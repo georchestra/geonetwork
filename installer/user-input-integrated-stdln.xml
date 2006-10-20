@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<userInput>
+	
+	<!-- ==================================================================================== -->
+	<!-- === Geonetwork administrator ===-->
+	<!-- ==================================================================================== -->
+	
+	<panel order="0">
+	
+		<field type="title" txt="GeoNetwork Administrator"/>
+		
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+		
+		<field type="staticText" txt="Please provide information for the GeoNetwork site administrator"/>
+		
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+		
+		<field type="rule" variable="ADMIN_USER">
+			<spec				txt   ="Username. The log in name for the administrator account"
+								layout="O:20:30"
+								set   ="0:administrator" />
+			<validator		class ="com.izforge.izpack.util.RegularExpressionValidator" 
+								txt   ="The administrator name must be at least 6 characters">
+				<param name="pattern" value="\w{6,}"/>
+			</validator>
+		</field>
+		
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+		
+		<field type="rule" variable="ADMIN_PASSWORD">
+			<spec				txt   ="Password"
+								layout="O:20:30" />
+			<validator		class ="com.izforge.izpack.util.RegularExpressionValidator" 
+								txt   ="The password must be at least 6 alpha-numeric characters">
+				<param name="pattern" value="\w{6,}"/>
+			</validator>
+		</field>
+		
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+		
+		<field type="rule" variable="ADMIN_SURNAME">
+			<spec				txt   ="Surname"
+								layout="O:20:30" />
+			<validator		class ="com.izforge.izpack.util.NotEmptyValidator" 
+								txt   ="The surname is mandatory"/>
+		</field>
+		
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+		
+		<field type="rule" variable="ADMIN_NAME">
+			<spec				txt   ="Name"
+								layout="O:20:30" />
+			<validator		class ="com.izforge.izpack.util.NotEmptyValidator" 
+								txt   ="The name is mandatory"/>
+		</field>
+		
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+		
+		<field type="rule" variable="ADMIN_MAIL">
+			<spec				txt   ="EMail address"
+								layout="O:20:50" />
+			<validator		class ="com.izforge.izpack.util.NotEmptyValidator" 
+								txt   ="The email is mandatory"/>
+		</field>
+		
+	</panel>
+	
+	<!-- ==================================================================================== -->	
+		
+</userInput> 

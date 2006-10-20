@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="geonetwork" default="installer" basedir=".">
+
+	<!-- =================================================================================== -->
+	
+	<!-- Edit the properties file to point to the location of the InterMap project -->
+	<property file="geonetwork.properties"/>
+	
+	<!-- =================================================================================== -->
+	
+	<taskdef name     ="izpack" 
+				classpath="lib/standalone-compiler.jar" 
+				classname="com.izforge.izpack.ant.IzPackTask"/>
+
+	<!-- =================================================================================== -->
+	
+	<target name="installer">
+		<ant dir=".." target="all" />
+		
+		<delete file="../geonetwork-intermap-${version}-install.jar" />
+		<delete dir =".build" />
+		<mkdir  dir =".build" />
+		
+		<!-- file copying -->
+			
+		<copy todir=".build">
+			<fileset dir="..">
+				<exclude name="**/WEB-INF/lucene/*"/>
+				<exclude name="**/db/data/*"/>
+				<exclude name="**/log/*"/>
+			</fileset>		
+		</copy>
+			
+		<delete dir=".build/installer"/>
+		<delete dir=".build/intermap"/>
+		
+		<!-- apply transformations -->
+	
+		<copy file="parse/index.html"     todir=".build/web"  overwrite="true"/>
+		<copy file="parse/create-dbms.sh" todir=".build/bin"  overwrite="true"/>
+	
+		<xslt in="../web/WEB-INF/web.xml"    out=".build/web/WEB-INF/web.xml"    style="xsl/web.xsl"    force="true"/>
+		<xslt in="../web/WEB-INF/config.xml" out=".build/web/WEB-INF/config.xml" style="xsl/config.xsl" force="true"/>
+		<xslt in="../bin/jetty.xml"          out=".build/bin/jetty.xml"          style="xsl/jetty-integrated.xsl"  force="true"/>
+
+		<ant dir="${intermap}" target="all" />
+		
+		<delete dir =".build_intermap" />
+		<mkdir  dir =".build_intermap" />
+		
+		<!-- file copying -->
+			
+		<copy todir=".build_intermap">
+			<fileset dir="${intermap}">
+				<exclude name="**/log/*"/>
+			</fileset>		
+		</copy>
+			
+		<delete dir=".build_intermap/installer"/>
+		
+		<!-- apply transformations -->
+		<copy file="${intermap}/installer/parse/index-integrated.html"     tofile=".build_intermap/web/index.html"  overwrite="true"/>
+		<xslt in="${intermap}/web/WEB-INF/config.xml" out=".build_intermap/web/WEB-INF/config.xml" style="xsl/config-integrated.xsl" force="true"/>
+		<xslt in="${intermap}/web/WEB-INF/web.xml"    out=".build_intermap/web/WEB-INF/web.xml"    style="xsl/web-integrated.xsl"    force="true"/>
+
+		<izpack	input="${basedir}/installer-config-integrated.xml" 
+					output="../geonetwork-intermap-${version}-install.jar" 
+					installerType="standard" 
+					basedir="${basedir}"/>
+		
+		<delete dir =".build" />
+		<delete dir =".build_intermap" />
+	</target>
+
+	<!-- =================================================================================== -->
+
+</project>

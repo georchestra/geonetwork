@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="geonetwork" default="all" basedir=".">
+
+	<!-- =================================================================================== -->
+	
+	<property file="geonetwork.properties"/>
+	
+	<!-- =================================================================================== -->
+	
+	<taskdef name     ="izpack" 
+				classpath="lib/standalone-compiler.jar" 
+				classname="com.izforge.izpack.ant.IzPackTask"/>
+
+	<!-- =================================================================================== -->
+
+    <target name="all" depends="installer,source"/>
+	
+	<!-- =================================================================================== -->
+	
+	<target name="installer">
+		<ant dir=".." target="all" />
+		
+		<delete file="../geonetwork-${version}-install.jar" />
+		<delete dir =".build" />
+		<mkdir  dir =".build" />
+		
+		<!-- file copying -->
+			
+		<copy todir=".build">
+			<fileset dir="..">
+				<exclude name="**/WEB-INF/lucene/*"/>
+				<exclude name="**/db/data/*"/>
+				<exclude name="**/log/*"/>
+			</fileset>		
+		</copy>
+			
+		<delete dir=".build/installer"/>
+		
+		<!-- apply transformations -->
+	
+		<copy file="parse/index.html"     todir=".build/web"  overwrite="true"/>
+		<copy file="parse/create-dbms.sh" todir=".build/bin"  overwrite="true"/>
+	
+		<xslt in="../web/WEB-INF/web.xml"    out=".build/web/WEB-INF/web.xml"    style="xsl/web.xsl"    force="true"/>
+		<xslt in="../web/WEB-INF/config.xml" out=".build/web/WEB-INF/config.xml" style="xsl/config.xsl" force="true"/>
+		<xslt in="../bin/jetty.xml"          out=".build/bin/jetty.xml"          style="xsl/jetty.xsl"  force="true"/>
+
+		<izpack	input="${basedir}/installer-config.xml" 
+					output="../geonetwork-${version}-install.jar" 
+					installerType="standard" 
+					basedir="${basedir}"/>
+		
+		<delete dir =".build" />
+					
+	</target>
+
+	<!-- =================================================================================== -->
+	
+	<target name="source">
+		<delete file="../geonetwork-src-${version}.tar.gz" />
+		<tar tarfile="../geonetwork-src-${version}.tar.gz" compression="gzip" basedir="../src" includes="org/**" />
+<!--		<delete file="../geonetwork-source-${version}-install.jar" />
+		<izpack	input="source-config.xml" 
+			output="../geonetwork-src-project-${version}-install.jar" 
+			installerType="standard" 
+			basedir="."/> -->
+	</target>
+	
+	<!-- =================================================================================== -->
+
+</project>

@@ -1,0 +1,49 @@
+===========================================================================
+=== Post installation issues
+===========================================================================
+  
+---------------------------------------------------------------------------
+--- Running GeoNetwork opensource on Jetty
+---------------------------------------------------------------------------
+  
+If you have installed the Jetty package you can run GeoNetwork using the 
+scripts located into the $INSTALL_PATH/bin directory. 
+On the Windows platform they are:
+  
+	- start-geonetwork.bat
+	- stop-geonetwork.bat
+  
+On the Linux platform they are:
+  
+	- start-geonetwork.sh
+	- stop-geonetwork.sh
+  
+---------------------------------------------------------------------------
+--- Running GeoNetwork opensource on Tomcat
+---------------------------------------------------------------------------
+  
+If you don't want to use the internal Jetty server you have to setup Tomcat
+(download from http://jakarta.apache.org/tomcat). In order to link GeoNetwork 
+to Tomcat you have to add these lines to the %TOMCAT-DIR%/conf/server.xml 
+file, into the <Host> element (for example just before the closing </Host>):
+
+<Context 
+	path="/$SERVLET" 
+	docBase="$INSTALL_PATH/web" 
+	crossContext="false" 
+	debug="0" 
+	reloadable="false" />
+
+When installing the integrated version of GeoNetwork opensource and InterMap 
+opensource, you will also have to add the following context:
+  
+<Context 
+	path="/$SERVLET/intermap" 
+	docBase="$INSTALL_PATH/web-intermap" 
+	crossContext="false" 
+	debug="0" 
+	reloadable="false" />
+  
+After you have changed that file, you need to restart Tomcat.
+
+  

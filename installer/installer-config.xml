@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes"?>
+
+<installation version="1.0">
+	
+	<!-- =================================================================================== -->
+	
+	<info>
+		<appname>geonetwork</appname>
+		<appversion>2.1.0 alpha 1</appversion>
+		<authors>
+			<author name="FAO GeoNetwork Team" email="GeoNetwork@fao.org"/>
+			<author name="VAM WFP"             email="vamsie@wfp.org"/>
+			<author name="UNEP.net"            email="info@unep.net"/>
+		</authors>
+		<url>http://geonetwork.sourceforge.net/</url>
+		<javaversion>1.5</javaversion>
+	</info>
+	
+	<!-- =================================================================================== -->
+		
+	<guiprefs width="800" height="600" resizable="yes">
+		<laf name="liquid">
+			<os family="unix"/>
+			<os family="windows"/>
+			<os family="mac"/>
+		</laf>
+	</guiprefs>
+	
+	<!-- =================================================================================== -->
+	
+	<locale>
+		<langpack iso3="eng"/>
+	</locale>
+	
+	<!-- =================================================================================== -->
+	
+	<resources>
+		<res id="HTMLLicencePanel.licence" src=".build/docs/license.html"/>
+		<res id="HTMLInfoPanel.info"       src=".build/docs/readme-server.html"/>
+		<res id="XInfoPanel.info"          src=".build/docs/post-install.txt"/>
+		<res id="userInputSpec.xml"        src="user-input.xml"/>
+		<res id="Installer.image"          src="installer.png"/>
+<!--		<res id="shortcutSpec.xml"         src="windows-shortcuts.xml"/>
+		<res id="Unix_shortcutSpec.xml"    src="unix-shortcuts.xml"/>
+		<res id="Win_shortcutSpec.xml"     src="windows-shortcuts.xml"/> -->
+	</resources>
+	
+	<!-- =================================================================================== -->
+	
+	<panels>
+		<panel classname="HelloPanel"/>
+		<panel classname="HTMLInfoPanel"/>
+		<panel classname="HTMLLicencePanel"/>
+		<panel classname="TargetPanel"/>
+		<panel classname="PacksPanel"/>
+		<panel classname="UserInputPanel"/>
+		<panel classname="UserInputPanel"/>
+		<panel classname="UserInputPanel"/>
+		<panel classname="UserInputPanel"/>
+		<panel classname="InstallPanel"/>
+<!--		<panel classname="ShortcutPanel"/> -->
+		<panel classname="XInfoPanel"/>
+		<panel classname="FinishPanel"/>
+	</panels>
+	
+	<!-- =================================================================================== -->
+	
+	<native type="izpack" name="ShellLink.dll" />
+	
+	<!-- =================================================================================== -->
+	
+	<packs>
+		<pack name="Core" required="no" preselected="yes">
+			<description>The GeoNetwork opensource application.</description>
+			
+			<fileset dir=".build/setup" targetdir="$INSTALL_PATH/setup">
+				<exclude name="**/Metadata.ddf"/>
+				<exclude name="**/OperationAllowed.ddf"/>
+				<exclude name="**/Categories.ddf"/>
+			</fileset>			
+						
+			<fileset dir=".build/web" targetdir="$INSTALL_PATH/web"/>
+			
+			<fileset dir=".build/bin" targetdir="$INSTALL_PATH/bin">
+				<exclude name="**/start-geonetwork.sh"/>
+				<exclude name="**/stop-geonetwork.sh"/>
+				<exclude name="**/start-geonetwork.bat"/>
+				<exclude name="**/stop-geonetwork.bat"/>
+				<exclude name="**/jetty.xml"/>
+				<exclude name="**/jetty-configure_1_3.dtd"/>
+			</fileset>			
+			
+			<fileset dir=".build/docs" targetdir="$INSTALL_PATH/docs">
+				<exclude name="javadoc/**"/>
+			</fileset>			
+			
+			<parsable targetfile="$INSTALL_PATH/setup/db/Users.ddf"           type="plain"/>
+			<parsable targetfile="$INSTALL_PATH/web/index.html"               type="plain"/>
+			<parsable targetfile="$INSTALL_PATH/bin/create-dbms.sh"           type="plain"/>
+			<parsable targetfile="$INSTALL_PATH/docs/post-install.txt"        type="plain"/>
+			<parsable targetfile="$INSTALL_PATH/web/loc/en/xml/strings.xml"   type="xml"/>			
+			<parsable targetfile="$INSTALL_PATH/web/loc/fr/xml/strings.xml"   type="xml"/>			
+			<parsable targetfile="$INSTALL_PATH/web/loc/es/xml/strings.xml"   type="xml"/>			
+			<parsable targetfile="$INSTALL_PATH/web/WEB-INF/config.xml"       type="xml"/>			
+			<parsable targetfile="$INSTALL_PATH/web/WEB-INF/web.xml"          type="xml"/>
+			<parsable targetfile="$INSTALL_PATH/web/xml/repositories.xml"     type="xml"/>
+			<parsable targetfile="$INSTALL_PATH/web/xml/schema-mappings.xml"  type="xml"/>			
+			<parsable targetfile="$INSTALL_PATH/web/xml/search-profiles.xml"  type="xml"/>
+			<parsable targetfile="$INSTALL_PATH/web/xml/sources.xml"          type="xml"/>
+			<parsable targetfile="$INSTALL_PATH/web/xml/csw/capabilities.xml" type="xml"/>
+			
+			<executable targetfile="$INSTALL_PATH/bin/create-dbms.sh" />
+			
+			<executable targetfile="$INSTALL_PATH/web/WEB-INF/lib/setup.jar" 
+							type      ="jar" 
+							keep      ="true"
+							stage     ="postinstall">
+				<args>
+					<arg value="$INSTALL_PATH"/>
+					<arg value="$JDBC_URL"/>
+				</args>
+			</executable>
+		</pack>
+		
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+		
+		<pack name="Sample metadata" required="no" preselected="yes">
+			<description>A sample set of metadata for testing.</description>
+			
+			<file src=".build/setup/db/Metadata.ddf"         targetdir="$INSTALL_PATH/setup/db"/>
+			<file src=".build/setup/db/OperationAllowed.ddf" targetdir="$INSTALL_PATH/setup/db"/>
+			<file src=".build/setup/db/Categories.ddf"       targetdir="$INSTALL_PATH/setup/db"/>
+			
+			<parsable targetfile="$INSTALL_PATH/setup/db/Metadata.ddf" type="plain"/>
+		</pack>
+
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+		
+		<pack name="Integrated Jetty server" required="no" preselected="yes">
+			<description>Install this package for stand alone installations and testing. 
+You will be able to start/stop GeoNetwork opensource with the scripts provided in the 'bin' directory.
+			</description>
+			
+			<fileset dir=".build/jetty" targetdir="$INSTALL_PATH/jetty"/>
+			
+			<file src=".build/bin/start-geonetwork.sh"     targetdir="$INSTALL_PATH/bin"/>
+			<file src=".build/bin/stop-geonetwork.sh"      targetdir="$INSTALL_PATH/bin"/>			
+			<file src=".build/bin/start-geonetwork.bat"    targetdir="$INSTALL_PATH/bin"/>
+			<file src=".build/bin/stop-geonetwork.bat"     targetdir="$INSTALL_PATH/bin"/>
+			<file src=".build/bin/jetty.xml"               targetdir="$INSTALL_PATH/bin"/>
+			<file src=".build/bin/jetty-configure_1_3.dtd" targetdir="$INSTALL_PATH/bin"/>
+			
+			<executable targetfile="$INSTALL_PATH/bin/start-geonetwork.sh" />
+			<executable targetfile="$INSTALL_PATH/bin/stop-geonetwork.sh" />
+			
+			<parsable targetfile="$INSTALL_PATH/bin/jetty.xml" type="xml"/>
+		</pack>
+			
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+		
+		<pack name="CSW 2.0.1 test client - not required" required="no" preselected="no">
+			<description>The GeoNetwork opensource provides Catalog Services for the Web 2.0.1 support. 
+This is a separate test application that can be used to test the CSW 2.0.1 services. 
+Not required to run the application.</description>
+			
+			<fileset dir=".build/csw"       targetdir="$INSTALL_PATH/csw_client"/>
+		</pack>
+		
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+		
+		<pack name="Migration application - not required" required="no" preselected="no">
+			<description>This application can be used to migrate the content from 
+a GeoNetwork opensource 2.0 catalog to this new version of GeoNetwork opensource. 
+</description>
+			
+			<fileset dir=".build/migrate"       targetdir="$INSTALL_PATH/migration"/>
+		</pack>
+		
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+		
+		<pack name="Source code - not required" required="no" preselected="no">
+			<description>The GeoNetwork opensource source code. 
+Both the Java code and the web application files. Not required to run the application.
+</description>
+			
+			<fileset dir=".build/src"       targetdir="$INSTALL_PATH/source/src"/>
+			<fileset dir=".build/web"       targetdir="$INSTALL_PATH/source/web"/>
+			<file    src=".build/build.xml" targetdir="$INSTALL_PATH"/>
+		</pack>
+		
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+		
+		<pack name="Java source code JavaDoc - not required" required="no" preselected="no">
+			<description>The GeoNetwork opensource JavaDoc source code documentation. Not required to run the application.</description>
+			
+			<fileset dir=".build/docs/javadoc" targetdir="$INSTALL_PATH/docs/javadoc"/>
+		</pack>
+				
+	</packs>
+
+	<!-- =================================================================================== -->
+
+</installation>

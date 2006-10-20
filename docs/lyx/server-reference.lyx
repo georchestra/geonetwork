@@ -1,0 +1,3767 @@
+#LyX 1.4.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 245
+\begin_document
+\begin_header
+\textclass book
+\begin_preamble
+\usepackage{a4}
+\usepackage {times}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\let\myTOC\tableofcontents 
+\renewcommand{\tableofcontents}{% 
+  \begingroup 
+%  \let\ps@plain\ps@empty 
+  \pagenumbering{roman}
+  \myTOC 
+  \clearpage 
+  \endgroup% 
+  \pagenumbering{arabic}
+}
+\end_preamble
+\language english
+\inputencoding auto
+\fontscheme times
+\graphics default
+\paperfontsize 12
+\spacing single
+\papersize a4paper
+\use_geometry false
+\use_amsmath 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\leftmargin -20cm
+\rightmargin -20cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip medskip
+\quotes_language swedish
+\papercolumns 1
+\papersides 2
+\paperpagestyle headings
+\tracking_changes false
+\output_changes true
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\align center
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+thispagestyle{empty}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace vfill
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\series bold
+\size huge
+GeoNetwork's Server Reference
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace vfill
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\size larger
+Author: 
+\series bold
+\noun on
+Andrea Carboni
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\size larger
+Revision 1 (06-Sep-2006)
+\end_layout
+
+\begin_layout Standard
+
+\newpage
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+thispagestyle{empty}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter*
+Introduction
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+thispagestyle{empty}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This document gives some insights about the internal structure of GeoNetwork.
+\end_layout
+
+\begin_layout Standard
+\begin_inset LatexCommand \tableofcontents{}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Part
+Basic Operations
+\end_layout
+
+\begin_layout Chapter
+Compiling and running GeoNetwork
+\end_layout
+
+\begin_layout Section
+System Requirements
+\end_layout
+
+\begin_layout Section
+Package structure
+\end_layout
+
+\begin_layout Section
+Source code structure
+\end_layout
+
+\begin_layout Section
+Compiling GeoNetwork
+\end_layout
+
+\begin_layout Part
+Protocols
+\end_layout
+
+\begin_layout Chapter
+Harvesting
+\end_layout
+
+\begin_layout Chapter
+Metadata Exchange Format
+\end_layout
+
+\begin_layout Part
+XML Services
+\end_layout
+
+\begin_layout Chapter
+Calling specifications
+\end_layout
+
+\begin_layout Standard
+tramite http get/post
+\end_layout
+
+\begin_layout Chapter
+General services
+\end_layout
+
+\begin_layout Section
+xml.info
+\end_layout
+
+\begin_layout Standard
+The 
+\family sans
+xml.info
+\family default
+ service can be used to query the site about its configuration, services,
+ status and so on.
+ For example, it is used by the harvesting web interface to retrieve information
+ about a remote node.
+\end_layout
+
+\begin_layout Subsection*
+Request
+\end_layout
+
+\begin_layout Standard
+The xml request should contain at least one 
+\family sans
+\series bold
+type
+\family default
+\series default
+ element to indicates the kind of information to retrieve.
+ More 
+\family sans
+\series bold
+type
+\family default
+\series default
+ elements can be specified to obtain more information at once.
+ The set of allowed values are:
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+site
+\series default
+ Returns general information about the site like its name, id, etc...
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+categories
+\series default
+ Returns all the site's categories
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+groups
+\series default
+ Returns all the site's groups
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+knownNodes
+\series default
+ Returns all geonetwork nodes that the remote site knows.
+ Every time the remote site harvests from other nodes, it collects information
+ about their address, name, siteId etc...
+ This allows the propagation of the GeoNetwork sites to facilitate harvesting
+ of new sites.
+ Anyway, the remote node may know other nodes by other ways.
+\end_layout
+
+\begin_layout Standard
+Request example:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout LyX-Code
+
+\size footnotesize
+<request>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <type>site</type>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <type>groups</type>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+</request>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Response
+\end_layout
+
+\begin_layout Standard
+Each 
+\family sans
+\series bold
+type
+\family default
+\series default
+ element produces an XML subtree so the response to the previous request
+ is like this:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout LyX-Code
+
+\size footnotesize
+<response>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <site>...</site>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <groups>...</groups>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+</response>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Here follows the structure of each subtree:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+site
+\series default
+ : This is the container
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+name
+\series default
+ : Human readable site name
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+siteId
+\series default
+ : Universal unique identifier of the site
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+logo
+\series default
+ : Absolute path of the site's logo image.
+ This is the full path except for the host name/port.
+ Note that the name of the image is its UUID
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+platform
+\series default
+ : This is just a container to hold the site's backend
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+name
+\series default
+ : Plaform name.
+ For GeoNetwork installations it must be 
+\family sans
+\series bold
+geonetwork
+\family default
+\series default
+.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+version
+\series default
+ : Platform version, given in the X.Y.Z format
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+Example:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "s"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout LyX-Code
+
+\size footnotesize
+<site>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <name>My site</name>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <siteId>0619cc50-708b-11da-8202-000d9335906e</siteId>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <icon>/geonetwork/images/logos/
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+          0619cc50-708b-11da-8202-000d9335906e.png</icon>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <platform>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <name>geonetwork</name>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <version>2.1.0</version>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </platform>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+</site>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+categories
+\series default
+ : This is the container for categories
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+category
+\series default
+ [0..n] : A single GeoNetwork's category
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+name
+\series default
+ : Category's name
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+label
+\series default
+ : The label used to show the category on screen.
+ This is just a container for the localized strings in all supported languages.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+en
+\series default
+ : Localized label in english
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+fr
+\series default
+ : Localized label in french
+\end_layout
+
+\begin_layout Itemize
+...
+\end_layout
+
+\end_deeper
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout LyX-Code
+
+\size footnotesize
+<categories>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <category>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <name>datasets</name>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <label>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <en>Datasets</en>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <fr>I don't know</fr>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      </label>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </category>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+</categories>
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+groups
+\series default
+ : This is the container for groups
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+group
+\series default
+ [2..n] : This is a Geonetwork group.
+ There are at least the internet and intranet groups
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+name
+\series default
+ : Group's name
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+label
+\series default
+ : The label used to show the group on screen.
+ This is just a container for the localized strings in all supported languages.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+en
+\series default
+ : Localized label in english
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+fr
+\series default
+ : Localized label in french
+\end_layout
+
+\begin_layout Itemize
+...
+\end_layout
+
+\end_deeper
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout LyX-Code
+
+\size footnotesize
+<groups>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <group>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <name>editors</name>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <label>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <en>Editors</en>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <fr>I don't know</fr>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      </label>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </group>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+</groups>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+knownNodes
+\series default
+ : This is the container
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+node
+\series default
+ [0..n] : A known GeoNetwork node
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+name
+\series default
+ : Node's name
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+siteId
+\series default
+ : Node's unique identifier
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+icon
+\series default
+ : relative local path of the remote node's icon.
+ Notice that this is the path to get the icon from the node being queried
+ not the path on the remote note.
+ To discover that, call 
+\family sans
+\series bold
+xml.info
+\family default
+\series default
+ on the remote note.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+host
+\series default
+ : Node's host
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+port
+\series default
+ : Node's port.
+ Can be empty
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+servlet
+\series default
+ : Node's servlet.
+ Together with host and port can be used to call services on the remote
+ node.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+metadata
+\series default
+ : This is just the number of metadata that have been harvested from the
+ remote node.
+ This is used by the harvesting web interface to provide some hints to the
+ user.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout LyX-Code
+
+\size footnotesize
+<knownNodes>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <node>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <name>My Host</name>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <siteId>0619cc50-708b-11da-8202-000d9335906e</siteId>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <icon>/geonetwork/images/logos/
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+                        0619cc50-708b-11da-8202-000d9335906e.png</icon>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <host>www.myhost.org</host>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <port/>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <servlet>myservlet</servlet>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <metadata>23</metadata>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </node>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+</knownNodes>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+xml.forward
+\end_layout
+
+\begin_layout Standard
+This is just a router service.
+ It is used by Javascript code to connect to a remote host because a Javascript
+ program cannot access a machine other than its server.
+ For example, it is used by the harvesting web interface to query a remote
+ host and retrieve the list of site ids.
+\end_layout
+
+\begin_layout Subsection*
+Request
+\end_layout
+
+\begin_layout Standard
+The service's request has this form:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout LyX-Code
+
+\size footnotesize
+<request>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <url>...</url>
+\end_layout
+
+\begin_layout LyX-Code
+   
+\size footnotesize
+<params>...</params>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+</knownNodes>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where:
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+url
+\series default
+ Indicates the remote url to connect to.
+ Usually points to a GeoNetwork's xml service
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+params
+\series default
+ This is just a container for the request that must be executed remotely.
+\end_layout
+
+\begin_layout Standard
+Example:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout LyX-Code
+
+\size footnotesize
+<request>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <url>http:///mynode.org:8080/geonetwork/srv/en/xml.info</url>
+\end_layout
+
+\begin_layout LyX-Code
+   
+\size footnotesize
+<params>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <request>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <type>site<type>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      </request>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </params>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+</request>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Response
+\end_layout
+
+\begin_layout Standard
+The response is just the response of the remote service.
+\end_layout
+
+\begin_layout Chapter
+Harvesting services
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+This chapter provides a detailed explanation of the GeoNetwork's harvesting
+ services.
+ These services allow a complete control over the harvesting behaviour.
+ They are used by the web interface and can be used by any other client.
+\end_layout
+
+\begin_layout Section
+xml.harvesting.get
+\end_layout
+
+\begin_layout Standard
+Retrieves information about one or all configured harvesting nodes.
+\end_layout
+
+\begin_layout Subsection*
+Request
+\end_layout
+
+\begin_layout Standard
+Called with no parameters returns all nodes.
+ Example:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout LyX-Code
+
+\size footnotesize
+<request/>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Otherwise, an 
+\family sans
+\series bold
+id
+\family default
+\series default
+ parameter can be specified:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout LyX-Code
+
+\size footnotesize
+<request>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <id>123</id>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+</request>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Response
+\end_layout
+
+\begin_layout Standard
+When called with no parameters the service provide its output inside a 
+\family sans
+\series bold
+nodes
+\family default
+\series default
+ container.
+ You get as many 
+\family sans
+\series bold
+node
+\family default
+\series default
+ elements as are configured.
+ For example:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout LyX-Code
+
+\size footnotesize
+<nodes>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <node id="125" name="test 1" type="geonetwork">
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <site>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <host>localhost</host>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <port>8080</port>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <servlet>geonetwork</servlet>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <account>         
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+            <use>true</use>         
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+            <username />         
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+            <password />       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         </account>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      </site>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <searches>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <search>         
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+            <freeText />         
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+            <title />         
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+            <abstract />         
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+            <keywords />         
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+            <digital>false</digital>         
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+            <hardcopy>false</hardcopy>         
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+            <siteId>0619cc50-708b-11da-8202-000d9335906e</siteId>      
+ 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         </search>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      </searches>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <options>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <every>90</every>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <createGroups>true</createGroups>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <oneRunOnly>false</oneRunOnly>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <status>inactive</status>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      </options>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <info>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <lastRun />     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      </info>   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </node> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+</nodes> 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If you specify an id, you get a response like this (for a web folder node):
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout LyX-Code
+
+\size footnotesize
+<node id="165" name="test" type="webFolder">   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <site>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <url>http://www.mynode.org/metadata</url>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <account>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <use>true</use>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <username>admin</username>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <password>admin</password>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      </account>   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </site>   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <options>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <every>90</every>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <oneRunOnly>false</oneRunOnly>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <structure>false</structure>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <validate>true</validate>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <status>inactive</status>   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </options>   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <privileges>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <group id="0">       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <operation name="view" />     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      </group>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <group id="14">       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <operation name="download" />     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      </group>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </privileges>    
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <info>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <lastRun />   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </info> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+</node> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The node's structure is described in the next two services.
+ What are missing are the following elements:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+info
+\series default
+ : A container for general information.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+lastRun
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+) : The lastRun element will be filled as soon as the harvester starts harvestin
+g from this entry.
+ The value is the 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+running
+\series default
+ (boolean) : True if the harvester is currently running.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\series bold
+error
+\series default
+ : This element will be present if the harvester encounters an error during
+ harvesting.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+code
+\series default
+ : The error code, in string form
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+message
+\series default
+ : The description of the error.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+object
+\series default
+ : The object that caused the error (if any).
+ This element can be present or not depending on the case.
+\end_layout
+
+\end_deeper
+\begin_layout Section
+xml.harvesting.add
+\end_layout
+
+\begin_layout Standard
+Create a new harvesting entry.
+ The entry can be of any type support by GeoNetwork (GeoNetwork node, web
+ folder etc...).
+ When a new entry is created, its status is set to 
+\family sans
+\series bold
+inactive
+\family default
+\series default
+.
+ A call to the xml.harvesting.start service is required to start harvesting.
+\end_layout
+
+\begin_layout Subsection*
+Request
+\end_layout
+
+\begin_layout Standard
+The service requires an XML tree with all information the client wants to
+ add.
+ 
+\end_layout
+
+\begin_layout Standard
+To create a GeoNetwork entry the following XML information should be provided.
+ Default values are given in parenthesis (after the parameter's type) and
+ are used when the parameter is omitted.
+ If the type is boolean, only the 
+\family sans
+\series bold
+true
+\family default
+\series default
+ and 
+\family sans
+\series bold
+false
+\family default
+\series default
+ strings are allowed.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+node
+\series default
+ : This is the root container.
+ The 
+\family sans
+\series bold
+name
+\family default
+\series default
+ attribute specifies the entry's name.
+ If omitted, an empty string is considered.
+ The 
+\family sans
+\series bold
+type
+\family default
+\series default
+ attribute is mandatory and must be 
+\family sans
+\series bold
+geonetwork
+\family default
+\series default
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+site
+\series default
+ : A container for site information.
+ Can be omitted.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+host
+\series default
+ (
+\emph on
+string
+\emph default
+, '') : The GeoNetwork node's host name or IP address.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+port
+\series default
+ (
+\emph on
+string
+\emph default
+, '80') : The port to connect to.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+servlet
+\series default
+ (
+\emph on
+string
+\emph default
+, 'geonetwork').
+ The servlet name choosen in the remote site.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\series bold
+account
+\series default
+ : A container for account information.
+ Can be omitted.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+use
+\series default
+ (
+\emph on
+boolean
+\emph default
+, 'false') : True means that the harvester will use the provided username
+ and password to authenticate itself.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+username
+\series default
+ (
+\emph on
+string
+\emph default
+, '') : Username on the remote node.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+password
+\series default
+ (
+\emph on
+string
+\emph default
+, '') : Password on the remote node.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\series bold
+searches
+\series default
+ : A container for search parameters.
+ Can be omitted.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+search
+\series default
+ : A container for a single search on a siteID.
+ You can specify 0 or more searches but to properly harvest you have to
+ provide at least one.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+freeText
+\series default
+ (
+\emph on
+string
+\emph default
+, '') : Free text to search.
+ This and the following parameters are the same used during normal search
+ using the web interface.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+title
+\series default
+ (
+\emph on
+string
+\emph default
+, '')
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+abstract
+\series default
+ (
+\emph on
+string
+\emph default
+, '')
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+keywords
+\series default
+ (
+\emph on
+string
+\emph default
+, '')
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+digital
+\series default
+ (
+\emph on
+boolean
+\emph default
+, 'false')
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+hardcopy
+\series default
+ (
+\emph on
+boolean
+\emph default
+, 'false')
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+siteId
+\series default
+ (
+\emph on
+string
+\emph default
+, '') : On of the siteIDs present on the remote node.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+
+\series bold
+options
+\series default
+ : A container for generic options.
+ Can be omitted.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+every
+\series default
+ (
+\emph on
+integer
+\emph default
+, '90') : Harvesting interval in minutes.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+createGroups
+\series default
+ (
+\emph on
+boolean
+\emph default
+, 'true') : If true, GeoNetwork tries to keep remote privileges creating
+ local groups.
+ After the harvesting, the local node will have all the remote node's groups.
+ A group is created locally only if it does not already exist.
+ The group's name is used to establish that.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+oneRunOnly
+\series default
+ (
+\emph on
+boolean
+\emph default
+, 'false') : After the first run, the entry's status will be set to 
+\family sans
+\series bold
+inactive
+\family default
+\series default
+.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+Please note that even if clients can store empty values ('') for many parameters
+, before starting the harvesting entry those parameters should be properly
+ set in order to avoid errors.
+\end_layout
+
+\begin_layout Standard
+Here is an example of an XML request to create a GeoNetwork entry:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout LyX-Code
+
+\size footnotesize
+<node name="South Africa" type="geonetwork">   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <site>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <host>south.africa.org</host>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <port>8080</port>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <servlet>geonetwork</servlet>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <account>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <use>true</use>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <username>admin</username>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <password>admin</password>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      </account>   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </site>   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <searches>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <search>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <freeText />       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <title />       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <abstract />       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <keywords />       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <digital>true</digital>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <hardcopy>false</hardcopy>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <siteId>0619cc50-708b-11da-8202-000d9335906e</siteId>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      </search>   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </searches>   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <options>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <every>90</every>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <createGroups>true</createGroups>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <oneRunOnly>false</oneRunOnly>   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </options> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+</node> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+To create a WebFolder entry, the following XML information should be provided:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+node
+\series default
+ : This is the root container.
+ The 
+\family sans
+\series bold
+name
+\family default
+\series default
+ attribute specifies the entry's name.
+ If omitted, an empty string is considered.
+ The 
+\family sans
+\series bold
+type
+\family default
+\series default
+ attribute is mandatory and must be 
+\family sans
+\series bold
+webFolder
+\family default
+\series default
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+site
+\series default
+ : A container for site information.
+ Can be omitted.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+url
+\series default
+ (
+\emph on
+string
+\emph default
+, '') : The URL to harvest from.
+ If provided, must be a valid URL starting with 'HTTP://'.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+account
+\series default
+ : A container for account information.
+ Can be omitted.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+use
+\series default
+ (
+\emph on
+boolean
+\emph default
+, 'false') : If true, GeoNetwork will use the basic HTTP authentication.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+username
+\series default
+ (
+\emph on
+string
+\emph default
+, '') : Username on the remote node.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+password
+\series default
+ (
+\emph on
+string
+\emph default
+, '') : Password on the remote node.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+
+\series bold
+privileges
+\series default
+ : A container for privileges that must be associated to the harvested metadata.
+ Can be omitted but doing so the harvested metadata will not be visible.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+group
+\series default
+ : A container for the privileges to associate to this group.
+ It must have an 
+\family sans
+\series bold
+id
+\family default
+\series default
+ attribute which value should be the identifier of a GeoNetwork group.
+ If the id is not a valid group id, the contained privileges will be discarded.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+operation
+\series default
+ : Specifies an operation to associate to the containing group.
+ It must have a 
+\family sans
+\series bold
+name
+\family default
+\series default
+ attribute which value can be one of : 
+\family sans
+\series bold
+view
+\family default
+\series default
+, 
+\family sans
+\series bold
+download
+\family default
+\series default
+, 
+\family sans
+\series bold
+dynamic
+\family default
+\series default
+, 
+\family sans
+\series bold
+notify
+\family default
+\series default
+, 
+\family sans
+\series bold
+featured
+\family default
+\series default
+.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+
+\series bold
+options
+\series default
+ : A container for generic options.
+ Can be omitted.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+every
+\series default
+ (
+\emph on
+integer
+\emph default
+, '90') : Harvesting interval in minutes.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+oneRunOnly
+\series default
+ (
+\emph on
+boolean
+\emph default
+, 'false') : After the first run, the entry's status will be set to 
+\family sans
+\series bold
+inactive
+\family default
+\series default
+.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+structure
+\series default
+ (
+\emph on
+boolean
+\emph default
+, 'false') : When true, the folders present at the remote host will provide
+ additional information about categories and siteIDs.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+validate
+\series default
+ (
+\emph on
+boolean
+\emph default
+, 'false') : When true, GeoNetwork will validate every metadata against
+ its schema.
+ If the metadata is not valid, it will not be imported.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+Here is an example of an XML request to create a web folder entry:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout LyX-Code
+
+\size footnotesize
+<node name="Asia remote node" type="webFolder">   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <site>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <url>http://www.mynode.org/metadata</url>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <account>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <use>true</use>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <username>admin</username>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <password>admin</password>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      </account>   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </site>   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <options>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <every>90</every>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <oneRunOnly>false</oneRunOnly>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <structure>false</structure>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <validate>true</validate>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <status>inactive</status>   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </options>   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <privileges>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <group id="0">       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <operation name="view" />     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      </group>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <group id="14">       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <operation name="download" />     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      </group>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </privileges>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+</node> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Response
+\end_layout
+
+\begin_layout Standard
+The service's response is the output of the 
+\family sans
+\series bold
+xml.harvesting.get
+\family default
+\series default
+ service of the newly created entry.
+ So, the response is similar to the request but with some more information:
+\end_layout
+
+\begin_layout Itemize
+An 
+\family sans
+\series bold
+id
+\family default
+\series default
+ attribute to the 
+\family sans
+\series bold
+node
+\family default
+\series default
+ root element.
+ This is the internal identifier that must be used to update/start/stop
+ the entry.
+\end_layout
+
+\begin_layout Itemize
+An 
+\family sans
+\series bold
+info
+\family default
+\series default
+ element with some information and statistics.
+\end_layout
+
+\begin_layout Section
+xml.harvesting.update
+\end_layout
+
+\begin_layout Standard
+This service is responsible to change the entry's parameters.
+ A typical request has a 
+\family sans
+\series bold
+node
+\family default
+\series default
+ root element and must include the 
+\family sans
+\series bold
+id
+\family default
+\series default
+ attribute:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout LyX-Code
+
+\size footnotesize
+<node id="24">
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   ...
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+</node>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The body of the 
+\family sans
+\series bold
+node
+\family default
+\series default
+ element depends on the node's type.
+ The update policy is this:
+\end_layout
+
+\begin_layout Itemize
+If an element is specified, the associated parameter is updated.
+\end_layout
+
+\begin_layout Itemize
+If an element is not specified, the associated parameter will not be changed.
+\end_layout
+
+\begin_layout Standard
+So, you need to specify only the elements you want to change.
+ There are some exceptions for the following node types:
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+geonetwork
+\series default
+ The only exception to this behaviour is the 
+\family sans
+\series bold
+searches
+\family default
+\series default
+ element: if omitted searches will not be changed but if specified all contained
+ search entries will replace the old ones.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+webFolder
+\series default
+ The 
+\family sans
+\series bold
+privileges
+\family default
+\series default
+ element works as the previous one: if omitted privileges will not be changed
+ but if specified all current privileges will be replaced by the provided
+ ones.
+\end_layout
+
+\begin_layout Standard
+Note that you cannot change the type of an entry once it has been created.
+\end_layout
+
+\begin_layout Subsection*
+Request
+\end_layout
+
+\begin_layout Standard
+The request is the same as that used to add an entry.
+ Only the 
+\family sans
+\series bold
+id
+\family default
+\series default
+ attribute is mandatory.
+\end_layout
+
+\begin_layout Subsection*
+Response
+\end_layout
+
+\begin_layout Standard
+The response is the same as the 
+\family sans
+\series bold
+xml.harvesting.get
+\family default
+\series default
+ called on the updated entry.
+\end_layout
+
+\begin_layout Section
+xml.harvesting.remove/start/stop/run
+\end_layout
+
+\begin_layout Standard
+Request
+\end_layout
+
+\begin_layout Standard
+Response
+\end_layout
+
+\begin_layout Chapter
+Settings hierarchy
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+GeoNetwork stores many options and information inside the 
+\family sans
+\series bold
+Settings
+\family default
+\series default
+ table.
+ Information is grouped into hierarchies where each node has a key/value
+ pair and can have many children.
+ Each key is limited to 32 characters while each value is limited to 250.
+ The 2 top level hierarchies are 
+\family sans
+\series bold
+system
+\family default
+\series default
+ and 
+\family sans
+\series bold
+harvesting
+\family default
+\series default
+.
+\end_layout
+
+\begin_layout Standard
+In the following sections, the indentation is used to show hierarchies.
+ Names in bold represent keys with the value's datatype in parenthesys.
+ An 
+\emph on
+italic
+\emph default
+ font is used to indicate basic types (string, integer, boolean) while normal
+ font with a | is used to represent a set of allowed values.
+ Regarding the boolean type, value can be only 
+\family sans
+\series bold
+true
+\family default
+\series default
+ or 
+\family sans
+\series bold
+false
+\family default
+\series default
+.
+ A missing datatype means that the value of the node is not used.
+ Square brackets indicate cardinality.
+ If they are missing, a cardinality of [1..1] should be considered.
+\end_layout
+
+\begin_layout Section
+
+\series bold
+The 
+\family sans
+\series default
+system
+\family default
+\series bold
+ hierarchy
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+site
+\series default
+ : Contains information about the site
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+name
+\series default
+ (
+\emph on
+string
+\emph default
+) : Name used to present this site to other sites.
+ Used to fill comboboxes or lists.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+siteId
+\series default
+ (
+\emph on
+string
+\emph default
+) : A UUID that uniquely identifies the site.
+ It is generated by the installer.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\series bold
+gnVersion
+\series default
+ (
+\emph on
+string
+\emph default
+) : GeoNetwork's version in the X.Y.Z format
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+usePublication
+\series default
+ (
+\emph on
+boolean
+\emph default
+) : Used when the GeoNetwork's server is hidden and there is a main server
+ that redirects HTTP requests to GeoNetwork's server.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+host
+\series default
+ (
+\emph on
+string
+\emph default
+) : Main HTTP server's address
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+port
+\series default
+ (
+\emph on
+integer
+\emph default
+) : Main HTTP server's port (can be empty)
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\series bold
+intranet
+\series default
+ : specify the network of the intranet
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+network
+\series default
+ (
+\emph on
+string
+\emph default
+) : Network's address
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+netmask
+\series default
+ (
+\emph on
+string
+\emph default
+) : Network's netmask
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\series bold
+z3950Port
+\series default
+ (
+\emph on
+string
+\emph default
+) : The port opened by GeoNetwork to listen to Z39.50 requests.
+ Usually is 2100.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+useProxy
+\series default
+ (
+\emph on
+boolean
+\emph default
+) : If true, GeoNetwork will use the given proxy for outgoing connections
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+host
+\series default
+ (
+\emph on
+string
+\emph default
+) : Proxy host
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+port
+\series default
+ (
+\emph on
+integer
+\emph default
+) : Proxy port
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\series bold
+sendFeedback
+\series default
+ (
+\emph on
+boolean
+\emph default
+) : Collects some information used when sending feedback.
+ If false, the feedback is not sent.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+email
+\series default
+ (
+\emph on
+string
+\emph default
+) : email address of a GeoNetwork administrator or someone else
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+smtpHost
+\series default
+ (
+\emph on
+string
+\emph default
+) : Address of the SMTP server to use
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+smtpPort
+\series default
+ (
+\emph on
+string
+\emph default
+) : SMTP port to use
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Harvesting nodes
+\end_layout
+
+\begin_layout Standard
+The second top level hierarchy is 
+\family sans
+\series bold
+harvesting
+\family default
+\series default
+.
+ All nodes added using the web interface are stored here.
+ Each child has 
+\family sans
+\series bold
+node
+\family default
+\series default
+ in its key and its value can be 
+\family sans
+\series bold
+geonetwork
+\family default
+\series default
+ or 
+\family sans
+\series bold
+webFolder
+\family default
+\series default
+ depending on the node's type.
+\end_layout
+
+\begin_layout Subsection
+Nodes of type 
+\family sans
+geonetwork
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+site
+\series default
+ : Contains host and account information
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+name
+\series default
+ (
+\emph on
+string
+\emph default
+) : Node's name to show in the list
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+host
+\series default
+ (
+\emph on
+string
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+port
+\series default
+ (
+\emph on
+integer
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+servlet
+\series default
+ (
+\emph on
+string
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+useAccount
+\series default
+ (
+\emph on
+boolean
+\emph default
+)
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+username 
+\series default
+(
+\emph on
+string
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+password 
+\series default
+(
+\emph on
+string
+\emph default
+)
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+
+\series bold
+search
+\series default
+ [0..n] : Contains the search parameters.
+ If this element is missing no harvesting will be performed but the host's
+ parameters will be used to connect to the remote node.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+freeText
+\series default
+ (
+\emph on
+string
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+title
+\series default
+ (
+\emph on
+string
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+abstract
+\series default
+ (
+\emph on
+string
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+keywords
+\series default
+ (
+\emph on
+string
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+digital
+\series default
+ (
+\emph on
+boolean
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+hardcopy
+\series default
+ (
+\emph on
+boolean
+\emph default
+) 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+siteId
+\series default
+ (
+\emph on
+string
+\emph default
+) 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\series bold
+options
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+every
+\series default
+ (
+\emph on
+integer
+\emph default
+) : Timeout, in minutes, between 2 consecutive harvesting.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+createGroups
+\series default
+ (
+\emph on
+boolean
+\emph default
+) : If true, the harvester will create locally the same groups of the harvested
+ metadata in order to keep remote privileges.
+ Remote groups that already exist locally are not created.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+oneRunOnly
+\series default
+ (
+\emph on
+boolean
+\emph default
+) : If true, the harvester will harvest one time from this node and then
+ it will set the status to inactive.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+status
+\series default
+ (active|inactive) : Indicates if the harvesting from this node is stopped
+ (inactive) or if the harvester is waiting until the timeout comes.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\series bold
+info
+\series default
+ : Just a container for some information about harvesting from this node
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+lastRun
+\series default
+ (
+\emph on
+string
+\emph default
+) : If not empty, tells when the harvester harvested from this node
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Nodes of type 
+\family sans
+webFolder
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+site
+\series default
+ : Contains the URL to connect to and account information
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+name
+\series default
+ (
+\emph on
+string
+\emph default
+) : Node's name to show in the list
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+url
+\series default
+ (
+\emph on
+string
+\emph default
+) : URL to connect to.
+ Must be well formed, starting with 'http://', 'file://' or a supported
+ protocol
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+useAccount
+\series default
+ (
+\emph on
+boolean
+\emph default
+) : Indicates if the harvester has to authenticate to access the data.
+ Only the http basic authentication is used.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+username 
+\series default
+(
+\emph on
+string
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+password 
+\series default
+(
+\emph on
+string
+\emph default
+)
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+
+\series bold
+options
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+every
+\series default
+ (
+\emph on
+integer
+\emph default
+) : Timeout, in minutes, between 2 consecutive harvesting.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+oneRunOnly
+\series default
+ (
+\emph on
+boolean
+\emph default
+) : If true, the harvester will harvest one time from this node and then
+ it will set the status to inactive.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+structure
+\series default
+ (
+\emph on
+boolean
+\emph default
+) : Indicates if remote folder is flat or it contains subfolder with a precise
+ meaning.
+ See the 
+\family sans
+administrator's guide
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+validate
+\series default
+ (
+\emph on
+boolean
+\emph default
+) : If set, the harvester will validate the metadata against its schema
+ and the metadata will be harvested only if it is valid.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+status
+\series default
+ (active|inactive) : Indicates if the harvesting from this node is stopped
+ (inactive) or if the harvester is waiting until the timeout comes.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\series bold
+privileges
+\series default
+ : This is a container for privileges to assign to each imported metadata
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+group
+\series default
+ (
+\emph on
+integer
+\emph default
+) [0..n] : Indicate a local group.
+ The node's value is its local identifier.
+ There can be several group nodes each with its set of privileges
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+operation
+\series default
+ (
+\emph on
+integer
+\emph default
+) [0..n] : Privilege to assign to the group.
+ The node's value is the numeric id of the operation like 0=view, 1=download,
+ 2=edit etc...
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+
+\series bold
+info
+\series default
+ : Just a container for some information about harvesting from this node
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+lastRun
+\series default
+ (
+\emph on
+string
+\emph default
+) : If not empty, tells when the harvester harvested from this node.
+ The value is the current time in millis since 1 January, 1970.
+\end_layout
+
+\end_body
+\end_document
