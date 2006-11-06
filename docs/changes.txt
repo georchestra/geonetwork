@@ -20,6 +20,8 @@
 
 - Fixed bug with advanced search: the results were wrong if bounds were not specified
 
+- Harvesting : fixed an exception raised when adding new nodes
+
 ================================================================================
 ===
 === GeoNetwork 2.1.0 alpha1 : List of changes
