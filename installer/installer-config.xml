@@ -102,7 +102,6 @@
 			<parsable targetfile="$INSTALL_PATH/web/loc/fr/xml/strings.xml"   type="xml"/>			
 			<parsable targetfile="$INSTALL_PATH/web/loc/es/xml/strings.xml"   type="xml"/>			
 			<parsable targetfile="$INSTALL_PATH/web/WEB-INF/config.xml"       type="xml"/>			
-			<parsable targetfile="$INSTALL_PATH/web/WEB-INF/web.xml"          type="xml"/>
 			<parsable targetfile="$INSTALL_PATH/web/xml/repositories.xml"     type="xml"/>
 			<parsable targetfile="$INSTALL_PATH/web/xml/schema-mappings.xml"  type="xml"/>			
 			<parsable targetfile="$INSTALL_PATH/web/xml/search-profiles.xml"  type="xml"/>
