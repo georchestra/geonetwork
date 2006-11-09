@@ -2074,7 +2074,8 @@ siteId
 \emph on
 string
 \emph default
-, '') : On of the siteIDs present on the remote node.
+,) : One of the siteIDs present on the remote node.
+ Must be present and not empty.
 \end_layout
 
 \end_deeper
