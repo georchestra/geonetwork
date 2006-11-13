@@ -4,6 +4,8 @@
 ===
 ================================================================================
 
+- Added metadata rating information (Score for Lucene)
+
 - Added SOAP support to CSW. Updated test application to use SOAP.
   Used HTTP client library from Jakarta.
 
