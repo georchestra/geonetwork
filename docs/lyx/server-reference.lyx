@@ -192,8 +192,770 @@ Protocols
 Harvesting
 \end_layout
 
+\begin_layout Part
+File formats
+\end_layout
+
 \begin_layout Chapter
+\begin_inset LatexCommand \label{cha:mef}
+
+\end_inset
+
 Metadata Exchange Format
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+The metadata exchange format (
+\series bold
+MEF
+\series default
+ in short) is a special designed file format whose purpose is to allow metadata
+ exchange between different platforms.
+ A metadata exported into this format can be imported by any platform which
+ is able to understand it.
+ This format has been developed with GeoNetwork in mind so the information
+ it contains is mainly related to it.
+ Nevertheless, it can be used as an interoperability format between any
+ platform.
+\end_layout
+
+\begin_layout Standard
+This format has been designed with these needs in mind:
+\end_layout
+
+\begin_layout Itemize
+Export a metadata record for backup purposes
+\end_layout
+
+\begin_layout Itemize
+Import a metadata record from a previous backup
+\end_layout
+
+\begin_layout Itemize
+Import a metadata record from a different GeoNetwork version to allow a
+ smooth migration from one version to another.
+\end_layout
+
+\begin_layout Standard
+All these operations regard the metadata and its related data as well.
+\end_layout
+
+\begin_layout Standard
+In the paragraphs below, some terms should be intended as follows:
+\end_layout
+
+\begin_layout Itemize
+the term 
+\series bold
+actor
+\series default
+ is used to indicate any system (application, service etc...) that operates
+ on metadata.
+\end_layout
+
+\begin_layout Itemize
+the term 
+\series bold
+reader
+\series default
+ will be used to indicate any actor that can import metadata from a MEF
+ file.
+\end_layout
+
+\begin_layout Itemize
+the term 
+\series bold
+writer
+\series default
+ will be used to indicate any actor that can generate a MEF file.
+\end_layout
+
+\begin_layout Section
+File format
+\end_layout
+
+\begin_layout Standard
+A MEF file is simply a ZIP file which contains the following files:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+metadata.xml
+\series default
+ : this file contains the metadata itself, in XML format.
+ The text encoding of the metadata is that one specified into the XML declaratio
+n.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+info.xml
+\series default
+ : this is a special XML file which contains information related to the
+ metadata but that cannot be stored into it.
+ Examples of such information are the creation date, the last change date,
+ privileges on the metadata and so on.
+ Now this information is related to the GeoNetwork's architecture.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+thumbnails
+\series default
+ : this is a directory used to store the metadata thumbnails.
+ There are no restrictions on the images' format but it is strongly recommended
+ to use the portable network graphics (PNG), the JPEG or the GIF formats.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+data
+\series default
+ : this is a directory used to store all data (maps, shape files etc...) associated
+ to the metadata.
+ There are no restrictions on the files that can be stored into this directory.
+\end_layout
+
+\begin_layout Standard
+Any other file or directory present into the MEF file should be ignored
+ by readers that don't recognize them.
+ This allows actors to add custom extensions to the MEF file.
+\end_layout
+
+\begin_layout Standard
+A MEF file can have empty 
+\series bold
+thumbnails
+\series default
+ and 
+\series bold
+data
+\series default
+ folder depending on the export format, which can be:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+simple
+\series default
+ : both thumbnails and data are omitted.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+partial
+\series default
+ : only thumbnails are provided.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+full
+\series default
+ : both thumbnails and data are provided.
+\end_layout
+
+\begin_layout Standard
+It is recommended to use the 
+\family sans
+\series bold
+.mef
+\family default
+\series default
+ extension when naming MEF files.
+\end_layout
+
+\begin_layout Section
+The 
+\family sans
+info.xml
+\family default
+ file
+\end_layout
+
+\begin_layout Standard
+This file contains general information about a metadata.
+ It must have an 
+\series bold
+info
+\series default
+ root element with a mandatory 
+\series bold
+version
+\series default
+ attribute.
+ This attribute must be in the X.Y form, where X represents the major version
+ and Y the minor one.
+ The purpose of this attribute is to allow future changes of this format
+ maintaining compatibility with older readers.
+ The policy behind the version is this:
+\end_layout
+
+\begin_layout Itemize
+A change to Y means a minor change.
+ All existing elements in the previous version must be left unchanged: only
+ new elements or attributes may be added.
+ A reader capable of reading version X.Y is also capable of reading version
+ X.Y' with Y'>Y.
+\end_layout
+
+\begin_layout Itemize
+A change to X means a major change.
+ Usually, a reader of version X.Y is not able to read version X'.Y with X'>X.
+\end_layout
+
+\begin_layout Standard
+The root element must have the following children:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+general
+\series default
+ : a container for general information.
+ It must have the following children:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+uuid
+\series default
+ : this is the universally unique identifier assigned to the metadata and
+ must be a valid uuid.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+createDate
+\series default
+ : This date indicates when the metadata was created.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+changeDate
+\series default
+ : This date keeps track of the most recent change to the metadata.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+siteId
+\series default
+ : this is an uuid that identifies the actor that created the metadata and
+ must be a valid uuid
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+schema
+\series default
+ : Indicates the metadata's schema.
+ The value can be assigned as will but if the schema is one of those describe
+ below, that value must be used:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+dublin-core
+\series default
+ : A metadata in the dublin core format as described in http://dublincore.org
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+fgdc-std
+\series default
+ : A metadata in the Federal Geographic Data Committee.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+iso19115
+\series default
+ : A metadata in the ISO 19115 format
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+iso19139
+\series default
+ : A metadata in the ISO 19115/2003 format for which the ISO19139 is the
+ XML encoding.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\series bold
+format
+\series default
+ : Indicates the MEF export format.
+ The element's value must belong to the following set: { 
+\emph on
+simple, partial
+\emph default
+, 
+\emph on
+full
+\emph default
+ }.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+localId
+\series default
+ : This is an optional element.
+ If present, indicates the id used locally by the sourceId actor to store
+ the metadata.
+ Its purpose is just to allow the reuse of the same local id when reimporting
+ a metadata.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+isTemplate
+\series default
+ : A boolean field that indicates if this metadata is a template used to
+ create new ones.
+ There is no real distinction between a real metadata and a template but
+ some actors use it to allow fast metadata creation.
+ The value must be: { 
+\emph on
+true
+\emph default
+, 
+\emph on
+false
+\emph default
+ }.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\series bold
+categories
+\series default
+ : a container for categories associated to this metadata.
+ A category is just a name, like 'audio-video' that classifies the metadata
+ to allow an easy search.
+ Each category is specified by a 
+\series bold
+category 
+\series default
+element which must have a 
+\series bold
+name
+\series default
+ attribute.
+ This attribute is used to store the category's name.
+ If there are no categories, the 
+\series bold
+categories
+\series default
+ element will be empty.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+privileges
+\series default
+ : a container for privileges associated to this metadata.
+ Privileges are operations that a group (which represents a set of users)
+ can do on a metadata and are specified by a set of 
+\series bold
+group
+\series default
+ elements.
+ Each one of these, has a mandatory 
+\series bold
+name
+\series default
+ attribute to store the group's name and a set of 
+\series bold
+operation
+\series default
+ elements used to store the operations allowed on the metadata.
+ Each 
+\series bold
+operation
+\series default
+ element must have a 
+\series bold
+name
+\series default
+ attribute which value must belong to the following set: {
+\emph on
+ view
+\emph default
+, 
+\emph on
+download
+\emph default
+, 
+\emph on
+edit
+\emph default
+, 
+\emph on
+notify
+\emph default
+, 
+\emph on
+admin
+\emph default
+, 
+\emph on
+dynamic
+\emph default
+, 
+\emph on
+featured
+\emph default
+ }.
+ If there are no groups or the actor does not have the concept of group,
+ the 
+\series bold
+privileges
+\series default
+ element will be empty.
+ A 
+\series bold
+group
+\series default
+ element without any 
+\series bold
+operation
+\series default
+ element must be ignored by readers.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+thumbnails
+\series default
+ : All metadata thumbnails must be listed here.
+ This container contains a 
+\series bold
+file
+\series default
+ element for each thumbnail.
+ Mandatory attributes of this element are 
+\series bold
+name
+\series default
+, which represents the thumbnail's name and 
+\series bold
+changeDate
+\series default
+, which contains the date of the latest change to the file.
+ The 
+\series bold
+thumbnails
+\series default
+ element is optional but, if present, must contain all the thumbnail files
+ and any reader that imports these thumbnails must set the latest change
+ date on these using the provided ones.
+ The purpose of this element is to provide more information in the case
+ the MEF format is used for metadata harvesting.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+data
+\series default
+ : This element has the same purpose and structure of the 
+\series bold
+thumbnails
+\series default
+ element but is related to maps.
+\end_layout
+
+\begin_layout Standard
+Any other element or attribute should be ignored by readers that don't understan
+d them.
+ This allows actors to add custom attributes or subtrees to the XML.
+\end_layout
+
+\begin_layout Standard
+Figure 
+\begin_inset LatexCommand \ref{fig:example-info.xml}
+
+\end_inset
+
+ shows an example of info file.
+\end_layout
+
+\begin_layout Subsection*
+Date format
+\end_layout
+
+\begin_layout Standard
+Unless differently specified, all dates in this file must be in the ISO/8601
+ format.
+ The pattern must be YYYY-MM-DDTHH:mm:SS and the timezone should be the
+ local one.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement t
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout LyX-Code
+
+\size footnotesize
+<info version="1.0">
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <general>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <uuid>0619abc0-708b-eeda-8202-000d98959033</uuid>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <createDate>2006-12-11T10:33:21</createDate>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <changeDate>2006-12-14T08:44:43</changeDate>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <siteId>0619cc50-708b-11da-8202-000d9335906e</siteId>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <schema>iso19139</schema>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <format>full</format>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <localId>204</localId>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <isTemplate>false</isTemplate>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </general>
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <categories>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <category name="maps"/>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <category name="datasets"/>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </categories>
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <privileges>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <group name="editors">
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <operation name="view"/>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <operation name="download"/>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      </group>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </privileges>
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <thumbnails>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <file name="small.png" changeDate="2006-10-07T13:44:32"/>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <file name="large.png" changeDate="2006-11-11T09:33:21"/>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </thumbnails>
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <data>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <file name="map.zip" changeDate="2006-11-12T13:23:01"/>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </data>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+</info>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Caption
+\begin_inset LatexCommand \label{fig:example-info.xml}
+
+\end_inset
+
+Example of info file
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Part
@@ -371,7 +1133,7 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
-<response>
+<info>
 \end_layout
 
 \begin_layout LyX-Code
@@ -389,7 +1151,7 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
-</response>
+</info>
 \end_layout
 
 \end_inset
@@ -557,7 +1319,7 @@ status open
 \series bold
 categories
 \series default
- : This is the container for categories
+ : This is the container for categories.
 \end_layout
 
 \begin_deeper
@@ -566,7 +1328,13 @@ categories
 \series bold
 category
 \series default
- [0..n] : A single GeoNetwork's category
+ [0..n] : A single GeoNetwork's category.
+ This element has an 
+\series bold
+id
+\series default
+ attribute which represent the local identifier for the category.
+ It can be usefull to a client to link back to this category.
 \end_layout
 
 \begin_deeper
@@ -611,6 +1379,10 @@ fr
 \end_deeper
 \end_deeper
 \end_deeper
+\begin_layout Standard
+Example:
+\end_layout
+
 \begin_layout Standard
 \begin_inset Box Boxed
 position "t"
@@ -702,7 +1474,12 @@ groups
 group
 \series default
  [2..n] : This is a Geonetwork group.
- There are at least the internet and intranet groups
+ There are at least the internet and intranet groups.
+ This element has an 
+\series bold
+id
+\series default
+ attribute which represent the local identifier for the group.
 \end_layout
 
 \begin_deeper
@@ -714,6 +1491,31 @@ name
  : Group's name
 \end_layout
 
+\begin_layout Itemize
+
+\series bold
+description
+\series default
+ : Group's description
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+referrer
+\series default
+ : The user responsible for this group
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+email
+\series default
+ : The email address to notify when a map is downloaded
+\end_layout
+
+\end_deeper
 \begin_layout Itemize
 
 \series bold
@@ -732,6 +1534,7 @@ en
  : Localized label in english
 \end_layout
 
+\begin_deeper
 \begin_layout Itemize
 
 \series bold
@@ -747,6 +1550,10 @@ fr
 \end_deeper
 \end_deeper
 \end_deeper
+\begin_layout Standard
+Example:
+\end_layout
+
 \begin_layout Standard
 \begin_inset Box Boxed
 position "t"
@@ -910,6 +1717,10 @@ metadata
 
 \end_deeper
 \end_deeper
+\begin_layout Standard
+Example:
+\end_layout
+
 \begin_layout Standard
 \begin_inset Box Boxed
 position "t"
@@ -1111,7 +1922,7 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
-   <url>http:///mynode.org:8080/geonetwork/srv/en/xml.info</url>
+   <url>http://mynode.org:8080/geonetwork/srv/en/xml.info</url>
 \end_layout
 
 \begin_layout LyX-Code
@@ -1284,8 +2095,20 @@ node
 \family default
 \series default
  elements as are configured.
- For example:
+ Figure 
+\begin_inset LatexCommand \ref{fig:example-xml.harv.get1}
+
+\end_inset
+
+ shows an example of output.
 \end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement t
+wide false
+sideways false
+status collapsed
 
 \begin_layout Standard
 \begin_inset Box Boxed
@@ -1454,7 +2277,13 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
-         <createGroups>true</createGroups>       
+         <createGroups>true</createGroups> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <createCateg>true</createCateg>     
 \end_layout
 
 \begin_layout LyX-Code
@@ -1510,9 +2339,38 @@ status open
 
 \end_layout
 
-\begin_layout Standard
-If you specify an id, you get a response like this (for a web folder node):
+\begin_layout Caption
+\begin_inset LatexCommand \label{fig:example-xml.harv.get1}
+
+\end_inset
+
+Example of an 
+\family sans
+xml.harvesting.get
+\family default
+ response for a geonetwork node
 \end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If you specify an id, you get a response like that one in figure 
+\begin_inset LatexCommand \ref{fig:example-xml.harv.get2}
+
+\end_inset
+
+ (for a web folder node).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement t
+wide false
+sideways false
+status collapsed
 
 \begin_layout Standard
 \begin_inset Box Boxed
@@ -1697,6 +2555,23 @@ status open
 
 \begin_layout LyX-Code
 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Caption
+\begin_inset LatexCommand \label{fig:example-xml.harv.get2}
+
+\end_inset
+
+Example of an 
+\family sans
+xml.harvesting.get
+\family default
+ response for a web folder node
 \end_layout
 
 \end_inset
@@ -2121,6 +2996,22 @@ boolean
 \begin_layout Itemize
 
 \series bold
+createCateg
+\series default
+ (
+\emph on
+boolean
+\emph default
+, 'true') : If true, GeoNetwork will create local categories to match the
+ remote ones.
+ Normally, if a remote category does not exist locally, the link between
+ that category and the metadata is lost.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\series bold
 oneRunOnly
 \series default
  (
@@ -2137,7 +3028,6 @@ inactive
 \end_layout
 
 \end_deeper
-\end_deeper
 \begin_layout Standard
 Please note that even if clients can store empty values ('') for many parameters
 , before starting the harvesting entry those parameters should be properly
@@ -2145,8 +3035,19 @@ Please note that even if clients can store empty values ('') for many parameters
 \end_layout
 
 \begin_layout Standard
-Here is an example of an XML request to create a GeoNetwork entry:
+Figure 
+\begin_inset LatexCommand \ref{fig:example-xml.harv.add-gn}
+
+\end_inset
+
+ shows an example of an XML request to create a GeoNetwork entry.
 \end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
 
 \begin_layout Standard
 \begin_inset Box Boxed
@@ -2308,7 +3209,13 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
-      <createGroups>true</createGroups>     
+      <createGroups>true</createGroups>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <createCateg>true</createCateg>
 \end_layout
 
 \begin_layout LyX-Code
@@ -2331,6 +3238,23 @@ status open
 
 \begin_layout LyX-Code
 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Caption
+\begin_inset LatexCommand \label{fig:example-xml.harv.add-gn}
+
+\end_inset
+
+Example of an 
+\family sans
+xml.harvesting.add
+\family default
+ request for a geonetwork node
 \end_layout
 
 \end_inset
@@ -2587,8 +3511,20 @@ boolean
 \end_deeper
 \end_deeper
 \begin_layout Standard
-Here is an example of an XML request to create a web folder entry:
+Figure 
+\begin_inset LatexCommand \ref{fig:example-xml.harv.add-waf}
+
+\end_inset
+
+ shows an example of an XML request to create a web folder entry.
 \end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement t
+wide false
+sideways false
+status collapsed
 
 \begin_layout Standard
 \begin_inset Box Boxed
@@ -2755,6 +3691,23 @@ status open
 
 \begin_layout LyX-Code
 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Caption
+\begin_inset LatexCommand \label{fig:example-xml.harv.add-waf}
+
+\end_inset
+
+Example of an 
+\family sans
+xml.harvesting.add
+\family default
+ request for a web folder node
 \end_layout
 
 \end_inset
@@ -3447,6 +4400,63 @@ already-running
 
 \end_layout
 
+\begin_layout Chapter
+MEF services
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+This chapter describes the XML services related to the Metadata Exchange
+ Format (see chapter 
+\begin_inset LatexCommand \ref{cha:mef}
+
+\end_inset
+
+).
+ These service allow to import/export metadata following the MEF format.
+\end_layout
+
+\begin_layout Section
+xml.mef.export
+\end_layout
+
+\begin_layout Standard
+multithreaded
+\end_layout
+
+\begin_layout Standard
+usa la dir temp del sistema per l'export che si può settare con -D
+\end_layout
+
+\begin_layout Standard
+il file ha come nome uuid.mef
+\end_layout
+
+\begin_layout Standard
+privilegi: per partial basta view ma per full occorre view+download, senza
+ login si può accedere solo format=partial e metadata=public
+\end_layout
+
+\begin_layout Standard
+il servizio è publico
+\end_layout
+
+\begin_layout Standard
+il servizio ritorna application/...
+ 
+\end_layout
+
+\begin_layout Section
+xml.mef.import
+\end_layout
+
+\begin_layout Standard
+è riservato agli admin
+\end_layout
+
 \begin_layout Part
 Settings internal structure
 \end_layout
@@ -4010,6 +5020,20 @@ boolean
 ) : If true, the harvester will create locally the same groups of the harvested
  metadata in order to keep remote privileges.
  Remote groups that already exist locally are not created.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+createCateg
+\series default
+ (
+\emph on
+boolean
+\emph default
+) : If true, the harvester will create locally the same categories of the
+ harvested metadata in order to keep the link to the metadata.
+ Remote categories that already exist locally are not created.
 \end_layout
 
 \begin_layout Itemize
