@@ -42,40 +42,6 @@
 								txt   ="The port is mandatory"/>
 		</field>
 		
-		<divider/><!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-		
-		<field type="rule" variable="SITE_ID">
-			<description	txt   ="Please enter a UNIQUE id that identifies this geonetwork site. (Do NOT just use 'geonetwork' for this!) "/>
-			<spec				txt   ="Site ID"
-								layout="O:20:50" />
-			<validator		class ="com.izforge.izpack.util.NotEmptyValidator" 
-								txt   ="The site id is mandatory"/>
-		</field>
-		
-		<divider/><!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-		
-		<field type="rule" variable="NETWORK">
-			<description	txt         ="Please enter your Intranet network address. This is used to discriminate between intranet and Internet users. Ask your network administrator for details."/>
-			<spec				txt         ="Network address" 
-								layout      ="N:3:3 - N:3:3 - N:3:3 - N:3:3" 
-								set         ="0:192 1:168 2:0 3:0" 
-								resultFormat="specialSeparator" 
-								separator   ="."/>
-			<validator		class       ="com.izforge.izpack.util.NotEmptyValidator" 
-								txt         ="The network address is mandatory"/>
-		</field>
-		
-		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-		
-		<field type="rule" variable="NETMASK">
-			<spec				txt         ="Network mask. Ask your network administrator for details" 
-								layout      ="N:3:3 - N:3:3 - N:3:3 - N:3:3" 
-								set         ="0:255 1:255 2:0 3:0" 
-								resultFormat="specialSeparator" 
-								separator   ="."/>
-			<validator		class       ="com.izforge.izpack.util.NotEmptyValidator" 
-								txt         ="The network mask is mandatory"/>
-		</field>
 	</panel>
 	
 	<!-- ==================================================================================== -->
@@ -129,15 +95,6 @@
 								layout="O:20:30" />
 			<validator		class ="com.izforge.izpack.util.NotEmptyValidator" 
 								txt   ="The name is mandatory"/>
-		</field>
-		
-		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-		
-		<field type="rule" variable="ADMIN_MAIL">
-			<spec				txt   ="EMail address (used for user feedback)"
-								layout="O:20:80" />
-			<validator		class ="com.izforge.izpack.util.NotEmptyValidator" 
-								txt   ="The email is mandatory"/>
 		</field>
 		
 	</panel>
@@ -209,70 +166,8 @@
 	<!-- ==================================================================================== -->
 	
 	<panel order="3">
-	
-		<field type="title" txt="Other settings (4/4)"/>
-		
-		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-		
 		<field type="staticText" txt="Please specify the SMTP server that will be used to send download statistics to the data publishers"/>
-		
-		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-		
-		<field type="rule" variable="SMTP_HOST">
-			<spec				txt   ="Host"
-								layout="O:20:50"
-								set   ="0:smtp.yoursite.org" />
-			<validator		class ="com.izforge.izpack.util.NotEmptyValidator" 
-								txt   ="The host is mandatory"/>
-		</field>
-		
-		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-		
-		<field type="rule" variable="SMTP_PORT">
-			<spec				txt   ="Port"
-								layout="N:6:6" 
-								set   ="0:25"/>
-			<validator		class ="com.izforge.izpack.util.NotEmptyValidator" 
-								txt   ="The port is mandatory"/>
-		</field>
-		
-		<divider/><!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-		
-		<field type="staticText" txt="Please specify the port to use for incoming search requests using the Z39.50/ISO23950 protocol"/>
-		
-		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-		
-		<field type="rule" variable="Z3950_PORT">
-			<spec				txt   ="Z3950 Port"
-								layout="N:6:6"
-								set   ="0:2100" />
-			<validator		class ="com.izforge.izpack.util.NotEmptyValidator" 
-								txt   ="The port is mandatory"/>
-		</field>
-		
-		<divider/><!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-		
-		<field type="staticText" txt="The following host name and port number are used to build links for resources. Make sure you use a valid host name and port!"/>
-		
-		<field type="rule" variable="PUBLIC_HOST">
-			<description	txt   ="Please enter the host name of the computer where you are installing GeoNetwork."/>
-			<spec				txt   ="Public host"
-								layout="O:20:50"
-								set   ="0:www.this-host.org"/>
-			<validator		class ="com.izforge.izpack.util.NotEmptyValidator" 
-								txt   ="The public host is mandatory"/>
-		</field>
-		
-		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-		
-		<field type="rule" variable="PUBLIC_PORT">
-			<description	txt   ="Please enter the host port of the computer where you are installing GeoNetwork. If you don't have special needs you can use the same value of the Jetty port entered into the first panel."/>
-			<spec				txt   ="Public port"
-								layout="N:6:6"
-								set   ="0:8080" />
-			<validator		class ="com.izforge.izpack.util.NotEmptyValidator" 
-								txt   ="The public port is mandatory"/>
-		</field>
+		<field type="staticText" txt="Please specify the port to use for incoming search requests using the Z39.50/ISO23950 protocol"/>		
 	</panel>
 
 	<!-- ==================================================================================== -->
