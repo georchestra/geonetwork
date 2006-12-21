@@ -1,4 +1,4 @@
-#LyX 1.4.2 created this file. For more info see http://www.lyx.org/
+#LyX 1.4.3 created this file. For more info see http://www.lyx.org/
 \lyxformat 245
 \begin_document
 \begin_header
@@ -201,7 +201,7 @@ File formats
 
 \end_inset
 
-Metadata Exchange Format
+Metadata Exchange Format v1.0
 \end_layout
 
 \begin_layout Section
@@ -307,9 +307,10 @@ info.xml
 \begin_layout Itemize
 
 \series bold
-thumbnails
+public
 \series default
- : this is a directory used to store the metadata thumbnails.
+ : this is a directory used to store the metadata thumbnails and other public
+ files.
  There are no restrictions on the images' format but it is strongly recommended
  to use the portable network graphics (PNG), the JPEG or the GIF formats.
 \end_layout
@@ -317,11 +318,17 @@ thumbnails
 \begin_layout Itemize
 
 \series bold
-data
+private
 \series default
  : this is a directory used to store all data (maps, shape files etc...) associated
  to the metadata.
- There are no restrictions on the files that can be stored into this directory.
+ Files in this directory are 
+\emph on
+private
+\emph default
+ in the sense that an authorization is required to access them.
+ There are no restrictions on the file types that can be stored into this
+ directory.
 \end_layout
 
 \begin_layout Standard
@@ -333,13 +340,13 @@ Any other file or directory present into the MEF file should be ignored
 \begin_layout Standard
 A MEF file can have empty 
 \series bold
-thumbnails
+public
 \series default
  and 
 \series bold
-data
+private
 \series default
- folder depending on the export format, which can be:
+ folders depending on the export format, which can be:
 \end_layout
 
 \begin_layout Itemize
@@ -347,7 +354,7 @@ data
 \series bold
 simple
 \series default
- : both thumbnails and data are omitted.
+ : both public and private are omitted.
 \end_layout
 
 \begin_layout Itemize
@@ -355,7 +362,7 @@ simple
 \series bold
 partial
 \series default
- : only thumbnails are provided.
+ : only public files are provided.
 \end_layout
 
 \begin_layout Itemize
@@ -363,7 +370,7 @@ partial
 \series bold
 full
 \series default
- : both thumbnails and data are provided.
+ : both public and private files are provided.
 \end_layout
 
 \begin_layout Standard
@@ -387,12 +394,16 @@ info.xml
 \begin_layout Standard
 This file contains general information about a metadata.
  It must have an 
+\family sans
 \series bold
 info
+\family default
 \series default
  root element with a mandatory 
+\family sans
 \series bold
 version
+\family default
 \series default
  attribute.
  This attribute must be in the X.Y form, where X represents the major version
@@ -421,8 +432,10 @@ The root element must have the following children:
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 general
+\family default
 \series default
  : a container for general information.
  It must have the following children:
@@ -431,8 +444,10 @@ general
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 uuid
+\family default
 \series default
  : this is the universally unique identifier assigned to the metadata and
  must be a valid uuid.
@@ -441,8 +456,10 @@ uuid
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 createDate
+\family default
 \series default
  : This date indicates when the metadata was created.
  
@@ -450,8 +467,10 @@ createDate
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 changeDate
+\family default
 \series default
  : This date keeps track of the most recent change to the metadata.
  
@@ -459,8 +478,10 @@ changeDate
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 siteId
+\family default
 \series default
  : this is an uuid that identifies the actor that created the metadata and
  must be a valid uuid
@@ -468,8 +489,10 @@ siteId
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 schema
+\family default
 \series default
  : Indicates the metadata's schema.
  The value can be assigned as will but if the schema is one of those describe
@@ -479,32 +502,48 @@ schema
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
-dublin-core
+dublin
+\family default
+-
+\family sans
+core
+\family default
 \series default
  : A metadata in the dublin core format as described in http://dublincore.org
 \end_layout
 
 \begin_layout Itemize
 
+\family sans
 \series bold
-fgdc-std
+fgdc
+\family default
+-
+\family sans
+std
+\family default
 \series default
  : A metadata in the Federal Geographic Data Committee.
 \end_layout
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 iso19115
+\family default
 \series default
  : A metadata in the ISO 19115 format
 \end_layout
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 iso19139
+\family default
 \series default
  : A metadata in the ISO 19115/2003 format for which the ISO19139 is the
  XML encoding.
@@ -513,8 +552,10 @@ iso19139
 \end_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 format
+\family default
 \series default
  : Indicates the MEF export format.
  The element's value must belong to the following set: { 
@@ -530,8 +571,10 @@ full
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 localId
+\family default
 \series default
  : This is an optional element.
  If present, indicates the id used locally by the sourceId actor to store
@@ -542,8 +585,10 @@ localId
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 isTemplate
+\family default
 \series default
  : A boolean field that indicates if this metadata is a template used to
  create new ones.
@@ -563,8 +608,10 @@ false
 \end_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 categories
+\family default
 \series default
  : a container for categories associated to this metadata.
  A category is just a name, like 'audio-video' that classifies the metadata
@@ -574,46 +621,62 @@ categories
 category 
 \series default
 element which must have a 
+\family sans
 \series bold
 name
+\family default
 \series default
  attribute.
  This attribute is used to store the category's name.
  If there are no categories, the 
+\family sans
 \series bold
 categories
+\family default
 \series default
  element will be empty.
 \end_layout
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 privileges
+\family default
 \series default
  : a container for privileges associated to this metadata.
  Privileges are operations that a group (which represents a set of users)
  can do on a metadata and are specified by a set of 
+\family sans
 \series bold
 group
+\family default
 \series default
  elements.
  Each one of these, has a mandatory 
+\family sans
 \series bold
 name
+\family default
 \series default
  attribute to store the group's name and a set of 
+\family sans
 \series bold
 operation
+\family default
 \series default
  elements used to store the operations allowed on the metadata.
  Each 
+\family sans
 \series bold
 operation
+\family default
 \series default
  element must have a 
+\family sans
 \series bold
 name
+\family default
 \series default
  attribute which value must belong to the following set: {
 \emph on
@@ -646,47 +709,69 @@ featured
  }.
  If there are no groups or the actor does not have the concept of group,
  the 
+\family sans
 \series bold
 privileges
+\family default
 \series default
  element will be empty.
  A 
+\family sans
 \series bold
 group
+\family default
 \series default
  element without any 
+\family sans
 \series bold
 operation
+\family default
 \series default
  element must be ignored by readers.
 \end_layout
 
 \begin_layout Itemize
 
+\family sans
 \series bold
-thumbnails
+public
+\family default
 \series default
- : All metadata thumbnails must be listed here.
+ : All metadata thumbnails (and any other public file) must be listed here.
  This container contains a 
+\family sans
 \series bold
 file
+\family default
 \series default
- element for each thumbnail.
+ element for each file.
  Mandatory attributes of this element are 
+\family sans
 \series bold
 name
+\family default
 \series default
-, which represents the thumbnail's name and 
+, which represents the file's name and 
+\family sans
 \series bold
 changeDate
+\family default
 \series default
 , which contains the date of the latest change to the file.
  The 
+\family sans
 \series bold
-thumbnails
+public
+\family default
 \series default
- element is optional but, if present, must contain all the thumbnail files
- and any reader that imports these thumbnails must set the latest change
+ element is optional but, if present, must contain all the files present
+ in the metadata's 
+\family sans
+\series bold
+public
+\family default
+\series default
+ directory and any reader that imports these files must set the latest change
  date on these using the provided ones.
  The purpose of this element is to provide more information in the case
  the MEF format is used for metadata harvesting.
@@ -694,14 +779,18 @@ thumbnails
 
 \begin_layout Itemize
 
+\family sans
 \series bold
-data
+private
+\family default
 \series default
  : This element has the same purpose and structure of the 
+\family sans
 \series bold
-thumbnails
+public
+\family default
 \series default
- element but is related to maps.
+ element but is related to maps and all other private files.
 \end_layout
 
 \begin_layout Standard
@@ -891,7 +980,7 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
-   <thumbnails>
+   <public>
 \end_layout
 
 \begin_layout LyX-Code
@@ -909,7 +998,7 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
-   </thumbnails>
+   </public>
 \end_layout
 
 \begin_layout LyX-Code
@@ -919,7 +1008,7 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
-   <data>
+   <private>
 \end_layout
 
 \begin_layout LyX-Code
@@ -931,7 +1020,7 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
-   </data>
+   </private>
 \end_layout
 
 \begin_layout LyX-Code
@@ -1165,8 +1254,10 @@ Here follows the structure of each subtree:
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 site
+\family default
 \series default
  : This is the container
 \end_layout
@@ -1174,34 +1265,30 @@ site
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 name
+\family default
 \series default
  : Human readable site name
 \end_layout
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 siteId
+\family default
 \series default
  : Universal unique identifier of the site
 \end_layout
 
 \begin_layout Itemize
 
-\series bold
-logo
-\series default
- : Absolute path of the site's logo image.
- This is the full path except for the host name/port.
- Note that the name of the image is its UUID
-\end_layout
-
-\begin_layout Itemize
-
+\family sans
 \series bold
 platform
+\family default
 \series default
  : This is just a container to hold the site's backend
 \end_layout
@@ -1209,8 +1296,10 @@ platform
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 name
+\family default
 \series default
  : Plaform name.
  For GeoNetwork installations it must be 
@@ -1224,8 +1313,10 @@ geonetwork
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 version
+\family default
 \series default
  : Platform version, given in the X.Y.Z format
 \end_layout
@@ -1270,18 +1361,6 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
-   <icon>/geonetwork/images/logos/
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-          0619cc50-708b-11da-8202-000d9335906e.png</icon>
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
    <platform>
 \end_layout
 
@@ -1316,8 +1395,10 @@ status open
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 categories
+\family default
 \series default
  : This is the container for categories.
 \end_layout
@@ -1325,13 +1406,17 @@ categories
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 category
+\family default
 \series default
  [0..n] : A single GeoNetwork's category.
  This element has an 
+\family sans
 \series bold
 id
+\family default
 \series default
  attribute which represent the local identifier for the category.
  It can be usefull to a client to link back to this category.
@@ -1340,16 +1425,20 @@ id
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 name
+\family default
 \series default
  : Category's name
 \end_layout
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 label
+\family default
 \series default
  : The label used to show the category on screen.
  This is just a container for the localized strings in all supported languages.
@@ -1358,16 +1447,20 @@ label
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 en
+\family default
 \series default
  : Localized label in english
 \end_layout
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 fr
+\family default
 \series default
  : Localized label in french
 \end_layout
@@ -1461,8 +1554,10 @@ status open
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 groups
+\family default
 \series default
  : This is the container for groups
 \end_layout
@@ -1470,14 +1565,18 @@ groups
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 group
+\family default
 \series default
  [2..n] : This is a Geonetwork group.
  There are at least the internet and intranet groups.
  This element has an 
+\family sans
 \series bold
 id
+\family default
 \series default
  attribute which represent the local identifier for the group.
 \end_layout
@@ -1485,32 +1584,40 @@ id
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 name
+\family default
 \series default
  : Group's name
 \end_layout
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 description
+\family default
 \series default
  : Group's description
 \end_layout
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 referrer
+\family default
 \series default
  : The user responsible for this group
 \end_layout
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 email
+\family default
 \series default
  : The email address to notify when a map is downloaded
 \end_layout
@@ -1518,8 +1625,10 @@ email
 \end_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 label
+\family default
 \series default
  : The label used to show the group on screen.
  This is just a container for the localized strings in all supported languages.
@@ -1528,8 +1637,10 @@ label
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 en
+\family default
 \series default
  : Localized label in english
 \end_layout
@@ -1537,8 +1648,10 @@ en
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 fr
+\family default
 \series default
  : Localized label in french
 \end_layout
@@ -1628,8 +1741,10 @@ status open
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 knownNodes
+\family default
 \series default
  : This is the container
 \end_layout
@@ -1637,8 +1752,10 @@ knownNodes
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 node
+\family default
 \series default
  [0..n] : A known GeoNetwork node
 \end_layout
@@ -1646,49 +1763,40 @@ node
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 name
+\family default
 \series default
  : Node's name
 \end_layout
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 siteId
+\family default
 \series default
  : Node's unique identifier
 \end_layout
 
 \begin_layout Itemize
 
-\series bold
-icon
-\series default
- : relative local path of the remote node's icon.
- Notice that this is the path to get the icon from the node being queried
- not the path on the remote note.
- To discover that, call 
 \family sans
 \series bold
-xml.info
-\family default
-\series default
- on the remote note.
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
 host
+\family default
 \series default
  : Node's host
 \end_layout
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 port
+\family default
 \series default
  : Node's port.
  Can be empty
@@ -1696,8 +1804,10 @@ port
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 servlet
+\family default
 \series default
  : Node's servlet.
  Together with host and port can be used to call services on the remote
@@ -1706,8 +1816,10 @@ servlet
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 metadata
+\family default
 \series default
  : This is just the number of metadata that have been harvested from the
  remote node.
@@ -1756,18 +1868,6 @@ status open
 
 \size footnotesize
       <siteId>0619cc50-708b-11da-8202-000d9335906e</siteId>
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-      <icon>/geonetwork/images/logos/
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-                        0619cc50-708b-11da-8202-000d9335906e.png</icon>
 \end_layout
 
 \begin_layout LyX-Code
@@ -2246,8 +2346,13 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
-            <siteId>0619cc50-708b-11da-8202-000d9335906e</siteId>      
- 
+            <siteId>0619cc50-708b-11da-8202-000d9335906e</siteId>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+            <siteName>Food and Agriculture Organization</siteName>
 \end_layout
 
 \begin_layout LyX-Code
@@ -2586,8 +2691,10 @@ The node's structure is described in the next two services.
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 info
+\family default
 \series default
  : A container for general information.
 \end_layout
@@ -2611,8 +2718,10 @@ g from this entry.
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 running
+\family default
 \series default
  (boolean) : True if the harvester is currently running.
 \end_layout
@@ -2620,8 +2729,10 @@ running
 \end_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 error
+\family default
 \series default
  : This element will be present if the harvester encounters an error during
  harvesting.
@@ -2630,30 +2741,55 @@ error
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 code
+\family default
 \series default
  : The error code, in string form
 \end_layout
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 message
+\family default
 \series default
  : The description of the error.
 \end_layout
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 object
+\family default
 \series default
  : The object that caused the error (if any).
  This element can be present or not depending on the case.
 \end_layout
 
 \end_deeper
+\begin_layout Standard
+When getting information about a harvesting node of type Geonetwork, the
+ 
+\family sans
+\series bold
+search
+\family default
+\series default
+ element may contain a 
+\family sans
+\series bold
+siteName
+\family default
+\series default
+ child.
+ This element is present and filled when Geonetwork is able to retrieve
+ it from the remote site.
+\end_layout
+
 \begin_layout Subsection*
 Errors
 \end_layout
@@ -2721,8 +2857,10 @@ false
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 node
+\family default
 \series default
  : This is the root container.
  The 
@@ -2751,8 +2889,10 @@ geonetwork
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 site
+\family default
 \series default
  : A container for site information.
  Can be omitted.
@@ -2761,8 +2901,10 @@ site
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 host
+\family default
 \series default
  (
 \emph on
@@ -2773,8 +2915,10 @@ string
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 port
+\family default
 \series default
  (
 \emph on
@@ -2785,8 +2929,10 @@ string
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 servlet
+\family default
 \series default
  (
 \emph on
@@ -2799,8 +2945,10 @@ string
 \end_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 account
+\family default
 \series default
  : A container for account information.
  Can be omitted.
@@ -2809,8 +2957,10 @@ account
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 use
+\family default
 \series default
  (
 \emph on
@@ -2822,8 +2972,10 @@ boolean
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 username
+\family default
 \series default
  (
 \emph on
@@ -2834,8 +2986,10 @@ string
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 password
+\family default
 \series default
  (
 \emph on
@@ -2847,8 +3001,10 @@ string
 \end_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 searches
+\family default
 \series default
  : A container for search parameters.
  Can be omitted.
@@ -2857,8 +3013,10 @@ searches
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 search
+\family default
 \series default
  : A container for a single search on a siteID.
  You can specify 0 or more searches but to properly harvest you have to
@@ -2868,8 +3026,10 @@ search
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 freeText
+\family default
 \series default
  (
 \emph on
@@ -2882,8 +3042,10 @@ string
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 title
+\family default
 \series default
  (
 \emph on
@@ -2894,8 +3056,10 @@ string
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 abstract
+\family default
 \series default
  (
 \emph on
@@ -2906,8 +3070,10 @@ string
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 keywords
+\family default
 \series default
  (
 \emph on
@@ -2918,8 +3084,10 @@ string
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 digital
+\family default
 \series default
  (
 \emph on
@@ -2930,8 +3098,10 @@ boolean
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 hardcopy
+\family default
 \series default
  (
 \emph on
@@ -2942,8 +3112,10 @@ boolean
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 siteId
+\family default
 \series default
  (
 \emph on
@@ -2957,8 +3129,10 @@ string
 \end_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 options
+\family default
 \series default
  : A container for generic options.
  Can be omitted.
@@ -2967,8 +3141,10 @@ options
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 every
+\family default
 \series default
  (
 \emph on
@@ -2979,8 +3155,10 @@ integer
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 createGroups
+\family default
 \series default
  (
 \emph on
@@ -2995,8 +3173,10 @@ boolean
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 createCateg
+\family default
 \series default
  (
 \emph on
@@ -3011,8 +3191,10 @@ boolean
 \end_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 oneRunOnly
+\family default
 \series default
  (
 \emph on
@@ -3268,8 +3450,10 @@ To create a WebFolder entry, the following XML information should be provided:
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 node
+\family default
 \series default
  : This is the root container.
  The 
@@ -3298,8 +3482,10 @@ webFolder
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 site
+\family default
 \series default
  : A container for site information.
  Can be omitted.
@@ -3308,8 +3494,10 @@ site
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 url
+\family default
 \series default
  (
 \emph on
@@ -3321,8 +3509,10 @@ string
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 account
+\family default
 \series default
  : A container for account information.
  Can be omitted.
@@ -3331,8 +3521,10 @@ account
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 use
+\family default
 \series default
  (
 \emph on
@@ -3343,8 +3535,10 @@ boolean
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 username
+\family default
 \series default
  (
 \emph on
@@ -3355,8 +3549,10 @@ string
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 password
+\family default
 \series default
  (
 \emph on
@@ -3369,8 +3565,10 @@ string
 \end_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 privileges
+\family default
 \series default
  : A container for privileges that must be associated to the harvested metadata.
  Can be omitted but doing so the harvested metadata will not be visible.
@@ -3379,8 +3577,10 @@ privileges
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 group
+\family default
 \series default
  : A container for the privileges to associate to this group.
  It must have an 
@@ -3396,8 +3596,10 @@ id
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 operation
+\family default
 \series default
  : Specifies an operation to associate to the containing group.
  It must have a 
@@ -3443,8 +3645,10 @@ featured
 \end_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 options
+\family default
 \series default
  : A container for generic options.
  Can be omitted.
@@ -3453,8 +3657,10 @@ options
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 every
+\family default
 \series default
  (
 \emph on
@@ -3465,8 +3671,10 @@ integer
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 oneRunOnly
+\family default
 \series default
  (
 \emph on
@@ -3483,8 +3691,10 @@ inactive
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 structure
+\family default
 \series default
  (
 \emph on
@@ -3496,8 +3706,10 @@ boolean
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 validate
+\family default
 \series default
  (
 \emph on
@@ -4536,8 +4748,10 @@ system
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 site
+\family default
 \series default
  : Contains information about the site
 \end_layout
@@ -4545,8 +4759,10 @@ site
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 name
+\family default
 \series default
  (
 \emph on
@@ -4558,8 +4774,24 @@ string
 
 \begin_layout Itemize
 
+\family sans
+\series bold
+organization
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+) : Name of the organization/company/institute that is running GeoNetwork
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
 \series bold
 siteId
+\family default
 \series default
  (
 \emph on
@@ -4572,8 +4804,10 @@ string
 \end_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 gnVersion
+\family default
 \series default
  (
 \emph on
@@ -4584,8 +4818,10 @@ string
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 usePublication
+\family default
 \series default
  (
 \emph on
@@ -4598,8 +4834,10 @@ boolean
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 host
+\family default
 \series default
  (
 \emph on
@@ -4610,8 +4848,10 @@ string
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 port
+\family default
 \series default
  (
 \emph on
@@ -4623,8 +4863,10 @@ integer
 \end_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 intranet
+\family default
 \series default
  : specify the network of the intranet
 \end_layout
@@ -4632,8 +4874,10 @@ intranet
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 network
+\family default
 \series default
  (
 \emph on
@@ -4644,8 +4888,10 @@ string
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 netmask
+\family default
 \series default
  (
 \emph on
@@ -4657,8 +4903,10 @@ string
 \end_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 z3950Port
+\family default
 \series default
  (
 \emph on
@@ -4670,8 +4918,10 @@ string
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 useProxy
+\family default
 \series default
  (
 \emph on
@@ -4683,8 +4933,10 @@ boolean
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 host
+\family default
 \series default
  (
 \emph on
@@ -4695,8 +4947,10 @@ string
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 port
+\family default
 \series default
  (
 \emph on
@@ -4708,22 +4962,22 @@ integer
 \end_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
-sendFeedback
+feedback
+\family default
 \series default
- (
-\emph on
-boolean
-\emph default
-) : Collects some information used when sending feedback.
- If false, the feedback is not sent.
+ : Feedback is sent with proper web form or when downloading a resource.
+ 
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 email
+\family default
 \series default
  (
 \emph on
@@ -4734,8 +4988,10 @@ string
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 smtpHost
+\family default
 \series default
  (
 \emph on
@@ -4746,8 +5002,10 @@ string
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 smtpPort
+\family default
 \series default
  (
 \emph on
@@ -4799,8 +5057,10 @@ geonetwork
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 site
+\family default
 \series default
  : Contains host and account information
 \end_layout
@@ -4808,8 +5068,10 @@ site
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 name
+\family default
 \series default
  (
 \emph on
@@ -4820,8 +5082,10 @@ string
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 host
+\family default
 \series default
  (
 \emph on
@@ -4832,8 +5096,10 @@ string
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 port
+\family default
 \series default
  (
 \emph on
@@ -4844,8 +5110,10 @@ integer
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 servlet
+\family default
 \series default
  (
 \emph on
@@ -4856,8 +5124,10 @@ string
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 useAccount
+\family default
 \series default
  (
 \emph on
@@ -4869,8 +5139,11 @@ boolean
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
-username 
+username
+\family default
+ 
 \series default
 (
 \emph on
@@ -4881,8 +5154,11 @@ string
 
 \begin_layout Itemize
 
+\family sans
 \series bold
-password 
+password
+\family default
+ 
 \series default
 (
 \emph on
@@ -4895,8 +5171,10 @@ string
 \end_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 search
+\family default
 \series default
  [0..n] : Contains the search parameters.
  If this element is missing no harvesting will be performed but the host's
@@ -4906,8 +5184,10 @@ search
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 freeText
+\family default
 \series default
  (
 \emph on
@@ -4918,8 +5198,10 @@ string
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 title
+\family default
 \series default
  (
 \emph on
@@ -4930,8 +5212,10 @@ string
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 abstract
+\family default
 \series default
  (
 \emph on
@@ -4942,8 +5226,10 @@ string
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 keywords
+\family default
 \series default
  (
 \emph on
@@ -4954,8 +5240,10 @@ string
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 digital
+\family default
 \series default
  (
 \emph on
@@ -4966,8 +5254,10 @@ boolean
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 hardcopy
+\family default
 \series default
  (
 \emph on
@@ -4978,8 +5268,10 @@ boolean
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 siteId
+\family default
 \series default
  (
 \emph on
@@ -4991,6 +5283,7 @@ string
 \end_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 options
 \end_layout
@@ -4998,8 +5291,10 @@ options
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 every
+\family default
 \series default
  (
 \emph on
@@ -5010,8 +5305,10 @@ integer
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 createGroups
+\family default
 \series default
  (
 \emph on
@@ -5024,8 +5321,10 @@ boolean
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 createCateg
+\family default
 \series default
  (
 \emph on
@@ -5038,8 +5337,10 @@ boolean
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 oneRunOnly
+\family default
 \series default
  (
 \emph on
@@ -5051,8 +5352,10 @@ boolean
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 status
+\family default
 \series default
  (active|inactive) : Indicates if the harvesting from this node is stopped
  (inactive) or if the harvester is waiting until the timeout comes.
@@ -5061,8 +5364,10 @@ status
 \end_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 info
+\family default
 \series default
  : Just a container for some information about harvesting from this node
 \end_layout
@@ -5070,8 +5375,10 @@ info
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 lastRun
+\family default
 \series default
  (
 \emph on
@@ -5089,8 +5396,10 @@ webFolder
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 site
+\family default
 \series default
  : Contains the URL to connect to and account information
 \end_layout
@@ -5098,8 +5407,10 @@ site
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 name
+\family default
 \series default
  (
 \emph on
@@ -5110,8 +5421,10 @@ string
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 url
+\family default
 \series default
  (
 \emph on
@@ -5124,8 +5437,10 @@ string
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 useAccount
+\family default
 \series default
  (
 \emph on
@@ -5138,8 +5453,11 @@ boolean
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
-username 
+username
+\family default
+ 
 \series default
 (
 \emph on
@@ -5150,8 +5468,11 @@ string
 
 \begin_layout Itemize
 
+\family sans
 \series bold
-password 
+password
+\family default
+ 
 \series default
 (
 \emph on
@@ -5164,6 +5485,7 @@ string
 \end_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 options
 \end_layout
@@ -5171,8 +5493,10 @@ options
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 every
+\family default
 \series default
  (
 \emph on
@@ -5183,8 +5507,10 @@ integer
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 oneRunOnly
+\family default
 \series default
  (
 \emph on
@@ -5196,8 +5522,10 @@ boolean
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 structure
+\family default
 \series default
  (
 \emph on
@@ -5214,8 +5542,10 @@ administrator's guide
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 validate
+\family default
 \series default
  (
 \emph on
@@ -5227,8 +5557,10 @@ boolean
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 status
+\family default
 \series default
  (active|inactive) : Indicates if the harvesting from this node is stopped
  (inactive) or if the harvester is waiting until the timeout comes.
@@ -5237,8 +5569,10 @@ status
 \end_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 privileges
+\family default
 \series default
  : This is a container for privileges to assign to each imported metadata
 \end_layout
@@ -5246,8 +5580,10 @@ privileges
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 group
+\family default
 \series default
  (
 \emph on
@@ -5261,8 +5597,10 @@ integer
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 operation
+\family default
 \series default
  (
 \emph on
@@ -5277,8 +5615,10 @@ integer
 \end_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 info
+\family default
 \series default
  : Just a container for some information about harvesting from this node
 \end_layout
@@ -5286,8 +5626,10 @@ info
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 lastRun
+\family default
 \series default
  (
 \emph on
