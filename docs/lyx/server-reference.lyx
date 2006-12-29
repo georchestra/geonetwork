@@ -38,7 +38,7 @@
 \defskip medskip
 \quotes_language swedish
 \papercolumns 1
-\papersides 2
+\papersides 1
 \paperpagestyle headings
 \tracking_changes false
 \output_changes true
@@ -1350,6 +1350,12 @@ status open
 
 \size footnotesize
    <name>My site</name>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <organization>FAO</organization>
 \end_layout
 
 \begin_layout LyX-Code
@@ -4613,6 +4619,391 @@ already-running
 \end_layout
 
 \begin_layout Chapter
+System configuration
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+The GeoNetwork's configuration is made up of a set of parameters that can
+ be changed to accomodate any installation need.
+ These parameters are subdivided into 2 groups:
+\end_layout
+
+\begin_layout Itemize
+parameters that can be easily changed through a web interface.
+\end_layout
+
+\begin_layout Itemize
+parameters not accessible from a web interface and that must be changed
+ when the system is not running.
+\end_layout
+
+\begin_layout Standard
+The first group of parameters can be queried or changed through 2 services:
+ 
+\family sans
+\series bold
+xml.config.get
+\family default
+\series default
+ and 
+\family sans
+\series bold
+xml.config.update
+\family default
+\series default
+.
+\end_layout
+
+\begin_layout Section
+xml.config.get
+\end_layout
+
+\begin_layout Standard
+This service returns the system configuration's parameters.
+\end_layout
+
+\begin_layout Subsection*
+Request
+\end_layout
+
+\begin_layout Standard
+No parameters are needed.
+\end_layout
+
+\begin_layout Subsection*
+Response
+\end_layout
+
+\begin_layout Standard
+The response is an XML tree similar to the 
+\family sans
+\series bold
+system
+\family default
+\series default
+ hyerarchy into the settings structure.
+ See 
+\begin_inset LatexCommand \ref{sec:The-system-hierarchy}
+
+\end_inset
+
+ for more information.
+ The response has the following elements:
+\end_layout
+
+\begin_layout Itemize
+site
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+name
+\end_layout
+
+\begin_layout Itemize
+organization
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+server
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+host
+\end_layout
+
+\begin_layout Itemize
+port
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+intranet
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+network
+\end_layout
+
+\begin_layout Itemize
+netmask
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+z3950
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+enable
+\end_layout
+
+\begin_layout Itemize
+port
+\end_layout
+
+\begin_layout Itemize
+proxy
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+use
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+host
+\end_layout
+
+\begin_layout Itemize
+port
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+feedback
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+email
+\end_layout
+
+\begin_layout Itemize
+mailServer
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+host
+\end_layout
+
+\begin_layout Itemize
+port
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout LyX-Code
+
+\size footnotesize
+<config>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <site> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <name>dummy</name> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <organization>dummy</organization> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </site>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <server>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <host>localhost</host> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <port>8080</port> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </server>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <intranet> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <network>127.0.0.1</network> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <netmask>255.255.255.0</netmask> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </intranet>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <z3950> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <enable>true</enable> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <port>2100</port>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </z3950>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <proxy> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <use>false</use> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <host/> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <port/> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </proxy>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <feedback> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <email/> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <mailServer> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <host/> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <port>25</port> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      </mailServer> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </feedback> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+</config>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+xml.config.update
+\end_layout
+
+\begin_layout Subsection*
+Request
+\end_layout
+
+\begin_layout Subsection*
+Response
+\end_layout
+
+\begin_layout Chapter
 MEF services
 \end_layout
 
@@ -4737,6 +5128,10 @@ false
 \begin_layout Section
 
 \series bold
+\begin_inset LatexCommand \label{sec:The-system-hierarchy}
+
+\end_inset
+
 The 
 \family sans
 \series default
@@ -4820,15 +5215,12 @@ string
 
 \family sans
 \series bold
-usePublication
+server
 \family default
 \series default
- (
-\emph on
-boolean
-\emph default
-) : Used when the GeoNetwork's server is hidden and there is a main server
- that redirects HTTP requests to GeoNetwork's server.
+ : Used when it is necessary to build absolute URLs to the GeoNetwork server.
+ This is the case, for example, when creating links inside a metadata or
+ when providing CS/W capabilities.
 \end_layout
 
 \begin_deeper
@@ -4905,22 +5297,58 @@ string
 
 \family sans
 \series bold
-z3950Port
+z3950
 \family default
+\series default
+ : A container for Z39.50 server parameters
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+enable
 \series default
  (
 \emph on
-string
+boolean
 \emph default
-) : The port opened by GeoNetwork to listen to Z39.50 requests.
- Usually is 2100.
+) : If true, GeoNetwork will start the Z30.50 server
 \end_layout
 
 \begin_layout Itemize
 
 \family sans
 \series bold
-useProxy
+port
+\family default
+\series default
+ (
+\emph on
+integer
+\emph default
+) : The port opened by GeoNetwork to listen to Z39.50 requests.
+ Usually is 2100.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+proxy
+\family default
+\series default
+ : This container speficy proxy configuration to use
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+use
 \family default
 \series default
  (
@@ -4930,7 +5358,6 @@ boolean
 ) : If true, GeoNetwork will use the given proxy for outgoing connections
 \end_layout
 
-\begin_deeper
 \begin_layout Itemize
 
 \family sans
@@ -4990,7 +5417,17 @@ string
 
 \family sans
 \series bold
-smtpHost
+mailServer
+\series default
+ : This container represents the mail server that will be used to send emails
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+host
 \family default
 \series default
  (
@@ -5004,7 +5441,7 @@ string
 
 \family sans
 \series bold
-smtpPort
+port
 \family default
 \series default
  (
@@ -5014,6 +5451,7 @@ string
 ) : SMTP port to use
 \end_layout
 
+\end_deeper
 \end_deeper
 \begin_layout Section
 Harvesting nodes
