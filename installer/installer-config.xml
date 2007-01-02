@@ -36,7 +36,7 @@
 	
 	<resources>
 		<res id="HTMLLicencePanel.licence" src=".build/docs/license.html"/>
-		<res id="HTMLInfoPanel.info"       src=".build/docs/readme-server.html"/>
+		<res id="HTMLInfoPanel.info"       src=".build/docs/readme.html"/>
 		<res id="XInfoPanel.info"          src=".build/docs/post-install.txt"/>
 		<res id="userInputSpec.xml"        src="user-input.xml"/>
 		<res id="Installer.image"          src="installer.png"/>
@@ -55,8 +55,6 @@
 		<panel classname="PacksPanel"/>
 		<panel classname="UserInputPanel"/>
 		<panel classname="UserInputPanel"/>
-		<panel classname="UserInputPanel"/>
-		<panel classname="UserInputPanel"/>
 		<panel classname="InstallPanel"/>
 <!--		<panel classname="ShortcutPanel"/> -->
 		<panel classname="XInfoPanel"/>
@@ -71,9 +69,8 @@
 	
 	<packs>
 		<pack name="Core" required="no" preselected="yes">
-			<description>
-				The GeoNetwork opensource application.
-				This is the Spatial Data Catalog web application.
+			<description>The GeoNetwork opensource application.
+This is the Spatial Data Catalog web application.
 			</description>
 			
 			<fileset dir=".build/setup" targetdir="$INSTALL_PATH/setup">
@@ -125,18 +122,14 @@
 			
 			<file src=".build/setup/db/Metadata.ddf"         targetdir="$INSTALL_PATH/setup/db"/>
 			<file src=".build/setup/db/OperationAllowed.ddf" targetdir="$INSTALL_PATH/setup/db"/>
-			<file src=".build/setup/db/Categories.ddf"       targetdir="$INSTALL_PATH/setup/db"/>
-			
-			<parsable targetfile="$INSTALL_PATH/setup/db/Metadata.ddf" type="plain"/>
+			<file src=".build/setup/db/Categories.ddf"       targetdir="$INSTALL_PATH/setup/db"/>			
 		</pack>
 
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		
 		<pack name="Integrated Jetty server" required="no" preselected="yes">
-			<description>
-				Install this package for stand alone installations and testing. 
-				You will be able to start/stop GeoNetwork opensource with the scripts 
-				provided in the 'bin' directory.
+			<description>Install this package for stand alone installations and testing. 
+You will be able to start/stop GeoNetwork opensource with the scripts provided in the 'bin' directory.
 			</description>
 			
 			<fileset dir=".build/jetty" targetdir="$INSTALL_PATH/jetty"/>
@@ -157,9 +150,8 @@
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		
 		<pack name="CSW 2.0.1 test client" required="no" preselected="no">
-			<description>
-				The GeoNetwork opensource provides Catalog Services for the Web 2.0.1 support. 
-				This is a separate test application that can be used to test the CSW 2.0.1 services. 
+			<description>The GeoNetwork opensource provides Catalog Services for the Web 2.0.1 support. 
+This is a separate test application that can be used to test the CSW 2.0.1 services. 
 			</description>
 			
 			<fileset dir=".build/csw" targetdir="$INSTALL_PATH/csw"/>
@@ -168,9 +160,8 @@
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		
 		<pack name="Migration application" required="no" preselected="no">
-			<description>
-				This application can be used to migrate the content from 
-				a GeoNetwork opensource 2.0 catalog to this new version of GeoNetwork opensource. 
+			<description>This application can be used to migrate the content from 
+a GeoNetwork opensource 2.0 catalog to this new version of GeoNetwork opensource. 
 			</description>
 			
 			<fileset dir=".build/migrate"       targetdir="$INSTALL_PATH/migrate"/>

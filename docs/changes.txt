@@ -9,12 +9,25 @@
 - Added SOAP support to CSW. Updated test application to use SOAP.
   Used HTTP client library from Jakarta.
 
+- Finished harvesting code for type=GeoNetwork 
+
+- Added SQL script for PostgreSQL to the installer
+
 --------------------------------------------------------------------------------
 --- Changes
 --------------------------------------------------------------------------------
 
 - Removed file regions.xml and fixed lucene and Z39.50 searchers. This fixes a
   Z39.50 exception too.
+
+- Removed 'delete', 'privileges' and 'categories' buttons for harvested metadata
+
+- CS/W : now the host and port parameters for the capabilities XML are taken
+  from the system config.
+
+- Moved many of the istaller parameters to the web interface
+
+- Changed the metadata root element from 'DS_DataSet' to 'MD_Metadata'
 
 --------------------------------------------------------------------------------
 --- Bugs fixed
