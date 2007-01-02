@@ -28,23 +28,6 @@
 	
 	<xsl:template match="resource[@enabled='true']/activator"/>
 
-	<!-- === application handler ======================================= -->
-	
-	<xsl:template match="appHandler" xml:space="preserve">		
-		<appHandler class="org.fao.geonet.Geonetwork">
-			<param name="network"        value="$NETWORK" />
-			<param name="netmask"        value="$NETMASK" />
-			<param name="port"           value="$PORT" />
-			<param name="luceneDir"      value="WEB-INF/lucene" />
-			<param name="z3950Port"      value="$Z3950_PORT" />
-			<param name="schemaMappings" value="schema-mappings.xml" />
-			<param name="dataDir"        value="WEB-INF/data" />
-			<param name="siteId"         value="$SITE_ID" />
-			<param name="publicHost"     value="$PUBLIC_HOST" />
-			<param name="publicPort"     value="$PUBLIC_PORT" />
-		</appHandler>
-	</xsl:template>
-	
 	<!-- === element copying =========================================== -->
 	
 	<xsl:template match="@*|node()">

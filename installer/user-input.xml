@@ -8,19 +8,9 @@
 	
 	<panel order="0">
 	
-		<field type="title" txt="General settings (1/4)"/>
+		<field type="title" txt="General settings (1/2)"/>
 		
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-		
-		<field type="rule" variable="ORGANIZATION">
-			<description	txt   ="Please enter your organization's name"/>
-			<spec				txt   ="Organization name"
-								layout="O:20:100" />
-			<validator		class ="com.izforge.izpack.util.NotEmptyValidator" 
-								txt   ="The organization name is mandatory"/>
-		</field>
-		
-		<divider/><!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		
 		<field type="rule" variable="SERVLET">
 			<description	txt   ="Please enter the servlet name that will be used to access GeoNetwork using a browser"/>
@@ -44,67 +34,12 @@
 	</panel>
 	
 	<!-- ==================================================================================== -->
-	<!-- === Geonetwork administrator ===-->
+	<!-- === JDBC access settings ===-->
 	<!-- ==================================================================================== -->
 	
 	<panel order="1">
 	
-		<field type="title" txt="GeoNetwork Administrator (2/4)"/>
-		
-		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-		
-		<field type="staticText" txt="Please provide information for the GeoNetwork site administrator"/>
-		
-		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-		
-		<field type="rule" variable="ADMIN_USER">
-			<spec				txt   ="Username. The log in name for the administrator"
-								layout="O:20:30"
-								set   ="0:administrator" />
-			<validator		class ="com.izforge.izpack.util.RegularExpressionValidator" 
-								txt   ="The administrator name must be at least 6 characters">
-				<param name="pattern" value="\w{6,}"/>
-			</validator>
-		</field>
-		
-		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-		
-		<field type="rule" variable="ADMIN_PASSWORD">
-			<spec				txt   ="Password"
-								layout="O:20:30" />
-			<validator		class ="com.izforge.izpack.util.RegularExpressionValidator" 
-								txt   ="The password must be at least 6 alpha-numeric characters">
-				<param name="pattern" value="\w{6,}"/>
-			</validator>
-		</field>
-		
-		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-		
-		<field type="rule" variable="ADMIN_SURNAME">
-			<spec				txt   ="Surname"
-								layout="O:20:30" />
-			<validator		class ="com.izforge.izpack.util.NotEmptyValidator" 
-								txt   ="The surname is mandatory"/>
-		</field>
-		
-		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-		
-		<field type="rule" variable="ADMIN_NAME">
-			<spec				txt   ="Name"
-								layout="O:20:30" />
-			<validator		class ="com.izforge.izpack.util.NotEmptyValidator" 
-								txt   ="The name is mandatory"/>
-		</field>
-		
-	</panel>
-	
-	<!-- ==================================================================================== -->
-	<!-- === JDBC access settings ===-->
-	<!-- ==================================================================================== -->
-	
-	<panel order="2">
-	
-		<field type="title" txt="Database settings (JDBC access) (3/4)"/>
+		<field type="title" txt="Database settings (JDBC access) (2/2)"/>
 		
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		
@@ -138,6 +73,7 @@
 		<field type="staticText" txt="Please specify a connection url. Typical urls are:"/>
 		<field type="staticText" txt="     jdbc:oracle:thin:@HOST:1521:SID"/>
 		<field type="staticText" txt="     jdbc:mysql://HOST/DATABASE"/>
+		<field type="staticText" txt="     jdbc:postgresql:DATABASE"/>
 		<field type="staticText" txt="Leave as it is to use the internal DBMS"/>
 		<field type="staticText" txt=" "/>
 		
@@ -156,20 +92,11 @@
 				<choice txt="Internal (uses McKoi)"  value="com.mckoi.JDBCDriver" set="true"/>
 				<choice txt="Oracle"                 value="oracle.jdbc.driver.OracleDriver"/>
 				<choice txt="MySql"                  value="com.mysql.jdbc.Driver"/>
+				<choice txt="PostgreSQL"             value="org.postgresql.Driver"/>
 			</spec>
 		</field>
 	</panel>
 	
-	<!-- ==================================================================================== -->
-	<!-- === Other settings ===-->
-	<!-- ==================================================================================== -->
-	
-	<panel order="3">
-	
-		<field type="staticText" txt="Please specify the SMTP server that will be used to send download statistics to the data publishers"/>
-		<field type="staticText" txt="Please specify the port to use for incoming search requests using the Z39.50/ISO23950 protocol"/>		
-	</panel>
-
 	<!-- ==================================================================================== -->	
 		
 </userInput> 

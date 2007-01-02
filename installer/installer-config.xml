@@ -6,7 +6,7 @@
 	
 	<info>
 		<appname>geonetwork</appname>
-		<appversion>2.1.0 alpha 1</appversion>
+		<appversion>2.1.0 alpha 2</appversion>
 		<authors>
 			<author name="FAO GeoNetwork Team" email="GeoNetwork@fao.org"/>
 			<author name="VAM WFP"             email="vamsie@wfp.org"/>
@@ -71,7 +71,10 @@
 	
 	<packs>
 		<pack name="Core" required="no" preselected="yes">
-			<description>The GeoNetwork opensource application.</description>
+			<description>
+				The GeoNetwork opensource application.
+				This is the Spatial Data Catalog web application.
+			</description>
 			
 			<fileset dir=".build/setup" targetdir="$INSTALL_PATH/setup">
 				<exclude name="**/Metadata.ddf"/>
@@ -94,9 +97,7 @@
 				<exclude name="javadoc/**"/>
 			</fileset>			
 			
-			<parsable targetfile="$INSTALL_PATH/setup/db/Users.ddf"           type="plain"/>
 			<parsable targetfile="$INSTALL_PATH/web/index.html"               type="plain"/>
-			<parsable targetfile="$INSTALL_PATH/bin/create-dbms.sh"           type="plain"/>
 			<parsable targetfile="$INSTALL_PATH/docs/post-install.txt"        type="plain"/>
 			<parsable targetfile="$INSTALL_PATH/web/loc/en/xml/strings.xml"   type="xml"/>			
 			<parsable targetfile="$INSTALL_PATH/web/loc/fr/xml/strings.xml"   type="xml"/>			
@@ -105,10 +106,6 @@
 			<parsable targetfile="$INSTALL_PATH/web/xml/repositories.xml"     type="xml"/>
 			<parsable targetfile="$INSTALL_PATH/web/xml/schema-mappings.xml"  type="xml"/>			
 			<parsable targetfile="$INSTALL_PATH/web/xml/search-profiles.xml"  type="xml"/>
-			<parsable targetfile="$INSTALL_PATH/web/xml/sources.xml"          type="xml"/>
-			<parsable targetfile="$INSTALL_PATH/web/xml/csw/capabilities.xml" type="xml"/>
-			
-			<executable targetfile="$INSTALL_PATH/bin/create-dbms.sh" />
 			
 			<executable targetfile="$INSTALL_PATH/web/WEB-INF/lib/setup.jar" 
 							type      ="jar" 
@@ -136,8 +133,10 @@
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		
 		<pack name="Integrated Jetty server" required="no" preselected="yes">
-			<description>Install this package for stand alone installations and testing. 
-You will be able to start/stop GeoNetwork opensource with the scripts provided in the 'bin' directory.
+			<description>
+				Install this package for stand alone installations and testing. 
+				You will be able to start/stop GeoNetwork opensource with the scripts 
+				provided in the 'bin' directory.
 			</description>
 			
 			<fileset dir=".build/jetty" targetdir="$INSTALL_PATH/jetty"/>
@@ -157,40 +156,39 @@ You will be able to start/stop GeoNetwork opensource with the scripts provided i
 			
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		
-		<pack name="CSW 2.0.1 test client - not required" required="no" preselected="no">
-			<description>The GeoNetwork opensource provides Catalog Services for the Web 2.0.1 support. 
-This is a separate test application that can be used to test the CSW 2.0.1 services. 
-Not required to run the application.</description>
+		<pack name="CSW 2.0.1 test client" required="no" preselected="no">
+			<description>
+				The GeoNetwork opensource provides Catalog Services for the Web 2.0.1 support. 
+				This is a separate test application that can be used to test the CSW 2.0.1 services. 
+			</description>
 			
-			<fileset dir=".build/csw"       targetdir="$INSTALL_PATH/csw_client"/>
+			<fileset dir=".build/csw" targetdir="$INSTALL_PATH/csw"/>
 		</pack>
 		
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		
-		<pack name="Migration application - not required" required="no" preselected="no">
-			<description>This application can be used to migrate the content from 
-a GeoNetwork opensource 2.0 catalog to this new version of GeoNetwork opensource. 
-</description>
+		<pack name="Migration application" required="no" preselected="no">
+			<description>
+				This application can be used to migrate the content from 
+				a GeoNetwork opensource 2.0 catalog to this new version of GeoNetwork opensource. 
+			</description>
 			
-			<fileset dir=".build/migrate"       targetdir="$INSTALL_PATH/migration"/>
+			<fileset dir=".build/migrate"       targetdir="$INSTALL_PATH/migrate"/>
 		</pack>
 		
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		
-		<pack name="Source code - not required" required="no" preselected="no">
-			<description>The GeoNetwork opensource source code. 
-Both the Java code and the web application files. Not required to run the application.
-</description>
+		<pack name="Source code" required="no" preselected="no">
+			<description>The GeoNetwork source code and the ant build script.</description>
 			
-			<fileset dir=".build/src"       targetdir="$INSTALL_PATH/source/src"/>
-			<fileset dir=".build/web"       targetdir="$INSTALL_PATH/source/web"/>
+			<fileset dir=".build/src"       targetdir="$INSTALL_PATH/src"/>
 			<file    src=".build/build.xml" targetdir="$INSTALL_PATH"/>
 		</pack>
 		
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		
-		<pack name="Java source code JavaDoc - not required" required="no" preselected="no">
-			<description>The GeoNetwork opensource JavaDoc source code documentation. Not required to run the application.</description>
+		<pack name="Java source code JavaDoc" required="no" preselected="no">
+			<description>The GeoNetwork JavaDoc source code documentation.</description>
 			
 			<fileset dir=".build/docs/javadoc" targetdir="$INSTALL_PATH/docs/javadoc"/>
 		</pack>
