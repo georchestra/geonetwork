@@ -38,7 +38,6 @@
 		<res id="HTMLLicencePanel.licence" src=".build/docs/license.html"/>
 		<res id="HTMLInfoPanel.info"       src=".build/docs/readme.html"/>
 		<res id="XInfoPanel.info"          src=".build/docs/post-install.txt"/>
-		<res id="userInputSpec.xml"        src="user-input.xml"/>
 		<res id="Installer.image"          src="installer.png"/>
 <!--		<res id="shortcutSpec.xml"         src="windows-shortcuts.xml"/>
 		<res id="Unix_shortcutSpec.xml"    src="unix-shortcuts.xml"/>
@@ -53,8 +52,6 @@
 		<panel classname="HTMLLicencePanel"/>
 		<panel classname="TargetPanel"/>
 		<panel classname="PacksPanel"/>
-		<panel classname="UserInputPanel"/>
-		<panel classname="UserInputPanel"/>
 		<panel classname="InstallPanel"/>
 <!--		<panel classname="ShortcutPanel"/> -->
 		<panel classname="XInfoPanel"/>
@@ -79,30 +76,24 @@ This is the Spatial Data Catalog web application.
 				<exclude name="**/Categories.ddf"/>
 			</fileset>			
 						
-			<fileset dir=".build/web" targetdir="$INSTALL_PATH/web"/>
-			
-			<fileset dir=".build/bin" targetdir="$INSTALL_PATH/bin">
-				<exclude name="**/start-geonetwork.sh"/>
-				<exclude name="**/stop-geonetwork.sh"/>
-				<exclude name="**/start-geonetwork.bat"/>
-				<exclude name="**/stop-geonetwork.bat"/>
-				<exclude name="**/jetty.xml"/>
-				<exclude name="**/jetty-configure_1_3.dtd"/>
-			</fileset>			
+			<fileset dir=".build/web"   targetdir="$INSTALL_PATH/web"/>			
+			<fileset dir=".build/bin"   targetdir="$INSTALL_PATH/bin"/>
+			<fileset dir=".build/jetty" targetdir="$INSTALL_PATH/jetty"/>
 			
 			<fileset dir=".build/docs" targetdir="$INSTALL_PATH/docs">
 				<exclude name="javadoc/**"/>
-			</fileset>			
+			</fileset>						
 			
+			<executable targetfile="$INSTALL_PATH/bin/start-geonetwork.sh" />
+			<executable targetfile="$INSTALL_PATH/bin/stop-geonetwork.sh" />
+						
 			<parsable targetfile="$INSTALL_PATH/web/index.html"               type="plain"/>
 			<parsable targetfile="$INSTALL_PATH/docs/post-install.txt"        type="plain"/>
 			<parsable targetfile="$INSTALL_PATH/web/loc/en/xml/strings.xml"   type="xml"/>			
 			<parsable targetfile="$INSTALL_PATH/web/loc/fr/xml/strings.xml"   type="xml"/>			
 			<parsable targetfile="$INSTALL_PATH/web/loc/es/xml/strings.xml"   type="xml"/>			
-			<parsable targetfile="$INSTALL_PATH/web/WEB-INF/config.xml"       type="xml"/>			
 			<parsable targetfile="$INSTALL_PATH/web/xml/repositories.xml"     type="xml"/>
 			<parsable targetfile="$INSTALL_PATH/web/xml/schema-mappings.xml"  type="xml"/>			
-			<parsable targetfile="$INSTALL_PATH/web/xml/search-profiles.xml"  type="xml"/>
 			
 			<executable targetfile="$INSTALL_PATH/web/WEB-INF/lib/setup.jar" 
 							type      ="jar" 
@@ -110,7 +101,6 @@ This is the Spatial Data Catalog web application.
 							stage     ="postinstall">
 				<args>
 					<arg value="$INSTALL_PATH"/>
-					<arg value="$JDBC_URL"/>
 				</args>
 			</executable>
 		</pack>
@@ -124,29 +114,7 @@ This is the Spatial Data Catalog web application.
 			<file src=".build/setup/db/OperationAllowed.ddf" targetdir="$INSTALL_PATH/setup/db"/>
 			<file src=".build/setup/db/Categories.ddf"       targetdir="$INSTALL_PATH/setup/db"/>			
 		</pack>
-
-		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		
-		<pack name="Integrated Jetty server" required="no" preselected="yes">
-			<description>Install this package for stand alone installations and testing. 
-You will be able to start/stop GeoNetwork opensource with the scripts provided in the 'bin' directory.
-			</description>
-			
-			<fileset dir=".build/jetty" targetdir="$INSTALL_PATH/jetty"/>
-			
-			<file src=".build/bin/start-geonetwork.sh"     targetdir="$INSTALL_PATH/bin"/>
-			<file src=".build/bin/stop-geonetwork.sh"      targetdir="$INSTALL_PATH/bin"/>			
-			<file src=".build/bin/start-geonetwork.bat"    targetdir="$INSTALL_PATH/bin"/>
-			<file src=".build/bin/stop-geonetwork.bat"     targetdir="$INSTALL_PATH/bin"/>
-			<file src=".build/bin/jetty.xml"               targetdir="$INSTALL_PATH/bin"/>
-			<file src=".build/bin/jetty-configure_1_3.dtd" targetdir="$INSTALL_PATH/bin"/>
-			
-			<executable targetfile="$INSTALL_PATH/bin/start-geonetwork.sh" />
-			<executable targetfile="$INSTALL_PATH/bin/stop-geonetwork.sh" />
-			
-			<parsable targetfile="$INSTALL_PATH/bin/jetty.xml" type="xml"/>
-		</pack>
-			
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		
 		<pack name="CSW 2.0.1 test client" required="no" preselected="no">
@@ -164,7 +132,7 @@ This is a separate test application that can be used to test the CSW 2.0.1 servi
 a GeoNetwork opensource 2.0 catalog to this new version of GeoNetwork opensource. 
 			</description>
 			
-			<fileset dir=".build/migrate"       targetdir="$INSTALL_PATH/migrate"/>
+			<fileset dir=".build/migrate" targetdir="$INSTALL_PATH/migrate"/>
 		</pack>
 		
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

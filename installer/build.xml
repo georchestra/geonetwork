@@ -31,22 +31,12 @@
 			</fileset>		
 		</copy>
 			
-		<delete dir=".build/installer"/>
-		
-		<!-- apply transformations -->
-	
-		<copy file="parse/index.html" todir=".build/web" overwrite="true"/>
-	
-		<xslt in="../web/WEB-INF/config.xml" out=".build/web/WEB-INF/config.xml" style="xsl/config.xsl" force="true"/>
-		<xslt in="../bin/jetty.xml"          out=".build/bin/jetty.xml"          style="xsl/jetty.xsl"  force="true"/>
-
 		<izpack	input="${basedir}/installer-config.xml" 
 					output="../geonetwork-${version}-install.jar" 
 					installerType="standard" 
 					basedir="${basedir}"/>
 		
 		<delete dir =".build" />
-					
 	</target>
 
 	<!-- =================================================================================== -->
