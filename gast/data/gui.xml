@@ -26,7 +26,7 @@
 		<image>22x22/configure.png</image>
 		<label>Configuration</label>
 		
-		<!-- Site ID - - - - - - - - - - - - - - - - - - - - - - - - -->
+		<!-- Site ID - - - - - - - - - - - - - - - - - - - - - - - - 
 		
 		<form>
 			<id>siteid</id>
@@ -52,7 +52,7 @@
 				GeoNetwork stopped.
 			</precon>
 		</form>
-		
+		-->
 		<!-- Jetty - - - - - - - - - - - - - - - - - - - - - - - - -->
 		
 		<form>
@@ -88,9 +88,12 @@
 			<class>config.dbms.MainPanel</class>
 			<description>
 				This panel allows you to change the DBMS you want to connect to.
-				Here you change only the configuration. You have also to create
+				Here you can change only the configuration. You have also to create
 				the schema and populate the database. You can do that through
-				the 'database/setup' panel.
+				the 'database/setup' panel. If you select the embedded database
+				and its data files are not there (for example because you just
+				checked out from the subversion repository), the 'save' button 
+				will also create them and generate a new random account.
 			</description>
 			
 			<button>
@@ -226,36 +229,6 @@
 				gets built.
 			</precon>
 		</form>
-		
-		<!-- Data files - - - - - - - - - - - - - - - - - - - - - - - - -->
-		
-		<form>
-			<id>datafiles</id>
-			<image>16x16/hdd_unmount.png</image>
-			<label>Data files</label>
-			<title>Create data files</title>
-			<class>database.datafiles.MainPanel</class>
-			<description>
-				The purpose of this panel is to create the data files of
-				the embedded database. You don't have to mess with this
-				because the installer already creates these files. You
-				only need this facility when you get GeoNetwork from the
-				subversion repository. In this case you have to create
-				the data files before running the setup panel. 
-			</description>
-			
-			<button>
-				<image>16x16/run.png</image>
-				<label>Create</label>
-				<action>create</action>
-			</button>
-			
-			<precon type="stopped">
-				Obviously GeoNetwork cannot be running while the database
-				gets built.
-			</precon>
-		</form>
-		
 	</container>
 	
 </gui>
