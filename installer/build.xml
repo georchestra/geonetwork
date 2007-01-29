@@ -4,7 +4,7 @@
 
 	<!-- =================================================================================== -->
 	
-	<property file="geonetwork.properties"/>
+	<property file="../web/WEB-INF/server.prop"/>
 	
 	<!-- =================================================================================== -->
 	
@@ -17,7 +17,7 @@
 	<target name="installer">
 		<ant dir=".." target="all" />
 		
-		<delete file="../geonetwork-${version}-install.jar" />
+		<delete file="../geonetwork-${release}-install.jar" />
 		<delete dir =".build" />
 		<mkdir  dir =".build" />
 		
@@ -32,7 +32,7 @@
 		</copy>
 			
 		<izpack	input="${basedir}/installer-config.xml" 
-					output="../geonetwork-${version}-install.jar" 
+					output="../geonetwork-${release}-install.jar" 
 					installerType="standard" 
 					basedir="${basedir}"/>
 		

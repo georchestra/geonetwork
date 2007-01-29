@@ -6,7 +6,7 @@
 	
 	<info>
 		<appname>geonetwork</appname>
-		<appversion>2.1.0 alpha 2</appversion>
+		<appversion>2.1.0 beta-1</appversion>
 		<authors>
 			<author name="FAO GeoNetwork Team" email="GeoNetwork@fao.org"/>
 			<author name="VAM WFP"             email="vamsie@wfp.org"/>
@@ -70,24 +70,18 @@
 This is the Spatial Data Catalog web application.
 			</description>
 			
-			<fileset dir=".build/setup" targetdir="$INSTALL_PATH/setup">
-				<exclude name="**/Metadata.ddf"/>
-				<exclude name="**/OperationAllowed.ddf"/>
-				<exclude name="**/Categories.ddf"/>
-			</fileset>			
-						
-			<fileset dir=".build/web"   targetdir="$INSTALL_PATH/web"/>			
-			<fileset dir=".build/bin"   targetdir="$INSTALL_PATH/bin"/>
-			<fileset dir=".build/jetty" targetdir="$INSTALL_PATH/jetty"/>
-			
 			<fileset dir=".build/docs" targetdir="$INSTALL_PATH/docs">
 				<exclude name="javadoc/**"/>
 			</fileset>						
 			
+			<fileset dir=".build/bin"   targetdir="$INSTALL_PATH/bin"/>
+			<fileset dir=".build/gast" targetdir="$INSTALL_PATH/gast"/>			
+			<fileset dir=".build/jetty" targetdir="$INSTALL_PATH/jetty"/>
+			<fileset dir=".build/web"   targetdir="$INSTALL_PATH/web"/>			
+			
 			<executable targetfile="$INSTALL_PATH/bin/start-geonetwork.sh" />
 			<executable targetfile="$INSTALL_PATH/bin/stop-geonetwork.sh" />
 						
-			<parsable targetfile="$INSTALL_PATH/web/index.html"               type="plain"/>
 			<parsable targetfile="$INSTALL_PATH/docs/post-install.txt"        type="plain"/>
 			<parsable targetfile="$INSTALL_PATH/web/loc/en/xml/strings.xml"   type="xml"/>			
 			<parsable targetfile="$INSTALL_PATH/web/loc/fr/xml/strings.xml"   type="xml"/>			
@@ -95,24 +89,14 @@ This is the Spatial Data Catalog web application.
 			<parsable targetfile="$INSTALL_PATH/web/xml/repositories.xml"     type="xml"/>
 			<parsable targetfile="$INSTALL_PATH/web/xml/schema-mappings.xml"  type="xml"/>			
 			
-			<executable targetfile="$INSTALL_PATH/web/WEB-INF/lib/setup.jar" 
+			<executable targetfile="$INSTALL_PATH/gast/gast.jar" 
 							type      ="jar" 
 							keep      ="true"
 							stage     ="postinstall">
 				<args>
-					<arg value="$INSTALL_PATH"/>
+					<arg value="-setup"/>
 				</args>
 			</executable>
-		</pack>
-		
-		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-		
-		<pack name="Sample metadata" required="no" preselected="yes">
-			<description>A sample set of metadata for testing.</description>
-			
-			<file src=".build/setup/db/Metadata.ddf"         targetdir="$INSTALL_PATH/setup/db"/>
-			<file src=".build/setup/db/OperationAllowed.ddf" targetdir="$INSTALL_PATH/setup/db"/>
-			<file src=".build/setup/db/Categories.ddf"       targetdir="$INSTALL_PATH/setup/db"/>			
 		</pack>
 		
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -142,6 +126,15 @@ a GeoNetwork opensource 2.0 catalog to this new version of GeoNetwork opensource
 			
 			<fileset dir=".build/src"       targetdir="$INSTALL_PATH/src"/>
 			<file    src=".build/build.xml" targetdir="$INSTALL_PATH"/>
+		</pack>
+		
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+		
+		<pack name="Installer building tools" required="no" preselected="no">
+			<description>The installer data files. Installing this package you will
+ be able to create the installer.</description>
+			
+			<fileset dir=".build/installer" targetdir="$INSTALL_PATH/installer"/>
 		</pack>
 		
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

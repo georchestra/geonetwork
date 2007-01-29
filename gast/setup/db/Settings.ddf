@@ -19,7 +19,9 @@ value,         VARCHAR
 11	10	name	dummy
 12	10	siteId	dummy
 13	10	organization	dummy
-14	1	gnVersion	changed-by-setup
+14	1	platform	
+15	14	version	<changed-by-setup>
+16	14	subVersion	<changed-by-setup>
 
 20	1	server	
 21	20	host	localhost
@@ -27,7 +29,7 @@ value,         VARCHAR
 
 30	1	intranet	
 31	30	network	127.0.0.1
-32	30	netmask	255.255.255.0
+32	30	netmask	255.0.0.0
 
 40	1	z3950	
 41	40	enable	true
