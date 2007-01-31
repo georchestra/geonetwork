@@ -77,7 +77,9 @@ This is the Spatial Data Catalog web application.
 			<fileset dir=".build/bin"   targetdir="$INSTALL_PATH/bin"/>
 			<fileset dir=".build/gast" targetdir="$INSTALL_PATH/gast"/>			
 			<fileset dir=".build/jetty" targetdir="$INSTALL_PATH/jetty"/>
-			<fileset dir=".build/web"   targetdir="$INSTALL_PATH/web"/>			
+			<fileset dir=".build/web"   targetdir="$INSTALL_PATH/web">
+				<exclude name="**/WEB-INF/db/account.prop"/>
+			</fileset>
 			
 			<executable targetfile="$INSTALL_PATH/bin/start-geonetwork.sh" />
 			<executable targetfile="$INSTALL_PATH/bin/stop-geonetwork.sh" />
