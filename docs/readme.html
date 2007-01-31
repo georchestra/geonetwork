@@ -9,21 +9,47 @@
 </style></head>
 
 <body>
-	<div align="right"><span class="style1">GeoNetwork opensource V2.1.0 alpha 2 Date: 02-01-2007</span></div>
+	<div align="right"><span class="style1">GeoNetwork opensource V2.1.0 beta 1 Date: 15-02-2007</span></div>
 	<h1>GeoNetwork release notes</h1>
-	<h2>Introduction</h2>
-
-	<p>Welcome to GeoNetwork opensource Spatial Data Catalogue system. The server installation has been developed to allow the full configuration of the base properties of the system during installation. This makes the installation fairly complex, since network details have to be known during the installation process. For desktop installations, please use the desktop specific installer.</p>
 
 	<h2>Requirements</h2>
+
 	<h3>Java</h3>
-	<p>A Java Runtime Environment (JRE) 1.5 Standard Edition (download from <a href="http://java.sun.com" target="_blank">http://java.sun.com) </a>is required to run GeoNetwork opensource. See the Troubleshooting sections when normal installation or start up fails. </p> 
+	<p>
+		A Java Runtime Environment (JRE) 1.5 Standard Edition (download from 
+		<a href="http://java.sun.com">http://java.sun.com)</a> is required to 
+		run GeoNetwork opensource. See the Troubleshooting sections when normal 
+		installation or start up fails. 
+	</p> 
+
 	<h3>Web server</h3>
-	<p>The installer comes with an embedded <a href="http://jetty.mortbay.org/">Jetty</a> web server. You can use this server for testing. When moving to production you should use <a href="http://jakarta.apache.org/tomcat" target="_blank">Jakarta Tomcat</a> instead (see post-install notes).</p>
-	<p>You can open the GeoNetwork opensource homepage in a web browser by using the following URL http://&lt;your server URL&gt;:&lt;your port&gt;/geonetwork. If you install on your local machine using port 8080 (default), you could use http://localhost:8080/geonetwork</p>	
+	<p>
+		The installer comes with an embedded <a href="http://jetty.mortbay.org/">Jetty</a>
+		web server but you can consider using <a href="http://jakarta.apache.org/tomcat">Jakarta Tomcat</a> 
+		instead (see post-install notes).
+	</p>
+	<p>
+		You can open the GeoNetwork opensource homepage in a web browser by using the following 
+		URL http://&lt;your server URL&gt;:&lt;your port&gt;/geonetwork. If you install on your local 
+		machine using port 8080 (default), you could use http://localhost:8080/geonetwork
+	</p>	
 	
 	<h3>Database system </h3>
-	<p>GeoNetwork desktop comes with an internal DBMS server, the <a href="http://mckoi.com/database/">McKoi</a> SQL database.<br/>You can use this DBMS for testing but it should not be used for server deployment. If you plan to use another DBMS please select that DBMS during the installation process and make sure that the DBMS is already up and running. Oracle and MySQL are currently supported<br/>You can also configure the DBMS manually at a later stage, although this is more complex (See the community website for details)</p>
-	<h2>More information at <a href="http://geonetwork.sourceforge.net" target="_blank">http://geonetwork.sourceforge.net</a> </h2>
+
+	<p>
+		GeoNetwork desktop comes with an internal DBMS server, the 
+		<a href="http://mckoi.com/database/">McKoi</a> SQL database.
+	</p>
+	<p>
+		If you plan to use another DBMS please select that DBMS using the GAST tool and make 
+		sure that the DBMS is already up and running. Oracle, MySQL and PostgreSQL are currently 
+		supported
+	</p>
+	<p>
+		You can also configure the DBMS manually at a later stage, although this is more complex 
+		(See the community website for details)
+	</p>
+
+	<h2>More information at <a href="http://geonetwork.sourceforge.net">http://geonetwork.sourceforge.net</a></h2>
 </body>
 </html>

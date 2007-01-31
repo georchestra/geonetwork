@@ -28,22 +28,12 @@ to Tomcat you have to add these lines to the %TOMCAT-DIR%/conf/server.xml
 file, into the <Host> element (for example just before the closing </Host>):
 
 <Context 
-	path="/$SERVLET" 
+	path="/geonetwork" 
 	docBase="$INSTALL_PATH/web" 
 	crossContext="false" 
 	debug="0" 
 	reloadable="false" />
 
-When installing the integrated version of GeoNetwork opensource and InterMap 
-opensource, you will also have to add the following context:
-  
-<Context 
-	path="/$SERVLET/intermap" 
-	docBase="$INSTALL_PATH/web-intermap" 
-	crossContext="false" 
-	debug="0" 
-	reloadable="false" />
-  
 After you have changed that file, you need to restart Tomcat.
 
   

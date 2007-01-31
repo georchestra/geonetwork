@@ -1504,7 +1504,7 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
-   <category>
+   <category id="1">
 \end_layout
 
 \begin_layout LyX-Code
@@ -1695,7 +1695,7 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
-   <group>
+   <group id="1">
 \end_layout
 
 \begin_layout LyX-Code
@@ -5201,7 +5201,17 @@ string
 
 \family sans
 \series bold
-gnVersion
+platform
+\series default
+ : Contains information about the current version
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+version
 \family default
 \series default
  (
@@ -5211,6 +5221,19 @@ string
 ) : GeoNetwork's version in the X.Y.Z format
 \end_layout
 
+\begin_layout Itemize
+
+\series bold
+subVersion
+\series default
+ (
+\emph on
+string
+\emph default
+) : A small description about the version, like 'alpha-1', 'beta' etc...
+\end_layout
+
+\end_deeper
 \begin_layout Itemize
 
 \family sans

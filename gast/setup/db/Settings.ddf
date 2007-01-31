@@ -36,7 +36,7 @@ value,         VARCHAR
 42	40	port	2100
 
 50	1	proxy	
-51	50	use	true
+51	50	use	false
 52	50	host	
 53	50	port	
 
