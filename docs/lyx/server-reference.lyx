@@ -1119,7 +1119,7 @@ site
 \series bold
 categories
 \series default
- Returns all the site's categories
+ Returns all site's categories
 \end_layout
 
 \begin_layout List
@@ -1128,7 +1128,25 @@ categories
 \series bold
 groups
 \series default
- Returns all the site's groups
+ Returns all site's groups
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+operations
+\series default
+ Returns all possible operations on metadata
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+regions
+\series default
+ Returns all geographical regions usable for queries
 \end_layout
 
 \begin_layout List
@@ -1234,7 +1252,19 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
+   <categories>...</categories>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
    <groups>...</groups>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   ...
 \end_layout
 
 \begin_layout LyX-Code
@@ -1319,6 +1349,14 @@ version
 \family default
 \series default
  : Platform version, given in the X.Y.Z format
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+subVersion
+\series default
+ : Additional version notes, like 'alpha-1' or 'beta-2'.
 \end_layout
 
 \end_deeper
@@ -1424,7 +1462,7 @@ category
 id
 \family default
 \series default
- attribute which represent the local identifier for the category.
+ attribute which represents the local identifier for the category.
  It can be usefull to a client to link back to this category.
 \end_layout
 
@@ -1446,36 +1484,15 @@ name
 label
 \family default
 \series default
- : The label used to show the category on screen.
- This is just a container for the localized strings in all supported languages.
+ : The localized labels used to show the category on screen.
+ See 
+\begin_inset LatexCommand \ref{sub:Localized-entities}
+
+\end_inset
+
+ below.
 \end_layout
 
-\begin_deeper
-\begin_layout Itemize
-
-\family sans
-\series bold
-en
-\family default
-\series default
- : Localized label in english
-\end_layout
-
-\begin_layout Itemize
-
-\family sans
-\series bold
-fr
-\family default
-\series default
- : Localized label in french
-\end_layout
-
-\begin_layout Itemize
-...
-\end_layout
-
-\end_deeper
 \end_deeper
 \end_deeper
 \begin_layout Standard
@@ -1584,7 +1601,7 @@ group
 id
 \family default
 \series default
- attribute which represent the local identifier for the group.
+ attribute which represents the local identifier for the group.
 \end_layout
 
 \begin_deeper
@@ -1628,7 +1645,6 @@ email
  : The email address to notify when a map is downloaded
 \end_layout
 
-\end_deeper
 \begin_layout Itemize
 
 \family sans
@@ -1636,37 +1652,15 @@ email
 label
 \family default
 \series default
- : The label used to show the group on screen.
- This is just a container for the localized strings in all supported languages.
+ : The localized labels used to show the group on screen.
+ See 
+\begin_inset LatexCommand \ref{sub:Localized-entities}
+
+\end_inset
+
+ below.
 \end_layout
 
-\begin_deeper
-\begin_layout Itemize
-
-\family sans
-\series bold
-en
-\family default
-\series default
- : Localized label in english
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-
-\family sans
-\series bold
-fr
-\family default
-\series default
- : Localized label in french
-\end_layout
-
-\begin_layout Itemize
-...
-\end_layout
-
-\end_deeper
 \end_deeper
 \end_deeper
 \begin_layout Standard
@@ -1738,6 +1732,318 @@ status open
 
 \size footnotesize
 </groups>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+operations
+\series default
+ : This is the container for the operations
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+operation
+\series default
+ [0..n] : This is a possible operation on metadata.
+ This element has an 
+\family sans
+\series bold
+id
+\family default
+\series default
+ attribute which represents the local identifier for the operation.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+name
+\series default
+ : Short name for the operation.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+reserved
+\series default
+ : Can be 
+\family sans
+\series bold
+y
+\family default
+\series default
+ or 
+\family sans
+\series bold
+n
+\family default
+\series default
+ and is used to distinguish between system reserved and user defined operations.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+label
+\series default
+ : The localized labels used to show the operation on screen.
+ See 
+\begin_inset LatexCommand \ref{sub:Localized-entities}
+
+\end_inset
+
+ below.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+Example:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout LyX-Code
+
+\size footnotesize
+<operations>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <operation id="0">
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <name>view</name>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <label>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <en>View</en>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <fr>I don't know</fr>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      </label>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </operation>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+</operations>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+regions
+\series default
+ : This is the container for geographical regions
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+region
+\series default
+ [0..n] : This is a region present into the system.
+ This element has an 
+\family sans
+\series bold
+id
+\family default
+\series default
+ attribute which represents the local identifier for the operation.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+north
+\series default
+ : North coordinate of the bounding box.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+south
+\series default
+ : South coordinate of the bounding box.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+west
+\series default
+ : West coordinate of the bounding box.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+east
+\series default
+ : east coordinate of the bounding box.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+label
+\series default
+ : The localized labels used to show the region on screen.
+ See 
+\begin_inset LatexCommand \ref{sub:Localized-entities}
+
+\end_inset
+
+ below.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+Example:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout LyX-Code
+
+\size footnotesize
+<regions>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <region id="303">
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <north>82.99</north>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <south>26.92</south>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <west>-37.32</west>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <east>39.24</east>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <label>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <en>Western Europe</en>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <fr>Western Europe</fr>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      </label>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </region> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+</regions>
 \end_layout
 
 \end_inset
@@ -1910,6 +2216,80 @@ status open
 
 \size footnotesize
 </knownNodes>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+\begin_inset LatexCommand \label{sub:Localized-entities}
+
+\end_inset
+
+Localized entities
+\end_layout
+
+\begin_layout Standard
+Localized entities have a general 
+\family sans
+\series bold
+label
+\family default
+\series default
+ element which contains the localized strings in all supported languages.
+ This element has as many children as the supported languages.
+ Each child has a name that reflect the language code while its content
+ is the localized text.
+ Here is an example of such elements:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout LyX-Code
+
+\size footnotesize
+<label>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <en>Editors</en>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <fr>I don't know</fr>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <es>Neither<es>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+</label>
+\end_layout
+
+\begin_layout LyX-Code
+
 \end_layout
 
 \end_inset
