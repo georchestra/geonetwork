@@ -1,7 +1,7 @@
 REM ======================================================================
 REM ===   Sql Script for Database : Geonet
 REM ===
-REM === Build : 127
+REM === Build : 129
 REM ======================================================================
 
 CREATE TABLE Metadata
@@ -83,7 +83,7 @@ CREATE TABLE OperationsDes
   (
     idDes   int,
     langId  varchar(5),
-    label   varchar(32)   not null,
+    label   varchar(64)   not null,
     primary key(idDes,langId),
     foreign key(idDes) references Operations(id),
     foreign key(langId) references Languages(id)
@@ -107,7 +107,7 @@ CREATE TABLE RegionsDes
   (
     idDes   int,
     langId  varchar(5),
-    label   varchar(32)   not null,
+    label   varchar(64)   not null,
     primary key(idDes,langId),
     foreign key(idDes) references Regions(id),
     foreign key(langId) references Languages(id)
@@ -165,7 +165,7 @@ CREATE TABLE GroupsDes
   (
     idDes   int,
     langId  varchar(5),
-    label   varchar(32)   not null,
+    label   varchar(64)   not null,
     primary key(idDes,langId),
     foreign key(idDes) references Groups(id),
     foreign key(langId) references Languages(id)
@@ -188,7 +188,7 @@ CREATE TABLE CategoriesDes
   (
     idDes   int,
     langId  varchar(5),
-    label   varchar(32)   not null,
+    label   varchar(64)   not null,
     primary key(idDes,langId),
     foreign key(idDes) references Categories(id),
     foreign key(langId) references Languages(id)

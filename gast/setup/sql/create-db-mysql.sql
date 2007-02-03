@@ -1,7 +1,7 @@
 -- ======================================================================
 -- ===   Sql Script for Database : Geonet
 -- ===
--- === Build : 127
+-- === Build : 129
 -- ======================================================================
 
 CREATE TABLE Metadata
@@ -90,7 +90,7 @@ CREATE TABLE OperationsDes
   (
     idDes   int,
     langId  varchar(5),
-    label   varchar(32)   not null,
+    label   varchar(64)   not null,
 
     primary key(idDes,langId),
 
@@ -117,7 +117,7 @@ CREATE TABLE RegionsDes
   (
     idDes   int,
     langId  varchar(5),
-    label   varchar(32)   not null,
+    label   varchar(64)   not null,
 
     primary key(idDes,langId),
 
@@ -182,7 +182,7 @@ CREATE TABLE GroupsDes
   (
     idDes   int,
     langId  varchar(5),
-    label   varchar(32)   not null,
+    label   varchar(64)   not null,
 
     primary key(idDes,langId),
 
@@ -209,7 +209,7 @@ CREATE TABLE CategoriesDes
   (
     idDes   int,
     langId  varchar(5),
-    label   varchar(32)   not null,
+    label   varchar(64)   not null,
 
     primary key(idDes,langId),
 
