@@ -1,10 +1,14 @@
 ================================================================================
 ===
-=== GeoNetwork 2.1.0 alpha3 : List of changes
+=== GeoNetwork 2.1.0 beta1 : List of changes
 ===
 ================================================================================
 
 - Added GAST application
+
+- Added form to localize entities
+
+- Added possibility to create thumbnails from [Geo]Tiff images
 
 --------------------------------------------------------------------------------
 --- Changes
