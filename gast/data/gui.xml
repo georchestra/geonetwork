@@ -231,4 +231,35 @@
 		</form>
 	</container>
 	
+	<!-- ========================================================== -->
+	<!-- Migration -->
+	<!-- ========================================================== -->
+	
+	<container>
+		<image>22x22/vcs_update.png</image>
+		<label>Migration</label>
+		
+		<!-- Old GeoNetwork - - - - - - - - - - - - - - - - - - - - - -->
+		
+		<form>
+			<id>fromOld</id>
+			<image>16x16/kget.png</image>
+			<label>Old installation</label>
+			<title>Migrate an old GeoNetwork</title>
+			<class>migration.oldinst.MainPanel</class>
+			<description>
+				This panel allows you to migrate data and metadata from
+				an old GeoNetwork installation.
+			</description>
+			
+			<button>
+				<image>16x16/kget.png</image>
+				<label>Migrate</label>
+				<action>migrate</action>
+			</button>
+			
+			<precon type="stopped">
+			</precon>
+		</form>
+	</container>
 </gui>
