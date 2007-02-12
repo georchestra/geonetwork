@@ -106,7 +106,7 @@ Andrea Carboni
 \align center
 
 \size larger
-Revision 2 (02-Jan-2007)
+Revision 3 (12-Feb-2007)
 \end_layout
 
 \begin_layout Standard
@@ -484,7 +484,8 @@ siteId
 \family default
 \series default
  : this is an uuid that identifies the actor that created the metadata and
- must be a valid uuid
+ must be a valid uuid.
+ This element is optional and, when omitted, the reader should assign one.
 \end_layout
 
 \begin_layout Itemize
@@ -5392,52 +5393,182 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-This chapter describes the XML services related to the Metadata Exchange
- Format (see chapter 
+This chapter describes the services related to the Metadata Exchange Format
+ (see chapter 
 \begin_inset LatexCommand \ref{cha:mef}
 
 \end_inset
 
 ).
- These service allow to import/export metadata following the MEF format.
+ These services allow to import/export metadata using the MEF format.
 \end_layout
 
 \begin_layout Section
-xml.mef.export
+mef.export
 \end_layout
 
 \begin_layout Standard
-multithreaded
+As the name suggests, this service exports a GeoNetwork's metadata using
+ the MEF file format.
 \end_layout
 
 \begin_layout Standard
-usa la dir temp del sistema per l'export che si può settare con -D
+This service is public but metadata access rules apply.
+ For a partial export, the 
+\family sans
+\series bold
+view
+\family default
+\series default
+ privilege is enough but for a full export the 
+\family sans
+\series bold
+download
+\family default
+\series default
+ privilege is also required.
+ Without a login step, only partial exports on public metadata are allowed.
 \end_layout
 
 \begin_layout Standard
-il file ha come nome uuid.mef
+This service uses the system's temporary directory to build the MEF file.
+ With full exports of big data maybe it is necessary to change this directory.
+ In this case, use the Java's -D command line option to set the new directory
+ before running GeoNetwork (if you use Jetty, simply change the script into
+ the 
+\family sans
+\series bold
+bin
+\family default
+\series default
+ directory).
+\end_layout
+
+\begin_layout Subsection*
+Request
 \end_layout
 
 \begin_layout Standard
-privilegi: per partial basta view ma per full occorre view+download, senza
- login si può accedere solo format=partial e metadata=public
+This service accepts requests in GET/POST and XML form.
+ The input parameters are:
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+uuid
+\series default
+ the universal unique identifier of the metadata
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+format
+\series default
+ which format to use.
+ Can be one of : 
+\family sans
+\series bold
+simple
+\family default
+\series default
+, 
+\family sans
+\series bold
+partial
+\family default
+\series default
+, 
+\family sans
+\series bold
+full
+\family default
+\series default
+.
+\end_layout
+
+\begin_layout Subsection*
+Response
 \end_layout
 
 \begin_layout Standard
-il servizio è publico
+The service's response is a MEF file with these characteristics:
 \end_layout
 
-\begin_layout Standard
-il servizio ritorna application/...
- 
+\begin_layout Itemize
+the name of the file is the metadata's uuid
+\end_layout
+
+\begin_layout Itemize
+the extension of the file is 
+\family sans
+\series bold
+mef
 \end_layout
 
 \begin_layout Section
-xml.mef.import
+mef.import
 \end_layout
 
 \begin_layout Standard
-è riservato agli admin
+This service is reserved to administrators and is used to import a metadata
+ provided in the MEF format.
+\end_layout
+
+\begin_layout Subsection*
+Request
+\end_layout
+
+\begin_layout Standard
+The service accepts a multipart/form-data POST request with a single 
+\family sans
+\series bold
+mefFile
+\family default
+\series default
+ parameter that must contain the MEF information.
+\end_layout
+
+\begin_layout Subsection*
+Response
+\end_layout
+
+\begin_layout Standard
+If all goes well, the service returns an 
+\family sans
+\series bold
+ok
+\family default
+\series default
+ element containing the local id of the created metadata.
+ Example:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout LyX-Code
+
+\size footnotesize
+<ok>123</ok>
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Part
