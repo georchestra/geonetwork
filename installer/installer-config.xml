@@ -12,7 +12,7 @@
 			<author name="VAM WFP"             email="vamsie@wfp.org"/>
 			<author name="UNEP.net"            email="info@unep.net"/>
 		</authors>
-		<url>http://geonetwork.sourceforge.net/</url>
+		<url>http://geonetwork-opensource.org/</url>
 		<javaversion>1.5</javaversion>
 	</info>
 	
@@ -39,9 +39,9 @@
 		<res id="HTMLInfoPanel.info"       src=".build/docs/readme.html"/>
 		<res id="XInfoPanel.info"          src=".build/docs/post-install.txt"/>
 		<res id="Installer.image"          src="installer.png"/>
-<!--		<res id="shortcutSpec.xml"         src="windows-shortcuts.xml"/>
+		<res id="shortcutSpec.xml"         src="windows-shortcuts.xml"/>
 		<res id="Unix_shortcutSpec.xml"    src="unix-shortcuts.xml"/>
-		<res id="Win_shortcutSpec.xml"     src="windows-shortcuts.xml"/> -->
+		<res id="Win_shortcutSpec.xml"     src="windows-shortcuts.xml"/>
 	</resources>
 	
 	<!-- =================================================================================== -->
@@ -53,7 +53,7 @@
 		<panel classname="TargetPanel"/>
 		<panel classname="PacksPanel"/>
 		<panel classname="InstallPanel"/>
-<!--		<panel classname="ShortcutPanel"/> -->
+		<panel classname="ShortcutPanel"/>
 		<panel classname="XInfoPanel"/>
 		<panel classname="FinishPanel"/>
 	</panels>

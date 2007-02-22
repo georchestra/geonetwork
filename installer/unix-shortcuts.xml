@@ -8,7 +8,7 @@
   <programGroup defaultName="GeoNetwork" location="applications"/>
 
 	<!-- =================================================================================== -->
-<!--   
+   
 	<shortcut
      name="Start GeoNetwork"
      programGroup="yes"
@@ -20,9 +20,9 @@
      
      <createForPack name="Integrated Jetty server"/>
    </shortcut>
--->   
+   
 	<!-- =================================================================================== -->
-<!--   
+   
 	<shortcut
      name="Stop GeoNetwork"
      programGroup="yes"
@@ -34,7 +34,7 @@
      
      <createForPack name="Integrated Jetty server"/>
    </shortcut>
--->	
+	
 	<!-- =================================================================================== -->
 	
 	<shortcut
