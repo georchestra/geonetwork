@@ -149,7 +149,8 @@ thispagestyle{empty}
 \end_layout
 
 \begin_layout Standard
-This document gives some insights about the internal structure of GeoNetwork.
+This document gives some insights about the internal structure of GeoNetwork
+ opensource.
 \end_layout
 
 \begin_layout Standard
@@ -165,7 +166,7 @@ Basic Operations
 \end_layout
 
 \begin_layout Chapter
-Compiling and running GeoNetwork
+Compiling and running GeoNetwork opensource
 \end_layout
 
 \begin_layout Section
