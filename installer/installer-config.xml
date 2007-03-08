@@ -75,7 +75,7 @@ This is the Spatial Data Catalog web application.
 			</fileset>						
 			
 			<fileset dir=".build/bin"   targetdir="$INSTALL_PATH/bin"/>
-			<fileset dir=".build/gast" targetdir="$INSTALL_PATH/gast"/>			
+			<fileset dir=".build/gast"  targetdir="$INSTALL_PATH/gast"/>			
 			<fileset dir=".build/jetty" targetdir="$INSTALL_PATH/jetty"/>
 			<fileset dir=".build/web"   targetdir="$INSTALL_PATH/web">
 				<exclude name="**/WEB-INF/db/account.prop"/>
@@ -109,16 +109,6 @@ This is a separate test application that can be used to test the CSW 2.0.1 servi
 			</description>
 			
 			<fileset dir=".build/csw" targetdir="$INSTALL_PATH/csw"/>
-		</pack>
-		
-		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-		
-		<pack name="Migration application" required="no" preselected="no">
-			<description>This application can be used to migrate the content from 
-a GeoNetwork opensource 2.0 catalog to this new version of GeoNetwork opensource. 
-			</description>
-			
-			<fileset dir=".build/migrate" targetdir="$INSTALL_PATH/migrate"/>
 		</pack>
 		
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
