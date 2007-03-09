@@ -106,7 +106,7 @@ Andrea Carboni
 \align center
 
 \size larger
-Revision 3 (12-Feb-2007)
+Revision 4 (09-Mar-2007)
 \end_layout
 
 \begin_layout Standard
@@ -452,7 +452,10 @@ uuid
 \series default
  : this is the universally unique identifier assigned to the metadata and
  must be a valid uuid.
- 
+ This element is optional and, when omitted, the reader should generate
+ one.
+ A metadata without a uuid can be imported several times into the same system
+ without breaking uniqueness constraints.
 \end_layout
 
 \begin_layout Itemize
@@ -486,7 +489,7 @@ siteId
 \series default
  : this is an uuid that identifies the actor that created the metadata and
  must be a valid uuid.
- This element is optional and, when omitted, the reader should assign one.
+ 
 \end_layout
 
 \begin_layout Itemize
@@ -1165,6 +1168,18 @@ knownNodes
  Anyway, the remote node may know other nodes by other ways.
 \end_layout
 
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+harvestingNodes
+\series default
+ Returns all active nodes the remote node is currently harvesting from.
+ When harvesting from a remote node, this information is usefull to find
+ out how many metadata have been harvested and to which siteId they belong.
+ If there are no metadata from a node, that node will not be returned.
+\end_layout
+
 \begin_layout Standard
 Request example:
 \end_layout
@@ -1362,7 +1377,6 @@ subVersion
 \end_layout
 
 \end_deeper
-\end_deeper
 \begin_layout Standard
 Example:
 \end_layout
@@ -1439,6 +1453,7 @@ status open
 
 \end_layout
 
+\end_deeper
 \begin_layout Itemize
 
 \family sans
@@ -1495,7 +1510,6 @@ label
  below.
 \end_layout
 
-\end_deeper
 \end_deeper
 \begin_layout Standard
 Example:
@@ -1577,6 +1591,7 @@ status open
 
 \end_layout
 
+\end_deeper
 \begin_layout Itemize
 
 \family sans
@@ -1664,7 +1679,6 @@ label
 \end_layout
 
 \end_deeper
-\end_deeper
 \begin_layout Standard
 Example:
 \end_layout
@@ -1741,6 +1755,7 @@ status open
 
 \end_layout
 
+\end_deeper
 \begin_layout Itemize
 
 \series bold
@@ -1808,7 +1823,6 @@ label
  below.
 \end_layout
 
-\end_deeper
 \end_deeper
 \begin_layout Standard
 Example:
@@ -1886,6 +1900,7 @@ status open
 
 \end_layout
 
+\end_deeper
 \begin_layout Itemize
 
 \series bold
@@ -1957,7 +1972,6 @@ label
  below.
 \end_layout
 
-\end_deeper
 \end_deeper
 \begin_layout Standard
 Example:
@@ -2053,6 +2067,7 @@ status open
 
 \end_layout
 
+\end_deeper
 \begin_layout Itemize
 
 \family sans
@@ -2128,20 +2143,6 @@ servlet
  node.
 \end_layout
 
-\begin_layout Itemize
-
-\family sans
-\series bold
-metadata
-\family default
-\series default
- : This is just the number of metadata that have been harvested from the
- remote node.
- This is used by the harvesting web interface to provide some hints to the
- user.
-\end_layout
-
-\end_deeper
 \end_deeper
 \begin_layout Standard
 Example:
@@ -2205,12 +2206,6 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
-      <metadata>23</metadata>
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
    </node>
 \end_layout
 
@@ -2225,6 +2220,118 @@ status open
 
 \end_layout
 
+\end_deeper
+\begin_layout Itemize
+
+\series bold
+harvestingNodes
+\series default
+ : This is the container.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+node
+\series default
+ [0..n] : A remote node GeoNetwork is harvesting from
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+name
+\series default
+ : Node's name
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+siteId
+\series default
+ : Node's unique identifier
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+metadata
+\series default
+ : This is just the number of metadata that have been harvested from the
+ remote node.
+ This is used by the harvesting web interface to provide some hints to the
+ user.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+Example:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout LyX-Code
+
+\size footnotesize
+<harvestingNodes>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <node>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <name>My Host</name>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <siteId>0619cc50-708b-11da-8202-000d9335906e</siteId>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <metadata>23</metadata>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </node>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+</harvestingNodes>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
 \begin_layout Subsection*
 \begin_inset LatexCommand \label{sub:Localized-entities}
 
@@ -2452,6 +2559,10 @@ status open
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+Please notice that this service uses the GeoNetwork's proxy configuration.
 \end_layout
 
 \begin_layout Subsection*
@@ -5486,6 +5597,30 @@ partial
 \family sans
 \series bold
 full
+\family default
+\series default
+.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+skipUuid
+\series default
+ If provided, tells the exporter to not export the metadata's uuid.
+ Without the uuid (which is a unique key inside the database) the metadata
+ can be imported over and over again.
+ Can be one of: 
+\family sans
+\series bold
+true
+\family default
+\series default
+, 
+\family sans
+\series bold
+false
 \family default
 \series default
 .
