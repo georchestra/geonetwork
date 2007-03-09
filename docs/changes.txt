@@ -10,6 +10,10 @@
 
 - Added possibility to create thumbnails from [Geo]Tiff images
 
+- Added a user's guide
+
+- Added MEF file format and related import/export facilities
+
 --------------------------------------------------------------------------------
 --- Changes
 --------------------------------------------------------------------------------
@@ -18,11 +22,22 @@
 
 - Added the installer data files to the installer packages
 
+- Used proxy in xml.forward service and during harvesting.
+
 --------------------------------------------------------------------------------
 --- Bugs fixed
 --------------------------------------------------------------------------------
 
 - Exceptions : fixed a bug during stacktrace generation 
+
+- [bug:1655563] Fixed bug with IPv6 loopback
+
+- Fixed bug when indexing metadata: an error on indexing due to
+  corrupted metadata is now ignored. This allows the system to boot.
+
+- Fixed bug when removing data files: now it is possible to remove
+  the entry from the metadata even when the files are not there.
+
 
 ================================================================================
 ===
