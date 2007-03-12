@@ -14,7 +14,11 @@ Issues:
 - A big issue is the backward compatibility of the harvesting. v2.1 does not harvest
   nodes of v2.0. This can not be. Even if less optimal harvesting, this should remain 
   possible when upgrading.
-
+  
+- The process of creating a database should:
+	- provide the default option to add metadata templates to the database so people can get started.
+	- provide the option to add sample data
+	
 - Sample metadata does not have:
 	- thumbnails
 	- online resources (requires InterMap integration too)
