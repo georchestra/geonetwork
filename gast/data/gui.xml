@@ -166,7 +166,7 @@
 			</button>
 			
 			<precon type="running">
-				Use MEF facilities so GeoNetwork must be running.
+				Uses MEF facilities so GeoNetwork must be running.
 			</precon>
 		</form>
 		
@@ -191,7 +191,7 @@
 			</button>
 			
 			<precon type="running">
-				Use MEF facilities so GeoNetwork must be running.
+				Uses MEF facilities so GeoNetwork must be running.
 			</precon>
 		</form>
 	</container>
@@ -227,6 +227,33 @@
 			<precon type="stopped">
 				Obviously GeoNetwork cannot be running while the database
 				gets built.
+			</precon>
+		</form>
+		
+		<!-- Sample data - - - - - - - - - - - - - - - - - - - - - - - - -->
+		
+		<form>
+			<id>sampleData</id>
+			<image>16x16/hdd_unmount.png</image>
+			<label>Sample data</label>
+			<title>Sample data and metadata</title>
+			<class>database.sample.MainPanel</class>
+			<description>
+				There are some sample metadata that you can import into your
+				GeoNetwork after setup. These are provided just to experiment
+				the features and the user interface.
+				You can even import the same metadata several times in order to
+				fill your database for stress tests.
+			</description>
+			
+			<button>
+				<image>16x16/run.png</image>
+				<label>Import</label>
+				<action>import</action>
+			</button>
+			
+			<precon type="running">
+				Uses MEF facilities so GeoNetwork must be running.
 			</precon>
 		</form>
 	</container>
