@@ -456,6 +456,13 @@ uuid
  one.
  A metadata without a uuid can be imported several times into the same system
  without breaking uniqueness constraints.
+ When missing, the reader should also generate the 
+\family sans
+\series bold
+siteId
+\family default
+\series default
+ value.
 \end_layout
 
 \begin_layout Itemize
@@ -487,9 +494,16 @@ changeDate
 siteId
 \family default
 \series default
- : this is an uuid that identifies the actor that created the metadata and
+ : This is an uuid that identifies the actor that created the metadata and
  must be a valid uuid.
- 
+ When the 
+\family sans
+\series bold
+uuid
+\family default
+\series default
+ element is missing, this element should be missing too.
+ If present, it will be ignored.
 \end_layout
 
 \begin_layout Itemize
@@ -5870,8 +5884,10 @@ string
 
 \begin_layout Itemize
 
+\family sans
 \series bold
 subVersion
+\family default
 \series default
  (
 \emph on
