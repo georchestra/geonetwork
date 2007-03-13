@@ -38,6 +38,7 @@
 - Fixed bug when removing data files: now it is possible to remove
   the entry from the metadata even when the files are not there.
 
+- Fixed security bug in service xml.metadata.get
 
 ================================================================================
 ===
