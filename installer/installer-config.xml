@@ -85,9 +85,6 @@ This is the Spatial Data Catalog web application.
 			<executable targetfile="$INSTALL_PATH/bin/stop-geonetwork.sh" />
 						
 			<parsable targetfile="$INSTALL_PATH/docs/post-install.txt"        type="plain"/>
-			<parsable targetfile="$INSTALL_PATH/web/loc/en/xml/strings.xml"   type="xml"/>			
-			<parsable targetfile="$INSTALL_PATH/web/loc/fr/xml/strings.xml"   type="xml"/>			
-			<parsable targetfile="$INSTALL_PATH/web/loc/es/xml/strings.xml"   type="xml"/>			
 			<parsable targetfile="$INSTALL_PATH/web/xml/repositories.xml"     type="xml"/>
 			<parsable targetfile="$INSTALL_PATH/web/xml/schema-mappings.xml"  type="xml"/>			
 			
