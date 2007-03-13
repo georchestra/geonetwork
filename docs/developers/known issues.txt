@@ -1,6 +1,9 @@
 List of bugs, issues to be resolved & todo list
 
+==================================================================
 Bugs:
+==================================================================
+
 - XML Metadata insert form requires a template "title" even for regular metadata. 
   Without a title the import fails.
 	Proposed resolution: title field is not displayed when Metadata is selected in the 
@@ -10,7 +13,17 @@ Bugs:
   ISO19115 elements. The current import conversion from 19115 to 19139 does not 
   create output that includes these prefixes. The related XSLTs need updating.
 	
+- Some metadata element strings are not found in the editor
+
+- Bug with Z39.50: when clicking a metadata on the search results page,
+  the link is wrong because it points always to the last metadata in results.
+
+- Remove debug printing in the editor
+
+==================================================================
 Issues:
+==================================================================
+
 - A big issue is the backward compatibility of the harvesting. v2.1 does not harvest
   nodes of v2.0. This can not be. Even if less optimal harvesting, this should remain 
   possible when upgrading.
@@ -34,7 +47,10 @@ Issues:
 - General error handling seems to be missing. Raw Java errors are displayed in case 
   of a session time out for instance
   
+==================================================================
 To do:
+==================================================================
+
 - in metadata.show.xsl & search-results.xsl the href does not point to baseURL yet of
   the resource yet.
   
