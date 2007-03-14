@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Metadata>
+  <mdFileID/>
+  <mdLang>
+    <languageCode value="en" />
+  </mdLang>
+  <mdChar>
+    <CharSetCd value="utf8" />
+  </mdChar>
+  <mdContact>
+    <rpIndName />
+    <rpOrgName />
+    <rpPosName />
+    <rpCntInfo>
+      <cntPhone>
+        <voiceNum />
+        <faxNum />
+      </cntPhone>
+      <cntAddress>
+        <delPoint />
+        <city />
+        <adminArea />
+        <postCode />
+        <country />
+        <eMailAdd />
+      </cntAddress>
+    </rpCntInfo>
+    <role>
+      <RoleCd value="pointOfContact" />
+    </role>
+  </mdContact>
+  <mdDateSt>2005-03-31T19:13:30</mdDateSt>
+  <mdStanName>ISO 19115</mdStanName>
+  <mdStanVer>FDIS</mdStanVer>
+  <distInfo>
+    <distTranOps>
+    </distTranOps>
+  </distInfo>
+  <dataIdInfo>
+    <idCitation>
+      <resTitle>Template for ISO19115</resTitle>
+      <resRefDate>
+        <refDate />
+        <refDateType>
+          <DateTypCd value="publication" />
+        </refDateType>
+      </resRefDate>
+      <resEd />
+      <presForm>
+        <PresFormCd value="mapDigital" />
+      </presForm>
+    </idCitation>
+    <idAbs></idAbs>
+    <idPurp />
+    <status>
+      <ProgCd value="onGoing" />
+    </status>
+    <idPoC>
+      <rpIndName />
+      <rpOrgName />
+      <rpPosName />
+      <rpCntInfo>
+        <cntPhone>
+          <voiceNum />
+          <faxNum />
+        </cntPhone>
+        <cntAddress>
+          <delPoint />
+          <city />
+          <adminArea />
+          <postCode />
+          <country />
+          <eMailAdd />
+        </cntAddress>
+      </rpCntInfo>
+      <role>
+        <RoleCd value="originator" />
+      </role>
+    </idPoC>
+    <resConst>
+      <LegConsts>
+        <accessConsts>
+          <RestrictCd value="copyright" />
+        </accessConsts>
+        <useConsts>
+          <RestrictCd value="otherRestictions" />
+        </useConsts>
+        <othConsts />
+      </LegConsts>
+    </resConst>
+    <resMaint>
+      <maintFreq>
+        <MaintFreqCd value="asNeeded" />
+      </maintFreq>
+    </resMaint>
+    <spatRpType>
+      <SpatRepTypCd value="" />
+    </spatRpType>
+    <dataScale>
+      <equScale>
+        <rfDenom />
+      </equScale>
+    </dataScale>
+    <dataLang>
+      <languageCode value="en" />
+    </dataLang>
+    <dataChar>
+      <CharSetCd value="utf8" />
+    </dataChar>
+    <tpCat>
+      <TopicCatCd value="boundaries" />
+    </tpCat>
+    <geoBox>
+      <westBL>-180</westBL>
+      <eastBL>180</eastBL>
+      <southBL>-90</southBL>
+      <northBL>90</northBL>
+    </geoBox>
+    <dataExt>
+      <tempEle>
+        <TempExtent>
+          <exTemp>
+            <TM_GeometricPrimitive>
+              <TM_Period>
+                <begin />
+                <end />
+              </TM_Period>
+            </TM_GeometricPrimitive>
+          </exTemp>
+        </TempExtent>
+      </tempEle>
+    </dataExt>
+    <suppInfo />
+  </dataIdInfo>
+  <dqInfo>
+    <dqScope>
+      <scpLvl>
+        <ScopeCd value="dataset" />
+      </scpLvl>
+    </dqScope>
+    <dataLineage>
+      <statement />
+    </dataLineage>
+  </dqInfo>
+  <spatRepInfo>
+    <GridSpatRep>
+      <numDims>3</numDims>
+      <axDimProps>
+        <Dimen>
+          <dimName>
+            <DimNameTypCd value="row" />
+          </dimName>
+          <dimSize />
+          <dimResol>
+            <value>
+              <Decimal />
+            </value>
+            <uom>
+              <UomLength>
+                <uomName />
+                <conversionToISOstandarUnit />
+              </UomLength>
+            </uom>
+          </dimResol>
+        </Dimen>
+        <Dimen>
+          <dimName>
+            <DimNameTypCd value="column" />
+          </dimName>
+          <dimSize />
+          <dimResol>
+            <value>
+              <Decimal />
+            </value>
+            <uom>
+              <UomLength>
+                <uomName />
+                <conversionToISOstandarUnit />
+              </UomLength>
+            </uom>
+          </dimResol>
+        </Dimen>
+        <Dimen>
+          <dimName>
+            <DimNameTypCd value="vertical" />
+          </dimName>
+          <dimSize />
+          <dimResol>
+            <value>
+              <Decimal />
+            </value>
+            <uom>
+              <UomLength>
+                <uomName />
+                <conversionToISOstandarUnit />
+              </UomLength>
+            </uom>
+          </dimResol>
+        </Dimen>
+      </axDimProps>
+      <cellGeo>
+        <CellGeoCd value="area" />
+      </cellGeo>
+      <tranParaAv />
+    </GridSpatRep>
+  </spatRepInfo>
+  <refSysInfo>
+    <RefSystem>
+      <refSysID>
+        <identCode>WGS 1984</identCode>
+      </refSysID>
+    </RefSystem>
+  </refSysInfo>
+</Metadata>
