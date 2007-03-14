@@ -40,6 +40,8 @@
 
 - Fixed security bug in service xml.metadata.get
 
+- Fixed bug with templates that were not shown
+
 ================================================================================
 ===
 === GeoNetwork 2.1.0 alpha2 : List of changes
