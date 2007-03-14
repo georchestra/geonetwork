@@ -18,8 +18,6 @@ Bugs:
 - Bug with Z39.50: when clicking a metadata on the search results page,
   the link is wrong because it points always to the last metadata in results.
 
-- Remove debug printing in the editor
-
 ==================================================================
 Issues:
 ==================================================================
@@ -28,12 +26,7 @@ Issues:
   nodes of v2.0. This can not be. Even if less optimal harvesting, this should remain 
   possible when upgrading.
   
-- The process of creating a database should:
-	- provide the default option to add metadata templates to the database so people can get started.
-	- provide the option to add sample data
-	
 - Sample metadata does not have:
-	- thumbnails
 	- online resources (requires InterMap integration too)
 	- code list issues with ISO19139 metadata
 	
@@ -44,9 +37,6 @@ Issues:
 
 - The Check for ISO19139 fails.
 
-- General error handling seems to be missing. Raw Java errors are displayed in case 
-  of a session time out for instance
-  
 ==================================================================
 To do:
 ==================================================================
@@ -62,3 +52,20 @@ To do:
 - Integrated version with InterMap opensource
 
 - Set logging options to OFF before creating final release
+
+==================================================================
+DONE
+==================================================================
+
+- Remove debug printing in the editor
+
+- The process of creating a database should:
+	- provide the default option to add metadata templates to the database so people can get started.
+	- provide the option to add sample data
+	
+- Sample metadata does not have:
+	- thumbnails
+
+- General error handling seems to be missing. Raw Java errors are displayed in case 
+  of a session time out for instance
+  
