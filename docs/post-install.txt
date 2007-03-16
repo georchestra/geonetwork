@@ -17,6 +17,19 @@ On the Linux platform they are:
   
 	- start-geonetwork.sh
 	- stop-geonetwork.sh
+	
+---------------------------------------------------------------------------
+--- First time use
+---------------------------------------------------------------------------
+
+After installation make sure you start the web server to start the 
+Geonetwork opensource application. You can than open the GeoNetwork 
+application in your browser after that. 
+By default this should be at http://localhost:8080/geonetwork
+
+IMPORTANT!! After opening the GeoNetwork homepage, log on as Administrator. 
+You should use the username "admin" and password "admin".
+In the Administration section you can now modify your password.
   
 ---------------------------------------------------------------------------
 --- Running GeoNetwork opensource on Tomcat

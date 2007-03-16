@@ -106,7 +106,7 @@
 		os="windows"
 		name="Release notes " 
 		description="GeoNetwork desktop release notes "
-		target="$INSTALL_PATH\docs\readme-stdln.html"
+		target="$INSTALL_PATH\docs\readme.html"
 		commandLine="" 
 		workingDirectory="$INSTALL_PATH" 
 		iconFile="$INSTALL_PATH/bin/ico/text.ico" 
