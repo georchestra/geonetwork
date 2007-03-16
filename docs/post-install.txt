@@ -32,6 +32,18 @@ You should use the username "admin" and password "admin".
 In the Administration section you can now modify your password.
   
 ---------------------------------------------------------------------------
+--- Loading sample data
+---------------------------------------------------------------------------
+
+The catalog comes with metadata templates setup. However, no sample metadata 
+has been loaded by default.
+
+If you want to load sample metadata, you have to start the GAST tool.
+1- Configure your authenthication in "Options" - "Config".
+2- Select the Sample data option in the Database section and hit Import.
+You are set to test with sample metadata records.
+
+---------------------------------------------------------------------------
 --- Running GeoNetwork opensource on Tomcat
 ---------------------------------------------------------------------------
   
