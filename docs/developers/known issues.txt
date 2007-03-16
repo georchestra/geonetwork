@@ -9,7 +9,8 @@ Bugs:
 	Proposed resolution: title field is not displayed when Metadata is selected in the 
 	drop down. In Insert.java the title parameter will be validated depending on the 
 	isTemplate parameter.
--	XML Metadata insert using ISO19139 only works when the gmd: prefix is used for 
+
+- XML Metadata insert using ISO19139 only works when the gmd: prefix is used for 
   ISO19115 elements. The current import conversion from 19115 to 19139 does not 
   create output that includes these prefixes. The related XSLTs need updating.
 	
@@ -30,11 +31,6 @@ Issues:
 	- online resources (requires InterMap integration too)
 	- code list issues with ISO19139 metadata
 	
-- The Back button's behavior in the administration services should be verified as at 
-  least a number of them should bring the user back to the administration page and 
-  not back into the editing forms for instance. User and Group management are among 
-  these.
-
 - The Check for ISO19139 fails.
 
 ==================================================================
@@ -69,3 +65,8 @@ DONE
 - General error handling seems to be missing. Raw Java errors are displayed in case 
   of a session time out for instance
   
+- The Back button's behavior in the administration services should be verified as at 
+  least a number of them should bring the user back to the administration page and 
+  not back into the editing forms for instance. User and Group management are among 
+  these.
+

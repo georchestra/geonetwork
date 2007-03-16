@@ -42,6 +42,11 @@
 
 - Fixed bug with templates that were not shown
 
+- Fixed bug when changing the user's password. It seems that the 'update()' function
+  has a different sematic if called inside the 'onClick' attribute
+
+- Fixed wrong behaviour of 'back' button in categories/groups/users
+
 ================================================================================
 ===
 === GeoNetwork 2.1.0 alpha2 : List of changes
