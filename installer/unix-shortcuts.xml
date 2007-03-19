@@ -4,60 +4,133 @@
 
 	<!-- =================================================================================== -->
   
-  <skipIfNotSupported/>
-  <programGroup defaultName="GeoNetwork" location="applications"/>
+	<skipIfNotSupported/>
+	<programGroup defaultName="GeoNetwork opensource" location="applications"/>
 
 	<!-- =================================================================================== -->
+	<!-- GN open homepage -->
+  
+	<shortcut 
+		name="Open GeoNetwork opensource" 
+		description="This opens the GeoNetwork homepage in a web browser"
+		target="$INSTALL_PATH/bin/win/start-stdln.html"
+		commandLine="" 
+		workingDirectory="$INSTALL_PATH" 
+		iconFile="$INSTALL_PATH/bin/ico/gn.ico" 
+		iconIndex="0" 
+		initialState="normal" 
+		programGroup="yes"
+		startup="no">
+		<createForPack name="Core"/>
+	</shortcut>
+	
+	<!-- =================================================================================== -->
+  	<!-- GN start -->
    
 	<shortcut
-     name="Start GeoNetwork"
-     programGroup="yes"
-     desktop="yes"
-     target="&quot;$INSTALL_PATH/bin/start-geonetwork.sh&quot;"
-     workingDirectory="&quot;$INSTALL_PATH/bin&quot;"
-     type="Application"
-     encoding="UTF-8">
-     
-     <createForPack name="Integrated Jetty server"/>
+		name="Start server"
+		description="This starts the GeoNetwork server"
+		programGroup="yes"
+		desktop="no"
+		startup="no"
+		target="$INSTALL_PATH/bin/start-geonetwork.sh"
+		initialState="noShow"
+		workingDirectory="$INSTALL_PATH/bin"
+		type="Application"
+		iconFile="$INSTALL_PATH/bin/ico/gnstart.ico"
+		iconIndex="0" 
+		encoding="UTF-8">
+		<createForPack name="Core"/>
    </shortcut>
    
 	<!-- =================================================================================== -->
+	<!-- GN stop -->
    
 	<shortcut
-     name="Stop GeoNetwork"
-     programGroup="yes"
-     desktop="yes"
-     target="&quot;$INSTALL_PATH/bin/stop-geonetwork.sh&quot;"
-     workingDirectory="&quot;$INSTALL_PATH/bin&quot;"
-     type="Application"
-     encoding="UTF-8">
-     
-     <createForPack name="Integrated Jetty server"/>
+		name="Stop server"
+		description="This stops the GeoNetwork server"
+		programGroup="yes"
+		desktop="no"
+		target="$INSTALL_PATH/bin/stop-geonetwork.sh"
+		initialState="noShow"
+		workingDirectory="$INSTALL_PATH/bin"
+		type="Application"
+		iconFile="$INSTALL_PATH/bin/ico/gnstop.ico"
+		iconIndex="0"
+		encoding="UTF-8">
+		<createForPack name="Core"/>
    </shortcut>
 	
 	<!-- =================================================================================== -->
+	<!-- GAST -->
+   
+	<shortcut
+		name="Start GAST"
+		description="This starts GeoNetwork's Administrator Survival Tool"
+		programGroup="yes"
+		desktop="no"
+		commandLine="-jar &quot;$INSTALL_PATH/gast/gast.jar&quot;"
+		initialState="noShow"
+		workingDirectory="$INSTALL_PATH/bin"
+		type="Application"
+		iconFile="$INSTALL_PATH/bin/ico/gast.ico"
+		iconIndex="0"
+		encoding="UTF-8">
+		<createForPack name="Core"/>
+   </shortcut>
+	
+	<!-- =================================================================================== -->
+	<!-- Documentation -->
 	
 	<shortcut
-     name="List of Changes"
-     programGroup="yes"
-     target="konqueror"
-     initialState="noShow"
-     iconFile="help"
-     iconIndex="0" 
-     commandLine="&quot;$INSTALL_PATH/docs/changes.txt&quot;"
-     type="Application"
-     encoding="UTF-8">     
+		name="Documentation" 
+		description="GeoNetwork opensource documentation"
+		target="$INSTALL_PATH/docs/manuals/"
+		commandLine="" 
+		workingDirectory="$INSTALL_PATH" 
+		iconFile="$INSTALL_PATH/bin/ico/docs.ico" 
+		iconIndex="0" 
+		initialState="normal" 
+		programGroup="yes"
+		startup="no">
    </shortcut>
 
-	<!-- =================================================================================== -->
-<!--
-   <shortcut
-     name="Documentation"
-     iconFile="acroread"
-   </shortcut>
--->         
-	<!-- =================================================================================== -->
-   
+  <!-- =================================================================================== -->
+  <!-- GN readme -->
+  
+  <shortcut 
+		name="Release notes " 
+		description="GeoNetwork desktop release notes "
+		target="$INSTALL_PATH\docs\readme.html"
+		commandLine="" 
+		workingDirectory="$INSTALL_PATH" 
+		iconFile="$INSTALL_PATH/bin/ico/text.ico" 
+		iconIndex="0" 
+		initialState="normal" 
+		programGroup="yes"
+		startup="no">
+		<createForPack name="Core"/>
+  </shortcut>
+	
+  <!-- =================================================================================== -->
+	<!-- License -->
+	
+  <shortcut 
+		name="GPL License" 
+		description="GeoNetwork opensource GNU-GPL license "
+		target="$INSTALL_PATH\docs\license.html"
+		commandLine="" 
+		workingDirectory="$INSTALL_PATH" 
+		iconFile="$INSTALL_PATH/bin/ico/text.ico" 
+		iconIndex="0" 
+		initialState="normal" 
+		programGroup="yes"
+		startup="no">
+  </shortcut>
+	
+  <!-- =================================================================================== -->
+  	<!-- Uninstall -->
+
 	<shortcut
      name="Uninstaller"
      programGroup="yes"

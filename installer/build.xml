@@ -18,17 +18,14 @@
 		<ant dir=".." target="all" />
 		
 		<delete file="../geonetwork-${release}-install.jar" />
+		
 		<delete dir =".build" />
 		<mkdir  dir =".build" />
 		
 		<!-- file copying -->
 			
 		<copy todir=".build">
-			<fileset dir="..">
-				<exclude name="**/WEB-INF/lucene/*"/>
-				<exclude name="**/db/data/*"/>
-				<exclude name="**/log/*"/>
-			</fileset>		
+			<fileset dir=".."/>
 		</copy>
 			
 		<izpack	input="${basedir}/installer-config.xml" 

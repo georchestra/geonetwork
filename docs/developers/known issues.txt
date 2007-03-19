@@ -16,9 +16,6 @@ Bugs:
 	
 - Some metadata element strings are not found in the editor
 
-- Bug with Z39.50: when clicking a metadata on the search results page,
-  the link is wrong because it points always to the last metadata in results.
-
 ==================================================================
 Issues:
 ==================================================================
@@ -47,26 +44,4 @@ To do:
  
 - Integrated version with InterMap opensource
 
-- Set logging options to OFF before creating final release
-
 ==================================================================
-DONE
-==================================================================
-
-- Remove debug printing in the editor
-
-- The process of creating a database should:
-	- provide the default option to add metadata templates to the database so people can get started.
-	- provide the option to add sample data
-	
-- Sample metadata does not have:
-	- thumbnails
-
-- General error handling seems to be missing. Raw Java errors are displayed in case 
-  of a session time out for instance
-  
-- The Back button's behavior in the administration services should be verified as at 
-  least a number of them should bring the user back to the administration page and 
-  not back into the editing forms for instance. User and Group management are among 
-  these.
-

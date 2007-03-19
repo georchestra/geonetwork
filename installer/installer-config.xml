@@ -6,7 +6,7 @@
 	
 	<info>
 		<appname>geonetwork</appname>
-		<appversion>2.1.0 beta-1</appversion>
+		<appversion>2.1.0 beta1</appversion>
 		<authors>
 			<author name="FAO GeoNetwork Team" email="GeoNetwork@fao.org"/>
 			<author name="VAM WFP"             email="vamsie@wfp.org"/>
@@ -76,18 +76,26 @@ This is the Spatial Data Catalog web application.
 			
 			<fileset dir=".build/bin"   targetdir="$INSTALL_PATH/bin"/>
 			<fileset dir=".build/gast"  targetdir="$INSTALL_PATH/gast"/>			
-			<fileset dir=".build/jetty" targetdir="$INSTALL_PATH/jetty"/>
+			
+			<fileset dir=".build/jetty" targetdir="$INSTALL_PATH/jetty">
+				<exclude name="log/*"/>
+				<exclude name="log/archive/*"/>
+			</fileset>
+			
 			<fileset dir=".build/web"   targetdir="$INSTALL_PATH/web">
-				<exclude name="**/WEB-INF/db/account.prop"/>
+				<exclude name="WEB-INF/db/account.prop"/>
+				<exclude name="WEB-INF/db/data/*"/>
+				<exclude name="WEB-INF/db/log/*"/>
+				<exclude name="WEB-INF/data/0*"/>
+				<exclude name="WEB-INF/lucene/*"/>
 			</fileset>
 			
 			<executable targetfile="$INSTALL_PATH/bin/start-geonetwork.sh" />
 			<executable targetfile="$INSTALL_PATH/bin/stop-geonetwork.sh" />
 			<executable targetfile="$INSTALL_PATH/bin/start-gast.sh" />
 						
-			<parsable targetfile="$INSTALL_PATH/docs/post-install.txt"        type="plain"/>
-			<parsable targetfile="$INSTALL_PATH/web/xml/repositories.xml"     type="xml"/>
-			<parsable targetfile="$INSTALL_PATH/web/xml/schema-mappings.xml"  type="xml"/>			
+			<parsable targetfile="$INSTALL_PATH/docs/post-install.txt"    type="plain"/>
+			<parsable targetfile="$INSTALL_PATH/web/xml/repositories.xml" type="xml"/>
 			
 			<executable targetfile="$INSTALL_PATH/gast/gast.jar" 
 							type      ="jar" 
@@ -124,7 +132,9 @@ This is a separate test application that can be used to test the CSW 2.0.1 servi
 			<description>The installer data files. Installing this package you will
  be able to create the installer.</description>
 			
-			<fileset dir=".build/installer" targetdir="$INSTALL_PATH/installer"/>
+			<fileset dir=".build/installer" targetdir="$INSTALL_PATH/installer">
+				<exclude name="**/.build"/>
+			</fileset>
 		</pack>
 		
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

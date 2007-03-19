@@ -42,10 +42,12 @@
 
 - Fixed bug with templates that were not shown
 
-- Fixed bug when changing the user's password. It seems that the 'update()' function
-  has a different sematic if called inside the 'onClick' attribute
+- Fixed bug when changing the user's password. It seems that the 'update()' 
+  function has a different sematic if called inside the 'onClick' attribute
 
 - Fixed wrong behaviour of 'back' button in categories/groups/users
+
+- Fixed some bugs with Z39.50. Now, it should work.
 
 ================================================================================
 ===
