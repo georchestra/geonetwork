@@ -95,7 +95,7 @@
       </maintFreq>
     </resMaint>
     <spatRpType>
-      <SpatRepTypCd value="" />
+      <SpatRepTypCd value="vector" />
     </spatRpType>
     <dataScale>
       <equScale>
