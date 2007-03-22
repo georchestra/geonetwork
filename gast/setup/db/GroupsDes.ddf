@@ -11,10 +11,10 @@ label,         VARCHAR
 
 [DATA]
 0	en	Internal
-0	fr	Internal
+0	fr	Intranet
 0	es	Internal
 0	cn	Internal
 1	en	All
-1	fr	All
+1	fr	Tous
 1	es	All
 1	cn	All
