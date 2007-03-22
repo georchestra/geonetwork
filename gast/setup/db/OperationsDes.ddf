@@ -18,13 +18,13 @@ label,         VARCHAR
 5	en	Interactive
 6	en	Featured
 
-0	fr	View
-1	fr	Download
-2	fr	Edit
-3	fr	Notify
+0	fr	Visualiser
+1	fr	Télécharger
+2	fr	Editer
+3	fr	Notifier
 4	fr	Admin
 5	fr	Interactive
-6	fr	Featured
+6	fr	Epingler
 
 0	es	View
 1	es	Download
