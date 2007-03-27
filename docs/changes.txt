@@ -4,6 +4,10 @@
 ===
 ================================================================================
 
+- GAST : Added migration code to migrate an old geonetwork installation
+
+- GAST : Added conversion code from iso19115 to iso19139
+
 --------------------------------------------------------------------------------
 --- Changes
 --------------------------------------------------------------------------------
@@ -13,6 +17,10 @@
 --------------------------------------------------------------------------------
 
 - Fixed NullPointerException with Tomcat
+
+- Fixed validation bug using Java 1.5 facilities
+
+- Fixed fkey constraint violation when removing harvesting nodes
 
 ================================================================================
 ===
