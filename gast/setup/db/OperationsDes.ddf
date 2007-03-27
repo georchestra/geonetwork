@@ -1,5 +1,5 @@
 #---------------------------------------------------------
-#--- File exported in DDF format on 2006-10-15 18:46:20
+#--- File exported in DDF format on 2007-03-27 19:11:59
 #---
 #--- SELECT idDes,langId,label FROM APP.OperationsDes
 #---------------------------------------------------------
@@ -17,15 +17,6 @@ label,         VARCHAR
 4	en	Admin
 5	en	Interactive
 6	en	Featured
-
-0	fr	Visualiser
-1	fr	Télécharger
-2	fr	Editer
-3	fr	Notifier
-4	fr	Admin
-5	fr	Interactive
-6	fr	Epingler
-
 0	es	View
 1	es	Download
 2	es	Edit
@@ -33,7 +24,6 @@ label,         VARCHAR
 4	es	Admin
 5	es	Interactive
 6	es	Featured
-
 0	cn	View
 1	cn	Download
 2	cn	Edit
@@ -41,3 +31,10 @@ label,         VARCHAR
 4	cn	Admin
 5	cn	Interactive
 6	cn	Featured
+0	fr	Visualiser
+1	fr	T~00E9l~00E9charger
+2	fr	Editer
+3	fr	Notifier
+4	fr	Admin
+5	fr	Interactive
+6	fr	Epingler
