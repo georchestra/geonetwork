@@ -12,6 +12,12 @@
 --- Changes
 --------------------------------------------------------------------------------
 
+- User administration: now the group list is not shown if the choosen profile is 
+  'Administrator'
+
+- Z39.50 : repositories.xml and schema-mappings.xml files are now processed at
+  startup and do not required variable substitution anymore.
+
 --------------------------------------------------------------------------------
 --- Bugs fixed
 --------------------------------------------------------------------------------
@@ -21,6 +27,10 @@
 - Fixed validation bug using Java 1.5 facilities
 
 - Fixed fkey constraint violation when removing harvesting nodes
+
+- Fixed an exception raised when changing user information
+
+- Fixed bug in metadata.admin.form : now only groups visible to the user are returned
 
 ================================================================================
 ===
