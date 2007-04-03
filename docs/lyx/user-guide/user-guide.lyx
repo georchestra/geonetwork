@@ -807,6 +807,270 @@ The batch import options
 
 \end_layout
 
+\begin_layout Subsection
+Structured import
+\end_layout
+
+\begin_layout Standard
+An hidden feature of the batch import is the possibility to specify some
+ import parameters in more detail.
+ This feature is triggered when the specified folder contains the 
+\family sans
+\series bold
+import-config.xml
+\family default
+\series default
+ file.
+ When this happen, this file is read and the standard import switches to
+ the structured one.
+ 
+\end_layout
+
+\begin_layout Standard
+The import-config.xml file has a 
+\family sans
+\series bold
+config
+\family default
+\series default
+ root element with the following children:
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+categoryMapping
+\family default
+\series default
+ [1] : this element specifies the mapping of directories to categories.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+mapping
+\family default
+\series default
+ [0..n] : This element can appear 0 or more times and maps one directory name
+ to a category name.
+ It must have a 
+\family sans
+\series bold
+dir
+\family default
+\series default
+ attribute that indicates the directory and a 
+\family sans
+\series bold
+to
+\family default
+\series default
+ attribute that indicates the category name.
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+default
+\family default
+\series default
+ [1] : This element specifies a default mapping of categories for all directorie
+s that do not match the other mapping elements.
+ It must have only the 
+\family sans
+\series bold
+to
+\family default
+\series default
+ attribute.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+schemaMapping
+\family default
+\series default
+ [1] : this element specifies the mapping of directories to metadata schemas.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+mapping
+\family default
+\series default
+ [0..n] : This element can appear 0 or more times and maps one directory to
+ the schema name that must be used when importing.
+ The provided schema must match the one used by the metadata contained into
+ the specified directory, which must all have the same schema.
+ It must have a 
+\family sans
+\series bold
+dir
+\family default
+\series default
+ attribute that indicates the directory and a 
+\family sans
+\series bold
+to
+\family default
+\series default
+ attribute that indicates the schema name.
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+default
+\family default
+\series default
+ [1] : default behaviour to use when all other mapping elements do not match.
+ It must have only the 
+\family sans
+\series bold
+to
+\family default
+\series default
+ attribute.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+Here is an example of the 
+\family sans
+\series bold
+import-config.xml
+\family default
+\series default
+ file:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout LyX-Code
+
+\size footnotesize
+<config> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <categoryMapping> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <mapping dir="1" to="maps" /> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <mapping dir="3" to="datasets" /> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <mapping dir="6" to="interactiveResources" /> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <mapping dir="30" to="photo" />  
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <default to="maps" /> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </categoryMapping> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <schemaMapping> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <mapping dir="3" to="fgdc-std" /> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <default to="dublin-core" /> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </schemaMapping> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+</config> 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The import procedure starts by scanning the provided directory.
+ This can contain, beside the 
+\family sans
+\series bold
+import-config.xml
+\family default
+\series default
+ file, only subdirectories which name will be used as siteId.
+ Inside each siteId directory, there is another level made only by directories
+ that represent a metadata grouping for categories.
+ Each directory name will be used as the 
+\family sans
+\series bold
+dir
+\family default
+\series default
+ attribute in the mapping scheme previously described.
+\end_layout
+
 \begin_layout Chapter
 Harvesting
 \end_layout
