@@ -18,6 +18,8 @@
 - Z39.50 : repositories.xml and schema-mappings.xml files are now processed at
   startup and do not required variable substitution anymore.
 
+- AccessManager : now the allowed operations are read from the database
+
 --------------------------------------------------------------------------------
 --- Bugs fixed
 --------------------------------------------------------------------------------
