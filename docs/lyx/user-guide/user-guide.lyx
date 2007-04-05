@@ -105,7 +105,7 @@ Andrea Carboni
 \align center
 
 \size larger
-Revision 1 (09-Mar-2007)
+Revision 2 (05-Apr-2007)
 \end_layout
 
 \begin_layout Standard
@@ -735,22 +735,6 @@ web/xsl/conversion/import
  the schema format selected above.
 \end_layout
 
-\begin_layout List
-\labelwidthstring 00.00.0000
-
-\series bold
-Site
-\series default
-\InsetSpace ~
-
-\series bold
-ID
-\series default
- The site id acts like a source designator.
- The string entered here will be associated to the metadata and can be used
- for searching purposes.
-\end_layout
-
 \begin_layout Standard
 Below the page, there are the following buttons:
 \end_layout
@@ -774,6 +758,7 @@ Upload
  When the process ends, the total count of imported metadata will be shown.
  Please notice that the import is transactional: the metadata set will be
  fully imported or fully discarded (there are no partial imports).
+ Files that starts with '.' or that do not end with '.xml' are ignored.
 \end_layout
 
 \begin_layout Standard
