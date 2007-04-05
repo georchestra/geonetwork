@@ -1059,8 +1059,9 @@ The import procedure starts by scanning the provided directory.
 import-config.xml
 \family default
 \series default
- file, only subdirectories which name will be used as siteId.
- Inside each siteId directory, there is another level made only by directories
+ file, only subdirectories which name will be ignored but used only as a
+ container.
+ Inside each directory, there is another level made only by directories
  that represent a metadata grouping for categories.
  Each directory name will be used as the 
 \family sans
