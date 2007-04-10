@@ -8,6 +8,8 @@
 
 - GAST : Added conversion code from iso19115 to iso19139
 
+- Added jdbc driver for postgresql
+
 --------------------------------------------------------------------------------
 --- Changes
 --------------------------------------------------------------------------------
@@ -19,6 +21,22 @@
   startup and do not required variable substitution anymore.
 
 - AccessManager : now the allowed operations are read from the database
+
+- Substituted proprietary cos.jar with jakarta commons fileupload
+
+- Removed useless link to dc:identifier when showing dublin core metadata
+
+- Main page/recent additions : now all groups visible to the user are considered
+
+- Removed 'siteId' option to batch import. Files that do not end with '.xml' are
+  skipped during import.
+
+- Now it is possible to remove categories and groups when they have fkey relationships.
+  Affected metadata are now reindexed.
+
+- User add form : added alert if no group is selected, highlithed mandatory fields
+
+- Metadata privileges : added a button to set all privileges all at once.
 
 --------------------------------------------------------------------------------
 --- Bugs fixed
