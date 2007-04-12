@@ -38,6 +38,11 @@
 
 - Metadata privileges : added a button to set all privileges all at once.
 
+- Metadata creation and duplication: changed groups's combobox to a list
+
+- ISO19139: Changed 'language' element to a char 3 code. Added a dropdown to the 
+  editor to choose the language. Updated migration stylesheets from 19115 -> 19139
+
 --------------------------------------------------------------------------------
 --- Bugs fixed
 --------------------------------------------------------------------------------
