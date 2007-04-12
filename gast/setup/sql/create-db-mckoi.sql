@@ -1,7 +1,7 @@
 -- ======================================================================
 -- ===   Sql Script for Database : Geonet
 -- ===
--- === Build : 129
+-- === Build : 131
 -- ======================================================================
 
 CREATE TABLE Metadata
@@ -95,6 +95,31 @@ CREATE TABLE OperationsDes
     primary key(idDes,langId),
 
     foreign key(idDes) references Operations(id),
+    foreign key(langId) references Languages(id)
+  );
+
+-- ======================================================================
+
+CREATE TABLE IsoLanguages
+  (
+    id    int,
+    code  varchar(3)   not null,
+
+    primary key(id),
+    unique(code)
+  );
+
+-- ======================================================================
+
+CREATE TABLE IsoLanguagesDes
+  (
+    idDes   int,
+    langId  varchar(5),
+    label   varchar(64)   not null,
+
+    primary key(idDes,langId),
+
+    foreign key(idDes) references IsoLanguages(id),
     foreign key(langId) references Languages(id)
   );
 

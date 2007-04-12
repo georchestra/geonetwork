@@ -5,7 +5,7 @@
 		<gco:CharacterString/>
 	</gmd:fileIdentifier>
 	<gmd:language>
-		<gco:CharacterString>en</gco:CharacterString>
+		<gco:CharacterString>eng</gco:CharacterString>
 	</gmd:language>
 	<gmd:characterSet>
 		<gmd:MD_CharacterSetCode codeList="./resources/codeList.xml#MD_CharacterSetCode" codeListValue="utf8" />
@@ -112,7 +112,7 @@
 				</gmd:MD_Keywords>
 			</gmd:descriptiveKeywords>
 			<gmd:language>
-				<gco:CharacterString>en</gco:CharacterString>
+				<gco:CharacterString>eng</gco:CharacterString>
 			</gmd:language>
 			<gmd:characterSet>
 				<gmd:MD_CharacterSetCode codeList="./resources/codeList.xml#MD_CharacterSetCode" codeListValue="utf8" />

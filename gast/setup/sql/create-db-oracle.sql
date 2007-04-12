@@ -1,7 +1,7 @@
 REM ======================================================================
 REM ===   Sql Script for Database : Geonet
 REM ===
-REM === Build : 129
+REM === Build : 131
 REM ======================================================================
 
 CREATE TABLE Metadata
@@ -86,6 +86,28 @@ CREATE TABLE OperationsDes
     label   varchar(64)   not null,
     primary key(idDes,langId),
     foreign key(idDes) references Operations(id),
+    foreign key(langId) references Languages(id)
+  );
+
+REM ======================================================================
+
+CREATE TABLE IsoLanguages
+  (
+    id    int,
+    code  varchar(3)   not null,
+    primary key(id),
+    unique(code)
+  );
+
+REM ======================================================================
+
+CREATE TABLE IsoLanguagesDes
+  (
+    idDes   int,
+    langId  varchar(5),
+    label   varchar(64)   not null,
+    primary key(idDes,langId),
+    foreign key(idDes) references IsoLanguages(id),
     foreign key(langId) references Languages(id)
   );
 
