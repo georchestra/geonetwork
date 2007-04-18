@@ -104,7 +104,7 @@ Andrea Carboni, Jeroen Ticheler
 \align center
 
 \size larger
-Revision 0.2 (23-Feb-2007)
+Revision 2 (18-Apr-2007)
 \end_layout
 
 \begin_layout Standard
@@ -356,8 +356,8 @@ Q: What is Free and Open Source Software (FOSS) and how can I use, participate
 \end_layout
 
 \begin_layout Description
-A: The book "Producing Open Source Software" (
-\begin_inset LatexCommand \vref{fig:Producing-Open-Source}
+A: The book "Producing Open Source Software" (shown in figure 
+\begin_inset LatexCommand \ref{fig:Producing-Open-Source}
 
 \end_inset
 
@@ -398,13 +398,14 @@ The book is available in bookstores and from the publisher (
 \end_layout
 
 \begin_layout Standard
-\align left
+\align center
 \begin_inset Float figure
 wide false
 sideways false
 status open
 
 \begin_layout Standard
+\align center
 \begin_inset Graphics
 	filename images/producingoss-cover-small.png
 	lyxscale 70
