@@ -69,7 +69,7 @@ Frequently Asked Questions
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename img/GeoNetwork_folder_cover_fro.jpg
+	filename images/GeoNetwork_folder_cover_fro.jpg
 
 \end_inset
 
@@ -116,7 +116,7 @@ Revision 0.2 (23-Feb-2007)
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename img/GeoNetwork_opensource_logo_.png
+	filename images/GeoNetwork_opensource_logo_.png
 	lyxscale 70
 	scale 70
 	rotateOrigin center
@@ -402,11 +402,11 @@ The book is available in bookstores and from the publisher (
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Standard
 \begin_inset Graphics
-	filename img/producingoss-cover-small.png
+	filename images/producingoss-cover-small.png
 	lyxscale 70
 	scale 70
 
