@@ -165,9 +165,108 @@ Q: I am having difficulty installing multiple instances of GeoNetwork on
 
 \begin_layout Description
 A: To run multiple installation you have to change the ports that GeoNetwork
- uses
+ uses in order to avoid conflicts.
+ The port are:
 \end_layout
 
+\begin_layout Itemize
+
+\series bold
+Z39.50 listening port
+\series default
+.
+ This is the most probable source of conflicts.
+ You have to entedit the web/WEB-INF/config.xml file of the second installation
+ and choose a value other than the default one, which is 2100.
+ Use for example 2101 but keep in mind that remote nodes usually use 2100
+ so your second node will not be reachable.
+ You cannot use the system configuration web form the first time because
+ if the port conflicts, the server won't start.
+\end_layout
+
+\begin_layout Itemize
+If you are using Jetty:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+Jetty's listening port
+\series default
+.
+ This can be modified using GAST and its default value is usually 8080.
+ To run a second installation use a different value, like 8081.
+ The affected file is 
+\family sans
+\series bold
+bin/jetty.xml
+\family default
+\series default
+.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Jetty's stop port
+\series default
+.
+ This is defined into the scripts 
+\family sans
+\series bold
+bin/start-geonetwork.*
+\family default
+\series default
+ and 
+\family sans
+\series bold
+bin/stop-geonetwork.*
+\family default
+\series default
+ (for both Windows and Linux).
+ The provided value is 8079 as the value of the 
+\family sans
+\series bold
+STOP.PORT
+\family default
+\series default
+ parameter.
+ Use another value for the second installation, like 8078.
+ If you don't change this value, the stop script will stop all instances.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+If you are using the embedded McKoi DBMS:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+McKoi listening port
+\series default
+.
+ This can be easily modified using GAST.
+ The default value is 9157.
+ For other installations you can use 9158, 9159 and so on.
+ The affected files are 
+\family sans
+\series bold
+web/WEB-INF/config.xml
+\family default
+\series default
+ and 
+\family sans
+\series bold
+web/WEB-INF/db/db.conf
+\family default
+\series default
+.
+\end_layout
+
+\end_deeper
 \begin_layout Subsection*
 Logging
 \end_layout
