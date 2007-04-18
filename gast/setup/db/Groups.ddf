@@ -14,3 +14,4 @@ referrer,      INTEGER
 [DATA]
 0	internal			
 1	all			
+2	sample			
