@@ -10,6 +10,10 @@
 
 - Added jdbc driver for postgresql
 
+- Added confirmation dialog to GAST during database setup
+
+- Added a sample group
+
 --------------------------------------------------------------------------------
 --- Changes
 --------------------------------------------------------------------------------
@@ -56,6 +60,8 @@
 - Fixed an exception raised when changing user information
 
 - Fixed bug in metadata.admin.form : now only groups visible to the user are returned
+
+- Fixed bug in the editor : on Windows machines, CR/LF were doubled on saving
 
 ================================================================================
 ===
