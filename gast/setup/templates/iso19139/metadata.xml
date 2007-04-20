@@ -118,7 +118,7 @@
 				<gmd:MD_CharacterSetCode codeList="./resources/codeList.xml#MD_CharacterSetCode" codeListValue="utf8" />
 			</gmd:characterSet>
 			<gmd:topicCategory>
-				<gmd:MD_TopicCategoryCode codeList="./resources/codeList.xml#MD_TopicCategoryCode" codeListValue="geoscientificInformation" />
+				<gmd:MD_TopicCategoryCode>geoscientificInformation</gmd:MD_TopicCategoryCode>
 			</gmd:topicCategory>
 		</gmd:MD_DataIdentification>
 	</gmd:identificationInfo>
