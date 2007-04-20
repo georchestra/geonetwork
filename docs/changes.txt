@@ -47,13 +47,17 @@
 - ISO19139: Changed 'language' element to a char 3 code. Added a dropdown to the 
   editor to choose the language. Updated migration stylesheets from 19115 -> 19139
 
+- ISO19139: Fixed TopicCategoryCode. It is not a codelist
+
+- xml metadata insert: forced 'gmd:' prefix for iso19139 metadata
+
 --------------------------------------------------------------------------------
 --- Bugs fixed
 --------------------------------------------------------------------------------
 
 - Fixed NullPointerException with Tomcat
 
-- Fixed validation bug using Java 1.5 facilities
+- Fixed validation bug using Java 1.5 facilities. Fixed iso19139 schema also
 
 - Fixed fkey constraint violation when removing harvesting nodes
 
@@ -62,6 +66,12 @@
 - Fixed bug in metadata.admin.form : now only groups visible to the user are returned
 
 - Fixed bug in the editor : on Windows machines, CR/LF were doubled on saving
+
+- GAST: resources were not properly aborted
+
+- GAST: fixed missing 'gmd:' prefix when migrating metadata 19115 -> 19139
+
+- User's form: the group's name was not localized
 
 ================================================================================
 ===
