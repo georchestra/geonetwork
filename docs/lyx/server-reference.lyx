@@ -106,7 +106,7 @@ Andrea Carboni
 \align center
 
 \size larger
-Revision 4 (09-Mar-2007)
+Revision 5 (23-Apr-2007)
 \end_layout
 
 \begin_layout Standard
@@ -151,6 +151,8 @@ thispagestyle{empty}
 \begin_layout Standard
 This document gives some insights about the internal structure of GeoNetwork
  opensource.
+ It describes some basic operations, like compiling and running the software,
+ protocols used, a description of XML services and the Settings structure.
 \end_layout
 
 \begin_layout Standard
@@ -173,16 +175,389 @@ Compiling and running GeoNetwork opensource
 System Requirements
 \end_layout
 
-\begin_layout Section
-Package structure
+\begin_layout Standard
+GeoNetwork is a Java application that runs as a servlet so the Java Runtime
+ Environment (JRE) must be installed in order to run it.
+ You can get the JRE from the following address 
+\family sans
+\series bold
+http://java.sun.com
+\family default
+\series default
+ and you have to download the Java 5 Standard Edition (SE).
+ GeoNetwork won't run with Java 1.4 and Java 6 has some problems with it
+ so we recommend to use Java 5.
+ Being written in Java, GeoNetwork can run on any platform that supports
+ Java, so it can run on Windows, Linux and Mac OSX.
+ For the latter one, make sure to use version 10.4 (Tiger) or newer.
+ Version 10.3 (Panther) has only Java 1.4 so it cannot run GeoNetwork.
+\end_layout
+
+\begin_layout Standard
+Next, you need a servlet container.
+ GeoNetwork comes with an embedded one (Jetty) which is fast and well suited
+ for most applications.
+ If you need a stronger one, you can install Tomcat from the Apache Software
+ Foundation (
+\family sans
+\series bold
+http://tomcat.apache.org
+\family default
+\series default
+).
+ It provides load balance, fault tolerance and other corporate needed stuff.
+ If you work for an organization, it is probable that you already have it
+ up and running.
+ The tested version is 5.5 but GeoNetwork should work with all other versions.
+\end_layout
+
+\begin_layout Standard
+Regarding storage, you need a Database Management System (DBMS) like Oracle,
+ MySQL, PostgreSQL and so on.
+ GeoNetwork comes with an embedded one (McKoi) which is used by default
+ during installation.
+ This DBMS can be used for small or desktop installations, where the speed
+ is not an issue.
+ You can use this DBMS for several thousands of metadata.
+ If you manage more than 10.000 metadata it is better to use a professional,
+ stand alone DBMS.
+ In this case, using a separate DBMS also frees up some memory for the applicati
+on.
+\end_layout
+
+\begin_layout Standard
+GeoNetwork does not require a strong machine to run.
+ A good performance can be obtained even with 128 Mb of RAM.
+ The suggested amount is 512 Mb.
+ For the hard disk space, you have to consider the space required for the
+ application itself (about 40 Mb) and the space required for data maps,
+ which can require 50 Gb or more.
+ A simple disk of 250 Gb should be ok.
+ Maybe you can choose a fast one to reduce backup time but GeoNetwork itself
+ does not speed up on a faster disk.
+ You also need some space for the search index which is located in 
+\family sans
+\series bold
+web/WEB-INF/lucene
+\family default
+\series default
+.
+ Even with a lot of metadata the index is small so usually 10-20 Mb of space
+ is enough.
 \end_layout
 
 \begin_layout Section
-Source code structure
+Running the software
+\end_layout
+
+\begin_layout Standard
+The software is run in different ways depending on the servlet container
+ you are using:
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+Tomcat
+\series default
+ You can use the manager web application to start/stop GeoNetwork.
+ You can also use the 
+\family sans
+\series bold
+startup.*
+\family default
+\series default
+ and 
+\family sans
+\series bold
+shutdown.*
+\family default
+\series default
+ scripts located into Tomcat's 
+\family sans
+\series bold
+bin
+\family default
+\series default
+ folder (.* means .sh or .bat depending on your OS) but this way you restart
+ all applications you are running, not only GeoNetwork.
+ After installation and before running GeoNetwork you must link it to Tomcat.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+Jetty
+\series default
+ If you use the provided container you can use the scripts into GeoNetwork's
+ 
+\family sans
+\series bold
+bin
+\family default
+\series default
+ folder.
+ The scripts are 
+\family sans
+\series bold
+start-geonetwork.*
+\family default
+\series default
+ and 
+\family sans
+\series bold
+stop-geonetwork.*
+\family default
+\series default
+ and you must be inside the 
+\family sans
+\series bold
+bin
+\family default
+\series default
+ folder to run them.
+ You can use these scripts just after installation.
 \end_layout
 
 \begin_layout Section
 Compiling GeoNetwork
+\end_layout
+
+\begin_layout Standard
+To compile GeoNetwork you first need to install the source code during installat
+ion.
+ If you do so, you get a 
+\family sans
+\series bold
+build.xml
+\family default
+\series default
+ script and a 
+\family sans
+\series bold
+src
+\family default
+\series default
+ folder with the full source.
+\end_layout
+
+\begin_layout Standard
+You also need the 
+\family sans
+\series bold
+Ant
+\family default
+\series default
+ tool to run the build script.
+ You can download Ant from 
+\family sans
+\series bold
+http://ant.apache.org
+\family default
+\series default
+.
+ Version 1.6.5 works but any other recent version should be ok.
+ Once installed, you should have the 
+\family sans
+\series bold
+ant
+\family default
+\series default
+ command in your path (on Windows systems, you have to open a shell to check).
+\end_layout
+
+\begin_layout Standard
+When all is in place, go inside the GeoNetwork's root folder (the one where
+ the 
+\family sans
+\series bold
+build.xml
+\family default
+\series default
+ file is located) and issue the 
+\family sans
+\series bold
+ant
+\family default
+\series default
+ command.
+ You should see an output like this one:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout LyX-Code
+
+\size footnotesize
+gemini:/geonetwork/trunk# ant 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+Buildfile: build.xml
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+compile: 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+[delete] Deleting: /geonetwork/trunk/web/WEB-INF/lib/geonetwork.jar 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+[delete] Deleting: /geonetwork/trunk/csw/lib/csw-client.jar 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+[delete] Deleting: /geonetwork/trunk/csw/lib/csw-common.jar 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+[delete] Deleting: /geonetwork/trunk/gast/gast.jar 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+ [mkdir] Created dir: /geonetwork/trunk/.build 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+ [javac] Compiling 267 source files to /geonetwork/trunk/.build 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+ [javac] Note: Some input files use or override a deprecated API.
+ 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+ [javac] Note: Recompile with -Xlint:deprecation for details.
+ 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+ [javac] Note: Some input files use unchecked or unsafe operations.
+ 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+ [javac] Note: Recompile with -Xlint:unchecked for details.
+ 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+  [copy] Copying 1 file to /geonetwork/trunk/.build 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   [jar] Building jar: /geonetwork/trunk/web/WEB-INF/lib/geonetwork.jar 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   [jar] Building jar: /geonetwork/trunk/csw/lib/csw-client.jar 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   [jar] Building jar: /geonetwork/trunk/csw/lib/csw-common.jar 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   [jar] Building jar: /geonetwork/trunk/gast/gast.jar 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+[delete] Deleting directory /geonetwork/trunk/.build
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+BUILD SUCCESSFUL 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+Total time: 9 seconds 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+gemini:/geonetwork/trunk#
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The compilation phase, if it has success, puts all jars into the proper
+ place (most of them will be copied into 
+\family sans
+\series bold
+web/WEB-INF/lib
+\family default
+\series default
+).
+ After this phase, simply restart GeoNetwork to see the effects.
 \end_layout
 
 \begin_layout Part
@@ -1074,12 +1449,1144 @@ XML Services
 Calling specifications
 \end_layout
 
-\begin_layout Standard
-tramite http get/post
+\begin_layout Section
+Calling XML services
 \end_layout
 
 \begin_layout Standard
-exceptions
+GeoNetwork provides access to several internal structures through the use
+ of XML services.
+ These are much like HTML addresses but return XML instead.
+ As an example, consider the 
+\family sans
+\series bold
+xml.info
+\family default
+\series default
+ service: you can use this service to get some system's information without
+ fancy styles and graphics.
+ In GeoNetwork, XML services have usually the 
+\family sans
+\series bold
+xml.
+
+\family default
+\series default
+ prefix in their address.
+\end_layout
+
+\begin_layout Subsection
+Request
+\end_layout
+
+\begin_layout Standard
+Each service accepts a set of parameters, which must be embedded into the
+ request.
+ A service can be called using different HTTP methods, depending on the
+ structure of its request:
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+GET
+\series default
+ The parameters are sent using the URL address.
+ On the server side, these parameters are grouped into a flat XML document
+ with one root and several simple children.
+ A service can be called this way only if the parameters it accepts are
+ not structured.
+ Figure 
+\begin_inset LatexCommand \ref{fig:xml-get-request}
+
+\end_inset
+
+ shows an example of such request and the parameters encoded in XML.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+POST
+\series default
+ There are 3 variants of this method:
+\end_layout
+
+\begin_deeper
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+ENCODED
+\series default
+ The request has one of the following content types: 
+\emph on
+application/x-www-form-urlencoded
+\emph default
+ or 
+\emph on
+multipart/form-data
+\emph default
+.
+ The first case is very common when sending web forms while the second one
+ is used to send binary data (usually files) to the server.
+ In these cases, the parameters are not structured so the rules of the GET
+ method applies.
+ Even if the second case could be used to send XML documents, this possibility
+ is not considered on the server side.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+XML
+\series default
+ The content type is 
+\emph on
+application/xml
+\emph default
+.
+ This is the common case when the client is not a browser but a specialized
+ client.
+ The request is a pure XML document in string form, encoded using the encoding
+ specified into the prologue of the XML document.
+ Using this form, any type of request can be made (structured or not) so
+ any service can be called.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+SOAP
+\series default
+ The content type is 
+\emph on
+application/soap+xml
+\emph default
+.
+ SOAP is a simple protocol used to access objects and services using XML.
+ Clients that use this protocol can embed XML requests into a SOAP structure.
+ On the server side, GeoNetwork will remove the SOAP structure and feed
+ the content to the service.
+ Its response will be embedded again into a SOAP structure and sent back
+ to the caller.
+ It makes sense to use this protocol if it is the only protocol understood
+ by the client.
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\align center
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout LyX-Code
+
+\size footnotesize
+GET /geonetwork/srv/en/main.search?hitsPerPage=10&any=
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+<request>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <hitsPerPage>10</hitsPerPage> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <any /> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+</request> 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Caption
+\begin_inset LatexCommand \label{fig:xml-get-request}
+
+\end_inset
+
+A GET request to a XML service and its request encoding
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Response
+\end_layout
+
+\begin_layout Standard
+The response of an XML service always has a content type of
+\emph on
+ application/xml
+\emph default
+ (the only exception are those services which return binary data).
+ The document encoding is the one specified into the document's prologue.
+ Anyway, all GeoNetwork services return documents in the UTF-8 encoding.
+\end_layout
+
+\begin_layout Standard
+On a GET request, the client can force a SOAP response adding the 
+\emph on
+application/soap+xml
+\emph default
+ content type to the 
+\family sans
+Accept
+\family default
+ header parameter.
+\end_layout
+
+\begin_layout Section
+Exception handling
+\end_layout
+
+\begin_layout Standard
+A response document having an 
+\family sans
+\series bold
+error
+\family default
+\series default
+ root element means that the XML service raised an exception.
+ This can happen under several conditions: bad parameters, internal errors
+ etc...
+ In this cases the returned XML document has the following structure:
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+error
+\family default
+\series default
+ : This is the root element of the document.
+ It has a mandatory 
+\family sans
+\series bold
+id
+\family default
+\series default
+ attribute that represents an identifier of the error from a common set.
+ See table 
+\begin_inset LatexCommand \ref{tab:summary-of-error-ids}
+
+\end_inset
+
+ for a list of all id values.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+message
+\family default
+\series default
+ : A message related to the error.
+ It can be a short description about the error type or it can contain some
+ other information that completes the id code.
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+class
+\family default
+\series default
+ : The Java class of the raised error (name without package information).
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+stack
+\family default
+\series default
+ : The server's stacktrace up to the point that generated the exception.
+ It contains several 
+\family sans
+\series bold
+at
+\family default
+\series default
+ children, one for each nested level.
+ Useful for debugging purposes.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+at
+\family default
+\series default
+ : Information about a nested level of called code.
+ It has the following mandatory attributes:
+\end_layout
+
+\begin_deeper
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\family sans
+\series bold
+class
+\family default
+\series default
+ Java class of the called method.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\family sans
+\series bold
+method
+\family default
+\series default
+ Java called method.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\family sans
+\series bold
+line
+\family default
+\series default
+ Line, inside the called method's source code where there the method call
+ of the next nested level.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\family sans
+\series bold
+file
+\family default
+\series default
+ Source file where the class is defined.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+object
+\family default
+\series default
+ : An optional container for parameters or other values that caused the
+ exception.
+ In case a parameter is an XML object, this container will contain that
+ object in XML form.
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+request
+\family default
+\series default
+ : A container for some useful information that can be needed to debug the
+ service.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+language
+\family default
+\series default
+ : Language used when the service was called.
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+service
+\family default
+\series default
+ : Name of the called service.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\align center
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="15" columns="3">
+<features>
+<column alignment="left" valignment="top" leftline="true" width="0">
+<column alignment="left" valignment="top" leftline="true" width="6cm">
+<column alignment="left" valignment="top" leftline="true" rightline="true" width="6cm">
+<row topline="true" bottomline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family sans
+\series bold
+id
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\series bold
+Meaning of 
+\family sans
+message
+\family default
+ element
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\series bold
+Meaning of 
+\family sans
+object
+\family default
+ element
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+error
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+General message, human readable
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+bad-format
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Reason
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+-
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+bad-parameter
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Name of the parameter
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Parameter's bad value
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+file-not-found
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+-
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+File's name
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+file-upload-too-big
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+-
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+-
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+missing-parameter
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Name of the parameter
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+XML container where the parameter should have been present.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+object-not-found
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+-
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Object's name
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+operation-aborted
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Reason of abort
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+If present, the object that caused the abort
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+operation-not-allowed
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+-
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+-
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+resource-not-found
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+-
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Resource's name
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+service-not-allowed
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+-
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Service's name
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+service-not-found
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+-
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Service's name
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+user-login
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+User login failed message
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+User's name
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true" bottomline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+user-not-found
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+-
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+User's id or name
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Caption
+\begin_inset LatexCommand \label{tab:summary-of-error-ids}
+
+\end_inset
+
+Summary of error ids
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Figure 
+\begin_inset LatexCommand \ref{fig:xml-exc-handling}
+
+\end_inset
+
+ shows an example of exception generated by the 
+\family sans
+\series bold
+mef.export
+\family default
+\series default
+ service.
+ The service complains about a missing parameter, as you can see from the
+ content of the 
+\family sans
+\series bold
+id
+\family default
+\series default
+ attribute.
+ The 
+\family sans
+\series bold
+object
+\family default
+\series default
+ element contains the xml request with an unknown 
+\family sans
+\series bold
+test
+\family default
+\series default
+ paremeter while the mandatory 
+\family sans
+\series bold
+uuid
+\family default
+\series default
+ parameter (as specified by the 
+\family sans
+\series bold
+message
+\family default
+\series default
+ element) is missing.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\align center
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout LyX-Code
+
+\size footnotesize
+<error id="missing-parameter">   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <message>uuid</message>   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <class>MissingParameterEx</class>   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <stack>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <at class="jeeves.utils.Util" 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+            file="Util.java" line="66" method="getParam"/>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <at class="org.fao.geonet.services.mef.Export" 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+            file="Export.java" line="60" method="exec"/>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <at class="jeeves.server.dispatchers.ServiceInfo" 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+            file="ServiceInfo.java" line="226" method="execService"/>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <at class="jeeves.server.dispatchers.ServiceInfo" 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+            file="ServiceInfo.java" line="129" method="execServices"/>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <at class="jeeves.server.dispatchers.ServiceManager" 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+            file="ServiceManager.java" line="370" method="dispatch"/>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </stack>   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <object>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <request>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <asd>ee</asd>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      </request>   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </object>   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <request>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <language>en</language>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <service>mef.export</service>   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </request> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+</error> 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Caption
+\begin_inset LatexCommand \label{fig:xml-exc-handling}
+
+\end_inset
+
+An example of generated exception
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Chapter
@@ -5163,6 +6670,7 @@ xml.config.update
 \family default
 \series default
 .
+ The second group of parameters can be changed using the GAST tool.
 \end_layout
 
 \begin_layout Section
@@ -5203,99 +6711,187 @@ system
 \end_layout
 
 \begin_layout Itemize
+
+\series bold
 site
+\series default
+ : A container for site information.
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
+
+\series bold
 name
+\series default
+ : Site's name.
 \end_layout
 
 \begin_layout Itemize
+
+\series bold
 organization
+\series default
+ : Site's organization name.
 \end_layout
 
 \end_deeper
 \begin_layout Itemize
+
+\series bold
 server
+\series default
+ : A container for server information.
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
+
+\series bold
 host
+\series default
+ : Name of the host from which the site is reached.
 \end_layout
 
 \begin_layout Itemize
+
+\series bold
 port
+\series default
+ : Port number of the previous host.
 \end_layout
 
 \end_deeper
 \begin_layout Itemize
+
+\series bold
 intranet
+\series default
+ : Information about the intranet of the organization.
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
+
+\series bold
 network
+\series default
+ : IP address that specifies the network.
 \end_layout
 
 \begin_layout Itemize
+
+\series bold
 netmask
+\series default
+ : netmask of the network.
 \end_layout
 
 \end_deeper
 \begin_layout Itemize
+
+\series bold
 z3950
+\series default
+ : Configuration about Z39.50 protocol.
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
+
+\series bold
 enable
+\series default
+ : 
+\series bold
+true
+\series default
+ means that the server component is running.
 \end_layout
 
 \begin_layout Itemize
+
+\series bold
 port
+\series default
+ : Port number to use to listen for incoming Z39.50 requests.
 \end_layout
 
+\end_deeper
 \begin_layout Itemize
+
+\series bold
 proxy
+\series default
+ : Proxy configuration
 \end_layout
 
-\end_deeper
+\begin_deeper
 \begin_layout Itemize
+
+\series bold
 use
+\series default
+ : true means that the proxy is used when connecting to external nodes.
 \end_layout
 
-\begin_deeper
 \begin_layout Itemize
+
+\series bold
 host
+\series default
+ : Proxy's server host.
 \end_layout
 
 \begin_layout Itemize
+
+\series bold
 port
+\series default
+ : Proxy's server port.
 \end_layout
 
 \end_deeper
 \begin_layout Itemize
+
+\series bold
 feedback
+\series default
+ : A container for feeback information
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
+
+\series bold
 email
+\series default
+ : Administrator's email address
 \end_layout
 
 \begin_layout Itemize
+
+\series bold
 mailServer
+\series default
+ : Email server to use to send feedback
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
+
+\series bold
 host
+\series default
+ : Email's host address
 \end_layout
 
 \begin_layout Itemize
+
+\series bold
 port
+\series default
+ : Email's port to use in host address
 \end_layout
 
 \end_deeper
@@ -5502,12 +7098,554 @@ status open
 xml.config.update
 \end_layout
 
+\begin_layout Standard
+This service is used to update the system's information and so it is restricted
+ to administrators.
+ 
+\end_layout
+
 \begin_layout Subsection*
 Request
 \end_layout
 
+\begin_layout Standard
+The request format must have the same structure returned by the 
+\family sans
+\series bold
+xml.config.get
+\family default
+\series default
+ service.
+ Some parameters are mandatory while other are optional (please, refer to
+ table 
+\begin_inset LatexCommand \ref{tab:mand-opt-config-update}
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="15" columns="3">
+<features>
+<column alignment="left" valignment="top" leftline="true" width="0">
+<column alignment="center" valignment="top" leftline="true" width="0">
+<column alignment="center" valignment="top" leftline="true" rightline="true" width="0">
+<row topline="true" bottomline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\series bold
+Parameter
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\series bold
+Type
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\series bold
+Mandatory
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+site/name
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+string
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+yes
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+site/organization
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+string
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+-
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+server/host
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+string
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+yes
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+server/port
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+number or empty
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+yes
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+intranet/network
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+string
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+yes
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+intranet/netmask
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+string
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+yes
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+z3950/enable
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+bool
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+yes
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+z3950/port
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+number or empty
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+-
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+proxy/use
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+bool
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+yes
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+proxy/host
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+string
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+-
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+proxy/port
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+number or empty
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+-
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+feedback/email
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+string
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+-
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+feedback/mailServer/host
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+string
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+-
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true" bottomline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+feedback/mailServer/port
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+number or empty
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+-
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Caption
+\begin_inset LatexCommand \label{tab:mand-opt-config-update}
+
+\end_inset
+
+Mandatory and optional parameters for the 
+\family sans
+\series bold
+xml.config.update
+\family default
+\series default
+ service.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection*
 Response
+\end_layout
+
+\begin_layout Standard
+On success, the service returns a response element with the 
+\series bold
+ok
+\series default
+ text.
+ Example:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout LyX-Code
+
+\size footnotesize
+<response>ok</response>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Otherwise a proper error element is returned.
 \end_layout
 
 \begin_layout Chapter
