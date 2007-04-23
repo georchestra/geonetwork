@@ -12,6 +12,6 @@ email,         VARCHAR
 referrer,      INTEGER
 
 [DATA]
-0	internal			
+0	intranet			
 1	all			
 2	sample			
