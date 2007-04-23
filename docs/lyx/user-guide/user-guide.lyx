@@ -105,7 +105,7 @@ Andrea Carboni
 \align center
 
 \size larger
-Revision 2 (05-Apr-2007)
+Revision 3 (23-Apr-2007)
 \end_layout
 
 \begin_layout Standard
@@ -582,6 +582,174 @@ During CSW requests.
  The GetCapabilities operation returns an XML document with HTTP links to
  the CSW services.
  These links are dynamically built using the host and port values.
+\end_layout
+
+\begin_layout Section
+Localization
+\end_layout
+
+\begin_layout Standard
+The GeoNetwork's user interface can be easily localized into several languages
+ just adding a few XML files.
+ Anyway, beside static labels on the web page there are some dinamic entities
+ that can be created and changed for which a simple XML file is not enough.
+ These entities are stored inside the database and their localization can
+ be performed using a specialized web form which can be reached from the
+ administration page (see figure 
+\begin_inset LatexCommand \ref{fig:localiz-location}
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename images/web-localization-where.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Caption
+\begin_inset LatexCommand \label{fig:localiz-location}
+
+\end_inset
+
+How to reach the localization page
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This form allows you to localize all entities whose structure is similar:
+ a short non localized name and several localized labels, one for each supported
+ language.
+ Up to now, you can localize the following entities: 
+\emph on
+groups
+\emph default
+, 
+\emph on
+categories
+\emph default
+, 
+\emph on
+operations
+\emph default
+ and 
+\emph on
+regions
+\emph default
+.
+ The form is shown in figure 
+\begin_inset LatexCommand \ref{fig:localiz-form}
+
+\end_inset
+
+ and is subdivided into a left and a right panel.
+ 
+\end_layout
+
+\begin_layout Standard
+The left panel allows you to choose which entity you want to edit.
+ On the top, a dropdown let you choose which entity type to edit.
+ All entities of a choosen type are shown in a list on the bottom part of
+ the panel (actually, the short names are listed).
+\end_layout
+
+\begin_layout Standard
+The right panel allows a translator to read the label in a source language
+ and translate it into a target language.
+ The user can change both the source and the target languages using the
+ provided dropdown controls.
+ The label in the source language is read only while the one in the target
+ language is the one that needs to be localized.
+ When the user changes the target label, the textarea becomes yellow to
+ indicate a change.
+ When the label becomes equal to the initial one again, the textarea becomes
+ white.
+\end_layout
+
+\begin_layout Standard
+On the bottom of the form there are some buttons:
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+Back
+\series default
+ Simply returns to the administration page.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+Save
+\series default
+ Saves the current target label to the server and advances to the next one.
+ The normal workflow is to select first both a source and a target language.
+ Then, the user goes through all entities localizing on at time.
+ It is important to notice that if the user changes a label and chooses
+ another target language, the label change is lost so it is better to localize
+ labels in one language at time.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+Refresh
+\series default
+ Reloads all entities of the selected type and any previous cache of other
+ loaded types is invalidated.
+ This button is useful when the number of entities changes (added or removed
+ by other users).
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename images/web-localization.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Caption
+\begin_inset LatexCommand \label{fig:localiz-form}
+
+\end_inset
+
+The localization form
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Chapter
