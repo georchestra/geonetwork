@@ -4,16 +4,6 @@ List of bugs, issues to be resolved & todo list
 Bugs:
 ==================================================================
 
-- XML Metadata insert form requires a template "title" even for regular metadata. 
-  Without a title the import fails.
-	Proposed resolution: title field is not displayed when Metadata is selected in the 
-	drop down. In Insert.java the title parameter will be validated depending on the 
-	isTemplate parameter.
-
-- XML Metadata insert using ISO19139 only works when the gmd: prefix is used for 
-  ISO19115 elements. The current import conversion from 19115 to 19139 does not 
-  create output that includes these prefixes. The related XSLTs need updating.
-	
 - Some metadata element strings are not found in the editor
 
 ==================================================================
@@ -28,8 +18,6 @@ Issues:
 	- online resources (requires InterMap integration too)
 	- code list issues with ISO19139 metadata
 	
-- The Check for ISO19139 fails.
-
 ==================================================================
 To do:
 ==================================================================

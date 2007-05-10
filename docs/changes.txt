@@ -49,7 +49,7 @@
 
 - ISO19139: Fixed TopicCategoryCode. It is not a codelist
 
-- xml metadata insert: forced 'gmd:' prefix for iso19139 metadata
+- ISO19139: Changed dateTime element to date+time to allow validation.
 
 --------------------------------------------------------------------------------
 --- Bugs fixed
@@ -72,6 +72,13 @@
 - GAST: fixed missing 'gmd:' prefix when migrating metadata 19115 -> 19139
 
 - User's form: the group's name was not localized
+
+- Forced the 'gmd' prefix to iso 19139 metadata to both xml insert and batch import
+
+- Fixed bug with metadata xml insert: 'title' is no longer mandatory if the
+  kind is not subtemplate. Added some javascript to show/hide the title textfield.
+
+- Fixed bug with MEF exports that caused corrupted files on Windows machines
 
 ================================================================================
 ===
