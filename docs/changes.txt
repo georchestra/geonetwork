@@ -51,6 +51,8 @@
 
 - ISO19139: Changed dateTime element to date+time to allow validation.
 
+- Massive Javascript refactoring to accomodate new harvesting needs
+
 --------------------------------------------------------------------------------
 --- Bugs fixed
 --------------------------------------------------------------------------------
@@ -79,6 +81,8 @@
   kind is not subtemplate. Added some javascript to show/hide the title textfield.
 
 - Fixed bug with MEF exports that caused corrupted files on Windows machines
+
+- Localization form : fixed bug when saving region labels
 
 ================================================================================
 ===
