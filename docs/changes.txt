@@ -84,6 +84,8 @@
 
 - Localization form : fixed bug when saving region labels
 
+- Z39.50 is now working
+
 ================================================================================
 ===
 === GeoNetwork 2.1.0 beta1 : List of changes
