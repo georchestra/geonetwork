@@ -245,9 +245,7 @@
 			<description>
 				Once you have configured your DBMS in the 'configuration/dbms' 
 				panel, you have to use this panel to create tables and fill
-				them with initial data. Please notice that if you did a checkout
-				from subversion, you have to select the 'configuration/dbms'
-				panel and press the 'save' button to update the configuration.
+				them with initial data.
 			</description>
 			
 			<button>
