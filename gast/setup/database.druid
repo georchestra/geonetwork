@@ -2,8 +2,8 @@
 
 <project version="2">
 	<attribs>
-		<attrib name="build">131</attrib>
-		<attrib name="serial">62683</attrib>
+		<attrib name="build">132</attrib>
+		<attrib name="serial">62685</attrib>
 	</attribs>
 	<database>
 		<attribs>
@@ -139,6 +139,9 @@
 						</list>
 					</sqlMapping>
 				</oraSql>
+				<mckoiSql>
+					<output>/my/work/fao/geonetwork/cvs/geonetwork/trunk/gast/setup/sql/create-db-mckoi.sql</output>
+				</mckoiSql>
 				<pgSql>
 					<output>/my/work/fao/geonetwork/cvs/geonetwork/trunk/gast/setup/sql/create-db-postgres.sql</output>
 					<sqlMapping type="l">
@@ -154,9 +157,6 @@
 						</list>
 					</sqlMapping>
 				</pgSql>
-				<mckoiSql>
-					<output>/my/work/fao/geonetwork/cvs/geonetwork/trunk/gast/setup/sql/create-db-mckoi.sql</output>
-				</mckoiSql>
 			</SqlGenModule>
 		</modsConfig>
 		<modsUsage>
@@ -564,7 +564,7 @@
 								<attrib name="name">Label</attrib>
 								<attrib name="ddEquiv"/>
 								<attrib name="id">61541</attrib>
-								<attrib name="size">64</attrib>
+								<attrib name="size">96</attrib>
 							</attribs>
 							<domain>
 								<attribs>
@@ -903,22 +903,6 @@ ORDER BY id
 								</idx>
 								<ts>0</ts>
 							</oraSql>
-							<mckoiSql>
-								<idx type="l">
-									<list>
-										<header>
-											<elem type="i">id</elem>
-											<elem type="s">index</elem>
-											<elem type="s">name</elem>
-										</header>
-										<row>
-											<elem>61528</elem>
-											<elem>Idx1</elem>
-											<elem/>
-										</row>
-									</list>
-								</idx>
-							</mckoiSql>
 							<pgSql>
 								<idx type="l">
 									<list>
@@ -939,6 +923,22 @@ ORDER BY id
 									</list>
 								</idx>
 							</pgSql>
+							<mckoiSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
+							</mckoiSql>
 						</SqlGenModule>
 					</modsConfig>
 					<field>
@@ -1622,22 +1622,6 @@ ORDER BY id
 									</list>
 								</idx>
 							</oraSql>
-							<mckoiSql>
-								<idx type="l">
-									<list>
-										<header>
-											<elem type="i">id</elem>
-											<elem type="s">index</elem>
-											<elem type="s">name</elem>
-										</header>
-										<row>
-											<elem>61528</elem>
-											<elem>Idx1</elem>
-											<elem/>
-										</row>
-									</list>
-								</idx>
-							</mckoiSql>
 							<pgSql>
 								<idx type="l">
 									<list>
@@ -1658,6 +1642,22 @@ ORDER BY id
 									</list>
 								</idx>
 							</pgSql>
+							<mckoiSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
+							</mckoiSql>
 						</SqlGenModule>
 					</modsConfig>
 					<field>
@@ -1797,22 +1797,6 @@ ORDER BY id
 								</idx>
 								<ts>0</ts>
 							</oraSql>
-							<mckoiSql>
-								<idx type="l">
-									<list>
-										<header>
-											<elem type="i">id</elem>
-											<elem type="s">index</elem>
-											<elem type="s">name</elem>
-										</header>
-										<row>
-											<elem>61528</elem>
-											<elem>Idx1</elem>
-											<elem/>
-										</row>
-									</list>
-								</idx>
-							</mckoiSql>
 							<pgSql>
 								<idx type="l">
 									<list>
@@ -1833,6 +1817,22 @@ ORDER BY id
 									</list>
 								</idx>
 							</pgSql>
+							<mckoiSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
+							</mckoiSql>
 						</SqlGenModule>
 					</modsConfig>
 					<field>
@@ -2024,22 +2024,6 @@ ORDER BY id
 									</list>
 								</idx>
 							</oraSql>
-							<mckoiSql>
-								<idx type="l">
-									<list>
-										<header>
-											<elem type="i">id</elem>
-											<elem type="s">index</elem>
-											<elem type="s">name</elem>
-										</header>
-										<row>
-											<elem>61528</elem>
-											<elem>Idx1</elem>
-											<elem/>
-										</row>
-									</list>
-								</idx>
-							</mckoiSql>
 							<pgSql>
 								<idx type="l">
 									<list>
@@ -2060,6 +2044,22 @@ ORDER BY id
 									</list>
 								</idx>
 							</pgSql>
+							<mckoiSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
+							</mckoiSql>
 						</SqlGenModule>
 					</modsConfig>
 					<field>
@@ -2329,6 +2329,22 @@ ORDER BY id
 									</list>
 								</idx>
 							</oraSql>
+							<mckoiSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
+							</mckoiSql>
 							<pgSql>
 								<idx type="l">
 									<list>
@@ -2349,22 +2365,6 @@ ORDER BY id
 									</list>
 								</idx>
 							</pgSql>
-							<mckoiSql>
-								<idx type="l">
-									<list>
-										<header>
-											<elem type="i">id</elem>
-											<elem type="s">index</elem>
-											<elem type="s">name</elem>
-										</header>
-										<row>
-											<elem>61528</elem>
-											<elem>Idx1</elem>
-											<elem/>
-										</row>
-									</list>
-								</idx>
-							</mckoiSql>
 						</SqlGenModule>
 					</modsConfig>
 					<field>
@@ -2729,22 +2729,6 @@ ORDER BY id
 								</idx>
 								<ts>0</ts>
 							</oraSql>
-							<mckoiSql>
-								<idx type="l">
-									<list>
-										<header>
-											<elem type="i">id</elem>
-											<elem type="s">index</elem>
-											<elem type="s">name</elem>
-										</header>
-										<row>
-											<elem>61528</elem>
-											<elem>Idx1</elem>
-											<elem/>
-										</row>
-									</list>
-								</idx>
-							</mckoiSql>
 							<pgSql>
 								<idx type="l">
 									<list>
@@ -2765,6 +2749,22 @@ ORDER BY id
 									</list>
 								</idx>
 							</pgSql>
+							<mckoiSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
+							</mckoiSql>
 						</SqlGenModule>
 					</modsConfig>
 					<field>
@@ -2902,6 +2902,22 @@ ORDER BY id
 									</list>
 								</idx>
 							</oraSql>
+							<mckoiSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
+							</mckoiSql>
 							<pgSql>
 								<idx type="l">
 									<list>
@@ -2922,22 +2938,6 @@ ORDER BY id
 									</list>
 								</idx>
 							</pgSql>
-							<mckoiSql>
-								<idx type="l">
-									<list>
-										<header>
-											<elem type="i">id</elem>
-											<elem type="s">index</elem>
-											<elem type="s">name</elem>
-										</header>
-										<row>
-											<elem>61528</elem>
-											<elem>Idx1</elem>
-											<elem/>
-										</row>
-									</list>
-								</idx>
-							</mckoiSql>
 						</SqlGenModule>
 					</modsConfig>
 					<field>
@@ -3052,6 +3052,22 @@ ORDER BY id
 									</list>
 								</idx>
 							</oraSql>
+							<mckoiSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
+							</mckoiSql>
 							<pgSql>
 								<idx type="l">
 									<list>
@@ -3072,22 +3088,6 @@ ORDER BY id
 									</list>
 								</idx>
 							</pgSql>
-							<mckoiSql>
-								<idx type="l">
-									<list>
-										<header>
-											<elem type="i">id</elem>
-											<elem type="s">index</elem>
-											<elem type="s">name</elem>
-										</header>
-										<row>
-											<elem>61528</elem>
-											<elem>Idx1</elem>
-											<elem/>
-										</row>
-									</list>
-								</idx>
-							</mckoiSql>
 						</SqlGenModule>
 					</modsConfig>
 					<field>
@@ -3102,9 +3102,9 @@ ORDER BY id
 						</fieldAttribs>
 						<attribs>
 							<attrib name="comment"/>
-							<attrib name="name">idDes</attrib>
-							<attrib name="refField">62105</attrib>
 							<attrib name="matchType">s</attrib>
+							<attrib name="refField">62105</attrib>
+							<attrib name="name">idDes</attrib>
 							<attrib name="id">62112</attrib>
 							<attrib name="onDelete">n</attrib>
 							<attrib name="onUpdate">n</attrib>
@@ -3125,9 +3125,9 @@ ORDER BY id
 						</fieldAttribs>
 						<attribs>
 							<attrib name="comment"/>
-							<attrib name="name">langId</attrib>
-							<attrib name="refField">57906</attrib>
 							<attrib name="matchType">s</attrib>
+							<attrib name="refField">57906</attrib>
+							<attrib name="name">langId</attrib>
 							<attrib name="id">62392</attrib>
 							<attrib name="onDelete">n</attrib>
 							<attrib name="onUpdate">n</attrib>
@@ -3148,9 +3148,9 @@ ORDER BY id
 						</fieldAttribs>
 						<attribs>
 							<attrib name="comment"/>
-							<attrib name="name">label</attrib>
-							<attrib name="refField">0</attrib>
 							<attrib name="matchType">s</attrib>
+							<attrib name="refField">0</attrib>
+							<attrib name="name">label</attrib>
 							<attrib name="id">62396</attrib>
 							<attrib name="onDelete">n</attrib>
 							<attrib name="onUpdate">n</attrib>
@@ -3371,22 +3371,6 @@ ORDER BY id
 									</list>
 								</idx>
 							</oraSql>
-							<mckoiSql>
-								<idx type="l">
-									<list>
-										<header>
-											<elem type="i">id</elem>
-											<elem type="s">index</elem>
-											<elem type="s">name</elem>
-										</header>
-										<row>
-											<elem>61528</elem>
-											<elem>Idx1</elem>
-											<elem/>
-										</row>
-									</list>
-								</idx>
-							</mckoiSql>
 							<pgSql>
 								<idx type="l">
 									<list>
@@ -3407,6 +3391,22 @@ ORDER BY id
 									</list>
 								</idx>
 							</pgSql>
+							<mckoiSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
+							</mckoiSql>
 						</SqlGenModule>
 					</modsConfig>
 					<field>
