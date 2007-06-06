@@ -7,14 +7,14 @@
 CREATE TABLE Metadata
   (
     id           int,
-    uuid         varchar(36)    not null,
+    uuid         varchar(250)   not null,
     schemaId     varchar(32)    not null,
     isTemplate   char(1)        default 'n' not null,
     isHarvested  char(1)        default 'n' not null,
     createDate   varchar(24)    not null,
     changeDate   varchar(24)    not null,
     data         text           not null,
-    source       varchar(36)    not null,
+    source       varchar(250)   not null,
     sourceUri    varchar(255),
     title        varchar(255),
     root         varchar(255),
@@ -64,7 +64,7 @@ CREATE TABLE Languages
 
 CREATE TABLE KnownNodes
   (
-    siteId   varchar(36),
+    siteId   varchar(250),
     name     varchar(250),
     host     varchar(250),
     port     int,
