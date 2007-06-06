@@ -1,4 +1,4 @@
-#LyX 1.4.3 created this file. For more info see http://www.lyx.org/
+#LyX 1.4.4 created this file. For more info see http://www.lyx.org/
 \lyxformat 245
 \begin_document
 \begin_header
@@ -106,7 +106,7 @@ Andrea Carboni
 \align center
 
 \size larger
-Revision 5 (23-Apr-2007)
+Revision 6 (06-Jun-2007)
 \end_layout
 
 \begin_layout Standard
@@ -6896,6 +6896,24 @@ port
 
 \end_deeper
 \end_deeper
+\begin_layout Itemize
+
+\series bold
+removedMetadata
+\series default
+ : A container for removed metadata information
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+dir
+\series default
+ : Folder used to store removed metadata in MEF format
+\end_layout
+
+\end_deeper
 \begin_layout Standard
 \begin_inset Box Boxed
 position "t"
@@ -7080,7 +7098,25 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
-   </feedback> 
+   </feedback>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <removedMetadata>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <dir>WEB-INF/removed</dir>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </removedMetadata>
 \end_layout
 
 \begin_layout LyX-Code
@@ -7115,14 +7151,16 @@ The request format must have the same structure returned by the
 xml.config.get
 \family default
 \series default
- service.
- Some parameters are mandatory while other are optional (please, refer to
- table 
+ service and can contain only elements that the caller wants to be updated.
+ If an element is not included, it will not be updated.
+ However, when included some elements require mandatory information (i.e.
+ the value cannot be empty).
+ Please, refer to table 
 \begin_inset LatexCommand \ref{tab:mand-opt-config-update}
 
 \end_inset
 
-).
+.
 \end_layout
 
 \begin_layout Standard
@@ -7135,7 +7173,7 @@ status open
 \begin_layout Standard
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="15" columns="3">
+<lyxtabular version="3" rows="16" columns="3">
 <features>
 <column alignment="left" valignment="top" leftline="true" width="0">
 <column alignment="center" valignment="top" leftline="true" width="0">
@@ -7276,7 +7314,7 @@ server/port
 \begin_inset Text
 
 \begin_layout Standard
-number or empty
+integer
 \end_layout
 
 \end_inset
@@ -7285,7 +7323,7 @@ number or empty
 \begin_inset Text
 
 \begin_layout Standard
-yes
+-
 \end_layout
 
 \end_inset
@@ -7392,7 +7430,7 @@ z3950/port
 \begin_inset Text
 
 \begin_layout Standard
-number or empty
+integer
 \end_layout
 
 \end_inset
@@ -7479,7 +7517,7 @@ proxy/port
 \begin_inset Text
 
 \begin_layout Standard
-number or empty
+integer
 \end_layout
 
 \end_inset
@@ -7552,7 +7590,7 @@ string
 \end_inset
 </cell>
 </row>
-<row topline="true" bottomline="true">
+<row topline="true">
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
@@ -7566,7 +7604,7 @@ feedback/mailServer/port
 \begin_inset Text
 
 \begin_layout Standard
-number or empty
+integer
 \end_layout
 
 \end_inset
@@ -7576,6 +7614,35 @@ number or empty
 
 \begin_layout Standard
 -
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true" bottomline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+removedMetadata/dir
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+string
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+yes
 \end_layout
 
 \end_inset
@@ -8277,6 +8344,25 @@ string
 
 \end_deeper
 \end_deeper
+\begin_layout Itemize
+
+\series bold
+removedMetadata
+\series default
+ : This container contains settings about removed metadata.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+dir
+\series default
+ : This folder will contain removed metadata in MEF format.
+ It gets populated when the user deletes a metadata using the web interface.
+\end_layout
+
+\end_deeper
 \begin_layout Section
 Harvesting nodes
 \end_layout
@@ -8653,7 +8739,7 @@ string
 \begin_layout Subsection
 Nodes of type 
 \family sans
-webFolder
+webdav
 \end_layout
 
 \begin_layout Itemize

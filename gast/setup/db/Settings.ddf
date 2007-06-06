@@ -45,3 +45,6 @@ value,         VARCHAR
 62	60	mailServer	
 63	62	host	
 64	62	port	25
+
+70	1	removedMetadata	
+71	70	dir	WEB-INF/removed
