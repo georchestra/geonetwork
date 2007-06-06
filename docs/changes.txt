@@ -1,6 +1,6 @@
 ================================================================================
 ===
-=== GeoNetwork 2.1.0 RC : List of changes
+=== GeoNetwork 2.1.0 beta3 : List of changes
 ===
 ================================================================================
 
@@ -17,6 +17,15 @@
 --------------------------------------------------------------------------------
 
 - Lucene search: fixed a possible race bug when metadata are deleted
+
+- Fixed code compilation on computer with encoding different than ISO-8859
+
+- Fixed namespace declaration for CSW requests returning FGDC metadata
+
+- Changed label's length to varchar(96). There were some language descriptions
+  that were beyond length 64.
+
+- Fixed prototype inclusion bug. It was not possible to create new metadata
 
 ================================================================================
 ===
