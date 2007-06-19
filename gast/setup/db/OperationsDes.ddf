@@ -15,26 +15,26 @@ label,         VARCHAR
 2	en	Edit
 3	en	Notify
 4	en	Admin
-5	en	Interactive
+5	en	Interactive Map
 6	en	Featured
 0	es	View
 1	es	Download
 2	es	Edit
 3	es	Notify
 4	es	Admin
-5	es	Interactive
+5	es	Interactive Map
 6	es	Featured
 0	cn	View
 1	cn	Download
 2	cn	Edit
 3	cn	Notify
 4	cn	Admin
-5	cn	Interactive
+5	cn	Interactive Map
 6	cn	Featured
 0	fr	Visualiser
 1	fr	T~00E9l~00E9charger
 2	fr	Editer
 3	fr	Notifier
 4	fr	Admin
-5	fr	Interactive
+5	fr	Interactive Map
 6	fr	Epingler
