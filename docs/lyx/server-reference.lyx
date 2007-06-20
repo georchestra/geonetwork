@@ -4083,7 +4083,7 @@ status open
 \end_layout
 
 \begin_layout Standard
-Please notice that this service uses the GeoNetwork's proxy configuration.
+Please note that this service uses the GeoNetwork's proxy configuration.
 \end_layout
 
 \begin_layout Subsection*
@@ -4252,13 +4252,25 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
-   <node id="125" name="test 1" type="geonetwork">
+   <node id="125" type="geonetwork">
 \end_layout
 
 \begin_layout LyX-Code
 
 \size footnotesize
-      <site>       
+      <site>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <name>test 1</name>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <uuid>0619cc50-708b-11da-8202-000d9335aaae</uuid>
 \end_layout
 
 \begin_layout LyX-Code
@@ -4438,7 +4450,13 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
-         <lastRun />     
+         <lastRun />
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <running>false</running>
 \end_layout
 
 \begin_layout LyX-Code
@@ -4513,13 +4531,25 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
-<node id="165" name="test" type="webFolder">   
+<node id="165" type="webfolder">   
 \end_layout
 
 \begin_layout LyX-Code
 
 \size footnotesize
    <site>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <name>test 1</name>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <uuid>0619cc50-708b-11da-8202-000d9335aaae</uuid>
 \end_layout
 
 \begin_layout LyX-Code
@@ -4669,6 +4699,12 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
+      <running>false</running>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
    </info> 
 \end_layout
 
@@ -4705,10 +4741,320 @@ xml.harvesting.get
 \end_layout
 
 \begin_layout Standard
-The node's structure is described in the next two services.
- What are missing are the following elements:
+The node's structure has a common XML format, plus some additional information
+ provided by the harvesting types.
+ In the following structure, each element has a cardinality specified using
+ the 
+\family sans
+[x..y]
+\family default
+ notation, where 
+\family sans
+x
+\family default
+ and 
+\family sans
+y
+\family default
+ denote the minimum and the maximum values.
+ The cardinality [1..1] is omitted for clarity.
 \end_layout
 
+\begin_layout Itemize
+
+\family sans
+\series bold
+node
+\family default
+\series default
+ : The root element.
+ It has a mandatory 
+\family sans
+\series bold
+id
+\family default
+\series default
+ attribute that represents the internal identifier and a mandatory 
+\family sans
+\series bold
+type
+\family default
+\series default
+ attribute which indicates the harvesting type.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+site
+\family default
+\series default
+ : A container for site information.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+name
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+) : The node's name used to describe the harvesting.
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+uuid
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+) : This is a system generated unique identifier associated to the harvesting
+ node.
+ This is used as the 
+\family sans
+source
+\family default
+ field into the 
+\family sans
+Metadata
+\family default
+ table to group all metadata from the remote node.
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+account
+\family default
+\series default
+ : A container for account information.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+use
+\family default
+\series default
+ (
+\emph on
+boolean
+\emph default
+) : 
+\family sans
+\series bold
+true
+\family default
+\series default
+ means that the harvester will use the provided username and password to
+ authenticate itself.
+ The authentication mechanism depends on the harvesting type.
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+username
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+) : Username on the remote node.
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+password
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+) : Password on the remote node.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+options
+\family default
+\series default
+ : A container for generic options.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+every
+\family default
+\series default
+ (
+\emph on
+integer
+\emph default
+) : Harvesting interval in minutes.
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+oneRunOnly
+\family default
+\series default
+ (
+\emph on
+boolean
+\emph default
+) : After the first run, the entry's status will be set to 
+\family sans
+\series bold
+inactive
+\family default
+\series default
+.
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+status
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+) : Indicates if the harvesting from this node is stopped (
+\family sans
+\series bold
+inactive
+\family default
+\series default
+) or if the harvester is waiting for the timeout (
+\family sans
+\series bold
+active
+\family default
+\series default
+).
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+privileges
+\family default
+\series default
+ [0..1]: A container for privileges that must be associated to the harvested
+ metadata.
+ This optional element is present only if the harvesting type supports it.
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+group
+\family default
+\series default
+ [0..n] : A container for allowed operations associated to this group.
+ It has the 
+\family sans
+\series bold
+id
+\family default
+\series default
+ attribute which value is the identifier of a GeoNetwork group.
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+operation
+\family default
+\series default
+ [0..n] : Specifies an operation to associate to the containing group.
+ It has a 
+\family sans
+\series bold
+name
+\family default
+\series default
+ attribute which value is one of the supported operation names.
+ 
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+categories
+\family default
+\series default
+ [0..1] : This is a container for categories to assign to each imported metadata.
+ This optional element is present if the harvesting type supports it.
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+category
+\family default
+\series default
+ (
+\emph on
+integer
+\emph default
+) [0..n] : Represents a local category and the 
+\family sans
+\series bold
+id
+\family default
+\series default
+ attribute is its local identifier.
+\end_layout
+
+\end_deeper
 \begin_layout Itemize
 
 \family sans
@@ -4743,7 +5089,11 @@ g from this entry.
 running
 \family default
 \series default
- (boolean) : True if the harvester is currently running.
+ (
+\emph on
+boolean
+\emph default
+) : True if the harvester is currently running.
 \end_layout
 
 \end_deeper
@@ -4766,7 +5116,11 @@ error
 code
 \family default
 \series default
- : The error code, in string form
+ (
+\emph on
+string
+\emph default
+): The error code, in string form.
 \end_layout
 
 \begin_layout Itemize
@@ -4776,7 +5130,11 @@ code
 message
 \family default
 \series default
- : The description of the error.
+ (
+\emph on
+string
+\emph default
+) : The description of the error.
 \end_layout
 
 \begin_layout Itemize
@@ -4786,30 +5144,16 @@ message
 object
 \family default
 \series default
- : The object that caused the error (if any).
+ (
+\emph on
+string
+\emph default
+) : The object that caused the error (if any).
  This element can be present or not depending on the case.
 \end_layout
 
 \end_deeper
-\begin_layout Standard
-When getting information about a harvesting node of type Geonetwork, the
- 
-\family sans
-\series bold
-search
-\family default
-\series default
- element may contain a 
-\family sans
-\series bold
-siteName
-\family default
-\series default
- child.
- This element is present and filled when Geonetwork is able to retrieve
- it from the remote site.
-\end_layout
-
+\end_deeper
 \begin_layout Subsection*
 Errors
 \end_layout
@@ -4833,17 +5177,23 @@ xml.harvesting.add
 \end_layout
 
 \begin_layout Standard
-Create a new harvesting entry.
- The entry can be of any type support by GeoNetwork (GeoNetwork node, web
+Create a new harvesting node.
+ The node can be of any type supported by GeoNetwork (GeoNetwork node, web
  folder etc...).
- When a new entry is created, its status is set to 
+ When a new node is created, its status is set to 
 \family sans
 \series bold
 inactive
 \family default
 \series default
 .
- A call to the xml.harvesting.start service is required to start harvesting.
+ A call to the 
+\family sans
+\series bold
+xml.harvesting.start
+\family default
+\series default
+ service is required to start harvesting.
 \end_layout
 
 \begin_layout Subsection*
@@ -4853,13 +5203,9 @@ Request
 \begin_layout Standard
 The service requires an XML tree with all information the client wants to
  add.
- 
-\end_layout
-
-\begin_layout Standard
-To create a GeoNetwork entry the following XML information should be provided.
- Default values are given in parenthesis (after the parameter's type) and
- are used when the parameter is omitted.
+ In the following sections, default values are given in parenthesis (after
+ the parameter's type) and are used when the parameter is omitted.
+ If no default is provided, the parameter is mandatory.
  If the type is boolean, only the 
 \family sans
 \series bold
@@ -4873,6 +5219,14 @@ false
 \family default
 \series default
  strings are allowed.
+ 
+\end_layout
+
+\begin_layout Standard
+All harvesting nodes share a common XML structure that must be honored.
+ Please, refer to the previous section for elements explanation.
+ Each node type can add extra information to that structure.
+ The common structure is here described:
 \end_layout
 
 \begin_layout Itemize
@@ -4882,16 +5236,262 @@ false
 node
 \family default
 \series default
- : This is the root container.
+ : The root container.
  The 
+\family sans
+\series bold
+type
+\family default
+\series default
+ attribute is mandatory and must be one of the supported harvesting types.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+site
+\family default
+\series default
+ [0..1]
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
 \family sans
 \series bold
 name
 \family default
 \series default
- attribute specifies the entry's name.
- If omitted, an empty string is considered.
- The 
+ (
+\emph on
+string
+\emph default
+, '')
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+account
+\family default
+\series default
+ [0..1]
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+use
+\family default
+\series default
+ (
+\emph on
+boolean
+\emph default
+, 'false')
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+username
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+, '')
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+password
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+, '')
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+options
+\family default
+\series default
+ [0..1]
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+every
+\family default
+\series default
+ (
+\emph on
+integer
+\emph default
+, '90')
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+oneRunOnly
+\family default
+\series default
+ (
+\emph on
+boolean
+\emph default
+, 'false')
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+privileges
+\family default
+\series default
+ [0..1]: Can be omitted but doing so the harvested metadata will not be visible.
+ Please note that privileges are taken into account only if the harvesting
+ type supports them.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+group
+\family default
+\series default
+ [0..n] : It must have the 
+\family sans
+\series bold
+id
+\family default
+\series default
+ attribute which value should be the identifier of a GeoNetwork group.
+ If the id is not a valid group id, all contained operations will be discarded.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+operation
+\family default
+\series default
+ [0..n] : It must have a 
+\family sans
+\series bold
+name
+\family default
+\series default
+ attribute which value must be one of the supported operation names.
+ The operations 
+\family sans
+\series bold
+edit 
+\family default
+\series default
+and
+\family sans
+\series bold
+ admin
+\family default
+\series default
+ cannot be associated to any metadata and will be skipped.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+categories
+\family default
+\series default
+ [0..1] : Please, note that categories will be assigned to metadata only if
+ the harvesting type supports them.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+category
+\family default
+\series default
+ (
+\emph on
+integer
+\emph default
+) [0..n] : The mandatory 
+\family sans
+\series bold
+id
+\family default
+\series default
+ attribute is the category's local identifier.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+Please note that even if clients can store empty values ('') for many parameters
+, before starting the harvesting entry those parameters should be properly
+ set in order to avoid errors.
+\end_layout
+
+\begin_layout Standard
+In the following sections, the XML structures described inherit from this
+ one here so the common elements have been removed for clarity reasons (unless
+ they are containers and contain new children).
+\end_layout
+
+\begin_layout Subsubsection*
+Standard GeoNetwork harvesting
+\end_layout
+
+\begin_layout Standard
+To create a node capable of harvesting from another GeoNetwork node, the
+ following XML information should be provided:
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+node
+\family default
+\series default
+ : The 
 \family sans
 \series bold
 type
@@ -4914,8 +5514,7 @@ geonetwork
 site
 \family default
 \series default
- : A container for site information.
- Can be omitted.
+ 
 \end_layout
 
 \begin_deeper
@@ -4967,67 +5566,10 @@ string
 
 \family sans
 \series bold
-account
-\family default
-\series default
- : A container for account information.
- Can be omitted.
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-
-\family sans
-\series bold
-use
-\family default
-\series default
- (
-\emph on
-boolean
-\emph default
-, 'false') : True means that the harvester will use the provided username
- and password to authenticate itself.
-\end_layout
-
-\begin_layout Itemize
-
-\family sans
-\series bold
-username
-\family default
-\series default
- (
-\emph on
-string
-\emph default
-, '') : Username on the remote node.
-\end_layout
-
-\begin_layout Itemize
-
-\family sans
-\series bold
-password
-\family default
-\series default
- (
-\emph on
-string
-\emph default
-, '') : Password on the remote node.
-\end_layout
-
-\end_deeper
-\begin_layout Itemize
-
-\family sans
-\series bold
 searches
 \family default
 \series default
- : A container for search parameters.
- Can be omitted.
+ [0..1] : A container for search parameters.
 \end_layout
 
 \begin_deeper
@@ -5038,7 +5580,7 @@ searches
 search
 \family default
 \series default
- : A container for a single search on a siteID.
+ [0..n] : A container for a single search on a siteID.
  You can specify 0 or more searches but to properly harvest you have to
  provide at least one.
 \end_layout
@@ -5071,7 +5613,7 @@ title
 \emph on
 string
 \emph default
-, '')
+, '') : Search the title field.
 \end_layout
 
 \begin_layout Itemize
@@ -5085,7 +5627,7 @@ abstract
 \emph on
 string
 \emph default
-, '')
+, '') : Search the abstract field.
 \end_layout
 
 \begin_layout Itemize
@@ -5099,7 +5641,7 @@ keywords
 \emph on
 string
 \emph default
-, '')
+, '') : Search the keywords fields.
 \end_layout
 
 \begin_layout Itemize
@@ -5113,7 +5655,7 @@ digital
 \emph on
 boolean
 \emph default
-, 'false')
+, 'false') : Search for metadata in digital form.
 \end_layout
 
 \begin_layout Itemize
@@ -5127,22 +5669,21 @@ hardcopy
 \emph on
 boolean
 \emph default
-, 'false')
+, 'false') : Search for metadata in printed form.
 \end_layout
 
 \begin_layout Itemize
 
 \family sans
 \series bold
-siteId
+source
 \family default
 \series default
  (
 \emph on
 string
 \emph default
-,) : One of the siteIDs present on the remote node.
- Must be present and not empty.
+, '') : One of the sources present on the remote node.
 \end_layout
 
 \end_deeper
@@ -5152,27 +5693,9 @@ string
 \family sans
 \series bold
 options
-\family default
-\series default
- : A container for generic options.
- Can be omitted.
 \end_layout
 
 \begin_deeper
-\begin_layout Itemize
-
-\family sans
-\series bold
-every
-\family default
-\series default
- (
-\emph on
-integer
-\emph default
-, '90') : Harvesting interval in minutes.
-\end_layout
-
 \begin_layout Itemize
 
 \family sans
@@ -5209,40 +5732,14 @@ boolean
 \end_layout
 
 \end_deeper
-\begin_layout Itemize
-
-\family sans
-\series bold
-oneRunOnly
-\family default
-\series default
- (
-\emph on
-boolean
-\emph default
-, 'false') : After the first run, the entry's status will be set to 
-\family sans
-\series bold
-inactive
-\family default
-\series default
-.
-\end_layout
-
 \end_deeper
-\begin_layout Standard
-Please note that even if clients can store empty values ('') for many parameters
-, before starting the harvesting entry those parameters should be properly
- set in order to avoid errors.
-\end_layout
-
 \begin_layout Standard
 Figure 
 \begin_inset LatexCommand \ref{fig:example-xml.harv.add-gn}
 
 \end_inset
 
- shows an example of an XML request to create a GeoNetwork entry.
+ shows an example of an XML request to create a GeoNetwork node.
 \end_layout
 
 \begin_layout Standard
@@ -5464,8 +5961,13 @@ xml.harvesting.add
 
 \end_layout
 
+\begin_layout Subsubsection*
+WebDAV harvesting
+\end_layout
+
 \begin_layout Standard
-To create a WebFolder entry, the following XML information should be provided:
+To create a web DAV node, the following XML information should be provided.
+ 
 \end_layout
 
 \begin_layout Itemize
@@ -5475,16 +5977,7 @@ To create a WebFolder entry, the following XML information should be provided:
 node
 \family default
 \series default
- : This is the root container.
- The 
-\family sans
-\series bold
-name
-\family default
-\series default
- attribute specifies the entry's name.
- If omitted, an empty string is considered.
- The 
+ : The 
 \family sans
 \series bold
 type
@@ -5493,7 +5986,7 @@ type
  attribute is mandatory and must be 
 \family sans
 \series bold
-webFolder
+webdav
 \family default
 \series default
 .
@@ -5505,10 +5998,6 @@ webFolder
 \family sans
 \series bold
 site
-\family default
-\series default
- : A container for site information.
- Can be omitted.
 \end_layout
 
 \begin_deeper
@@ -5527,188 +6016,15 @@ string
  If provided, must be a valid URL starting with 'HTTP://'.
 \end_layout
 
-\begin_layout Itemize
-
-\family sans
-\series bold
-account
-\family default
-\series default
- : A container for account information.
- Can be omitted.
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-
-\family sans
-\series bold
-use
-\family default
-\series default
- (
-\emph on
-boolean
-\emph default
-, 'false') : If true, GeoNetwork will use the basic HTTP authentication.
-\end_layout
-
-\begin_layout Itemize
-
-\family sans
-\series bold
-username
-\family default
-\series default
- (
-\emph on
-string
-\emph default
-, '') : Username on the remote node.
-\end_layout
-
-\begin_layout Itemize
-
-\family sans
-\series bold
-password
-\family default
-\series default
- (
-\emph on
-string
-\emph default
-, '') : Password on the remote node.
-\end_layout
-
-\end_deeper
-\end_deeper
-\begin_layout Itemize
-
-\family sans
-\series bold
-privileges
-\family default
-\series default
- : A container for privileges that must be associated to the harvested metadata.
- Can be omitted but doing so the harvested metadata will not be visible.
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-
-\family sans
-\series bold
-group
-\family default
-\series default
- : A container for the privileges to associate to this group.
- It must have an 
-\family sans
-\series bold
-id
-\family default
-\series default
- attribute which value should be the identifier of a GeoNetwork group.
- If the id is not a valid group id, the contained privileges will be discarded.
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-
-\family sans
-\series bold
-operation
-\family default
-\series default
- : Specifies an operation to associate to the containing group.
- It must have a 
-\family sans
-\series bold
-name
-\family default
-\series default
- attribute which value can be one of : 
-\family sans
-\series bold
-view
-\family default
-\series default
-, 
-\family sans
-\series bold
-download
-\family default
-\series default
-, 
-\family sans
-\series bold
-dynamic
-\family default
-\series default
-, 
-\family sans
-\series bold
-notify
-\family default
-\series default
-, 
-\family sans
-\series bold
-featured
-\family default
-\series default
-.
-\end_layout
-
-\end_deeper
 \end_deeper
 \begin_layout Itemize
 
 \family sans
 \series bold
 options
-\family default
-\series default
- : A container for generic options.
- Can be omitted.
 \end_layout
 
 \begin_deeper
-\begin_layout Itemize
-
-\family sans
-\series bold
-every
-\family default
-\series default
- (
-\emph on
-integer
-\emph default
-, '90') : Harvesting interval in minutes.
-\end_layout
-
-\begin_layout Itemize
-
-\family sans
-\series bold
-oneRunOnly
-\family default
-\series default
- (
-\emph on
-boolean
-\emph default
-, 'false') : After the first run, the entry's status will be set to 
-\family sans
-\series bold
-inactive
-\family default
-\series default
-.
-\end_layout
-
 \begin_layout Itemize
 
 \family sans
@@ -5742,6 +6058,10 @@ boolean
 
 \end_deeper
 \end_deeper
+\begin_layout Standard
+This type supports both privileges and categories assignment.
+\end_layout
+
 \begin_layout Standard
 Figure 
 \begin_inset LatexCommand \ref{fig:example-xml.harv.add-waf}
@@ -5947,6 +6267,183 @@ xml.harvesting.add
 
 \end_layout
 
+\begin_layout Subsubsection*
+CSW harvesting
+\end_layout
+
+\begin_layout Standard
+To create a node to harvest from a CSW capable server, the following XML
+ information should be provided:
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+node
+\family default
+\series default
+ : The 
+\family sans
+\series bold
+type
+\family default
+\series default
+ attribute is mandatory and must be 
+\family sans
+\series bold
+csw
+\family default
+\series default
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+site
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+capabilitiesUrl
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+) : URL of the capabilities file that will be used to retrieve the operations
+ address.
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+icon
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+, 'default.gif') : Icon file used to represent this node in the search results.
+ The icon must be present into the 
+\family sans
+\series bold
+images/csw
+\family default
+\series default
+ folder.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+searches
+\family default
+\series default
+ [0..1]
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+search
+\family default
+\series default
+ [0..n] : Contains search parameters.
+ If this element is missing no harvesting will be performed but the host's
+ parameters will be used to connect to the remote node.
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+freeText
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+, '') : Search the entire metadata.
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+title
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+, '') : Search the 
+\family sans
+dc:title
+\family default
+ queryable.
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+abstract
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+, ''): Search the 
+\family sans
+dc:abstract
+\family default
+ queryable.
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+subject
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+, '') : Search the 
+\family sans
+dc:subject
+\family default
+ queryable.
+\end_layout
+
+\end_deeper
+\end_deeper
+\end_deeper
+\begin_layout Standard
+This type supports both privileges and categories assignment.
+\end_layout
+
 \begin_layout Subsection*
 Response
 \end_layout
@@ -5958,36 +6455,229 @@ The service's response is the output of the
 xml.harvesting.get
 \family default
 \series default
- service of the newly created entry.
- So, the response is similar to the request but with some more information:
+ service of the newly created node.
 \end_layout
 
-\begin_layout Itemize
-An 
-\family sans
-\series bold
-id
-\family default
-\series default
- attribute to the 
-\family sans
-\series bold
-node
-\family default
-\series default
- root element.
- This is the internal identifier that must be used to update/start/stop
- the entry.
+\begin_layout Subsection*
+Summary
 \end_layout
 
-\begin_layout Itemize
-An 
-\family sans
+\begin_layout Standard
+The following table summaries the features of the supported harvesting types:
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="4">
+<features>
+<column alignment="center" valignment="top" leftline="true" width="0">
+<column alignment="center" valignment="top" leftline="true" width="0">
+<column alignment="center" valignment="top" leftline="true" width="0">
+<column alignment="center" valignment="top" leftline="true" rightline="true" width="0">
+<row topline="true" bottomline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
 \series bold
-info
-\family default
-\series default
- element with some information and statistics.
+Harvesting type
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\series bold
+Authentication
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\series bold
+Privileges ?
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\series bold
+Categories ?
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+GeoNetwork
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+native
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Web DAV
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+HTTP digest
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+yes
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+yes
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Web folder
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+HTTP Basic
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+yes
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+yes
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true" bottomline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+CSW
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+HTTP Basic
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+yes
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+yes
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -5995,7 +6685,7 @@ xml.harvesting.update
 \end_layout
 
 \begin_layout Standard
-This service is responsible for changing the entry's parameters.
+This service is responsible for changing the node's parameters.
  A typical request has a 
 \family sans
 \series bold
@@ -6068,44 +6758,40 @@ If an element is not specified, the associated parameter will not be changed.
 
 \begin_layout Standard
 So, you need to specify only the elements you want to change.
- There are some exceptions for the following node types:
+ However, there are some exceptions:
 \end_layout
 
 \begin_layout List
 \labelwidthstring 00.00.0000
 
-\series bold
-geonetwork
-\series default
- The only exception to this behaviour is the 
-\family sans
-\series bold
-searches
-\family default
-\series default
- element: if omitted searches will not be changed but if specified all contained
- search entries will replace the old ones.
-\end_layout
-
-\begin_layout List
-\labelwidthstring 00.00.0000
-
-\series bold
-webFolder
-\series default
- The 
-\family sans
 \series bold
 privileges
-\family default
 \series default
- element works as the previous one: if omitted privileges will not be changed
- but if specified all current privileges will be replaced by the provided
- ones.
+ If this element is omitted, privileges will not be changed.
+ If specified, new privileges will replace the old ones.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+categories
+\series default
+ Like the previous one.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+searches
+\series default
+ Some harvesting types support multiple searches on the same remote note.
+ When supported, the updated behaviour should be like the previous ones.
 \end_layout
 
 \begin_layout Standard
-Note that you cannot change the type of an entry once it has been created.
+Note that you cannot change the type of an node once it has been created.
 \end_layout
 
 \begin_layout Subsection*
@@ -6143,7 +6829,7 @@ xml.harvesting.remove/start/stop/run
 
 \begin_layout Standard
 These services are put together because they share a common request interface.
- Their purpose is obviously to remove, start, stop or run a harvesting entry.
+ Their purpose is obviously to remove, start, stop or run a harvesting node.
  
 \end_layout
 
@@ -6219,8 +6905,13 @@ Response
 \end_layout
 
 \begin_layout Standard
-The same as the request but every id has a status attribute indicating the
- success or failure of the operation.
+The same as the request but every id has a 
+\family sans
+\series bold
+status
+\family default
+\series default
+ attribute indicating the success or failure of the operation.
  For example, the response to the previous request could be:
 \end_layout
 
@@ -8388,13 +9079,277 @@ node
 geonetwork
 \family default
 \series default
- or 
+, 
 \family sans
 \series bold
-webFolder
+webdav
 \family default
 \series default
- depending on the node's type.
+, 
+\family sans
+\series bold
+csw
+\family default
+\series default
+ or another depending on the node's type.
+\end_layout
+
+\begin_layout Standard
+All harvesting nodes share a common setting structure, which is used by
+ the harvesting engine to retrieve these common parameters.
+ This imply that any new harvesting type must honor this structure, which
+ is the following:
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+site
+\family default
+\series default
+ : A container for site information.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+name
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+) : Node's name as shown in the harvesting list.
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+uuid
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+) : A unique identifier assigned by the system when the harvesting node
+ is created.
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+useAccount
+\family default
+\series default
+ (
+\emph on
+boolean
+\emph default
+) : Indicates if the harvester has to authenticate to access the data.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+username
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+) :
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+password
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+) :
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+options
+\family default
+\series default
+ :
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+every
+\family default
+\series default
+ (
+\emph on
+integer
+\emph default
+) : Timeout, in minutes, between 2 consecutive harvesting.
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+oneRunOnly
+\family default
+\series default
+ (
+\emph on
+boolean
+\emph default
+) : If true, the harvester will harvest one time from this node and then
+ it will set the status to inactive.
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+status
+\family default
+\series default
+ (active|inactive) : Indicates if the harvesting from this node is stopped
+ (inactive) or if the harvester is waiting until the timeout comes.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+privileges
+\family default
+\series default
+ [0..1]
+\family sans
+\series bold
+ 
+\family default
+:
+\series default
+ This is a container for privileges to assign to each imported metadata
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+group
+\family default
+\series default
+ (
+\emph on
+integer
+\emph default
+) [0..n] : Indicate a local group.
+ The node's value is its local identifier.
+ There can be several group nodes each with its set of privileges.
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+operation
+\family default
+\series default
+ (
+\emph on
+integer
+\emph default
+) [0..n] : Privilege to assign to the group.
+ The node's value is the numeric id of the operation like 0=view, 1=download,
+ 2=edit etc...
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+categories
+\family default
+\series default
+[0..1] : This is a container for categories to assign to each imported metadata
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+category
+\family default
+\series default
+ (
+\emph on
+integer
+\emph default
+) [0..n] : Indicate a local category and the node's value is its local identifier.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+info
+\family default
+\series default
+ : Just a container for some information about harvesting from this node.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+lastRun
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+) : If not empty, tells when the harvester harvested from this node.
+ The value is the current time in millis since 1 January, 1970.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+Privileges and categories nodes can or cannot be present depending on the
+ harvesting type.
+ In the following structures, this common structure is not shown.
+ Only extra information specific to the harvesting type is described.
 \end_layout
 
 \begin_layout Subsection
@@ -8414,20 +9369,6 @@ site
 \end_layout
 
 \begin_deeper
-\begin_layout Itemize
-
-\family sans
-\series bold
-name
-\family default
-\series default
- (
-\emph on
-string
-\emph default
-) : Node's name to show in the list
-\end_layout
-
 \begin_layout Itemize
 
 \family sans
@@ -8470,52 +9411,6 @@ string
 )
 \end_layout
 
-\begin_layout Itemize
-
-\family sans
-\series bold
-useAccount
-\family default
-\series default
- (
-\emph on
-boolean
-\emph default
-)
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-
-\family sans
-\series bold
-username
-\family default
- 
-\series default
-(
-\emph on
-string
-\emph default
-)
-\end_layout
-
-\begin_layout Itemize
-
-\family sans
-\series bold
-password
-\family default
- 
-\series default
-(
-\emph on
-string
-\emph default
-)
-\end_layout
-
-\end_deeper
 \end_deeper
 \begin_layout Itemize
 
@@ -8618,7 +9513,7 @@ boolean
 
 \family sans
 \series bold
-siteId
+source
 \family default
 \series default
  (
@@ -8641,20 +9536,6 @@ options
 
 \family sans
 \series bold
-every
-\family default
-\series default
- (
-\emph on
-integer
-\emph default
-) : Timeout, in minutes, between 2 consecutive harvesting.
-\end_layout
-
-\begin_layout Itemize
-
-\family sans
-\series bold
 createGroups
 \family default
 \series default
@@ -8665,74 +9546,6 @@ boolean
 ) : If true, the harvester will create locally the same groups of the harvested
  metadata in order to keep remote privileges.
  Remote groups that already exist locally are not created.
-\end_layout
-
-\begin_layout Itemize
-
-\family sans
-\series bold
-createCateg
-\family default
-\series default
- (
-\emph on
-boolean
-\emph default
-) : If true, the harvester will create locally the same categories of the
- harvested metadata in order to keep the link to the metadata.
- Remote categories that already exist locally are not created.
-\end_layout
-
-\begin_layout Itemize
-
-\family sans
-\series bold
-oneRunOnly
-\family default
-\series default
- (
-\emph on
-boolean
-\emph default
-) : If true, the harvester will harvest one time from this node and then
- it will set the status to inactive.
-\end_layout
-
-\begin_layout Itemize
-
-\family sans
-\series bold
-status
-\family default
-\series default
- (active|inactive) : Indicates if the harvesting from this node is stopped
- (inactive) or if the harvester is waiting until the timeout comes.
-\end_layout
-
-\end_deeper
-\begin_layout Itemize
-
-\family sans
-\series bold
-info
-\family default
-\series default
- : Just a container for some information about harvesting from this node
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-
-\family sans
-\series bold
-lastRun
-\family default
-\series default
- (
-\emph on
-string
-\emph default
-) : If not empty, tells when the harvester harvested from this node
 \end_layout
 
 \end_deeper
@@ -8757,20 +9570,6 @@ site
 
 \family sans
 \series bold
-name
-\family default
-\series default
- (
-\emph on
-string
-\emph default
-) : Node's name to show in the list
-\end_layout
-
-\begin_layout Itemize
-
-\family sans
-\series bold
 url
 \family default
 \series default
@@ -8783,53 +9582,6 @@ string
  protocol
 \end_layout
 
-\begin_layout Itemize
-
-\family sans
-\series bold
-useAccount
-\family default
-\series default
- (
-\emph on
-boolean
-\emph default
-) : Indicates if the harvester has to authenticate to access the data.
- Only the http basic authentication is used.
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-
-\family sans
-\series bold
-username
-\family default
- 
-\series default
-(
-\emph on
-string
-\emph default
-)
-\end_layout
-
-\begin_layout Itemize
-
-\family sans
-\series bold
-password
-\family default
- 
-\series default
-(
-\emph on
-string
-\emph default
-)
-\end_layout
-
-\end_deeper
 \end_deeper
 \begin_layout Itemize
 
@@ -8839,35 +9591,6 @@ options
 \end_layout
 
 \begin_deeper
-\begin_layout Itemize
-
-\family sans
-\series bold
-every
-\family default
-\series default
- (
-\emph on
-integer
-\emph default
-) : Timeout, in minutes, between 2 consecutive harvesting.
-\end_layout
-
-\begin_layout Itemize
-
-\family sans
-\series bold
-oneRunOnly
-\family default
-\series default
- (
-\emph on
-boolean
-\emph default
-) : If true, the harvester will harvest one time from this node and then
- it will set the status to inactive.
-\end_layout
-
 \begin_layout Itemize
 
 \family sans
@@ -8903,26 +9626,18 @@ boolean
  and the metadata will be harvested only if it is valid.
 \end_layout
 
-\begin_layout Itemize
-
+\end_deeper
+\begin_layout Subsection
+Nodes of type 
 \family sans
-\series bold
-status
-\family default
-\series default
- (active|inactive) : Indicates if the harvesting from this node is stopped
- (inactive) or if the harvester is waiting until the timeout comes.
+csw
 \end_layout
 
-\end_deeper
 \begin_layout Itemize
 
 \family sans
 \series bold
-privileges
-\family default
-\series default
- : This is a container for privileges to assign to each imported metadata
+site
 \end_layout
 
 \begin_deeper
@@ -8930,61 +9645,86 @@ privileges
 
 \family sans
 \series bold
-group
-\family default
-\series default
- (
-\emph on
-integer
-\emph default
-) [0..n] : Indicate a local group.
- The node's value is its local identifier.
- There can be several group nodes each with its set of privileges
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-
-\family sans
-\series bold
-operation
-\family default
-\series default
- (
-\emph on
-integer
-\emph default
-) [0..n] : Privilege to assign to the group.
- The node's value is the numeric id of the operation like 0=view, 1=download,
- 2=edit etc...
-\end_layout
-
-\end_deeper
-\end_deeper
-\begin_layout Itemize
-
-\family sans
-\series bold
-info
-\family default
-\series default
- : Just a container for some information about harvesting from this node
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-
-\family sans
-\series bold
-lastRun
+capabUrl
 \family default
 \series default
  (
 \emph on
 string
 \emph default
-) : If not empty, tells when the harvester harvested from this node.
- The value is the current time in millis since 1 January, 1970.
+) : URL of the capabilities file that will be used to retrieve the operations
+ address.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+search
+\family default
+\series default
+ [0..n] : Contains search parameters.
+ If this element is missing no harvesting will be performed but the host's
+ parameters will be used to connect to the remote node.
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+freeText
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+title
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+abstract
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+subject
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+)
 \end_layout
 
 \end_body
