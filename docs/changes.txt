@@ -15,6 +15,12 @@
 - Now UUIDs are varchar(250). This is necessary because some uuids could not
   be well formed.
 
+- Now the server starts even if the Z39.50 port is already used. In that case,
+  Z39.50 server will be disabled.
+
+- MEF import: now if the uuid is missing, it is correctly stored inside the
+  metadata
+
 --------------------------------------------------------------------------------
 --- Bugs fixed
 --------------------------------------------------------------------------------
