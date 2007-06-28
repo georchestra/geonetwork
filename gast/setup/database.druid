@@ -2,8 +2,8 @@
 
 <project version="2">
 	<attribs>
-		<attrib name="build">133</attrib>
-		<attrib name="serial">62691</attrib>
+		<attrib name="build">135</attrib>
+		<attrib name="serial">62839</attrib>
 	</attribs>
 	<database>
 		<attribs>
@@ -1142,7 +1142,7 @@ ORDER BY id
 								<attrib name="61528">true</attrib>
 								<attrib name="17">true</attrib>
 								<attrib name="15">false</attrib>
-								<attrib name="340">false</attrib>
+								<attrib name="340">true</attrib>
 							</attribs>
 						</fieldAttribs>
 						<attribs>
@@ -1155,29 +1155,6 @@ ORDER BY id
 							<attrib name="onUpdate">n</attrib>
 							<attrib name="refTable">0</attrib>
 							<attrib name="type">54376</attrib>
-						</attribs>
-						<modsConfig/>
-					</field>
-					<field>
-						<fieldAttribs>
-							<attribs>
-								<attrib name="54374"/>
-								<attrib name="61528">false</attrib>
-								<attrib name="17">false</attrib>
-								<attrib name="15">false</attrib>
-								<attrib name="340">false</attrib>
-							</attribs>
-						</fieldAttribs>
-						<attribs>
-							<attrib name="comment"/>
-							<attrib name="matchType">s</attrib>
-							<attrib name="refField">0</attrib>
-							<attrib name="name">sourceUri</attrib>
-							<attrib name="id">54697</attrib>
-							<attrib name="onDelete">n</attrib>
-							<attrib name="onUpdate">n</attrib>
-							<attrib name="refTable">0</attrib>
-							<attrib name="type">54777</attrib>
 						</attribs>
 						<modsConfig/>
 					</field>
@@ -1224,6 +1201,29 @@ ORDER BY id
 							<attrib name="onUpdate">n</attrib>
 							<attrib name="refTable">0</attrib>
 							<attrib name="type">53372</attrib>
+						</attribs>
+						<modsConfig/>
+					</field>
+					<field>
+						<fieldAttribs>
+							<attribs>
+								<attrib name="54374"/>
+								<attrib name="61528">false</attrib>
+								<attrib name="17">false</attrib>
+								<attrib name="15">false</attrib>
+								<attrib name="340">true</attrib>
+							</attribs>
+						</fieldAttribs>
+						<attribs>
+							<attrib name="comment"/>
+							<attrib name="matchType">s</attrib>
+							<attrib name="refField">0</attrib>
+							<attrib name="name">harvestUuid</attrib>
+							<attrib name="id">62696</attrib>
+							<attrib name="onDelete">n</attrib>
+							<attrib name="onUpdate">n</attrib>
+							<attrib name="refTable">0</attrib>
+							<attrib name="type">54376</attrib>
 						</attribs>
 						<modsConfig/>
 					</field>
