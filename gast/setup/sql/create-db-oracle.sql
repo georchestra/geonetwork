@@ -1,7 +1,7 @@
 REM ======================================================================
 REM ===   Sql Script for Database : Geonet
 REM ===
-REM === Build : 132
+REM === Build : 135
 REM ======================================================================
 
 CREATE TABLE Metadata
@@ -15,11 +15,11 @@ CREATE TABLE Metadata
     changeDate   varchar(24)    not null,
     data         long           not null,
     source       varchar(250)   not null,
-    sourceUri    varchar(255),
     title        varchar(255),
     root         varchar(255),
+    harvestUuid  varchar(250),
     primary key(id),
-    unique(uuid)
+    unique(uuid,source,harvestUuid)
   );
 
 CREATE INDEX MetadataNDX1 ON Metadata(source);
