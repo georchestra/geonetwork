@@ -21,6 +21,14 @@
 - MEF import: now if the uuid is missing, it is correctly stored inside the
   metadata
 
+- MEF export: changed skipUUID default to false
+
+- MEF format: added siteName
+
+- xml.info : now returned groups are only those visible to the user
+
+- xml.forward : changed structure to allow authentication
+
 --------------------------------------------------------------------------------
 --- Bugs fixed
 --------------------------------------------------------------------------------
