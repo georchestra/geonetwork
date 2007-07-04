@@ -106,7 +106,7 @@ Andrea Carboni
 \align center
 
 \size larger
-Revision 6 (06-Jun-2007)
+Revision 7 (03-Jul-2007)
 \end_layout
 
 \begin_layout Standard
@@ -879,6 +879,23 @@ uuid
 \series default
  element is missing, this element should be missing too.
  If present, it will be ignored.
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+siteName
+\family default
+\series default
+ : This is a human readable name for the actor that created the metadata.
+ It must be present only if the 
+\family sans
+\series bold
+siteId
+\family default
+\series default
+ is present.
 \end_layout
 
 \begin_layout Itemize
@@ -2654,7 +2671,20 @@ categories
 \series bold
 groups
 \series default
- Returns all site's groups
+ Returns all site's groups visible to the requesting user.
+ If the user does not authenticate theirselves, only the 
+\family sans
+\series bold
+intranet
+\family default
+\series default
+ and the 
+\family sans
+\series bold
+all
+\family default
+\series default
+ groups are visible.
 \end_layout
 
 \begin_layout List
@@ -2679,28 +2709,27 @@ regions
 \labelwidthstring 00.00.0000
 
 \series bold
-knownNodes
+sources
 \series default
- Returns all geonetwork nodes that the remote site knows.
- Every time the remote site harvests from other nodes, it collects information
- about their address, name, siteId etc...
- This allows the propagation of the GeoNetwork sites to facilitate harvesting
- of new sites.
- Anyway, the remote node may know other nodes by other ways.
+ Returns all geonetwork sources that the remote site knows.
+ The result will contain:
 \end_layout
 
-\begin_layout List
-\labelwidthstring 00.00.0000
-
-\series bold
-harvestingNodes
-\series default
- Returns all active nodes the remote node is currently harvesting from.
- When harvesting from a remote node, this information is usefull to find
- out how many metadata have been harvested and to which siteId they belong.
- If there are no metadata from a node, that node will not be returned.
+\begin_deeper
+\begin_layout Itemize
+The remote node's name and siteId
 \end_layout
 
+\begin_layout Itemize
+All source uuids and names that have been discovered through harvesting.
+\end_layout
+
+\begin_layout Itemize
+All source uuids and names of metadata that have been imported into the
+ remote node through the MEF format.
+\end_layout
+
+\end_deeper
 \begin_layout Standard
 Request example:
 \end_layout
@@ -3588,156 +3617,7 @@ status open
 
 \end_layout
 
-\end_deeper
-\begin_layout Itemize
-
-\family sans
-\series bold
-knownNodes
-\family default
-\series default
- : This is the container
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-
-\family sans
-\series bold
-node
-\family default
-\series default
- [0..n] : A known GeoNetwork node
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-
-\family sans
-\series bold
-name
-\family default
-\series default
- : Node's name
-\end_layout
-
-\begin_layout Itemize
-
-\family sans
-\series bold
-siteId
-\family default
-\series default
- : Node's unique identifier
-\end_layout
-
-\begin_layout Itemize
-
-\family sans
-\series bold
-host
-\family default
-\series default
- : Node's host
-\end_layout
-
-\begin_layout Itemize
-
-\family sans
-\series bold
-port
-\family default
-\series default
- : Node's port.
- Can be empty
-\end_layout
-
-\begin_layout Itemize
-
-\family sans
-\series bold
-servlet
-\family default
-\series default
- : Node's servlet.
- Together with host and port can be used to call services on the remote
- node.
-\end_layout
-
-\end_deeper
 \begin_layout Standard
-Example:
-\end_layout
-
-\begin_layout Standard
-\begin_inset Box Boxed
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-width "100col%"
-special "none"
-height "1in"
-height_special "totalheight"
-status open
-
-\begin_layout LyX-Code
-
-\size footnotesize
-<knownNodes>
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-   <node>
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-      <name>My Host</name>
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-      <siteId>0619cc50-708b-11da-8202-000d9335906e</siteId>
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-      <host>www.myhost.org</host>
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-      <port/>
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-      <servlet>myservlet</servlet>
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-   </node>
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-</knownNodes>
-\end_layout
-
-\end_inset
-
 
 \end_layout
 
@@ -3745,7 +3625,7 @@ status open
 \begin_layout Itemize
 
 \series bold
-harvestingNodes
+sources
 \series default
  : This is the container.
 \end_layout
@@ -3754,9 +3634,9 @@ harvestingNodes
 \begin_layout Itemize
 
 \series bold
-node
+source
 \series default
- [0..n] : A remote node GeoNetwork is harvesting from
+ [0..n] : A source known to the remote node.
 \end_layout
 
 \begin_deeper
@@ -3765,26 +3645,15 @@ node
 \series bold
 name
 \series default
- : Node's name
+ : Source's name
 \end_layout
 
 \begin_layout Itemize
 
 \series bold
-siteId
+uuid
 \series default
- : Node's unique identifier
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-metadata
-\series default
- : This is just the number of metadata that have been harvested from the
- remote node.
- This is used by the harvesting web interface to provide some hints to the
- user.
+ : Source's unique identifier
 \end_layout
 
 \end_deeper
@@ -3808,13 +3677,13 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
-<harvestingNodes>
+<sources>
 \end_layout
 
 \begin_layout LyX-Code
 
 \size footnotesize
-   <node>
+   <source>
 \end_layout
 
 \begin_layout LyX-Code
@@ -3826,25 +3695,19 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
-      <siteId>0619cc50-708b-11da-8202-000d9335906e</siteId>
+      <uuid>0619cc50-708b-11da-8202-000d9335906e</uuid>
 \end_layout
 
 \begin_layout LyX-Code
 
 \size footnotesize
-      <metadata>23</metadata>
+   </source>
 \end_layout
 
 \begin_layout LyX-Code
 
 \size footnotesize
-   </node>
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-</harvestingNodes>
+</sources>
 \end_layout
 
 \end_inset
@@ -3969,7 +3832,49 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
-   <url>...</url>
+   <site>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <url>...</url>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <type>...</type>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <account>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <username>...</username>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <password>...</password>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      </account>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </site>
 \end_layout
 
 \begin_layout LyX-Code
@@ -3997,12 +3902,53 @@ where:
 \labelwidthstring 00.00.0000
 
 \series bold
+site
+\series default
+ A container for site information where the request will be forwarded.
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
 url
 \series default
  Indicates the remote url to connect to.
- Usually points to a GeoNetwork's xml service
+ Usually points to a GeoNetwork's xml service but can point to any XML service.
 \end_layout
 
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+type
+\series default
+ Its only purpose is to discriminate geonetwork nodes which use a different
+ authentication scheme.
+ The value 
+\family sans
+\series bold
+geonetwork
+\family default
+\series default
+ indicates these nodes.
+ Any other value, or if the element is missing, indicate a generic node.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+account
+\series default
+ This element is optional.
+ If present, the provided credentials will be used to authenticate to the
+ remote site.
+\end_layout
+
+\end_deeper
 \begin_layout List
 \labelwidthstring 00.00.0000
 
@@ -4038,7 +3984,19 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
-   <url>http://mynode.org:8080/geonetwork/srv/en/xml.info</url>
+   <site>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <url>http://mynode.org:8080/geonetwork/srv/en/xml.info</url>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </site>
 \end_layout
 
 \begin_layout LyX-Code
@@ -4091,7 +4049,7 @@ Response
 \end_layout
 
 \begin_layout Standard
-The response is just the response of the remote service.
+The response is just the response from the remote service.
 \end_layout
 
 \begin_layout Chapter
@@ -8528,6 +8486,13 @@ true
 \family default
 \series default
 , 
+\family sans
+\series bold
+false
+\family default
+\series default
+.
+ The default value is 
 \family sans
 \series bold
 false
