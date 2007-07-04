@@ -1,7 +1,7 @@
 -- ======================================================================
 -- ===   Sql Script for Database : Geonet
 -- ===
--- === Build : 135
+-- === Build : 139
 -- ======================================================================
 
 CREATE TABLE Metadata
@@ -23,7 +23,7 @@ CREATE TABLE Metadata
     unique(uuid,source,harvestUuid)
   );
 
-CREATE INDEX MetadataNDX1 ON Metadata(source);
+CREATE INDEX MetadataNDX1 ON Metadata(uuid,source);
 
 -- ======================================================================
 
@@ -62,40 +62,13 @@ CREATE TABLE Languages
 
 -- ======================================================================
 
-CREATE TABLE KnownNodes
+CREATE TABLE Sources
   (
-    siteId   varchar(250),
+    uuid     varchar(250),
     name     varchar(250),
-    host     varchar(250),
-    port     int,
-    servlet  varchar(250),
+    isLocal  char(1)        default 'y',
 
-    primary key(siteId)
-  );
-
--- ======================================================================
-
-CREATE TABLE Operations
-  (
-    id        int,
-    name      varchar(32)   not null,
-    reserved  char(1)       default 'n' not null,
-
-    primary key(id)
-  );
-
--- ======================================================================
-
-CREATE TABLE OperationsDes
-  (
-    idDes   int,
-    langId  varchar(5),
-    label   varchar(96)   not null,
-
-    primary key(idDes,langId),
-
-    foreign key(idDes) references Operations(id),
-    foreign key(langId) references Languages(id)
+    primary key(uuid)
   );
 
 -- ======================================================================
@@ -170,6 +143,31 @@ CREATE TABLE Users
 
     primary key(id),
     unique(username)
+  );
+
+-- ======================================================================
+
+CREATE TABLE Operations
+  (
+    id        int,
+    name      varchar(32)   not null,
+    reserved  char(1)       default 'n' not null,
+
+    primary key(id)
+  );
+
+-- ======================================================================
+
+CREATE TABLE OperationsDes
+  (
+    idDes   int,
+    langId  varchar(5),
+    label   varchar(96)   not null,
+
+    primary key(idDes,langId),
+
+    foreign key(idDes) references Operations(id),
+    foreign key(langId) references Languages(id)
   );
 
 -- ======================================================================

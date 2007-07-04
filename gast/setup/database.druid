@@ -2,8 +2,8 @@
 
 <project version="2">
 	<attribs>
-		<attrib name="build">135</attrib>
-		<attrib name="serial">62839</attrib>
+		<attrib name="build">139</attrib>
+		<attrib name="serial">63004</attrib>
 	</attribs>
 	<database>
 		<attribs>
@@ -139,6 +139,9 @@
 						</list>
 					</sqlMapping>
 				</oraSql>
+				<mckoiSql>
+					<output>/my/work/fao/geonetwork/cvs/geonetwork/trunk/gast/setup/sql/create-db-mckoi.sql</output>
+				</mckoiSql>
 				<pgSql>
 					<output>/my/work/fao/geonetwork/cvs/geonetwork/trunk/gast/setup/sql/create-db-postgres.sql</output>
 					<sqlMapping type="l">
@@ -154,9 +157,6 @@
 						</list>
 					</sqlMapping>
 				</pgSql>
-				<mckoiSql>
-					<output>/my/work/fao/geonetwork/cvs/geonetwork/trunk/gast/setup/sql/create-db-mckoi.sql</output>
-				</mckoiSql>
 			</SqlGenModule>
 		</modsConfig>
 		<modsUsage>
@@ -903,22 +903,6 @@ ORDER BY id
 								</idx>
 								<ts>0</ts>
 							</oraSql>
-							<mckoiSql>
-								<idx type="l">
-									<list>
-										<header>
-											<elem type="i">id</elem>
-											<elem type="s">index</elem>
-											<elem type="s">name</elem>
-										</header>
-										<row>
-											<elem>61528</elem>
-											<elem>Idx1</elem>
-											<elem/>
-										</row>
-									</list>
-								</idx>
-							</mckoiSql>
 							<pgSql>
 								<idx type="l">
 									<list>
@@ -939,6 +923,22 @@ ORDER BY id
 									</list>
 								</idx>
 							</pgSql>
+							<mckoiSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
+							</mckoiSql>
 						</SqlGenModule>
 					</modsConfig>
 					<field>
@@ -968,7 +968,7 @@ ORDER BY id
 						<fieldAttribs>
 							<attribs>
 								<attrib name="54374"/>
-								<attrib name="61528">false</attrib>
+								<attrib name="61528">true</attrib>
 								<attrib name="17">true</attrib>
 								<attrib name="15">false</attrib>
 								<attrib name="340">true</attrib>
@@ -1293,6 +1293,22 @@ ORDER BY id
 									</list>
 								</idx>
 							</oraSql>
+							<mckoiSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
+							</mckoiSql>
 							<pgSql>
 								<idx type="l">
 									<list>
@@ -1313,22 +1329,6 @@ ORDER BY id
 									</list>
 								</idx>
 							</pgSql>
-							<mckoiSql>
-								<idx type="l">
-									<list>
-										<header>
-											<elem type="i">id</elem>
-											<elem type="s">index</elem>
-											<elem type="s">name</elem>
-										</header>
-										<row>
-											<elem>61528</elem>
-											<elem>Idx1</elem>
-											<elem/>
-										</row>
-									</list>
-								</idx>
-							</mckoiSql>
 						</SqlGenModule>
 					</modsConfig>
 					<field>
@@ -1404,11 +1404,83 @@ ORDER BY id
 					<modsConfig>
 						<SqlGenModule>
 							<stdSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
 								<postSql/>
 							</stdSql>
 							<oraSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+											<elem type="i">ts</elem>
+											<elem type="b">bitmap</elem>
+											<elem type="b">stats</elem>
+											<elem type="b">noSort</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+											<elem>0</elem>
+											<elem>false</elem>
+											<elem>false</elem>
+											<elem>false</elem>
+										</row>
+									</list>
+								</idx>
 								<ts>0</ts>
 							</oraSql>
+							<mckoiSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
+							</mckoiSql>
+							<pgSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+											<elem type="s">access</elem>
+											<elem type="s">where</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+											<elem>default</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
+							</pgSql>
 						</SqlGenModule>
 					</modsConfig>
 					<field>
@@ -1513,11 +1585,83 @@ ORDER BY id
 					<modsConfig>
 						<SqlGenModule>
 							<stdSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
 								<postSql/>
 							</stdSql>
 							<oraSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+											<elem type="i">ts</elem>
+											<elem type="b">bitmap</elem>
+											<elem type="b">stats</elem>
+											<elem type="b">noSort</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+											<elem>0</elem>
+											<elem>false</elem>
+											<elem>false</elem>
+											<elem>false</elem>
+										</row>
+									</list>
+								</idx>
 								<ts>0</ts>
 							</oraSql>
+							<mckoiSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
+							</mckoiSql>
+							<pgSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+											<elem type="s">access</elem>
+											<elem type="s">where</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+											<elem>default</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
+							</pgSql>
 						</SqlGenModule>
 					</modsConfig>
 					<field>
@@ -1701,22 +1845,6 @@ ORDER BY id
 									</list>
 								</idx>
 							</oraSql>
-							<mckoiSql>
-								<idx type="l">
-									<list>
-										<header>
-											<elem type="i">id</elem>
-											<elem type="s">index</elem>
-											<elem type="s">name</elem>
-										</header>
-										<row>
-											<elem>61528</elem>
-											<elem>Idx1</elem>
-											<elem/>
-										</row>
-									</list>
-								</idx>
-							</mckoiSql>
 							<pgSql>
 								<idx type="l">
 									<list>
@@ -1737,6 +1865,22 @@ ORDER BY id
 									</list>
 								</idx>
 							</pgSql>
+							<mckoiSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
+							</mckoiSql>
 						</SqlGenModule>
 					</modsConfig>
 					<field>
@@ -1876,22 +2020,6 @@ ORDER BY id
 								</idx>
 								<ts>0</ts>
 							</oraSql>
-							<mckoiSql>
-								<idx type="l">
-									<list>
-										<header>
-											<elem type="i">id</elem>
-											<elem type="s">index</elem>
-											<elem type="s">name</elem>
-										</header>
-										<row>
-											<elem>61528</elem>
-											<elem>Idx1</elem>
-											<elem/>
-										</row>
-									</list>
-								</idx>
-							</mckoiSql>
 							<pgSql>
 								<idx type="l">
 									<list>
@@ -1912,6 +2040,22 @@ ORDER BY id
 									</list>
 								</idx>
 							</pgSql>
+							<mckoiSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
+							</mckoiSql>
 						</SqlGenModule>
 					</modsConfig>
 					<field>
@@ -2103,22 +2247,6 @@ ORDER BY id
 									</list>
 								</idx>
 							</oraSql>
-							<mckoiSql>
-								<idx type="l">
-									<list>
-										<header>
-											<elem type="i">id</elem>
-											<elem type="s">index</elem>
-											<elem type="s">name</elem>
-										</header>
-										<row>
-											<elem>61528</elem>
-											<elem>Idx1</elem>
-											<elem/>
-										</row>
-									</list>
-								</idx>
-							</mckoiSql>
 							<pgSql>
 								<idx type="l">
 									<list>
@@ -2139,6 +2267,22 @@ ORDER BY id
 									</list>
 								</idx>
 							</pgSql>
+							<mckoiSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
+							</mckoiSql>
 						</SqlGenModule>
 					</modsConfig>
 					<field>
@@ -2243,11 +2387,83 @@ ORDER BY id
 					<modsConfig>
 						<SqlGenModule>
 							<stdSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
 								<postSql/>
 							</stdSql>
 							<oraSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+											<elem type="i">ts</elem>
+											<elem type="b">bitmap</elem>
+											<elem type="b">stats</elem>
+											<elem type="b">noSort</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+											<elem>0</elem>
+											<elem>false</elem>
+											<elem>false</elem>
+											<elem>false</elem>
+										</row>
+									</list>
+								</idx>
 								<ts>0</ts>
 							</oraSql>
+							<mckoiSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
+							</mckoiSql>
+							<pgSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+											<elem type="s">access</elem>
+											<elem type="s">where</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+											<elem>default</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
+							</pgSql>
 						</SqlGenModule>
 					</modsConfig>
 					<field>
@@ -2408,6 +2624,22 @@ ORDER BY id
 									</list>
 								</idx>
 							</oraSql>
+							<mckoiSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
+							</mckoiSql>
 							<pgSql>
 								<idx type="l">
 									<list>
@@ -2428,22 +2660,6 @@ ORDER BY id
 									</list>
 								</idx>
 							</pgSql>
-							<mckoiSql>
-								<idx type="l">
-									<list>
-										<header>
-											<elem type="i">id</elem>
-											<elem type="s">index</elem>
-											<elem type="s">name</elem>
-										</header>
-										<row>
-											<elem>61528</elem>
-											<elem>Idx1</elem>
-											<elem/>
-										</row>
-									</list>
-								</idx>
-							</mckoiSql>
 						</SqlGenModule>
 					</modsConfig>
 					<field>
@@ -2508,7 +2724,7 @@ ORDER BY id
 					<rules/>
 					<attribs>
 						<attrib name="comment"/>
-						<attrib name="name">KnownNodes</attrib>
+						<attrib name="name">Sources</attrib>
 						<attrib name="id">57288</attrib>
 						<attrib name="schema"/>
 						<attrib name="tempPK"/>
@@ -2516,7 +2732,86 @@ ORDER BY id
 						<attrib name="tempOther"/>
 						<attrib name="sqlCommands"/>
 					</attribs>
-					<modsConfig/>
+					<modsConfig>
+						<SqlGenModule>
+							<stdSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
+							</stdSql>
+							<oraSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+											<elem type="i">ts</elem>
+											<elem type="b">bitmap</elem>
+											<elem type="b">stats</elem>
+											<elem type="b">noSort</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+											<elem>0</elem>
+											<elem>false</elem>
+											<elem>false</elem>
+											<elem>false</elem>
+										</row>
+									</list>
+								</idx>
+							</oraSql>
+							<pgSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+											<elem type="s">access</elem>
+											<elem type="s">where</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+											<elem>default</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
+							</pgSql>
+							<mckoiSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
+							</mckoiSql>
+						</SqlGenModule>
+					</modsConfig>
 					<field>
 						<fieldAttribs>
 							<attribs>
@@ -2531,7 +2826,7 @@ ORDER BY id
 							<attrib name="comment"/>
 							<attrib name="matchType">s</attrib>
 							<attrib name="refField">0</attrib>
-							<attrib name="name">siteId</attrib>
+							<attrib name="name">uuid</attrib>
 							<attrib name="id">57291</attrib>
 							<attrib name="onDelete">n</attrib>
 							<attrib name="onUpdate">n</attrib>
@@ -2571,7 +2866,7 @@ ORDER BY id
 					<field>
 						<fieldAttribs>
 							<attribs>
-								<attrib name="54374"/>
+								<attrib name="54374">'y'</attrib>
 								<attrib name="61528">false</attrib>
 								<attrib name="17">false</attrib>
 								<attrib name="15">false</attrib>
@@ -2582,338 +2877,19 @@ ORDER BY id
 							<attrib name="comment"/>
 							<attrib name="matchType">s</attrib>
 							<attrib name="refField">0</attrib>
-							<attrib name="name">host</attrib>
+							<attrib name="name">isLocal</attrib>
 							<attrib name="id">57293</attrib>
-							<attrib name="onDelete">n</attrib>
-							<attrib name="onUpdate">n</attrib>
-							<attrib name="refTable">0</attrib>
-							<attrib name="type">55991</attrib>
-						</attribs>
-						<modsConfig/>
-					</field>
-					<field>
-						<fieldAttribs>
-							<attribs>
-								<attrib name="54374"/>
-								<attrib name="61528">false</attrib>
-								<attrib name="17">false</attrib>
-								<attrib name="15">false</attrib>
-								<attrib name="340">false</attrib>
-							</attribs>
-						</fieldAttribs>
-						<attribs>
-							<attrib name="comment"/>
-							<attrib name="matchType">s</attrib>
-							<attrib name="refField">0</attrib>
-							<attrib name="name">port</attrib>
-							<attrib name="id">57294</attrib>
-							<attrib name="onDelete">n</attrib>
-							<attrib name="onUpdate">n</attrib>
-							<attrib name="refTable">0</attrib>
-							<attrib name="type">5</attrib>
-						</attribs>
-						<modsConfig/>
-					</field>
-					<field>
-						<fieldAttribs>
-							<attribs>
-								<attrib name="54374"/>
-								<attrib name="61528">false</attrib>
-								<attrib name="17">false</attrib>
-								<attrib name="15">false</attrib>
-								<attrib name="340">false</attrib>
-							</attribs>
-						</fieldAttribs>
-						<attribs>
-							<attrib name="comment"/>
-							<attrib name="matchType">s</attrib>
-							<attrib name="refField">0</attrib>
-							<attrib name="name">servlet</attrib>
-							<attrib name="id">57295</attrib>
-							<attrib name="onDelete">n</attrib>
-							<attrib name="onUpdate">n</attrib>
-							<attrib name="refTable">0</attrib>
-							<attrib name="type">55991</attrib>
-						</attribs>
-						<modsConfig/>
-					</field>
-				</table>
-				<table>
-					<vars>
-						<list>
-							<header>
-								<elem>name</elem>
-								<elem>type</elem>
-								<elem>value</elem>
-								<elem>descr</elem>
-							</header>
-						</list>
-					</vars>
-					<triggers/>
-					<rules/>
-					<attribs>
-						<attrib name="comment"/>
-						<attrib name="name">Operations</attrib>
-						<attrib name="id">51877</attrib>
-						<attrib name="schema"/>
-						<attrib name="tempPK"/>
-						<attrib name="tempFK"/>
-						<attrib name="tempOther"/>
-						<attrib name="sqlCommands"/>
-					</attribs>
-					<modsConfig>
-						<SqlGenModule>
-							<stdSql>
-								<postSql/>
-							</stdSql>
-							<oraSql>
-								<ts>0</ts>
-							</oraSql>
-						</SqlGenModule>
-					</modsConfig>
-					<field>
-						<fieldAttribs>
-							<attribs>
-								<attrib name="54374"/>
-								<attrib name="61528">false</attrib>
-								<attrib name="17">false</attrib>
-								<attrib name="15">true</attrib>
-								<attrib name="340">false</attrib>
-							</attribs>
-						</fieldAttribs>
-						<attribs>
-							<attrib name="comment"/>
-							<attrib name="matchType">s</attrib>
-							<attrib name="refField">0</attrib>
-							<attrib name="name">id</attrib>
-							<attrib name="id">51878</attrib>
-							<attrib name="onDelete">n</attrib>
-							<attrib name="onUpdate">n</attrib>
-							<attrib name="refTable">0</attrib>
-							<attrib name="type">5</attrib>
-						</attribs>
-						<modsConfig/>
-					</field>
-					<field>
-						<fieldAttribs>
-							<attribs>
-								<attrib name="54374"/>
-								<attrib name="61528">false</attrib>
-								<attrib name="17">true</attrib>
-								<attrib name="15">false</attrib>
-								<attrib name="340">false</attrib>
-							</attribs>
-						</fieldAttribs>
-						<attribs>
-							<attrib name="comment"/>
-							<attrib name="matchType">s</attrib>
-							<attrib name="refField">0</attrib>
-							<attrib name="name">name</attrib>
-							<attrib name="id">60730</attrib>
-							<attrib name="onDelete">n</attrib>
-							<attrib name="onUpdate">n</attrib>
-							<attrib name="refTable">0</attrib>
-							<attrib name="type">11</attrib>
-						</attribs>
-						<modsConfig/>
-					</field>
-					<field>
-						<fieldAttribs>
-							<attribs>
-								<attrib name="54374">'n'</attrib>
-								<attrib name="61528">false</attrib>
-								<attrib name="17">true</attrib>
-								<attrib name="15">false</attrib>
-								<attrib name="340">false</attrib>
-							</attribs>
-						</fieldAttribs>
-						<attribs>
-							<attrib name="comment"/>
-							<attrib name="matchType">s</attrib>
-							<attrib name="refField">0</attrib>
-							<attrib name="name">reserved</attrib>
-							<attrib name="id">60599</attrib>
 							<attrib name="onDelete">n</attrib>
 							<attrib name="onUpdate">n</attrib>
 							<attrib name="refTable">0</attrib>
 							<attrib name="type">54301</attrib>
 						</attribs>
 						<modsConfig/>
-					</field>
-				</table>
-				<table>
-					<vars>
-						<list>
-							<header>
-								<elem>name</elem>
-								<elem>type</elem>
-								<elem>value</elem>
-								<elem>descr</elem>
-							</header>
-						</list>
-					</vars>
-					<triggers/>
-					<rules/>
-					<attribs>
-						<attrib name="comment"/>
-						<attrib name="name">OperationsDes</attrib>
-						<attrib name="id">60329</attrib>
-						<attrib name="schema"/>
-						<attrib name="tempPK"/>
-						<attrib name="tempFK"/>
-						<attrib name="tempOther"/>
-						<attrib name="sqlCommands"/>
-					</attribs>
-					<modsConfig>
-						<SqlGenModule>
-							<stdSql>
-								<idx type="l">
-									<list>
-										<header>
-											<elem type="i">id</elem>
-											<elem type="s">index</elem>
-											<elem type="s">name</elem>
-										</header>
-										<row>
-											<elem>61528</elem>
-											<elem>Idx1</elem>
-											<elem/>
-										</row>
-									</list>
-								</idx>
-								<postSql/>
-							</stdSql>
-							<oraSql>
-								<idx type="l">
-									<list>
-										<header>
-											<elem type="i">id</elem>
-											<elem type="s">index</elem>
-											<elem type="s">name</elem>
-											<elem type="i">ts</elem>
-											<elem type="b">bitmap</elem>
-											<elem type="b">stats</elem>
-											<elem type="b">noSort</elem>
-										</header>
-										<row>
-											<elem>61528</elem>
-											<elem>Idx1</elem>
-											<elem/>
-											<elem>0</elem>
-											<elem>false</elem>
-											<elem>false</elem>
-											<elem>false</elem>
-										</row>
-									</list>
-								</idx>
-								<ts>0</ts>
-							</oraSql>
-							<mckoiSql>
-								<idx type="l">
-									<list>
-										<header>
-											<elem type="i">id</elem>
-											<elem type="s">index</elem>
-											<elem type="s">name</elem>
-										</header>
-										<row>
-											<elem>61528</elem>
-											<elem>Idx1</elem>
-											<elem/>
-										</row>
-									</list>
-								</idx>
-							</mckoiSql>
-							<pgSql>
-								<idx type="l">
-									<list>
-										<header>
-											<elem type="i">id</elem>
-											<elem type="s">index</elem>
-											<elem type="s">name</elem>
-											<elem type="s">access</elem>
-											<elem type="s">where</elem>
-										</header>
-										<row>
-											<elem>61528</elem>
-											<elem>Idx1</elem>
-											<elem/>
-											<elem>default</elem>
-											<elem/>
-										</row>
-									</list>
-								</idx>
-							</pgSql>
-						</SqlGenModule>
-					</modsConfig>
-					<field>
-						<fieldAttribs>
-							<attribs>
-								<attrib name="54374"/>
-								<attrib name="61528">false</attrib>
-								<attrib name="17">false</attrib>
-								<attrib name="15">true</attrib>
-								<attrib name="340">false</attrib>
-							</attribs>
-						</fieldAttribs>
-						<attribs>
-							<attrib name="comment"/>
-							<attrib name="matchType">s</attrib>
-							<attrib name="refField">51878</attrib>
-							<attrib name="name">idDes</attrib>
-							<attrib name="id">60330</attrib>
-							<attrib name="onDelete">n</attrib>
-							<attrib name="onUpdate">n</attrib>
-							<attrib name="refTable">51877</attrib>
-							<attrib name="type">0</attrib>
-						</attribs>
-						<modsConfig/>
-					</field>
-					<field>
-						<fieldAttribs>
-							<attribs>
-								<attrib name="54374"/>
-								<attrib name="61528">false</attrib>
-								<attrib name="17">false</attrib>
-								<attrib name="15">true</attrib>
-								<attrib name="340">false</attrib>
-							</attribs>
-						</fieldAttribs>
-						<attribs>
-							<attrib name="comment"/>
-							<attrib name="matchType">s</attrib>
-							<attrib name="refField">57906</attrib>
-							<attrib name="name">langId</attrib>
-							<attrib name="id">60331</attrib>
-							<attrib name="onDelete">n</attrib>
-							<attrib name="onUpdate">n</attrib>
-							<attrib name="refTable">57905</attrib>
-							<attrib name="type">0</attrib>
-						</attribs>
-						<modsConfig/>
-					</field>
-					<field>
-						<fieldAttribs>
-							<attribs>
-								<attrib name="54374"/>
-								<attrib name="61528">false</attrib>
-								<attrib name="17">true</attrib>
-								<attrib name="15">false</attrib>
-								<attrib name="340">false</attrib>
-							</attribs>
-						</fieldAttribs>
-						<attribs>
-							<attrib name="comment"/>
-							<attrib name="matchType">s</attrib>
-							<attrib name="refField">0</attrib>
-							<attrib name="name">label</attrib>
-							<attrib name="id">60332</attrib>
-							<attrib name="onDelete">n</attrib>
-							<attrib name="onUpdate">n</attrib>
-							<attrib name="refTable">0</attrib>
-							<attrib name="type">61541</attrib>
-						</attribs>
-						<modsConfig/>
+						<docs>
+							<p>
+								<t>A local source is the siteId of the node itself or the source of an imported metadata through the MEF format.</t>
+							</p>
+						</docs>
 					</field>
 				</table>
 				<table>
@@ -2981,6 +2957,22 @@ ORDER BY id
 									</list>
 								</idx>
 							</oraSql>
+							<mckoiSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
+							</mckoiSql>
 							<pgSql>
 								<idx type="l">
 									<list>
@@ -3001,22 +2993,6 @@ ORDER BY id
 									</list>
 								</idx>
 							</pgSql>
-							<mckoiSql>
-								<idx type="l">
-									<list>
-										<header>
-											<elem type="i">id</elem>
-											<elem type="s">index</elem>
-											<elem type="s">name</elem>
-										</header>
-										<row>
-											<elem>61528</elem>
-											<elem>Idx1</elem>
-											<elem/>
-										</row>
-									</list>
-								</idx>
-							</mckoiSql>
 						</SqlGenModule>
 					</modsConfig>
 					<field>
@@ -3131,6 +3107,22 @@ ORDER BY id
 									</list>
 								</idx>
 							</oraSql>
+							<mckoiSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
+							</mckoiSql>
 							<pgSql>
 								<idx type="l">
 									<list>
@@ -3151,22 +3143,6 @@ ORDER BY id
 									</list>
 								</idx>
 							</pgSql>
-							<mckoiSql>
-								<idx type="l">
-									<list>
-										<header>
-											<elem type="i">id</elem>
-											<elem type="s">index</elem>
-											<elem type="s">name</elem>
-										</header>
-										<row>
-											<elem>61528</elem>
-											<elem>Idx1</elem>
-											<elem/>
-										</row>
-									</list>
-								</idx>
-							</mckoiSql>
 						</SqlGenModule>
 					</modsConfig>
 					<field>
@@ -3450,22 +3426,6 @@ ORDER BY id
 									</list>
 								</idx>
 							</oraSql>
-							<mckoiSql>
-								<idx type="l">
-									<list>
-										<header>
-											<elem type="i">id</elem>
-											<elem type="s">index</elem>
-											<elem type="s">name</elem>
-										</header>
-										<row>
-											<elem>61528</elem>
-											<elem>Idx1</elem>
-											<elem/>
-										</row>
-									</list>
-								</idx>
-							</mckoiSql>
 							<pgSql>
 								<idx type="l">
 									<list>
@@ -3486,6 +3446,22 @@ ORDER BY id
 									</list>
 								</idx>
 							</pgSql>
+							<mckoiSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
+							</mckoiSql>
 						</SqlGenModule>
 					</modsConfig>
 					<field>
@@ -3893,6 +3869,362 @@ ORDER BY id
 							<attrib name="onUpdate">n</attrib>
 							<attrib name="refTable">0</attrib>
 							<attrib name="type">56729</attrib>
+						</attribs>
+						<modsConfig/>
+					</field>
+				</table>
+			</folder>
+			<folder>
+				<attribs>
+					<attrib name="name">Operations</attrib>
+				</attribs>
+				<modsConfig/>
+				<table>
+					<vars>
+						<list>
+							<header>
+								<elem>name</elem>
+								<elem>type</elem>
+								<elem>value</elem>
+								<elem>descr</elem>
+							</header>
+						</list>
+					</vars>
+					<triggers/>
+					<rules/>
+					<attribs>
+						<attrib name="comment"/>
+						<attrib name="name">Operations</attrib>
+						<attrib name="id">51877</attrib>
+						<attrib name="schema"/>
+						<attrib name="tempPK"/>
+						<attrib name="tempFK"/>
+						<attrib name="tempOther"/>
+						<attrib name="sqlCommands"/>
+					</attribs>
+					<modsConfig>
+						<SqlGenModule>
+							<stdSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
+								<postSql/>
+							</stdSql>
+							<oraSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+											<elem type="i">ts</elem>
+											<elem type="b">bitmap</elem>
+											<elem type="b">stats</elem>
+											<elem type="b">noSort</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+											<elem>0</elem>
+											<elem>false</elem>
+											<elem>false</elem>
+											<elem>false</elem>
+										</row>
+									</list>
+								</idx>
+								<ts>0</ts>
+							</oraSql>
+							<pgSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+											<elem type="s">access</elem>
+											<elem type="s">where</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+											<elem>default</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
+							</pgSql>
+							<mckoiSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
+							</mckoiSql>
+						</SqlGenModule>
+					</modsConfig>
+					<field>
+						<fieldAttribs>
+							<attribs>
+								<attrib name="54374"/>
+								<attrib name="61528">false</attrib>
+								<attrib name="17">false</attrib>
+								<attrib name="15">true</attrib>
+								<attrib name="340">false</attrib>
+							</attribs>
+						</fieldAttribs>
+						<attribs>
+							<attrib name="comment"/>
+							<attrib name="matchType">s</attrib>
+							<attrib name="refField">0</attrib>
+							<attrib name="name">id</attrib>
+							<attrib name="id">51878</attrib>
+							<attrib name="onDelete">n</attrib>
+							<attrib name="onUpdate">n</attrib>
+							<attrib name="refTable">0</attrib>
+							<attrib name="type">5</attrib>
+						</attribs>
+						<modsConfig/>
+					</field>
+					<field>
+						<fieldAttribs>
+							<attribs>
+								<attrib name="54374"/>
+								<attrib name="61528">false</attrib>
+								<attrib name="17">true</attrib>
+								<attrib name="15">false</attrib>
+								<attrib name="340">false</attrib>
+							</attribs>
+						</fieldAttribs>
+						<attribs>
+							<attrib name="comment"/>
+							<attrib name="matchType">s</attrib>
+							<attrib name="refField">0</attrib>
+							<attrib name="name">name</attrib>
+							<attrib name="id">60730</attrib>
+							<attrib name="onDelete">n</attrib>
+							<attrib name="onUpdate">n</attrib>
+							<attrib name="refTable">0</attrib>
+							<attrib name="type">11</attrib>
+						</attribs>
+						<modsConfig/>
+					</field>
+					<field>
+						<fieldAttribs>
+							<attribs>
+								<attrib name="54374">'n'</attrib>
+								<attrib name="61528">false</attrib>
+								<attrib name="17">true</attrib>
+								<attrib name="15">false</attrib>
+								<attrib name="340">false</attrib>
+							</attribs>
+						</fieldAttribs>
+						<attribs>
+							<attrib name="comment"/>
+							<attrib name="matchType">s</attrib>
+							<attrib name="refField">0</attrib>
+							<attrib name="name">reserved</attrib>
+							<attrib name="id">60599</attrib>
+							<attrib name="onDelete">n</attrib>
+							<attrib name="onUpdate">n</attrib>
+							<attrib name="refTable">0</attrib>
+							<attrib name="type">54301</attrib>
+						</attribs>
+						<modsConfig/>
+					</field>
+				</table>
+				<table>
+					<vars>
+						<list>
+							<header>
+								<elem>name</elem>
+								<elem>type</elem>
+								<elem>value</elem>
+								<elem>descr</elem>
+							</header>
+						</list>
+					</vars>
+					<triggers/>
+					<rules/>
+					<attribs>
+						<attrib name="comment"/>
+						<attrib name="name">OperationsDes</attrib>
+						<attrib name="id">60329</attrib>
+						<attrib name="schema"/>
+						<attrib name="tempPK"/>
+						<attrib name="tempFK"/>
+						<attrib name="tempOther"/>
+						<attrib name="sqlCommands"/>
+					</attribs>
+					<modsConfig>
+						<SqlGenModule>
+							<stdSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
+								<postSql/>
+							</stdSql>
+							<oraSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+											<elem type="i">ts</elem>
+											<elem type="b">bitmap</elem>
+											<elem type="b">stats</elem>
+											<elem type="b">noSort</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+											<elem>0</elem>
+											<elem>false</elem>
+											<elem>false</elem>
+											<elem>false</elem>
+										</row>
+									</list>
+								</idx>
+								<ts>0</ts>
+							</oraSql>
+							<pgSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+											<elem type="s">access</elem>
+											<elem type="s">where</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+											<elem>default</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
+							</pgSql>
+							<mckoiSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
+							</mckoiSql>
+						</SqlGenModule>
+					</modsConfig>
+					<field>
+						<fieldAttribs>
+							<attribs>
+								<attrib name="54374"/>
+								<attrib name="61528">false</attrib>
+								<attrib name="17">false</attrib>
+								<attrib name="15">true</attrib>
+								<attrib name="340">false</attrib>
+							</attribs>
+						</fieldAttribs>
+						<attribs>
+							<attrib name="comment"/>
+							<attrib name="matchType">s</attrib>
+							<attrib name="refField">51878</attrib>
+							<attrib name="name">idDes</attrib>
+							<attrib name="id">60330</attrib>
+							<attrib name="onDelete">n</attrib>
+							<attrib name="onUpdate">n</attrib>
+							<attrib name="refTable">51877</attrib>
+							<attrib name="type">0</attrib>
+						</attribs>
+						<modsConfig/>
+					</field>
+					<field>
+						<fieldAttribs>
+							<attribs>
+								<attrib name="54374"/>
+								<attrib name="61528">false</attrib>
+								<attrib name="17">false</attrib>
+								<attrib name="15">true</attrib>
+								<attrib name="340">false</attrib>
+							</attribs>
+						</fieldAttribs>
+						<attribs>
+							<attrib name="comment"/>
+							<attrib name="matchType">s</attrib>
+							<attrib name="refField">57906</attrib>
+							<attrib name="name">langId</attrib>
+							<attrib name="id">60331</attrib>
+							<attrib name="onDelete">n</attrib>
+							<attrib name="onUpdate">n</attrib>
+							<attrib name="refTable">57905</attrib>
+							<attrib name="type">0</attrib>
+						</attribs>
+						<modsConfig/>
+					</field>
+					<field>
+						<fieldAttribs>
+							<attribs>
+								<attrib name="54374"/>
+								<attrib name="61528">false</attrib>
+								<attrib name="17">true</attrib>
+								<attrib name="15">false</attrib>
+								<attrib name="340">false</attrib>
+							</attribs>
+						</fieldAttribs>
+						<attribs>
+							<attrib name="comment"/>
+							<attrib name="matchType">s</attrib>
+							<attrib name="refField">0</attrib>
+							<attrib name="name">label</attrib>
+							<attrib name="id">60332</attrib>
+							<attrib name="onDelete">n</attrib>
+							<attrib name="onUpdate">n</attrib>
+							<attrib name="refTable">0</attrib>
+							<attrib name="type">61541</attrib>
 						</attribs>
 						<modsConfig/>
 					</field>

@@ -1,7 +1,7 @@
 REM ======================================================================
 REM ===   Sql Script for Database : Geonet
 REM ===
-REM === Build : 135
+REM === Build : 139
 REM ======================================================================
 
 CREATE TABLE Metadata
@@ -22,7 +22,7 @@ CREATE TABLE Metadata
     unique(uuid,source,harvestUuid)
   );
 
-CREATE INDEX MetadataNDX1 ON Metadata(source);
+CREATE INDEX MetadataNDX1 ON Metadata(uuid,source);
 
 REM ======================================================================
 
@@ -57,36 +57,12 @@ CREATE TABLE Languages
 
 REM ======================================================================
 
-CREATE TABLE KnownNodes
+CREATE TABLE Sources
   (
-    siteId   varchar(250),
+    uuid     varchar(250),
     name     varchar(250),
-    host     varchar(250),
-    port     int,
-    servlet  varchar(250),
-    primary key(siteId)
-  );
-
-REM ======================================================================
-
-CREATE TABLE Operations
-  (
-    id        int,
-    name      varchar(32)   not null,
-    reserved  char(1)       default 'n' not null,
-    primary key(id)
-  );
-
-REM ======================================================================
-
-CREATE TABLE OperationsDes
-  (
-    idDes   int,
-    langId  varchar(5),
-    label   varchar(96)   not null,
-    primary key(idDes,langId),
-    foreign key(idDes) references Operations(id),
-    foreign key(langId) references Languages(id)
+    isLocal  char(1)        default 'y',
+    primary key(uuid)
   );
 
 REM ======================================================================
@@ -154,6 +130,28 @@ CREATE TABLE Users
     kind          varchar(16),
     primary key(id),
     unique(username)
+  );
+
+REM ======================================================================
+
+CREATE TABLE Operations
+  (
+    id        int,
+    name      varchar(32)   not null,
+    reserved  char(1)       default 'n' not null,
+    primary key(id)
+  );
+
+REM ======================================================================
+
+CREATE TABLE OperationsDes
+  (
+    idDes   int,
+    langId  varchar(5),
+    label   varchar(96)   not null,
+    primary key(idDes,langId),
+    foreign key(idDes) references Operations(id),
+    foreign key(langId) references Languages(id)
   );
 
 REM ======================================================================
