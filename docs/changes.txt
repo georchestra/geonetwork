@@ -8,6 +8,8 @@
 
 - Added harvesting of CSW nodes
 
+- Added Oracle JDBC driver 10g
+
 --------------------------------------------------------------------------------
 --- Changes
 --------------------------------------------------------------------------------
@@ -28,6 +30,8 @@
 - xml.info : now returned groups are only those visible to the user
 
 - xml.forward : changed structure to allow authentication
+
+- Updated documentation.
 
 --------------------------------------------------------------------------------
 --- Bugs fixed
