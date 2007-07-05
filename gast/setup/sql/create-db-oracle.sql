@@ -1,7 +1,7 @@
 REM ======================================================================
 REM ===   Sql Script for Database : Geonet
 REM ===
-REM === Build : 139
+REM === Build : 140
 REM ======================================================================
 
 CREATE TABLE Metadata
@@ -23,6 +23,15 @@ CREATE TABLE Metadata
   );
 
 CREATE INDEX MetadataNDX1 ON Metadata(uuid,source);
+
+REM ======================================================================
+
+CREATE TABLE Relations
+  (
+    id         int,
+    relatedId  int,
+    primary key(id,relatedId)
+  );
 
 REM ======================================================================
 

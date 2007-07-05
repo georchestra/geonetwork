@@ -1,7 +1,7 @@
 -- ======================================================================
 -- ===   Sql Script for Database : Geonet
 -- ===
--- === Build : 139
+-- === Build : 140
 -- ======================================================================
 
 CREATE TABLE Metadata
@@ -24,6 +24,16 @@ CREATE TABLE Metadata
   );
 
 CREATE INDEX MetadataNDX1 ON Metadata(uuid,source);
+
+-- ======================================================================
+
+CREATE TABLE Relations
+  (
+    id         int,
+    relatedId  int,
+
+    primary key(id,relatedId)
+  );
 
 -- ======================================================================
 
