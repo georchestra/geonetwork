@@ -10,6 +10,8 @@
 
 - Added Oracle JDBC driver 10g
 
+- Merged Intermap
+
 --------------------------------------------------------------------------------
 --- Changes
 --------------------------------------------------------------------------------
@@ -32,6 +34,10 @@
 - xml.forward : changed structure to allow authentication
 
 - Updated documentation.
+
+- Now it is possible to search multiple keywords and categories in the server.
+  Fields are specified using multiple key-value pairs (like category=aaa&category=bbb).
+  Fields are put in OR form.
 
 --------------------------------------------------------------------------------
 --- Bugs fixed
