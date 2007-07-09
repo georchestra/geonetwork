@@ -106,7 +106,7 @@ Andrea Carboni
 \align center
 
 \size larger
-Revision 7 (03-Jul-2007)
+Revision 7 (09-Jul-2007)
 \end_layout
 
 \begin_layout Standard
@@ -8575,6 +8575,681 @@ status open
 
 \size footnotesize
 <ok>123</ok>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Relations
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+This chapter describes general services used to get and set relations between
+ metadata records inside GeoNetwork.
+ The association is performed by a 
+\family sans
+\series bold
+Relations
+\family default
+\series default
+ table which stores a metadata 
+\family sans
+\series bold
+id
+\family default
+\series default
+ and a metadata 
+\family sans
+\series bold
+relatedId
+\family default
+\series default
+ fields (see figure 
+\begin_inset LatexCommand \ref{fig:Structure-of-relations}
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="3">
+<features>
+<column alignment="center" valignment="top" leftline="true" width="0">
+<column alignment="center" valignment="top" leftline="true" width="0">
+<column alignment="left" valignment="top" leftline="true" rightline="true" width="0">
+<row topline="true" bottomline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\series bold
+Field
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\series bold
+Datatype
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\series bold
+Description
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+id
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+foreign key to Metadata(id)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Source metadata whose relation is being described.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true" bottomline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+relatedId
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+foreign key to Metadata(id)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Metadata related to the source one
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Caption
+\begin_inset LatexCommand \label{fig:Structure-of-relations}
+
+\end_inset
+
+Structure of table 
+\family sans
+\series bold
+Relations
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+xml.relation.get
+\end_layout
+
+\begin_layout Standard
+This service retrieves all relations between metadata.
+\end_layout
+
+\begin_layout Subsection*
+Request
+\end_layout
+
+\begin_layout Standard
+The request accepts an 
+\family sans
+\series bold
+id
+\family default
+\series default
+ and a 
+\family sans
+\series bold
+relation
+\family default
+\series default
+ parameters, whose meaning is this:
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+id
+\family default
+\series default
+ (
+\emph on
+integer
+\emph default
+) : This is the local GeoNetwork identifier of the metadata whose relations
+ are requested.
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+relation
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+, 'normal') : This optional parameter identifies the kind of relation that
+ the client wants to be returned.
+ It can be one of these values :
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+normal
+\series default
+ : The service performs a query into the 
+\family sans
+\series bold
+id
+\family default
+\series default
+ field and returns all 
+\family sans
+\series bold
+relatedId
+\family default
+\series default
+ records.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+reverse
+\series default
+ : The service performs a query into the 
+\family sans
+\series bold
+relatedId
+\family default
+\series default
+ field and returns all 
+\family sans
+\series bold
+id
+\family default
+\series default
+ records.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+full
+\series default
+ : Includes both normal and reverse queries (duplicated ids are removed).
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+Here is an example of POST/XML request:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout LyX-Code
+
+\size footnotesize
+<request>   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <id>10</id> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <relation>full</relation> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+</request> 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Response
+\end_layout
+
+\begin_layout Standard
+The response has a 
+\family sans
+\series bold
+response
+\family default
+\series default
+ root element with several 
+\family sans
+\series bold
+metadata
+\family default
+\series default
+ children depending on the relations found.
+ Example:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout LyX-Code
+
+\size footnotesize
+<response>   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <metadata>...</metadata> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <metadata>...</metadata>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   ...
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+</response> 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Each 
+\family sans
+\series bold
+metadata
+\family default
+\series default
+ element has the following structure:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+title
+\series default
+ : Metadata title
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+abstract
+\series default
+ : A brief explanation of the metadata
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+keyword
+\series default
+ : Keywords found inside the metadata
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+image
+\series default
+ : Information about thumbnails
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+link
+\series default
+ : A link to the source site
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+geoBox
+\series default
+ : coordinates of the bounding box
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+geonet:info
+\series default
+ : A container for GeoNetwork related information
+\end_layout
+
+\begin_layout Standard
+Here is an example of the structure:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout LyX-Code
+
+\size footnotesize
+<metadata> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <title>Globally threatened species of the world</title>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <abstract> Contains information on animals.
+ </abstract> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <keyword>biodiversity</keyword> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <keyword>endangered animal species</keyword> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <keyword>endangered plant species</keyword> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <link type="url">http://www.mysite.org</link>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <geoBox> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <westBL>-180.0</westBL> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <eastBL>180.0</eastBL> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <southBL>-90.0</southBL> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <northBL>90.0</northBL> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </geoBox>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <geonet:info> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <id>11</id> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <schema>fgdc-std</schema> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <createDate>2005-03-31T19:13:31</createDate> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <changeDate>2007-03-12T14:52:46</changeDate> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <isTemplate>n</isTemplate> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <title/> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <source>38b75c1b-634b-443e-9c36-a12e89b4c866</source>    
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <uuid>84b4190b-de43-4bd7-b25f-6ed47eb239ac</uuid> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <isHarvested>n</isHarvested> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <view>true</view> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <admin>false</admin> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <edit>false</edit> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <notify>false</notify> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <download>true</download> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <dynamic>false</dynamic> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <featured>false</featured> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </geonet:info> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+</metadata>
 \end_layout
 
 \end_inset
