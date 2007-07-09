@@ -72,7 +72,8 @@ This is the Spatial Data Catalog web application.
 			</description>
 			
 			<fileset dir=".build/docs" targetdir="$INSTALL_PATH/docs">
-				<exclude name="javadoc/**"/>
+				<exclude name="javadoc-gn/**"/>
+				<exclude name="javadoc-im/**"/>
 			</fileset>						
 			
 			<fileset dir=".build/bin"   targetdir="$INSTALL_PATH/bin"/>
@@ -84,11 +85,11 @@ This is the Spatial Data Catalog web application.
 			</fileset>
 			
 			<fileset dir=".build/web"   targetdir="$INSTALL_PATH/web">
-				<exclude name="WEB-INF/db/account.prop"/>
-				<exclude name="WEB-INF/db/data/*"/>
-				<exclude name="WEB-INF/db/log/*"/>
-				<exclude name="WEB-INF/data/0*"/>
-				<exclude name="WEB-INF/lucene/*"/>
+				<exclude name="geonetwork/WEB-INF/db/account.prop"/>
+				<exclude name="geonetwork/WEB-INF/db/data/*"/>
+				<exclude name="geonetwork/WEB-INF/db/log/*"/>
+				<exclude name="geonetwork/WEB-INF/data/00000-00099"/>
+				<exclude name="geonetwork/WEB-INF/lucene/*"/>
 			</fileset>
 			
 			<executable targetfile="$INSTALL_PATH/bin/start-geonetwork.sh" />
@@ -142,7 +143,8 @@ This is a separate test application that can be used to test the CSW 2.0.1 servi
 		<pack name="Java source code JavaDoc" required="no" preselected="no">
 			<description>The GeoNetwork JavaDoc source code documentation.</description>
 			
-			<fileset dir=".build/docs/javadoc" targetdir="$INSTALL_PATH/docs/javadoc"/>
+			<fileset dir=".build/docs/javadoc-gn" targetdir="$INSTALL_PATH/docs/javadoc-gn"/>
+			<fileset dir=".build/docs/javadoc-im" targetdir="$INSTALL_PATH/docs/javadoc-im"/>
 		</pack>
 				
 	</packs>
