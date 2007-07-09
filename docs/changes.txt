@@ -12,6 +12,9 @@
 
 - Merged Intermap
 
+- Added 'xml.relation.get' service and 'Relations' table to support relations
+  between metadata.
+
 --------------------------------------------------------------------------------
 --- Changes
 --------------------------------------------------------------------------------
