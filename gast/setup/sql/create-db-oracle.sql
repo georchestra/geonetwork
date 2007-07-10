@@ -1,29 +1,7 @@
 REM ======================================================================
 REM ===   Sql Script for Database : Geonet
 REM ===
-REM === Build : 140
-REM ======================================================================
-
-CREATE TABLE Metadata
-  (
-    id           int,
-    uuid         varchar(250)   not null,
-    schemaId     varchar(32)    not null,
-    isTemplate   char(1)        default 'n' not null,
-    isHarvested  char(1)        default 'n' not null,
-    createDate   varchar(24)    not null,
-    changeDate   varchar(24)    not null,
-    data         long           not null,
-    source       varchar(250)   not null,
-    title        varchar(255),
-    root         varchar(255),
-    harvestUuid  varchar(250),
-    primary key(id),
-    unique(uuid,source,harvestUuid)
-  );
-
-CREATE INDEX MetadataNDX1 ON Metadata(uuid,source);
-
+REM === Build : 141
 REM ======================================================================
 
 CREATE TABLE Relations
@@ -162,6 +140,30 @@ CREATE TABLE OperationsDes
     foreign key(idDes) references Operations(id),
     foreign key(langId) references Languages(id)
   );
+
+REM ======================================================================
+
+CREATE TABLE Metadata
+  (
+    id           int,
+    uuid         varchar(250)   not null,
+    schemaId     varchar(32)    not null,
+    isTemplate   char(1)        default 'n' not null,
+    isHarvested  char(1)        default 'n' not null,
+    createDate   varchar(24)    not null,
+    changeDate   varchar(24)    not null,
+    data         long           not null,
+    source       varchar(250)   not null,
+    title        varchar(255),
+    root         varchar(255),
+    harvestUuid  varchar(250),
+    owner        int            not null,
+    primary key(id),
+    unique(uuid,source,harvestUuid),
+    foreign key(owner) references Users(id)
+  );
+
+CREATE INDEX MetadataNDX1 ON Metadata(uuid,source);
 
 REM ======================================================================
 

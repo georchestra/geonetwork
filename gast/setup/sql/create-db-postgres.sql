@@ -1,30 +1,7 @@
 -- ======================================================================
 -- ===   Sql Script for Database : Geonet
 -- ===
--- === Build : 140
--- ======================================================================
-
-CREATE TABLE Metadata
-  (
-    id           int,
-    uuid         varchar(250)   not null,
-    schemaId     varchar(32)    not null,
-    isTemplate   char(1)        default 'n' not null,
-    isHarvested  char(1)        default 'n' not null,
-    createDate   varchar(24)    not null,
-    changeDate   varchar(24)    not null,
-    data         text           not null,
-    source       varchar(250)   not null,
-    title        varchar(255),
-    root         varchar(255),
-    harvestUuid  varchar(250),
-
-    primary key(id),
-    unique(uuid,source,harvestUuid)
-  );
-
-CREATE INDEX MetadataNDX1 ON Metadata(uuid,source);
-
+-- === Build : 141
 -- ======================================================================
 
 CREATE TABLE Relations
@@ -179,6 +156,32 @@ CREATE TABLE OperationsDes
     foreign key(idDes) references Operations(id),
     foreign key(langId) references Languages(id)
   );
+
+-- ======================================================================
+
+CREATE TABLE Metadata
+  (
+    id           int,
+    uuid         varchar(250)   not null,
+    schemaId     varchar(32)    not null,
+    isTemplate   char(1)        default 'n' not null,
+    isHarvested  char(1)        default 'n' not null,
+    createDate   varchar(24)    not null,
+    changeDate   varchar(24)    not null,
+    data         text           not null,
+    source       varchar(250)   not null,
+    title        varchar(255),
+    root         varchar(255),
+    harvestUuid  varchar(250),
+    owner        int            not null,
+
+    primary key(id),
+    unique(uuid,source,harvestUuid),
+
+    foreign key(owner) references Users(id)
+  );
+
+CREATE INDEX MetadataNDX1 ON Metadata(uuid,source);
 
 -- ======================================================================
 
