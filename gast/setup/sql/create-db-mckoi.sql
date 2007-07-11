@@ -1,7 +1,7 @@
 -- ======================================================================
 -- ===   Sql Script for Database : Geonet
 -- ===
--- === Build : 141
+-- === Build : 142
 -- ======================================================================
 
 CREATE TABLE Relations
@@ -116,7 +116,7 @@ CREATE TABLE Users
   (
     id            int,
     username      varchar(32)    not null,
-    password      varchar(32)    not null,
+    password      varchar(40)    not null,
     surname       varchar(32),
     name          varchar(32),
     profile       varchar(32)    not null,

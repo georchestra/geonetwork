@@ -1,7 +1,7 @@
 REM ======================================================================
 REM ===   Sql Script for Database : Geonet
 REM ===
-REM === Build : 141
+REM === Build : 142
 REM ======================================================================
 
 CREATE TABLE Relations
@@ -104,7 +104,7 @@ CREATE TABLE Users
   (
     id            int,
     username      varchar(32)    not null,
-    password      varchar(32)    not null,
+    password      varchar(40)    not null,
     surname       varchar(32),
     name          varchar(32),
     profile       varchar(32)    not null,
