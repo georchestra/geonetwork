@@ -1697,6 +1697,10 @@ Accept
 \end_layout
 
 \begin_layout Section
+\begin_inset LatexCommand \label{sec:Exception-handling}
+
+\end_inset
+
 Exception handling
 \end_layout
 
@@ -9250,6 +9254,657 @@ status open
 
 \size footnotesize
 </metadata>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Schema information
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+GeoNetwork is able to handle several metadata schema formats.
+ Up to now, the supported schemas are: 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+ISO-19115
+\series default
+ (iso19115) : GeoNetwork implements an old version of the draft, which uses
+ short names for elements.
+ This is not so standard so this schema is obsolete and will be removed
+ in future releases.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+ISO-19139
+\series default
+ (iso19139) : This is the XML encoding of the ISO 19115:2007 metadata specificat
+ion.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Dublin core
+\series default
+ (dublin-core) : This is a simple metadata schema based on a set of elements
+ capable of describing any metadata.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+FGDC
+\series default
+ (fgdc-std) : It stands for Federal Geographic Data Committee and it is
+ a metadata schema used in North America.
+\end_layout
+
+\begin_layout Standard
+In parenthesis is indicated the name used by GeoNetwork to refer to that
+ schema.
+ These schemas are handled through their XML schema files (XSD), which GeoNetwor
+k loads and interprets to allow the editor to add and remove elements.
+ Beside its internal use, GeoNetwork provides some useful XML services to
+ find out some element properties, like label, description and so on.
+\end_layout
+
+\begin_layout Section
+xml.schema.info
+\end_layout
+
+\begin_layout Standard
+This service returns information about a set of schema elements or codelists.
+ The returned information consists of a localized label, a description,
+ conditions that the element must satisfy etc...
+\end_layout
+
+\begin_layout Subsection*
+Request
+\end_layout
+
+\begin_layout Standard
+Due to its nature, this service accepts only the POST binding with application/X
+ML content type.
+ The request can contain several 
+\family sans
+\series bold
+element
+\family default
+\series default
+ and 
+\family sans
+\series bold
+codelist
+\family default
+\series default
+ elements.
+ Each element indicate the will to retrieve information for that element.
+ Here follows the element descriptions:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+element
+\series default
+ : It must contain a 
+\family sans
+\series bold
+schema
+\family default
+\series default
+ and a 
+\family sans
+\series bold
+name
+\family default
+\series default
+ attribute.
+ The first one must be one of the supported schemas (see the section above).
+ The second must be the qualified name of the element which information
+ must be retrieved.
+ The namespace must be declared into this element or into the root element
+ of the request.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+codelist
+\series default
+ : Works like the previous one but returns information about codelists.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout LyX-Code
+
+\size footnotesize
+<request xmlns:gmd="http://www.isotc211.org/2005/gmd">   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <element schema="iso19139" name="gmd:constraintLanguage" />   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <codelist schema="iso19115" name="DateTypCd" /> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+</request>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Description
+Note The returned text is localized depending on the language specified
+ during the service call.
+ A call to 
+\family sans
+/geonetwork/srv/
+\series bold
+en
+\series default
+/xml.schema.info
+\family default
+ will return text in the English language.
+\end_layout
+
+\begin_layout Subsection*
+Response
+\end_layout
+
+\begin_layout Standard
+The response's root element will be populated with information of the elements/c
+odelists specified into the request.
+ The structure is the following:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+element
+\series default
+ : A container for information about an element.
+ It has a 
+\series bold
+name
+\series default
+ attribute which contains the qualified name of the element.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+label
+\series default
+ : The human readable name of the element, localized into the request's
+ language.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+description
+\series default
+ : A generic description of the element.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+condition
+\series default
+ [0..1] : This element is optional and indicates if the element must satisfy
+ a condition, like the element is always mandatory or is mandatory if another
+ one is missing.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\series bold
+codelist
+\series default
+ : A container for information about a codelist.
+ It has a 
+\series bold
+name
+\series default
+ attribute which contains the qualified name of the codelist.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+entry
+\series default
+ [1..n] : A container for a codelist entry.
+ There can be many entries.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+code
+\series default
+ : The entry's code.
+ This is the value that will be present inside the metadata.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+label
+\series default
+ : This is a human readable name, used to show the entry into the user interface.
+ It is localized.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+description
+\series default
+ : A generic localized description of the codelist.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout LyX-Code
+
+\size footnotesize
+<response>   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <element name="gmd:constraintLanguage">     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <label>Constraint language</label>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <description>language used in Application Schema</description>   
+  
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <condition>mandatory</condition>   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </element>   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <codelist name="DateTypCd">     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <entry>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <code>creation</code>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <label>Creation</label>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <description>date when the resource was brought into 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+               existence</description>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      </entry> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <entry>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <code>publication</code>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <label>Publication</label>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <description>date when the resource was issued</description>  
+   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      </entry>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <entry>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <code>revision</code>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <label>Revision</label>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <description>date identifies when the resource was examined
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+               or re-examined and improved or amended</description>    
+ 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      </entry>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </codelist> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+</response> 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Error management
+\end_layout
+
+\begin_layout Standard
+Beside the normal exceptions management discussed in section 
+\begin_inset LatexCommand \ref{sec:Exception-handling}
+
+\end_inset
+
+, the service can encounter some errors trying to retrieve an element/codelist
+ information.
+ In this case, the object is copied verbatim to the response with the addition
+ of an 
+\family sans
+\series bold
+error
+\family default
+\series default
+ attribute that describes the encountered error.
+ The returned errors are described in figure 
+\begin_inset LatexCommand \ref{fig:xml-schema-info-errors}
+
+\end_inset
+
+.
+ Here follows an example of such response:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout LyX-Code
+
+\size footnotesize
+<response>   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <element schemma="iso19139" name="blablabla" error="not-found"/>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+</response> 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="2">
+<features>
+<column alignment="left" valignment="top" leftline="true" width="0">
+<column alignment="left" valignment="top" leftline="true" rightline="true" width="0">
+<row topline="true" bottomline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\series bold
+Error code
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\series bold
+Description
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+unknown-schema
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+The specified schema is not supported
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+unknown-namespace
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+The namespace of the specified prefix was not found
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true" bottomline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+not-found
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+The requested element / codelist was not found
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Caption
+\begin_inset LatexCommand \label{fig:xml-schema-info-errors}
+
+\end_inset
+
+Possible errors returned by 
+\family sans
+xml.schema.info
+\family default
+ service.
 \end_layout
 
 \end_inset
