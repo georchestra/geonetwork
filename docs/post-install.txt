@@ -54,7 +54,14 @@ file, into the <Host> element (for example just before the closing </Host>):
 
 <Context 
 	path="/geonetwork" 
-	docBase="$INSTALL_PATH/web" 
+	docBase="$INSTALL_PATH/web/geonetwork" 
+	crossContext="false" 
+	debug="0" 
+	reloadable="false" />
+
+<Context 
+	path="/intermap" 
+	docBase="$INSTALL_PATH/web/intermap" 
 	crossContext="false" 
 	debug="0" 
 	reloadable="false" />
