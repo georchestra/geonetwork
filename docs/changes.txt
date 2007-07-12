@@ -8,17 +8,26 @@
   all privileges where removed the metadata got lost because the search was no
   able to retrieve it.
 
+- Added documentation for new xml.schema.info service
+
 --------------------------------------------------------------------------------
 --- Changes
 --------------------------------------------------------------------------------
 
 - Moved schema labels and help strings into the proper schema folder
 
+- In metadata.show and metadata.edit there are tooltips for elements instead of
+  opening a separate window
+
 --------------------------------------------------------------------------------
 --- Bugs fixed
 --------------------------------------------------------------------------------
 
 - Fixed portal.search.present service: parameters where not pipelined
+
+- Fixed path in csw start scripts
+
+- Fixed password length in Users table
 
 ================================================================================
 ===
