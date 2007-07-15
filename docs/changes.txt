@@ -1,6 +1,6 @@
 ================================================================================
 ===
-=== GeoNetwork 2.1.0 RC1 : List of changes
+=== GeoNetwork 2.1.0 RC : List of changes
 ===
 ================================================================================
 
@@ -33,6 +33,8 @@
 
 - Fixed query for featured metadata in the main page. It had some problems with
   PostgreSQL.
+
+- Fixed bug when inserting a new user: the password was not scrambled
 
 ================================================================================
 ===
