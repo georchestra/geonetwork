@@ -10,6 +10,10 @@
 
 - Added documentation for new xml.schema.info service
 
+- Added 'users' section in xml.info service
+
+- Added 'cache=yes|no' attribute to Jeeves's services to allow data caching
+
 --------------------------------------------------------------------------------
 --- Changes
 --------------------------------------------------------------------------------
@@ -18,6 +22,9 @@
 
 - In metadata.show and metadata.edit there are tooltips for elements instead of
   opening a separate window
+
+- Removed EDIT and ADMIN privileges. Added the concept of metadata 'reviewer'.
+  Adjusted all search and access policies.
 
 --------------------------------------------------------------------------------
 --- Bugs fixed
@@ -35,6 +42,8 @@
   PostgreSQL.
 
 - Fixed bug when inserting a new user: the password was not scrambled
+
+- Jeeves : removed path in file upload
 
 ================================================================================
 ===
