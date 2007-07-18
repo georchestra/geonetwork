@@ -12,8 +12,6 @@ reserved,      VARCHAR
 [DATA]
 0	view	y
 1	download	y
-2	edit	y
 3	notify	y
-4	admin	y
 5	dynamic	y
 6	featured	y
