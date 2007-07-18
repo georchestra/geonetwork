@@ -2,8 +2,8 @@
 
 <project version="2">
 	<attribs>
-		<attrib name="build">142</attrib>
-		<attrib name="serial">63603</attrib>
+		<attrib name="build">144</attrib>
+		<attrib name="serial">63756</attrib>
 	</attribs>
 	<database>
 		<attribs>
@@ -1267,6 +1267,29 @@ ORDER BY id
 							<attrib name="onDelete">n</attrib>
 							<attrib name="onUpdate">n</attrib>
 							<attrib name="refTable">51027</attrib>
+							<attrib name="type">0</attrib>
+						</attribs>
+						<modsConfig/>
+					</field>
+					<field>
+						<fieldAttribs>
+							<attribs>
+								<attrib name="54374"/>
+								<attrib name="61528">false</attrib>
+								<attrib name="17">false</attrib>
+								<attrib name="15">false</attrib>
+								<attrib name="340">false</attrib>
+							</attribs>
+						</fieldAttribs>
+						<attribs>
+							<attrib name="comment"/>
+							<attrib name="matchType">s</attrib>
+							<attrib name="refField">51648</attrib>
+							<attrib name="name">groupOwner</attrib>
+							<attrib name="id">63606</attrib>
+							<attrib name="onDelete">n</attrib>
+							<attrib name="onUpdate">n</attrib>
+							<attrib name="refTable">51647</attrib>
 							<attrib name="type">0</attrib>
 						</attribs>
 						<modsConfig/>
