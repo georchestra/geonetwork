@@ -1,5 +1,5 @@
-#LyX 1.4.3 created this file. For more info see http://www.lyx.org/
-\lyxformat 245
+#LyX 1.5.0rc1 created this file. For more info see http://www.lyx.org/
+\lyxformat 271
 \begin_document
 \begin_header
 \textclass book
@@ -21,13 +21,21 @@
 \end_preamble
 \language english
 \inputencoding auto
-\fontscheme times
+\font_roman times
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
 \graphics default
 \paperfontsize 12
 \spacing onehalf
 \papersize a4paper
 \use_geometry false
 \use_amsmath 1
+\use_esint 0
 \cite_engine basic
 \use_bibtopic false
 \paperorientation portrait
@@ -40,7 +48,8 @@
 \papersides 1
 \paperpagestyle headings
 \tracking_changes false
-\output_changes true
+\output_changes false
+\author "FX.Prunayre" 
 \end_header
 
 \begin_body
@@ -105,7 +114,7 @@ Andrea Carboni
 \align center
 
 \size larger
-Revision 3 (23-Apr-2007)
+Revision 4 (10-Jul-2007)
 \end_layout
 
 \begin_layout Standard
@@ -128,7 +137,7 @@ thispagestyle{empty}
 \end_inset
 
 
-\begin_inset LatexCommand \tableofcontents{}
+\begin_inset LatexCommand tableofcontents
 
 \end_inset
 
@@ -203,7 +212,8 @@ Most of the GeoNetwork's configuration parameters can be changed using the
  usually changed using the GAST application.
  To reach this web interface, you must be logged in as an Administrator.
  The page's link is located into the administration page (see figure 
-\begin_inset LatexCommand \ref{fig:config-location}
+\begin_inset LatexCommand ref
+reference "fig:config-location"
 
 \end_inset
 
@@ -228,8 +238,12 @@ status open
 
 \end_layout
 
-\begin_layout Caption
-\begin_inset LatexCommand \label{fig:config-location}
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "fig:config-location"
 
 \end_inset
 
@@ -241,10 +255,16 @@ How to reach the configuration page
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 Clicking the page's link you will get the set of parameters that you can
  change (see figure 
-\begin_inset LatexCommand \ref{fig:config-options}
+\begin_inset LatexCommand ref
+reference "fig:config-options"
 
 \end_inset
 
@@ -513,12 +533,21 @@ status open
 
 \end_layout
 
-\begin_layout Caption
-\begin_inset LatexCommand \label{fig:config-options}
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "fig:config-options"
 
 \end_inset
 
 The configuration options
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -596,7 +625,8 @@ The GeoNetwork's user interface can be easily localized into several languages
  These entities are stored inside the database and their localization can
  be performed using a specialized web form which can be reached from the
  administration page (see figure 
-\begin_inset LatexCommand \ref{fig:localiz-location}
+\begin_inset LatexCommand ref
+reference "fig:localiz-location"
 
 \end_inset
 
@@ -620,12 +650,21 @@ status open
 
 \end_layout
 
-\begin_layout Caption
-\begin_inset LatexCommand \label{fig:localiz-location}
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "fig:localiz-location"
 
 \end_inset
 
 How to reach the localization page
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -655,7 +694,8 @@ regions
 \emph default
 .
  The form is shown in figure 
-\begin_inset LatexCommand \ref{fig:localiz-form}
+\begin_inset LatexCommand ref
+reference "fig:localiz-form"
 
 \end_inset
 
@@ -739,12 +779,21 @@ status open
 
 \end_layout
 
-\begin_layout Caption
-\begin_inset LatexCommand \label{fig:localiz-form}
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "fig:localiz-form"
 
 \end_inset
 
 The localization form
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -766,7 +815,8 @@ The batch import facility allows you to import a set of metadata into the
  In order to use this facility, you have to be logged in as an administrator.
  After the login step, go to the administration page and select the batch
  import's link (see figure 
-\begin_inset LatexCommand \ref{fig:batchimport-location}
+\begin_inset LatexCommand ref
+reference "fig:batchimport-location"
 
 \end_inset
 
@@ -791,8 +841,12 @@ status open
 
 \end_layout
 
-\begin_layout Caption
-\begin_inset LatexCommand \label{fig:batchimport-location}
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "fig:batchimport-location"
 
 \end_inset
 
@@ -804,10 +858,16 @@ How to reach the batch import page
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 Clicking the link, you will reach the batch import's page as illustrated
  in figure 
-\begin_inset LatexCommand \ref{fig:batchimport-options}
+\begin_inset LatexCommand ref
+reference "fig:batchimport-options"
 
 \end_inset
 
@@ -947,12 +1007,21 @@ status open
 
 \end_layout
 
-\begin_layout Caption
-\begin_inset LatexCommand \label{fig:batchimport-options}
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "fig:batchimport-options"
 
 \end_inset
 
 The batch import options
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1325,13 +1394,14 @@ These two concepts allow GeoNetwork to fetch a remote metadata, to check
 \end_layout
 
 \begin_layout Section
-Tha main page
+The main page
 \end_layout
 
 \begin_layout Standard
 To reach the harvesting main page you have to be logged in as an administrator.
  From the administration page, click the link shown in figure 
-\begin_inset LatexCommand \ref{fig:harvesting-location}
+\begin_inset LatexCommand ref
+reference "fig:harvesting-location"
 
 \end_inset
 
@@ -1355,8 +1425,12 @@ status open
 
 \end_layout
 
-\begin_layout Caption
-\begin_inset LatexCommand \label{fig:harvesting-location}
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "fig:harvesting-location"
 
 \end_inset
 
@@ -1368,9 +1442,15 @@ How to reach the harvesting main page
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 Figure 
-\begin_inset LatexCommand \ref{fig:harvesting-list}
+\begin_inset LatexCommand ref
+reference "fig:harvesting-list"
 
 \end_inset
 
@@ -1425,7 +1505,8 @@ Status
 \series default
  This is an icon that reflects the node's current status.
  See figure 
-\begin_inset LatexCommand \ref{fig:harv-status-icons}
+\begin_inset LatexCommand ref
+reference "fig:harv-status-icons"
 
 \end_inset
 
@@ -1443,7 +1524,8 @@ Errors
  The result is reflected on this icon and a tooltip will show detailed informati
 on.
  See figure 
-\begin_inset LatexCommand \ref{fig:harv-error-icons}
+\begin_inset LatexCommand ref
+reference "fig:harv-error-icons"
 
 \end_inset
 
@@ -1509,12 +1591,21 @@ status open
 
 \end_layout
 
-\begin_layout Caption
-\begin_inset LatexCommand \label{fig:harvesting-list}
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "fig:harvesting-list"
 
 \end_inset
 
 The harvesting main page
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1598,7 +1689,8 @@ Add
 \series default
  This button allows to create new harvesting nodes.
  See section 
-\begin_inset LatexCommand \ref{sec:Adding-new-entries}
+\begin_inset LatexCommand ref
+reference "sec:Adding-new-entries"
 
 \end_inset
 
@@ -1778,12 +1870,21 @@ The harvesting engine is currently running, fetching metadata from remote
 
 \end_layout
 
-\begin_layout Caption
-\begin_inset LatexCommand \label{fig:harv-status-icons}
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "fig:harv-status-icons"
 
 \end_inset
 
 Possible status icons
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1889,8 +1990,12 @@ The harvesting was aborted due to an unexpected condition.
 
 \end_layout
 
-\begin_layout Caption
-\begin_inset LatexCommand \label{fig:harv-error-icons}
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "fig:harv-error-icons"
 
 \end_inset
 
@@ -1902,8 +2007,14 @@ Possible error icons
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
-\begin_inset LatexCommand \label{sec:Adding-new-entries}
+\begin_inset LatexCommand label
+name "sec:Adding-new-entries"
 
 \end_inset
 
@@ -1919,7 +2030,8 @@ Add
 \series default
  button in the main page allows you to add new harvesting nodes.
  After pressing it, you will reach the page shown in figure 
-\begin_inset LatexCommand \ref{fig:harvesting-add}
+\begin_inset LatexCommand ref
+reference "fig:harvesting-add"
 
 \end_inset
 
@@ -1966,7 +2078,8 @@ folder
  Because this page contains file names, change dates and links, GeoNetwork
  is able to download them and keep them updated.
  Figure 
-\begin_inset LatexCommand \ref{fig:harvesting-waf-example}
+\begin_inset LatexCommand ref
+reference "fig:harvesting-waf-example"
 
 \end_inset
 
@@ -2009,12 +2122,21 @@ status open
 
 \end_layout
 
-\begin_layout Caption
-\begin_inset LatexCommand \label{fig:harvesting-add}
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "fig:harvesting-add"
 
 \end_inset
 
 Adding a new harvesting node
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -2040,12 +2162,21 @@ status open
 
 \end_layout
 
-\begin_layout Caption
-\begin_inset LatexCommand \label{fig:harvesting-waf-example}
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "fig:harvesting-waf-example"
 
 \end_inset
 
 An example of a WAF page generated by the Apache web server.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -2063,7 +2194,8 @@ This type of harvesting allows you to connect to a GeoNetwork node, perform
  The search is usefull because it allows to focus only on metadata of interest.
  Once, you add a node of this type, you will get a page like the one shown
  in figure 
-\begin_inset LatexCommand \ref{fig:harvesting-gn}
+\begin_inset LatexCommand ref
+reference "fig:harvesting-gn"
 
 \end_inset
 
@@ -2089,12 +2221,21 @@ status open
 
 \end_layout
 
-\begin_layout Caption
-\begin_inset LatexCommand \label{fig:harvesting-gn}
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "fig:harvesting-gn"
 
 \end_inset
 
 Adding a GeoNetwork node
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -2279,7 +2420,8 @@ Adding a Web Assessible Folder node
 \begin_layout Standard
 In this type of harvesting, metadata are retrieved from a remote web page.
  The available options are shown in figure 
-\begin_inset LatexCommand \ref{fig:harvesting-waf}
+\begin_inset LatexCommand ref
+reference "fig:harvesting-waf"
 
 \end_inset
 
@@ -2303,12 +2445,21 @@ status open
 
 \end_layout
 
-\begin_layout Caption
-\begin_inset LatexCommand \label{fig:harvesting-waf}
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "fig:harvesting-waf"
 
 \end_inset
 
 Adding a web accessible folder node
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -2497,6 +2648,589 @@ Save
 Mixing harvesting between different versions
 \end_layout
 
+\begin_layout Chapter
+Thesaurus
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+Thesaurus support in GeoNetwork allows :
+\end_layout
+
+\begin_layout Itemize
+metadata editing : controled vocabulary on the metadata editing interface
+ for ISO and Dublin Core
+\end_layout
+
+\begin_layout Itemize
+administration interface allows import/export/creation/browse thesaurus
+\end_layout
+
+\begin_layout Itemize
+search interface : a list of keyword is proposed for the keyword criteria
+\end_layout
+
+\begin_layout Standard
+On a node, thesaurus types could be defined as:
+\end_layout
+
+\begin_layout Itemize
+external: When a thesaurus is imported, it is flagged to 
+\begin_inset Quotes sld
+\end_inset
+
+external
+\begin_inset Quotes srd
+\end_inset
+
+ which means that users are not allowed to edit the thesaurus.
+ This thesaurus is managed by an external organisation.
+\end_layout
+
+\begin_layout Itemize
+local: When a thesaurus is created, it is flagged to 
+\begin_inset Quotes sld
+\end_inset
+
+local
+\begin_inset Quotes srd
+\end_inset
+
+ which means that users are allowed to edit the thesaurus.
+\end_layout
+
+\begin_layout Section
+Thesaurus / SKOS format
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset LatexCommand htmlurl
+name "Simple Knowledge Organisation Systems (SKOS)"
+target "http://www.w3.org/2004/02/skos/"
+
+\end_inset
+
+is an area of work developing specifications and standards to support the
+ use of knowledge organisation systems (KOS) such as thesauri, classification
+ schemes.
+ This format is used by GeoNetwork to store thesaurus information.
+ 
+\end_layout
+
+\begin_layout Standard
+A concept is defined by an identifier, a prefered label, a definition and
+ links with other concepts.
+ Labels and definitions could be stored in multiple languages (using the
+ xml:lang attributes).
+ Three type of links between concepts have been defined in the SKOS format:
+ 
+\end_layout
+
+\begin_layout Itemize
+related terms
+\end_layout
+
+\begin_layout Itemize
+broader terms
+\end_layout
+
+\begin_layout Itemize
+narrower terms
+\end_layout
+
+\begin_layout Standard
+For example, a concept 
+\begin_inset Quotes sld
+\end_inset
+
+ABLETTE
+\begin_inset Quotes srd
+\end_inset
+
+ could be defined as follow with a label in french and english, linked to
+ broader concept.:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Standard
+<skos:Concept rdf:about="http://www.oieau.org/concept#c4fc54576dc00227b82a709287ac
+3681"> 
+\end_layout
+
+\begin_layout Standard
+<skos:prefLabel xml:lang="fr">ABLETTE</skos:prefLabel> 
+\end_layout
+
+\begin_layout Standard
+<skos:prefLabel xml:lang="en">BLEAK</skos:prefLabel> 
+\end_layout
+
+\begin_layout Standard
+<skos:broader rdf:resource="http://www.oieau.org/concept#9f25ece36d04776e09492c666
+27cccb9"/> 
+\end_layout
+
+\begin_layout Standard
+</skos:Concept> 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+GeoNetwork support multilingual thesaurus (e.g.
+ Agrovoc).
+ Search and edition are made based on current user interface language (i.e.
+ if the interface is in english, when editing metadata, GeoNetwork will
+ only search for concept in english).
+\end_layout
+
+\begin_layout Section
+Thesaurus administration
+\end_layout
+
+\begin_layout Standard
+To reach the thesaurus administration page you have to be logged in as an
+ administrator.
+ From the administration page, click the link 
+\begin_inset Quotes sld
+\end_inset
+
+Manage thesaurii
+\begin_inset Quotes srd
+\end_inset
+
+.
+ Figure 
+\begin_inset LatexCommand ref
+reference "fig:thesaurus-admin"
+
+\end_inset
+
+ shows the list of thesaurus available in the GeoNetwork node.
+ The page shows a list of thesaurus that have been created or imported.
+ The upper part of the page allows user to edit/add/modify/consult thesaurus.
+ The lower part allows upload of thesaurus in SKOS format.
+ 
+\end_layout
+
+\begin_layout Subsection
+Creation of a new thesaurus
+\end_layout
+
+\begin_layout Standard
+To create a new thesaurus, click the 
+\begin_inset Quotes sld
+\end_inset
+
++
+\begin_inset Quotes srd
+\end_inset
+
+ sign in the category you want your thesaurus to be in.
+ Once created, the thesaurus could be updated through the edit interface.
+ The meaning of each column is as follows:
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+Type
+\series default
+ The type allows to classify thesaurus according to its type.
+ First, is defined the type of the thesaurus following ISO category list,
+ then the type indicates if the thesaurus is a local one or an external
+ one.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+Name
+\series default
+ This is the thesaurus's name provided by the administrator on creation
+ or filename on upload.
+ When creating a thesaurus, the name of the thesaurus will be the filename
+ of the thesaurus.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename images/thesaurus-Admin.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "fig:thesaurus-admin"
+
+\end_inset
+
+Administration interface for thesaurus
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For each thesaurus the following buttons are available:
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+Download
+\series default
+ Link to the rdf file.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+Delete
+\series default
+ Remove thesaurus from the current node.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+View
+\series default
+ If type is external, the view button allows to search and view concepts.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+Edit
+\series default
+ If type is local, the edit button allows to search, add, remove and view
+ concepts.
+\end_layout
+
+\begin_layout Subsection
+Import existing thesaurus
+\end_layout
+
+\begin_layout Standard
+GeoNetwork allows thesaurus import in SKOS format.
+ Once uploaded, an external thesaurus could not be updated.
+ Select the category, browse for the thesaurus file and click upload.
+ The file is located in /web/xml/codelist/external/thesauri/category/.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename images/thesaurus-upload.png
+	subcaption
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "fig:thesaurus-upload"
+
+\end_inset
+
+Administration interface for thesaurus
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+At the bottom of the page there are the following buttons:
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+Back
+\series default
+ Go back to the main administration page.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+Upload
+\series default
+ Upload the selected rdf file to the node.
+ Then it will list all thesaurus available on the node.
+\end_layout
+
+\begin_layout Section
+Editing/browsing thesaurus : add/remove/browse keywords
+\end_layout
+
+\begin_layout Standard
+\noindent
+From the thesaurus administration interface, click on the edit button for
+ a local thesaurus or the view button for an external thesaurus.
+ This interface allows : 
+\end_layout
+
+\begin_layout Itemize
+\noindent
+keywords search
+\end_layout
+
+\begin_layout Itemize
+\noindent
+add/remove keywords for local thesaurus.
+\end_layout
+
+\begin_layout Standard
+Use the textbox and the type of search in order to search for keywords.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename images/thesaurus-KeywordSearch.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "fig:thesaurus-admin"
+
+\end_inset
+
+Administration interface for thesaurus
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename images/thesaurus-KeywordDesc.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "fig:thesaurus-KeywordDesc"
+
+\end_inset
+
+Keyword description
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Metadata editing : adding keywords
+\end_layout
+
+\begin_layout Standard
+When editing metadata in ISO or Dublin core, the keyword fields autocomplete
+ when editor fill the fields.
+ Keywords available in all thesaurus know by the current node are returned.
+ Editor could select one of the list or could type any other keywords.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename images/thesaurus-EditKeywords.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "fig:thesaurus-EditKeywords"
+
+\end_inset
+
+Administration interface for thesaurus
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Search criteria : keywords
+\end_layout
+
+\begin_layout Standard
+In the advanced search interface, the keyword field will proposed all keywords
+ used in the metadata.
+ These keywords are indexed by Lucene on creation/update of metadata.
+ The number of metadata linked to all keywords available in the index are
+ display.
+ User could type in the keyword field or click the icon to get the list
+ of keywords available.
+ 
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename images/thesaurus-SearchInterface.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "fig:thesaurus-SearchInterface"
+
+\end_inset
+
+Administration interface for thesaurus
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Part
 GAST
 \end_layout
@@ -2595,7 +3329,8 @@ Operating modes
 \begin_layout Standard
 When you start GAST, you get an application window like the one in figure
  
-\begin_inset LatexCommand \ref{fig:main-window}
+\begin_inset LatexCommand ref
+reference "fig:main-window"
 
 \end_inset
 
@@ -2620,12 +3355,21 @@ status open
 
 \end_layout
 
-\begin_layout Caption
-\begin_inset LatexCommand \label{fig:main-window}
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "fig:main-window"
 
 \end_inset
 
 GAST's main window with a tool selected 
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -2890,7 +3634,8 @@ Config
 \series default
  from the menubar.
  You will get the dialog shown in figure 
-\begin_inset LatexCommand \ref{fig:the-configuration-dialog}
+\begin_inset LatexCommand ref
+reference "fig:the-configuration-dialog"
 
 \end_inset
 
@@ -2914,12 +3659,21 @@ status open
 
 \end_layout
 
-\begin_layout Caption
-\begin_inset LatexCommand \label{fig:the-configuration-dialog}
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "fig:the-configuration-dialog"
 
 \end_inset
 
 The configuration dialog
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -3039,7 +3793,8 @@ Export
 \series default
  node you get its option panel on the right, as you can see from figure
  
-\begin_inset LatexCommand \ref{fig:mef-export}
+\begin_inset LatexCommand ref
+reference "fig:mef-export"
 
 \end_inset
 
@@ -3062,12 +3817,21 @@ status open
 
 \end_layout
 
-\begin_layout Caption
-\begin_inset LatexCommand \label{fig:mef-export}
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "fig:mef-export"
 
 \end_inset
 
 The metadata export panel
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -3165,7 +3929,8 @@ Import
 \series default
  node you get its option panel on the right, as you can see from figure
  
-\begin_inset LatexCommand \ref{fig:mef-import}
+\begin_inset LatexCommand ref
+reference "fig:mef-import"
 
 \end_inset
 
@@ -3188,12 +3953,21 @@ status open
 
 \end_layout
 
-\begin_layout Caption
-\begin_inset LatexCommand \label{fig:mef-import}
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "fig:mef-import"
 
 \end_inset
 
 The metadata import panel
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
