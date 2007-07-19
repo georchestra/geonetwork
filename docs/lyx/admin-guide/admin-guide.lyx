@@ -2730,7 +2730,7 @@ status open
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename images/thesaurus-Admin.png
+	filename images/thesaurus/thesaurus-Admin.png
 
 \end_inset
 
@@ -2812,7 +2812,7 @@ status open
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename images/thesaurus-upload.png
+	filename images/thesaurus/thesaurus-upload.png
 	subcaption
 
 \end_inset
@@ -2891,7 +2891,7 @@ status open
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename images/thesaurus-KeywordSearch.png
+	filename images/thesaurus/thesaurus-KeywordSearch.png
 
 \end_inset
 
@@ -2917,7 +2917,7 @@ status open
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename images/thesaurus-KeywordDesc.png
+	filename images/thesaurus/thesaurus-KeywordDesc.png
 
 \end_inset
 
@@ -2958,7 +2958,7 @@ status open
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename images/thesaurus-EditKeywords.png
+	filename images/thesaurus/thesaurus-EditKeywords.png
 
 \end_inset
 
@@ -3003,7 +3003,7 @@ status open
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename images/thesaurus-SearchInterface.png
+	filename images/thesaurus/thesaurus-SearchInterface.png
 
 \end_inset
 
