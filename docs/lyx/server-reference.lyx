@@ -553,7 +553,13 @@ The compilation phase, if it has success, puts all jars into the proper
  place (most of them will be copied into 
 \family sans
 \series bold
-web/WEB-INF/lib
+web/geonetwork/WEB-INF/lib
+\family default
+\series default
+ and 
+\family sans
+\series bold
+web/intermap/WEB-INF/lib
 \family default
 \series default
 ).
@@ -1898,7 +1904,7 @@ status open
 \begin_layout Standard
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="15" columns="3">
+<lyxtabular version="3" rows="16" columns="3">
 <features>
 <column alignment="left" valignment="top" leftline="true" width="0">
 <column alignment="left" valignment="top" leftline="true" width="6cm">
@@ -2324,7 +2330,7 @@ User's name
 \end_inset
 </cell>
 </row>
-<row topline="true" bottomline="true">
+<row topline="true">
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
@@ -2348,6 +2354,35 @@ user-not-found
 
 \begin_layout Standard
 User's id or name
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true" bottomline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+metadata-not-found
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+The requested metadata was not found
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Metadata's id
 \end_layout
 
 \end_inset
@@ -2731,6 +2766,46 @@ All source uuids and names that have been discovered through harvesting.
 \begin_layout Itemize
 All source uuids and names of metadata that have been imported into the
  remote node through the MEF format.
+\end_layout
+
+\end_deeper
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+users
+\series default
+ Returns all users visible to the calling one.
+ The visibility policy is the following one:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Administrators can see all users into the system (normal, other administrators,
+ etc...)
+\end_layout
+
+\begin_layout Itemize
+User administrators can see all users they can administrate and all other
+ user administrators in the same group set.
+ The group set is defined by all groups visible to the user administration,
+ beside the 
+\family sans
+All
+\family default
+ and the 
+\family sans
+intranet
+\family default
+ groups.
+\end_layout
+
+\begin_layout Itemize
+A logged user can se only theirself.
+\end_layout
+
+\begin_layout Itemize
+A guest cannot see any user.
 \end_layout
 
 \end_deeper
@@ -3712,6 +3787,240 @@ status open
 
 \size footnotesize
 </sources>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\series bold
+users
+\series default
+ : This is the container for user information
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+user
+\series default
+ [0..n] : A user of the system
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+id
+\series default
+ : The local identifier of the user
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+username
+\series default
+ : The login name
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+surname
+\series default
+ : 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+name
+\series default
+ :
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+profile
+\series default
+ : User's profile, like Administrator, Editor, UserAdmin etc...
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+address
+\series default
+ :
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+state
+\series default
+ :
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+zip
+\series default
+ :
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+country
+\series default
+ :
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+email
+\series default
+ :
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+organisation
+\series default
+ :
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+kind
+\series default
+ :
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+Example:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout LyX-Code
+
+\size footnotesize
+<users>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <user> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <id>3</id> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <username>eddi</username> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <surname>Smith</surname>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <name>John</name>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <profile>Editor</profile> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <address/> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <state/> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <zip/> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <country/> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <email/> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <organisation/> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <kind>gov</kind> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </user>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+</users>
 \end_layout
 
 \end_inset
