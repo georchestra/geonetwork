@@ -10,16 +10,22 @@
 
 <body>
 	<div align="right"><span class="style1">GeoNetwork opensource V2.1.0 beta4 Date: 08-07-2007</span></div>
-	<h1>GeoNetwork release notes</h1>
+	<h1>GeoNetwork - Getting started</h1>
+
+	<h2>Running the application</h2>
 	
-	<h2>First time use</h2>
 	<p>
-		After installation make sure you start the web server to start the Geonetwork opensource application. You can than open the GeoNetwork application in your browser after that.
+		You have to launch the web server before starting the Geonetwork opensource application: Navigate to the start-menu folder you created during installation, and then launching "start server". You can then open the GeoNetwork application in your browser.
 	</p>
 	<p>
 		By default this should be at <a href="http://localhost:8080/geonetwork">http://localhost:8080/geonetwork</a>
 	</p>
 	<p>
+		A Java Runtime Environment (JRE) 1.5 Standard Edition (download from 
+		<a href="http://java.sun.com">http://java.sun.com)</a> is required to 
+		run GeoNetwork opensource. See the Troubleshooting sections if normal 
+		installation or start up fails. 
+	</p>
 		<strong>IMPORTANT!!</strong> After opening the GeoNetwork homepage, log on as Administrator. 
 		You should use the username <code><b>admin</b></code> and password <code><b>admin</b></code>.
 		In the Administration section you can then modify your account.
@@ -31,7 +37,7 @@ The catalog comes with metadata templates setup. However, no sample metadata
 has been loaded by default.
 </p>
 <p>
-If you want to load sample metadata, you have to start the GAST tool.
+If you want to load sample metadata, you have to start the GeoNetwork Administrator Survival Tool (GAST) tool.
 </p>
 <p>
 	<ul>
@@ -39,22 +45,15 @@ If you want to load sample metadata, you have to start the GAST tool.
 			Configure your authenthication in "Options" - "Config"
 		</li>
 		<li>
-			Select the Sample data option in the Database section and hit Import
+			Select the Sample data option in the Database section and press Import
 		</li>
 	</ul>
 </p>
-<p>You are set to test with sample metadata records.</p>
+<p>You are now ready to test with sample metadata records.</p>
 
-	<h2>Requirements</h2>
+	<h2>Features</h2>
 
-	<h3>Java</h3>
-	<p>
-		A Java Runtime Environment (JRE) 1.5 Standard Edition (download from 
-		<a href="http://java.sun.com">http://java.sun.com)</a> is required to 
-		run GeoNetwork opensource. See the Troubleshooting sections when normal 
-		installation or start up fails. 
-	</p> 
-
+	
 	<h3>Web server</h3>
 	<p>
 		The installer comes with an embedded <a href="http://jetty.mortbay.org/">Jetty</a>
@@ -82,6 +81,8 @@ If you want to load sample metadata, you have to start the GAST tool.
 		You can also configure the DBMS manually at a later stage, although this is more complex 
 		(See the community website for details)
 	</p>
+
+
 
 	<h2>More information at <a href="http://geonetwork-opensource.org">http://geonetwork-opensource.org</a></h2>
 </body>
