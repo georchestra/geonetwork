@@ -45,6 +45,8 @@
 
 - Jeeves : removed path in file upload
 
+- Fixed wrong table name when deleting harvesting nodes
+
 ================================================================================
 ===
 === GeoNetwork 2.1.0 beta4 : List of changes
