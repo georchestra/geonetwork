@@ -1,6 +1,6 @@
 ================================================================================
 ===
-=== GeoNetwork 2.1.0 RC : List of changes
+=== GeoNetwork 2.1.0 beta5 : List of changes
 ===
 ================================================================================
 
@@ -46,6 +46,10 @@
 - Jeeves : removed path in file upload
 
 - Fixed wrong table name when deleting harvesting nodes
+
+- Fixed Ajax pages with IE (more or less)
+
+- Fixed bug with MEF import: private data was not imported
 
 ================================================================================
 ===
