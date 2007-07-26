@@ -51,6 +51,9 @@
 
 - Fixed bug with MEF import: private data was not imported
 
+- Fixed bug with data upload: if the browser was IE and the server was running
+  on linux the upload file name contained the file path
+
 ================================================================================
 ===
 === GeoNetwork 2.1.0 beta4 : List of changes
