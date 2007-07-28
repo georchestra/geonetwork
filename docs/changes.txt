@@ -54,6 +54,11 @@
 - Fixed bug with data upload: if the browser was IE and the server was running
   on linux the upload file name contained the file path
 
+- Fixed a bug in user creation page: it was not possible to create administrators
+
+- Fixed a nasty bug in the editor that caused a stack overflow with date
+  and thesaurusName elements.
+
 ================================================================================
 ===
 === GeoNetwork 2.1.0 beta4 : List of changes
