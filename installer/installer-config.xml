@@ -85,11 +85,14 @@ This is the Spatial Data Catalog web application.
 			</fileset>
 			
 			<fileset dir=".build/web"   targetdir="$INSTALL_PATH/web">
+				<exclude name="geonetwork/images/logos/*"/>
 				<exclude name="geonetwork/WEB-INF/db/account.prop"/>
 				<exclude name="geonetwork/WEB-INF/db/data/*"/>
 				<exclude name="geonetwork/WEB-INF/db/log/*"/>
 				<exclude name="geonetwork/WEB-INF/data/00000-00099"/>
 				<exclude name="geonetwork/WEB-INF/lucene/*"/>
+				<exclude name="geonetwork/WEB-INF/removed"/>
+				<exclude name="intermap/log/*"/>
 			</fileset>
 			
 			<executable targetfile="$INSTALL_PATH/bin/start-geonetwork.sh" />
