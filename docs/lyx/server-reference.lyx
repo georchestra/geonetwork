@@ -10641,8 +10641,10 @@ string
 \end_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 removedMetadata
+\family default
 \series default
  : This container contains settings about removed metadata.
 \end_layout
@@ -10650,13 +10652,216 @@ removedMetadata
 \begin_deeper
 \begin_layout Itemize
 
+\family sans
 \series bold
 dir
+\family default
 \series default
  : This folder will contain removed metadata in MEF format.
  It gets populated when the user deletes a metadata using the web interface.
 \end_layout
 
+\end_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+ldap
+\family default
+\series default
+ : Parameters for LDAP authentication
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+use
+\family default
+\series default
+ (
+\emph on
+boolean
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+host
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+port
+\family default
+\series default
+ (
+\emph on
+integer
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+defaultProfile
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+) : Default GeoNetwork's profile to use when the 
+\family sans
+profile
+\family default
+ user attribute does not exist.
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+login
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+userDN
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+password
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+)
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+distinguishedNames
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+base
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+users
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+)
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+userAttribs
+\family default
+\series default
+ : A container for user attributes present into the LDAP directory that
+ must be retrieved and used to create the user in GeoNetwork.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+name
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+password
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+profile
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+)
+\end_layout
+
+\end_deeper
 \end_deeper
 \begin_layout Section
 Harvesting nodes

@@ -48,3 +48,21 @@ value,         VARCHAR
 
 70	1	removedMetadata	
 71	70	dir	WEB-INF/removed
+
+80	1	ldap	
+81	80	use	false
+82	80	host	
+83	80	port	
+84	80	defaultProfile	RegisteredUser
+85	80	login	
+86	80	distinguishedNames	
+87	80	userAttribs	
+
+90	85	userDN	cn=Manager
+91	85	password	
+100	86	base	dc=fao,dc=org
+101	86	users	ou=people
+
+110	87	name	cn
+111	87	password	userPassword
+112	87	profile	profile
