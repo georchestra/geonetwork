@@ -6,6 +6,12 @@
 
 - Added simple LDAP authentication
 
+- Added possibility to install sample metadata during installation
+
+- Added WebDAV harvesting type
+
+- Added mysql jdbc driver
+
 --------------------------------------------------------------------------------
 --- Changes
 --------------------------------------------------------------------------------
@@ -15,6 +21,11 @@
 --------------------------------------------------------------------------------
 
 - Fixed start-geonetwork.bat script
+
+- Fixed bug during resource download. A missing 'host' or 'from' parameter 
+  caused an exception
+
+- Fixed bug in CSW harvesting: the privilege rows were pointing to webdav code
 
 ================================================================================
 ===
