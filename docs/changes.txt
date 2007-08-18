@@ -27,6 +27,9 @@
 
 - Fixed bug in CSW harvesting: the privilege rows were pointing to webdav code
 
+- Harvesting of type=geonetwork: changed radio buttons to dropdown list due to
+  usual problems with IE
+
 ================================================================================
 ===
 === GeoNetwork 2.1.0 beta5 : List of changes
