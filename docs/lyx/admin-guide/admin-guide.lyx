@@ -2813,7 +2813,6 @@ status open
 \align center
 \begin_inset Graphics
 	filename images/thesaurus/thesaurus-upload.png
-	subcaption
 
 \end_inset
 

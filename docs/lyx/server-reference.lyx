@@ -106,7 +106,7 @@ Andrea Carboni
 \align center
 
 \size larger
-Revision 7 (09-Jul-2007)
+Revision 8 (19-Aug-2007)
 \end_layout
 
 \begin_layout Standard
@@ -1105,15 +1105,7 @@ download
 \emph default
 , 
 \emph on
-edit
-\emph default
-, 
-\emph on
 notify
-\emph default
-, 
-\emph on
-admin
 \emph default
 , 
 \emph on
@@ -3834,7 +3826,8 @@ username
 \series bold
 surname
 \series default
- : 
+ : The user's surname.
+ Used for display purposes.
 \end_layout
 
 \begin_layout Itemize
@@ -3842,7 +3835,8 @@ surname
 \series bold
 name
 \series default
- :
+ : The user's name.
+ Used for display purposes.
 \end_layout
 
 \begin_layout Itemize
@@ -11108,7 +11102,7 @@ integer
 categories
 \family default
 \series default
-[0..1] : This is a container for categories to assign to each imported metadata
+ [0..1] : This is a container for categories to assign to each imported metadata
 \end_layout
 
 \begin_deeper
@@ -11165,6 +11159,247 @@ Privileges and categories nodes can or cannot be present depending on the
 Nodes of type 
 \family sans
 geonetwork
+\end_layout
+
+\begin_layout Standard
+This is the native harvesting supported by geonetwork 2.1 and above.
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+site
+\family default
+\series default
+ : Contains host and account information
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+host
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+port
+\family default
+\series default
+ (
+\emph on
+integer
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+servlet
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+)
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+search
+\family default
+\series default
+ [0..n] : Contains the search parameters.
+ If this element is missing, an unconstrained search will be performed.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+freeText
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+title
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+abstract
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+keywords
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+digital
+\family default
+\series default
+ (
+\emph on
+boolean
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+hardcopy
+\family default
+\series default
+ (
+\emph on
+boolean
+\emph default
+) 
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+source
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+) 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family sans
+\series bold
+groupsCopyPolicy
+\family default
+\series default
+ [0..n] : Represents a copy policy for a remote group.
+ It is used to maintain remote privileges on harvested metadata.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+name (
+\emph on
+string
+\emph default
+) : Internal name (not localized) of a remote group.
+\end_layout
+
+\begin_layout Itemize
+policy (
+\emph on
+string
+\emph default
+) : Copy policy.
+ For the group 
+\family sans
+\series bold
+all
+\family default
+\series default
+, policies are: 
+\family sans
+\series bold
+copy
+\family default
+\series default
+, 
+\family sans
+\series bold
+copyToIntranet
+\family default
+\series default
+.
+ For all other groups, policies are: 
+\family sans
+\series bold
+copy
+\family default
+\series default
+, 
+\family sans
+\series bold
+createAndCopy
+\family default
+\series default
+.
+ The intranet group is not considered.
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Nodes of type 
+\family sans
+geonetwork20
+\end_layout
+
+\begin_layout Standard
+This type allows harvesting from old geonetwork 2.0.x nodes.
 \end_layout
 
 \begin_layout Itemize
@@ -11322,7 +11557,7 @@ boolean
 
 \family sans
 \series bold
-source
+siteId
 \family default
 \series default
  (
@@ -11333,35 +11568,15 @@ string
 \end_layout
 
 \end_deeper
-\begin_layout Itemize
-
-\family sans
-\series bold
-options
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-
-\family sans
-\series bold
-createGroups
-\family default
-\series default
- (
-\emph on
-boolean
-\emph default
-) : If true, the harvester will create locally the same groups of the harvested
- metadata in order to keep remote privileges.
- Remote groups that already exist locally are not created.
-\end_layout
-
-\end_deeper
 \begin_layout Subsection
 Nodes of type 
 \family sans
 webdav
+\end_layout
+
+\begin_layout Standard
+This harvesting type is capable of connecting to a web server which is WEB
+ DAV enabled.
 \end_layout
 
 \begin_layout Itemize
@@ -11388,7 +11603,30 @@ string
 \emph default
 ) : URL to connect to.
  Must be well formed, starting with 'http://', 'file://' or a supported
- protocol
+ protocol.
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+icon
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+) : This is the icon that will be used as the metadata source's logo.
+ The image is taken from the 
+\family sans
+images/harvesting
+\family default
+ folder and copied to the 
+\family sans
+images/logos
+\family default
+ folder.
 \end_layout
 
 \end_deeper
@@ -11404,20 +11642,14 @@ options
 
 \family sans
 \series bold
-structure
+recurse
 \family default
 \series default
  (
 \emph on
 boolean
 \emph default
-) : Indicates if remote folder is flat or it contains subfolder with a precise
- meaning.
- See the 
-\family sans
-administrator's guide
-\family default
-.
+) : Indicates if the remote folder must be recursively scanned for metadata.
 \end_layout
 
 \begin_layout Itemize
@@ -11440,6 +11672,11 @@ boolean
 Nodes of type 
 \family sans
 csw
+\end_layout
+
+\begin_layout Standard
+This type of harvesting is capable of querying a Catalogue Services for
+ the Web (CSW) server and retrieving all found metadata.
 \end_layout
 
 \begin_layout Itemize
@@ -11465,6 +11702,29 @@ string
  address.
 \end_layout
 
+\begin_layout Itemize
+
+\family sans
+\series bold
+icon
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+) : This is the icon that will be used as the metadata source's logo.
+ The image is taken from the 
+\family sans
+images/harvesting
+\family default
+ folder and copied to the 
+\family sans
+images/logos
+\family default
+ folder.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 
@@ -11474,9 +11734,7 @@ search
 \family default
 \series default
  [0..n] : Contains search parameters.
- If this element is missing no harvesting will be performed but the host's
- parameters will be used to connect to the remote node.
- 
+ If this element is missing, an unconstrained search will be performed.
 \end_layout
 
 \begin_deeper

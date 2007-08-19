@@ -12,9 +12,13 @@
 
 - Added mysql jdbc driver
 
+- Finished Intermap integration
+
 --------------------------------------------------------------------------------
 --- Changes
 --------------------------------------------------------------------------------
+
+- Removed useless thumbnail in the coords box
 
 --------------------------------------------------------------------------------
 --- Bugs fixed
@@ -32,6 +36,8 @@
 
 - Harvesting: fixed 'deactivate' message and 'run' button behaviour when the
   server is restarted and services now are not allowed.
+
+- Fixed thumbnail in default view
 
 ================================================================================
 ===
