@@ -30,6 +30,9 @@
 - Harvesting of type=geonetwork: changed radio buttons to dropdown list due to
   usual problems with IE
 
+- Harvesting: fixed 'deactivate' message and 'run' button behaviour when the
+  server is restarted and services now are not allowed.
+
 ================================================================================
 ===
 === GeoNetwork 2.1.0 beta5 : List of changes
