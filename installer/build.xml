@@ -17,8 +17,6 @@
 	<target name="installer">
 		<ant dir=".." target="all" />
 		
-		<delete file="../geonetwork-${release}-install.jar" />
-		
 		<delete dir =".build" />
 		<mkdir  dir =".build" />
 		
@@ -28,12 +26,27 @@
 			<fileset dir=".."/>
 		</copy>
 			
+		<delete dir="../geonetwork-${release}"/>
+		<mkdir  dir="../geonetwork-${release}"/>
+		
 		<izpack	input="${basedir}/installer-config.xml" 
-					output="../geonetwork-${release}-install.jar" 
+					output="../geonetwork-${release}/geonetwork-install.jar" 
 					installerType="standard" 
 					basedir="${basedir}"/>
 		
 		<delete dir =".build" />
+		
+		<!-- create zip package -->
+	
+		<copy todir="../geonetwork-${release}">
+			<fileset dir="zip"/>
+		</copy>
+		
+		<zip destfile = "../geonetwork-${release}.zip"
+			  basedir  = "../geonetwork-${release}"/>
+			
+		<delete dir="../geonetwork-${release}"/>
+	
 	</target>
 
 	<!-- =================================================================================== -->

@@ -77,7 +77,10 @@ This is the Spatial Data Catalog web application.
 			</fileset>						
 			
 			<fileset dir=".build/bin"   targetdir="$INSTALL_PATH/bin"/>
-			<fileset dir=".build/gast"  targetdir="$INSTALL_PATH/gast"/>			
+			
+			<fileset dir=".build/gast"  targetdir="$INSTALL_PATH/gast">			
+				<exclude name="log/gast.log*"/>
+			</fileset>
 			
 			<fileset dir=".build/jetty" targetdir="$INSTALL_PATH/jetty">
 				<exclude name="log/*"/>
@@ -89,7 +92,7 @@ This is the Spatial Data Catalog web application.
 				<exclude name="geonetwork/WEB-INF/db/account.prop"/>
 				<exclude name="geonetwork/WEB-INF/db/data/*"/>
 				<exclude name="geonetwork/WEB-INF/db/log/*"/>
-				<exclude name="geonetwork/WEB-INF/data/00000-00099"/>
+				<exclude name="geonetwork/WEB-INF/data/00000-00099/**"/>
 				<exclude name="geonetwork/WEB-INF/lucene/*"/>
 				<exclude name="geonetwork/WEB-INF/removed"/>
 				<exclude name="intermap/log/*"/>
