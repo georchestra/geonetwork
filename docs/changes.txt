@@ -6,15 +6,37 @@
 
 - Intermap: added "export PDF" feature.
 
+- Intermap: added "refresh" button.
+
+- Intermap: added layers are hilited in green.
+
 --------------------------------------------------------------------------------
 --- Changes
 --------------------------------------------------------------------------------
+
+- Intermap: when adding layers, the server list is now created on server via XSL, and no longer
+  via JS on client.
+
+- Intermap: the layer list is now created on server via XSL, and no longer
+  via JS on client.
+
+- Intermap: new icon for "add layer" button.
+
+- Intermap: disabled scriptaculous effects under IE.
+
+- Intermap: when there is only one layer, it has no "delete" button.
+
+- Intermap: removed many unused JS functions.
 
 --------------------------------------------------------------------------------
 --- Bugs fixed
 --------------------------------------------------------------------------------
 
-- Intermap: Fixed duplicated TempFiles class.
+- Intermap: fixed duplicated TempFiles class.
+
+- Intermap: fixed map reaspect (North Pole is not at 180 lat degrees).
+
+- Intermap: up and down buttons in layer list now work.
 
 
 ================================================================================
