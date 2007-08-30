@@ -39,6 +39,8 @@ value,         VARCHAR
 51	50	use	false
 52	50	host	
 53	50	port	
+54	50	username	
+55	50	password	
 
 60	1	feedback	
 61	60	email	
