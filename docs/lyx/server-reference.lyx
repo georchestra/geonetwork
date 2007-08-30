@@ -106,7 +106,7 @@ Andrea Carboni
 \align center
 
 \size larger
-Revision 8 (19-Aug-2007)
+Revision 9 (28-Aug-2007)
 \end_layout
 
 \begin_layout Standard
@@ -567,11 +567,526 @@ web/intermap/WEB-INF/lib
 \end_layout
 
 \begin_layout Part
-Protocols
+Implementation guidelines
 \end_layout
 
 \begin_layout Chapter
 Harvesting
+\end_layout
+
+\begin_layout Section
+Structure
+\end_layout
+
+\begin_layout Standard
+The harvesting capability is built around 3 areas: Javascript code, Java
+ code and XSL stylesheets (on both the server and client side).
+\end_layout
+
+\begin_layout Subsection*
+
+\series bold
+Javascript code
+\end_layout
+
+\begin_layout Standard
+This refers to the web interface.
+ The code is located in the 
+\family sans
+web/geonetwork/scripts/harvesting
+\family default
+ folder.
+ Here, there is a subfolder for each harvesting type plus some classes for
+ the main page.
+ These are:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+harvester.js
+\series default
+ : This is an abstract class that must be implemented by harvesting types.
+ It defines some information retrieval methods (
+\family sans
+getType
+\family default
+, 
+\family sans
+getLabel
+\family default
+, etc...) used to handle the harvesting type, plus one 
+\family sans
+getUpdateRequest
+\family default
+ method used to build the XML request to insert or update entries.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+harvester-model.js
+\series default
+ : Another abstract class that must be implemented by harvesting types.
+ When creating the XML request, the only method 
+\family sans
+substituteCommon
+\family default
+ takes care of adding common information like privileges and categories
+ taken from the user interface.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+harvester-view.js
+\series default
+ : This is an important abstract class that must be implemented by harvesting
+ types.
+ It takes care of many common aspects of the user interface.
+ It provides methods to add group's privileges, to select categories, to
+ check data for validity and to set and get common data from the user interface.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+harvesting.js
+\series default
+ : This is the main Javascript file that takes care of everything.
+ It starts all the submodules, loads XML strings from the server and displays
+ the main page that lists all harvesting nodes.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+model.js
+\series default
+ : Performs all XML requests to the server, handles errors and decode responses.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+view.js
+\series default
+ : Handles all updates and changes on the main page.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+util.js
+\series default
+ : just a couple of utility methods.
+\end_layout
+
+\begin_layout Subsection*
+
+\series bold
+Java code
+\end_layout
+
+\begin_layout Standard
+The harvesting package is located in src/org/fao/geonet/kernel/harvest.
+ Here too, there is one subfolder for each harvesting type.
+ The most important classes for the implementor are:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+AbstractHarvester
+\series default
+ : This is the main class that a new harvesting type must extends.
+ It takes care of all aspects like adding, updating, removing, starting,
+ stopping of harvesting nodes.
+ Some abstract methods must be implemented to properly tune the behaviour
+ of a particular harvesting type.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+AbstractParams
+\series default
+ : All harvesting parameters must be enclosed in a class that extends this
+ abstract one.
+ Doing so, all common parameters can be transparently handled by this abstract
+ class.
+\end_layout
+
+\begin_layout Standard
+All others are small utility classes used by harvesting types.
+\end_layout
+
+\begin_layout Subsection*
+
+\series bold
+XSL stylesheets
+\end_layout
+
+\begin_layout Standard
+Stylesheets are spread in some foders and are used by both the Javascript
+ code and the server.
+ The main folder is located at web/geonetwork/xsl/harvesting.
+ Here there are some general stylesheets, plus one subfolder for each harvesting
+ type.
+ The general stylesheets are:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+buttons.xsl
+\series default
+ : Defines all button present in the main page (
+\emph on
+activate
+\emph default
+, 
+\emph on
+deactivate
+\emph default
+, 
+\emph on
+run
+\emph default
+, 
+\emph on
+remove
+\emph default
+, 
+\emph on
+back
+\emph default
+, 
+\emph on
+add
+\emph default
+, 
+\emph on
+refresh
+\emph default
+), buttons present in the "add new harvesting" page (
+\emph on
+back
+\emph default
+ and 
+\emph on
+add
+\emph default
+) and at the bottom of the edit page (
+\emph on
+back
+\emph default
+ and 
+\emph on
+save
+\emph default
+).
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+client-error-tip.xsl
+\series default
+ : This stylesheet is used by the browser to build tooltips when an harvesting
+ error occured.
+ It will show the error class, the message and the stacktrace.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+client-node-row.xsl
+\series default
+ : This is also used by the browser to add one row to the list of harvesting
+ nodes in the main page.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+harvesting.xsl
+\series default
+ : This is the main stylesheet.
+ It generates the html page of the main page and includes all panels from
+ all the harvesting nodes.
+\end_layout
+
+\begin_layout Standard
+In each subfolder, there are usually 4 files:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+xxx.xsl
+\series default
+ : This is the server stylesheets who builds all panels for editing the
+ parameters.
+ XXX is the harvesting type.
+ Usually, it has the following panels: site information, search criteria,
+ options, privileges and categories.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+client-privil-row.xsl
+\series default
+ : This is used by the Javascript code to add rows in the group's privileges
+ panel.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+client-result-tip.xsl
+\series default
+ : This is used by the Javascript code (which inherits from harvester-view.js)
+ to show the tooltip when the harvesting has been successfull.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+client-search-row.xsl
+\series default
+ : Used in some harvesting types to generate the html for the search criteria
+ panel.
+\end_layout
+
+\begin_layout Standard
+As you may have guessed, all client side stylesheets (those used by Javascript
+ code) start with the prefix 
+\family sans
+\series bold
+client-
+\family default
+\series default
+.
+\end_layout
+
+\begin_layout Standard
+Another set of stylesheets are located in 
+\family sans
+web/geonetwork/xsl/xml/harvesting
+\family default
+ and are used by the 
+\family sans
+xml.harvesting.get
+\family default
+ service.
+ This service is used by the Javascript code to retrieve all the nodes the
+ system is currently harvesting from.
+ This implies that a stylesheet (one for each harvesting type) must be provided
+ to convert from the internal setting structure to an XML structure suitable
+ to clients.
+\end_layout
+
+\begin_layout Standard
+The last file to take into consideration contains all localized strings
+ and is located at 
+\family sans
+web/geonetwork/loc/XX/xml/harvesting.xml
+\family default
+ (where XX refers to a language code).
+ This file is used by both Javascript code and the server.
+\end_layout
+
+\begin_layout Section
+Data storage
+\end_layout
+
+\begin_layout Standard
+Harvesting nodes are stored inside the 
+\family sans
+\series bold
+Settings
+\family default
+\series default
+ table.
+ Further useful information can be found in chapters 
+\begin_inset LatexCommand \ref{cha:Harvesting-services}
+
+\end_inset
+
+ and 
+\begin_inset LatexCommand \ref{cha:Settings-hierarchy}
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The 
+\family sans
+\series bold
+SourceNames
+\family default
+\series default
+ table is used to keep track of the uuid/name couple when metadata get migrated
+ to different sites.
+\end_layout
+
+\begin_layout Section
+Guidelines
+\end_layout
+
+\begin_layout Standard
+To add a new harvesting type, follows these steps:
+\end_layout
+
+\begin_layout Itemize
+Add the proper folder in 
+\family sans
+web/scripts/harvesting
+\family default
+, maybe copying an already existing one.
+\end_layout
+
+\begin_layout Itemize
+Edit the 
+\family sans
+harvesting.js
+\family default
+ file to include the new type (edit both 
+\family sans
+\series bold
+constructor
+\family default
+\series default
+ and 
+\family sans
+\series bold
+init
+\family default
+\series default
+ methods).
+\end_layout
+
+\begin_layout Itemize
+Add the proper folder in 
+\family sans
+web/xsl/harvesting
+\family default
+ (again, it is easy to copy from an already existing one).
+\end_layout
+
+\begin_layout Itemize
+Edit the stylesheet 
+\family sans
+web/xsl/harvesting/harvesting.xsl
+\family default
+ and add the new type
+\end_layout
+
+\begin_layout Itemize
+Add the transformation stylesheet in 
+\family sans
+web/xsl/xml/harvesting
+\family default
+.
+ Its name must match the string used for the harvesting type.
+\end_layout
+
+\begin_layout Itemize
+Add the Java code in a package inside 
+\family sans
+org.fao.geonet.kernel.harvest.harvester
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
+Add proper strings in 
+\family sans
+web/geonetwork/loc/XX/xml/harvesting.xml
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+Here follows a list of general notes to follow when adding a new harvesting
+ type:
+\end_layout
+
+\begin_layout Itemize
+Every harvesting node (not type) must generate its UUID.
+ This uuid is used to remove metadata when the harvesting node is removed
+ and to check if a metadata (which has another uuid) has been already harvested
+ by another node.
+\end_layout
+
+\begin_layout Itemize
+If a harvesting type supports multiple searches on a remote site, these
+ must be done sequentially and results merged.
+ 
+\end_layout
+
+\begin_layout Itemize
+Every harvesting type must save in the folder 
+\family sans
+images/logos
+\family default
+ a GIF image whose name is the node's uuid.
+ This image must be deleted when the harvesting node is removed.
+ This is necessary to propagate harvesting information to other GeoNetwork
+ nodes.
+\end_layout
+
+\begin_layout Itemize
+When a harvesting node is removed, all collected metadata must be removed
+ too.
+\end_layout
+
+\begin_layout Itemize
+During harvesting, take in mind that a metadata could have been removed
+ just after being added to the result list.
+ In this case the metadata should be skipped and no exception raised.
+\end_layout
+
+\begin_layout Itemize
+The only settable privileges are: 
+\family sans
+view
+\family default
+, 
+\family sans
+dynamic
+\family default
+, 
+\family sans
+featured
+\family default
+.
+ It does not make sense to use the others.
+\end_layout
+
+\begin_layout Itemize
+If a node raises an exception during harvesting, that node will be deactivated.
+\end_layout
+
+\begin_layout Itemize
+If a metadata already exists (its uuid exists) but belong to another node,
+ it must not be updated even if it has been changed.
+ This way the harvesting will not conflict with the other one.
+ As a side effect, this prevent locally created metadata from being changed.
+\end_layout
+
+\begin_layout Itemize
+The harvesting engine does not store results on disk so they will get lost
+ when the server will be restarted.
+\end_layout
+
+\begin_layout Itemize
+When some harvesting parameters are changed, the new harvesting type must
+ use them during the next harvesting without requiring to reboot the server.
 \end_layout
 
 \begin_layout Part
@@ -1282,6 +1797,12 @@ status open
 
 \size footnotesize
       <siteId>0619cc50-708b-11da-8202-000d9335906e</siteId>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <siteName>FAO main site</siteName>
 \end_layout
 
 \begin_layout LyX-Code
@@ -4360,6 +4881,10 @@ The response is just the response from the remote service.
 \end_layout
 
 \begin_layout Chapter
+\begin_inset LatexCommand \label{cha:Harvesting-services}
+
+\end_inset
+
 Harvesting services
 \end_layout
 
@@ -4493,7 +5018,7 @@ node
 placement t
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Standard
 \begin_inset Box Boxed
@@ -4565,7 +5090,7 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
-            <use>true</use>         
+            <use>false</use>         
 \end_layout
 
 \begin_layout LyX-Code
@@ -4643,13 +5168,25 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
-            <siteId>0619cc50-708b-11da-8202-000d9335906e</siteId>
+            <source>         
 \end_layout
 
 \begin_layout LyX-Code
 
 \size footnotesize
-            <siteName>Food and Agriculture Organization</siteName>
+               <uuid>0619cc50-708b-11da-8202-000d9335906e</uuid>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+               <name>Food and Agriculture Organization</name>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+            </source>         
 \end_layout
 
 \begin_layout LyX-Code
@@ -4673,19 +5210,7 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
-         <every>90</every>       
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-         <createGroups>true</createGroups> 
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-         <createCateg>true</createCateg>     
+         <every>90</every>
 \end_layout
 
 \begin_layout LyX-Code
@@ -4733,6 +5258,48 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
+      <groupsCopyPolicy>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <group name="all" policy="copy"/>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <group name="mygroup" policy="createAndCopy"/>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      </groupsCopyPolicy>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <categories>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <category id="4"/>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      </categories>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
    </node> 
 \end_layout
 
@@ -4770,7 +5337,7 @@ If you specify an id, you get a response like that one in figure
 
 \end_inset
 
- (for a web folder node).
+ (for a web DAV node).
 \end_layout
 
 \begin_layout Standard
@@ -4778,7 +5345,7 @@ If you specify an id, you get a response like that one in figure
 placement t
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Standard
 \begin_inset Box Boxed
@@ -4796,7 +5363,7 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
-<node id="165" type="webfolder">   
+<node id="165" type="webdav">   
 \end_layout
 
 \begin_layout LyX-Code
@@ -4821,6 +5388,12 @@ status open
 
 \size footnotesize
       <url>http://www.mynode.org/metadata</url>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <icon>default.gif</icon>     
 \end_layout
 
 \begin_layout LyX-Code
@@ -4880,7 +5453,7 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
-      <structure>false</structure>     
+      <recurse>false</recurse>     
 \end_layout
 
 \begin_layout LyX-Code
@@ -4952,6 +5525,24 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
+   <categories>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <category id="2"/>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </categories> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
    <info>     
 \end_layout
 
@@ -4997,7 +5588,7 @@ Example of an
 \family sans
 xml.harvesting.get
 \family default
- response for a web folder node
+ response for a web DAV node
 \end_layout
 
 \end_inset
@@ -5281,7 +5872,19 @@ name
 \family default
 \series default
  attribute which value is one of the supported operation names.
- 
+ The only supported operations are : 
+\emph on
+view
+\emph default
+, 
+\emph on
+dynamic
+\emph default
+, 
+\emph on
+featured
+\emph default
+.
 \end_layout
 
 \end_deeper
@@ -5677,19 +6280,7 @@ name
 \family default
 \series default
  attribute which value must be one of the supported operation names.
- The operations 
-\family sans
-\series bold
-edit 
-\family default
-\series default
-and
-\family sans
-\series bold
- admin
-\family default
-\series default
- cannot be associated to any metadata and will be skipped.
+ 
 \end_layout
 
 \end_deeper
@@ -5846,8 +6437,14 @@ search
 \family default
 \series default
  [0..n] : A container for a single search on a siteID.
- You can specify 0 or more searches but to properly harvest you have to
- provide at least one.
+ You can specify 0 or more searches.
+ If no 
+\family sans
+\series bold
+search
+\family default
+\series default
+ element is provided, an unconstrained search is performed.
 \end_layout
 
 \begin_deeper
@@ -5957,7 +6554,11 @@ string
 
 \family sans
 \series bold
-options
+groupsCopyPolicy
+\family default
+\series default
+ [0..1] : Container for copy policies of remote groups.
+ This mechanism is used to retain remote metadata privileges.
 \end_layout
 
 \begin_deeper
@@ -5965,35 +6566,89 @@ options
 
 \family sans
 \series bold
-createGroups
+group
 \family default
 \series default
- (
+ : There is one copy policy for each remote group.
+ This element must have 2 mandatory attributes: 
 \emph on
-boolean
+name
 \emph default
-, 'true') : If true, GeoNetwork tries to keep remote privileges creating
- local groups.
- After the harvesting, the local node will have all the remote node's groups.
- A group is created locally only if it does not already exist.
- The group's name is used to establish that.
-\end_layout
-
-\begin_layout Itemize
-
+ and 
+\emph on
+policy
+\emph default
+.
+ The 
 \family sans
 \series bold
-createCateg
+name
 \family default
 \series default
- (
+ attribute is the remote group's name.
+ If the remote group is renamed, it is not found anymore and the copy policy
+ is skipped.
+ The 
+\family sans
+\series bold
+policy
+\family default
+\series default
+ attribute represents the policy itself and can be: 
 \emph on
-boolean
+copy
 \emph default
-, 'true') : If true, GeoNetwork will create local categories to match the
- remote ones.
- Normally, if a remote category does not exist locally, the link between
- that category and the metadata is lost.
+, 
+\emph on
+createAndCopy
+\emph default
+, 
+\emph on
+copyToIntranet
+\emph default
+.
+ 
+\family sans
+\series bold
+copy
+\family default
+\series default
+ means that remote privileges are copied locally if there is locally a group
+ with the same name as the 
+\emph on
+name
+\emph default
+ attribute.
+ 
+\family sans
+\series bold
+createAndCopy
+\family default
+\series default
+ works like 
+\emph on
+copy
+\emph default
+ but the group is created locally if it does not exist.
+ 
+\family sans
+\series bold
+copyToIntranet
+\family default
+\series default
+ works only for the remote group named 
+\family sans
+\series bold
+all
+\family default
+\series default
+, which represents the public group.
+ This policy copies privileges of the remote group named 
+\emph on
+all
+\emph default
+ to the local intranet group.
+ This is usefull to restrict metadata access.
 \end_layout
 
 \end_deeper
@@ -6011,7 +6666,7 @@ Figure
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Standard
 \begin_inset Box Boxed
@@ -6029,13 +6684,19 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
-<node name="South Africa" type="geonetwork">   
+<node type="geonetwork">   
 \end_layout
 
 \begin_layout LyX-Code
 
 \size footnotesize
    <site>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <name>South Africa</name>     
 \end_layout
 
 \begin_layout LyX-Code
@@ -6143,7 +6804,7 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
-         <siteId>0619cc50-708b-11da-8202-000d9335906e</siteId>     
+         <source>0619cc50-708b-11da-8202-000d9335906e</source>
 \end_layout
 
 \begin_layout LyX-Code
@@ -6173,18 +6834,6 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
-      <createGroups>true</createGroups>
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-      <createCateg>true</createCateg>
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
       <oneRunOnly>false</oneRunOnly>   
 \end_layout
 
@@ -6192,6 +6841,48 @@ status open
 
 \size footnotesize
    </options> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <groupsCopyPolicy>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <group name="all" policy="copy"/>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <group name="mygroup" policy="createAndCopy"/>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </groupsCopyPolicy>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <categories>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <category id="4"/>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </categories>
 \end_layout
 
 \begin_layout LyX-Code
@@ -6281,6 +6972,27 @@ string
  If provided, must be a valid URL starting with 'HTTP://'.
 \end_layout
 
+\begin_layout Itemize
+
+\family sans
+\series bold
+icon
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+, 'default.gif') : Icon file used to represent this node in the search results.
+ The icon must be present into the 
+\family sans
+\series bold
+images/harvesting
+\family default
+\series default
+ folder.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 
@@ -6294,15 +7006,14 @@ options
 
 \family sans
 \series bold
-structure
+recurse
 \family default
 \series default
  (
 \emph on
 boolean
 \emph default
-, 'false') : When true, the folders present at the remote host will provide
- additional information about categories and siteIDs.
+, 'false') : When true, folders are scanned recursively to find metadata.
 \end_layout
 
 \begin_layout Itemize
@@ -6329,11 +7040,11 @@ This type supports both privileges and categories assignment.
 
 \begin_layout Standard
 Figure 
-\begin_inset LatexCommand \ref{fig:example-xml.harv.add-waf}
+\begin_inset LatexCommand \ref{fig:example-xml.harv.add-webdav}
 
 \end_inset
 
- shows an example of an XML request to create a web folder entry.
+ shows an example of an XML request to create a web DAV entry.
 \end_layout
 
 \begin_layout Standard
@@ -6341,7 +7052,7 @@ Figure
 placement t
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Standard
 \begin_inset Box Boxed
@@ -6359,7 +7070,7 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
-<node name="Asia remote node" type="webFolder">   
+<node type="webdav">   
 \end_layout
 
 \begin_layout LyX-Code
@@ -6371,7 +7082,19 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
-      <url>http://www.mynode.org/metadata</url>     
+      <name>Asia remote node</name>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <url>http://www.mynode.org/metadata</url>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <icon>default.gif</icon>
 \end_layout
 
 \begin_layout LyX-Code
@@ -6431,19 +7154,13 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
-      <structure>false</structure>     
+      <recurse>false</recurse>
 \end_layout
 
 \begin_layout LyX-Code
 
 \size footnotesize
       <validate>true</validate>     
-\end_layout
-
-\begin_layout LyX-Code
-
-\size footnotesize
-      <status>inactive</status>   
 \end_layout
 
 \begin_layout LyX-Code
@@ -6485,7 +7202,7 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
-         <operation name="download" />     
+         <operation name="features" />     
 \end_layout
 
 \begin_layout LyX-Code
@@ -6498,6 +7215,24 @@ status open
 
 \size footnotesize
    </privileges>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <categories>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <category id="4"/>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </categories>
 \end_layout
 
 \begin_layout LyX-Code
@@ -6516,7 +7251,7 @@ status open
 \end_layout
 
 \begin_layout Caption
-\begin_inset LatexCommand \label{fig:example-xml.harv.add-waf}
+\begin_inset LatexCommand \label{fig:example-xml.harv.add-webdav}
 
 \end_inset
 
@@ -6524,7 +7259,7 @@ Example of an
 \family sans
 xml.harvesting.add
 \family default
- request for a web folder node
+ request for a web DAV node
 \end_layout
 
 \end_inset
@@ -6602,7 +7337,7 @@ string
  The icon must be present into the 
 \family sans
 \series bold
-images/csw
+images/harvesting
 \family default
 \series default
  folder.
@@ -6628,9 +7363,7 @@ search
 \family default
 \series default
  [0..n] : Contains search parameters.
- If this element is missing no harvesting will be performed but the host's
- parameters will be used to connect to the remote node.
- 
+ If this element is missing, an unconstrained search will be performed.
 \end_layout
 
 \begin_deeper
@@ -6709,6 +7442,241 @@ dc:subject
 This type supports both privileges and categories assignment.
 \end_layout
 
+\begin_layout Standard
+Figure 
+\begin_inset LatexCommand \ref{fig:example-xml.harv.add-csw}
+
+\end_inset
+
+ shows an example of an XML request to create a CSW entry.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement t
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout LyX-Code
+
+\size footnotesize
+<node type="csw">   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <site>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <name>Minos CSW server</name>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <capabilitiesUrl>http://www.minos.org/csw?request=GetCapabilities
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+            &amp;service=CSW&amp;acceptVersions=2.0.1</capabilitiesUrl>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <icon>default.gif</icon>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <account>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <use>true</use>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <username>admin</username>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <password>admin</password>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      </account>   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </site>   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <options>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <every>90</every>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <oneRunOnly>false</oneRunOnly>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <recurse>false</recurse>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <validate>true</validate>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </options>   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <privileges>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <group id="0">       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <operation name="view" />     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      </group>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <group id="14">       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <operation name="features" />     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      </group>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </privileges>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <categories>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <category id="4"/>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </categories>
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+</node> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Caption
+\begin_inset LatexCommand \label{fig:example-xml.harv.add-csw}
+
+\end_inset
+
+Example of an 
+\family sans
+xml.harvesting.add
+\family default
+ request for a CSW node
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection*
 Response
 \end_layout
@@ -6734,7 +7702,7 @@ The following table summaries the features of the supported harvesting types:
 \begin_layout Standard
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="5" columns="4">
+<lyxtabular version="3" rows="4" columns="4">
 <features>
 <column alignment="center" valignment="top" leftline="true" width="0">
 <column alignment="center" valignment="top" leftline="true" width="0">
@@ -6809,7 +7777,7 @@ native
 \begin_inset Text
 
 \begin_layout Standard
-
+through policies
 \end_layout
 
 \end_inset
@@ -6818,7 +7786,7 @@ native
 \begin_inset Text
 
 \begin_layout Standard
-
+yes
 \end_layout
 
 \end_inset
@@ -6839,44 +7807,6 @@ Web DAV
 
 \begin_layout Standard
 HTTP digest
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-yes
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-yes
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row topline="true">
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-Web folder
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Standard
-HTTP Basic
 \end_layout
 
 \end_inset
@@ -7095,7 +8025,38 @@ xml.harvesting.remove/start/stop/run
 \begin_layout Standard
 These services are put together because they share a common request interface.
  Their purpose is obviously to remove, start, stop or run a harvesting node.
- 
+ In detail:
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+start
+\series default
+ When created, a node is in the inactive state.
+ This operation makes it active, that is the countdown is started and the
+ harvesting will be performed at the timeout.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+stop
+\series default
+ Makes a node inactive.
+ Inactive nodes are never harvested.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+run
+\series default
+ Just start the harvester now.
+ Used to test the harvesting.
 \end_layout
 
 \begin_layout Subsection*
@@ -7807,6 +8768,22 @@ port
  : Proxy's server port.
 \end_layout
 
+\begin_layout Itemize
+
+\series bold
+username
+\series default
+ : Proxy's credentials.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+password
+\series default
+ : Proxy's credentials.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 
@@ -7870,7 +8847,151 @@ dir
 \end_layout
 
 \end_deeper
+\begin_layout Itemize
+
+\series bold
+ldap
+\series default
+ : A container for LDAP parameters
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+use
+\series default
+ :
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+host
+\series default
+ :
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+port
+\series default
+ :
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+defaultProfile
+\series default
+ :
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+login
+\series default
+ :
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+userDN
+\series default
+ :
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+password
+\series default
+ :
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\series bold
+distinguishedNames
+\series default
+ :
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+base
+\series default
+ :
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+users
+\series default
+ :
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\series bold
+userAttribs
+\series default
+ :
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+name
+\series default
+ :
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+password
+\series default
+ :
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+profile
+\series default
+ :
+\end_layout
+
+\end_deeper
+\end_deeper
 \begin_layout Standard
+Figure 
+\begin_inset LatexCommand \ref{fig:example-xml.config.get}
+
+\end_inset
+
+ shows an example of xml.config.get response.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\align center
 \begin_inset Box Boxed
 position "t"
 hor_pos "c"
@@ -8012,6 +9133,18 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
+      <username>proxyuser</username> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <password>proxypass</password> 
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
    </proxy>
 \end_layout
 
@@ -8072,13 +9205,144 @@ status open
 \begin_layout LyX-Code
 
 \size footnotesize
-   </removedMetadata>
+   </removedMetadata>  
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   <ldap>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <use>false</use>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <host />     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <port />     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <defaultProfile>RegisteredUser</defaultProfile>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <login>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <userDN>cn=Manager</userDN>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <password />     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      </login>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <distinguishedNames>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <base>dc=fao,dc=org</base>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <users>ou=people</users>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      </distinguishedNames>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      <userAttribs>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <name>cn</name>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <password>userPassword</password>       
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+         <profile>profile</profile>     
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+      </userAttribs>   
+\end_layout
+
+\begin_layout LyX-Code
+
+\size footnotesize
+   </ldap>
 \end_layout
 
 \begin_layout LyX-Code
 
 \size footnotesize
 </config>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Caption
+\begin_inset LatexCommand \label{fig:example-xml.config.get}
+
+\end_inset
+
+Example of 
+\family sans
+xml.config.get
+\family default
+ response.
 \end_layout
 
 \end_inset
@@ -8129,7 +9393,7 @@ status open
 \begin_layout Standard
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="16" columns="3">
+<lyxtabular version="3" rows="29" columns="3">
 <features>
 <column alignment="left" valignment="top" leftline="true" width="0">
 <column alignment="center" valignment="top" leftline="true" width="0">
@@ -8493,6 +9757,64 @@ integer
 \begin_inset Text
 
 \begin_layout Standard
+proxy/username
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+string
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+-
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+proxy/password
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+string
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+-
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
 feedback/email
 \end_layout
 
@@ -8575,7 +9897,7 @@ integer
 \end_inset
 </cell>
 </row>
-<row topline="true" bottomline="true">
+<row topline="true">
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
@@ -8599,6 +9921,325 @@ string
 
 \begin_layout Standard
 yes
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+ldap/use
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+bool
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+yes
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+ldap/host
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+string
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+-
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+ldap/port
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+integer
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+-
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+ldap/defaultProfile
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+string
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+yes
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+ldap/login/userDN
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+string
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+yes
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+ldap/login/password
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+string
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+-
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+ldap/distinguishedNames/base
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+string
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+yes
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+ldap/distinguishedNames/users
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+string
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+yes
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+ldap/userAttribs/name
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+string
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+yes
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+ldap/userAttribs/password
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+string
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+yes
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true" bottomline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+ldap/userAttribs/profile
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+string
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+-
 \end_layout
 
 \end_inset
@@ -8887,6 +10528,18 @@ status open
 \end_inset
 
 
+\end_layout
+
+\begin_layout Section
+Metadata ownership
+\end_layout
+
+\begin_layout Standard
+Version 1.0 of the MEF format does not take into account the metadata owner
+ (the creator) and the group owner.
+ This implies that this information is not contained into the MEF file.
+ During import, the user that is performing this operation will become the
+ metadata owner and the group owner will be set to null.
 \end_layout
 
 \begin_layout Chapter
@@ -10220,6 +11873,10 @@ Settings internal structure
 \end_layout
 
 \begin_layout Chapter
+\begin_inset LatexCommand \label{cha:Settings-hierarchy}
+
+\end_inset
+
 Settings hierarchy
 \end_layout
 
@@ -10549,7 +12206,7 @@ host
 \emph on
 string
 \emph default
-) : Proxy host
+) : Proxy's host
 \end_layout
 
 \begin_layout Itemize
@@ -10563,7 +12220,35 @@ port
 \emph on
 integer
 \emph default
-) : Proxy port
+) : Proxy's port
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+username
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+) : Proxy's credentials.
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+password
+\family default
+\series default
+ (
+\emph on
+string
+\emph default
+) : Proxy's credentials.
 \end_layout
 
 \end_deeper
