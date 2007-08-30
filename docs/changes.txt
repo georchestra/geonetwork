@@ -1,6 +1,6 @@
 ================================================================================
 ===
-=== GeoNetwork 2.1.0 RC2 : List of changes
+=== GeoNetwork 2.1.0 final : List of changes
 ===
 ================================================================================
 
@@ -14,6 +14,8 @@
   when it's already selected.
 
 - Intermap: added the AJAX advanced search.
+
+- Added possibility to specify proxy's credentials
 
 --------------------------------------------------------------------------------
 --- Changes
@@ -32,6 +34,8 @@
 - Intermap: when there is only one layer, it has no "delete" button.
 
 - Intermap: removed many unused JS functions.
+
+- Improved both admin's guide and server reference manuals.
 
 --------------------------------------------------------------------------------
 --- Bugs fixed
