@@ -3,6 +3,7 @@
 === GeoNetwork 2.1.0 RC2 : List of changes
 ===
 ================================================================================
+- Added portal.opensearch service to allow search from client supporting OpenSearch.org spec.
 
 - Added xml.region.get service to retrieve Bounding Box given a region id
 
