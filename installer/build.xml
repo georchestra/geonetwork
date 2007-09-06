@@ -11,10 +11,32 @@
 	<taskdef name     ="izpack" 
 				classpath="lib/standalone-compiler.jar" 
 				classname="com.izforge.izpack.ant.IzPackTask"/>
+	
+	<taskdef name="launch4j"
+	        classname="net.sf.launch4j.ant.Launch4jTask"
+	        classpath="launch4j/macosx/launch4j.jar:launch4j/macosx/lib/xstream.jar"/>
 
 	<!-- =================================================================================== -->
 
-	<target name="installer">
+	<target name="setProperties">
+		<propertyfile
+		    file="../web/geonetwork/WEB-INF/server.prop"
+		    comment="GeoNetwork opensource properties. These are also used by both gast and geonetwork at runtime">
+			<!-- ### these are used by both gast and geonetwork at runtime -->
+			<!-- Don't remove !! -->
+			<entry  key="version" value="2.1.0.0"/>
+			<entry  key="subVersion" value="RC2"/>
+
+			<entry  key="release" value="2.1.0"/>
+			<entry  key="date" type="date" value="now" pattern="yymmddHHmm"/>
+		  
+		</propertyfile>
+	</target>
+		
+	<!-- =================================================================================== -->
+
+	<target name="installer" depends="setProperties">
+		
 		<ant dir=".." target="all" />
 		
 		<delete dir =".build" />
@@ -33,20 +55,34 @@
 					output="../geonetwork-${release}/geonetwork-install.jar" 
 					installerType="standard" 
 					basedir="${basedir}"/>
-		
-		<delete dir =".build" />
-		
+				
 		<!-- create zip package -->
 	
-		<copy todir="../geonetwork-${release}">
+<!--		<copy todir="../geonetwork-${release}">
 			<fileset dir="zip"/>
-		</copy>
+		</copy> -->
 		
-		<zip destfile = "../geonetwork-${release}.zip"
-			  basedir  = "../geonetwork-${release}"/>
-			
-		<delete dir="../geonetwork-${release}"/>
+<!--		<zip destfile = "../geonetwork-${release}.zip"
+			  basedir  = "../geonetwork-${release}"/> -->
 	
+	</target>
+	
+	<target name="wininstall">
+		<!-- create Windows installer -->
+		
+		<launch4j configFile="${basedir}/launch4j/launch4jConfig.xml"
+			jar="../geonetwork-${release}/geonetwork-install.jar"
+			outfile="../geonetwork-${release}/geonetwork-install.exe"
+			txtFileVersion="${version}-${subVersion}-${day}" 
+			txtProductVersion="${version}" 
+			fileVersion="${version}" 
+			productVersion="${version}"/>
+
+	</target>
+
+	<target name="clean">
+		<delete dir =".build" />
+		<delete dir="../geonetwork-${release}"/>
 	</target>
 
 	<!-- =================================================================================== -->
