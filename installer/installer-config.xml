@@ -12,6 +12,7 @@
 			<author name="VAM WFP"             email="vamsie@wfp.org"/>
 			<author name="UNEP.net"            email="info@unep.net"/>			 
 			<author name="OCHA"                email="ochageodata@un.org"/>			 
+			<author name="OSGeo"                email="geonetwork@osgeo.org"/>			 
 		</authors>
 		<url>http://geonetwork-opensource.org/</url>
 		<javaversion>1.5</javaversion>
@@ -38,7 +39,7 @@
 	<resources>
 		<res id="HTMLLicencePanel.licence" src=".build/docs/license.html"/>
 		<res id="HTMLInfoPanel.info"       src=".build/docs/readme.html"/>
-		<res id="XInfoPanel.info"          src=".build/docs/post-install.txt"/>
+<!--		<res id="XInfoPanel.info"          src=".build/docs/post-install.txt"/> -->
 		<res id="Installer.image"          src="installer.png"/>
 		<res id="shortcutSpec.xml"         src="windows-shortcuts.xml"/>
 		<res id="Unix_shortcutSpec.xml"    src="unix-shortcuts.xml"/>
@@ -49,13 +50,13 @@
 	
 	<panels>
 		<panel classname="HelloPanel"/>
-		<panel classname="HTMLInfoPanel"/>
 		<panel classname="HTMLLicencePanel"/>
 		<panel classname="TargetPanel"/>
 		<panel classname="PacksPanel"/>
 		<panel classname="InstallPanel"/>
 		<panel classname="ShortcutPanel"/>
-		<panel classname="XInfoPanel"/>
+<!--		<panel classname="XInfoPanel"/> -->
+		<panel classname="HTMLInfoPanel"/>
 		<panel classname="FinishPanel"/>
 	</panels>
 	
@@ -83,8 +84,8 @@ This is the Spatial Data Catalog web application.
 			</fileset>
 			
 			<fileset dir=".build/jetty" targetdir="$INSTALL_PATH/jetty">
-				<exclude name="log/*"/>
-				<exclude name="log/archive/*"/>
+				<exclude name="log/*.log"/>
+				<exclude name="log/archive/*.log"/>
 			</fileset>
 			
 			<fileset dir=".build/web"   targetdir="$INSTALL_PATH/web">
