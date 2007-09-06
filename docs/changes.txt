@@ -1,8 +1,10 @@
 ================================================================================
 ===
-=== GeoNetwork 2.1.0 final : List of changes
+=== GeoNetwork 2.1.0 RC2 : List of changes
 ===
 ================================================================================
+
+- Added xml.region.get service to retrieve Bounding Box given a region id
 
 - Intermap: added "export PDF" feature.
 
@@ -20,6 +22,11 @@
 --------------------------------------------------------------------------------
 --- Changes
 --------------------------------------------------------------------------------
+
+- Intermap: added interaction with region selection dropdown list. Overview map zooms
+  to AoI and keeps AoI set
+  
+- AJAX based default and advanced search interfaces added and navigation improved
 
 - Intermap: when adding layers, the server list is now created on server via XSL, and no longer
   via JS on client.
