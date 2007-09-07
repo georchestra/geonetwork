@@ -1,33 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+==============================================================================
+=== This Ant build file is used to build the GeoNetwork opensource installers
+===
+=== Authors : Jeroen Ticheler <ticheler@users.sourceforge.net>
+===           Andrea Carboni <acarboni@users.sourceforge.net>
+==============================================================================
+-->
 
 <project name="geonetwork" default="installer" basedir=".">
 
 	<!-- =================================================================================== -->
 	
 	<property file="../web/geonetwork/WEB-INF/server.prop"/>
-	
+	<condition property="os" value="macosx">
+		<os family="mac"/>
+	</condition>
+	<condition property="os" value="win">
+			<os family="windows"/>
+	</condition>
+	<condition property="os" value="unix">
+			<os family="unix"/>
+	</condition>
+		
 	<!-- =================================================================================== -->
 	
-	<taskdef name     ="izpack" 
+	<taskdef name="izpack" 
 				classpath="lib/standalone-compiler.jar" 
 				classname="com.izforge.izpack.ant.IzPackTask"/>
 	
 	<taskdef name="launch4j"
 	        classname="net.sf.launch4j.ant.Launch4jTask"
-	        classpath="launch4j/macosx/launch4j.jar:launch4j/macosx/lib/xstream.jar"/>
+	        classpath="launch4j/${os}/launch4j.jar:launch4j/${os}/lib/xstream.jar"/>
 
 	<!-- =================================================================================== -->
 
 	<target name="setProperties">
 		<propertyfile
 		    file="../web/geonetwork/WEB-INF/server.prop"
-		    comment="GeoNetwork opensource properties. These are also used by both gast and geonetwork at runtime">
+		    comment="GeoNetwork opensource properties. 
+			           These are also used by both gast and geonetwork at runtime">
 			<!-- ### these are used by both gast and geonetwork at runtime -->
 			<!-- Don't remove !! -->
-			<entry  key="version" value="2.1.0.0"/>
+			<entry  key="version" value="2.1.0"/>
 			<entry  key="subVersion" value="RC2"/>
 
 			<entry  key="release" value="2.1.0"/>
+			<entry  key="OS" value="Compiled on ${os.name}"/>
 			<entry  key="date" type="date" value="now" pattern="yymmddHHmm"/>
 		  
 		</propertyfile>
@@ -35,15 +54,22 @@
 		
 	<!-- =================================================================================== -->
 
+	<target name="all">
+		<ant dir=".." target="javadoc"  />
+		<ant dir="." target="installer"  />
+		<ant dir="." target="wininstall"  />	
+	</target>
+
+	<!-- =================================================================================== -->
+
 	<target name="installer" depends="setProperties">
 		
-		<ant dir=".." target="all" />
+		<ant dir=".." target="compile"  />
 		
 		<delete dir =".build" />
 		<mkdir  dir =".build" />
 		
 		<!-- file copying -->
-			
 		<copy todir=".build">
 			<fileset dir=".."/>
 		</copy>
@@ -55,30 +81,23 @@
 					output="../geonetwork-${release}/geonetwork-install.jar" 
 					installerType="standard" 
 					basedir="${basedir}"/>
-				
-		<!-- create zip package -->
-	
-<!--		<copy todir="../geonetwork-${release}">
-			<fileset dir="zip"/>
-		</copy> -->
-		
-<!--		<zip destfile = "../geonetwork-${release}.zip"
-			  basedir  = "../geonetwork-${release}"/> -->
 	
 	</target>
 	
+	<!-- =================================================================================== -->
+
 	<target name="wininstall">
-		<!-- create Windows installer -->
-		
+		<!-- create a Windows installer using launch4j -->
 		<launch4j configFile="${basedir}/launch4j/launch4jConfig.xml"
 			jar="../geonetwork-${release}/geonetwork-install.jar"
 			outfile="../geonetwork-${release}/geonetwork-install.exe"
 			txtFileVersion="${version}-${subVersion}-${day}" 
-			txtProductVersion="${version}" 
-			fileVersion="${version}" 
-			productVersion="${version}"/>
-
+			txtProductVersion="${version}-${subVersion}" 
+			fileVersion="${version}.0" 
+			productVersion="${version}.0"/>
 	</target>
+
+	<!-- =================================================================================== -->
 
 	<target name="clean">
 		<delete dir =".build" />
