@@ -15,7 +15,7 @@
 			<author name="OSGeo"                email="geonetwork@osgeo.org"/>			 
 		</authors>
 		<url>http://geonetwork-opensource.org/</url>
-		<javaversion>1.5</javaversion>
+		<javaversion>1.5.0</javaversion>
 	</info>
 	
 	<!-- =================================================================================== -->
@@ -37,8 +37,8 @@
 	<!-- =================================================================================== -->
 	
 	<resources>
-		<res id="HTMLLicencePanel.licence" src=".build/docs/license.html"/>
-		<res id="HTMLInfoPanel.info"       src=".build/docs/readme.html"/>
+		<res id="HTMLLicencePanel.licence" src="../docs/license.html"/>
+		<res id="HTMLInfoPanel.info"       src="../docs/readme.html"/>
 		<res id="Installer.image"          src="installer.png"/>
 		<res id="shortcutSpec.xml"         src="windows-shortcuts.xml"/>
 		<res id="Unix_shortcutSpec.xml"    src="unix-shortcuts.xml"/>
@@ -70,23 +70,23 @@
 This is the Spatial Data Catalog web application.
 			</description>
 			
-			<fileset dir=".build/docs" targetdir="$INSTALL_PATH/docs">
+			<fileset dir="../docs" targetdir="$INSTALL_PATH/docs">
 				<exclude name="javadoc-gn/**"/>
 				<exclude name="javadoc-im/**"/>
 			</fileset>						
 			
-			<fileset dir=".build/bin"   targetdir="$INSTALL_PATH/bin"/>
+			<fileset dir="../bin"   targetdir="$INSTALL_PATH/bin"/>
 			
-			<fileset dir=".build/gast"  targetdir="$INSTALL_PATH/gast">			
+			<fileset dir="../gast"  targetdir="$INSTALL_PATH/gast">			
 				<exclude name="log/gast.log*"/>
 			</fileset>
 			
-			<fileset dir=".build/jetty" targetdir="$INSTALL_PATH/jetty">
+			<fileset dir="../jetty" targetdir="$INSTALL_PATH/jetty">
 				<exclude name="log/*.log"/>
 				<exclude name="log/archive/*.log"/>
 			</fileset>
 			
-			<fileset dir=".build/web"   targetdir="$INSTALL_PATH/web">
+			<fileset dir="../web"   targetdir="$INSTALL_PATH/web">
 				<exclude name="geonetwork/images/logos/*"/>
 				<exclude name="geonetwork/WEB-INF/db/account.prop"/>
 				<exclude name="geonetwork/WEB-INF/db/data/*"/>
@@ -117,7 +117,7 @@ This is the Spatial Data Catalog web application.
 This is a separate test application that can be used to test the CSW 2.0.1 services. 
 			</description>
 			
-			<fileset dir=".build/csw" targetdir="$INSTALL_PATH/csw"/>
+			<fileset dir="../csw" targetdir="$INSTALL_PATH/csw"/>
 		</pack>
 		
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -125,8 +125,8 @@ This is a separate test application that can be used to test the CSW 2.0.1 servi
 		<pack name="Source code" required="no" preselected="no">
 			<description>The GeoNetwork source code and the ant build script.</description>
 			
-			<fileset dir=".build/src"       targetdir="$INSTALL_PATH/src"/>
-			<file    src=".build/build.xml" targetdir="$INSTALL_PATH"/>
+			<fileset dir="../src"       targetdir="$INSTALL_PATH/src"/>
+			<file    src="../build.xml" targetdir="$INSTALL_PATH"/>
 		</pack>
 		
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -135,7 +135,7 @@ This is a separate test application that can be used to test the CSW 2.0.1 servi
 			<description>The installer data files. Installing this package you will
  be able to create the installer.</description>
 			
-			<fileset dir=".build/installer" targetdir="$INSTALL_PATH/installer">
+			<fileset dir="../installer" targetdir="$INSTALL_PATH/installer">
 				<exclude name="**/.build"/>
 			</fileset>
 		</pack>
@@ -145,8 +145,8 @@ This is a separate test application that can be used to test the CSW 2.0.1 servi
 		<pack name="Java source code JavaDoc" required="no" preselected="no">
 			<description>The GeoNetwork JavaDoc source code documentation.</description>
 			
-			<fileset dir=".build/docs/javadoc-gn" targetdir="$INSTALL_PATH/docs/javadoc-gn"/>
-			<fileset dir=".build/docs/javadoc-im" targetdir="$INSTALL_PATH/docs/javadoc-im"/>
+			<fileset dir="../docs/javadoc-gn" targetdir="$INSTALL_PATH/docs/javadoc-gn"/>
+			<fileset dir="../docs/javadoc-im" targetdir="$INSTALL_PATH/docs/javadoc-im"/>
 		</pack>
 				
 	</packs>
