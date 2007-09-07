@@ -43,7 +43,7 @@
 	</ul>
  	</p>
  	<p>
-		<cite>Note: A Java Runtime Environment (JRE) <em>1.5 Standard Edition</em> (download from <a href="http://java.sun.com">http://java.sun.com)</a> is required to run GeoNetwork opensource. See the Troubleshooting sections if normal 
+		<cite>Note: A Java Runtime Environment (JRE) <em>1.5.0 Standard Edition</em> (download from <a href="http://java.sun.com">http://java.sun.com)</a> is required to run GeoNetwork opensource. See the Troubleshooting sections if normal 
 		installation or start up fails.</cite>
 	</p>
 	
@@ -55,20 +55,13 @@
 	If you want to load data and metadata, you have a number of options. These include batch import of XML files from the local system, WebDav harvesting, direct XML insert through an online form in the Administrative panel and by using the MEF format.
 	</p>
 	<p>Probably <em>the most convenient method</em> is to use the <em>MEF</em> format that was specifically developed to exchange metadata <em>and</em> data, preview images and basic access privileges between GeoNetwork nodes. You can find sample MEF files in the <code>\gast\setup\sample-data</code> folder. The file format has been described in Chapter 3 of the server-reference manual (in <code>\docs\manuals\</code>. This format will also become available in other geospatial applications.
-	<br/>To import or export metadata and data into or from GeoNetwork, you have to start the GeoNetwork Administrator Survival Tool (<em>GAST</em>) tool.
-	</p>
-	<p>
-		<ul>
-			<li>
-				First configure your GeoNetwork connection by providing server and account details in the <code>Options => Config</code> menu. <cite>Note: You require an editor or administrator account for this function to work.</cite>
-			</li>
-			<li>
-				To load sample metadata and data, select the <em>Sample data</em> option in the Database section and press Import
-			</li>
-			<li>
-				To load other <code>MEF</code> formatted data, select Import in the Management options. Select the folder containing the <code>MEF</code> files and click on the Import button.
-			</li>
-		</ul>
+	<br>To import or export metadata and data into or from GeoNetwork, you have to start the GeoNetwork Administrator Survival Tool (<em>GAST</em>) tool.
+	<br>
+	<ul>
+		<li>First configure your GeoNetwork connection by providing server and account details in the <code>Options => Config</code> menu. <cite>Note: You require an editor or administrator account for this function to work.</cite></li>
+		<li>To load sample metadata and data, select the <em>Sample data</em> option in the Database section and press Import</li>
+		<li>To load other <code>MEF</code> formatted data, select Import in the Management options. Select the folder containing the <code>MEF</code> files and click on the Import button.</li>
+	</ul>
 	</p>
 
 	<h2>System configuration</h2>
@@ -80,15 +73,11 @@
 	
 	<h3>Database system </h3>
 
-	<p>
-		GeoNetwork desktop comes with an internal DBMS server, the <a href="http://mckoi.com/database/">McKoi</a> SQL database.
-	</p>
-	<p>
-		If you plan to use another DBMS you can use GAST to setup the database and migrate the content from the McKoi embedded database. Make sure that the DBMS is already up and running with a database schema and a user. Select the DBMS using the GAST tool. Oracle, MySQL and PostgreSQL are currently supported. GeoNetwork uses the JDBC interface to work with the DBMS, so other DBMS systems may also work.
-	</p>
-	<p>
-		You can also configure the DBMS manually, although this is more complex (See the community website for details)
-	</p>
+	<p>GeoNetwork desktop comes with an internal DBMS server, the <a href="http://mckoi.com/database/">McKoi</a> SQL database.</p>
+	
+	<p>If you plan to use another DBMS you can use GAST to setup the database and migrate the content from the McKoi embedded database. Make sure that the DBMS is already up and running with a database schema and a user. Select the DBMS using the GAST tool. Oracle, MySQL and PostgreSQL are currently supported. GeoNetwork uses the JDBC interface to work with the DBMS, so other DBMS systems may also work.</p>
+	
+	<p>You can also configure the DBMS manually, although this is more complex (See the community website for details)</p>
 
 	<h2>More information at <a href="http://geonetwork-opensource.org">http://geonetwork-opensource.org</a></h2>
 	
