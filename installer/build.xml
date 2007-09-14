@@ -68,6 +68,11 @@
 					installerType="standard" 
 					basedir="${basedir}"/>
 
+		<izpack	input="${basedir}/installer-config-win-jre.xml" 
+					output="../geonetwork-${release}/geonetwork-install-win-jre.jar" 
+					installerType="standard" 
+					basedir="${basedir}"/> 
+
 		<ant dir="." target="wininstall"  />	
 	
 	</target>
@@ -84,7 +89,15 @@
 		<launch4j configFile="${basedir}/launch4j/launch4jConfig.xml"
 			jar="../geonetwork-${release}/geonetwork-install.jar"
 			outfile="../geonetwork-${release}/geonetwork-install.exe"
-			txtFileVersion="${version}-${subVersion}-${day}" 
+			txtFileVersion="${version}-${subVersion}-${date}" 
+			txtProductVersion="${version}-${subVersion}" 
+			fileVersion="${version}.0" 
+			productVersion="${version}.0"/>
+
+		<launch4j configFile="${basedir}/launch4j/launch4jConfig-jre.xml"
+			jar="../geonetwork-${release}/geonetwork-install-win-jre.jar"
+			outfile="../geonetwork-${release}/geonetwork-install-with-jre.exe"
+			txtFileVersion="${version}-${subVersion}-${date}" 
 			txtProductVersion="${version}-${subVersion}" 
 			fileVersion="${version}.0" 
 			productVersion="${version}.0"/>
@@ -92,5 +105,5 @@
 	</target>
 
 	<!-- =================================================================================== -->
-	
+
 </project>

@@ -8,13 +8,15 @@
   <jar>../geonetwork-2.1.0/geonetwork-install.jar</jar>
   <outfile>../geonetwork-2.1.0/geonetwork-install.exe</outfile>
   <errTitle>GeoNetwork opensource Installation Error</errTitle>
+<!--  <downloadUrl>http://java.sun.com/javase/downloads/index_jdk5.jsp</downloadUrl>
+  <supportURL>http://java.sun.com/j2se/1.5.0/jre/install-windows.html</supportURL> -->
   <jarArgs></jarArgs>
   <chdir></chdir>
   <customProcName>false</customProcName>
   <stayAlive>false</stayAlive>
   <icon>../installer.ico</icon>
   <jre>
-<!--    <path>jre1.5.0_12</path> -->
+    <path>jre1.5.0_12</path>
     <minVersion>1.5.0</minVersion>
     <maxVersion>1.5.0_12</maxVersion>
     <initialHeapSize>256</initialHeapSize>
