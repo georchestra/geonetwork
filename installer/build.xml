@@ -68,11 +68,6 @@
 					installerType="standard" 
 					basedir="${basedir}"/>
 
-		<izpack	input="${basedir}/installer-config-win-jre.xml" 
-					output="../geonetwork-${release}/geonetwork-install-win-jre.jar" 
-					installerType="standard" 
-					basedir="${basedir}"/> 
-
 		<ant dir="." target="wininstall"  />	
 	
 	</target>
@@ -93,6 +88,22 @@
 			txtProductVersion="${version}-${subVersion}" 
 			fileVersion="${version}.0" 
 			productVersion="${version}.0"/>
+
+	</target>
+
+	<!-- =================================================================================== -->
+
+	<target name="wininstall-jre">
+		<!-- create a Windows installer using launch4j -->
+
+		<property file="../web/geonetwork/WEB-INF/server.prop"/>
+
+		<echo message="Building Windows installer with JRE on ${osys} using launch4j"/>
+
+		<izpack	input="${basedir}/installer-config-win-jre.xml" 
+					output="../geonetwork-${release}/geonetwork-install-win-jre.jar" 
+					installerType="standard" 
+					basedir="${basedir}"/> 
 
 		<launch4j configFile="${basedir}/launch4j/launch4jConfig-jre.xml"
 			jar="../geonetwork-${release}/geonetwork-install-win-jre.jar"
