@@ -9,7 +9,7 @@
       WARNING, INFO, CONFIG, FINER, FINEST, in order of
       Increasing statements logged.
     -->
-    <loggingLevel>CONFIG</loggingLevel>
+    <loggingLevel>WARNING</loggingLevel>
     <loggingToFile value = "false" />
     <JaiMemoryCapacity value = "0.5" />
     <JaiMemoryThreshold value = "0.75" />
