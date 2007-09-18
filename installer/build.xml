@@ -43,7 +43,7 @@
 			<!-- These are used by both gast and geonetwork at runtime -->
 			<!-- Do not remove !! -->
 			<entry  key="version" value="2.1.0"/>
-			<entry  key="subVersion" value="RC2"/>
+			<entry  key="subVersion" value="Final"/>
 			<entry  key="release" value="2.1.0"/>
 
 			<entry  key="date" type="date" value="now" pattern="yymmddHHmm"/>

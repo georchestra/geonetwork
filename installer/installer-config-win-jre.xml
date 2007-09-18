@@ -6,7 +6,7 @@
 	
 	<info>
 		<appname>geonetwork</appname>
-		<appversion>2.1.0 RC</appversion>
+		<appversion>2.1.0</appversion>
 		<authors>
 			<author name="FAO GeoNetwork Team" email="GeoNetwork@fao.org"/>
 			<author name="VAM WFP"             email="vamsie@wfp.org"/>
@@ -78,6 +78,7 @@ This is the Spatial Data Catalog web application.
 			<fileset dir="../bin"   targetdir="$INSTALL_PATH/bin">
 				<exclude name="jre"/>
 				<exclude name="*.bat"/>
+				<exclude name="jetty.xml_with_geoserver"/>
 			</fileset>
 			
 			<singlefile target="$INSTALL_PATH/bin/start-geonetwork.bat" src="../bin/jre/start-geonetwork-jre.bat" override="true"/>
@@ -104,6 +105,8 @@ This is the Spatial Data Catalog web application.
 				<exclude name="geonetwork/WEB-INF/lucene/*"/>
 				<exclude name="geonetwork/WEB-INF/removed"/>
 				<exclude name="intermap/log/*"/>
+				<exclude name="intermap/WEB-INF/mapServers.xml_with_geoserver"/>
+				<exclude name="geoserver"/>
 			</fileset>
 			
 			<executable targetfile="$INSTALL_PATH/bin/start-geonetwork.sh" />
@@ -117,6 +120,22 @@ This is the Spatial Data Catalog web application.
 					<arg value="-setup"/>
 				</args>
 			</executable>
+		</pack>
+		
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+		
+		<pack name="GeoServer web map server" required="no" preselected="yes">
+			<description>GeoServer is an Open Source server that connects your information 
+to the Geospatial Web. This embedded version is setup to provide the base layers 
+for the map viewers in GeoNetwork. You can safely install this on modern computers, 
+but be careful on older computers with little memory (less then 256MB RAM).
+			</description>
+			
+			<fileset dir="../web/geoserver" targetdir="$INSTALL_PATH/web/geoserver"/>
+			<singlefile target="$INSTALL_PATH/web/intermap/WEB-INF/mapServers.xml" 
+					src="../web/intermap/WEB-INF/mapServers.xml_with_geoserver" override="true"/>
+			<singlefile target="$INSTALL_PATH/bin/jetty.xml" 
+					src="../bin/jetty.xml_with_geoserver" override="true"/>
 		</pack>
 		
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
