@@ -20,8 +20,8 @@
     -->
     <format namespace = "gn" enabled = "true" id = "BlueMarble_world" >
       <description>Blue Marble World image</description>
-      <type>WorldImage</type>
-      <url>file:coverages/BlueMarble_world/world-topo-bathy-200407-3x8640x4320.jpg</url>
+      <type>GeoTIFF</type>
+      <url>file:coverages/BlueMarble_world/bluemarble_jpeg_small.tiff</url>
     </format>
   </formats>
   <!--

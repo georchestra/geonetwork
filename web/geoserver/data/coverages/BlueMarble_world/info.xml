@@ -23,8 +23,8 @@
   AXIS['Geodetic longitude', EAST], 
   AXIS['Geodetic latitude', NORTH], 
   AUTHORITY['EPSG','4326']]" srsName = "EPSG:4326" >
-    <pos>-180.00000000005 -90.00000014395002</pos>
-    <pos>180.00000028795003 90.00000000005</pos>
+    <pos>-180.0 -90.0</pos>
+    <pos>180.0 90.0</pos>
   </envelope>
   <grid dimension = "2" >
     <low>0 0 </low>
@@ -60,8 +60,8 @@
     <requestCRSs>EPSG:4326</requestCRSs>
     <responseCRSs>EPSG:4326</responseCRSs>
   </supportedCRSs>
-  <supportedFormats nativeFormat = "WorldImage" >
-    <formats>GEOTIFF,GTOPO30,ARCGRID,GIF,PNG,JPEG,TIFF,IMAGEMOSAIC</formats>
+  <supportedFormats nativeFormat = "GeoTIFF" >
+    <formats>ARCGRID,GEOTIFF,IMAGEMOSAIC,GIF,PNG,JPEG,TIFF,GTOPO30</formats>
   </supportedFormats>
   <supportedInterpolations default = "nearest neighbor" >
     <interpolationMethods>nearest neighbor,bilinear,bicubic</interpolationMethods>
