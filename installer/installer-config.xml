@@ -6,7 +6,7 @@
 	
 	<info>
 		<appname>geonetwork</appname>
-		<appversion>2.1.0</appversion>
+		<appversion>2.1.0 RC2</appversion>
 		<authors>
 			<author name="FAO GeoNetwork Team" email="GeoNetwork@fao.org"/>
 			<author name="VAM WFP"             email="vamsie@wfp.org"/>
@@ -73,9 +73,12 @@ This is the Spatial Data Catalog web application.
 			<fileset dir="../docs" targetdir="$INSTALL_PATH/docs">
 				<exclude name="javadoc-gn/**"/>
 				<exclude name="javadoc-im/**"/>
+				<exclude name="lyx/**"/>
+				<exclude name="developers/**"/>
 			</fileset>						
 			
 			<fileset dir="../bin"   targetdir="$INSTALL_PATH/bin">
+				<exclude name="jre/**"/>
 				<exclude name="jetty.xml_with_geoserver"/>
 			</fileset>
 			
@@ -98,7 +101,7 @@ This is the Spatial Data Catalog web application.
 				<exclude name="geonetwork/WEB-INF/removed"/>
 				<exclude name="intermap/log/*"/>
 				<exclude name="intermap/WEB-INF/mapServers.xml_with_geoserver"/>
-				<exclude name="geoserver"/>
+				<exclude name="geoserver/**"/>
 			</fileset>
 			
 			<executable targetfile="$INSTALL_PATH/bin/start-geonetwork.sh" />
@@ -121,9 +124,16 @@ This is the Spatial Data Catalog web application.
 to the Geospatial Web. This embedded version is setup to provide the base layers 
 for the map viewers in GeoNetwork. You can safely install this on modern computers, 
 but be careful on older computers with little memory (less then 256MB RAM).
+To have a full resolution background layer, check the GeoNetwork site for 
+instructions and download.
 			</description>
 			
-			<fileset dir="../web/geoserver" targetdir="$INSTALL_PATH/web/geoserver"/>
+			<fileset dir="../web/geoserver" targetdir="$INSTALL_PATH/web/geoserver">
+				<exclude name="data/catalog.xml_jpg"/>
+				<exclude name="data/coverages/BlueMarble_world/world-topo-bathy-200407-3x8640x4320.jpg"/>
+				<exclude name="data/coverages/BlueMarble_world/world-topo-bathy-200407-3x8640x4320.wld"/>
+				<exclude name="data/coverages/BlueMarble_world/info.xml_jpg"/>
+			</fileset>
 			<singlefile target="$INSTALL_PATH/web/intermap/WEB-INF/mapServers.xml" 
 					src="../web/intermap/WEB-INF/mapServers.xml_with_geoserver" override="true"/>
 			<singlefile target="$INSTALL_PATH/bin/jetty.xml" 

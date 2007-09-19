@@ -43,7 +43,7 @@
 			<!-- These are used by both gast and geonetwork at runtime -->
 			<!-- Do not remove !! -->
 			<entry  key="version" value="2.1.0"/>
-			<entry  key="subVersion" value="Final"/>
+			<entry  key="subVersion" value="RC2"/>
 			<entry  key="release" value="2.1.0"/>
 
 			<entry  key="date" type="date" value="now" pattern="yymmddHHmm"/>
@@ -64,7 +64,7 @@
 		<mkdir  dir="../geonetwork-${release}"/>
 		
 		<izpack	input="${basedir}/installer-config.xml" 
-					output="../geonetwork-${release}/geonetwork-install.jar" 
+					output="../geonetwork-${release}/geonetwork-install-${release}.jar" 
 					installerType="standard" 
 					basedir="${basedir}"/>
 
@@ -82,8 +82,8 @@
 		<echo message="Building Windows installer on ${osys} using launch4j"/>
 
 		<launch4j configFile="${basedir}/launch4j/launch4jConfig.xml"
-			jar="../geonetwork-${release}/geonetwork-install.jar"
-			outfile="../geonetwork-${release}/geonetwork-install.exe"
+			jar="../geonetwork-${release}/geonetwork-install-${release}.jar"
+			outfile="../geonetwork-${release}/geonetwork-install-${release}.exe"
 			txtFileVersion="${version}-${subVersion}-${date}" 
 			txtProductVersion="${version}-${subVersion}" 
 			fileVersion="${version}.0" 
@@ -101,13 +101,13 @@
 		<echo message="Building Windows installer with JRE on ${osys} using launch4j"/>
 
 		<izpack	input="${basedir}/installer-config-win-jre.xml" 
-					output="../geonetwork-${release}/geonetwork-install-win-jre.jar" 
+					output="../geonetwork-${release}/geonetwork-install-win-jre-${release}.jar" 
 					installerType="standard" 
 					basedir="${basedir}"/> 
 
 		<launch4j configFile="${basedir}/launch4j/launch4jConfig-jre.xml"
-			jar="../geonetwork-${release}/geonetwork-install-win-jre.jar"
-			outfile="../geonetwork-${release}/geonetwork-install-with-jre.exe"
+			jar="../geonetwork-${release}/geonetwork-install-win-jre-${release}.jar"
+			outfile="../geonetwork-${release}/geonetwork-install-with-jre-${release}.exe"
 			txtFileVersion="${version}-${subVersion}-${date}" 
 			txtProductVersion="${version}-${subVersion}" 
 			fileVersion="${version}.0" 
