@@ -94,6 +94,10 @@
 
 - Fixed bug with character encoding when editing metadata
 
+- Small fixes to the sample metadata for ISO19115/19139
+
+- Removed invalid URLs from online resources in 19139 templates
+
 - Fixed localization of the AJAX services
 
 - Fixed Chinese localization
