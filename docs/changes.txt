@@ -55,6 +55,7 @@
 
 - Intermap: up and down buttons in layer list now work.
 
+- Fixed bug with character encoding when editing metadata
 
 ================================================================================
 ===
