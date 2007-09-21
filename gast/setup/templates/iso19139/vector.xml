@@ -318,7 +318,7 @@
 <onLine>
 <CI_OnlineResource>
 <linkage>
-<URL>http://168.202.95.104:8080/geonetwork/srv/en/resources.get?id=2&amp;fname=&amp;access=private</URL>
+<URL/>
 </linkage>
 <protocol>
 <gco:CharacterString>WWW:DOWNLOAD-1.0-http--download</gco:CharacterString>
