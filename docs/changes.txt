@@ -3,6 +3,10 @@
 === GeoNetwork 2.1.0 RC2 : List of changes
 ===
 ================================================================================
+--------------------------------------------------------------------------------
+--- New
+--------------------------------------------------------------------------------
+
 - Added portal.opensearch service to allow search from client supporting OpenSearch.org spec.
 
 - Added xml.region.get service to retrieve Bounding Box given a region id
@@ -16,9 +20,15 @@
 - Intermap: AOI can now be deleted on minimap by pressing the AOI button
   when it's already selected.
 
-- Intermap: added the AJAX advanced search.
+- GeoNetwork added the AJAX advanced search.
 
 - Added possibility to specify proxy's credentials
+
+- Included a version of GeoServer with Blue marble and country boundaries base layers
+
+- Handling interactive maps for metadata with OnlineResources holding getCapabilities WMS servers.
+
+- Build tools for Windows native installer (win and *nix, macosx cleaned up)
 
 --------------------------------------------------------------------------------
 --- Changes
@@ -45,6 +55,33 @@
 
 - Improved both admin's guide and server reference manuals.
 
+- Small georss fixes
+
+- Legends in InterMap integrated in GUI
+
+- Fixes to presentation of recent additions and categories using AJAX
+
+- InterMap: Improved computation of scalebar lenght via Haversine formula.
+
+- Some toolbar and legend improvements, including icon updates and additions
+
+- Improved default and advanced search forms
+
+- Improved presentation of beginPosition and endPosition fields in iso19139 editor (have calendars)
+
+- Home link always goes to homepage
+
+- Map can now be resized by dragging its lower-right corner.
+
+- Improved readability of the "loading map" message.
+
+- Version and release numbers are <maintained> in this build file now!! 
+  And still stored in the server.prop file.
+  
+- Moved Readme panel to the end of the installer and removed post install panel.
+
+- Updated readme.html content
+
 --------------------------------------------------------------------------------
 --- Bugs fixed
 --------------------------------------------------------------------------------
@@ -56,6 +93,14 @@
 - Intermap: up and down buttons in layer list now work.
 
 - Fixed bug with character encoding when editing metadata
+
+- Fixed localization of the AJAX services
+
+- Fixed Chinese localization
+
+- Fix iso19115 packages for iso19139 - add contentInfo and extensionInfo
+
+- The zoombox is now bound inside the map.
 
 ================================================================================
 ===
