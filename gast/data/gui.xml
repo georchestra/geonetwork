@@ -305,16 +305,14 @@
 			<title>Migrate an old GeoNetwork</title>
 			<class>migration.oldinst.MainPanel</class>
 			<description>
-				This panel allows you to migrate metadata from an old GeoNetwork 
+				This panel allows you to migrate metadata from an old GeoNetwork 2.0.x
 				installation. This procedure migrates the database content. After 
 				this stage, you will probably need to setup some parameters into 
 				the config.xml file (like dataDir). Other parameters (like proxy
 				settings) must be changed using the web interface. Harvested
-				metadata are not migrated. When migrating both old and new nodes MUST not 
-				be started. Once the directory selected, GAST will look for an Old installation
-				dir as SELECTED_DIR/web/geonetwork/WEB-INF/config.xml (It could be different
-				according to installation made of 2.0.3, web/geonetwork could not exist or 
-				be slightly different according to servlet name. If needed, update directory name).
+				metadata are not migrated. When migrating, both old and new nodes MUST NOT 
+				be started. If you use Tomcat and you have used only the geonetwork's 
+				'web' folder you have to select the GeoNetwork's web app folder inside Tomcat.
 			</description>
 			
 			<button>
