@@ -105,7 +105,7 @@ Andrea Carboni, François Prunayre
 \align center
 
 \size larger
-Revision 6 (29-Aug-2007)
+Revision 7 (04-Oct-2007)
 \end_layout
 
 \begin_layout Standard
@@ -182,10 +182,6 @@ tools
 \series default
  : these are special tools that cannot be executed while GeoNetwork is running
  or that perform special tasks better done in a separate tool.
-\end_layout
-
-\begin_layout Standard
-
 \end_layout
 
 \begin_layout Part
@@ -1289,6 +1285,10 @@ A CSW 2.0.1 server.
 An old GeoNetwork 2.0 node.
 \end_layout
 
+\begin_layout Itemize
+An OAI-PMH server.
+\end_layout
+
 \begin_layout Section
 Mechanism overview
 \end_layout
@@ -1504,6 +1504,30 @@ getRecordById
 \family default
 \series default
  operation is discarded and the metadata skipped.
+\end_layout
+
+\begin_layout Subsection*
+OAI-PMH harvesting type
+\end_layout
+
+\begin_layout Itemize
+The 
+\series bold
+id
+\series default
+ of the remote server 
+\series bold
+must
+\series default
+ be a uuid.
+ If not, metadata can be harvested but during hierarchical propagation id
+ clashes could corrupt harvested metadata.
+\end_layout
+
+\begin_layout Itemize
+During harvesting, GeoNetwork will try to autodetect the schema of each
+ metadata.
+ If the schema is not supported the metadata is skipped.
 \end_layout
 
 \begin_layout Section
@@ -2033,7 +2057,13 @@ Description
 \begin_layout Standard
 The harvesting was ok, no errors were found.
  In this case, a tooltip will show some harvesting results (like the number
- of harvested metadata etc...)
+ of harvested metadata etc...).
+ See section 
+\begin_inset LatexCommand \ref{sub:harvesting-result}
+
+\end_inset
+
+.
 \end_layout
 
 \end_inset
@@ -2078,6 +2108,632 @@ The harvesting was aborted due to an unexpected condition.
 \end_inset
 
 Possible error icons
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+\begin_inset LatexCommand \label{sub:harvesting-result}
+
+\end_inset
+
+Harvesting result tips
+\end_layout
+
+\begin_layout Standard
+If the harvesting succeeds, a tooltip will show detailed information about
+ the harvesting process.
+ This way you can check if the harvester worked as expected or if there
+ is something to fix to the harvesting parameters or somewhere else.
+ The result tip is like a table, where each row refers to
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+Total
+\series default
+ This is the total number of metadata found remotely.
+ Metadata with the same id are considered as one.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+Added
+\series default
+ Number of metadata added to the system because they were not present locally.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+Removed
+\series default
+ Number of metadata that have been removed locally because they are not
+ present in the remote server anymore.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+Updated
+\series default
+ Number of metadata that are present locally but that needed to be updated
+ because their last change date was different from the remote one.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+Unchanged
+\series default
+ Local metadata left unchanged.
+ Their remote last change date did not change.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+Unknown
+\series default
+\InsetSpace ~
+
+\series bold
+schema
+\series default
+ Number of skipped metadata because their format was not recognized by GeoNetwor
+k.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+Unretrievable
+\series default
+ Number of metadata that were ready to be retrieved from the remote server
+ but for some reason there was an exception during the data transfer process.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+Bad\InsetSpace ~
+Format
+\series default
+ Number of skipped metadata because they did not have a valid XML representation.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+Does
+\series default
+\InsetSpace ~
+
+\series bold
+not
+\series default
+\InsetSpace ~
+
+\series bold
+validate
+\series default
+ Number of metadata which did not validate against their schema.
+ These metadata were harvestable with success but skipped due to the validation
+ process.
+ Usually, there is an option to force validation: if you want to harvest
+ these metadata anyway, simply turn it off.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="10" columns="5">
+<features>
+<column alignment="center" valignment="top" leftline="true" rightline="true" width="0">
+<column alignment="center" valignment="top" leftline="true" width="0">
+<column alignment="center" valignment="top" leftline="true" width="0">
+<column alignment="center" valignment="top" leftline="true" width="0">
+<column alignment="center" valignment="top" leftline="true" rightline="true" width="0">
+<row topline="true" bottomline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Result vs harvesting type
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Geonet
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Web DAV
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+CSW
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+OAI-PMH
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Total
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Added
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Removed
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Updated
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Unchanged
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Unknown schema
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Unretrievable
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Bad Format
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true" bottomline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Does Not Validate
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Caption
+Result information supported by harvesting types.
 \end_layout
 
 \end_inset
@@ -2154,8 +2810,28 @@ DAV
 \series bold
 CSW
 \series default
- CSW stands for Catalogue Services for the Web and it is a search interface
- for catalogues developed by the Open Geospatial Consortium.
+ CSW stands for 
+\emph on
+Catalogue
+\emph default
+ 
+\emph on
+Services
+\emph default
+ 
+\emph on
+for
+\emph default
+ 
+\emph on
+the
+\emph default
+ 
+\emph on
+Web
+\emph default
+ and it is a search interface for catalogues developed by the Open Geospatial
+ Consortium.
  GeoNetwork is compatible with version 2.0.1 of such protocol.
 \end_layout
 
@@ -2176,6 +2852,41 @@ geonetwork
  this harvesting type to harvest from old 2.0 servers.
  This harvesting type is deprecated and only kept until GeoNetwork 2.1 will
  be widely spread.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+OAI-PMH
+\series default
+ The acronym stands for 
+\emph on
+Open
+\emph default
+ 
+\emph on
+Archive
+\emph default
+ 
+\emph on
+Initiative
+\emph default
+, 
+\emph on
+Protocol
+\emph default
+ for 
+\emph on
+Metadata
+\emph default
+ 
+\emph on
+Harvesting
+\emph default
+.
+ It is a good harvesting protol widely used.
+ GeoNetwork is compatible with version 2.0 of the protocol.
 \end_layout
 
 \begin_layout Standard
@@ -2234,7 +2945,8 @@ Adding a GeoNetwork node
 \begin_layout Standard
 This type of harvesting allows you to connect to a GeoNetwork node, perform
  a simple search as in the main page and retrieve all matched metadata.
- The search is usefull because it allows to focus only on metadata of interest.
+ The search is usefull because it allows you to focus only on metadata of
+ interest.
  Once you add a node of this type, you will get a page like the one shown
  in figure 
 \begin_inset LatexCommand \ref{fig:harvesting-gn}
@@ -2614,7 +3326,7 @@ account
 \series bold
 Options
 \series default
- General harvesting options
+ General harvesting options:
 \end_layout
 
 \begin_deeper
@@ -2741,7 +3453,7 @@ Adding a CSW node
 
 \begin_layout Standard
 This type of harvesting is capable of connecting to a remote CSW server
- and retrieving al matching metadata.
+ and retrieving all matching metadata.
  Please, note that in order to be harvested metadata must have one of the
  schema format handled by GeoNetwork.
  Figure 
@@ -2894,6 +3606,290 @@ Save
  Then it will go back to the main harvesting page.
 \end_layout
 
+\begin_layout Subsection*
+Adding an OAI-PMH node
+\end_layout
+
+\begin_layout Standard
+An OAI-PMH server implements a harvesting protocol that GeoNetwork, acting
+ as a client, can use to harvest metadata.
+ If you are requesting the 
+\family sans
+\series bold
+oai_dc
+\family default
+\series default
+ output format, GeoNetwork will convert it into its dublin core format.
+ Other formats can be harvested only if GeoNetwork supports them and is
+ able to autodetect the schema from the metadata.
+ Figure 
+\begin_inset LatexCommand \ref{fig:harvesting-oaipmh}
+
+\end_inset
+
+ shows all available options, which are:
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename images/web-harvesting-oaipmh.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Caption
+\begin_inset LatexCommand \label{fig:harvesting-oaipmh}
+
+\end_inset
+
+Adding an OAI-PMH harvesting node
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+Site
+\series default
+ All options are the same as web DAV harvesting.
+ The only difference is that the 
+\family sans
+\series bold
+URL
+\family default
+\series default
+ parameter here points to an OAI-PMH server.
+ This is the entry point that GeoNetwork will use to issue all PMH commands.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+Search
+\series default
+ This part allows you to restrict the harvesting to specific metadata subsets.
+ You can specify several searches: GeoNetwork will execute them sequentially
+ and results will be merged to avoid the harvesting of the same metadata.
+ Several searches allow you to specify different search criteria.
+ In each search, you can specify the following parameters:
+\end_layout
+
+\begin_deeper
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+From
+\series default
+ You can provide a start date here.
+ All metadata whose last change date is equal to or greater than this date
+ will be harvested.
+ You cannot simply edit this field but you have to use the 
+\begin_inset Graphics
+	filename icons/calendar.gif
+
+\end_inset
+
+ icon to popup a calendar and choose the date.
+ This field is optional so if you don't provide it the start date constraint
+ is dropped.
+ Use the 
+\begin_inset Graphics
+	filename icons/clear_left.png
+
+\end_inset
+
+ icon to clear the field.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+Until
+\series default
+ Works exactly as the 
+\family sans
+\series bold
+from
+\family default
+\series default
+ parameter but adds an end constraint to the last change date.
+ The until date is included in the date range, the check is: less than or
+ equal to.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+Set
+\series default
+ An OAI-PMH server classifies its metadata into hierarchical sets.
+ You can request to return metadata that belong to only one set (and its
+ subsets).
+ This narrows the search result.
+ Initially the drop down shows only a blank option that indicate 
+\emph on
+no set
+\emph default
+.
+ After specifying the connection URL, you can press the 
+\family sans
+\series bold
+Retrieve Info
+\family default
+\series default
+ button, whose purpose is to connect to the remote node, retrieve all supported
+ sets and prefixes and fill the search drop downs.
+ After you have pressed this button, you can select a remote set from the
+ drop down.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+Prefix
+\series default
+ Here prefix means metadata format.
+ The 
+\family sans
+\series bold
+oai_dc
+\family default
+\series default
+ prefix is mandatory for any OAI-PMH compliant server, so this entry is
+ always present into the prefix drop down.
+ To have this drop down filled with all prefixes supported by the remote
+ server, you have to enter a valid URL and press the 
+\family sans
+\series bold
+Retrieve Info
+\family default
+\series default
+ button.
+\end_layout
+
+\begin_layout Standard
+You can use the 
+\family sans
+\series bold
+Add
+\family default
+\series default
+ button to add one more search to the list.
+ A search can be removed clicking the 
+\begin_inset Graphics
+	filename icons/fileclose.png
+
+\end_inset
+
+ icon on its left.
+\end_layout
+
+\end_deeper
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+Options
+\series default
+ Most options are common to web DAV harvesting.
+ The 
+\family sans
+\series bold
+validate
+\family default
+\series default
+ option, when checked, will validate each harvested metadata against GeoNetwork'
+s schemas.
+ Only valid metadata will be harvested.
+ Invalid one will be skipped.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+Privileges
+\series default
+ Please, see web DAV harvesting.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+Categories
+\series default
+ Please, see web DAV harvesting.
+\end_layout
+
+\begin_layout Standard
+At the bottom of the page there are the following buttons:
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+Back
+\series default
+ Go back to the main harvesting page.
+ The harvesting is not added.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+Save
+\series default
+ Saves node's data creating a new harvesting node.
+ Then it will go back to the main harvesting page.
+\end_layout
+
+\begin_layout Standard
+Please note that when you edit a previously created node, both the 
+\emph on
+set
+\emph default
+ and 
+\emph on
+prefix
+\emph default
+ drop down lists will be empty.
+ They will contain only the previously selected entries, plus the default
+ ones if they were not selected.
+ Furthermore, the set name will not be localized but the internal code string
+ will be displayed.
+ You have to press the 
+\family sans
+\series bold
+retrieve info
+\family default
+\series default
+ button again to connect to the remote server and retrieve the localized
+ name and all set and prefix information.
+\end_layout
+
 \begin_layout Chapter
 Metadata ownership
 \end_layout
@@ -2996,10 +3992,16 @@ A
 user administrator
 \family default
 \series default
- or 
+ or
 \family sans
 \series bold
-an editor
+ 
+\family default
+\series default
+an 
+\family sans
+\series bold
+editor
 \family default
 \series default
  can view:
@@ -3197,6 +4199,16 @@ editor
  Selecting an editor means selecting all metadata that belong to that editor.
  An empty drop down means that there are no editors with metadata associated
  and hence no transfer is possible.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+
+\series bold
+Note
+\series default
+ The drop down will be filled with all editors visible to you.
+ If you are not an administrator, you will view only a subset of all editors.
 \end_layout
 
 \begin_layout Standard
