@@ -58,7 +58,7 @@
       Defines the password of the administrator for log in
       to the web based administration tool.
     -->
-    <adminPassword>geonetwork</adminPassword>
+    <adminPassword>geoserver</adminPassword>
   </global>
   <services >
     <service type = "WCS" enabled = "false" >
