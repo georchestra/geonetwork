@@ -10,11 +10,11 @@ Bugs:
 Issues:
 ==================================================================
 
-- A big issue is the backward compatibility of the harvesting. v2.1 does not harvest
+- (RESOLVED for version 2.1.0) A big issue is the backward compatibility of the harvesting. v2.1 does not harvest
   nodes of v2.0. This can not be. Even if less optimal harvesting, this should remain 
   possible when upgrading.
   
-- Sample metadata does not have:
+- (RESOLVED for version 2.1.0) Sample metadata does not have:
 	- online resources (requires InterMap integration too)
 	- code list issues with ISO19139 metadata
 	
@@ -28,8 +28,8 @@ To do:
 - Revisit the help.xml, links.xml and about.xml to verify and update (a.o. links & 
   some of the translations))
  
-- Further improve help through the use of DHTML tooltips and AJAX request to server
+- (Done for version 2.1.0) Further improve help through the use of DHTML tooltips and AJAX request to server
  
-- Integrated version with InterMap opensource
+- (Done for version 2.1.0) Integrated version with InterMap opensource
 
 ==================================================================
