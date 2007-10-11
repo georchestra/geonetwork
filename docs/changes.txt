@@ -21,6 +21,19 @@
 --- Changes
 --------------------------------------------------------------------------------
 
+- Removed Oracle JDBC driver due to license incompatibility. 
+  Driver can be downloaded from Oracle Technology Network by the user.
+  
+- All headers of Java classes have been checked and GNU-GPL license and 
+  copyright statements have been added where missing.
+  
+- GeoRSS output for search and latest updates have been harmonized. 
+  Both now support georss:box, georss:point or georss:where with a gml:Envelope
+  output for the geo part.
+  
+- Added mapServer.xml configuration files that were missing in SVN, but were 
+  in the release.
+  
 --------------------------------------------------------------------------------
 --- Bugs fixed
 --------------------------------------------------------------------------------
@@ -33,6 +46,11 @@
   GeoNetworks running on Tomcat.
 
 - LDAP : passwords are now scrambled. Avoided admin login
+
+- Fixed NullPointerException in HTTP transaction handler in InterMap
+
+- Fixed Windows installation problem with incorrect JRE requirements on install
+  of the version that includes a JRE
 
 ================================================================================
 ===
