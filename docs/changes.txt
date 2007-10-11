@@ -47,6 +47,11 @@
 
 - LDAP : passwords are now scrambled. Avoided admin login
 
+- Editor : Fixed upload bug
+
+- Fixed bug in privileges management : it was not possible to clear privileges
+  for administrators and reviewer that were metadata owners
+
 - Fixed NullPointerException in HTTP transaction handler in InterMap
 
 - Fixed Windows installation problem with incorrect JRE requirements on install
