@@ -33,7 +33,9 @@
   
 - Added mapServer.xml configuration files that were missing in SVN, but were 
   in the release.
-  
+ 
+- Added 'sources' to search summary
+
 --------------------------------------------------------------------------------
 --- Bugs fixed
 --------------------------------------------------------------------------------
@@ -56,6 +58,10 @@
 
 - Fixed Windows installation problem with incorrect JRE requirements on install
   of the version that includes a JRE
+
+- Fixed some bugs to geonetwork 2.0 harvesting type
+
+- Fixed thumbnails display on metadata harvested from a geonetwork 2.0 node
 
 ================================================================================
 ===
