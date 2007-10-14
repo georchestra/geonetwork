@@ -58,6 +58,8 @@
 
 - Fixed Windows installation problem with incorrect JRE requirements on install
   of the version that includes a JRE
+  
+- Fixed appearing and then disappearing metadata display in IE7
 
 - Fixed some bugs to geonetwork 2.0 harvesting type
 
