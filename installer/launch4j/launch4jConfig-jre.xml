@@ -17,8 +17,10 @@
   <icon>../installer.ico</icon>
   <jre>
     <path>jre1.5.0_12</path>
-    <minVersion>1.5.0</minVersion>
-    <maxVersion>1.5.0_12</maxVersion>
+    <!-- The minimal version required by the IzPack installer is 1.4
+         The JRE for GeoNetwork is included in the installer -->
+    <minVersion>1.4.0</minVersion>
+<!--    <maxVersion>1.5.0_12</maxVersion> -->
     <initialHeapSize>256</initialHeapSize>
     <maxHeapSize>512</maxHeapSize>
     <args></args>
