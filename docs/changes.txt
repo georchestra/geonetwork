@@ -17,6 +17,8 @@
 
 - Added search criteria for downloadable and interactive maps
 
+- Added text only search results for low bandwitdh connections 
+
 --------------------------------------------------------------------------------
 --- Changes
 --------------------------------------------------------------------------------
