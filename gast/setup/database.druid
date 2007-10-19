@@ -2,8 +2,8 @@
 
 <project version="2">
 	<attribs>
-		<attrib name="build">145</attrib>
-		<attrib name="serial">63913</attrib>
+		<attrib name="build">148</attrib>
+		<attrib name="serial">65484</attrib>
 	</attribs>
 	<database>
 		<attribs>
@@ -618,6 +618,27 @@
 								<attrib name="ddEquiv"/>
 								<attrib name="id">63450</attrib>
 								<attrib name="size">40</attrib>
+							</attribs>
+							<domain>
+								<attribs>
+									<attrib name="minValue"/>
+									<attrib name="outRange">false</attrib>
+									<attrib name="maxValue"/>
+									<attrib name="type">none</attrib>
+								</attribs>
+								<list>
+									<header>
+										<elem>value</elem>
+									</header>
+								</list>
+							</domain>
+						</alias>
+						<alias>
+							<attribs>
+								<attrib name="name">IPAddress</attrib>
+								<attrib name="ddEquiv"/>
+								<attrib name="id">64699</attrib>
+								<attrib name="size">32</attrib>
 							</attribs>
 							<domain>
 								<attribs>
@@ -1369,6 +1390,59 @@ ORDER BY id
 						</attribs>
 						<modsConfig/>
 					</field>
+					<field>
+						<fieldAttribs>
+							<attribs>
+								<attrib name="63909">false</attrib>
+								<attrib name="54374">0</attrib>
+								<attrib name="61528">false</attrib>
+								<attrib name="17">true</attrib>
+								<attrib name="15">false</attrib>
+								<attrib name="340">false</attrib>
+							</attribs>
+						</fieldAttribs>
+						<attribs>
+							<attrib name="comment"/>
+							<attrib name="matchType">s</attrib>
+							<attrib name="refField">0</attrib>
+							<attrib name="name">rating</attrib>
+							<attrib name="id">63916</attrib>
+							<attrib name="onDelete">n</attrib>
+							<attrib name="onUpdate">n</attrib>
+							<attrib name="refTable">0</attrib>
+							<attrib name="type">5</attrib>
+						</attribs>
+						<modsConfig/>
+						<docs>
+							<p>
+								<t>Range is 0..5</t>
+							</p>
+						</docs>
+					</field>
+					<field>
+						<fieldAttribs>
+							<attribs>
+								<attrib name="63909">false</attrib>
+								<attrib name="54374">0</attrib>
+								<attrib name="61528">false</attrib>
+								<attrib name="17">true</attrib>
+								<attrib name="15">false</attrib>
+								<attrib name="340">false</attrib>
+							</attribs>
+						</fieldAttribs>
+						<attribs>
+							<attrib name="comment"/>
+							<attrib name="matchType">s</attrib>
+							<attrib name="refField">0</attrib>
+							<attrib name="name">popularity</attrib>
+							<attrib name="id">63917</attrib>
+							<attrib name="onDelete">n</attrib>
+							<attrib name="onUpdate">n</attrib>
+							<attrib name="refTable">0</attrib>
+							<attrib name="type">5</attrib>
+						</attribs>
+						<modsConfig/>
+					</field>
 				</table>
 				<table>
 					<vars>
@@ -1738,6 +1812,11 @@ ORDER BY id
 											<elem>Idx1</elem>
 											<elem/>
 										</row>
+										<row>
+											<elem>63909</elem>
+											<elem>Idx2</elem>
+											<elem/>
+										</row>
 									</list>
 								</idx>
 							</stdSql>
@@ -1762,6 +1841,15 @@ ORDER BY id
 											<elem>false</elem>
 											<elem>false</elem>
 										</row>
+										<row>
+											<elem>63909</elem>
+											<elem>Idx2</elem>
+											<elem/>
+											<elem>0</elem>
+											<elem>false</elem>
+											<elem>false</elem>
+											<elem>false</elem>
+										</row>
 									</list>
 								</idx>
 							</oraSql>
@@ -1776,6 +1864,11 @@ ORDER BY id
 										<row>
 											<elem>61528</elem>
 											<elem>Idx1</elem>
+											<elem/>
+										</row>
+										<row>
+											<elem>63909</elem>
+											<elem>Idx2</elem>
 											<elem/>
 										</row>
 									</list>
@@ -1794,6 +1887,13 @@ ORDER BY id
 										<row>
 											<elem>61528</elem>
 											<elem>Idx1</elem>
+											<elem/>
+											<elem>default</elem>
+											<elem/>
+										</row>
+										<row>
+											<elem>63909</elem>
+											<elem>Idx2</elem>
 											<elem/>
 											<elem>default</elem>
 											<elem/>
@@ -1844,6 +1944,208 @@ ORDER BY id
 							<attrib name="refField">0</attrib>
 							<attrib name="name">relatedId</attrib>
 							<attrib name="id">63013</attrib>
+							<attrib name="onDelete">n</attrib>
+							<attrib name="onUpdate">n</attrib>
+							<attrib name="refTable">0</attrib>
+							<attrib name="type">5</attrib>
+						</attribs>
+						<modsConfig/>
+					</field>
+				</table>
+				<table>
+					<vars>
+						<list>
+							<header>
+								<elem>name</elem>
+								<elem>type</elem>
+								<elem>value</elem>
+								<elem>descr</elem>
+							</header>
+						</list>
+					</vars>
+					<triggers/>
+					<rules/>
+					<attribs>
+						<attrib name="comment"/>
+						<attrib name="name">MetadataRating</attrib>
+						<attrib name="id">64377</attrib>
+						<attrib name="schema"/>
+						<attrib name="tempPK"/>
+						<attrib name="tempFK"/>
+						<attrib name="tempOther"/>
+						<attrib name="sqlCommands"/>
+					</attribs>
+					<modsConfig>
+						<SqlGenModule>
+							<stdSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+										</row>
+										<row>
+											<elem>63909</elem>
+											<elem>Idx2</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
+							</stdSql>
+							<oraSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+											<elem type="i">ts</elem>
+											<elem type="b">bitmap</elem>
+											<elem type="b">stats</elem>
+											<elem type="b">noSort</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+											<elem>0</elem>
+											<elem>false</elem>
+											<elem>false</elem>
+											<elem>false</elem>
+										</row>
+										<row>
+											<elem>63909</elem>
+											<elem>Idx2</elem>
+											<elem/>
+											<elem>0</elem>
+											<elem>false</elem>
+											<elem>false</elem>
+											<elem>false</elem>
+										</row>
+									</list>
+								</idx>
+							</oraSql>
+							<pgSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+											<elem type="s">access</elem>
+											<elem type="s">where</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+											<elem>default</elem>
+											<elem/>
+										</row>
+										<row>
+											<elem>63909</elem>
+											<elem>Idx2</elem>
+											<elem/>
+											<elem>default</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
+							</pgSql>
+							<mckoiSql>
+								<idx type="l">
+									<list>
+										<header>
+											<elem type="i">id</elem>
+											<elem type="s">index</elem>
+											<elem type="s">name</elem>
+										</header>
+										<row>
+											<elem>61528</elem>
+											<elem>Idx1</elem>
+											<elem/>
+										</row>
+										<row>
+											<elem>63909</elem>
+											<elem>Idx2</elem>
+											<elem/>
+										</row>
+									</list>
+								</idx>
+							</mckoiSql>
+						</SqlGenModule>
+					</modsConfig>
+					<field>
+						<fieldAttribs>
+							<attribs>
+								<attrib name="63909">false</attrib>
+								<attrib name="54374"/>
+								<attrib name="61528">false</attrib>
+								<attrib name="17">false</attrib>
+								<attrib name="15">true</attrib>
+								<attrib name="340">false</attrib>
+							</attribs>
+						</fieldAttribs>
+						<attribs>
+							<attrib name="comment"/>
+							<attrib name="matchType">s</attrib>
+							<attrib name="refField">44102</attrib>
+							<attrib name="name">metadataId</attrib>
+							<attrib name="id">64386</attrib>
+							<attrib name="onDelete">n</attrib>
+							<attrib name="onUpdate">n</attrib>
+							<attrib name="refTable">44101</attrib>
+							<attrib name="type">0</attrib>
+						</attribs>
+						<modsConfig/>
+					</field>
+					<field>
+						<fieldAttribs>
+							<attribs>
+								<attrib name="63909">false</attrib>
+								<attrib name="54374"/>
+								<attrib name="61528">false</attrib>
+								<attrib name="17">false</attrib>
+								<attrib name="15">true</attrib>
+								<attrib name="340">false</attrib>
+							</attribs>
+						</fieldAttribs>
+						<attribs>
+							<attrib name="comment"/>
+							<attrib name="matchType">s</attrib>
+							<attrib name="refField">0</attrib>
+							<attrib name="name">ipAddress</attrib>
+							<attrib name="id">64387</attrib>
+							<attrib name="onDelete">n</attrib>
+							<attrib name="onUpdate">n</attrib>
+							<attrib name="refTable">0</attrib>
+							<attrib name="type">64699</attrib>
+						</attribs>
+						<modsConfig/>
+					</field>
+					<field>
+						<fieldAttribs>
+							<attribs>
+								<attrib name="63909">false</attrib>
+								<attrib name="54374"/>
+								<attrib name="61528">false</attrib>
+								<attrib name="17">true</attrib>
+								<attrib name="15">false</attrib>
+								<attrib name="340">false</attrib>
+							</attribs>
+						</fieldAttribs>
+						<attribs>
+							<attrib name="comment"/>
+							<attrib name="matchType">s</attrib>
+							<attrib name="refField">0</attrib>
+							<attrib name="name">rating</attrib>
+							<attrib name="id">64388</attrib>
 							<attrib name="onDelete">n</attrib>
 							<attrib name="onUpdate">n</attrib>
 							<attrib name="refTable">0</attrib>

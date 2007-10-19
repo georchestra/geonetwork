@@ -19,6 +19,11 @@
 
 - Added text only search results for low bandwitdh connections 
 
+- Added metadata popularity concept (used to sort search results)
+
+- Added metadata rating system (used to sort search results). It is possible
+  to rate remote metadata harvested using the geonetwork's harvesting type.
+
 --------------------------------------------------------------------------------
 --- Changes
 --------------------------------------------------------------------------------

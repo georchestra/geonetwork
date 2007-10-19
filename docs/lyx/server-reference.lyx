@@ -106,7 +106,7 @@ Andrea Carboni
 \align center
 
 \size larger
-Revision 9 (28-Aug-2007)
+Revision 10 (20-Oct-2007)
 \end_layout
 
 \begin_layout Standard
@@ -1098,7 +1098,7 @@ File formats
 
 \end_inset
 
-Metadata Exchange Format v1.0
+Metadata Exchange Format v1.1
 \end_layout
 
 \begin_layout Section
@@ -1535,6 +1535,51 @@ true
 false
 \emph default
  }.
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+rating
+\family default
+\series default
+ : This is an optional element.
+ If present, indicates the users' rating of the metadata ranging from 
+\family sans
+\series bold
+1
+\family default
+\series default
+ (a bad rating) to 
+\family sans
+\series bold
+5
+\family default
+\series default
+ (an excellent rating).
+ The special value 
+\family sans
+\series bold
+0
+\family default
+\series default
+ means that the metadata has not been rated yet.
+ Can be used to sort search results.
+\end_layout
+
+\begin_layout Itemize
+
+\family sans
+\series bold
+popularity
+\family default
+\series default
+ : Another optional value.
+ If present, indicates the popularity of the metadata.
+ The value must be positive and high values mean high popularity.
+ The criteria used to set the popularity is left to the writer.
+ Its main purpose is to provide a metadata ordering during a search.
 \end_layout
 
 \end_deeper

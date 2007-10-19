@@ -1,7 +1,7 @@
 -- ======================================================================
 -- ===   Sql Script for Database : Geonet
 -- ===
--- === Build : 145
+-- === Build : 148
 -- ======================================================================
 
 CREATE TABLE Relations
@@ -233,6 +233,8 @@ CREATE TABLE Metadata
     owner        int            not null,
     groupOwner   int,
     harvestUri   varchar(255),
+    rating       int            default 0 not null,
+    popularity   int            default 0 not null,
 
     primary key(id),
     unique(uuid,source,harvestUuid),
@@ -270,6 +272,19 @@ CREATE TABLE OperationAllowed
     foreign key(groupId) references Groups(id),
     foreign key(metadataId) references Metadata(id),
     foreign key(operationId) references Operations(id)
+  );
+
+-- ======================================================================
+
+CREATE TABLE MetadataRating
+  (
+    metadataId  int,
+    ipAddress   varchar(32),
+    rating      int           not null,
+
+    primary key(metadataId,ipAddress),
+
+    foreign key(metadataId) references Metadata(id)
   );
 
 -- ======================================================================

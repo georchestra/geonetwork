@@ -1,7 +1,7 @@
 REM ======================================================================
 REM ===   Sql Script for Database : Geonet
 REM ===
-REM === Build : 145
+REM === Build : 148
 REM ======================================================================
 
 CREATE TABLE Relations
@@ -209,6 +209,8 @@ CREATE TABLE Metadata
     owner        int            not null,
     groupOwner   int,
     harvestUri   varchar(255),
+    rating       int            default 0 not null,
+    popularity   int            default 0 not null,
     primary key(id),
     unique(uuid,source,harvestUuid),
     foreign key(owner) references Users(id),
@@ -240,6 +242,17 @@ CREATE TABLE OperationAllowed
     foreign key(groupId) references Groups(id),
     foreign key(metadataId) references Metadata(id),
     foreign key(operationId) references Operations(id)
+  );
+
+REM ======================================================================
+
+CREATE TABLE MetadataRating
+  (
+    metadataId  int,
+    ipAddress   varchar(32),
+    rating      int           not null,
+    primary key(metadataId,ipAddress),
+    foreign key(metadataId) references Metadata(id)
   );
 
 REM ======================================================================
