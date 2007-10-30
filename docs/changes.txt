@@ -43,6 +43,9 @@
  
 - Added 'sources' to search summary
 
+- Now the mef.export service is accessible to users. Export is limited by metadata
+  privileges.
+
 --------------------------------------------------------------------------------
 --- Bugs fixed
 --------------------------------------------------------------------------------
