@@ -1,0 +1,3439 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<book>
+  <title>Quick Start Guide - GeoNetwork opensource Version 2.1.0</title>
+
+  <toc>
+    <tocchap>
+      <tocentry></tocentry>
+    </tocchap>
+  </toc>
+
+  <chapter>
+    <title>A Geographic Information Management System for all</title>
+
+    <section>
+      <title>Introduction</title>
+
+      <para>GeoNetwork opensource (GNos) is a standard based and decentralized
+      spatial information management system, designed to enable access to
+      geo-referenced databases and cartographic products from a variety of
+      data providers through descriptive metadata, enhancing the spatial
+      information exchange and sharing between organizations and their
+      audience, using the capacities and the power of the Internet. The system
+      provides a broad community of users with easy and timely access to
+      available spatial data and thematic maps from multidisciplinary sources,
+      that may in the end support informed decision making. The main goal of
+      the GNos software is to increase collaboration within and between
+      organizations for reducing duplication and enhancing information
+      consistency and quality and to improve the accessibility of a wide
+      variety of geographic information along with the associated information,
+      organized and documented in a standard and consistent way.</para>
+
+      <highlights>
+        <para>GeoNetwork Main Features</para>
+
+        <para><itemizedlist>
+            <listitem>
+              <para>Instant search on local and distributed geospatial
+              catalogues</para>
+            </listitem>
+
+            <listitem>
+              <para>Uploading and downloading of data, documents, PDF's and
+              any other content</para>
+            </listitem>
+
+            <listitem>
+              <para>An interactive Web map viewer that combines Web Map
+              Services from distributed servers around the world</para>
+            </listitem>
+
+            <listitem>
+              <para>Online map layout generation and export in PDF
+              format</para>
+            </listitem>
+
+            <listitem>
+              <para>Online editing of metadata with a powerful template
+              system</para>
+            </listitem>
+
+            <listitem>
+              <para>Scheduled harvesting and syncronization of metadata
+              between distributed catalogues</para>
+            </listitem>
+
+            <listitem>
+              <para>Groups and users management</para>
+            </listitem>
+
+            <listitem>
+              <para>Fine grained access control</para>
+            </listitem>
+          </itemizedlist></para>
+      </highlights>
+    </section>
+
+    <section>
+      <title>GeoNetwork opensource background and its evolution</title>
+
+      <para>The prototype of the GeoNetwork catalog was developed by the Food
+      and Agriculture Organization of the United Nations (FAO) in 2001 to
+      systematically archive and publish the geographic datasets produced
+      within the Organization. The prototype was built on experiences within
+      and outside the organization. It used metadata content available from
+      legacy systems that was transformed into what was then only a draft
+      metadata standard, the ISO 19115. Later on, another UN agency, the World
+      Food Programme (WFP) joined the project and with its contribution the
+      first version of the software was released in 2003 and operational
+      catalogues were established in FAO and WFP. The system was based on the
+      ISO19115:DIS metadata standard and embedded the Web Map Client InterMap
+      that supported Open Geospatial Consortium (OGC) compliant Web Map
+      Services. Distributed searches were possible using the standard Z39.50
+      catalog protocol. At that moment it was decided to develop the program
+      as a Free and Open Source Software to allow the whole geospatial users
+      community to benefit from the development results and to contribute to
+      the further advancement of the software.</para>
+
+      <para>Jointly with the UN Environmental Programme (UNEP), FAO developed
+      a second version in 2004. The new release allowed users to work with
+      multiple metadata standards (ISO 19115, FGDC and Dublin Core) in a
+      transparent manner. It also allowed metadata to be shared between
+      catalogues through a caching mechanism, improving reliability when
+      searching in multiple catalogues.</para>
+
+      <para>In 2006, the GeoNetwork team dedicated efforts to develop a DVD
+      containing the GNos version 2.0.3 and the best free and open source
+      software in the field of Geoinformatics. The DVD was produced and
+      distributed in hard copy to over three thousand people and is now also
+      available for download from the http://geonetwork-opensource.org Web
+      site.</para>
+
+      <para>The latest release of GNos version 2.1, issued in late 2007, is
+      the result of another round of critical improvements, supported by FAO,
+      the UN Office for the Coordination of Humanitarian Affairs (UNOCHA), the
+      Consultative Group on International Agricultural Research (CSI-CGIAR),
+      UNEP and other donors. Support for the final metadata standard
+      ISO19115:2003 has been enabled by using the ISO19139:2007 implementation
+      specification schema published in May 2007. The release also serves as
+      the open source reference implementation of the OGC Catalog Service for
+      the Web (CSW 2.0.1) specification. Improvements to give users a more
+      responsive and interactive experience have been substantial and include
+      a new Web map viewer and a complete revision of search interface.</para>
+    </section>
+
+    <section>
+      <title>The use of Standards</title>
+
+      <para>GNos has been developed following the principles of a Free and
+      Open Source Software (FOSS) and based on International and Open
+      Standards for services and protocols, like the ISO-TC211 and the Open
+      Geospatial Consortium (OGC) specifications. The GeoNetwork architecture
+      is largely compatible with the OGC Portal Reference Architecture, i.e.
+      the OGC guide for implementing standardized geospatial portals. Indeed,
+      the GNos’ own structure relies on the same three main modules identified
+      by the OGC Portal Reference Architecture, that are focused on spatial
+      data, metadata and interactive map visualization. GNos is also fully
+      compliant with the OGC specifications for querying and retrieving
+      information from Web catalogues (CSW 2.0.1). GNos supports the most
+      common standards to specifically describe geographic data (ISO19139 and
+      FGDC) and the international standard for general documents (Dublin
+      Core). It uses standards (OGS WMS) also for visualizing maps through the
+      Internet.</para>
+    </section>
+
+    <section>
+      <title>Harvesting geospatial data in a shared environment</title>
+
+      <para>Within the geographic information environment, the increased
+      collaboration between data providers and their efforts to reduce
+      duplication have stimulated the development of tools and systems to
+      significantly improve the information sharing and guarantee an easier
+      and quicker access of data from a variety of sources without undermining
+      the ownership of the information. The harvesting funcionality in GNos is
+      a mechanism of data collection in perfect accordance with both rights to
+      data access and data ownership protection. Through the harvesting
+      functionality it is possible to collect public information from the
+      different GeoNetwork nodes installed around the world and to copy and
+      store periodically this information locally. In this way a user from a
+      single entry point can get information also from distributed catalogues.
+      The logo posted on top each harvested record informs the user about the
+      data source.</para>
+    </section>
+
+    <section>
+      <title>GeoNetwork and the Open Source Community Development</title>
+
+      <para>The community of users and developers of the GNos software has
+      increased dramatically since the release of version 2.0 in December 2005
+      and the subsequent pre-releases of version 2.1. At present, the user and
+      developer mailing lists count nearly 200 subscriptions each.
+      Subscription to these lists is open to anyone interested. The archive of
+      the mailing lists provides an important resource for users and can be
+      freely browsed online. Members provide feedback within the community and
+      provide translations, new functionalities, bug reports, fixes and
+      instructions to the project as a whole. Building a self sustaining
+      community of users and developers is one of the biggest challenges for
+      the project. This community-building process relies on active
+      participation and interaction of its members. It also relies on building
+      trust and operating in a transparent manner, thereby agreeing on the
+      overall objectives, prioritization and long term direction of the
+      project. A number of actions have been taken by the project team to
+      facilitate this process.</para>
+
+      <para>The foundation for the establishment of a GeoNetwork Advisory
+      Board was laid at the 2006 workshop in Rome and membership criteria were
+      defined.</para>
+
+      <para>A work plan is presented and discussed at the yearly GNos
+      workshop; subsequently, the plan is maintained and updated throughout
+      the year where needed. The project management team reports back to the
+      advisory board about the reached developments and objectives during the
+      annual workshops.</para>
+
+      <para>Two public Websites have been established. One focuses on the
+      users of the software (http://geonetwork-opensource.org), while the
+      other one is dedicated to the developers
+      (http://trac-osgeo.org/geonetwork). Both can be updated and maintained
+      online by trusted members of the community. They provide documentation,
+      bug reporting and tracking, Wiki pages et cetera. A small part of the
+      community connects through Internet Relay Chat (IRC) on a public
+      geonetwork channel. But most interaction takes place on the user and the
+      developer mailing lists.</para>
+
+      <para>During the 2006 workshop, the project advisory board decided to
+      propose the GeoNetwork opensource project as an incubator project to the
+      newly founded Open Source Geospatial Foundation (OSGEO). This incubation
+      process is currently ongoing but close to conclusions. The project
+      Websites has been moved to servers accessible under the umbrella of the
+      OSGEO foundation. Web pages have been updated to reflect the OSGEO
+      principles and a source code review performed.</para>
+
+      <para>Source code is maintained in a publicly accessible code
+      repository, hosted at an independent service provider, SourceForge.net
+      that hosts thousands of FOSS projects. Developers and users have full
+      access to all sections of the source code, while trusted developers can
+      make changes in the repository itself. A special mailing list has been
+      established to monitor changes in the code repository. This so-called
+      "commit mailing list" delivers change reports by email to its
+      subscribers.</para>
+
+      <para>Standardizing documentation development is the next challenge
+      taken up by the project to ensure versioning and support of multiple
+      output formats (e.g. HTML and PDF).</para>
+    </section>
+  </chapter>
+
+  <chapter>
+    <title>Metadata Theoretical concepts</title>
+
+    <sect1>
+      <title>What is Metadata?</title>
+
+      <para>Metadata, commonly defined as “data about data”, is a structured
+      set of information which describes data (including both digital and
+      non-digital datasets) stored in administrative systems. Metadata may
+      provide a short summary about the content, purpose, quality, location of
+      the data as well as information related to its creation.</para>
+    </sect1>
+
+    <sect1>
+      <title>What are Metadata Standards?</title>
+
+      <para>Metadata standards provide data producers with the format and
+      content for properly describing their data, allowing users to evaluate
+      the usefulness of the data in addressing their specific needs.</para>
+    </sect1>
+
+    <sect1>
+      <title>Why do we need Standardized Metadata?</title>
+
+      <para>Standardized metadata support users in effectively and efficiently
+      accessing data by using a common set of terminology and metadata
+      elements that allow for a quick means of data discovery and retrieval
+      from metadata clearinghouses. The metadata based on standards ensure
+      information consistency and quality and avoid that important parts of
+      data knowledge are lost.</para>
+    </sect1>
+
+    <sect1>
+      <title>Geographic Information Metadata Standard</title>
+
+      <para>Geographic data, which can be defined as any data with a
+      geographic component, is often produced by one individual or
+      organization, and may address the needs of various users, including
+      information system analysts, programme planners, developers of
+      geographic information or policy makers. Proper standard documentation
+      on geographic data enable different users to better evaluate the
+      appropriateness of data to be used for data production, storage,
+      update.</para>
+
+      <para>The metadata standards supported by GeoNetwork opensource are the
+      <emphasis role="bold"><emphasis role="bold">ISO
+      19115</emphasis>:2003</emphasis> - approved by the international
+      community in April 2003 as a tool to define metadata in the field of
+      geographic information - and the <emphasis role="bold">FGDC</emphasis> -
+      the metadata standard adopted in the United States by the Federal
+      Geographic Data Committee. In addition, GNos supports also the
+      international standard <emphasis role="bold">Dublin Core</emphasis> for
+      the description of general documents.</para>
+
+      <para>This ISO Standard precisely defines how geographic information and
+      related services should be described, providing mandatory and
+      conditional metadata sections, metadata entities and metadata elements.
+      This standard applies to data series, independent datasets, individual
+      geographic features and feature properties. Despite ISO 19115:2003 was
+      designed for digital data, its principles can be extended to many other
+      forms of geographic data such as maps, charts, and textual documents as
+      well as non-geographic data (ISO/FDIS 19115, 2003).</para>
+    </sect1>
+  </chapter>
+
+  <chapter>
+    <title>Get connected to the new release!</title>
+
+    <section>
+      <title>New version - New funtionalities</title>
+
+      <para>GeoNetwork opensource version 2.1.0 comes with substantial
+      upgrades of different components for a more intuitive and responsive
+      user-system interaction. Web2 technologies have been adopted, in
+      particular AJAX techniques, to allow for more interactive and faster
+      services in the web interface and for the integration of the existing
+      web map viewer in the home page. Similar functionalities have been
+      implemented in the administrative part of the system, to provide an
+      easier access to the configuration pages related to site settings,
+      catalogue harvesting, scheduling and maintenance.</para>
+
+      <para>The search interface has been completely overhauled to provide
+      highly interactive searching capabilities. Furthermore, the new version
+      of GNos embeds GeoServer as map server. Users can now not only overlay
+      OGC web map services available on the web, but also create their own map
+      services for other users to browse without having to download additional
+      plugins. Maps created with web map services can be now saved as PDF and
+      sent to others.</para>
+
+      <para>The metadata catalogue handles the latest ISO19115:2003 geographic
+      metadata format based on the ISO191139 schemas, as well as the older
+      ISO19115 final draft format, FGDC and Dublin Core. The metadata editor
+      is able to handle the majority of these complex standards, providing
+      default, advanced and XML editing online tools.</para>
+
+      <para>The new version has a number of different harvesting interfaces
+      allowing users to connect their own server to many other catalogues
+      around the world. This is the result of the implementation of the open
+      source reference for the web catalog services according to OGC
+      specifications. Harvesting in the new version is now fully compatible
+      with GeoNetwork 2.0 and 2.1 nodes.</para>
+
+      <para>We have added avanced online and offline administration
+      funcionalities to configure, backup and migrate the application. We have
+      also added a convenient import and export format "MEF" or Metadata
+      Exchange Format, that allows the users to move metadata, previews and
+      even data in a convenient single file. GNos can be easily expanded with
+      plugins to export/import metadata to/from other software supporting
+      MEF.</para>
+
+      <para></para>
+
+      <figure>
+        <title><emphasis role="bold">Figure 3.1. Home page of the GeoNetwork
+        opensource version 2.1.0</emphasis></title>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="../images/Home_page_s.png" scale="100%" />
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para></para>
+    </section>
+
+    <section>
+      <title>Where do I get the GeoNetwork opensource installer?</title>
+
+      <para>You can find the Geonetwork opensource software on the Internet at
+      the GeoNetwork opensource Community website
+      http://geonetwork-opensource.org. The new version 2.1.0 is also
+      distributed through the Sourceforge Website at
+      http://sourceforge.net/projects/geonetwork.</para>
+    </section>
+
+    <section>
+      <title>System requirements</title>
+
+      <para>The GNos can run either on <emphasis role="bold">MS
+      Windows</emphasis>, <emphasis role="bold">Linux</emphasis> or <emphasis
+      role="bold">Mac OS X</emphasis>.</para>
+
+      <para></para>
+
+      <para>Some general system requirements for the software to run without
+      problems are listed below:</para>
+
+      <para><emphasis role="bold">Processor</emphasis>: 1 GHz or higher</para>
+
+      <para><emphasis role="bold">Memory (RAM)</emphasis>: 512 MB or
+      higher</para>
+
+      <para><emphasis role="bold">Disk Space</emphasis>: 30 MB minimum.
+      However, it is suggested to have a minimum of 250 MB of free disk space.
+      Additional space is required depending on the amount of spatial data
+      that you expect to upload into the internal geodatabse.</para>
+
+      <para><emphasis role="bold">Other Software requirements</emphasis>: A
+      Java Runtime Environment (JRE 1.5.0). For server installations, Apache
+      Tomcat and a dedicated JDBC compliant DBMS (MySQL, Oracle) are also
+      required.<emphasis role="bold"></emphasis></para>
+
+      <para></para>
+
+      <para><emphasis role="bold">Supporting Software</emphasis></para>
+
+      <para>-Java Runtime Environment (JRE 1.4.0 +) (Windows &amp;
+      Linux)</para>
+
+      <para>-MySQL DBMS v5.5 (All)*</para>
+
+      <para>-Apache Tomcat v5.5 (All)*</para>
+
+      <para>-Apache HTTP v2.0 (Windows)</para>
+
+      <para>-Druid v3.8 (All)*</para>
+
+      <para>-Firefox v1.5 (All)*</para>
+
+      <para>-Internet Explorer (Windows)</para>
+
+      <para></para>
+
+      <para>* All = Windows, Linux and Mac OS X</para>
+
+      <para></para>
+    </section>
+
+    <section>
+      <title>How do I install GeoNetwork opensource?</title>
+
+      <para>Before running the GeoNetwork installer, make sure that all system
+      requirements are satisfied, and in particular that the Java Runtime
+      Environment version 1.5.0 is set up on your machine.</para>
+
+      <para>If you use Windows, the following steps will guide you to complete
+      the installation (other FOSS will follow):</para>
+
+      <orderedlist>
+        <listitem>
+          <para>Double click on <emphasis
+          role="bold">geonetwork-install-2.1.0.exe</emphasis> to start the
+          GeoNetwok opensource desktop installer</para>
+        </listitem>
+
+        <listitem>
+          <para>Follow the instructions on screen (figure 3.4)</para>
+        </listitem>
+
+        <listitem>
+          <para>After completion of the installation process, a 'GeoNetwork
+          desktop' menu will be added to your Windows Start menu under
+          'Programs'</para>
+        </listitem>
+
+        <listitem>
+          <para>Click Start &gt; Programs &gt; GeoNetwork desktop &gt; Start
+          server to start the Geonetwork opensource Web server. The first time
+          you do this, the system will require about 1 minute to complete
+          startup.</para>
+        </listitem>
+
+        <listitem>
+          <para>Click Start &gt; Programs &gt; Geonetwork desktop &gt; Open
+          GeoNetwork opensource to start using GeoNetwork opensource, or
+          connect your Web browser to http://localhost8080/geonetwork/</para>
+        </listitem>
+      </orderedlist>
+
+      <para></para>
+
+      <figure>
+        <title>Figure 3.4</title>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="../images/installer.png" width="" />
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para><guilabel></guilabel></para>
+    </section>
+  </chapter>
+
+  <chapter>
+    <title>Getting Started</title>
+
+    <para>There are no requirements for general visitors to search and access
+    information in a GeoNetwork opensource based catalog. To get access to
+    advanced features and restricted information, you need an account to log
+    in (e.g. a username and password) that should be provided by the GNos
+    administrator. Depending on your privileges, you will be able to access,
+    submit and edit metadata records. Each user is assigned to a particular
+    work group and is able to access data within that work group. To log in,
+    simply go to the homepage and enter your username and password in the
+    dedicated fields on the top right corner, then click the login button.
+    (See figure 4)</para>
+
+    <para></para>
+
+    <figure>
+      <title>Figure 4</title>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="../images/login.png" format="PNG" />
+        </imageobject>
+      </mediaobject>
+    </figure>
+  </chapter>
+
+  <chapter>
+    <title>Searching for Maps and Data</title>
+
+    <para>There are many different ways to search the catalogue for maps and
+    other geographic data. This guide will introduce you to the most popular
+    search methods: default, advanced and by category. Whichever search you
+    choose, remember that you will see results based on your privileges and
+    assigned work group.</para>
+
+    <para>Note that the term <emphasis role="bold">data</emphasis> in this
+    application refers to datasets, maps, tables, documents, etc. that are
+    linked to the metadata of a specific record.</para>
+
+    <sect1>
+      <title>Default Search</title>
+
+      <para>The default search allows you to search text within the entire
+      record, such as keywords of the metadata and/or geographic
+      location.</para>
+
+      <para>For the free text search:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para><emphasis role="bold"><emphasis>Enter</emphasis></emphasis> a
+          search term or letter(s) in the <emphasis
+          role="bold">What?</emphasis> field. You can use one or more thematic
+          keyword(s) or strings in quotes. Keywords and operators (and, or,
+          not) are not case sensitive. (See figure 5.1 a).</para>
+        </listitem>
+      </itemizedlist>
+
+      <para></para>
+
+      <figure>
+        <title>Figure 5.1 a</title>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="../images/what.png" />
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>For the geographic search, two options are available for selecting
+      a particular region to limit the search:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>You can select a <emphasis
+          role="bold">region</emphasis><emphasis
+          role="bold"><emphasis><emphasis role="bold"><emphasis> from
+          </emphasis><emphasis>a</emphasis></emphasis></emphasis><emphasis
+          role="bold"> predefined list</emphasis></emphasis>. (Figure 5.1
+          b);</para>
+        </listitem>
+      </itemizedlist>
+
+      <para></para>
+
+      <figure>
+        <title>Figure 5.1 b</title>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="../images/where1.png" />
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para></para>
+
+      <itemizedlist>
+        <listitem>
+          <para>You can select your own <emphasis role="bold">area of
+          interest</emphasis> in a more interactive way. A <emphasis
+          role="bold"><emphasis>small global map is shown on the screen from
+          which you can </emphasis></emphasis>drag and drop the frame of your
+          location area. Just click on the button on the upper right of the
+          map screen.<emphasis role="bold"><emphasis> (Figure 5.1
+          c)</emphasis></emphasis>;</para>
+        </listitem>
+      </itemizedlist>
+
+      <para></para>
+
+      <figure>
+        <title>Figure 5.1 c</title>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="../images/where2.png" />
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para></para>
+
+      <para>Both types of search, free text search and geographic search can
+      be combined to restrict the query further.</para>
+
+      <para></para>
+
+      <para><itemizedlist>
+          <listitem>
+            <para>Click the <emphasis role="bold">Search</emphasis> button.
+            (Figure 5.1 e).</para>
+          </listitem>
+        </itemizedlist></para>
+
+      <figure>
+        <title>Fogure 5.1 e</title>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="../images/search_button.png" />
+          </imageobject>
+        </mediaobject>
+      </figure>
+    </sect1>
+
+    <sect1>
+      <title>Searching by Categories</title>
+
+      <para>An additional way to search data within the GeoNetwork database,
+      from the home page, is searching by <emphasis
+      role="bold">Category</emphasis>. A list of categories is provided to the
+      user to identify data at a more generic level: <emphasis
+      role="bold">Applications</emphasis>, <emphasis
+      role="bold">Audio/Video</emphasis>, <emphasis role="bold">Case study and
+      best practices</emphasis>, <emphasis role="bold">Conference
+      proceedings</emphasis>, <emphasis role="bold">Datasets</emphasis>,
+      <emphasis role="bold">Directories</emphasis>, <emphasis
+      role="bold">Interactive resources</emphasis>, <emphasis role="bold">Maps
+      and graphics</emphasis>, <emphasis role="bold">Other information
+      resources</emphasis>, <emphasis role="bold">Photo</emphasis>.</para>
+
+      <para>To search only for maps, click on <emphasis role="bold">Maps and
+      Graphics</emphasis> (Figure 5.2). A list of maps will be displayed from
+      which you may view details of every single map; just clicking on the
+      <emphasis role="bold">Metadata</emphasis> button of the map you wish to
+      review.</para>
+
+      <para></para>
+
+      <figure>
+        <title>Figure 5.2</title>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="../images/Categories.png" />
+          </imageobject>
+        </mediaobject>
+      </figure>
+    </sect1>
+
+    <sect1>
+      <title>Advanced Search</title>
+
+      <para>The advanced search option (Figure 5.3 a) works similarly to the
+      default search. However, you can be more specific in your search
+      criteria as it offers different elements to look for data, each of them
+      answering one of the following questions:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para><emphasis role="bold">WHAT?</emphasis></para>
+        </listitem>
+
+        <listitem>
+          <para><emphasis role="bold">WHERE?</emphasis></para>
+        </listitem>
+
+        <listitem>
+          <para><emphasis role="bold">WHEN?</emphasis></para>
+        </listitem>
+      </itemizedlist>
+
+      <para></para>
+
+      <figure>
+        <title>Figure 5.3 a</title>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="../images/advanced_search1.png" />
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para></para>
+
+      <para>To perform an <emphasis role="bold"><emphasis>advanced
+      search</emphasis></emphasis>, from the home page <emphasis
+      role="bold">click</emphasis> <emphasis role="bold">Advanced
+      </emphasis>just below the search bottom (see figure 5.3 from the default
+      search section).</para>
+
+      <para></para>
+
+      <figure>
+        <title>Figure 5.3</title>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="../images/advanced_search_button.png" />
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para></para>
+
+      <para>In the <emphasis role="bold">WHAT?</emphasis> section the elements
+      are all related to the data content. Through them, in addition to
+      searching only free keywords in the entire metadata content, you can
+      also search directly in the title or abstract fields and add more
+      keywords to customize your search further. You can also specify the
+      level of accuracy you wish to reach in performing your search. (Figure
+      5.3 b).</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>To search by <emphasis role="bold">Title</emphasis>, <emphasis
+          role="bold">Abstract</emphasis>, <emphasis role="bold">Free
+          Text</emphasis>, or <emphasis role="bold">Keyword</emphasis>(s) type
+          any text into the respective field. You can enter information in one
+          or multiple field(s). If you do not want to search by a given field,
+          simply leave it blank;</para>
+        </listitem>
+
+        <listitem>
+          <para>You can choose the <emphasis role="bold">accuracy of your
+          search</emphasis>, in terms of spelling words, from <emphasis
+          role="bold">Precise</emphasis> = 1 to <emphasis
+          role="bold">Imprecise</emphasis> = 0.2, through 3 more consecutive
+          steps which are equal to 0.8, 0.6, 0.4.</para>
+        </listitem>
+      </itemizedlist>
+
+      <para></para>
+
+      <figure>
+        <title>Figure 5.3 b</title>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="../images/advanced_search_what.png" />
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>The <emphasis role="bold">WHERE?</emphasis> parameters, which are
+      related to the spatial extent, allow you, as in the default search,
+      either to select your own area of interest or to select a predefined
+      region from the drop-down list. In this section you can also type the
+      geographic coordinates of a specific location that is not available from
+      the above list. (Figure 5.3 c)</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>To select <emphasis role="bold">your own area of
+          interest</emphasis>, drag and drop the frame of your area on the
+          global map using the appropriate tool on the bottom left of the map
+          screen;</para>
+        </listitem>
+
+        <listitem>
+          <para>To use <emphasis role="bold">free coordinates</emphasis>, type
+          the lat-long geographic references in the appropriate fields around
+          the map screen, without any limitation of decimal figures;</para>
+        </listitem>
+
+        <listitem>
+          <para>To use the coordinates of a <emphasis role="bold">predefined
+          region</emphasis>, select the region from the drop-down list.</para>
+
+          <para></para>
+        </listitem>
+      </itemizedlist>
+
+      <para></para>
+
+      <figure>
+        <title>Figure 5.3 c</title>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="../images/advanced_search_where.png" />
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para></para>
+
+      <para>Whatever type of geographic search you decide to perform, in the
+      <emphasis role="bold">Spatial search type</emphasis> field, you can
+      choose from different options: <emphasis role="bold">is</emphasis>,
+      <emphasis role="bold">overlaps</emphasis>, <emphasis
+      role="bold">encloses</emphasis>, <emphasis role="bold">is fully outside
+      of</emphasis> (Figure 5.3 c). If you use this field, be cautious as this
+      limits your output data as follows:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>If you choose <emphasis role="bold">Spatial search
+          type</emphasis> <citetitle>is</citetitle> “Country”, only maps for
+          the selected country will be displayed. In other words, a city map
+          within that country will not show in the output results.</para>
+        </listitem>
+
+        <listitem>
+          <para>If you choose <emphasis role="bold">Spatial search
+          type</emphasis> <citetitle>overlaps</citetitle> “Country”, all maps
+          with the bounding box overlapping that country will be displayed in
+          the results, i.e. the neighbouring countries, the continent of which
+          that country is part of and the global maps.</para>
+        </listitem>
+
+        <listitem>
+          <para>If you choose <emphasis role="bold">Spatial search
+          type</emphasis> <citetitle>encloses</citetitle> “Country” you will
+          get, in the output results, maps of that country first and then all
+          maps within its bounding box.</para>
+        </listitem>
+
+        <listitem>
+          <para>Similarly, if you choose <emphasis role="bold">Spatial search
+          type</emphasis> <citetitle>is fully outside of</citetitle> a
+          selected region, only maps that follow that exact criteria will show
+          in the output results.</para>
+        </listitem>
+      </itemizedlist>
+
+      <para></para>
+
+      <para>The <emphasis role="bold">WHEN?</emphasis> section gives you the
+      possibility to restrict your search in terms of temporal extent,
+      indicating a specific range of time referred to the data creation or
+      publication date (figure 5.3 d).</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>To specify a range of time, click on the date selector button
+          next to <emphasis role="bold">From – To</emphasis> fields. Make use
+          of the symbols<emphasis role="bold"> &gt;</emphasis> and <emphasis
+          role="bold">&gt;&gt;</emphasis> on top of the calendar to select the
+          month and the year first and then click on the exact day; a complete
+          date will be filled in using the following standard order:
+          YY-MM-DD.</para>
+        </listitem>
+      </itemizedlist>
+
+      <itemizedlist>
+        <listitem>
+          <para>To clean the time fields, simply click on the white cross on
+          their right; the box <emphasis role="bold">Any</emphasis> will be
+          automatically selected and the search will be performed without any
+          restriction on the time period.</para>
+        </listitem>
+      </itemizedlist>
+
+      <para></para>
+
+      <figure>
+        <title>Figure 5.3 d</title>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="../images/advanced_search_when.png" />
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>Finally, the advanced search allows you to apply further
+      restrictions on the basis of additional parameters as data source, data
+      categories and data format (see figure 5.3 e).</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>To limit your queries to only one <emphasis
+          role="bold">Catalog</emphasis> out of those made available by the
+          installation through the harvesting process, highlight the catalog
+          of preference or just keep <emphasis role="bold">Any</emphasis>
+          selected to search all sites. (See more info about <emphasis
+          role="bold">data harvesting</emphasis> in Section 4 Chapter 1 of
+          these guidelines).</para>
+        </listitem>
+      </itemizedlist>
+
+      <itemizedlist>
+        <listitem>
+          <para>To search for data organized by <emphasis
+          role="bold">Category</emphasis>, such as Applications, Datasets,
+          etc., simply highlight the category you wish to search in from the
+          related drop-down list, otherwise we suggest to leave this field in
+          <emphasis role="bold">Any</emphasis> Category.</para>
+        </listitem>
+      </itemizedlist>
+
+      <itemizedlist>
+        <listitem>
+          <para>You can search for <emphasis role="bold">Digital</emphasis> or
+          <emphasis role="bold">Hard Copy</emphasis> maps. To search in one or
+          the other, simply check the box next to the one you wish to search.
+          If no box is checked, all content will be searched.</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>At last, you can customize the number of output results per page
+      in the <emphasis role="bold">Hits Per Page</emphasis> field. Simply
+      highlight the number of records to be displayed or leave the field set
+      on the default number (10).</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>Click the <emphasis role="bold">Search</emphasis>
+          button.</para>
+        </listitem>
+      </itemizedlist>
+
+      <para></para>
+
+      <figure>
+        <title>Figure 5.3 e</title>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="../images/advanced_search_morerest.png" />
+          </imageobject>
+        </mediaobject>
+      </figure>
+    </sect1>
+
+    <sect1>
+      <title>Analyzing Search Results</title>
+
+      <para>The output of a search provides you a list of the metadata records
+      that should fit your request. For each record, the result page shows the
+      title, an abstract and the keywords. According to the privileges that
+      have been set for each metadata, a maximum of four sections can be
+      consulted, as shown below. (Figure 5.4)</para>
+
+      <para><figure>
+          <title>Figure 5.4</title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/search_output2.png" scale="" />
+            </imageobject>
+          </mediaobject>
+        </figure></para>
+
+      <para></para>
+
+      <orderedlist>
+        <listitem>
+          <para><emphasis role="bold">Metadata</emphasis>: The metadata
+          section describes the dataset (e.g.: citation, data owner,
+          temporal/spatial/methodological information) and could contain links
+          to other web sites that could provide further information about the
+          dataset.</para>
+
+          <para></para>
+        </listitem>
+
+        <listitem>
+          <para><emphasis role="bold">Download</emphasis>: Depending on the
+          privileges that have been set for each record, when this button is
+          present, the dataset is available and downloadable. The downloadable
+          package is in a compressed format and contains the data and any
+          document or pictures can be included with the primary resources.
+          Note: the actual size of the compressed package can't exceed 50 Mb.
+          The process for retrieving data is simple and quick by just clicking
+          the download button (fig.5.4.2 a) or by using the proper link in the
+          specific metadata section for distribution info (fig.4.4.2
+          b).</para>
+
+          <para></para>
+
+          <para><figure>
+              <title>Figure 5.4.2 a</title>
+
+              <mediaobject>
+                <imageobject>
+                  <imagedata fileref="../images/search_output1.png" />
+                </imageobject>
+              </mediaobject>
+            </figure></para>
+
+          <para><figure>
+              <title>Figure 5.4.2 b</title>
+
+              <mediaobject>
+                <imageobject>
+                  <imagedata fileref="../images/download.png" />
+                </imageobject>
+              </mediaobject>
+            </figure></para>
+        </listitem>
+
+        <listitem>
+          <para><emphasis role="bold">Interactive Map</emphasis>: The map
+          service is also optional. When this button is shown, an interactive
+          map for this layer is available and, by default, it will be
+          displayed on the map screen of the simple search. To better
+          visualize the map through the map viewer, <emphasis
+          role="bold">click</emphasis> on <emphasis role="bold">Open Map
+          Viewer</emphasis> on the bottom left of the map screen (figure
+          5.4.3).</para>
+
+          <para></para>
+
+          <para><figure>
+              <title>Figure 5.4.3</title>
+
+              <mediaobject>
+                <imageobject>
+                  <imagedata fileref="../images/interactive_map.png" />
+                </imageobject>
+              </mediaobject>
+            </figure></para>
+        </listitem>
+
+        <listitem>
+          <para><emphasis role="bold">Graphic Overviews</emphasis>: There are
+          small and large overviews of the map used to properly evaluate
+          usefulness of the data, especially if the interactive map is not
+          available. Simply click on the small image to enlarge it. (Figure
+          5.4.4)</para>
+
+          <para></para>
+
+          <para><figure>
+              <title>Figure 5.4.4</title>
+
+              <mediaobject>
+                <imageobject>
+                  <imagedata fileref="../images/thumbnail.png" />
+                </imageobject>
+              </mediaobject>
+            </figure></para>
+        </listitem>
+      </orderedlist>
+
+      <para></para>
+    </sect1>
+  </chapter>
+
+  <chapter>
+    <title>Viewing and Analyzing the Data</title>
+
+    <para>Once you have completed your search, you view details of a
+    particular record by clicking on the <emphasis
+    role="bold">Metadata</emphasis> button.</para>
+
+    <para>The metadata profiles used by GNos to present and describe
+    geographic data and general documents stored in the catalogue are based on
+    the<emphasis role="bold"> International Standard</emphasis> <emphasis
+    role="bold">ISO 19115</emphasis><emphasis role="bold">:2003</emphasis>,
+    encoded according to the <emphasis role="bold">implementation
+    schema</emphasis> <emphasis role="bold">19139:2007</emphasis>, the
+    <emphasis role="bold">FGDC</emphasis> and the international standard
+    <emphasis role="bold">Dublin Core</emphasis>.</para>
+
+    <para>In this guide the <emphasis role="bold">ISO 19139</emphasis>
+    metadata implementation will be described in details since it is also
+    suggested as profile for the creation of new metadata records.</para>
+
+    <sect1>
+      <title>Meta Data Description</title>
+
+      <para>The metadata ISO 19139 profile used by GeoNetwork opensource to
+      describe the geographic data and services is based on the ISO standard
+      19115:2003 and provides information related to the identification, the
+      maintenance and constraints, the spatial and temporal extent, the
+      spatial representation and reference, the quality and distribution of a
+      geographic dataset.</para>
+
+      <para>The metadata profile is organized in sections and the most
+      important, illustrated in the figure 6.1, are the: <emphasis
+      role="bold">Identification Section, Distribution Section, Reference
+      System Section, Data Quality Section and Metadata Section</emphasis>.
+      These sections are described here in details.</para>
+
+      <para></para>
+
+      <figure>
+        <title>Figure 6.1</title>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="../images/mainSections.png" />
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para></para>
+
+      <sect2>
+        <title>Identification Section</title>
+
+        <para>This section includes information on the citation of the
+        resource (<emphasis role="bold">title, date of creation or
+        publication, edition, presentation form</emphasis>), the <emphasis
+        role="bold">abstract</emphasis>, the <emphasis
+        role="bold">purpose</emphasis> and the present<emphasis role="bold">
+        status</emphasis> of the resource that can be defined among the
+        options: completed, historical archive, obsolete, ongoing, planned,
+        required or under development. (Figure 6.1.1 a).</para>
+
+        <para></para>
+
+        <para><figure>
+            <title>Figure 6.1.1 a</title>
+
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="../images/Ident_Info_1.png" />
+              </imageobject>
+            </mediaobject>
+          </figure></para>
+
+        <para>This section also contains information about the person or
+        organization responsible for the data and who is considered to be a
+        <emphasis role="bold">point of contact</emphasis> for the resource
+        i.e. the dataset owner, originator, distributor, publisher, etc. and
+        it provides information on <emphasis role="bold">data
+        maintenance</emphasis> i.e. annually, monthly, daily, not planned, as
+        needed, etc. (Figure 6.1.1 b)</para>
+
+        <para></para>
+
+        <figure>
+          <title>Figure 6.1.1 b</title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/PoC_Maint.png" />
+            </imageobject>
+          </mediaobject>
+        </figure>
+
+        <para></para>
+
+        <para>Elements for <emphasis role="bold">keywords</emphasis> and for
+        describing restrictions on <emphasis role="bold">data</emphasis>
+        <emphasis role="bold">access</emphasis> and <emphasis
+        role="bold">use</emphasis> are also included in this section in
+        addition to <emphasis role="bold">spatial <emphasis
+        role="bold">representation</emphasis> </emphasis>info like data type
+        (vector, raster, text table, etc.) (figure 6.1.1 c).</para>
+
+        <para></para>
+
+        <figure>
+          <title>Figure 6.1.1 c</title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/Key_Const_Spatype.png" />
+            </imageobject>
+          </mediaobject>
+        </figure>
+
+        <para></para>
+
+        <para>The identification section provides information about the
+        <emphasis role="bold">scale</emphasis>, the <emphasis
+        role="bold">language</emphasis> and <emphasis role="bold">character
+        set</emphasis> used within the resource and the list of <emphasis
+        role="bold">ISO categories</emphasis> through which your map could be
+        classified (figure 6.1.1 d).</para>
+
+        <para></para>
+
+        <figure>
+          <title>Figure 6.1.1 d</title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/scale.png" />
+            </imageobject>
+          </mediaobject>
+        </figure>
+
+        <para></para>
+
+        <para>Finally, the temporal and spatial extent are also defined in
+        this section. The temporal extent is defined through the starting and
+        ending date of data validation (Figure 6.1.1 e);</para>
+
+        <para></para>
+
+        <figure>
+          <title><emphasis role="bold">Figure 6.1.1 e</emphasis></title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/temp_extent.png" />
+            </imageobject>
+          </mediaobject>
+        </figure>
+
+        <para></para>
+
+        <para>The spatial extent of the interested area is defined through
+        geographic coordinates or through the selection of a country or region
+        from a predefined list (Figure 6.1.1 f). Free text <emphasis
+        role="bold">supplemental information</emphasis> can be added to
+        complete the data identification section.</para>
+
+        <para></para>
+
+        <figure>
+          <title><emphasis role="bold">Figure 6.1.1 f</emphasis></title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/geobox.png" />
+            </imageobject>
+          </mediaobject>
+        </figure>
+
+        <para></para>
+      </sect2>
+
+      <sect2>
+        <title>Distribution Section</title>
+
+        <para>This section provides metadata elements for <emphasis
+        role="bold">accessing</emphasis> other useful <emphasis
+        role="bold">on-line resources</emphasis> available <emphasis
+        role="bold">through the web</emphasis>. The distribution elements
+        allow for on-line access using an URL address or similar addressing
+        scheme and provide the protocol for the proper connection <emphasis
+        role="bold">for accessing geographic data</emphasis> or any other
+        types of digital documents <emphasis role="bold">using the
+        download</emphasis> <emphasis role="bold">function</emphasis>.
+        Furthermore, it is possible <emphasis role="bold">to link</emphasis> a
+        metadata with a <emphasis role="bold">predefined map
+        service</emphasis> through the <emphasis role="bold">on line
+        resource</emphasis> and see the map interactively (Figure
+        6.1.2).</para>
+
+        <para></para>
+
+        <figure>
+          <title>Figure 6.1.2</title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/distrInfo.png" />
+            </imageobject>
+          </mediaobject>
+        </figure>
+
+        <para></para>
+      </sect2>
+
+      <sect2>
+        <title>Reference System Section</title>
+
+        <para>The Spatial Reference System section <emphasis
+        role="bold">defines</emphasis> <emphasis
+        role="bold">metadata</emphasis> required <emphasis role="bold">to
+        describe</emphasis> the <emphasis role="bold">spatial reference
+        system</emphasis> of a dataset. It contains one element to identify
+        the name of the reference system used (Figure 6.1.3). Using elements
+        <emphasis role="bold">from the advanced form</emphasis>, this section
+        may be modified to provide more <emphasis
+        role="bold">details</emphasis> on <emphasis role="bold">data
+        projection</emphasis>, <emphasis role="bold">ellipsoid</emphasis> and
+        <emphasis role="bold">datum</emphasis>. Note that if this information
+        is provided, a reference system identifier is not mandatory.</para>
+
+        <para></para>
+
+        <figure>
+          <title>Figure 6.1.3</title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/RefSystem.png" />
+            </imageobject>
+          </mediaobject>
+        </figure>
+
+        <para></para>
+
+        <para></para>
+      </sect2>
+
+      <sect2>
+        <title>Data Quality Section</title>
+
+        <para>The Data Quality section provides a <emphasis
+        role="bold">general assessment</emphasis> of the <emphasis
+        role="bold">quality of the data</emphasis>. It describes the<emphasis
+        role="bold"> different hierarchical levels of data quality</emphasis>,
+        namely a <emphasis role="bold">dataset series</emphasis>, <emphasis
+        role="bold">dataset</emphasis>, <emphasis
+        role="bold">features</emphasis>, <emphasis
+        role="bold">attributes</emphasis>, etc. This section also contains
+        information about <emphasis role="bold">sources of the input
+        data</emphasis>, and a<emphasis role="bold"> general explanation of
+        the production processes</emphasis> (lineage) used for creating the
+        data (Figure 6.1.4).</para>
+
+        <para></para>
+
+        <figure>
+          <title>Figure 6.1.4</title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/dataQuality.png" />
+            </imageobject>
+          </mediaobject>
+        </figure>
+
+        <para></para>
+
+        <para></para>
+      </sect2>
+
+      <sect2>
+        <title>Metadata Information Section</title>
+
+        <para>This section contains information about the metadata itself: the
+        <emphasis role="bold">Global Unique Identifier</emphasis> (GUID)
+        assigned to the record (this is the ‘File identifier’), <emphasis
+        role="bold">language</emphasis> and <emphasis
+        role="bold">character</emphasis> <emphasis role="bold">set</emphasis>
+        used, <emphasis role="bold">date</emphasis> of <emphasis
+        role="bold">la</emphasis><emphasis role="bold">st edit</emphasis>
+        (‘Date stamp’) and the <emphasis role="bold">metadata
+        standard</emphasis> and <emphasis role="bold">version name</emphasis>
+        of the record. It also contains information on the <emphasis
+        role="bold">metadata author</emphasis> responsible for the metadata
+        record; this person can also be a point of contact for the resource
+        described. Information on the Metadata author is mandatory (figure
+        6.1.5).</para>
+
+        <para></para>
+
+        <figure>
+          <title>Figure 6.1.5</title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/metadata.png" />
+            </imageobject>
+          </mediaobject>
+        </figure>
+
+        <para></para>
+      </sect2>
+    </sect1>
+  </chapter>
+
+  <chapter>
+    <title>Adding new Data and Information</title>
+
+    <para>This section guides you through the process of adding new records
+    (new data with information) into the GeoNetwork catalogue using either the
+    online metadata editor or the advanced metadata insert tool, based on XML
+    documents. In both cases you will use the template system, add thumbnails,
+    upload data, link to services and set access privileges to the metadata
+    and data.</para>
+
+    <para>To add or edit data and metadata, you must be <emphasis
+    role="bold">registered</emphasis> as an <emphasis
+    role="bold">Editor</emphasis> into the work group you want to add records
+    to. Contact your administrator if you are not a registered editor for your
+    work group.</para>
+
+    <para>For the metadata creation using the online editor, GNos provides a
+    set of simplified metadata templates based on the cited standards: ISO,
+    FGDC and DC. The templates for vector and raster based on the ISO 19139
+    are the preferred ones since they are devised in a way that hides the
+    complexity of the ISO19115 standard in the default view. At the same time
+    those templates are extensible with new elements to fit specialized needs
+    through the advanced view.</para>
+
+    <para>To produce a good metadata record, always try to gather as much
+    details as possible on the resource that you want to describe taking into
+    account the metadata elements that have been presented in the previous
+    chapter. The next step is to fill out properly the fields provided by the
+    metadata templates, while at the same time avoiding duplication of
+    information throughout the form.</para>
+
+    <para>The most important fields that may not be waived while compiling a
+    standard based metadata record are the following: <emphasis
+    role="bold">Title, Date of Creation o Publication, Abstract, Language used
+    for documenting data, Topic Category, Scale, Maintenance and Update
+    Frequency, Metadata Author, Language Used for Documenting
+    Metadata</emphasis>.</para>
+
+    <para>In addition to the main mandatory fields, we recommend you to fill
+    out these optional but critical fields (if information is available):
+    <emphasis role="bold">Purpose - Keywords - Presentation Form - Status -
+    Spatial Representation Type - Geographic Location - Reference System Info
+    - Temporal Extent - Data Quality Info - Access and Use Constraints - Point
+    of Contact - Distribution Info: Online Resources.</emphasis></para>
+
+    <para><emphasis><emphasis>You should also prepare an image of your data
+    that is required to be displayed in search results as
+    thumbnail.</emphasis></emphasis></para>
+
+    <para><emphasis><emphasis>Next section will guide you through the process
+    of metadata creation using the online editor.</emphasis></emphasis></para>
+
+    <sect1>
+      <title>Creating a New Record using the Metadata Editor on line</title>
+
+      <orderedlist>
+        <listitem>
+          <para>In the home page, click on the <emphasis
+          role="bold">Administration Tab</emphasis>.</para>
+        </listitem>
+
+        <listitem>
+          <para>Select <emphasis role="bold">New Metadata</emphasis> from the
+          List of the admin page.</para>
+        </listitem>
+
+        <listitem>
+          <para>Select the metadata standard <emphasis
+          role="bold">Template</emphasis>, if possible, using the preferred
+          ones (figure 6.1 c). GeoNetwork opensource comes by default with
+          support for three metadata standards, ISO19139, FGDC and Dublin
+          core. For the ISO standard, two templates have been developed; one
+          for vector and one for raster data. Both contain a relevant set of
+          elements to describe the respective types of data. More templates
+          can be developed online.</para>
+        </listitem>
+
+        <listitem>
+          <para>Select the <emphasis role="bold">Group</emphasis> the metadata
+          will belong to. These are the groups authorized to add metadata to
+          by your administrator.</para>
+        </listitem>
+
+        <listitem>
+          <para>Click on <emphasis role="bold">Create</emphasis>.</para>
+        </listitem>
+      </orderedlist>
+
+      <para></para>
+
+      <sect2>
+        <title>The steps in more details</title>
+
+        <orderedlist>
+          <listitem>
+            <para>Enter your username and password and click on the login
+            button (figure 7.1.1 a). The system will identify you and assign
+            the correct privileges to work with.</para>
+
+            <para></para>
+
+            <figure>
+              <title>Figure 7.1.1 a</title>
+
+              <mediaobject>
+                <imageobject>
+                  <imagedata fileref="../images/login.png" />
+                </imageobject>
+              </mediaobject>
+            </figure>
+
+            <para></para>
+          </listitem>
+
+          <listitem>
+            <para>Open the Administration page by clicking the Administration
+            button in the banner and then click on the New metadata link
+            (figure 7.1.1 b).</para>
+
+            <para></para>
+
+            <figure>
+              <title>Figure 7.1.1 b</title>
+
+              <mediaobject>
+                <imageobject>
+                  <imagedata fileref="../images/Admin.png" scale="" />
+                </imageobject>
+              </mediaobject>
+            </figure>
+
+            <para></para>
+          </listitem>
+
+          <listitem>
+            <para>From the metadata creation page, select the metadata
+            standard to use from the dropdown list (see figure 7.1.1 c)</para>
+
+            <para></para>
+
+            <para><figure>
+                <title>Figure 7.1.1 c</title>
+
+                <mediaobject>
+                  <imageobject>
+                    <imagedata fileref="../images/metadataCreation.png" />
+                  </imageobject>
+                </mediaobject>
+              </figure></para>
+
+            <para></para>
+          </listitem>
+
+          <listitem>
+            <para>After selecting the correct template, you should identify
+            which group of users the metadata will belong to (figure 7.1.1 d)
+            and finally click on <emphasis
+            role="bold">Create</emphasis>.</para>
+
+            <para></para>
+
+            <figure>
+              <title>Figure 7.1.1 d</title>
+
+              <mediaobject>
+                <imageobject>
+                  <imagedata fileref="../images/selectGroup.png" />
+                </imageobject>
+              </mediaobject>
+            </figure>
+
+            <para></para>
+
+            <para>A new metadata form based on the selected template will be
+            displayed for you to fill out.</para>
+
+            <para></para>
+          </listitem>
+        </orderedlist>
+      </sect2>
+
+      <sect2>
+        <title>Switching Editing Views from Default to Advanced to XML
+        View</title>
+
+        <para>Once you create a new record, you can choose between <emphasis
+        role="bold">Default</emphasis>, <emphasis
+        role="bold">Advanced</emphasis> or <emphasis role="bold">XML
+        View</emphasis>. To switch view, simply click on the view you want to
+        switch to on the left column of the page. The view in <emphasis
+        role="bold">bold</emphasis> is the view you are currently using (see
+        figure 7.1.2 a).</para>
+
+        <para></para>
+
+        <figure>
+          <title>Figure 7.1.2 a</title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/switchViews.png" />
+            </imageobject>
+          </mediaobject>
+        </figure>
+
+        <para></para>
+
+        <para>In the previous chapter you have analyzed the metadata structure
+        as it is presented in the <emphasis role="bold">Default
+        View</emphasis>. A selection of the main fields from different
+        categories of information is shown in one single view. The minimum set
+        of metadata required to serve the full range of metadata applications
+        (data discovery, determination of data fitness for use, data access,
+        data transfer and use of digital data) is defined here, along with
+        optional metadata elements to allow for a more extensive standard
+        description of geographic data, if required. However, if should be
+        there a need to add more metadata elements, you can switch to the
+        advanced view at any time while editing.</para>
+
+        <para>In the <emphasis role="bold">Advanced View</emphasis>, the ISO
+        profile offers the possibility to visualize and edit the entire
+        metadata structure organized in sections accessible through tabs from
+        the left column. You can use this view to write more advanced metadata
+        descriptions or templates to fit specialized needs. (Figure 7.1.2
+        b)</para>
+
+        <para></para>
+
+        <figure>
+          <title>Figure 7.1.2 b</title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/advancedView.png" />
+            </imageobject>
+          </mediaobject>
+        </figure>
+
+        <para></para>
+
+        <para>The <emphasis role="bold">XML View</emphasis> shows the entire
+        content of the metadata in the original hierarchical structure;
+        different colors allow to distinguish between an element's name and
+        its value. The XML structure is composed of tags and to every tag must
+        correspond a closing tag; the content is entirely contained withing
+        the two, i.e.</para>
+
+        <para>&lt;gmd:language&gt;</para>
+
+        <para>&lt;gco:CharacterString&gt;eng&lt;/gco:CharacterString&gt;</para>
+
+        <para>&lt;/gmd:language&gt;</para>
+
+        <para>(see figure 7.1.2 c).</para>
+
+        <para><figure>
+            <title>Figure 7.1.2 c</title>
+
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="../images/xmlView1.png" />
+              </imageobject>
+            </mediaobject>
+          </figure></para>
+
+        <para>Nevertheless, the use of the XML view requires some knowledge of
+        the XML language.</para>
+
+        <para></para>
+
+        <para>Both the <emphasis role="bold">Default</emphasis> and the
+        <emphasis role="bold">Advanced Views</emphasis> are composed of
+        <emphasis role="bold">mandatory</emphasis>, <emphasis
+        role="bold">conditional</emphasis> and <emphasis
+        role="bold">optional</emphasis> metadata <emphasis
+        role="bold">fields</emphasis>. The meaning of mandatory and optional
+        is fairly intuitive; the mandatory fields are required and may not be
+        waived, like <firstterm>Title</firstterm> and
+        <firstterm>Abstract</firstterm> for instance, whereas the optional
+        fields can be provided but are not fundamental, depending on the
+        metadata author. The conditional fields may be considered mandatory
+        under certain circumstances: essentially a conditional requirement
+        indicates that the presence of a specified data element is dependent
+        on the value or presence of other data elements in the same section.
+        For instance, the <firstterm>Individual name</firstterm> metadata
+        element of the <firstterm>Point of Contact</firstterm>, which is a
+        conditional element of the Identification section, becomes mandatory
+        if another element of the same section, <firstterm>Organization
+        name</firstterm> or <firstterm>Position name</firstterm> is not
+        already defined (figure 6.1.1 b).</para>
+
+        <para>The <emphasis role="bold">mandatory fields</emphasis> as well as
+        those <emphasis role="bold">highly recommended</emphasis> are flagged
+        with <emphasis role="bold">red asterisk</emphasis> <emphasis
+        role="bold">[<emphasis role="bold">*</emphasis>]</emphasis>. The
+        standard definition for each field can be read by passing the mouse on
+        the element name.</para>
+
+        <para>The <emphasis role="bold">Default View</emphasis> is the
+        preferred view as it provides a selection of the available metadata
+        elements, facilitating both the user and the editor in reading and
+        editing a metadata record, and at the same time it ensures that a
+        geospatial data can be properly described, through :</para>
+
+        <itemizedlist>
+          <listitem>
+            <para>the minimum set of metadata required to serve the full range
+            of metadata applications (data discovery, determination of data
+            fitness for use, data access, data transfer, and use of digital
+            data);</para>
+          </listitem>
+        </itemizedlist>
+
+        <itemizedlist>
+          <listitem>
+            <para>optional metadata elements - to allow for a more extensive
+            standard description of geographic data, if required;</para>
+          </listitem>
+        </itemizedlist>
+
+        <itemizedlist>
+          <listitem>
+            <para>a method for extending metadata to fit specialized
+            needs.</para>
+          </listitem>
+        </itemizedlist>
+
+        <para></para>
+      </sect2>
+
+      <sect2>
+        <title>Using basic commands of the editor</title>
+
+        <para>Fields are either <emphasis role="bold">free text
+        fields</emphasis> or <emphasis role="bold">drop down lists</emphasis>.
+        Free text means you can type any text into that field. Drop down lists
+        allow you to select only one option from the list. You can add
+        multiple fields of the same kind by clicking on the <emphasis
+        role="bold">[+]</emphasis> symbol next to the element. Every new field
+        that you will add in the advanced view will then be visible in the
+        default view. You can also delete existing fields by clicking on the
+        <emphasis role="bold">[x]</emphasis> symbol next to the element.
+        Clearly, mandatory fields cannot be deleted. One example of the need
+        to add multiple fields can arise if the content of your dataset has
+        some text written in two different languages (see figure
+        7.1.3).</para>
+
+        <para></para>
+
+        <figure>
+          <title>Figure 7.1.3</title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/multipleElement.png" />
+            </imageobject>
+          </mediaobject>
+        </figure>
+
+        <para></para>
+      </sect2>
+    </sect1>
+
+    <sect1>
+      <title>Entering Metadata for your Map</title>
+
+      <para>As we mentioned in the introduction to this guide, GNos provides
+      tools to describe any type of geographic data (verctor layers, raster,
+      tables, map services, etc.) as well as general document like reports,
+      projects, papers, etc. For the purpose of this Quick Start Guide, an
+      example of required and useful metadata elements to properly describe a
+      thematic map will be provided hereafter. You should gather as much
+      information as possible to identify and understand the map’s resource
+      and characteristics you want to describe. Use the default view to start.
+      If necessary, you can always switch to advanced view or come back later
+      and edit the record with the additonal information collected.</para>
+
+      <sect2>
+        <title>Entering Metadata For Your Map</title>
+
+        <para>Please follow these steps to enter your map's metadata. Note
+        that we will only go through the fields that have been identified as
+        compulsory (i.e. those fields marked with the asterix <emphasis
+        role="bold">[*],</emphasis> mandatory or highly recommended).</para>
+
+        <para><emphasis role="bold">Title </emphasis><emphasis
+        role="bold"><emphasis role="bold">*</emphasis></emphasis>: Under the
+        <emphasis role="bold">Identification Info</emphasis> field, give your
+        map a <emphasis role="bold">name</emphasis>. There will be a default
+        name of your data. Use free text to describe your map here.</para>
+
+        <para><emphasis role="bold">Date <emphasis role="bold"><emphasis
+        role="bold">*</emphasis></emphasis></emphasis>: Indicate the exact
+        <emphasis role="bold">date</emphasis> of <emphasis
+        role="bold">creation</emphasis>, <emphasis
+        role="bold">publication</emphasis> or <emphasis
+        role="bold">revision</emphasis> on your map.</para>
+
+        <para><emphasis role="bold">Presentation Form</emphasis>: Specify the
+        type of presentation, i.e. <emphasis role="bold">digital</emphasis>,
+        <emphasis role="bold">hard copy</emphasis>, <emphasis
+        role="bold">table</emphasis>, etc.</para>
+
+        <para><emphasis role="bold">Abstract <emphasis role="bold"><emphasis
+        role="bold">*</emphasis></emphasis></emphasis>: Enter some description
+        of the map.</para>
+
+        <para><emphasis role="bold">Purpose</emphasis>: Enter a short summary
+        of the purposes for your map to be developed.</para>
+
+        <para><emphasis role="bold">Status</emphasis>: Specify the status of
+        your map within the following options: completed, historical archive,
+        obsolete, ongoing, planned, required, under development.</para>
+
+        <para><emphasis role="bold">Point of Contact</emphasis>: Enter all
+        mandatory information and others you have at hand for the contact of
+        the person(s) associated with this resources of the map. Note that
+        some fields are only conditionally mandatory, such as Organization
+        Name if Individual Name and Position are not entered.</para>
+
+        <para><emphasis role="bold">Maintenance and update
+        frequency</emphasis><emphasis role="bold"><emphasis
+        role="bold">*</emphasis></emphasis>: Specify the frequency with which
+        you expect to make changes and additions to your map after the initial
+        version is completed. If any changes are scheduled you can leave
+        <firstterm>As Needed</firstterm> selected from the drop-down
+        list.</para>
+
+        <para><emphasis role="bold">Descriptive Keywords</emphasis>: Enter
+        keywords that describe your map. Also specify the type of keyword you
+        are entering, i.e. place, theme, etc. Remember that you can add
+        another keyword field if you need to add different types of
+        keywords.</para>
+
+        <para><emphasis role="bold">Access Constraints</emphasis>: Enter an
+        access constraint here, such as a copyright, trademark, etc. to assure
+        the protection of privacy and intellectual property.</para>
+
+        <para><emphasis role="bold">User Constraints</emphasis>: Enter a user
+        constraint here to assure the protection of privacy and intellectual
+        property.</para>
+
+        <para><emphasis role="bold">Other Constraints</emphasis><emphasis
+        role="bold"><emphasis role="bold"> *</emphasis></emphasis>: Enter
+        other constraint here to assure the protection of privacy and
+        intellectual property. Note that this field is conditionally mandatory
+        if Access and Use constraints are not entered.</para>
+
+        <para><emphasis role="bold">Spatial representation type</emphasis>:
+        Select, from the drop-down list the method used to spatially represent
+        your data. The options are: vector, grid, text table, stereo model,
+        video.</para>
+
+        <para><emphasis role="bold">Scale Denominator <emphasis
+        role="bold"><emphasis role="bold">*</emphasis></emphasis></emphasis>:
+        Enter the denominator for an equivalent scale of a hard copy of the
+        map.</para>
+
+        <para><emphasis role="bold">Language<emphasis role="bold"><emphasis
+        role="bold"> *</emphasis></emphasis></emphasis>: Select the language
+        used within your map</para>
+
+        <para><emphasis role="bold">Topic category </emphasis><emphasis
+        role="bold"><emphasis role="bold">*</emphasis></emphasis>: Specify the
+        main ISO category/ies through which your map could be classified (see
+        Annex for the complete list of ISO topic categories).</para>
+
+        <para><emphasis role="bold">Temporal Extent</emphasis><emphasis
+        role="bold"><emphasis role="bold">*</emphasis></emphasis>: Enter the
+        starting and ending date of the validity period.</para>
+
+        <para><emphasis role="bold">Geographic Bounding
+        Box</emphasis><emphasis role="bold"><emphasis role="bold">
+        *</emphasis></emphasis>: Enter the longitude and latitude for the map
+        or select a region from the predefined drop-down list. Make sure you
+        use degrees for the unit of the geographic coordinates as they are the
+        basis for the geographic searches.</para>
+
+        <para><emphasis role="bold">Supplemental Information</emphasis>: Enter
+        any other descriptive information about your map that can help the
+        user to better understand its content.</para>
+
+        <para><emphasis role="bold">Distribution Info</emphasis>: Enter
+        information about the distributor and about options for obtaining your
+        map.</para>
+
+        <para><emphasis role="bold">Online Resource</emphasis>: Enter
+        information about online resources for the map, such as where a user
+        may download it, etc. This information should include a link, the link
+        type (protocol) and a description of the resource.</para>
+
+        <para><emphasis role="bold">Reference system info</emphasis>: Enter
+        information about the spatial reference system of your map. The
+        <emphasis role="bold">default view contains</emphasis> one element to
+        provide the <emphasis role="bold">alphanumeric value</emphasis>
+        identifying the reference system used. GNos uses the <emphasis
+        role="bold">EPSG codes</emphasis> which are numeric codes associated
+        with coordinate system definitions. For instance, EPSG:4326 is
+        Geographic lat-long WGS84, and EPSG:32611 is "UTM zone 11 North,
+        WGS84". Using elements <emphasis role="bold">from the advanced
+        view</emphasis>, you may add <emphasis role="bold">more
+        details</emphasis> on <emphasis role="bold">data
+        projection,</emphasis> <emphasis role="bold">ellipsoid</emphasis> and
+        <emphasis role="bold">datum</emphasis>. Note that if this information
+        is provided, a reference system identifier is not mandatory.</para>
+
+        <para><emphasis role="bold">Data Quality</emphasis>: Specify the
+        hierarchal level of the data (<emphasis role="bold">dataset
+        series</emphasis>, <emphasis role="bold">dataset</emphasis>, <emphasis
+        role="bold">features</emphasis>, <emphasis
+        role="bold">attributes</emphasis>, etc.) and provide a <emphasis
+        role="bold">general explanation on the production processes</emphasis>
+        (lineage) used for creating the data. The statement element is
+        mandatory if the hierarchical level element is equal to
+        <firstterm>dataset</firstterm> or <firstterm>series</firstterm>.
+        Detailed information on <emphasis role="bold">completeness, logical
+        consistency</emphasis> and <emphasis
+        role="bold">positional</emphasis>, <emphasis
+        role="bold">thematic</emphasis> and <emphasis role="bold">temporal
+        accuracy</emphasis> can be directly added <emphasis role="bold">into
+        the advanced form</emphasis>.</para>
+
+        <para><emphasis role="bold">Metadata Author<emphasis
+        role="bold"><emphasis role="bold"> *</emphasis></emphasis></emphasis>:
+        Provide information about the author of the map, including the
+        person’s name, organization, position, role and any other contact
+        information available.</para>
+
+        <para>After completion of this section, you may select the <emphasis
+        role="bold">Type</emphasis> of document that you are going to save in
+        the catalogue. You have three options: <emphasis
+        role="bold">Metadata</emphasis>, <emphasis
+        role="bold">Template</emphasis>, <emphasis
+        role="bold">Sub-template</emphasis>. By default <emphasis
+        role="bold">Metadata</emphasis> is set up.</para>
+
+        <para>When done, you may click <emphasis role="bold">Save</emphasis>
+        or <emphasis role="bold">Save and Close</emphasis> to close the
+        editing session.</para>
+
+        <para></para>
+      </sect2>
+
+      <sect2>
+        <title>- Creating a Thumbnail</title>
+
+        <para>Next, you need to create a graphic overview of your map which
+        will be for a double purpose; as small thumbnail will be displayed in
+        search results and as large thumbnail with much more details, to allow
+        users to properly evaluate the data usefulness. As for the latest, the
+        image that you will use as source should be a significant reproduction
+        of the real dataset, possibly inclusive of the legend.</para>
+
+        <para>To create a thumbnail, go to the editing menu for your map. If
+        you are no longer in editing mode, retrieve the map from one of the
+        search options then click on <emphasis role="bold">Edit</emphasis>.
+        Then follow these simple steps:</para>
+
+        <itemizedlist>
+          <listitem>
+            <para>From the editing menu, click on the <emphasis
+            role="bold">Thumbnails</emphasis> button on the top or bottom of
+            the page. (See figure 7.2.2 a)</para>
+          </listitem>
+        </itemizedlist>
+
+        <para></para>
+
+        <para></para>
+
+        <figure>
+          <title>Figure 7.2.2 a</title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/thumButton.png" />
+            </imageobject>
+          </mediaobject>
+        </figure>
+
+        <para></para>
+
+        <itemizedlist>
+          <listitem>
+            <para>You will be taken to the <emphasis role="bold">Thumbnail
+            Management</emphasis> page. (See figure 7.2.2 b)</para>
+          </listitem>
+        </itemizedlist>
+
+        <itemizedlist>
+          <listitem>
+            <para>To create a small or large thumbnail, click on the <emphasis
+            role="bold">browse</emphasis> button next to either one. It is
+            recommended that you use 180 pixels for small thumbnails and
+            800x600 for large thumbnails. Using the ‘Large thumbnail’ option
+            allows you to create both a small and large thumbnail in one
+            go.</para>
+          </listitem>
+        </itemizedlist>
+
+        <itemizedlist>
+          <listitem>
+            <para>You can use GIF, PNG and JPEG images as input for the
+            thumbnails.</para>
+          </listitem>
+        </itemizedlist>
+
+        <itemizedlist>
+          <listitem>
+            <para>A pop up window will appear allowing you to browse your
+            files on your computer. <emphasis role="bold">Select</emphasis>
+            the file you wish to create a thumbnail with by double-clicking on
+            it.</para>
+          </listitem>
+        </itemizedlist>
+
+        <itemizedlist>
+          <listitem>
+            <para>Click on <emphasis role="bold">Add</emphasis>.</para>
+          </listitem>
+        </itemizedlist>
+
+        <itemizedlist>
+          <listitem>
+            <para>Your thumbnail will be added and displayed on the following
+            page.</para>
+          </listitem>
+        </itemizedlist>
+
+        <itemizedlist>
+          <listitem>
+            <para>You can then click on <emphasis role="bold">Back to
+            Editing</emphasis> and save your record. (See figure 7.2.2
+            c)</para>
+          </listitem>
+        </itemizedlist>
+
+        <para></para>
+
+        <para></para>
+
+        <figure>
+          <title>Figure 7.2.2 b</title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/thumbManag.png" />
+            </imageobject>
+          </mediaobject>
+        </figure>
+
+        <para></para>
+
+        <figure>
+          <title>Figure 7.2.2 c</title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/thumbManag2.png" />
+            </imageobject>
+          </mediaobject>
+        </figure>
+
+        <para></para>
+      </sect2>
+
+      <sect2>
+        <title>Linking data for download</title>
+
+        <para>Finally, you can upload the dataset stored on your local
+        computer and then create a link between data and related description.
+        Files in whatever format can be uploaded: doc, PDF, images, vector
+        layers, etc. For the latter the distribution in a compressed file is
+        recommended. You can include the verctor data, the legend, any
+        documentation that can help the interpretation of the data, related
+        reports, detailed descriptions of the data processing, base data used
+        to create the dataset specified and/or other relevant information.
+        Follow these guidelines for uploading datasets:</para>
+
+        <itemizedlist>
+          <listitem>
+            <para>Make sure the total size of the compressed file is
+            reasonable (less than 50 MB). Should your data be bigger than
+            50MB, consider a different mechanism to serve this data, e.g.
+            through an FTP or HTTP server and than link the resource through
+            an online resource ‘Web address (URL)’.</para>
+          </listitem>
+        </itemizedlist>
+
+        <itemizedlist>
+          <listitem>
+            <para>You can create several smaller files when appropriate and
+            upload them sequentially.</para>
+          </listitem>
+        </itemizedlist>
+
+        <itemizedlist>
+          <listitem>
+            <para>You add the size of the file at the end of the description
+            field.</para>
+          </listitem>
+        </itemizedlist>
+
+        <para></para>
+
+        <para>To Upload a Dataset, follow these steps (see figure
+        7.2.3):</para>
+
+        <orderedlist>
+          <listitem>
+            <para>The <emphasis role="bold">URL</emphasis> field can be left
+            empty when uploading a file. The system will automatically fill
+            this field out;</para>
+          </listitem>
+
+          <listitem>
+            <para>Select the correct <emphasis role="bold">protocol</emphasis>
+            to be used. If you do not see the buttons to browse and upload
+            when File for download is selected, save the metadata and return
+            to the upload section. Both buttons should appear;</para>
+          </listitem>
+
+          <listitem>
+            <para>Provide a short <emphasis role="bold">description</emphasis>
+            of the data;</para>
+          </listitem>
+
+          <listitem>
+            <para>Click the <emphasis role="bold">Browse</emphasis> button and
+            navigate to the folder where the file to be released is stored.
+            Consider if you want to upload multiple files as one unique zip
+            file or as multiple separate downloads. It is a good idea to add
+            additional documentation with the datasets that provide the user
+            with information related to the data described. Remind: the size
+            of a single file to upload can't exceed 50 Mbytes;</para>
+          </listitem>
+
+          <listitem>
+            <para>Click <emphasis role="bold">Upload</emphasis> and then
+            <emphasis role="bold">Save</emphasis>.</para>
+          </listitem>
+        </orderedlist>
+
+        <para></para>
+
+        <figure>
+          <title>Figure 7.2.3</title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/uploadData.png" />
+            </imageobject>
+          </mediaobject>
+        </figure>
+      </sect2>
+
+      <sect2>
+        <title>Assigning Privileges for a Map</title>
+
+        <para>As an important step of entering metadata to your map, you need
+        to assign privileges for each map. This means that you will identify
+        which work groups have which privileges, i.e. view, download, etc. for
+        your particular map.</para>
+
+        <para>For instance, you can fdefine if the information and related
+        services is visible to all (Internet users) or just to internal users
+        only (Intranet). Privileges are assigned on a per group basis.
+        Depending on the user profile (Guest, Registered User, Editor, Admin
+        etc.) access to these functions may differ on a per user basis.</para>
+
+        <para>To assign privileges for your map, follow these steps:</para>
+
+        <itemizedlist>
+          <listitem>
+            <para>Find your map by using the search option. Whether you have
+            multiple or single results from the search, on top of the
+            individual record or next to the record you will always see a row
+            of buttons including a Privileges button. (See figure 7.2.4
+            a)</para>
+          </listitem>
+        </itemizedlist>
+
+        <para></para>
+
+        <figure>
+          <title>Figure 7.2.4 a</title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/privilegesButton.png" />
+            </imageobject>
+          </mediaobject>
+        </figure>
+
+        <para></para>
+
+        <para></para>
+
+        <itemizedlist>
+          <listitem>
+            <para>Click on the Privileges button. This will take you to a new
+            page. You can assign certain privileges to specific groups by
+            selecting or deselecting them from this page. Simply click on the
+            small box next to the privilege to place or remove a checkmark.
+            <emphasis role="bold"><emphasis role="bold">Set
+            Al</emphasis>l</emphasis> and <emphasis role="bold">Clear
+            All</emphasis> buttons allow you to place and remove the
+            checkmarks all at once (see figure 7.2.4 b).</para>
+          </listitem>
+        </itemizedlist>
+
+        <para></para>
+
+        <figure>
+          <title>Figure 7.2.4 b</title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/privilegesSetting2.png" />
+            </imageobject>
+          </mediaobject>
+        </figure>
+
+        <para></para>
+
+        <para></para>
+
+        <para>Below is a brief description for each privilege to help you
+        identify which ones you should assign to which group(s).</para>
+
+        <para><emphasis role="bold">Publish</emphasis>: Users in the specified
+        group/s are able to see the map, i.e. if searching with matching
+        criteria.</para>
+
+        <para><emphasis role="bold">Download</emphasis>: Users in the
+        specified group/s are able to download the map.</para>
+
+        <para><emphasis role="bold">Interactive Map</emphasis>: Users in the
+        specified group/s are able to get an interactive map. <emphasis
+        role="bold">The interactive map</emphasis> has to be created
+        separately using a Web Map Server, which is part of the GeoNetwork
+        opensource application.</para>
+
+        <para><emphasis role="bold">Featured</emphasis>: When selected, the
+        map is placed in the Features Maps of the home page and it appears
+        there randomly.</para>
+
+        <para><emphasis role="bold">Notify</emphasis>: Users in that work
+        group receive notification that the map has been uploaded.</para>
+
+        <para></para>
+      </sect2>
+
+      <sect2>
+        <title>Assigning Categories for a Map</title>
+
+        <para>As a final step to entering metadata for a map, you should
+        assign categories for it. The assigned categories will determine the
+        categories the map will display under on the home page. To assign
+        categories for a map, follow these steps:</para>
+
+        <itemizedlist>
+          <listitem>
+            <para>Find your map by using the search option. Whether you have
+            multiple or single results from your search, on top of the
+            individual record or next to the record, you will always see a row
+            of buttons including a <emphasis role="bold">Categories</emphasis>
+            button. (See figure 7.2.4 a).</para>
+          </listitem>
+        </itemizedlist>
+
+        <itemizedlist>
+          <listitem>
+            <para>Click on the <emphasis role="bold">Categories</emphasis>
+            button. This will take you to a new page. You can assign one or
+            multiple categories selecting or deselecting them from this page.
+            Simply click on the small box next to the category to place or
+            remove a checkmark. (See figure 7.2.5)</para>
+          </listitem>
+        </itemizedlist>
+
+        <para></para>
+
+        <figure>
+          <title>Figure 7.2.5</title>
+
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/categoriesManag.png" />
+            </imageobject>
+          </mediaobject>
+        </figure>
+
+        <para></para>
+      </sect2>
+    </sect1>
+
+    <sect1>
+      <title>Uploading a New Record using the XML Metadata Insert Tool</title>
+
+      <para>A more advanced procedure to upload a new metadata record in the
+      GeoNetwork system is using an XML document. This procedure is
+      particularly useful for users who already have metadata in XML format,
+      for instance created by some GIS application. To this regard, it has to
+      be noted that the metadata must be in one of the standards used by
+      GeoNetwork: ISO19115, FGDC and Dublin Core.</para>
+
+      <para>To start the metadata uploading process through the <emphasis
+      role="bold">XML Metadata Insert</emphasis> tool, you should log in (see
+      Step. 1. in paragraph 7.1.1) and select the appropriate option from the
+      Administration page (Figure 7.3 a).</para>
+
+      <para></para>
+
+      <figure>
+        <title>Figure 7.3 a</title>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="../images/xmlUploadButton.png" />
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para></para>
+
+      <para>The main part of the page <emphasis role="bold">Import XML
+      Formatted Metadata</emphasis> that is displayed (figure 7.3 b) is the
+      <emphasis role="bold">Metadata</emphasis> text area, where the user can
+      paste the XML metadata to import. Below this, there is the <emphasis
+      role="bold">Type</emphasis> choise, which allows you select the type of
+      record that you are going to create (Metadata, Template and
+      Subtemplate). Then you can apply a stylesheet to convert your metadata
+      input from ArcCatalog8 to ISO1915 or from ISO19115 to ISO19139, if
+      required. Otherwise you can just leave <replaceable>none</replaceable>
+      selected. The <emphasis role="bold">Destination schema</emphasis> list
+      provides you with four options to choose the final standard layout for
+      your metadata (ISO19115, ISO19139, FDGDC and Dublin Core). Finally you
+      should select the <emphasis role="bold">Group</emphasis> as main group
+      in charge of the metadata and the <emphasis
+      role="bold">Category</emphasis> that you want to assign to your
+      metadata. By clicking the <emphasis role="bold">Insert</emphasis> button
+      the metadata is imported into the system; please note that all links to
+      external files, for istance to thumbnails or data for download, have to
+      be removed from the metadata input, to avoid any conflict within the
+      data repository.</para>
+
+      <para></para>
+
+      <figure>
+        <title>Figure 7.3 b</title>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="../images/xmlImporTool.png" />
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para><emphasis role="bold"><emphasis></emphasis></emphasis></para>
+
+      <para>If your metadata is already in ISO19115 format, the main actions
+      to be performed are the following (Figure 7.3 c):</para>
+
+      <orderedlist>
+        <listitem>
+          <para>Paste the XML file that contains the metadata information in
+          the <emphasis role="bold">Metadata</emphasis> text area;</para>
+        </listitem>
+
+        <listitem>
+          <para>Select Metadata as <emphasis role="bold">type</emphasis> of
+          record that you are going to create</para>
+        </listitem>
+
+        <listitem>
+          <para>Select the metadata schema ISO19139 that will be the final
+          <emphasis role="bold">destination schema</emphasis>;</para>
+        </listitem>
+
+        <listitem>
+          <para>Select the <emphasis role="bold">validate</emphasis> check box
+          if you want your metadata to be validated according to the related
+          schema.</para>
+        </listitem>
+
+        <listitem>
+          <para>Select the <emphasis role="bold">group</emphasis> in charge of
+          the metadata from the drop down list;</para>
+        </listitem>
+
+        <listitem>
+          <para>Select <emphasis role="bold">Maps and Graphics</emphasis> from
+          the list of categories;</para>
+        </listitem>
+
+        <listitem>
+          <para>Click the <emphasis role="bold">Insert</emphasis> button and
+          the metadata will be imported into the system.</para>
+        </listitem>
+      </orderedlist>
+
+      <para></para>
+
+      <figure>
+        <title>Figure 7.3 c</title>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="../images/xmlImporTool2.png" />
+          </imageobject>
+        </mediaobject>
+      </figure>
+    </sect1>
+  </chapter>
+
+  <chapter>
+    <title>Administration Features</title>
+
+    <para></para>
+
+    <sect1>
+      <title>Creation of new Group Profiles</title>
+
+      <para>The user with administrative privileges can manage the creation of
+      various groups corresponding to the various contributors/users of the
+      database (e.g. in the FAO-GeoNetwork node you may find as many groups as
+      GIS Projects that produce general geographic information in different
+      fields of activities: Fishery, Agriculture, Land and Water, Health
+      etc).</para>
+
+      <para>To create new groups you should first of all authenticate yourself
+      and determine if you have the required administrative privileges. To log
+      in, simply go to the homepage and enter your username and password in
+      the top right corner fields (use admin for both username and password),
+      then click on the login button (figure 8.1a).</para>
+
+      <para></para>
+
+      <figure>
+        <title>Figure 8.1 a</title>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="../images/login.png" />
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para></para>
+
+      <itemizedlist>
+        <listitem>
+          <para>From the Administration page displayed, select the option
+          related to group management (see figure 8.1 b).</para>
+        </listitem>
+      </itemizedlist>
+
+      <para></para>
+
+      <figure>
+        <title>Figure 8.1 b</title>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="../images/AdminManag.png" />
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para></para>
+
+      <para><itemizedlist>
+          <listitem>
+            <para>To include a new group in the system, you have to apply the
+            following logical steps:</para>
+          </listitem>
+        </itemizedlist></para>
+
+      <orderedlist>
+        <listitem>
+          <para>From the Group Management page click on the button <emphasis
+          role="bold">Add a new group</emphasis>;</para>
+
+          <figure>
+            <title>Figure 8.1 c</title>
+
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="../images/GroupManag.png" />
+              </imageobject>
+            </mediaobject>
+          </figure>
+        </listitem>
+
+        <listitem>
+          <para>Provide the information related to the new group that you are
+          going to create;</para>
+
+          <figure>
+            <title>Figure 8.1 d</title>
+
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="../images/addGroup.png" />
+              </imageobject>
+            </mediaobject>
+          </figure>
+        </listitem>
+
+        <listitem>
+          <para>Click on <emphasis role="bold">Save</emphasis></para>
+        </listitem>
+      </orderedlist>
+
+      <para>Depending on the data owner settings, for each record inserted in
+      the system, each group will have different data accessibility privileges
+      in relation to: view of Metadata (<emphasis
+      role="bold"><emphasis>Publish</emphasis></emphasis>), data Download,
+      Interactive Map visualization, view of your map appearing on the home
+      page randomly (Featured), Notification when a file gets
+      downloaded.</para>
+
+      <para>Below is an example of the privileges management table concerning
+      a certain dataset (figure 8.1 e).</para>
+
+      <figure>
+        <title>Figure 8.1 e</title>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="../images/privilegesSetting2.png" />
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para></para>
+    </sect1>
+
+    <sect1>
+      <title>User Profiles</title>
+
+      <para>Each group has a number of users with different profiles
+      (administrator, user administrator, content reviewer, editor, registered
+      user) varying in number with respect to the group
+      composition/organization (e.g., one administrator, two user
+      administrators, two content reviewers, five editors and one registered
+      user profile).</para>
+
+      <para>User profiles are illustrated in details in the list below:</para>
+
+      <orderedlist>
+        <listitem>
+          <para>Administrator Profile</para>
+
+          <para>The Administrator has special privileges that allow for
+          several management activities:</para>
+
+          <itemizedlist>
+            <listitem>
+              <para>Full rights for creating new groups and new users</para>
+            </listitem>
+          </itemizedlist>
+
+          <itemizedlist>
+            <listitem>
+              <para>Rights to change users/groups’ profiles</para>
+            </listitem>
+          </itemizedlist>
+
+          <itemizedlist>
+            <listitem>
+              <para>Full rights for creating/editing/deleting new/old
+              metadata</para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+
+        <listitem>
+          <para>User Administrator Profile</para>
+
+          <para>The User Administrator is the administrator of his/her own
+          group with the following privileges:</para>
+
+          <itemizedlist>
+            <listitem>
+              <para>Full rights on creating new users within the own
+              group</para>
+            </listitem>
+
+            <listitem>
+              <para>Rights to change users profiles within the own
+              group</para>
+            </listitem>
+
+            <listitem>
+              <para>Full rights on creating/editing/ deleting new/old data
+              within the own group</para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+
+        <listitem>
+          <para>Content Reviewer Profile</para>
+
+          <para>The content reviewer is the only person allowed to give final
+          clearance on the metadata publication on the Intranet and/or on the
+          Internet:</para>
+
+          <itemizedlist>
+            <listitem>
+              <para>Rights on reviewing metadata content within the own group
+              and authorizing its publication</para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+
+        <listitem>
+          <para>Editor Profile</para>
+
+          <para>The User Administrator is the administrator of his/her own
+          group with the following privileges:</para>
+
+          <itemizedlist>
+            <listitem>
+              <para>Full rights on creating/editing/ deleting new/old data
+              within the own group</para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+
+        <listitem>
+          <para>Registered User Profile</para>
+
+          <para>The User Administrator is the administrator of his/her own
+          group with the following privileges:</para>
+
+          <itemizedlist>
+            <listitem>
+              <para>Right to download protected data</para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+      </orderedlist>
+    </sect1>
+
+    <sect1>
+      <title>Creation of new User Profiles</title>
+
+      <para>To include a new user in the GeoNetwork system you will have to
+      apply the following logical steps:</para>
+
+      <orderedlist>
+        <listitem>
+          <para>Select <emphasis role="bold">User Management</emphasis> from
+          the Administration link in the toolbar (figure 8.3 a);</para>
+
+          <para></para>
+
+          <figure>
+            <title>Figure 8.3 a</title>
+
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="../images/UserManag.png" />
+              </imageobject>
+            </mediaobject>
+          </figure>
+        </listitem>
+
+        <listitem>
+          <para>Click the button <emphasis role="bold">Add a new
+          user</emphasis> to the Database (figure 8.3 b);</para>
+
+          <figure>
+            <title>Figure 8.3 b</title>
+
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="../images/AddUser.png" />
+              </imageobject>
+            </mediaobject>
+          </figure>
+        </listitem>
+
+        <listitem>
+          <para>Provide the <emphasis role="bold">information</emphasis>
+          required for the new user (figure 8.3 c);</para>
+
+          <figure>
+            <title>Figure 8.3 c</title>
+
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="../images/InsertUserInfo.png" />
+              </imageobject>
+            </mediaobject>
+          </figure>
+        </listitem>
+
+        <listitem>
+          <para>Assign the correct <emphasis
+          role="bold">profile</emphasis>;</para>
+        </listitem>
+
+        <listitem>
+          <para>Assign the user to a <emphasis
+          role="bold">group</emphasis>;</para>
+        </listitem>
+
+        <listitem>
+          <para>Click on <emphasis role="bold">Save</emphasis> (figure 8.3
+          c).</para>
+        </listitem>
+      </orderedlist>
+    </sect1>
+  </chapter>
+
+  <appendix>
+    <title>Glossary of Metadata Fields Description</title>
+
+    <para>This glossary provides you with brief descriptions of the minimum
+    set of metadata fields required to properly describe a geoghaphical data
+    as well as some optional elements highly suggested for a more extensive
+    standard description. Note: the <emphasis role="bold">mandatory <emphasis>
+    fields are in bold in the following list.</emphasis></emphasis></para>
+
+    <informaltable>
+      <tgroup cols="2">
+        <thead>
+          <row>
+            <entry align="left" morerows="">Metadata Elements</entry>
+
+            <entry align="left">Description</entry>
+          </row>
+        </thead>
+
+        <tbody>
+          <row>
+            <entry><emphasis role="bold"><emphasis>Access
+            constraints</emphasis></emphasis></entry>
+
+            <entry>access constraints applied to assure the protection of
+            privacy or intellectual property, and any special restrictions or
+            limitations on obtaining the resource</entry>
+          </row>
+
+          <row>
+            <entry><emphasis role="bold">Abstract </emphasis></entry>
+
+            <entry>brief narrative summary of the content of the
+            resource(s)</entry>
+          </row>
+
+          <row>
+            <entry>Administrative area</entry>
+
+            <entry>state, province of the location</entry>
+          </row>
+        </tbody>
+      </tgroup>
+
+      <tgroup cols="2">
+        <tbody>
+          <row>
+            <entry><emphasis role="bold"><emphasis
+            role="bold"><emphasis>Temporal extent - </emphasis> Begin
+            date</emphasis></emphasis></entry>
+
+            <entry>Formatted as 2007-09-12T15:00:00
+            (YYYY-MM-DDTHH:mm:ss)</entry>
+          </row>
+
+          <row>
+            <entry><emphasis role="bold">Character set</emphasis></entry>
+
+            <entry>full name of the character coding standard used for the
+            metadata set</entry>
+          </row>
+
+          <row>
+            <entry>Grid spatial representation - <emphasis role="bold">Cell
+            geometry</emphasis></entry>
+
+            <entry>identification of grid data as point or cell</entry>
+          </row>
+
+          <row>
+            <entry>City</entry>
+
+            <entry>city of the location</entry>
+          </row>
+
+          <row>
+            <entry><emphasis role="bold"><emphasis>Reference System Info -
+            </emphasis>Code</emphasis></entry>
+
+            <entry>alphanumeric value identifying an instance in the
+            namespace</entry>
+          </row>
+
+          <row>
+            <entry><emphasis role="bold">Country</emphasis></entry>
+
+            <entry>country of the physical address</entry>
+          </row>
+
+          <row>
+            <entry>Data quality info</entry>
+
+            <entry>provides overall assessment of quality of a
+            resource(s)</entry>
+          </row>
+        </tbody>
+      </tgroup>
+
+      <tgroup cols="2">
+        <tbody>
+          <row>
+            <entry><emphasis role="bold">Date </emphasis></entry>
+
+            <entry>reference date and event used to describe it
+            (YYYY-MM-DD)</entry>
+          </row>
+
+          <row>
+            <entry>Date stamp</entry>
+
+            <entry>date that the metadata was created
+            (YYYY-MM-DDThh:mm:ss)</entry>
+          </row>
+
+          <row>
+            <entry><emphasis role="bold">Date type</emphasis></entry>
+
+            <entry>event used for reference date</entry>
+          </row>
+
+          <row>
+            <entry><emphasis role="bold"><emphasis>Delivery
+            point</emphasis></emphasis></entry>
+
+            <entry>address line for the location (as described in ISO 11180,
+            annex A)</entry>
+          </row>
+
+          <row>
+            <entry><emphasis role="bold"><emphasis>Equivalent scale</emphasis>
+            - Denominator </emphasis></entry>
+
+            <entry>the number below the line in a vulgar fraction</entry>
+          </row>
+        </tbody>
+      </tgroup>
+
+      <tgroup cols="2">
+        <tbody>
+          <row>
+            <entry align="left"><emphasis role="bold"><emphasis>Data Quality
+            </emphasis> - <emphasis
+            role="bold">Description</emphasis></emphasis></entry>
+
+            <entry>description of the event, including related parameters or
+            tolerances</entry>
+          </row>
+
+          <row>
+            <entry align="left"><emphasis role="bold"><emphasis>OnLine
+            resource</emphasis> -
+            <emphasis>Description</emphasis></emphasis></entry>
+
+            <entry>detailed text description of what the online resource
+            is/does</entry>
+          </row>
+
+          <row>
+            <entry>Descriptive keywords</entry>
+
+            <entry>provides category keywords, their type, and reference
+            source</entry>
+          </row>
+
+          <row>
+            <entry>Grid spatial representation - <emphasis
+            role="bold">Dimension name</emphasis></entry>
+
+            <entry>name of the axis i.e. row, column</entry>
+          </row>
+
+          <row>
+            <entry>Grid spatial representation - <emphasis
+            role="bold">Dimension size</emphasis></entry>
+
+            <entry>number of elements along the axis</entry>
+          </row>
+
+          <row>
+            <entry>Dimension size Resolution</entry>
+
+            <entry>number of elements along the axis</entry>
+          </row>
+
+          <row>
+            <entry>Distribution info</entry>
+
+            <entry>provides information about the distributor of and options
+            for obtaining the resource(s)</entry>
+          </row>
+        </tbody>
+      </tgroup>
+
+      <tgroup cols="2">
+        <tbody>
+          <row>
+            <entry><emphasis role="bold"><emphasis>Geographic bounding
+            box</emphasis> - East bound longitude</emphasis></entry>
+
+            <entry>eastern-most coordinate of the limit of the dataset extent,
+            expressed in longitude in decimal degrees (positive east)</entry>
+          </row>
+
+          <row>
+            <entry align="left"><emphasis
+            role="bold"><emphasis>Edition</emphasis></emphasis></entry>
+
+            <entry>version of the cited resource</entry>
+          </row>
+
+          <row>
+            <entry><emphasis role="bold"><emphasis>Electronic mail
+            address</emphasis></emphasis></entry>
+
+            <entry>address of the electronic mailbox of the responsible
+            organization or individual</entry>
+          </row>
+
+          <row>
+            <entry><emphasis role="bold"><emphasis>Temporal extent</emphasis>
+            - End date </emphasis></entry>
+
+            <entry>Formatted as 2007-09-12T15:00:00
+            (YYYY-MM-DDTHH:mm:ss)</entry>
+          </row>
+
+          <row>
+            <entry><emphasis role="bold">Equivalent scale</emphasis></entry>
+
+            <entry>level of detail expressed as the scale of a comparable
+            hardcopy map or chart</entry>
+          </row>
+
+          <row>
+            <entry>Extent</entry>
+
+            <entry>information about spatial, vertical, and temporal
+            extent</entry>
+          </row>
+
+          <row>
+            <entry><emphasis
+            role="bold"><emphasis>Facsimile</emphasis></emphasis></entry>
+
+            <entry>telephone number of a facsimile machine for the responsible
+            organization or individual</entry>
+          </row>
+
+          <row>
+            <entry>File identifier</entry>
+
+            <entry>unique identifier for this metadata file</entry>
+          </row>
+
+          <row>
+            <entry>Vector spatial representation - <emphasis
+            role="bold">Geometric object type</emphasis></entry>
+
+            <entry>name of point and vector spatial objects used to locate
+            zero-, one-and two-dimensional spatial locations in the
+            dataset</entry>
+          </row>
+
+          <row>
+            <entry>Vector spatial representation - Geometric object
+            count</entry>
+
+            <entry>total number of the point or vector object type occurring
+            in the dataset</entry>
+          </row>
+
+          <row>
+            <entry>Geographic bounding box</entry>
+
+            <entry>geographic position of the dataset</entry>
+          </row>
+
+          <row>
+            <entry>Grid spatial representation</entry>
+
+            <entry>information about grid spatial objects in the
+            dataset</entry>
+          </row>
+
+          <row>
+            <entry>Grid spatial representation - <emphasis
+            role="bold">Resolution value</emphasis></entry>
+
+            <entry>degree of detail in the grid dataset</entry>
+          </row>
+
+          <row>
+            <entry>Grid spatial representation <emphasis role="bold">-
+            Transformation parameter availability </emphasis></entry>
+
+            <entry>indication of whether or not parameters for transformation
+            exists</entry>
+          </row>
+
+          <row>
+            <entry>Data Quality <emphasis role="bold"> - Hierarchy
+            level</emphasis></entry>
+
+            <entry>hierarchical level of the data specified by the
+            scope</entry>
+          </row>
+
+          <row>
+            <entry>Identification info</entry>
+
+            <entry>basic information about the resource(s) to which the
+            metadata applies</entry>
+          </row>
+
+          <row>
+            <entry><emphasis role="bold"><emphasis>Point of Contact
+            </emphasis>- Individual name</emphasis></entry>
+
+            <entry>name of the responsible person- surname, given name, title
+            separated by a delimiter</entry>
+          </row>
+
+          <row>
+            <entry><emphasis
+            role="bold"><emphasis>Keyword</emphasis></emphasis></entry>
+
+            <entry>commonly used word(s) or formalised word(s) or phrase(s)
+            used to describe the subject</entry>
+          </row>
+
+          <row>
+            <entry><emphasis role="bold"><emphasis>Data </emphasis>
+            <emphasis>Language</emphasis></emphasis></entry>
+
+            <entry>language used for documenting data</entry>
+          </row>
+
+          <row>
+            <entry><emphasis role="bold">Metadata -
+            Language</emphasis></entry>
+
+            <entry>language used for documenting metadata</entry>
+          </row>
+
+          <row>
+            <entry><emphasis role="bold"><emphasis>Data Quality</emphasis> -
+            Lineage</emphasis></entry>
+
+            <entry>non-quantitative quality information about the lineage of
+            the data specified by the scope. Mandatory if report not
+            provided</entry>
+          </row>
+
+          <row>
+            <entry><emphasis role="bold"><emphasis>OnLine resource</emphasis>
+            - Linkage</emphasis></entry>
+
+            <entry>location (address) for on-line access using a Uniform
+            Resource Locator address or similar addressing scheme such as
+            http://www.statkart.no/isotc211</entry>
+          </row>
+
+          <row>
+            <entry><emphasis role="bold">Maintenance and update
+            frequency</emphasis></entry>
+
+            <entry>frequency with which changes and additions are made to the
+            resource after the initial resource is completed</entry>
+          </row>
+
+          <row>
+            <entry>Metadata author</entry>
+
+            <entry>party responsible for the metadata information</entry>
+          </row>
+
+          <row>
+            <entry><emphasis role="bold">Metadata standard
+            name</emphasis></entry>
+
+            <entry>name of the metadata standard (including profile name)
+            used</entry>
+          </row>
+
+          <row>
+            <entry><emphasis role="bold">Metadata standard
+            version</emphasis></entry>
+
+            <entry>version (profile) of the metadata standard used</entry>
+          </row>
+        </tbody>
+      </tgroup>
+
+      <tgroup cols="2">
+        <tbody>
+          <row>
+            <entry><emphasis role="bold"><emphasis>OnLine resource -
+            Name</emphasis></emphasis></entry>
+
+            <entry>name of the online resource</entry>
+          </row>
+
+          <row>
+            <entry>Geographic bounding box - <emphasis role="bold">North bound
+            latitude</emphasis></entry>
+
+            <entry>northern-most, coordinate of the limit of the dataset
+            extent expressed in latitude in decimal degrees (positive
+            north)</entry>
+          </row>
+
+          <row>
+            <entry>Grid spatial representation - <emphasis role="bold">Number
+            of dimensions</emphasis></entry>
+
+            <entry>number of independent spatial-temporal axes</entry>
+          </row>
+
+          <row>
+            <entry>Distribution Info - OnLine resource</entry>
+
+            <entry>information about online sources from which the resource
+            can be obtained</entry>
+          </row>
+        </tbody>
+      </tgroup>
+
+      <tgroup cols="2">
+        <tbody>
+          <row>
+            <entry><emphasis role="bold"><emphasis>Point of Contact -
+            </emphasis>Organisation name</emphasis></entry>
+
+            <entry>name of the responsible organization</entry>
+          </row>
+        </tbody>
+      </tgroup>
+
+      <tgroup cols="2">
+        <tbody>
+          <row>
+            <entry>Other constraints</entry>
+
+            <entry>other restrictions and legal prerequisites for accessing
+            and using the resource</entry>
+          </row>
+
+          <row>
+            <entry>Point of contact</entry>
+
+            <entry>identification of, and means of communication with,
+            person(s) and organizations(s) associated with the
+            resource(s)</entry>
+          </row>
+        </tbody>
+      </tgroup>
+
+      <tgroup cols="2">
+        <tbody>
+          <row>
+            <entry><emphasis role="bold"><emphasis>Point of contact -
+            </emphasis>Position name</emphasis></entry>
+
+            <entry>role or position of the responsible person</entry>
+          </row>
+        </tbody>
+      </tgroup>
+
+      <tgroup cols="2">
+        <tbody>
+          <row>
+            <entry>Postal code</entry>
+
+            <entry>ZIP or other postal code</entry>
+          </row>
+
+          <row>
+            <entry>Presentation form</entry>
+
+            <entry>mode in which the resource is represented</entry>
+          </row>
+
+          <row>
+            <entry>OnLine resource - Protocol</entry>
+
+            <entry>connection protocol to be used</entry>
+          </row>
+        </tbody>
+      </tgroup>
+
+      <tgroup cols="2">
+        <tbody>
+          <row>
+            <entry>Purpose</entry>
+
+            <entry>summary of the intentions with which the resource(s) was
+            developed</entry>
+          </row>
+
+          <row>
+            <entry>Reference system info</entry>
+
+            <entry>description of the spatial and temporal reference systems
+            used in the datasetData</entry>
+          </row>
+
+          <row>
+            <entry>Data Quality -<emphasis role="bold">
+            Report</emphasis></entry>
+
+            <entry>quantitative quality information for the data specified by
+            the scope. Mandatory if lineage not provided</entry>
+          </row>
+
+          <row>
+            <entry>Grid spatial representation - <emphasis
+            role="bold">Resolution value</emphasis></entry>
+
+            <entry>degree of detail in the grid dataset</entry>
+          </row>
+        </tbody>
+      </tgroup>
+
+      <tgroup cols="2">
+        <tbody>
+          <row>
+            <entry>Point of contact - <emphasis
+            role="bold">Role</emphasis></entry>
+
+            <entry>function performed by the responsible party</entry>
+          </row>
+
+          <row>
+            <entry>Geographic bounding box <emphasis role="bold">- South bound
+            latitude</emphasis></entry>
+
+            <entry>southern-most coordinate of the limit of the dataset
+            extent, expressed in latitude in decimal degrees (positive
+            north)</entry>
+          </row>
+
+          <row>
+            <entry>Spatial representation info</entry>
+
+            <entry>digital representation of spatial information in the
+            dataset</entry>
+          </row>
+
+          <row>
+            <entry>Spatial representation type</entry>
+
+            <entry>method used to spatially represent geographic
+            information</entry>
+          </row>
+        </tbody>
+      </tgroup>
+
+      <tgroup cols="2">
+        <tbody>
+          <row>
+            <entry><emphasis role="bold"><emphasis>Data Quality</emphasis> -
+            Statement</emphasis></entry>
+
+            <entry>general explanation of the data producer's knowledge about
+            the lineage of a dataset</entry>
+          </row>
+        </tbody>
+      </tgroup>
+
+      <tgroup cols="2">
+        <tbody>
+          <row>
+            <entry>Status</entry>
+
+            <entry>status of the resource(s)</entry>
+          </row>
+
+          <row>
+            <entry>Supplemental Information</entry>
+
+            <entry>any other descriptive information about the dataset</entry>
+          </row>
+
+          <row>
+            <entry>Temporal Extent</entry>
+
+            <entry>time period covered by the content of the dataset</entry>
+          </row>
+        </tbody>
+      </tgroup>
+
+      <tgroup cols="2">
+        <tbody>
+          <row>
+            <entry>Titel</entry>
+
+            <entry>name by which the cited resource is known</entry>
+          </row>
+
+          <row>
+            <entry><emphasis role="bold">Topic category
+            code</emphasis></entry>
+
+            <entry>high-level geographic data thematic classification to
+            assist in the grouping and search of available geographic data
+            sets. Can be used to group keywords as well. Listed examples are
+            not exhaustive. NOTE It is understood there are overlaps between
+            general categories and the user is encouraged to select the one
+            most appropriate.</entry>
+          </row>
+
+          <row>
+            <entry>Grid spatial representation - <emphasis
+            role="bold">Transformation parameter
+            availability</emphasis></entry>
+
+            <entry>indication of whether or not parameters for transformation
+            exists</entry>
+          </row>
+
+          <row>
+            <entry>Vector spatial representation - Topology level</entry>
+
+            <entry>code which identifies the degree of complexity of the
+            spatial relationships</entry>
+          </row>
+
+          <row>
+            <entry>Type</entry>
+
+            <entry>subject matter used to group similar keywords</entry>
+          </row>
+        </tbody>
+      </tgroup>
+
+      <tgroup cols="2">
+        <tbody>
+          <row>
+            <entry>URL</entry>
+
+            <entry>URL</entry>
+          </row>
+        </tbody>
+      </tgroup>
+
+      <tgroup cols="2">
+        <tbody>
+          <row>
+            <entry>Use constraints</entry>
+
+            <entry>constraints applied to assure the protection of privacy or
+            intellectual property, and any special restrictions or limitations
+            or warnings on using the resource</entry>
+          </row>
+        </tbody>
+      </tgroup>
+
+      <tgroup cols="2">
+        <tbody>
+          <row>
+            <entry>Vector spatial representation</entry>
+
+            <entry>information about the vector spatial objects in the
+            dataset</entry>
+          </row>
+
+          <row>
+            <entry>Voice</entry>
+
+            <entry>telephone number by which individuals can speak to the
+            responsible organization or individual</entry>
+          </row>
+        </tbody>
+      </tgroup>
+
+      <tgroup cols="2">
+        <tbody>
+          <row>
+            <entry>Geographic bounding box -<emphasis role="bold"> West bound
+            longitude</emphasis></entry>
+
+            <entry>western-most coordinate of the limit of the dataset extent,
+            expressed in longitude in decimal degrees (positive east)</entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </informaltable>
+  </appendix>
+
+  <appendix>
+    <title>ISO Topic Categories</title>
+
+    <para>Isotopic Categories and Keywords</para>
+
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="../images/ISOCategory.png" />
+      </imageobject>
+    </mediaobject>
+
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="../images/ISOCategory2.png" />
+      </imageobject>
+    </mediaobject>
+
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="../images/ISOCategory3.png" />
+      </imageobject>
+    </mediaobject>
+  </appendix>
+
+  <appendix>
+    <title>Free and Open Source Software for Geospatial Information
+    Systems</title>
+
+    <para>A range of geospatial related software packages can be implemented
+    in addition to GeoNetwork opensource to deploy a full Spatial Data
+    Infrastructure. Within the range of Free and Open Source Software (FOSS)
+    solutions, these may include Web Map Server software, GIS desktop
+    applications and Web Map Viewers.</para>
+
+    <para>Below you will find some examples of open source software available
+    for each categories. Note that the FOSS in following list are downloadable
+    from the Sourceforge web site http://www.sourceforge.net.</para>
+
+    <para><emphasis role="bold">Web Map Server software</emphasis>:</para>
+
+    <para>MapServer (All)*</para>
+
+    <para>MapGuide (Windows &amp; Linux)</para>
+
+    <para><emphasis role="bold">GIS Desktop software</emphasis>:</para>
+
+    <para>GRASS (All)*</para>
+
+    <para>gvSIG (Windows &amp; Linux)</para>
+
+    <para>uDIG (All)*</para>
+
+    <para>OSSIM (Windows &amp; OSX)</para>
+
+    <para>Quantum GIS (All)*</para>
+
+    <para><emphasis role="bold">Web Map Viewers</emphasis>:</para>
+
+    <para>OpenLayers (All)*</para>
+
+    <para>MapBender (All)*</para>
+
+    <para>MapBuilder (All)*</para>
+
+    <para>Ka-Map 1.0b1 (All)*</para>
+
+    <para></para>
+
+    <para>* All = Windows, Linux and Mac OS X</para>
+  </appendix>
+</book>
