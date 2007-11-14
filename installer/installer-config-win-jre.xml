@@ -6,7 +6,7 @@
 	
 	<info>
 		<appname>geonetwork</appname>
-		<appversion>2.1.0 RC2</appversion>
+		<appversion>@version@ @subVersion@</appversion>
 		<authors>
 			<author name="FAO GeoNetwork Team" email="GeoNetwork@fao.org"/>
 			<author name="VAM WFP"             email="vamsie@wfp.org"/>
@@ -15,7 +15,7 @@
 			<author name="OSGeo"                email="geonetwork@osgeo.org"/>			 
 		</authors>
 		<url>http://geonetwork-opensource.org/</url>
-		<javaversion>1.5.0</javaversion>
+		<javaversion>@javaVersion@</javaversion>
 	</info>
 	
 	<!-- =================================================================================== -->
@@ -38,7 +38,7 @@
 	
 	<resources>
 		<res id="HTMLLicencePanel.licence" src="../docs/license.html"/>
-		<res id="HTMLInfoPanel.info"       src="../docs/readme.html"/>
+		<res id="HTMLInfoPanel.info"       src="../.props/readme.html"/>
 		<res id="Installer.image"          src="installer.png"/>
 		<res id="shortcutSpec.xml"         src="windows-shortcuts.xml"/>
 		<res id="Unix_shortcutSpec.xml"    src="unix-shortcuts.xml"/>
@@ -71,12 +71,15 @@ This is the Spatial Data Catalog web application.
 			</description>
 			
 			<fileset dir="../docs" targetdir="$INSTALL_PATH/docs">
+				<exclude name="docbook/**"/>
 				<exclude name="javadoc-gn/**"/>
 				<exclude name="javadoc-im/**"/>
 				<exclude name="lyx/**"/>
 				<exclude name="developers/**"/>
 			</fileset>						
 			
+			<singlefile src="../.props/readme.html" target="$INSTALL_PATH/docs/readme.html" override="true"/>
+
 			<fileset dir="../bin"   targetdir="$INSTALL_PATH/bin">
 				<exclude name="jre/**"/>
 				<exclude name="jetty.xml_with_geoserver"/>

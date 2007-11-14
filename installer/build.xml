@@ -11,7 +11,7 @@
 <project name="geonetwork" default="installer" basedir=".">
 
 	<!-- =================================================================================== -->
-	
+
 	<condition property="osys" value="macosx">
 		<os family="mac"/>
 	</condition>
@@ -22,6 +22,15 @@
 			<os family="unix"/>
 	</condition>
 		
+	<!-- =================================================================================== -->
+
+	<property name="version" value="2.2.0" />
+	<property name="subVersion" value="beta1" />
+	<property name="javaVersion" value="1.5.0" /> <!-- Minimum version required -->
+	<property name="jre_url" value="http://java.sun.com/javase/downloads/index_jdk5.jsp" />
+	<property name="OS" value="Compiled on ${os.name} (${osys})" />
+	<property name="propsdir" value="../.props" />
+
 	<!-- =================================================================================== -->
 	
 	<taskdef name="izpack" 
@@ -35,21 +44,69 @@
 	<!-- =================================================================================== -->
 
 	<target name="setProperties">
+	
+		<delete	dir ="${propsdir}" />
+		<mkdir	dir ="${propsdir}" />
+
 		<!-- Update the properties file -->
 		<propertyfile
 		    file="../web/geonetwork/WEB-INF/server.prop"
-		    comment="GeoNetwork opensource properties. 
-			           These are also used by both gast and geonetwork at runtime">
+		    comment="GeoNetwork opensource properties. These are also used by both gast and geonetwork at runtime">
 			<!-- These are used by both gast and geonetwork at runtime -->
 			<!-- Do not remove !! -->
-			<entry  key="version" value="2.1.0"/>
-			<entry  key="subVersion" value="RC2"/>
-			<entry  key="release" value="2.1.0"/>
+			<entry  key="version" value="${version}"/>
+			<entry  key="subVersion" value="${subVersion}"/>
+			<entry  key="release" value="${version}"/>
+			
+			<entry  key="javaVersion" value="${javaVersion}"/>
+			<entry	key="jre_url" value="${jre_url}"/>
 
 			<entry  key="date" type="date" value="now" pattern="yymmddHHmm"/>
-			<entry  key="OS" value="Compiled on ${os.name} (${osys})"/>
+			<entry  key="day" type="date" value="now" pattern="dd-M-yyyy"/>
+			<entry  key="OS" value="${OS}"/>
 		  
 		</propertyfile>
+		
+		<!-- make sure all files that need have version numbers etc updated -->
+
+	    <!-- Windows installer build -->
+	    <copy 	file="../installer/installer-config.xml" 
+	    		tofile="${propsdir}/installer-config.xml" 
+	    		filtering="on" overwrite="yes"/>
+
+		<replace 	file="${propsdir}/installer-config.xml" 
+					propertyFile="../web/geonetwork/WEB-INF/server.prop">
+			<replacefilter token="@version@" property="version"/>
+			<replacefilter token="@subVersion@" property="subVersion"/>
+			<replacefilter token="@javaVersion@" property="javaVersion"/>
+		</replace>
+
+	    <!-- Windows with JRE installer build -->
+	    <copy 	file="../installer/installer-config-win-jre.xml" 
+	    		tofile="${propsdir}/installer-config-win-jre.xml" 
+	    		filtering="on" overwrite="yes"/>
+
+		<replace 	file="${propsdir}/installer-config-win-jre.xml"
+					propertyFile="../web/geonetwork/WEB-INF/server.prop">
+			<replacefilter token="@version@" property="version"/>
+			<replacefilter token="@subVersion@" property="subVersion"/>
+			<replacefilter token="@javaVersion@" property="javaVersion"/>
+		</replace>
+
+		<!-- help file -->
+	    <copy 	file="../docs/readme.html" 
+	    		tofile="${propsdir}/readme.html" 
+	    		filtering="on" overwrite="yes"/>
+
+		<replace 	file="${propsdir}/readme.html"
+					propertyFile="../web/geonetwork/WEB-INF/server.prop">
+			<replacefilter token="@version@" property="version"/>
+			<replacefilter token="@subVersion@" property="subVersion"/>
+			<replacefilter token="@day@" property="day"/>
+			<replacefilter token="@javaVersion@" property="javaVersion"/>
+			<replacefilter token="@jre_url@" property="jre_url"/>
+		</replace>
+
 	</target>
 
 	<!-- =================================================================================== -->
@@ -62,8 +119,10 @@
 		
 		<delete dir="../geonetwork-${release}"/>
 		<mkdir  dir="../geonetwork-${release}"/>
-		
-		<izpack	input="${basedir}/installer-config.xml" 
+
+		<echo message="Building platform independent installer on ${osys} using IzPack"/>
+
+		<izpack	input="${propsdir}/installer-config.xml" 
 					output="../geonetwork-${release}/geonetwork-install-${release}.jar" 
 					installerType="standard" 
 					basedir="${basedir}"/>
@@ -98,12 +157,12 @@
 
 		<property file="../web/geonetwork/WEB-INF/server.prop"/>
 
-		<echo message="Building Windows installer with JRE on ${osys} using launch4j"/>
-
-		<izpack	input="${basedir}/installer-config-win-jre.xml" 
+		<izpack	input="${propsdir}/installer-config-win-jre.xml" 
 					output="../geonetwork-${release}/geonetwork-install-win-jre-${release}.jar" 
 					installerType="standard" 
 					basedir="${basedir}"/> 
+
+		<echo message="Building Windows installer with JRE on ${osys} using launch4j"/>
 
 		<launch4j configFile="${basedir}/launch4j/launch4jConfig-jre.xml"
 			jar="../geonetwork-${release}/geonetwork-install-win-jre-${release}.jar"

@@ -9,7 +9,7 @@
 </style></head>
 
 <body>
-	<div align="right"><span class="style1">GeoNetwork opensource V2.1.0 Date: 2007-08-30</span></div>
+	<div align="right"><span class="style1">GeoNetwork opensource V@version@ @subVersion@ Date: @day@</span></div>
 	<h1>GeoNetwork opensource - Getting started</h1>
 
 	<h2>Running the application</h2>
@@ -43,7 +43,7 @@
 	</ul>
  	</p>
  	<p>
-		<cite>Note: A Java Runtime Environment (JRE) <em>1.5.0 Standard Edition</em> (download from <a href="http://java.sun.com/javase/downloads/index_jdk5.jsp">http://java.sun.com)</a> is required to run GeoNetwork opensource. See the Troubleshooting sections if normal 
+		<cite>Note: A Java Runtime Environment (JRE) <em>@javaVersion@ Standard Edition</em> (download from <a href="@jre_url@">http://java.sun.com)</a> is required to run GeoNetwork opensource. See the Troubleshooting sections if normal 
 		installation or start up fails.</cite>
 	</p>
 	
@@ -68,7 +68,7 @@
 
 	<h3>Web server</h3>
 	<p>
-		The application comes with an embedded <a href="http://jetty.mortbay.org/">Jetty</a> web server. You can use <a href="http://jakarta.apache.org/tomcat">Jakarta Tomcat</a> instead if required. You have to setup new contexts in Tomcat that point to the applications in the <code>web</code> folder of the GeoNetwork installation.
+		The application comes with an embedded <a href="http://jetty.mortbay.org/">Jetty</a> web server. You can use <a href="http://jakarta.apache.org/tomcat">Jakarta Tomcat</a> version 5.5 instead if required. You have to setup new contexts in Tomcat that point to the applications in the <code>web</code> folder of the GeoNetwork installation.
 	</p>
 	
 	<h3>Database system </h3>
