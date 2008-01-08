@@ -261,7 +261,7 @@
 <temporalElement>
 <EX_TemporalExtent>
 <extent>
-<gml:TimePeriod>
+<gml:TimePeriod gml:id="">
 <gml:beginPosition/>
 <gml:endPosition/>
 </gml:TimePeriod>
