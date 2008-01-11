@@ -71,11 +71,15 @@ This is the Spatial Data Catalog web application.
 			</description>
 			
 			<fileset dir="../docs" targetdir="$INSTALL_PATH/docs">
+				<exclude name="build.xml"/>
 				<exclude name="docbook/**"/>
 				<exclude name="javadoc-gn/**"/>
 				<exclude name="javadoc-im/**"/>
 				<exclude name="lyx/**"/>
 				<exclude name="developers/**"/>
+				<exclude name="manuals/html/**"/>
+				<exclude name="manuals/images/**"/>
+				<exclude name="manuals/xml/**"/>
 			</fileset>						
 
 			<singlefile src="../.props/readme.html" target="$INSTALL_PATH/docs/readme.html" override="true"/>
