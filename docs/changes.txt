@@ -7,6 +7,12 @@
 --- New
 --------------------------------------------------------------------------------
 
+- Added User Quick Start Guide in pdf form
+
+- Added direct link to open WMS services in Google Earth
+
+- Added schematron validation
+
 - Added OAI-PMH server protocol
 
 - Added OAI-PMH harvesting type
@@ -27,6 +33,8 @@
 --------------------------------------------------------------------------------
 --- Changes
 --------------------------------------------------------------------------------
+
+- Added new link following Atom / RSS type of structures
 
 - Removed Oracle JDBC driver due to license incompatibility. 
   Driver can be downloaded from Oracle Technology Network by the user.
