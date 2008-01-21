@@ -1,6 +1,6 @@
 ================================================================================
 ===
-=== GeoNetwork 2.2.0 alpha1: List of changes
+=== GeoNetwork 2.2.0 RC0: List of changes
 ===
 ================================================================================
 --------------------------------------------------------------------------------
@@ -82,6 +82,16 @@
 - Fixed some bugs to geonetwork 2.0 harvesting type
 
 - Fixed thumbnails display on metadata harvested from a geonetwork 2.0 node
+
+-----------------------------------------------------------
+--- Known issues
+-----------------------------------------------------------
+
+- Some of the metadata display links do not open as embedded view while they should
+
+- The Map Viewer "Add note" function is not fully functional yet
+
+- The overview map does not automatically refresh when adding a new layer from the metadata
 
 ================================================================================
 ===
