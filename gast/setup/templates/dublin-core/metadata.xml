@@ -14,6 +14,6 @@
   <dc:source />
   <dc:language />
   <dc:relation />
-  <dc:coverage />
+  <dc:coverage>North 90, South -90, East 180, West -180. Global</dc:coverage>
   <dc:rights />
 </simpledc>
