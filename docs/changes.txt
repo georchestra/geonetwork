@@ -1,5 +1,50 @@
 ================================================================================
 ===
+=== GeoNetwork 2.2.0 RC1: List of changes
+===
+================================================================================
+--------------------------------------------------------------------------------
+--- Changes
+--------------------------------------------------------------------------------
+
+- Removed version number from image for easy maintenance
+
+- Updated and new logos for different harvesting types
+
+- Added a default bounding box to the DC template
+
+- Added description that suggests how to fill in the bounding box in DC
+
+- Slightly improved the content type filter, removing the list box with unusual 
+  content types (protocols)
+  
+- Aligned default values with interface for content types
+
+- Added extra debug logging, Added JavaDoc comments to Search constants, 
+	Rearranged constants, Added comments to Lucene index files
+	
+- Build file for docbook documentation
+
+InterMap:
+
+- Add the Extension element only when needed to Web Map Context
+
+- Temporary paths are now relative to the intermap servlet directory or 
+  absolute to the file system
+
+--------------------------------------------------------------------------------
+--- Bugs fixed
+--------------------------------------------------------------------------------
+
+- Fix to allow search for all metadata in the catalog, including those that do 
+  not contain a bounding box. Now the BBOX and region code are not included in 
+  the query when the Region field is set to '- Any -'  
+  
+- Skip alphanumeric validation to ensure all type of servlet names are allowed
+  e.g. mysub/geonetwork or just /
+
+================================================================================
+===
 === GeoNetwork 2.2.0 RC0: List of changes
 ===
 ================================================================================
