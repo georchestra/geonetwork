@@ -89,7 +89,7 @@
 		os="windows"
 		name="Documentation" 
 		description="GeoNetwork opensource documentation"
-		target="$INSTALL_PATH\docs\manuals\"
+		target="$INSTALL_PATH\docs\html\index.html"
 		commandLine="" 
 		workingDirectory="$INSTALL_PATH" 
 		iconFile="$INSTALL_PATH/bin/ico/docs.ico" 

@@ -71,16 +71,14 @@ This is the Spatial Data Catalog web application.
 			</description>
 			
 			<fileset dir="../docs" targetdir="$INSTALL_PATH/docs">
+				<exclude name="build/**"/>
 				<exclude name="build.xml"/>
+				<exclude name="build-docbook.xml"/>
 				<exclude name="docbook/**"/>
-				<exclude name="javadoc-gn/**"/>
-				<exclude name="javadoc-im/**"/>
-				<exclude name="lyx/**"/>
-				<exclude name="developers/**"/>
-				<exclude name="manuals/html/**"/>
-				<exclude name="manuals/images/**"/>
-				<exclude name="manuals/xml/**"/>
+				<exclude name="html/**"/>
 			</fileset>						
+
+			<fileset dir="../docs/html" targetdir="$INSTALL_PATH/docs"/>
 
 			<singlefile src="../.props/readme.html" target="$INSTALL_PATH/docs/readme.html" override="true"/>
 			
@@ -180,16 +178,7 @@ This is a separate test application that can be used to test the CSW 2.0.1 servi
 				<exclude name="**/.build"/>
 			</fileset>
 		</pack>
-		
-		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-		
-		<pack name="Java source code JavaDoc" required="no" preselected="no">
-			<description>The GeoNetwork JavaDoc source code documentation.</description>
-			
-			<fileset dir="../docs/javadoc-gn" targetdir="$INSTALL_PATH/docs/javadoc-gn"/>
-			<fileset dir="../docs/javadoc-im" targetdir="$INSTALL_PATH/docs/javadoc-im"/>
-		</pack>
-				
+						
 	</packs>
 
 	<!-- =================================================================================== -->

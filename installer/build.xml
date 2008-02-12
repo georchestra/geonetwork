@@ -25,7 +25,7 @@
 	<!-- =================================================================================== -->
 
 	<property name="version" value="2.2.0" />
-	<property name="subVersion" value="RC1" />
+	<property name="subVersion" value="RC2" />
 	<property name="javaVersion" value="1.5.0" /> <!-- Minimum version required -->
 	<property name="jre_url" value="http://java.sun.com/javase/downloads/index_jdk5.jsp" />
 	<property name="OS" value="Compiled on ${os.name} (${osys})" />
@@ -116,6 +116,8 @@
 		<property file="../web/geonetwork/WEB-INF/server.prop"/>
 		
 		<ant dir=".." target="all"  />
+
+		<ant dir="../docs" target="all"  />
 		
 		<delete dir="../geonetwork-${release}"/>
 		<mkdir  dir="../geonetwork-${release}"/>
@@ -123,7 +125,7 @@
 		<echo message="Building platform independent installer on ${osys} using IzPack"/>
 
 		<izpack	input="${propsdir}/installer-config.xml" 
-					output="../geonetwork-${release}/geonetwork-install-${release}.jar" 
+			output="../geonetwork-${release}/geonetwork-install-${release}-${subVersion}.jar" 
 					installerType="standard" 
 					basedir="${basedir}"/>
 
@@ -141,8 +143,8 @@
 		<echo message="Building Windows installer on ${osys} using launch4j"/>
 
 		<launch4j configFile="${basedir}/launch4j/launch4jConfig.xml"
-			jar="../geonetwork-${release}/geonetwork-install-${release}.jar"
-			outfile="../geonetwork-${release}/geonetwork-install-${release}.exe"
+			jar="../geonetwork-${release}/geonetwork-install-${release}-${subVersion}.jar"
+			outfile="../geonetwork-${release}/geonetwork-install-${release}-${subVersion}.exe"
 			txtFileVersion="${version}-${subVersion}-${date}" 
 			txtProductVersion="${version}-${subVersion}" 
 			fileVersion="${version}.0" 
@@ -158,15 +160,15 @@
 		<property file="../web/geonetwork/WEB-INF/server.prop"/>
 
 		<izpack	input="${propsdir}/installer-config-win-jre.xml" 
-					output="../geonetwork-${release}/geonetwork-install-win-jre-${release}.jar" 
+			output="../geonetwork-${release}/geonetwork-install-win-jre-${release}-${subVersion}.jar" 
 					installerType="standard" 
 					basedir="${basedir}"/> 
 
 		<echo message="Building Windows installer with JRE on ${osys} using launch4j"/>
 
 		<launch4j configFile="${basedir}/launch4j/launch4jConfig-jre.xml"
-			jar="../geonetwork-${release}/geonetwork-install-win-jre-${release}.jar"
-			outfile="../geonetwork-${release}/geonetwork-install-with-jre-${release}.exe"
+			jar="../geonetwork-${release}/geonetwork-install-win-jre-${release}-${subVersion}.jar"
+			outfile="../geonetwork-${release}/geonetwork-install-with-jre-${release}-${subVersion}.exe"
 			txtFileVersion="${version}-${subVersion}-${date}" 
 			txtProductVersion="${version}-${subVersion}" 
 			fileVersion="${version}.0" 
