@@ -18,7 +18,7 @@
                 </title>
                 <mediaobject>
                     <imageobject>
-                        <imagedata fileref="images/admin/web-batchimport-where.png" />
+                        <imagedata fileref="images/admin/web-batchimport-where.png" width="11cm" align="center" />
                     </imageobject>
                 </mediaobject>
             </figure>
@@ -60,7 +60,7 @@
                 </title>
                 <mediaobject>
                     <imageobject>
-                        <imagedata fileref="images/admin/web-batchimport-options.png" />
+                        <imagedata fileref="images/admin/web-batchimport-options.png" width="10cm" align="center" />
                     </imageobject>
                 </mediaobject>
             </figure>

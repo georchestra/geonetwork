@@ -49,30 +49,12 @@
         </para>
       </xi:fallback>
     </xi:include>
-    <!-- Metadata in Spatial Data Management -->
-    <xi:include href="qsg_metadata_theoretical_concepts.xml" xpointer="metadata"
-      xmlns:xi="http://www.w3.org/2001/XInclude">
-      <xi:fallback>
-        <para>
-          <emphasis>FIXME: MISSING XINCLUDE CONTENT - Metadata Theoretical concepts</emphasis>
-        </para>
-      </xi:fallback>
-    </xi:include>
-    <!-- Installing the software -->
-    <xi:include href="qsg_installing.xml" xpointer="installing"
-      xmlns:xi="http://www.w3.org/2001/XInclude">
-      <xi:fallback>
-        <para>
-          <emphasis>FIXME: MISSING XINCLUDE CONTENT - Installing the software</emphasis>
-        </para>
-      </xi:fallback>
-    </xi:include>
     <!-- Search for maps and data -->
-    <xi:include href="qsg_search_for_maps_and_data.xml" xpointer="search_for_maps_and_data"
+    <xi:include href="qsg_getting_started.xml" xpointer="getting_started"
       xmlns:xi="http://www.w3.org/2001/XInclude">
       <xi:fallback>
         <para>
-          <emphasis>FIXME: MISSING XINCLUDE CONTENT - Search for maps and data</emphasis>
+          <emphasis>FIXME: MISSING XINCLUDE CONTENT - Getting started</emphasis>
         </para>
       </xi:fallback>
     </xi:include>
@@ -91,6 +73,24 @@
       <xi:fallback>
         <para>
           <emphasis>FIXME: MISSING XINCLUDE CONTENT - Adding new Data and Information</emphasis>
+        </para>
+      </xi:fallback>
+    </xi:include>
+    <!-- Metadata in Spatial Data Management -->
+    <xi:include href="qsg_metadata_theoretical_concepts.xml" xpointer="metadata"
+      xmlns:xi="http://www.w3.org/2001/XInclude">
+      <xi:fallback>
+        <para>
+          <emphasis>FIXME: MISSING XINCLUDE CONTENT - Metadata Theoretical concepts</emphasis>
+        </para>
+      </xi:fallback>
+    </xi:include>
+    <!-- Installing the software -->
+    <xi:include href="qsg_installing.xml" xpointer="installing"
+      xmlns:xi="http://www.w3.org/2001/XInclude">
+      <xi:fallback>
+        <para>
+          <emphasis>FIXME: MISSING XINCLUDE CONTENT - Installing the software</emphasis>
         </para>
       </xi:fallback>
     </xi:include>

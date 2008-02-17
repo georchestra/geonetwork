@@ -24,7 +24,7 @@
 
                 <mediaobject>
                     <imageobject>
-                        <imagedata fileref="images/login.png" width="6cm"/>
+                        <imagedata fileref="images/login.png" width="6cm" align="center"/>
                     </imageobject>
                 </mediaobject>
             </figure>
@@ -41,7 +41,7 @@
 
                 <mediaobject>
                     <imageobject>
-                        <imagedata fileref="images/administration_panel.png" width="11cm"/>
+                        <imagedata fileref="images/administration_panel.png" width="12cm" align="center"/>
                     </imageobject>
                 </mediaobject>
             </figure>
@@ -65,7 +65,7 @@
 
                         <mediaobject>
                             <imageobject>
-                                <imagedata fileref="images/GroupManag.png" width="11cm"/>
+                                <imagedata fileref="images/GroupManag.png" width="9cm" align="center"/>
                             </imageobject>
                         </mediaobject>
                     </figure>
@@ -80,7 +80,7 @@
 
                         <mediaobject>
                             <imageobject>
-                                <imagedata fileref="images/addGroup.png" width="11cm"/>
+                                <imagedata fileref="images/addGroup.png" width="11cm" align="center"/>
                             </imageobject>
                         </mediaobject>
                     </figure>
@@ -107,7 +107,7 @@
 
                 <mediaobject>
                     <imageobject>
-                        <imagedata fileref="images/privilegesSetting1.png" width="11cm"/>
+                        <imagedata fileref="images/privilegesSetting1.png" width="12cm" align="center"/>
                     </imageobject>
                 </mediaobject>
             </figure>
@@ -231,7 +231,7 @@
 
                         <mediaobject>
                             <imageobject>
-                                <imagedata fileref="images/AddUser.png" width="11cm"/>
+                                <imagedata fileref="images/AddUser.png" width="11cm" align="center"/>
                             </imageobject>
                         </mediaobject>
                     </figure>
@@ -246,7 +246,7 @@
 
                         <mediaobject>
                             <imageobject>
-                                <imagedata fileref="images/InsertUserInfo.png" width="11cm"/>
+                                <imagedata fileref="images/InsertUserInfo.png" width="11cm" align="center"/>
                             </imageobject>
                         </mediaobject>
                     </figure>

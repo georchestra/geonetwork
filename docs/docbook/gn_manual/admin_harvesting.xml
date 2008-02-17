@@ -217,7 +217,7 @@
                 <title>How to reach the harvesting main page</title>
                 <mediaobject>
                     <imageobject>
-                        <imagedata fileref="images/admin/web-harvesting-where.png" width="11cm"/>
+                        <imagedata fileref="images/admin/web-harvesting-where.png" width="11cm" align="center"/>
                     </imageobject>
                 </mediaobject>
             </figure>
@@ -247,7 +247,7 @@
                 <title>The harvesting main page</title>
                 <mediaobject>
                     <imageobject>
-                        <imagedata fileref="images/admin/web-harvesting-list.png" width="10cm"/>
+                        <imagedata fileref="images/admin/web-harvesting-list.png" width="11cm" align="center"/>
                     </imageobject>
                 </mediaobject>
             </figure>
@@ -619,7 +619,7 @@
                 <title>Adding a new harvesting node</title>
                 <mediaobject>
                     <imageobject>
-                        <imagedata fileref="images/admin/web-harvesting-add.png" width="11cm"/>
+                        <imagedata fileref="images/admin/web-harvesting-add.png" width="12cm" align="center"/>
                     </imageobject>
                 </mediaobject>
             </figure>
@@ -637,7 +637,7 @@
                     <title>Adding a GeoNetwork node</title>
                     <mediaobject>
                         <imageobject>
-                            <imagedata fileref="images/admin/web-harvesting-gn.png" width="11cm"/>
+                            <imagedata fileref="images/admin/web-harvesting-gn.png" width="11cm" align="center"/>
                         </imageobject>
                     </mediaobject>
                 </figure>
@@ -712,7 +712,7 @@
                     <title>Adding a web DAV node</title>
                     <mediaobject>
                         <imageobject>
-                            <imagedata fileref="images/admin/web-harvesting-webdav.png" width="11cm"/>
+                            <imagedata fileref="images/admin/web-harvesting-webdav.png" width="11cm" align="center"/>
                         </imageobject>
                     </mediaobject>
                 </figure>
@@ -756,7 +756,7 @@
                     <title>Adding a Catalogue Services for the Web harvesting node</title>
                     <mediaobject>
                         <imageobject>
-                            <imagedata fileref="images/admin/web-harvesting-csw.png" width="11cm"/>
+                            <imagedata fileref="images/admin/web-harvesting-csw.png" width="11cm" align="center"/>
                         </imageobject>
                     </mediaobject>
                 </figure>
@@ -790,7 +790,7 @@
                     <title> Adding an OAI-PMH harvesting node </title>
                     <mediaobject>
                         <imageobject>
-                            <imagedata fileref="images/admin/web-harvesting-oaipmh.png" width="11cm"/>
+                            <imagedata fileref="images/admin/web-harvesting-oaipmh.png" width="11cm" align="center"/>
                         </imageobject>
                     </mediaobject>
                 </figure>

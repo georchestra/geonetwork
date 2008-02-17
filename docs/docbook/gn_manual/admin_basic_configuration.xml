@@ -17,7 +17,7 @@
                 <title>How to reach the configuration page</title>
                 <mediaobject>
                     <imageobject>
-                        <imagedata fileref="images/admin/web-config-where.png" />
+                        <imagedata fileref="images/admin/web-config-where.png" width="12cm" align="center"/>
                     </imageobject>
                 </mediaobject>
             </figure>
@@ -69,7 +69,7 @@
                 <title>The configuration options</title>
                 <mediaobject>
                     <imageobject>
-                        <imagedata fileref="images/admin/web-config-options.png" />
+                        <imagedata fileref="images/admin/web-config-options.png" width="11cm" align="center" />
                     </imageobject>
                 </mediaobject>
             </figure>
@@ -112,7 +112,7 @@
                 <title>How to reach the localization page</title>
                 <mediaobject>
                     <imageobject>
-                        <imagedata fileref="images/admin/web-localization-where.png" />
+                        <imagedata fileref="images/admin/web-localization-where.png" width="11cm" align="center" />
                     </imageobject>
                 </mediaobject>
             </figure>
@@ -148,7 +148,7 @@
                 <title>The localization form</title>
                 <mediaobject>
                     <imageobject>
-                        <imagedata fileref="images/admin/web-localization.png" />
+                        <imagedata fileref="images/admin/web-localization.png" width="11cm" align="center" />
                     </imageobject>
                 </mediaobject>
             </figure>

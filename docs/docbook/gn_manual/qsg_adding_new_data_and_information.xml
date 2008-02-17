@@ -104,7 +104,7 @@
 
                             <mediaobject>
                                 <imageobject>
-                                    <imagedata fileref="images/login.png" width="6cm"/>
+                                    <imagedata fileref="images/login.png" width="6cm" align="center"/>
                                 </imageobject>
                                 <textobject>
                                     <phrase>Login</phrase>
@@ -123,7 +123,7 @@
 
                             <mediaobject>
                                 <imageobject>
-                                    <imagedata fileref="images/Admin.png" width="11cm"/>
+                                    <imagedata fileref="images/Admin.png" width="12cm" align="center"/>
                                 </imageobject>
                             </mediaobject>
                         </figure>
@@ -140,7 +140,7 @@
                                 <mediaobject>
                                     <imageobject>
                                         <imagedata fileref="images/metadataCreation.png"
-                                            width="11cm"/>
+                                            width="10cm" align="center"/>
                                     </imageobject>
                                 </mediaobject>
                             </figure>
@@ -158,7 +158,7 @@
 
                             <mediaobject>
                                 <imageobject>
-                                    <imagedata fileref="images/selectGroup.png" width="11cm"/>
+                                    <imagedata fileref="images/selectGroup.png" width="10cm" align="center"/>
                                 </imageobject>
                             </mediaobject>
                         </figure>
@@ -185,7 +185,7 @@
 
                     <mediaobject>
                         <imageobject>
-                            <imagedata fileref="images/switchViews.png" width="11cm"/>
+                            <imagedata fileref="images/switchViews.png" width="11cm" align="center"/>
                         </imageobject>
                     </mediaobject>
                 </figure>
@@ -212,7 +212,7 @@
 
                     <mediaobject>
                         <imageobject>
-                            <imagedata fileref="images/advancedView.png"/>
+                            <imagedata fileref="images/advancedView.png" align="center"/>
                         </imageobject>
                     </mediaobject>
                 </figure>
@@ -223,24 +223,18 @@
                     composed of tags and to every tag must correspond a closing tag (<xref
                         linkend="xml_view"/>). The content is entirely contained withing the two,
                     i.e.</para>
+<programlisting><![CDATA[<gmd:language>
+    <gco:CharacterString>eng</gco:CharacterString>
+</gmd:language>]]></programlisting>
+                <figure id="xml_view">
+                    <title>XML view</title>
 
-                <programlisting>
-                    <![CDATA[<gmd:language>
-                        <gco:CharacterString>eng</gco:CharacterString>
-                    </gmd:language>]]>
-                </programlisting>
-
-                <para>
-                    <figure id="xml_view">
-                        <title>XML view</title>
-
-                        <mediaobject>
-                            <imageobject>
-                                <imagedata fileref="images/xmlView1.png" width="11cm"/>
-                            </imageobject>
-                        </mediaobject>
-                    </figure>
-                </para>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="images/xmlView1.png" width="11cm" align="center"/>
+                        </imageobject>
+                    </mediaobject>
+                </figure>
 
                 <para>Nevertheless, the use of the XML view requires some knowledge of the XML
                     language.</para>
@@ -266,7 +260,7 @@
 
                     <mediaobject>
                         <imageobject>
-                            <imagedata fileref="images/PoC_Maint.png" width="11cm"/>
+                            <imagedata fileref="images/PoC_Maint.png" width="11cm" align="center"/>
                         </imageobject>
                     </mediaobject>
                 </figure>
@@ -319,7 +313,7 @@
 
                     <mediaobject>
                         <imageobject>
-                            <imagedata fileref="images/multipleElement.png" width="11cm"/>
+                            <imagedata fileref="images/multipleElement.png" width="11cm" align="center"/>
                         </imageobject>
                     </mediaobject>
                 </figure>
@@ -576,7 +570,7 @@
 
                     <mediaobject>
                         <imageobject>
-                            <imagedata fileref="images/thumButton.png" width="11cm"/>
+                            <imagedata fileref="images/thumButton.png" width="11cm" align="center"/>
                         </imageobject>
                     </mediaobject>
                 </figure>
@@ -620,7 +614,7 @@
 
                     <mediaobject>
                         <imageobject>
-                            <imagedata fileref="images/thumbManag.png" width="10cm"/>
+                            <imagedata fileref="images/thumbManag.png" width="10cm" align="center"/>
                         </imageobject>
                     </mediaobject>
                 </figure>
@@ -630,7 +624,7 @@
 
                     <mediaobject>
                         <imageobject>
-                            <imagedata fileref="images/thumbManag2.png" width="10cm"/>
+                            <imagedata fileref="images/thumbManag2.png" width="10cm" align="center"/>
                         </imageobject>
                     </mediaobject>
                 </figure>
@@ -708,7 +702,7 @@
 
                     <mediaobject>
                         <imageobject>
-                            <imagedata fileref="images/uploadData.png" width="11cm"/>
+                            <imagedata fileref="images/uploadData.png" width="11cm" align="center"/>
                         </imageobject>
                     </mediaobject>
                 </figure>
@@ -743,7 +737,7 @@
 
                     <mediaobject>
                         <imageobject>
-                            <imagedata fileref="images/privilegesButton.png" width="11cm"/>
+                            <imagedata fileref="images/privilegesButton.png" width="11cm" align="center"/>
                         </imageobject>
                     </mediaobject>
                 </figure>
@@ -766,7 +760,7 @@
 
                     <mediaobject>
                         <imageobject>
-                            <imagedata fileref="images/privilegesSetting1.png" width="11cm"/>
+                            <imagedata fileref="images/privilegesSetting1.png" width="11cm" align="center"/>
                         </imageobject>
                     </mediaobject>
                 </figure>
@@ -821,7 +815,7 @@
 
                     <mediaobject>
                         <imageobject>
-                            <imagedata fileref="images/categoriesManag.png" width="6cm"/>
+                            <imagedata fileref="images/categoriesManag.png" width="6cm" align="center"/>
                         </imageobject>
                     </mediaobject>
                 </figure>
@@ -848,7 +842,7 @@
 
                 <mediaobject>
                     <imageobject>
-                        <imagedata fileref="images/administration_panel.png" width="11cm"/>
+                        <imagedata fileref="images/administration_panel.png" width="11cm" align="center"/>
                     </imageobject>
                 </mediaobject>
             </figure>
@@ -877,7 +871,7 @@
 
                 <mediaobject>
                     <imageobject>
-                        <imagedata fileref="images/xmlImporTool.png" width="11cm"/>
+                        <imagedata fileref="images/xmlImporTool.png" width="11cm" align="center"/>
                     </imageobject>
                 </mediaobject>
             </figure>
@@ -933,7 +927,7 @@
 
                 <mediaobject>
                     <imageobject>
-                        <imagedata fileref="images/xmlImporTool2.png" width="11cm"/>
+                        <imagedata fileref="images/xmlImporTool2.png" width="11cm" align="center"/>
                     </imageobject>
                 </mediaobject>
             </figure>

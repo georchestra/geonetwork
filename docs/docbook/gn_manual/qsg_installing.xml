@@ -52,7 +52,7 @@
 
                 <mediaobject>
                     <imageobject>
-                        <imagedata fileref="images/Home_page_s.png" width="11cm"/>
+                        <imagedata fileref="images/Home_page_s.png" width="11cm" align="center"/>
                     </imageobject>
                 </mediaobject>
             </figure>
@@ -174,7 +174,7 @@
                 <title>Installer</title>
                 <mediaobject>
                     <imageobject>
-                        <imagedata fileref="images/installer.png" width="11cm"/>
+                        <imagedata fileref="images/installer.png" width="11cm" align="center"/>
                     </imageobject>
                 </mediaobject>
             </figure>

@@ -49,10 +49,10 @@
                     id of the element you want to link to: (<xref linkend="logo_id"/>).
                 </para>
                 <figure id="logo_id">
-                    <title>The GeoNetwork opensource logo</title>
+                    <title>Use a figure to add an image to the document</title>
                     <mediaobject>
                         <imageobject>
-                            <imagedata fileref="images/GeoNetwork_opensource_logo.jpg" width="4cm" contentwidth="4cm"/>
+                            <imagedata fileref="images/GeoNetwork_opensource_logo.jpg" width="4cm" align="center"/>
                         </imageobject>
                     </mediaobject>
                 </figure>

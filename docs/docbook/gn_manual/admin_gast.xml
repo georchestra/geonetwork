@@ -54,7 +54,7 @@
                 </title>
                 <mediaobject>
                     <imageobject>
-                        <imagedata fileref="images/admin/gast-main.png" width="11cm"/>
+                        <imagedata fileref="images/admin/gast-main.png" width="11cm" align="center"/>
                     </imageobject>
                 </mediaobject>
             </figure>
@@ -174,7 +174,7 @@
                 </title>
                 <mediaobject>
                     <imageobject>
-                        <imagedata fileref="images/admin/gast-options.png" width="7cm"/>
+                        <imagedata fileref="images/admin/gast-options.png" width="7cm" align="center"/>
                     </imageobject>
                 </mediaobject>
             </figure>

@@ -63,9 +63,7 @@
                 <para>When all is in place, go inside the GeoNetwork’s root folder (the one where
                     the build.xml file is located) and issue the ant command. You should see an
                     output like this one: </para>
-                <programlisting><?db-font-size 75% ?>
-<![CDATA[
-gemini:/geonetwork/trunk# ant 
+<programlisting><?db-font-size 75% ?><![CDATA[gemini:/geonetwork/trunk# ant 
 Buildfile: build.xml 
 compile: 
 [delete] Deleting: /geonetwork/trunk/web/WEB-INF/lib/geonetwork.jar 
@@ -86,9 +84,7 @@ compile:
 [delete] Deleting directory /geonetwork/trunk/.build 
 BUILD SUCCESSFUL 
 Total time: 9 seconds 
-gemini:/geonetwork/trunk# 
-]]>
-                    </programlisting>
+gemini:/geonetwork/trunk#]]></programlisting>
                 <para>The compilation phase, if it has success, puts all jars into the proper place
                     (most of them will be copied into web/geonetwork/WEB-INF/lib and
                     web/intermap/WEB-INF/lib). After this phase, simply restart GeoNetwork to see

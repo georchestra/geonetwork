@@ -253,9 +253,7 @@
                     local one. </para>
                 <figure id="info_xml">
                     <title>Example of info file</title>
-                    <programlisting><?db-font-size 75% ?>
-<![CDATA[
-<info version="1.0"> 
+<programlisting><?db-font-size 75% ?><![CDATA[<info version="1.0"> 
     <general> 
         <uuid>0619abc0-708b-eeda-8202-000d98959033</uuid> 
         <createDate>2006-12-11T10:33:21</createDate> 
@@ -284,9 +282,7 @@
     <private> 
         <file name="map.zip" changeDate="2006-11-12T13:23:01"/> 
     </private> 
-</info>
-]]>
-                        </programlisting>
+</info>]]></programlisting>
                 </figure>
             </section>
         </section>

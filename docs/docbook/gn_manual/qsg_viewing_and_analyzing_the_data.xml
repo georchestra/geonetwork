@@ -39,7 +39,7 @@
 
                 <mediaobject>
                     <imageobject>
-                        <imagedata fileref="images/mainSections.png" width="11cm"/>
+                        <imagedata fileref="images/mainSections.png" width="10cm" align="center"/>
                     </imageobject>
                 </mediaobject>
             </figure>
@@ -61,7 +61,7 @@
 
                         <mediaobject>
                             <imageobject>
-                                <imagedata fileref="images/Ident_Info_1.png" width="11cm"/>
+                                <imagedata fileref="images/Ident_Info_1.png" width="10cm" align="center"/>
                             </imageobject>
                         </mediaobject>
                     </figure>
@@ -79,7 +79,7 @@
 
                     <mediaobject>
                         <imageobject>
-                            <imagedata fileref="images/PoC_Maint.png" width="11cm"/>
+                            <imagedata fileref="images/PoC_Maint.png" width="10cm" align="center"/>
                         </imageobject>
                     </mediaobject>
                 </figure>
@@ -96,7 +96,7 @@
 
                     <mediaobject>
                         <imageobject>
-                            <imagedata fileref="images/Key_Const_Spatype.png" width="11cm"/>
+                            <imagedata fileref="images/Key_Const_Spatype.png" width="10cm" align="center"/>
                         </imageobject>
                     </mediaobject>
                 </figure>
@@ -112,7 +112,7 @@
 
                     <mediaobject>
                         <imageobject>
-                            <imagedata fileref="images/scale.png" width="11cm"/>
+                            <imagedata fileref="images/scale.png" width="10cm" align="center"/>
                         </imageobject>
                     </mediaobject>
                 </figure>
@@ -128,7 +128,7 @@
 
                     <mediaobject>
                         <imageobject>
-                            <imagedata fileref="images/temp_extent.png" width="11cm"/>
+                            <imagedata fileref="images/temp_extent.png" width="10cm" align="center"/>
                         </imageobject>
                     </mediaobject>
                 </figure>
@@ -145,7 +145,7 @@
 
                     <mediaobject>
                         <imageobject>
-                            <imagedata fileref="images/geobox.png" width="11cm"/>
+                            <imagedata fileref="images/geobox.png" width="12cm" align="center"/>
                         </imageobject>
                     </mediaobject>
                 </figure>
@@ -172,7 +172,7 @@
 
                     <mediaobject>
                         <imageobject>
-                            <imagedata fileref="images/distrInfo.png" width="11cm"/>
+                            <imagedata fileref="images/distrInfo.png" width="12cm" align="center"/>
                         </imageobject>
                     </mediaobject>
                 </figure>
@@ -197,7 +197,7 @@
 
                     <mediaobject>
                         <imageobject>
-                            <imagedata fileref="images/RefSystem.png" width="11cm"/>
+                            <imagedata fileref="images/RefSystem.png" width="10cm" align="center"/>
                         </imageobject>
                     </mediaobject>
                 </figure>
@@ -222,7 +222,7 @@
 
                     <mediaobject>
                         <imageobject>
-                            <imagedata fileref="images/dataQuality.png" width="11cm"/>
+                            <imagedata fileref="images/dataQuality.png" width="10cm" align="center"/>
                         </imageobject>
                     </mediaobject>
                 </figure>
@@ -249,7 +249,7 @@
 
                     <mediaobject>
                         <imageobject>
-                            <imagedata fileref="images/metadata.png" width="11cm"/>
+                            <imagedata fileref="images/metadata.png" width="10cm" align="center"/>
                         </imageobject>
                     </mediaobject>
                 </figure>

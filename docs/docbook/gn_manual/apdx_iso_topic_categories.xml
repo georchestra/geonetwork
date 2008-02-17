@@ -9,19 +9,19 @@
         
         <mediaobject>
             <imageobject>
-                <imagedata fileref="images/ISOCategory.png" width="16cm" />
+                <imagedata fileref="images/ISOCategory.png" width="16cm" align="center" />
             </imageobject>
         </mediaobject>
         
         <mediaobject>
             <imageobject>
-                <imagedata fileref="images/ISOCategory2.png" width="16cm" />
+                <imagedata fileref="images/ISOCategory2.png" width="16cm" align="center" />
             </imageobject>
         </mediaobject>
         
         <mediaobject>
             <imageobject>
-                <imagedata fileref="images/ISOCategory3.png" width="16cm" />
+                <imagedata fileref="images/ISOCategory3.png" width="16cm" align="center" />
             </imageobject>
         </mediaobject>
     </appendix>

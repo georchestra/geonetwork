@@ -194,7 +194,7 @@
                             <title>Producing Open Source Software</title>
                             <mediaobject>
                                 <imageobject>
-                                    <imagedata fileref="images/producingoss-cover-small.png"/>
+                                    <imagedata fileref="images/producingoss-cover-small.png" align="center"/>
                                 </imageobject>
                             </mediaobject>
                         </figure>

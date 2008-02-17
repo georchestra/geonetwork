@@ -62,14 +62,12 @@
             </itemizedlist>
             <para>For example, a concept ”ABLETTE” could be defined as follow with a label in french
                 and english, linked to broader concept:</para>
-
 <programlisting><?db-font-size 75% ?><![CDATA[
 <skos:Concept rdf:about="http://www.oieau.org/concept#c4fc54576dc00227b82a709287ac3681">
     <skos:prefLabel xml:lang="fr">ABLETTE</skos:prefLabel> 
     <skos:prefLabel xml:lang="en">BLEAK</skos:prefLabel>
     <skos:broader rdf:resource="http://www.oieau.org/concept#9f25ece36d04776e09492c66627cccb9"/> 
 </skos:Concept>]]></programlisting>
-
             <para>GeoNetwork support multilingual thesaurus (e.g. Agrovoc). Search and edition are
                 made based on current user interface language (i.e. if the interface is in english,
                 when editing metadata, GeoNetwork will only search for concept in english).</para>
@@ -100,7 +98,7 @@
                     <title>Administration interface for thesaurus</title>
                     <mediaobject>
                         <imageobject>
-                            <imagedata fileref="images/thesaurus/thesaurus-Admin.png" width="14cm"/>
+                            <imagedata fileref="images/thesaurus/thesaurus-Admin.png" width="13cm" align="center"/>
                         </imageobject>
                     </mediaobject>
                 </figure>
@@ -123,7 +121,7 @@
                     <title>Upload interface for thesaurus</title>
                     <mediaobject>
                         <imageobject>
-                            <imagedata fileref="images/thesaurus/thesaurus-upload.png" width="14cm"/>
+                            <imagedata fileref="images/thesaurus/thesaurus-upload.png" width="13cm" align="center"/>
                         </imageobject>
                     </mediaobject>
                 </figure>
@@ -153,7 +151,7 @@
                 <title>Browse interface for thesaurus</title>
                 <mediaobject>
                     <imageobject>
-                        <imagedata fileref="images/thesaurus/thesaurus-KeywordSearch.png" width="14cm"/>
+                        <imagedata fileref="images/thesaurus/thesaurus-KeywordSearch.png" width="12cm" align="center"/>
                     </imageobject>
                 </mediaobject>
             </figure>
@@ -162,7 +160,7 @@
                 <title>Keyword description</title>
                 <mediaobject>
                     <imageobject>
-                        <imagedata fileref="images/thesaurus/thesaurus-KeywordDesc.png" width="14cm"/>
+                        <imagedata fileref="images/thesaurus/thesaurus-KeywordDesc.png" width="12cm" align="center"/>
                     </imageobject>
                 </mediaobject>
             </figure>
@@ -178,7 +176,7 @@
                 <title>Autocomplete in keywords editor</title>
                 <mediaobject>
                     <imageobject>
-                        <imagedata fileref="images/thesaurus/thesaurus-EditKeywords.png" width="10cm"/>
+                        <imagedata fileref="images/thesaurus/thesaurus-EditKeywords.png" width="11cm" align="center"/>
                     </imageobject>
                 </mediaobject>
             </figure>
@@ -196,7 +194,7 @@
                 <title>Thesaurus search interface</title>
                 <mediaobject>
                     <imageobject>
-                        <imagedata fileref="images/thesaurus/thesaurus-SearchInterface.png" width="11cm"/>
+                        <imagedata fileref="images/thesaurus/thesaurus-SearchInterface.png" width="11cm" align="center"/>
                     </imageobject>
                 </mediaobject>
             </figure>
@@ -205,7 +203,7 @@
                 <title>Autocomplete function in thesaurus search interface</title>
                 <mediaobject>
                     <imageobject>
-                        <imagedata fileref="images/thesaurus/thesaurus-SearchKeywordAutocomp.png" width="8cm"/>
+                        <imagedata fileref="images/thesaurus/thesaurus-SearchKeywordAutocomp.png" width="7cm" align="center"/>
                     </imageobject>
                 </mediaobject>
             </figure>
