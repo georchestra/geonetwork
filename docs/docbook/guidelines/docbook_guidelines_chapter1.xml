@@ -68,12 +68,12 @@
             <para>To generate the final documentation in HTML or PDF, <literal>Ant</literal> is
                 required to be installed on your computer.</para>
             <para>Open a Terminal window and <literal>cd</literal> (change directory) into the
-                    <literal>docs</literal> folder. Type <code>ant</code> and hit Return. All the
+                    <filename>docs</filename> folder. Type <code>ant</code> and hit Return. All the
                 documentation should now be compiled and a new Manual.pdf file and new content in
                 the HTML folder should be generated.</para>
-            <para>To only generate the PDF document you can run <code>ant pdf</code>, while you can
-                run <code>ant html</code> to only generate the HTML files. To generate the Javadoc
-                source code documentation run <code>ant javadoc</code>.</para>
+            <para>To only generate the PDF document you can run <userinput>ant pdf</userinput>, 
+                while you can run <code>ant html</code> to only generate the HTML files. 
+                To generate the Javadoc source code documentation run <code>ant javadoc</code>.</para>
         </section>
     </chapter>
 </book>

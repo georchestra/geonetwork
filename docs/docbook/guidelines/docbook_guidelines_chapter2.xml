@@ -7,7 +7,8 @@
         <sect1>
             <title>Section 1 Title</title>
             <para>
-                This document illustrates what elements are used in the GeoNetwork 
+                This document illustrates what elements are used in the 
+                <productname>GeoNetwork opensource</productname> 
                 documentation. It can be used as a reference to understand what 
                 elements to use and what not. This is done to keep writing the 
                 guidelines a simple process
@@ -18,22 +19,23 @@
                 <para>Sometimes you don't want a section to highlight something. 
                     Use a <literal>formalpara</literal> instead.</para>
             </formalpara>
-            
+            <para>This is the file name of this chapter: 
+                <filename>docbook_guidelines_chapter2.xml</filename></para>
+            <para>And here's some user input: 
+                <userinput>/home/geonetwork/docs/ant guidelines</userinput></para>
             <sect2>
                 <title>Section 2 title</title>
                 <para>
-                    <indexterm>
-                        <primary>indexterm</primary>
-                    </indexterm>
                     Important things that have to end up in the Index use the 
+                    <indexterm><primary>indexterm</primary></indexterm>
                     <literal>indexterm</literal>. You can find more options 
                     (for sorting and hierarchy for example)
                     <ulink url="http://www.sagehill.net/docbookxsl/GenerateIndex.html">
                         here
                     </ulink>.
                 </para>
-                <para>Buttons in the GUI are surrounded by the literal element:
-                    <literal>Save</literal>
+                <para>Buttons in the <acronym>GUI</acronym> are surrounded by the 
+                    literal element: <literal>Save</literal>
                 </para>
                 <para>To highlight text, use (with care!) the <emphasis role="bold"
                     >emphasis</emphasis> element. </para>
@@ -52,7 +54,8 @@
                     <title>Use a figure to add an image to the document</title>
                     <mediaobject>
                         <imageobject>
-                            <imagedata fileref="images/GeoNetwork_opensource_logo.jpg" width="4cm" align="center"/>
+                            <imagedata fileref="images/GeoNetwork_opensource_logo.jpg" 
+                                width="4cm" align="center"/>
                         </imageobject>
                     </mediaobject>
                 </figure>
