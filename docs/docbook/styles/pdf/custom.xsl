@@ -358,6 +358,7 @@
         <xsl:value-of select="$body.font.master"/>
         <xsl:text>pt</xsl:text>
       </xsl:attribute>
+      <xsl:attribute name="text-align">center</xsl:attribute>
       <xsl:attribute name="hyphenate">false</xsl:attribute>
       <xsl:attribute name="space-before.minimum">0.1em</xsl:attribute>
       <xsl:attribute name="space-before.optimum">0.1em</xsl:attribute>

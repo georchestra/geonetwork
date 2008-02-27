@@ -6,7 +6,7 @@
         <title>GeoNetwork’s Administrator Survival Tool - GAST</title>
         <section>
             <title>What is GAST?</title>
-            <para>GAST stands for "GeoNetwork’s Administrator Survival Tool” and is a standalone
+            <para>GAST stands for <literal>GeoNetwork’s Administrator Survival Tool</literal> and is a standalone
                 application whose purpose is to simplify some low level tasks like change of the
                 servlet, configuration of the JDBC account, setup the database and so on. Most
                 of the GAST’s facilities work only for the GeoNetwork’s installation where GAST
@@ -14,32 +14,29 @@
                 (like Tomcat) you will not be able to change some options (like the servlet’s
                 name). Other facilities work for any servlet container but you have to specify
                 the GeoNetwork’s URL into the GAST’s configuration dialog.</para>
-            
         </section>
         <section>
             <title>Starting GAST</title>
-            <para>GAST belongs to the core components so it is installed by default. It is
-                located into the gast folder and to start it you can either use the java command
-                or just click its jar’s icon. To use the java command you have to:</para>
-            
+            <para>GAST belongs to the core components so it is installed by default.</para>
+            <para>On Windows computers, simply select the <literal>Start GAST</literal> option under the 
+                GeoNetwork opensource program group under <literal>Start > Programs > GeoNetwork opensource</literal></para>
+            <para>Other options to start GAST are either to use a java command <emphasis 
+                role="bold">from a terminal window</emphasis>
+                or just click its jar’s icon. To issue the java command you have to:</para>
             <orderedlist>
                 <listitem>
-                    <para>from the GeoNetwork’s root folder, issue the command:</para>
+                    <para>change directory to the GeoNetwork installation folder</para>
                 </listitem>
-            </orderedlist>
-            <para><code>java -jar gast/gast.jar</code></para>
-            
-            <orderedlist>
                 <listitem>
-                    <para>from the gast folder, issue the command:</para>
+                    <para>issue the command <code>java -jar gast/gast.jar</code></para>
                 </listitem>
             </orderedlist>
-            <para><code>java -jar gast.jar</code></para>
-            <para>To use your window manager, simply open the GeoNetwork’s folder, go inside the
-                gast folder and click the gast.jar icon. If you have Java installed, GAST should
+            
+            <para>You can also try to simply open the GeoNetwork installation folder, go to the
+                gast folder and doubleclick on the gast.jar file. If you have Java installed, GAST should
                 start in a few seconds.</para>
-            <para>To run, GAST needs at least Java 1.5. It will not work on Java 1.4 and it
-                should run on Java 1.6 (anyway, it has not been tested).</para>
+            <para>To run, GAST requires Java 1.5. It will not work on Java 1.4 and it
+                should run on Java 1.6 (this has not been tested!).</para>
             
         </section>
         <section>
@@ -59,7 +56,7 @@
                 </mediaobject>
             </figure>
             
-            <para>Every GAST tool has an operating mode, which defines the condition under which
+            <para>Every function has an operating mode, which defines the condition under which
                 the tool can be used. The tool’s mode is shown with an icon on the right side of
                 the tool’s name. The operating modes, with their icons are summarized in the
                 following table:</para>
@@ -157,15 +154,15 @@
             
         </section>
         <section>
-            <title>Configuration dialog</title>
-            <para>Some of the GAST’s tools access a running GeoNetwork. Usually, GAST connects
+            <title>Server and Account configuration dialog</title>
+            <para>Some of the GAST’s tools access a running GeoNetwork application. Usually, GAST connects
                 to GeoNetwork using the connection parameters it finds on the installation
                 folder but you can specify other parameters in order to connect to other
-                instances. This is mandatory when the GeoNetwork instance is not running on the
+                instances. This is required when the GeoNetwork instance is not running on the
                 embedded Jetty server. In addition to that, some tools require authentication so
                 account parameters must be provided.</para>
             <para>To provide these parameters, you have to use the GAST ’s configuration dialog.
-                To open the dialog, simply select Options ⊳ ⊳ Config from the menubar. You will
+                To open the dialog, select <literal>Options >> Config</literal> from the menubar. You will
                 get the dialog shown in <xref linkend="admin_gast_config"/>.</para>
             
             <figure id="admin_gast_config" >
