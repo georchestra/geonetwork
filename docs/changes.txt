@@ -1,5 +1,146 @@
 ================================================================================
 ===
+=== GeoNetwork 2.2.0 RC2: List of changes
+===
+================================================================================
+--------------------------------------------------------------------------------
+--- New
+--------------------------------------------------------------------------------
+
+- Migration of all documentation into DocBook based on the Apache Velocity 
+  DocBook framework. All documentation is now written in DocBook format and 
+  build into HTML and PDF output using Ant.
+  
+- RESTful URL to metadata resources using URLs formatted as:
+	http://mysite.org/geonetwork?uuid=xxx-xxx-xxx
+	
+- uuid can be used to show a record. This is now used for RSS feeds, KML, latest
+  updates and searches
+  
+- Added Social Bookmarking links to delicious, digg, stumbleupon and facebook
+  (not visible for resources on local machine (localhost, 127.0.0.1)
+
+- Added Send by email link for metadata records
+  (not visible for resources on local machine (localhost, 127.0.0.1)
+  
+- Add push pins with comments on InterMap. The markers can be edited and are
+  stored in GeoRSS format within the Web Map Context document and in the HTML
+  email users can send to friends.
+  
+- Add and remove parent - child relations between metadata records. (No GUI is 
+  provided with this service and the functionality relates to the already 
+  existing xml.relation.get search function)
+  
+- Added local GeoServer link to InterMap default list of map servers.
+
+- Added support for PHRASE, OR and WITHOUT queries (for now hidden in search 
+  form, but can easily be made visible)
+      
+--------------------------------------------------------------------------------
+--- Changes
+--------------------------------------------------------------------------------
+
+- Improved RSS feeds on search and latest updates are consolidated 
+  (use same templates for output of items)
+  
+- Updates to documentation
+
+- Improved error reporting in AJAX interface
+
+- Minor translation updates
+
+- Improved email message send out by InterMap with Web Map Context document
+
+- language support and simplified messaging to the validation output
+
+- Changed startup scripts for Windows to hide (or allow to hide) the dos window.
+
+- GeoRSS opens in new browser window
+
+- Added SMTP port to WMC mail function
+
+- Hide sub-template elements (option and title) for 2.2RC2
+
+- Add debug parameter to avoid popup alerts on InterMap for operational 
+  deployments.
+  
+- Renamed gast startup files. Makes it slightly easier to run 
+  start-geonetwork.sh from terminal on a *NIX machine.
+  
+- Small updates in shortcut menus
+
+- Added a docs context as part of the Jetty configuration.
+
+- Added "label for" for checkbox elements to be able to check boxes when 
+  clicking the label
+  
+- Added some gml labels for nicer display and editing.
+
+- Upgrade Lucene to version 2.3.0
+
+- Change of content type for RSS services
+
+- Automatically open the map viewer when a WMC context is given in the URL.
+
+- Updated help on Localization interface
+
+- Cleanup OnlineResources display to prevent display of download and interactive
+  map buttons when no URL is actually found in the metadata
+  
+- Added warning & help to the categories and groups admin forms
+
+--------------------------------------------------------------------------------
+--- Bugs fixed
+--------------------------------------------------------------------------------
+
+- Fixed geographic search (communication between small map AoI and dropdown 
+  list, added User defined as an option to dropdown)
+  
+- Fix problem retrieving string from editor.xml that causes internet exploder 
+  to choke on tooltips for elements without a help string
+  
+- Retrieve the keywords relevant to the record in preparing brief summary xml
+
+- Fix for the info request to a WMS service
+
+- Feedback fix (feedback was not processed by application)
+
+- Fixes for attributeGroup inheritance and automatic srsName. Added support for 
+  the srsName attribute in gml featuretypes for display and editing the Extent 
+  as an EX_BoundingPolygon.
+
+- Fixed #55 adding an observer for Enter key on main.home page
+
+- Fixed #44 switch lower/upper corners of geokeywords
+  
+- MySQL longtext fix to avoid truncated metadata records
+
+- Initial minimap extent is now set to the union of the bboxes of all the 
+  displayed layers.
+
+- Ensure UUIDs are stored in lower case
+
+- Copy attributes before inserting new fileIdentifier element
+
+- Fix for IE: clicking on a marker now opens its info panel.
+
+- Fixed: Layer list not displayed in IE.
+
+--------------------------------------------------------------------------------
+--- Known issues
+--------------------------------------------------------------------------------
+
+- default settings reset function in advanced search not in synch with 
+  application defaults (fixed for Final Release)
+
+- Namespace issue for some labels in languages other than English in 
+  ISO19115/19139 (fixed for Final Release)
+
+- Some missing labels for Dublin Core fields in languages other than English 
+  (fixed for Final Release)
+
+================================================================================
+===
 === GeoNetwork 2.2.0 RC1: List of changes
 ===
 ================================================================================
