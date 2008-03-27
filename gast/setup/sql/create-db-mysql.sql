@@ -229,10 +229,10 @@ CREATE TABLE Metadata
     source       varchar(250)   not null,
     title        varchar(255),
     root         varchar(255),
-    harvestUuid  varchar(250),
+    harvestUuid  varchar(250)   default null,
     owner        int            not null,
-    groupOwner   int,
-    harvestUri   varchar(255),
+    groupOwner   int            default null,
+    harvestUri   varchar(255)   default null,
     rating       int            default 0 not null,
     popularity   int            default 0 not null,
 
