@@ -92,22 +92,34 @@
 	<target name="javadoc" depends="javadoc-gn, javadoc-im" />
 
 	<!-- =============================================================== -->
+	<path id="gn.classpath">
+		<fileset dir="../web/geonetwork/WEB-INF/lib">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
 	
 	<target name="javadoc-gn">
 		<delete   dir="${dbf.basedir}/html/javadoc/geonetwork" />
 		<mkdir    dir="${dbf.basedir}/html/javadoc/geonetwork" />
 		<javadoc	sourcepath  ="../src" 
+				classpathref="gn.classpath"
 				destdir     ="${dbf.basedir}/html/javadoc/geonetwork" 
 				packagenames="org.fao.*"
 				windowtitle ="GeoNetwork class documentation"/>
 	</target>
 	
 	<!-- =============================================================== -->
+	<path id="im.classpath">
+	  <fileset dir="../web/intermap/WEB-INF/lib">
+	    <include name="*.jar"/>
+	  </fileset>
+	</path>
 	
 	<target name="javadoc-im">
 		<delete   dir="${dbf.basedir}/html/javadoc/intermap" />
 		<mkdir    dir="${dbf.basedir}/html/javadoc/intermap" />
 		<javadoc        sourcepath  ="../src"
+				classpathref="im.classpath"
 				destdir     ="${dbf.basedir}/html/javadoc/intermap"
 				packagenames="org.wfp.*"
 				windowtitle ="InterMap class documentation"/>
