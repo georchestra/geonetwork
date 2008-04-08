@@ -38,6 +38,9 @@
                 <listitem>
                     <para>An OAI-PMH server.</para>
                 </listitem>
+                <listitem>
+                    <para>An OGC service using its GetCapabilities document.</para>
+                </listitem>
             </orderedlist>
 
         </section>
@@ -202,6 +205,23 @@
                         <para>During harvesting, GeoNetwork will try to autodetect the schema of
                             each metadata. If the schema is not supported the metadata is
                         skipped.</para>
+                    </listitem>
+                </orderedlist>
+
+            </section>
+            <section>
+                <title>OGC service harvesting type</title>
+
+                <orderedlist>
+                    <listitem>
+                        <para>Every time the harvester is ran, it will remove previously harvested information
+                        and create new ones. GeoNetwork will generate the id for all metadata (both service and datasets).
+                        Therefor, for datasets, if the metadata is created using a remote xml document (ie.
+                        if a metadataUrl tag is in the GetCapability document), the uuid of 
+                        the document is used.</para>
+                    </listitem>
+                    <listitem>
+                        <para>Thumbnails are generated only for Web Map Service (WMS).</para>
                     </listitem>
                 </orderedlist>
 
@@ -430,12 +450,18 @@
                                 <entry>
                                     <para>OAI-PMH</para>
                                 </entry>
+                                <entry>
+                                    <para>OGC Service</para>
+                                </entry>
                             </row>
                         </thead>
                         <tbody>
                             <row>
                                 <entry>
                                     <para>Total</para>
+                                </entry>
+                                <entry>
+                                    <para>x</para>
                                 </entry>
                                 <entry>
                                     <para>x</para>
@@ -466,10 +492,16 @@
                                 <entry>
                                     <para>x</para>
                                 </entry>
+                                <entry>
+                                    <para>x</para>
+                                </entry>
                             </row>
                             <row>
                                 <entry>
                                     <para>Removed</para>
+                                </entry>
+                                <entry>
+                                    <para>x</para>
                                 </entry>
                                 <entry>
                                     <para>x</para>
@@ -500,6 +532,9 @@
                                 <entry>
                                     <para>x</para>
                                 </entry>
+                                <entry>
+                                    <para></para>
+                                </entry>
                             </row>
                             <row>
                                 <entry>
@@ -517,10 +552,16 @@
                                 <entry>
                                     <para>x</para>
                                 </entry>
+                                <entry>
+                                    <para></para>
+                                </entry>
                             </row>
                             <row>
                                 <entry>
                                     <para>Unknown schema</para>
+                                </entry>
+                                <entry>
+                                    <para>x</para>
                                 </entry>
                                 <entry>
                                     <para>x</para>
@@ -551,6 +592,9 @@
                                 <entry>
                                     <para>x</para>
                                 </entry>
+                                <entry>
+                                    <para>x</para>
+                                </entry>
                             </row>
                             <row>
                                 <entry>
@@ -564,6 +608,8 @@
                                 <entry>
                                     <para>x</para>
                                 </entry>
+                                <entry>
+                                </entry>
                             </row>
                             <row>
                                 <entry>
@@ -574,6 +620,36 @@
                                     <para>x</para>
                                 </entry>
                                 <entry> </entry>
+                                <entry>
+                                    <para>x</para>
+                                </entry>
+                                <entry>
+                                </entry>
+                            </row>
+                            <row>
+                                <entry>
+                                    <para>Thumbnails / Thumbnails failed</para>
+                                </entry>
+                                <entry> </entry>
+                                <entry>
+                                </entry>
+                                <entry> </entry>
+                                <entry>
+                                </entry>
+                                <entry>
+                                    <para>x</para>
+                                </entry>
+                            </row>
+                            <row>
+                                <entry>
+                                    <para>Metadata URL attribute used</para>
+                                </entry>
+                                <entry> </entry>
+                                <entry>
+                                </entry>
+                                <entry> </entry>
+                                <entry>
+                                </entry>
                                 <entry>
                                     <para>x</para>
                                 </entry>
@@ -842,6 +918,51 @@
                     localized but the internal code string will be displayed. You have to press the
                     retrieve info button again to connect to the remote server and retrieve the
                     localized name and all set and prefix information.</para>
+            </section>
+            <section>
+                <title>Adding an OGC Service (ie. WMS, WFS, WCS)</title>
+                <para>An OGC service implements a GetCapabilities operation that GeoNetwork, acting as
+                    a client, can use to produce metadata. The GetCapability document provides information about the
+                    service and the layers/feature types/coverages served. GeoNetwork will convert it into
+                    ISO19139/119 format. <xref linkend="admin_harvesting_ogc"/> shows all
+                    available options, which are:</para>
+
+                <figure id="admin_harvesting_ogc">
+                    <title> Adding an OGC service harvesting node </title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="images/admin/web-harvesting-ogc.png" width="11cm" align="center"/>
+                        </imageobject>
+                    </mediaobject>
+                </figure>
+
+                <para>Site: Name is the name of the catalog and will be one of the search criteria. 
+                    The type of OGC service indicates if the harvester has to query for a specific kind of service.
+                    Supported type are WMS (1.0.0 and 1.1.1), WFS (1.0.0 and 1.1.0 and WCS (1.0.0).
+                    The service URL is the URL of the service to contact (without parameters like 
+                    "REQUEST=GetCapabilities", "VERSION=", ...). It has to be a valid URL like http://your.preferred.ogcservice/type_wms. 
+                    The metadata language has to be specified. It will define the language of the metadata.
+                    It should be the language used by the web service administrator.
+                    The ISO topic category is used to populate the metadata. It is recommended to choose on
+                    as the topic is mandatory for the ISO standard if the hierarchical level is "datasets".
+                </para>
+                <para>
+                    The type of import allows to define if the harvester has to produce only one metadata
+                    for the service or if it should loop over datasets served by the service and produce
+                    also metadata for each datasets. For each dataset the second checkbox allow to generate
+                    metadata for the dataset using an XML document referenced in the metadataURL attribute
+                    of the dataset in the GetCapability document. If this document is loaded but it is not valid
+                    (ie. unknown schema, bad xml format), the GetCapability document is used.
+                    For WMS, thumbnails could be created during harvesting.
+                </para>
+                <para> 
+                    Icons and privileges are defined as in the other harvester types.
+                </para>
+                <para>
+                    Metadata for the harvested service is linked to the category selected for the service 
+                    (usually "interactive resources" should be the best category). 
+                    For each dataset, the "category for datasets" is linked to each metadata for datasets.
+                </para>
             </section>
         </section>
     </chapter>
