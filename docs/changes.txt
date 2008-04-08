@@ -1,5 +1,39 @@
 ================================================================================
 ===
+=== GeoNetwork 2.3.x (current svn trunk) : List of changes
+===
+================================================================================
+--------------------------------------------------------------------------------
+--- Known issues
+--------------------------------------------------------------------------------
+
+- On some Windows systems, installing in the default Program files folder causes
+  a stylesheet compilation error. The workaround is to install in a directory
+  without spaces in the folder names. E.g. in c:\geonetwork
+
+- In Postgresql an error occurs related to type casting while migrating from 
+  version 2.0.3. Using the older version of the jdbc driver version 7.4 seems 
+  to resolve this problem for Postgres v7 and v8.x. The old driver can be found 
+  at http://jdbc.postgresql.org/download.html#archived
+
+--------------------------------------------------------------------------------
+--- Changes
+--------------------------------------------------------------------------------
+
+- Added support for printing search result in PDF format 
+(http://trac.osgeo.org/geonetwork/wiki/PrintPdf)
+
+- Added support to harvest the OGC:GetCapabilities documents
+to produce metadata for services and layers/featuretypes/coverages
+in ISO19139/119 format (http://trac.osgeo.org/geonetwork/wiki/ISO19119impl)
+
+--------------------------------------------------------------------------------
+--- Bug fixes
+--------------------------------------------------------------------------------
+
+
+================================================================================
+===
 === GeoNetwork 2.2.0 Final: List of changes
 ===
 ================================================================================
