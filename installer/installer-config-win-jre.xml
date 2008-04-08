@@ -48,14 +48,14 @@
 	<!-- =================================================================================== -->
 	
 	<panels>
-		<panel classname="HelloPanel"/>
-		<panel classname="HTMLLicencePanel"/>
-		<panel classname="TargetPanel"/>
-		<panel classname="PacksPanel"/>
-		<panel classname="InstallPanel"/>
-		<panel classname="ShortcutPanel"/>
-		<panel classname="HTMLInfoPanel"/>
-		<panel classname="FinishPanel"/>
+		<panel classname="HelloPanel" id="helloPanel"/>
+		<panel classname="HTMLLicencePanel" id="htmlLicensePanel"/>
+		<panel classname="TargetPanel" id="targetPanel"/>
+		<panel classname="PacksPanel" id="packsPanel"/>
+		<panel classname="InstallPanel" id="installPanel"/>
+		<panel classname="ShortcutPanel" id="shortcutPanel"/>
+		<panel classname="HTMLInfoPanel" id="htmlInfoPanel"/>
+		<panel classname="FinishPanel" id="finishPanel"/>
 	</panels>
 	
 	<!-- =================================================================================== -->
@@ -128,6 +128,20 @@ This is the Spatial Data Catalog web application.
 			</executable>
 		</pack>
 		
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+		<pack name="Sample metadata" required="no" preselected="yes" id="idSampleM">
+			<description>Import sample metadata for testing</description>
+			<executable targetfile="$INSTALL_PATH/gast/gast.jar" 
+							type      ="jar" 
+							keep      ="true"
+							stage     ="postinstall">
+				<args>
+					<arg value="-sampleData"/>
+				</args>
+			</executable>
+		</pack>		
+
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		
 		<pack name="GeoServer web map server" required="no" preselected="yes">

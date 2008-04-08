@@ -9,6 +9,10 @@ version 1.5.0. You can download it from this url:
 
 http://java.sun.com/javase/downloads/index_jdk5.jsp
 
+Please refer to the changes.txt file for a list of known issues.
+Refer to the online documentation or mailing-lists if you need 
+more help at http://geonetwork-opensource.org
+ 
 ==================================================================
 WINDOWS USERS
 ==================================================================
