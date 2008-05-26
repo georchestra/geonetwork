@@ -26,7 +26,7 @@
 		<image>22x22/configure.png</image>
 		<label>Configuration</label>
 		
-		<!-- Site ID - - - - - - - - - - - - - - - - - - - - - - - - 
+		<!-- Site ID - - - - - - - - - - - - - - - - - - - - - - - --> 
 		
 		<form>
 			<id>siteid</id>
@@ -35,24 +35,22 @@
 			<title>Site ID change</title>
 			<class>config.siteid.MainPanel</class>
 			<description>
-				Here you can change your installation's site ID. Because a site ID
-				must be unique, you are not allowed to enter a value but it will be
-				automatically generated.
+				*** WARNING *** Here you can change your installation's site ID
+				but you should not do this by hand, unless you are migrating
+				from a previous installation
 			</description>
 			
 			<button>
-				<image>16x16/reload.png</image>
-				<label>Generate</label>
-				<action>generate</action>
+				<image>16x16/filesave.png</image>
+				<label>Change</label>
+				<action>change</action>
 			</button>
 			
 			<precon type="stopped">
-				GeoNetwork must be stopped because the SettingManager caches data.
-				There are also some other operations that it is better to do with
-				GeoNetwork stopped.
+				GeoNetwork must be stopped
 			</precon>
 		</form>
-		-->
+		
 		<!-- Jetty - - - - - - - - - - - - - - - - - - - - - - - - -->
 		
 		<form>
