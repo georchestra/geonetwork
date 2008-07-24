@@ -184,8 +184,7 @@
                 <listitem>
                     <para>Editor Profile</para>
 
-                    <para>The User Administrator is the administrator of his/her own group with the
-                        following privileges:</para>
+                    <para>The editor works on metadata with following privileges:</para>
 
                     <itemizedlist>
                         <listitem>
@@ -198,8 +197,7 @@
                 <listitem>
                     <para>Registered User Profile</para>
 
-                    <para>The User Administrator is the administrator of his/her own group with the
-                        following privileges:</para>
+                    <para>The Registred User has more access privileges than unlogged users:</para>
 
                     <itemizedlist>
                         <listitem>
