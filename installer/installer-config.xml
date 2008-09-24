@@ -166,9 +166,9 @@ instructions and download.
 		
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		
-		<pack name="CSW 2.0.1 test client" required="no" preselected="no">
-			<description>The GeoNetwork opensource provides Catalog Services for the Web 2.0.1 support. 
-This is a separate test application that can be used to test the CSW 2.0.1 services. 
+		<pack name="CSW 2.0.2 test client" required="no" preselected="no">
+			<description>The GeoNetwork opensource provides Catalog Services for the Web 2.0.2 support. 
+This is a separate test application that can be used to test the CSW 2.0.2 services. 
 			</description>
 			
 			<fileset dir="../csw" targetdir="$INSTALL_PATH/csw"/>
