@@ -802,7 +802,7 @@
                     account Account credentials for a basic HTTP authentication toward the remote
                     URL. Options General harvesting options:</para>
                 <para>Every This is the harvesting period. The smallest value is 1 minute while the
-                    greatest value si 100 days. One run only If this option is checked, the
+                    greatest value is 100 days. One run only If this option is checked, the
                     harvesting will do only one run after which it will become inactive. Validate If
                     checked, the metadata will be validate during import. If the validation does not
                     pass, the metadata will be skipped. Recurse When the harvesting engine will find
