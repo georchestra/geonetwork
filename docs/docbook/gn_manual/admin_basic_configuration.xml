@@ -6,15 +6,19 @@
         <title>Basic configuration</title>
         <section>
             <title>System configuration</title>
-            <para>Most of the GeoNetwork’s configuration parameters can be changed using the web
+            <para>Most of the GeoNetwork system configuration parameters can be changed using the web
                 interface. Those parameters that cannot be changed through the web interface can
-                be usually changed using the GAST application. To reach this web interface, you
-                must be logged in as an Administrator. The page’s link is located into the
-                administration page (<xref linkend="admin_config_where"/>. The link is surrounded with a red
+                usually be changed using the GAST application.</para>
+            <para>To get to the System configuration, you must be logged on as administrator first.
+                Open the Administration page and select System configuration (<xref linkend="admin_config_where"/>. The link is surrounded with a red
                 rectangle). </para>
+            <important>
+                <para>New installations of GeoNetwork use <literal>admin</literal> for both username and password.
+                It is important to change this from the Administration page once you logged on!</para>
+            </important>
 
             <figure id="admin_config_where">
-                <title>How to reach the configuration page</title>
+                <title>The link to the System configuration page</title>
                 <mediaobject>
                     <imageobject>
                         <imagedata fileref="images/admin/web-config-where.png" width="12cm" align="center"/>
