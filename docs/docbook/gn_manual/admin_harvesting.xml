@@ -12,13 +12,13 @@
                 the same time. This is called distributed search and exploits the Internet
                 connectivity. In our cases, this distributed search can be heavy to perform if there
                 are many maps with associated thumbnails. Furthermore, GeoNetwork is usually
-                employed in countries (like Africa, Brazil) where the connectivity is bad, making
+                employed in areas (like Africa, Asia) where the connectivity can be limited, making
                 the use of distributed search not feasible.</para>
-            <para>The harvesting is the process of collecting remote metadata and storing them
+            <para>Harvesting is the process of collecting remote metadata and storing them
                 locally for a faster access. This is a periodic process to do, for example, once a
                 week. Harvesting is not a simple import: local and remote metadata are kept aligned.
-                Using some <emphasis>magic</emphasis>, GeoNetwork is capable of discovering metadata
-                that have been added, removed or updated.</para>
+                Using some <emphasis>magic</emphasis>, one GeoNetwork node is capable of discovering metadata
+                that have been added, removed or updated in the remote node.</para>
             <para>GeoNetwork is able to harvest from the following sources (for more details see
                 below):</para>
 
@@ -27,35 +27,33 @@
                     <para>Another GeoNetwork node (version 2.1 or above).</para>
                 </listitem>
                 <listitem>
-                    <para>A web DAV server.</para>
-                </listitem>
-                <listitem>
-                    <para>A CSW 2.0.1 server.</para>
-                </listitem>
-                <listitem>
                     <para>An old GeoNetwork 2.0 node.</para>
+                </listitem>
+                <listitem>
+                    <para>A WebDAV server.</para>
+                </listitem>
+                <listitem>
+                    <para>A CSW 2.0.1 or 2.0.2 server.</para>
                 </listitem>
                 <listitem>
                     <para>An OAI-PMH server.</para>
                 </listitem>
                 <listitem>
-                    <para>An OGC service using its GetCapabilities document.</para>
+                    <para>An OGC service using its GetCapabilities document. These include WMS, WFS and WCS services.</para>
                 </listitem>
             </orderedlist>
 
         </section>
         <section>
             <title>Mechanism overview</title>
-            <para>The harvesting mechanism is based on the concept of <emphasis>universally</emphasis>
-                <emphasis>unique</emphasis>
-                <emphasis>identifier</emphasis> (uuid). This is a special id because it is not only
+            <para>The harvesting mechanism is based on the concept of a <emphasis>universally unique identifier (uuid)</emphasis>.
+                This is a special id because it is not only
                 unique locally to the node that generated it but it is unique across all the world.
                 It is a combination of the network interface’s MAC address, the current date/time
                 and a random number. Every time you create a new metadata in GeoNetwork, a new uuid
                 is generated and assigned to it.</para>
-            <para>Another important concept behind the harvesting is the <emphasis>last</emphasis>
-                <emphasis>change</emphasis>
-                <emphasis>date</emphasis>. Every time you change a metadata, its last change date is
+            <para>Another important concept behind the harvesting is the <emphasis>last change date</emphasis>. 
+                Every time you change a metadata, its last change date is
                 updated. Just storing this parameter and comparing it with a new one allows any
                 system to find out if the metadata has been modified since last update.</para>
             <para>These two concepts allow GeoNetwork to fetch a remote metadata, check if it has
@@ -229,12 +227,12 @@
         </section>
         <section>
             <title>The main page</title>
-            <para>To reach the harvesting main page you have to be logged in as an administrator.
+            <para>To access the harvesting main page you have to be logged in as an administrator.
                 From the administration page, click the link shown in <xref
                     linkend="admin_harvesting_where"/> with a red rectangle.</para>
 
             <figure id="admin_harvesting_where">
-                <title>How to reach the harvesting main page</title>
+                <title>How to access the harvesting main page</title>
                 <mediaobject>
                     <imageobject>
                         <imagedata fileref="images/admin/web-harvesting-where.png" width="11cm" align="center"/>

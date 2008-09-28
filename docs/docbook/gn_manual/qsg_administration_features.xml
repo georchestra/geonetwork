@@ -3,7 +3,12 @@
                       "http://www.docbook.org/xml/4.4/docbookx.dtd">
 <book>
     <chapter id="administration_features">
-        <title>Administration Features</title>
+        <title>User and Group Administration</title>
+        <para>GeoNetwork uses the concept of Users, Groups and User Profiles. A User can be part of several Groups. 
+            A User also has a User Profile<footnote><para>A User can only have one User Profile associated.</para></footnote>. 
+            The combination of User Profile and Group defines what tasks the User can perform on the system 
+            or on specific metadata records.
+        </para>
 
         <section>
             <title>Creating new user Groups</title>
