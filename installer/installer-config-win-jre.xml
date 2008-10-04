@@ -32,17 +32,22 @@
 	
 	<locale>
 		<langpack iso3="eng"/>
+		<langpack iso3="fra"/>
 	</locale>
 	
 	<!-- =================================================================================== -->
 	
 	<resources>
 		<res id="HTMLLicencePanel.licence" src="../docs/license.html"/>
+		<res id="HTMLLicencePanel.licence_fra" src="../docs/license_fra.html"/>
 		<res id="HTMLInfoPanel.info"       src="../.props/readme.html"/>
+		<res id="HTMLInfoPanel.info_fra"       src="../.props/readme_fra.html"/>
 		<res id="Installer.image"          src="installer.png"/>
 		<res id="shortcutSpec.xml"         src="windows-shortcuts.xml"/>
 		<res id="Unix_shortcutSpec.xml"    src="unix-shortcuts.xml"/>
 		<res id="Win_shortcutSpec.xml"     src="windows-shortcuts.xml"/>
+        <res id="packsLang.xml"                src="packsLang.xml"/>
+        <res id="packsLang.xml_fra"            src="packsLang.xml_fra"/>
 	</resources>
 	
 	<!-- =================================================================================== -->
@@ -65,10 +70,8 @@
 	<!-- =================================================================================== -->
 	
 	<packs>
-		<pack name="Core" required="no" preselected="yes">
-			<description>The GeoNetwork opensource application.
-This is the Spatial Data Catalog web application.
-			</description>
+		<pack id="core" name="Core" required="no" preselected="yes">
+			<description/>
 			
 			<fileset dir="../docs" targetdir="$INSTALL_PATH/docs">
 				<exclude name="build/**"/>
@@ -131,7 +134,7 @@ This is the Spatial Data Catalog web application.
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
 		<pack name="Sample metadata" required="no" preselected="yes" id="idSampleM">
-			<description>Import sample metadata for testing</description>
+			<description/>
 			<executable targetfile="$INSTALL_PATH/gast/gast.jar" 
 							type      ="jar" 
 							keep      ="true"
@@ -144,14 +147,8 @@ This is the Spatial Data Catalog web application.
 
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		
-		<pack name="GeoServer web map server" required="no" preselected="yes">
-			<description>GeoServer is an Open Source server that connects your information 
-to the Geospatial Web. This embedded version is setup to provide the base layers 
-for the map viewers in GeoNetwork. You can safely install this on modern computers, 
-but be careful on older computers with little memory (less then 256MB RAM).
-To have a full resolution background layer, check the GeoNetwork site for 
-instructions and download.
-			</description>
+		<pack name="GeoServer web map server" required="no" preselected="yes" id="geoserver">
+			<description/>
 			
 			<fileset dir="../web/geoserver" targetdir="$INSTALL_PATH/web/geoserver">
 				<exclude name="data/catalog.xml_jpg"/>
@@ -167,18 +164,16 @@ instructions and download.
 		
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		
-		<pack name="CSW 2.0.2 test client" required="no" preselected="no">
-			<description>The GeoNetwork opensource provides Catalog Services for the Web 2.0.2 support. 
-This is a separate test application that can be used to test the CSW 2.0.2 services. 
-			</description>
+		<pack id="csw" name="CSW 2.0.2 test client" required="no" preselected="no">
+			<description/>
 			
 			<fileset dir="../csw" targetdir="$INSTALL_PATH/csw"/>
 		</pack>
 		
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		
-		<pack name="Source code" required="no" preselected="no">
-			<description>The GeoNetwork source code and the ant build script.</description>
+		<pack id="src" name="Source code" required="no" preselected="no">
+			<description/>
 			
 			<fileset dir="../src"       targetdir="$INSTALL_PATH/src"/>
 			<file    src="../build.xml" targetdir="$INSTALL_PATH"/>
@@ -186,9 +181,8 @@ This is a separate test application that can be used to test the CSW 2.0.2 servi
 		
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		
-		<pack name="Installer building tools" required="no" preselected="no">
-			<description>The installer data files. Installing this package you will
- be able to create the installer.</description>
+		<pack id="ibt" name="Installer building tools" required="no" preselected="no">
+			<description/>
 			
 			<fileset dir="../installer" targetdir="$INSTALL_PATH/installer">
 				<exclude name="**/.build"/>

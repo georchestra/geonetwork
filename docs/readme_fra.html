@@ -1,0 +1,101 @@
+<html>
+
+<head>
+	<title>GeoNetwork opensource readme</title>
+<style type="text/css">
+<!--
+.style1 {font-size: 9px}
+-->
+</style></head>
+
+<body>
+	<div align="right"><span class="style1">GeoNetwork V@version@ @subVersion@ / Date: @day@</span></div>
+	<h1>GeoNetwork - Prise en main </h1>
+
+	<h2>Lancement de l'application</h2>
+	
+	<p>
+	Pour utiliser GeoNetwork, vous devez d'abord démarrer le serveur Web intégré.</p>
+	<p><strong>Sous Windows</strong>, accédez à <em>GeoNetwork</em> dans le <em>menu windows</em> qui a été créé lors de l'installation et <strong>lancer "Démarrer serveur"</strong>. 
+	Vous pouvez ensuite ouvrir l'application dans votre navigateur.
+	</p>
+	<p>
+		Par défaut, ce devrait être au <a href="http://localhost:8080/geonetwork">http://localhost:8080/geonetwork</a>
+	</p>
+	<p>
+		<font color="#FF0000"><strong>IMPORTANT!!</strong></font>Après avoir ouvert la page d'accueil de GeoNetwork, connectez-vous en tant qu'administrateur. 
+		Vous devez utiliser le nom d'utilisateur <font color="#FF0000"><code><b>admin</b></code></font> et le mot de passe  <font color="#FF0000"><code><b>admin</b></code></font>.
+		Dans l'Administration, vous pouvez ensuite <strong>modifier votre compte</strong>.
+	</p>
+	<p>Documentation en ligne est disponible sur le GeoNetwork page d'accueil. Sélectionnez <b><a href="http://localhost:8080/geonetwork/docs/index.html">Aide</a></b>
+	 de la barre de menu. Un lien vers la version imprimable version PDF peut être trouvé au bas de la page d'aide. </p>
+	<p>Vous pouvez également démarrer le serveur Web Jetty de GeoNetwork utilisant les scripts situés dans le $INSTALL_PATH/bin directory.</p>
+	<p>Sur une plate-forme Windows, dans le répertoire bin de votre installation : 
+	<br>
+	<ul>
+		<li><code>start-geonetwork.bat</code></li>
+		<li><code>stop-geonetwork.bat</code></li>
+	</ul>
+	Sous Linux ou mac OSX, dans le répertoire bin de votre installation  :
+	<br>
+	<ul>
+		<li><code>start-geonetwork.sh</code></li>
+		<li><code>stop-geonetwork.sh</code></li>
+	</ul>
+ 	</p>
+ 	<p>
+		<cite>Note: Un environnement d'exécution Java (JRE) <em>@javaVersion@  Standard Edition</em> (téléchargement depuis <a href="@jre_url@">http://java.sun.com)</a> est requis pour l'exécution GeoNetwork opensource. Voir les sections Dépannage normale si l'installation
+		ou le démarrage échoue.</cite>
+	</p>
+	
+	<h2>Chargement des métadonnées</h2>
+	<p>
+	Le catalogue est fourni avec des modèles de métadonnées par défaut pour vous permettre de créer de nouvelles métadonnées en utilisant l'éditeur en ligne.
+	</p>
+	<p>
+	Si vous voulez charger d'autre métadonnée, plusieurs options s'offrent à vous: 
+	<ul>
+	   <li>Import de fichier XML via la section administration du catalogue</li>
+       <li>Import de fichier MEF via GAST ou la section administration du catalogue</li>
+   	   <li>Moissonage</li>
+	</ul>
+	
+	</p>
+	<p>Le format <em>MEF</em> a été spécialement conçus pour l'échange de métadonnées <em>et</em> de données, les aperçus ainsi que les privilèges d'accès
+	des catalogues de type GeoNetwork. Vous pouvez trouver un échantillon de fichiers MEF dans le <code>\gast\setup\sample-data</code> dossier. 
+	Le format de fichier a été décrit dans le chapitre 3 du serveur-manuel de référence (dans <code>\docs\manuals\</code>. 
+	Ce format sera également disponible dans d'autres applications géospatiales. 
+	<br>Pour importer ou exporter des métadonnées de GeoNetwork, vous devez démarrer l'outil GeoNetwork Administrateur Survival Tool (<em>GAST</em>).
+	<br>
+	<ul>
+		<li>Tout d'abord configurer votre connexion GeoNetwork serveur en fournissant des détails de compte et dans le menu <code>Options => Config</code> menu.
+		 <cite>Note: Vous avez besoin d'un éditeur ou un administrateur compte pour que cette fonction de travail.</cite></li>
+		<li>Pour charger échantillon de métadonnées et de données, sélectionnez l'option <em>échantillon de données</em> dans la base de données et
+		 appuyez sur la section d'importation </li>
+		<li>Pour charger d'autres données mises en forme <code>MEF</code>, sélectionnez Importer dans la gestion des options. Sélectionnez le dossier 
+		contenant les fichiers <code>MEF</code>et cliquez sur le bouton Importer.</li>
+	</ul>
+	</p>
+
+	<h2>Configuration du système</h2>
+
+	<h3>Serveur Web</h3>
+	<p>
+		L'application est embarquée avec une <a href="http://jetty.mortbay.org/">Jetty</a> serveur Web. Vous pouvez utiliser <a href="http://jakarta.apache.org/tomcat">Jakarta Tomcat</a> version 5.5
+		 au lieu si nécessaire. Vous avez à mettre en place de nouveaux contextes dans Tomcat qui pointent vers les applications <em>web</em> 
+		 dans le dossier de l'installation GeoNetwork.
+	</p>
+	
+	<h3>System de base de données </h3>
+
+	<p>GeoNetwork de bureau est livré avec un serveur de bases de données internes, la base de données SQL <a href="http://mckoi.com/database/">McKoi</a>.</p>
+	
+	<p>Si vous prévoyez d'utiliser un autre SGBD, vous pouvez utiliser GAST à mettre en place la base de données et migrer le contenu de la base de données embarquée McKoi. Assurez-vous que le SGBD est déjà en place et fonctionne avec un schéma de base de données et un utilisateur. Sélectionnez le SGBD en utilisant les GAST outil. Oracle, MySQL et PostgreSQL sont actuellement supportés. GeoNetwork utilise l'interface JDBC de travailler avec le SGBD, pour que d'autres SGBD systèmes de mai également.</p>
+	
+	<p>Vous pouvez également configurer manuellement le SGBD, bien que cela soit plus complexe (voir le site Web de la communauté pour plus de détails)</p>
+
+	<h2>Pour plus d'informations, à <a href="http://geonetwork-opensource.org">http://geonetwork-opensource.org</a></h2>
+	
+	<strong>Apprécier!</strong>
+</body>
+</html>
