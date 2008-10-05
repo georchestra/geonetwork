@@ -31,6 +31,9 @@
                     <para>issue the command <code>java -jar gast/gast.jar</code></para>
                 </listitem>
             </orderedlist>
+            <para>GAST will be in current system language if any translation is available. If you want to force
+            GAST GUI language, you could start GAST using the -Duser.language option (e.g. ./gast.sh -Duser.language=fr or java -Duser.language=fr -jar gast/gast.jar).
+            </para>
             
             <para>You can also try to simply open the GeoNetwork installation folder, go to the
                 gast folder and doubleclick on the gast.jar file. If you have Java installed, GAST should
