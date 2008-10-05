@@ -35,6 +35,13 @@
     <ant antfile="${dbf.basedir}/build-docbook.xml" target="all">
       <property name="docbook.dir" value="gn_manual"/>
       <property name="docbook.file" value="Manual"/>
+      <property name="lang" value="eng"/>
+    </ant>
+  	
+    <ant antfile="${dbf.basedir}/build-docbook.xml" target="all">
+      <property name="docbook.dir" value="gn_manual_fra"/>
+      <property name="docbook.file" value="Manual_fra"/>
+	  <property name="lang" value="fra"/>
     </ant>
   </target>
 
@@ -49,6 +56,13 @@
     <ant antfile="${dbf.basedir}/build-docbook.xml" target="pdf">
       <property name="docbook.dir" value="gn_manual"/>
       <property name="docbook.file" value="Manual"/>
+      <property name="lang" value="eng"/>
+    </ant>
+  
+    <ant antfile="${dbf.basedir}/build-docbook.xml" target="pdf">
+      <property name="docbook.dir" value="gn_manual_fra"/>
+      <property name="docbook.file" value="Manual_fra"/>
+      <property name="lang" value="fra"/>
     </ant>
   </target>
 
@@ -63,6 +77,13 @@
     <ant antfile="${dbf.basedir}/build-docbook.xml" target="html">
       <property name="docbook.dir" value="gn_manual"/>
       <property name="docbook.file" value="Manual"/>
+      <property name="lang" value="eng"/>
+    </ant>
+
+    <ant antfile="${dbf.basedir}/build-docbook.xml" target="html">
+      <property name="docbook.dir" value="gn_manual_fra"/>
+      <property name="docbook.file" value="Manual_fra"/>
+      <property name="lang" value="fra"/>
     </ant>
   </target>
 
@@ -80,8 +101,9 @@
     <ant antfile="${dbf.basedir}/build-docbook.xml" target="pdf">
       <property name="docbook.dir" value="guidelines"/>
       <property name="docbook.file" value="docbook_guidelines"/>
-      </ant>
-   </target>
+      <property name="lang" value="eng"/>
+    </ant>
+  </target>
    
   <!-- ======================================================================== -->
   <!-- ==                                                                    == -->

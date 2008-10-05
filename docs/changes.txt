@@ -20,10 +20,14 @@
 --- Changes
 --------------------------------------------------------------------------------
 
+- Added multilingual support in installer
+
+- Added french translation of the documentation
+
 - Added support for printing search result in PDF format 
 (http://trac.osgeo.org/geonetwork/wiki/PrintPdf)
 
-- Added support to harvest the OGC:GetCapabilities documents
+- Added support to harvest the OGC:GetCapabilities (WMS, WFS, WCS and WPS) documents
 to produce metadata for services and layers/featuretypes/coverages
 in ISO19139/119 format (http://trac.osgeo.org/geonetwork/wiki/ISO19119impl)
 

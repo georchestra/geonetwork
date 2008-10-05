@@ -131,9 +131,11 @@
     <attribute name="dir"/>
     <attribute name="file"/>
     <attribute name="xsl"/>
+    <attribute name="lang"/>
     <sequential>
 
-    <property name="@{type}.target.dir" value="${target.dir}/@{dir}/@{target}"/>
+    <property name="@{type}.target.dir" value="${target.dir}/@{dir}/@{target}/@{lang}"/>
+    <property name="@{type}.target.dir.image" value="${target.dir}/@{dir}/@{target}"/>    	
     <property name="@{type}.target.file" value="${@{type}.target.dir}/@{file}"/>
     <property name="@{type}.tmp.style" value="${tmp.dir}/@{type}.xsl"/>
     <property name="@{type}.tmp.custom" value="${tmp.dir}/@{type}-style.xsl"/>
@@ -169,7 +171,7 @@
            output="${@{type}.tmp.titlepage}.xsl"
            style="${dbf.xsl.dir}/template/titlepage.xsl"/>
 
-    <copy todir="${@{type}.target.dir}/images">
+    <copy todir="${@{type}.target.dir.image}/images">
       <fileset dir="${docbook.src.dir}/@{dir}/images"/>
     </copy>
 
@@ -266,6 +268,7 @@
     <delete quiet="true" dir="${target.dir}"/>
     <delete quiet="true" dir="${basedir}/html"/>
     <delete quiet="true" file="${basedir}/Manual.pdf"/>
+    <delete quiet="true" file="${basedir}/Manual_fra.pdf"/>
     <delete quiet="true" file="${basedir}/docbook_guidelines.pdf"/>
   </target>
 
@@ -278,7 +281,7 @@
           depends="prepare"
           description="--> Generate PDF docs">
 
-    <transform type="pdf" target="tmp" title="pdf" xsl="fo" dir="${docbook.dir}" file="${docbook.file}"/>
+    <transform type="pdf" target="tmp" title="pdf" xsl="fo" dir="${docbook.dir}" file="${docbook.file}" lang="${lang}"/>
 
     <fop format="application/pdf" 
         fofile="${pdf.target.file}.xml"
@@ -296,7 +299,7 @@
           depends="prepare"
           description="--> Generate HTML docs in multiple files">
 
-    <transform type="html" target="html" title="html" xsl="html" dir="${docbook.dir}" file="${docbook.file}"/>
+    <transform type="html" target="html" title="html" xsl="html" dir="${docbook.dir}" file="${docbook.file}" lang="${lang}"/>
 
     <copy todir="${html.target.dir}/images">
       <fileset dir="${dbf.xsl.dir}/images/"/>
@@ -311,7 +314,7 @@
     <copy todir="${basedir}/html">
       <fileset dir="${target.dir}/${docbook.dir}/html"/>
     </copy>
-    
+
   </target>
 
   <!-- ======================================================================== -->
