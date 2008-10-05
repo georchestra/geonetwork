@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+                      "http://www.docbook.org/xml/4.4/docbookx.dtd">
+<book>
+    <preface id="preface">
+        <title>Préface</title>
+        <formalpara>
+            <title>A propos du projet</title>
+            <para>Ce document fourni les informations pour l'utilisation et la personnalisation de l'outil GeoNetwork. 
+                Ce projet est né en tant que catalogue de données géospatiales pour l' 
+                <ulink url="http://www.fao.org">Organisation pour l'Agriculture et l'Alimentation des Nations Unies 
+                (FAO)</ulink>, le  
+                <ulink url="http://vam.wfp.org">Programme d'Alimentation Mondiale (WFP)</ulink> 
+                et le <ulink url="http://www.unep.org">Programme Environnemental des Nations Unies (UNEP)</ulink>.
+                Actuellement le projet est largement utilisé comme brique principale des Infrastructures de données
+                Spatial dans le monde entier. Le projet fait parti de  
+                l'Open Source Geospatial Foundation (OSGeo) et peut être découvert 
+                <ulink url="http://geonetwork-opensource.org"/>.
+            </para>
+        </formalpara>
+        <formalpara>
+            <title>Information sur la license</title>
+            <para>
+                Copyright (c) 2007-2008 Open Source Geospatial Foundation (<ulink url="http://www.osgeo.org">OSGeo</ulink>).  
+            </para>
+        </formalpara>
+        <para>You are free to Share — to copy, distribute and transmit the work. 
+            Under the following conditions:
+            <itemizedlist>
+                <listitem><para>Attribution. You must attribute the work in the manner specified 
+                    by the author or licensor (but not in any way that suggests that they 
+                    endorse you or your use of the work).</para></listitem>
+                <listitem><para>No Derivative Works. You may not alter, transform, or 
+                    build upon this work.</para></listitem>
+                <listitem><para>For any reuse or distribution, you must make clear to others 
+                    the license terms of this work. The best way to do this is with a link to 
+                    this web page.</para></listitem>
+                <listitem><para>Any of the above conditions can be waived if you get permission
+                    from the copyright holder.</para></listitem>
+                <listitem><para>Nothing in this license impairs or restricts the author's moral
+                    rights.</para></listitem>
+            </itemizedlist>
+        </para>
+        <para>You may obtain a copy of the License at
+            <ulink url="http://creativecommons.org/licenses/by-nd/3.0/">Creative Commons</ulink></para>
+        <para>The document is written in DocBook format for consistency and portability.</para>
+        <formalpara>
+            <title>Information sur les auteurs</title>
+            <para>Cette documentation a été écrite par les développeurs du projet GeoNetwork opensource
+                . Si vous avez des questions, découvrez des erreurs ou souhaitez suggérer des améliorations
+                , contactez nous via la mailing list développeur de GeoNetwork opensource
+                <email>geonetwork-devel@lists.sourceforge.net</email></para>
+        </formalpara>
+        <para/>
+        <para><inlinemediaobject id="gn_logo"><imageobject><imagedata fileref="images/GeoNetwork_opensource_logo.jpg" width="4cm" contentwidth="4cm"/></imageobject></inlinemediaobject></para>
+        <para/>
+        <para><inlinemediaobject id="osgeo_logo"><imageobject><imagedata fileref="images/OSGeo_logo.jpg" width="4cm" contentwidth="4cm"/></imageobject></inlinemediaobject></para>
+        
+    </preface>
+</book>
