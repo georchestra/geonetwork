@@ -212,7 +212,7 @@ CREATE TABLE Metadata
     rating       int            default 0 not null,
     popularity   int            default 0 not null,
     primary key(id),
-    unique(uuid,source,harvestUuid),
+    unique(uuid),
     foreign key(owner) references Users(id),
     foreign key(groupOwner) references Groups(id)
   );
