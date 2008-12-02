@@ -3,91 +3,91 @@
                       "http://www.docbook.org/xml/4.4/docbookx.dtd">
 <book>
     <chapter id="metadata">
-        <title>Metadata in Spatial Data Management</title><indexterm><primary>metadata</primary></indexterm>
+        <title>Métadonnées dans la gestion des données</title><indexterm><primary>métadonnée</primary></indexterm>
         <section>
-            <title>What is Metadata?</title>
+            <title>Qu'est ce que les métadonnées ?</title>
 
-            <para>Metadata, commonly defined as “data about data” or "information about data", is a structured set of
-                information which describes data (including both digital and non-digital datasets)
-                stored in administrative systems. Metadata may provide a short summary about the
-                content, purpose, quality, location of the data as well as information related to
-                its creation.</para>
+            <para>Les métadonnées sont généralement définies comme “données sur les données” ou "information sur les données". 
+                Les métadonnées sont une liste structurée d'information qui décrivent les données ou les services 
+                (incluant les données numériques ou non) stockés dans les systèmes d'information.
+                Les métadonnées peuvent contenir une brève description sur le contenu, les objectifs, 
+                la qualité et la localisation de la donnée ainsi que les informations relatives à sa création.</para>
         </section>
 
         <section>
-            <title>What are Metadata Standards?</title><indexterm><primary>Metadata</primary><secondary>standards</secondary></indexterm>
-            <para>Metadata standards provide data producers with the format and content for properly
-                describing their data, allowing users to evaluate the usefulness of the data in
-                addressing their specific needs.</para>
+            <title>Quels sont les standards sur les métadonnées ?</title><indexterm><primary>Métadonnée</primary><secondary>standards</secondary></indexterm>
+            <para>Pour les gestionnaires de données, les standards sur les métadonnées 
+                décrivent le format d'échange et le contenu
+                pour décrire leurs données ou services. Ceci permet aux utilisateurs d'évaluer la pertinence
+                des données par rapport à leurs besoins.
+                </para>
             
-            <para>The standards provide a documented, common set of terms and definitions
-                that are presented in a structured format.</para>
+            <para>Les standards fournissent un ensemble commun de descripteurs et leur définition.</para>
         </section>
 
         <section>
-            <title>Why do we need Standardized Metadata?</title>
+            <title>Pourquoi avons nous besoin de standards ?</title>
 
-            <para>Standardized metadata support users in effectively and efficiently accessing data
-                by using a common set of terminology and metadata elements that allow for a quick
-                means of data discovery and retrieval from metadata clearinghouses. The metadata
-                based on standards ensure information consistency and quality and avoid that
-                important parts of data knowledge are lost.</para>
+            <para>L'utilisation de standards permet aux utilisateurs d'avoir une terminologie
+                commune permettant la réalisation de recherche efficace pour la découverte des données
+                dans les catalogues. Les métadonnées reposant sur les standards
+                permettent d'avoir un même niveau d'information et d'éviter la perte
+                de connaissance sur les données.</para>
         </section>
 
         <section>
-            <title>Geographic Information Metadata Standard</title><indexterm><primary>Metadata</primary><secondary>ISO19115</secondary></indexterm>
-            <indexterm><primary>Metadata</primary><secondary>ISO19139</secondary></indexterm>
-            <indexterm><primary>Metadata</primary><secondary>FGDC</secondary></indexterm>
-            <indexterm><primary>Metadata</primary><secondary>Dublin Core</secondary></indexterm>
-            <para>Geographic data, which can be defined as any data with a geographic component, is
-                often produced by one individual or organization, and may address the needs of
-                various users, including information system analysts, programme planners, developers
-                of geographic information or policy makers. Proper standard documentation on
-                geographic data enable different users to better evaluate the appropriateness of
-                data to be used for data production, storage, update.</para>
+            <title>Les standards pour les métadonnées géographiques</title><indexterm><primary>Métadonnées</primary><secondary>ISO19115</secondary></indexterm>
+            <indexterm><primary>Métadonnée</primary><secondary>ISO19139</secondary></indexterm>
+            <indexterm><primary>Métadonnée</primary><secondary>FGDC</secondary></indexterm>
+            <indexterm><primary>Métadonnée</primary><secondary>Dublin Core</secondary></indexterm>
+            <para>Les données géographiques sont souvent produites par des organisations ou des indépendants
+                et peuvent répondre aux besoins de différents types d'utilisateurs (opérateurs SIG, 
+                analyse d'image, politiques, ...). Une documentation adéquate sur les données 
+                aide à mieux définir la pertinence de ces informations pour la production, l'utilisation
+                et la mise à jour.</para>
 
-            <para>The metadata standards supported by GeoNetwork opensource are the <emphasis
+            <para>Les standards de métadonnées supportés par GeoNetwork opensource sont l'<emphasis
                     role="bold"><emphasis role="bold">ISO 19115</emphasis>:2003</emphasis> -
-                approved by the international community in April 2003 as a tool to define metadata
-                in the field of geographic information - and the <emphasis role="bold"
-                >FGDC</emphasis> - the metadata standard adopted in the United States by the Federal
-                Geographic Data Committee. In addition, GNos supports also the international
-                standard <emphasis role="bold">Dublin Core</emphasis> for the description of general
-                documents.</para>
+                approuvé par l'ISO en avril 2003 comme l'outil pour définir les métadonnées 
+                dans le domaine de l'information géographique - et le <emphasis role="bold"
+                >FGDC</emphasis> - le standard de métadonnée adopté par les Etats-Unis / Federal
+                Geographic Data Committee. En complément, GeoNetwork supporte également le standard international
+                 <emphasis role="bold">Dublin Core</emphasis> pour la description d'autres types de ressource.</para>
 
-            <para>This ISO Standard precisely defines how geographic information and related
-                services should be described, providing mandatory and conditional metadata sections,
-                metadata entities and metadata elements. This standard applies to data series,
-                independent datasets, individual geographic features and feature properties. Despite
-                ISO 19115:2003 was designed for digital data, its principles can be extended to many
-                other forms of geographic data such as maps, charts, and textual documents as well
-                as non-geographic data.</para>
+            <para>L'ISO définit en détail comment décrire les ressources dans le domaine de l'information 
+                géographique tel que les données ou les services. Ce standard précise les descripteurs
+                obligatoires et conditionels. Il s'applique aux séries de données, aux données, aux
+                objets géographiques ainsi qu'à leurs propriétés. Bien que 
+                l'ISO 19115:2003 ai été conçu pour les données numériques, ces principes peuvent 
+                être étendus à d'autres type de ressources tel que les cartes, graphiques, 
+                documents ou données non géographiques.</para>
             
-            <para>The underlying format of an ISO19115:2003 compliant metadata is XML. GeoNetwork 
-                uses the <literal>ISO Technical Specification 19139 Geographic information - Metadata - 
-                XML schema implementation</literal> for the encoding of this XML.</para>
+            <para>Le format d'échange de l'ISO19115:2003 est XML. GeoNetwork 
+                utilise <literal>ISO Technical Specification 19139 Geographic information - Metadata - 
+                XML schema implementation</literal> pour l'encodage XML de l'ISO19115.</para>
         </section>
         
         <section>
-            <title>Metadata profiles</title><indexterm><primary>Metadata</primary><secondary>profiles</secondary></indexterm>
-            <para>GeoNetwork supports multiple metadata profiles. Profiles can take the form of 
-                <literal>Templates</literal> that you can create using the metadata editor. 
-                Using the Advanced view of the editor, virtually all of the metadata elements
-                are accessible to the user.</para>
+            <title>Profile de métadonnées</title><indexterm><primary>Métadonnées</primary><secondary>profiles</secondary></indexterm>
+            <para>GeoNetwork supporte plusieurs profiles de métadonnées. Les profiles peuvent prendre la forme
+                de modèle ou  
+                <literal>Templates</literal> qu'il est possible de créer via l'éditeur. 
+                En utilisant la vue avancée de l'éditeur, potentiellement l'ensemble des éléments sont accessibles
+                à l'utilisateur.</para>
             
-            <para>Support for extensions to a metadata standard can also be achieved relatively
-                quick by an experienced XML/XSL software engineer.</para>
+            <para>Le support d'extensions ou de profil spécifique peut également être mis en place 
+                par des développeurs connaissant les langages XML/XSL.</para>
         </section>
         
         <section>
-            <title>Transition between metadata standards</title><indexterm><primary>Metadata</primary><secondary>transforming</secondary></indexterm>
-            <indexterm><primary>Metadata</primary><secondary>migrating</secondary></indexterm>
-            <para>With the ISO19115:2003 Metadata standard for Geographic Information now
-                being the preferred common standard, many have a need to migrate legacy metadata
-                into the new standard.</para>
-            <para>GeoNetwork provides import (and export) functionality and has a number of 
-                transformers in place. It is an easy process for a system administrator to 
-                install custom transformers based on XSLT.</para>
+            <title>Transition entre les standards de métadonnée</title><indexterm><primary>Métadonnée</primary><secondary>transformation</secondary></indexterm>
+            <indexterm><primary>Métadonnée</primary><secondary>migration</secondary></indexterm>
+            <para>Avec le standard ISO19115:2003 actuellement le principale standard utilisé, 
+                il est nécessaire de disposer d'outil de migration.</para>
+            <para>Pour cela, GeoNetwork permet d'importer et d'exporter différents formats. 
+                Il est également simple pour un administrateur d'ajouter de nouvelles transformations
+                dans son catalogue via l'utilisation de transformation XSLT. 
+                </para>
         </section>
         
     </chapter>

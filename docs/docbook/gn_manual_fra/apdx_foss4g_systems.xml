@@ -3,19 +3,17 @@
                       "http://www.docbook.org/xml/4.4/docbookx.dtd">
 <book>
     <appendix id="foss4g_systems">
-        <title>Free and Open Source Software for Geospatial Information
-            Systems</title>
+        <title>Logiciel libre pour les Systèmes d'Information Géographique</title>
         
-        <para>A range of related software packages can be used
-            in addition to GeoNetwork opensource to deploy a full Spatial Data
-            Infrastructure. These include Web Map Server software, GIS desktop
-            applications and Web Map Viewers.</para>
+        <para>Une suite de logiciel peut être utilisé en complément de GeoNetwork opensource
+            pour déployer une infrastructure de données spatiales complète.
+            Ceci inclu les outils pour la mise en place de serveurs cartographiques
+            sur Internet, les SIG bureautiques et les outils de visualisation.</para>
         
-        <para>Below you will find some examples of open source software available
-        for each categories.</para>
+        <para>Ci-dessous, vous trouverez quelques exemples pour chacune des catégories.</para>
         
         <section>
-            <title>Web Map Server software</title>
+            <title>Serveurs cartographiques</title>
             <itemizedlist>
                 <listitem><para>GeoServer (All)<footnote id="os_support"><para>All = Windows, Linux and Mac OS X</para></footnote> <ulink url="http://www.geoserver.org"/></para></listitem>
                 <listitem><para>MapServer (All) <ulink url="http://www.osgeo.org/mapserver"/></para></listitem>
@@ -24,7 +22,7 @@
         </section>
 
         <section>
-            <title>GIS Desktop software</title>
+            <title>SIG</title>
             <itemizedlist>
                 <listitem><para>GRASS (All) <ulink url="http://www.osgeo.org/grass"/></para></listitem>
                 <listitem><para>gvSIG (All) <ulink url="http://www.gvsig.gva.es/"/></para></listitem>
@@ -35,7 +33,7 @@
         </section>        
 
         <section>
-            <title>Web Map Viewers</title>
+            <title>Cartographie sur Internet</title>
             <itemizedlist>
                 <listitem><para>OpenLayers (All) <ulink url="http://www.osgeo.org/openlayers"/></para></listitem>
                 <listitem><para>MapBender (All) <ulink url="http://www.osgeo.org/mapbender"/></para></listitem>
