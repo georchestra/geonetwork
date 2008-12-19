@@ -244,22 +244,25 @@
                 shows a list of harvesting nodes that have been created so far. On the bottom side
                 there is a set of buttons to manage these nodes. The meaning of each column is as
                 follows:</para>
-            <para>Select This is just a checkbox to select one or more nodes. The selected nodes
+            <para><emphasis>Select</emphasis> This is just a checkbox to select one or more nodes. The selected nodes
                 will be affected by the first row of buttons (start, stop, run, remove). For
                 example, if you select 3 nodes and press the Remove button, these 3 nodes will be
-                removed. Name This is the node’s name provided by the administrator. Type The node’s
+                removed.</para>
+            <para><emphasis>Name</emphasis> This is the node’s name provided by the administrator. Type The node’s
                 harvesting type choosed when the node was created (geonetwork, web folder etc...).
-                Status This is an icon that reflects the node’s current status. See <xref
+            </para>
+            <para><emphasis>Status</emphasis> This is an icon that reflects the node’s current status. See <xref
                     linkend="admin_harvesting_status"/> for all different icons and status
-                description. Errors This column reflects the status of the last harvesting run,
+                    description.</para>
+            <para><emphasis>Errors</emphasis> This column reflects the status of the last harvesting run,
                 which could have succeeded or not. The result is reflected on this icon and a
                 tooltip will show detailed information. See <xref
-                    linkend="admin_harvesting_status_2"/> for all different icons. Every Time (in
-                days, hours, minutes) between two consecutive harvesting from this node. Last run
-                The date, in ISO 8601 format, of the most recent harvesting run. Operation A list of
-                buttons for all possible operations on a node. At least, an Edit button is present.
-                Pressing this button you will reach the same page used to create the node. From this
-                page you can change the desired parameters.</para>
+                linkend="admin_harvesting_status_2"/> for all different icons.</para>
+            <para><emphasis>Every</emphasis> The time (in days, hours, minutes) between two consecutive harvesting 
+            	from this node.</para>
+            <para><emphasis>Last run</emphasis> The date, in ISO 8601 format, of the most recent harvesting run. </para>
+            <para><emphasis>Operation</emphasis> A list of buttons for all possible operations on a node.</para>
+            <para>Selecting <emphasis>Edit</emphasis> will allow you to change the parameters for a node.</para>
 
             <figure id="admin_harvesting_list">
                 <title>The harvesting main page</title>
@@ -270,22 +273,25 @@
                 </mediaobject>
             </figure>
 
-            <para>The bottom side of the page contains two rows of buttons. The first row contains
-                buttons that can operate on a set of nodes. You can select the nodes using the
-                checkbox on the first column and then press the proper button. When the button
-                finishes its action, the checkboxes are cleared. The second row contains general
-                purpose buttons. Here is the meaning of each button:</para>
-            <para>Activate When a new harvesting node is created, it’s status is
+            <para>The bottom side of the page contains two rows of buttons. The first row contains buttons 
+                that can operate on a set of nodes. You can select the nodes using the checkbox on the first 
+                column and then press the proper button. When the button finishes its action, the checkboxes 
+                are cleared. Here is the meaning of each button:</para>
+            <para><emphasis>Activate</emphasis> When a new harvesting node is created, it’s status is
                 <emphasis>inactive</emphasis>. Use this button to make it
-                <emphasis>active</emphasis> and thus to start harvesting from the remote node.
-                Deactivate Stops harvesting from a node. Please notice that this does not mean that
+                <emphasis>active</emphasis> and thus to start harvesting from the remote node.</para>
+            <para><emphasis>Deactivate</emphasis> Stops harvesting from a node. Please notice that this does not mean that
                 a currently running harvesting will be stopped but it means that this node will be
-                ignored during future harvestings. Run This button simply tells the harvesting
+                ignored during future harvestings.</para>
+            <para><emphasis>Run</emphasis> This button simply tells the harvesting
                 engine to start harvesting immediately. This is usefull for testing during the
-                harvesting setup. Remove Remove all currently selected nodes. A dialog will ask the
-                user to confirm the action. Back Simply returns to the main administration page. Add
-                This button allows to create new harvesting nodes. See section ?? for more
-                information. Refresh Refreshes the current list of nodes quering the server. This
+                harvesting setup.</para>
+            <para><emphasis>Remove</emphasis> Remove all currently selected nodes. A dialog will ask the
+            user to confirm the action.</para>
+            <para>The second row contains general purpose buttons. Here is the meaning of each button:</para>
+            <para><emphasis>Back</emphasis> Simply returns to the main administration page.</para>
+            <para><emphasis>Add</emphasis> This button allows to create new harvesting nodes.</para>
+            <para><emphasis>Refresh</emphasis> Refreshes the current list of nodes quering the server. This
                 can be usefull to see if the harvesting list has been altered by someone else or if
                 any harvesting process started.</para>
 
@@ -660,9 +666,9 @@
         </section>
         <section>
             <title>Adding new nodes</title>
-            <para>The Add button in the main page allows you to add new harvesting nodes. After
-                pressing it, you will reach the page shown in <xref linkend="admin_harvesting_add"
-                />. When creating a new node, you have to choose the harvesting protocol implemented
+            <para>The Add button in the main page allows you to add new harvesting nodes. It will 
+            	open the form shown in <xref linkend="admin_harvesting_add"/>. 
+            	When creating a new node, you have to choose the harvesting protocol supported
                 by the remote server. The supported protocols are:</para>
             <para>Geonetwork This is the standard and most powerfull harvesting protocol used in
                 GeoNetwork. It is able to log in into the remote node, to perform a standard search
