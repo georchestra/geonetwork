@@ -257,36 +257,36 @@
 
             <orderedlist>
                 <listitem>
-                    <para>Sélectionner : Case à cocher pour la sélection d'un noeud. Fonction des
+                    <para><emphasis>Sélectionner</emphasis>: Case à cocher pour la sélection d'un noeud. Fonction des
                         actions lancées (Activer, Désactiver, Lancer, ...), le noeud sélectionné
                         sera impacté. Par exemple, si vous sélectionnez 3 noeuds, ceux là seront
                         supprimés.</para>
                 </listitem>
                 <listitem>
-                    <para>Nom : Nom du noeud tel que défini par l'administrateur.</para>
+                    <para><emphasis>Nom</emphasis>: Nom du noeud tel que défini par l'administrateur.</para>
                 </listitem>
                 <listitem>
-                    <para>Type : Type de noeud (GeoNetwork, CSW, WebDav, ...).</para>
+                    <para><emphasis>Type</emphasis>: Type de noeud (GeoNetwork, CSW, WebDav, ...).</para>
                 </listitem>
                 <listitem>
-                    <para>Status : Icône représentant l'état du noeud. Voir <xref
+                    <para><emphasis>Status</emphasis>: Icône représentant l'état du noeud. Voir <xref
                             linkend="admin_harvesting_status"/> pour les différents status
                         possibles.</para>
                 </listitem>
                 <listitem>
-                    <para>Erreur : Status du dernier moissonnage joué. Les informations sur le
+                    <para><emphasis>Erreur</emphasis>: Status du dernier moissonnage joué. Les informations sur le
                         moissonnage (nombre de résultats, ajouts, suppression sont disponibles dans
                         l'info bulle de l'icône. Voir See <xref linkend="admin_harvesting_status_2"
                         />.</para>
                 </listitem>
                 <listitem>
-                    <para>Fréquence (j:h:m) : Fréquence de moissonnage.</para>
+                    <para><emphasis>Fréquence (j:h:m)</emphasis>: Fréquence de moissonnage.</para>
                 </listitem>
                 <listitem>
-                    <para>Dernière exécution : Date du dernier moissonnage.</para>
+                    <para><emphasis>Dernière exécution</emphasis>: Date du dernier moissonnage.</para>
                 </listitem>
                 <listitem>
-                    <para>Opération : Opérations possibles sur le noeud dont l'édition des
+                    <para><emphasis>Opération</emphasis>: Opérations possibles sur le noeud dont l'édition des
                         propriétés.</para>
                 </listitem>
             </orderedlist>
@@ -687,6 +687,8 @@
                     linkend="admin_harvesting_add"/>. Lors de la création d'un nouveau noeud, vous
                 devez choisir le type de moissonnage du serveur distant. Les protocoles supportés
                 sont les suivants :</para>
+            <orderedlist>
+                <listitem>
             <para>Geonetwork est le protocole le plus avancé utilisé dans GeoNetwork. Celui-ci
                 permet de se connecter à un noeud distant et de réaliser une recherche utilisant les
                 critères de recherche et importer les métadonnées correspondantes. De plus, ce
@@ -694,23 +696,34 @@
                 moissonées si ils existent localement. Notez que depuis la version 2.1 de GeoNetwork
                 protocole de moissonnage s'est amélioré. Il n'est pas possible de moissoner les
                 anciennes version de GeoNetwork.</para>
+            	</listitem>
+            	<listitem>
             <para>Web DAV permet d'utiliser les répertoires Web DAV (Distributed Authoring and
                 Versioning) . Il peut être pratique pour des utilisateurs souhaitant publier leurs
                 métadonnées via un serveur web supportant l'interface DAV. Le protocole permet de
                 récupérer le contenu d'une page (la liste des fichiers présent sur le webdav) avec
                 leur date de mise à jour.</para>
+            	</listitem>
+            	<listitem>
             <para>CSW correspond à <emphasis>Catalogue Services for the Web</emphasis> et est une
                 interface de recherche pour les catalogues développé par l'Open Geospatial
                 Consortium. GeoNetwork est compatible avec la version 2.0.1 et 2.0.2 de ce
                 protocole.</para>
+            	</listitem>
+            	<listitem>
             <para>Ancienne version de GeoNetwork permet de moissoner d'ancien noeud GeoNetwork car
                 depuis la version 2.1 le mécanisme de moissonnage a fortement évolué. Un catalogue
                 en version 2.0 peut toujours moissoner un catalogue en version 2.1 mais un catalogue
                 2.1 doit utiliser ce protocole pour moissoner un ancien noeud. Ce mécanisme est
                 conservé tant que les versions 2.1 et sup. ne sont pas largement déployée.</para>
+            	</listitem>
+            	<listitem>
             <para>L'acronyme OAI-PMH correspond à <emphasis>Open Archive Initiative Protocol for
                     Metadata Harvesting</emphasis>. C'est un protocole largement utilisé. GeoNetwork
                 est compatible avec la version 2.0 de ce protocole.</para>
+            	</listitem>
+            </orderedlist>
+
             <para>La liste déroulante présente la liste des protocoles disponibles. En cliquant sur
                 Ajouter, vous accédez la page d'édition des paramètres qui dépend du type de
                 protocole choisi. Le bouton retour permet de revenir à la page principale.</para>

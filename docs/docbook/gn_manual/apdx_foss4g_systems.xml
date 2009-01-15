@@ -18,7 +18,7 @@
             <title>Web Map Server software</title>
             <itemizedlist>
                 <listitem><para>GeoServer (All)<footnote id="os_support"><para>All = Windows, Linux and Mac OS X</para></footnote> <ulink url="http://www.geoserver.org"/></para></listitem>
-                <listitem><para>MapServer (All) <ulink url="http://www.osgeo.org/mapserver"/></para></listitem>
+                <listitem><para>MapServer (All) <ulink url="http://www.mapserver.org/"/></para></listitem>
                 <listitem><para>MapGuide Open Source (Windows &amp; Linux) <ulink url="http://www.osgeo.org/mapguide"/></para></listitem>
             </itemizedlist>
         </section>

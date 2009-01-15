@@ -336,7 +336,7 @@
             <title>Entering Metadata for your Map</title>
 
             <para>As we mentioned in the introduction to this guide, GNos provides tools to describe
-                any type of geographic data (verctor layers, raster, tables, map services, etc.) as
+                any type of geographic data (vector layers, raster, tables, map services, etc.) as
                 well as general document like reports, projects, papers, etc. For the purpose of
                 this Quick Start Guide, an example of required and useful metadata elements to
                 properly describe a thematic map will be provided hereafter. You should gather as
@@ -648,7 +648,7 @@
                 <para>Finally, you can upload the dataset stored on your local computer and then
                     create a link between data and related description. Files in whatever format can
                     be uploaded: doc, PDF, images, vector layers, etc. For the latter the
-                    distribution in a compressed file is recommended. You can include the verctor
+                    distribution in a compressed file is recommended. You can include the vector
                     data, the legend, any documentation that can help the interpretation of the
                     data, related reports, detailed descriptions of the data processing, base data
                     used to create the dataset specified and/or other relevant information. Follow
@@ -727,7 +727,7 @@
                     privileges for each map. This means that you will identify which work groups
                     have which privileges, i.e. view, download, etc. for your particular map.</para>
 
-                <para>For instance, you can fdefine if the information and related services is
+                <para>For instance, you can define if the information and related services is
                     visible to all (Internet users) or just to internal users only (Intranet).
                     Privileges are assigned on a per group basis. Depending on the user profile
                     (Guest, Registered User, Editor, Admin etc.) access to these functions may

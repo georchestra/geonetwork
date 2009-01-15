@@ -36,7 +36,7 @@
                                 <formalpara>
                                     <title>Z39.50 listening port</title>
                                     <para>This is the most probable source of conflicts. You have to
-                                        entedit the <literal>web/WEB-INF/config.xml</literal> file of the second
+                                        edit the <literal>web/WEB-INF/config.xml</literal> file of the second
                                         installation and choose a value other than the default one,
                                         which is 2100. Use for example 2101 but keep in mind that
                                         remote nodes usually use 2100 so your second node will not
@@ -171,7 +171,7 @@
                         <para>The book "Producing Open Source Software" (shown in <xref
                                 linkend="producingoss"/>) is a highly recommended book for anyone
                             working on open source software projects. It provides insight in all
-                            aspects of FOSS development and on how to make a project succesful. If
+                            aspects of FOSS development and on how to make a project successful. If
                             you are interested in participating in the GeoNetwork opensource
                             project, please spend some time reading through this book. It's
                             definitely worth the time and money (so buy the hardcopy if you can

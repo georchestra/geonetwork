@@ -9,7 +9,7 @@
             <title>New version - New funtionalities</title>
 
             <para>The new GeoNetwork opensource comes with substantial upgrades of different
-                components for a more intuitive and responsive user-system interaction. Web2
+                components for a more intuitive and responsive user-system interaction. Web 2.0
                 technologies have been adopted, in particular AJAX techniques, to allow for more
                 interactive and faster services in the web interface and for the integration of the
                 existing web map viewer in the home page. Similar functionalities have been
@@ -172,7 +172,7 @@
                 <listitem>
                     <para>Click Start &gt; Programs &gt; Geonetwork desktop &gt; Open
                         GeoNetwork opensource to start using GeoNetwork opensource, or connect your
-                        Web browser to <ulink url="http://localhost8080/geonetwork/"/></para>
+                        Web browser to <ulink url="http://localhost:8080/geonetwork/"/></para>
                 </listitem>
             </orderedlist>
 

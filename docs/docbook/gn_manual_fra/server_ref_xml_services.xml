@@ -1776,7 +1776,7 @@
                 </section>
                 <section>
                     <title>Response</title>
-                    <para>The response is an XML tree similar to the system hyerarchy into the
+                    <para>The response is an XML tree similar to the system hierarchy into the
                         settings structure. See ?? for more information. The response has the
                         following elements:</para>
                     <itemizedlist>

@@ -33,13 +33,13 @@
                     <para>A WebDAV server.</para>
                 </listitem>
                 <listitem>
-                    <para>A CSW 2.0.1 or 2.0.2 server.</para>
+                    <para>A CSW 2.0.1 or 2.0.2 catalog server.</para>
                 </listitem>
                 <listitem>
                     <para>An OAI-PMH server.</para>
                 </listitem>
                 <listitem>
-                    <para>An OGC service using its GetCapabilities document. These include WMS, WFS and WCS services.</para>
+                    <para>An OGC service using its GetCapabilities document. These include WMS, WFS, WPS and WCS services.</para>
                 </listitem>
             </orderedlist>
 
@@ -219,7 +219,8 @@
                         the document is used.</para>
                     </listitem>
                     <listitem>
-                        <para>Thumbnails are generated only for Web Map Service (WMS).</para>
+                        <para>Thumbnails are generated only for Web Map Service (WMS). The service should also support 
+                        the WGS84 projection</para>
                     </listitem>
                 </orderedlist>
 
@@ -244,25 +245,43 @@
                 shows a list of harvesting nodes that have been created so far. On the bottom side
                 there is a set of buttons to manage these nodes. The meaning of each column is as
                 follows:</para>
-            <para><emphasis>Select</emphasis> This is just a checkbox to select one or more nodes. The selected nodes
-                will be affected by the first row of buttons (start, stop, run, remove). For
-                example, if you select 3 nodes and press the Remove button, these 3 nodes will be
-                removed.</para>
-            <para><emphasis>Name</emphasis> This is the node’s name provided by the administrator. Type The node’s
-                harvesting type choosed when the node was created (geonetwork, web folder etc...).
-            </para>
-            <para><emphasis>Status</emphasis> This is an icon that reflects the node’s current status. See <xref
-                    linkend="admin_harvesting_status"/> for all different icons and status
-                    description.</para>
-            <para><emphasis>Errors</emphasis> This column reflects the status of the last harvesting run,
-                which could have succeeded or not. The result is reflected on this icon and a
-                tooltip will show detailed information. See <xref
-                linkend="admin_harvesting_status_2"/> for all different icons.</para>
-            <para><emphasis>Every</emphasis> The time (in days, hours, minutes) between two consecutive harvesting 
+                
+            <orderedlist>
+                <listitem>
+                	<para><emphasis>Select</emphasis> This is just a checkbox to select one or more nodes. The selected nodes
+                		will be affected by the first row of buttons (start, stop, run, remove). For
+        		        example, if you select 3 nodes and press the Remove button, these 3 nodes will be
+		                removed.</para>
+                </listitem>
+                <listitem>
+            		<para><emphasis>Name</emphasis> This is the node’s name provided by the administrator. Type The node’s
+                		harvesting type choosed when the node was created (geonetwork, web folder etc...).</para>
+                </listitem>
+                <listitem>
+            		<para><emphasis>Status</emphasis> This is an icon that reflects the node’s current status. See <xref
+                    	linkend="admin_harvesting_status"/> for all different icons and status
+                    	description.</para>
+                </listitem>
+                <listitem>
+            		<para><emphasis>Errors</emphasis> This column reflects the status of the last harvesting run,
+                		which could have succeeded or not. The result is reflected on this icon and a
+                		tooltip will show detailed information. See <xref
+                		linkend="admin_harvesting_status_2"/> for all different icons.</para>
+                </listitem>
+                <listitem>
+            		<para><emphasis>Every</emphasis> The time (in days, hours, minutes) between two consecutive harvesting 
             	from this node.</para>
-            <para><emphasis>Last run</emphasis> The date, in ISO 8601 format, of the most recent harvesting run. </para>
-            <para><emphasis>Operation</emphasis> A list of buttons for all possible operations on a node.</para>
-            <para>Selecting <emphasis>Edit</emphasis> will allow you to change the parameters for a node.</para>
+                </listitem>
+                <listitem>
+            		<para><emphasis>Last run</emphasis> The date, in ISO 8601 format, of the most recent harvesting run. </para>
+                </listitem>
+                <listitem>
+        		    <para><emphasis>Operation</emphasis> A list of buttons for all possible operations on a node.</para>
+                </listitem>
+                <listitem>
+		            <para>Selecting <emphasis>Edit</emphasis> will allow you to change the parameters for a node.</para>
+                </listitem>
+            </orderedlist>
 
             <figure id="admin_harvesting_list">
                 <title>The harvesting main page</title>
@@ -277,23 +296,44 @@
                 that can operate on a set of nodes. You can select the nodes using the checkbox on the first 
                 column and then press the proper button. When the button finishes its action, the checkboxes 
                 are cleared. Here is the meaning of each button:</para>
+
+            <orderedlist>
+                <listitem>
             <para><emphasis>Activate</emphasis> When a new harvesting node is created, it’s status is
                 <emphasis>inactive</emphasis>. Use this button to make it
                 <emphasis>active</emphasis> and thus to start harvesting from the remote node.</para>
+                </listitem>
+                <listitem>
             <para><emphasis>Deactivate</emphasis> Stops harvesting from a node. Please notice that this does not mean that
                 a currently running harvesting will be stopped but it means that this node will be
                 ignored during future harvestings.</para>
+                </listitem>
+                <listitem>
             <para><emphasis>Run</emphasis> This button simply tells the harvesting
                 engine to start harvesting immediately. This is usefull for testing during the
                 harvesting setup.</para>
+                </listitem>
+                <listitem>
             <para><emphasis>Remove</emphasis> Remove all currently selected nodes. A dialog will ask the
             user to confirm the action.</para>
+                </listitem>
+            </orderedlist>
+
             <para>The second row contains general purpose buttons. Here is the meaning of each button:</para>
+
+            <orderedlist>
+                <listitem>
             <para><emphasis>Back</emphasis> Simply returns to the main administration page.</para>
+                </listitem>
+                <listitem>
             <para><emphasis>Add</emphasis> This button allows to create new harvesting nodes.</para>
+                </listitem>
+                <listitem>
             <para><emphasis>Refresh</emphasis> Refreshes the current list of nodes quering the server. This
                 can be usefull to see if the harvesting list has been altered by someone else or if
                 any harvesting process started.</para>
+                </listitem>
+            </orderedlist>
 
            <table frame="all" id="admin_harvesting_status">
                <title>Possible status icons</title><?dbhtml table-width="75%" ?>
@@ -670,29 +710,46 @@
             	open the form shown in <xref linkend="admin_harvesting_add"/>. 
             	When creating a new node, you have to choose the harvesting protocol supported
                 by the remote server. The supported protocols are:</para>
-            <para>Geonetwork This is the standard and most powerfull harvesting protocol used in
-                GeoNetwork. It is able to log in into the remote node, to perform a standard search
-                using the common queryable fields and to import all matching metadata. Furthermore,
-                the protocol will try to keep both remote privileges and categories of the harvested
-                metadata if they exist locally. Please notice that since GeoNetwork 2.1 the
-                harvesting protocol has been improved. This means that it is not possible to use
-                this protocol to harvest from version 2.0 or below. Web DAV This harvesting type
+            <orderedlist>
+                <listitem>
+            <para><emphasis>GeoNetwork 2.1 remote node</emphasis> This is the standard and most powerful 
+            	harvesting protocol used in GeoNetwork. It is able to log in into the remote node, to perform 
+            	a standard search using the common query fields and to import all matching metadata. 
+            	Furthermore, the protocol will try to keep both remote privileges and categories of 
+            	the harvested metadata if they exist locally. Please notice that since GeoNetwork 2.1 
+            	the harvesting protocol has been improved. This means that it is not possible to use 
+            	this protocol to harvest from version 2.0 or below.</para>
+            	</listitem>
+            	<listitem>
+            <para><emphasis>Web DAV server</emphasis> This harvesting type
                 uses the web DAV (Distributed Authoring and Versioning) protocol to harvest metadata
                 from a DAV server. It can be useful to users that want to publish their metadata
                 through a web server that offers a DAV interface. The protocol allows to retrieve
-                the contents of a web page (a list of files) with their change date. CSW CSW stands
-                for <emphasis>Catalogue Services for the Web</emphasis> and it is a search interface
-                for catalogues developed by the Open Geospatial Consortium. GeoNetwork is compatible
-                with version 2.0.1 of such protocol. Old geonetwork GeoNetwork 2.1 introduced a new
-                powerfull harvesting engine which is not compatible with the old one present in
-                GeoNetwork 2.0. Old 2.0 servers can still harvest from 2.1 servers but a 2.1 server
-                needs this harvesting type to harvest from old 2.0 servers. This harvesting type is
-                deprecated and only kept until GeoNetwork 2.1 will be widely spread. OAI-PMH The
-                acronym stands for <emphasis>Open Archive Initiative Protocol for Metadata
-                    Harvesting</emphasis>. It is a good harvesting protol widely used. GeoNetwork is
-                compatible with version 2.0 of the protocol.</para>
+                the contents of a web page (a list of files) with their change date.</para>
+            	</listitem>
+            	<listitem>
+            <para><emphasis>Catalog Services for the Web 2.0</emphasis> The Open Geospatial Consortium 
+            	Catalogue Services for the Web and it is a search interface for catalogues developed by 
+            	the Open Geospatial Consortium. GeoNetwork implements version 2.0 of this protocol.</para>
+            	</listitem>
+            	<listitem>
+            <para><emphasis>GeoNetwork v2.0 remote node</emphasis> GeoNetwork 2.1 introduced a new 
+            	powerful harvesting engine which is not compatible with GeoNetwork version 2.0 based 
+            	catalogs. Old 2.0 servers can still harvest from 2.1 servers but harvesting metadata 
+            	from a v2.0 server requires this harvesting type. This harvesting type is 
+            	deprecated.</para>
+            	</listitem>
+            	<listitem>
+            <para><emphasis>Z3950 Remote search</emphasis> Not implemented. This is a placeholder.</para>
+            	</listitem>
+            	<listitem>
+            <para><emphasis>OAI Protocol for Metadata Harvesting 2.0</emphasis> This is a good 
+            	harvesting protocol that is widely used among libraries. GeoNetwork implements version 
+            	2.0 of the protocol.</para>
+            	</listitem>
+            </orderedlist>
             <para>The drop down list shows all available protocols. Pressing the Add button you will
-                reach an edit page whose content depends on the choosed protocol. The Back button
+                reach an edit page whose content depends on the chosen protocol. The Back button
                 will go back to the main page.</para>
 
             <figure id="admin_harvesting_add">
@@ -942,9 +999,10 @@
 
                 <para>Site: Name is the name of the catalog and will be one of the search criteria. 
                     The type of OGC service indicates if the harvester has to query for a specific kind of service.
-                    Supported type are WMS (1.0.0 and 1.1.1), WFS (1.0.0 and 1.1.0 and WCS (1.0.0).
-                    The service URL is the URL of the service to contact (without parameters like 
-                    "REQUEST=GetCapabilities", "VERSION=", ...). It has to be a valid URL like http://your.preferred.ogcservice/type_wms. 
+                    Supported type are WMS (1.0.0 and 1.1.1), WFS (1.0.0 and 1.1.0, WCS (1.0.0) and WPS (0.4.0 and
+                    1.0.0). The service URL is the URL of the service to contact (without parameters like 
+                    "REQUEST=GetCapabilities", "VERSION=", ...). It has to be a valid URL 
+                    like http://your.preferred.ogcservice/type_wms. 
                     The metadata language has to be specified. It will define the language of the metadata.
                     It should be the language used by the web service administrator.
                     The ISO topic category is used to populate the metadata. It is recommended to choose on
