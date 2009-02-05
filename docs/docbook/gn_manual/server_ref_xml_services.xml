@@ -24,19 +24,21 @@
                         parameters it accepts are not structured. <xref linkend="xml_request"/>
                         shows an example of such request and the parameters encoded in XML. POST
                         There are 3 variants of this method:</para>
-                    <para>ENCODED The request has one of the following content types:
+                    <para><emphasis>ENCODED</emphasis> The request has one of the following content types:
                             <literal>application/x-www-form-urlencoded</literal> or
                             <literal>multipart/form-data</literal>. The first case is very common
                         when sending web forms while the second one is used to send binary data
                         (usually files) to the server. In these cases, the parameters are not
                         structured so the rules of the GET method applies. Even if the second case
                         could be used to send XML documents, this possibility is not considered on
-                        the server side. XML The content type is <literal>application/xml</literal>.
+                        the server side.</para>
+                    <para><emphasis>XML</emphasis> The content type is <literal>application/xml</literal>.
                         This is the common case when the client is not a browser but a specialized
                         client. The request is a pure XML document in string form, encoded using the
                         encoding specified into the prologue of the XML document. Using this form,
                         any type of request can be made (structured or not) so any service can be
-                        called. SOAP The content type is <literal>application/soap+xml</literal>.
+                        called.</para>
+                    <para><emphasis>SOAP</emphasis> The content type is <literal>application/soap+xml</literal>.
                         SOAP is a simple protocol used to access objects and services using XML.
                         Clients that use this protocol can embed XML requests into a SOAP structure.
                         On the server side, GeoNetwork will remove the SOAP structure and feed the
