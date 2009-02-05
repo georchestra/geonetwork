@@ -71,50 +71,50 @@
                     structure:</para>
                 <itemizedlist>
                     <listitem>
-                        <para>error: This is the root element of the document. It has a mandatory
+                        <para><emphasis>error</emphasis>: This is the root element of the document. It has a mandatory
                             id attribute that represents an identifier of the error from a common
                             set. See <xref linkend="error_ids"/> for a list of all id values.</para>
                         <itemizedlist>
                             <listitem>
-                                <para>message: A message related to the error. It can be a short
+                                <para><emphasis>message</emphasis>: A message related to the error. It can be a short
                                     description about the error type or it can contain some other
                                     information that completes the id code.</para>
                             </listitem>
                             <listitem>
-                                <para>class: The Java class of the raised error (name without
+                                <para><emphasis>class</emphasis>: The Java class of the raised error (name without
                                     package information).</para>
                             </listitem>
                             <listitem>
-                                <para>stack: The server’s stacktrace up to the point that generated
+                                <para><emphasis>stack</emphasis>: The server’s stacktrace up to the point that generated
                                     the exception. It contains several at children, one for each
                                     nested level. Useful for debugging purposes.</para>
                                 <itemizedlist>
                                     <listitem>
-                                        <para>at: Information about a nested level of called code.
+                                        <para><emphasis>at</emphasis>: Information about a nested level of called code.
                                             It has the following mandatory attributes:</para>
-                                        <para>class Java class of the called method. method Java
-                                            called method. line Line, inside the called method’s
+                                        <para><emphasis>class</emphasis> Java class of the called method. <emphasis>method</emphasis> Java
+                                            called method. <emphasis>line</emphasis> Line, inside the called method’s
                                             source code where there the method call of the next
-                                            nested level. file Source file where the class is
+                                            nested level. <emphasis>file</emphasis> Source file where the class is
                                             defined.</para>
                                     </listitem>
                                 </itemizedlist>
                             </listitem>
                             <listitem>
-                                <para>object: An optional container for parameters or other values
+                                <para><emphasis>object</emphasis>: An optional container for parameters or other values
                                     that caused the exception. In case a parameter is an XML object,
                                     this container will contain that object in XML form.</para>
                             </listitem>
                             <listitem>
-                                <para>request: A container for some useful information that can be
+                                <para><emphasis>request</emphasis>: A container for some useful information that can be
                                     needed to debug the service.</para>
                                 <itemizedlist>
                                     <listitem>
-                                        <para>language: Language used when the service was called.
+                                        <para><emphasis>language</emphasis>: Language used when the service was called.
                                         </para>
                                     </listitem>
                                     <listitem>
-                                        <para>service: Name of the called service.</para>
+                                        <para><emphasis>service</emphasis>: Name of the called service.</para>
                                     </listitem>
                                 </itemizedlist>
                             </listitem>
@@ -130,7 +130,7 @@
                         <thead>
                             <row>
                                 <entry>
-                                    <para>id</para>
+                                    <para><emphasis>id</emphasis></para>
                                 </entry>
                                 <entry>
                                     <para>Meaning of message element</para>
@@ -143,7 +143,7 @@
                         <tbody>
                             <row>
                                 <entry>
-                                    <para>error</para>
+                                    <para><emphasis>error</emphasis></para>
                                 </entry>
                                 <entry>
                                     <para>General message, human readable</para>
@@ -152,7 +152,7 @@
                             </row>
                             <row>
                                 <entry>
-                                    <para>bad-format</para>
+                                    <para><emphasis>bad-format</emphasis></para>
                                 </entry>
                                 <entry>
                                     <para>Reason</para>
@@ -163,7 +163,7 @@
                             </row>
                             <row>
                                 <entry>
-                                    <para>bad-parameter</para>
+                                    <para><emphasis>bad-parameter</emphasis></para>
                                 </entry>
                                 <entry>
                                     <para>Name of the parameter</para>
@@ -174,7 +174,7 @@
                             </row>
                             <row>
                                 <entry>
-                                    <para>file-not-found</para>
+                                    <para><emphasis>file-not-found</emphasis></para>
                                 </entry>
                                 <entry>
                                     <para>-</para>
@@ -185,7 +185,7 @@
                             </row>
                             <row>
                                 <entry>
-                                    <para>file-upload-too-big</para>
+                                    <para><emphasis>file-upload-too-big</emphasis></para>
                                 </entry>
                                 <entry>
                                     <para>-</para>
@@ -196,7 +196,7 @@
                             </row>
                             <row>
                                 <entry>
-                                    <para>missing-parameter</para>
+                                    <para><emphasis>missing-parameter</emphasis></para>
                                 </entry>
                                 <entry>
                                     <para>Name of the parameter</para>
@@ -208,7 +208,7 @@
                             </row>
                             <row>
                                 <entry>
-                                    <para>object-not-found</para>
+                                    <para><emphasis>object-not-found</emphasis></para>
                                 </entry>
                                 <entry>
                                     <para>-</para>
@@ -219,7 +219,7 @@
                             </row>
                             <row>
                                 <entry>
-                                    <para>operation-aborted</para>
+                                    <para><emphasis>operation-aborted</emphasis></para>
                                 </entry>
                                 <entry>
                                     <para>Reason of abort</para>
@@ -230,7 +230,7 @@
                             </row>
                             <row>
                                 <entry>
-                                    <para>operation-not-allowed</para>
+                                    <para><emphasis>operation-not-allowed</emphasis></para>
                                 </entry>
                                 <entry>
                                     <para>-</para>
@@ -241,7 +241,7 @@
                             </row>
                             <row>
                                 <entry>
-                                    <para>resource-not-found</para>
+                                    <para><emphasis>resource-not-found</emphasis></para>
                                 </entry>
                                 <entry>
                                     <para>-</para>
@@ -252,7 +252,7 @@
                             </row>
                             <row>
                                 <entry>
-                                    <para>service-not-allowed</para>
+                                    <para><emphasis>service-not-allowed</emphasis></para>
                                 </entry>
                                 <entry>
                                     <para>-</para>
@@ -263,7 +263,7 @@
                             </row>
                             <row>
                                 <entry>
-                                    <para>service-not-found</para>
+                                    <para><emphasis>service-not-found</emphasis></para>
                                 </entry>
                                 <entry>
                                     <para>-</para>
@@ -274,7 +274,7 @@
                             </row>
                             <row>
                                 <entry>
-                                    <para>user-login</para>
+                                    <para><emphasis>user-login</emphasis></para>
                                 </entry>
                                 <entry>
                                     <para>User login failed message</para>
@@ -285,7 +285,7 @@
                             </row>
                             <row>
                                 <entry>
-                                    <para>user-not-found</para>
+                                    <para><emphasis>user-not-found</emphasis></para>
                                 </entry>
                                 <entry>
                                     <para>-</para>
@@ -296,7 +296,7 @@
                             </row>
                             <row>
                                 <entry>
-                                    <para>metadata-not-found</para>
+                                    <para><emphasis>metadata-not-found</emphasis></para>
                                 </entry>
                                 <entry>
                                     <para>The requested metadata was not found</para>
@@ -417,28 +417,28 @@
                     <para>Here follows the structure of each subtree:</para>
                     <itemizedlist>
                         <listitem>
-                            <para>site: This is the container</para>
+                            <para><emphasis>site</emphasis>: This is the container</para>
                             <itemizedlist>
                                 <listitem>
-                                    <para>name: Human readable site name</para>
+                                    <para><emphasis>name</emphasis>: Human readable site name</para>
                                 </listitem>
                                 <listitem>
-                                    <para>siteId: Universal unique identifier of the site</para>
+                                    <para><emphasis>siteId</emphasis>: Universal unique identifier of the site</para>
                                 </listitem>
                                 <listitem>
-                                    <para>platform: This is just a container to hold the site’s
+                                    <para><emphasis>platform</emphasis>: This is just a container to hold the site’s
                                         backend</para>
                                     <itemizedlist>
                                         <listitem>
-                                            <para>name: Plaform name. For GeoNetwork installations
+                                            <para><emphasis>name</emphasis>: Plaform name. For GeoNetwork installations
                                                 it must be geonetwork.</para>
                                         </listitem>
                                         <listitem>
-                                            <para>version: Platform version, given in the X.Y.Z
+                                            <para><emphasis>version</emphasis>: Platform version, given in the X.Y.Z
                                                 format</para>
                                         </listitem>
                                         <listitem>
-                                            <para>subVersion: Additional version notes, like
+                                            <para><emphasis>subVersion</emphasis>: Additional version notes, like
                                                 ’alpha-1’ or ’beta-2’.</para>
                                         </listitem>
                                     </itemizedlist>
@@ -459,19 +459,19 @@
                             </figure>
                         </listitem>
                         <listitem>
-                            <para>categories: This is the container for categories.</para>
+                            <para><emphasis>categories</emphasis>: This is the container for categories.</para>
                             <itemizedlist>
                                 <listitem>
-                                    <para>category [0..n]: A single GeoNetwork’s category. This
+                                    <para><emphasis>category [0..n]</emphasis>: A single GeoNetwork’s category. This
                                         element has an id attribute which represents the local
                                         identifier for the category. It can be usefull to a client
                                         to link back to this category.</para>
                                     <itemizedlist>
                                         <listitem>
-                                            <para>name: Category’s name</para>
+                                            <para><emphasis>name</emphasis>: Category’s name</para>
                                         </listitem>
                                         <listitem>
-                                            <para>label: The localized labels used to show the
+                                            <para><emphasis>label</emphasis>: The localized labels used to show the
                                                 category on screen. See <xref
                                                   linkend="xml_response_categories"/>.</para>
                                         </listitem>
@@ -492,30 +492,30 @@
                             </figure>
                         </listitem>
                         <listitem>
-                            <para>groups: This is the container for groups</para>
+                            <para><emphasis>groups</emphasis>: This is the container for groups</para>
                             <itemizedlist>
                                 <listitem>
-                                    <para>group [2..n]: This is a Geonetwork group. There are at
+                                    <para><emphasis>group [2..n]</emphasis>: This is a Geonetwork group. There are at
                                         least the internet and intranet groups. This element has an
                                         id attribute which represents the local identifier for the
                                         group.</para>
                                     <itemizedlist>
                                         <listitem>
-                                            <para>name: Group’s name</para>
+                                            <para><emphasis>name</emphasis>: Group’s name</para>
                                         </listitem>
                                         <listitem>
-                                            <para>description: Group’s description</para>
+                                            <para><emphasis>description</emphasis>: Group’s description</para>
                                         </listitem>
                                         <listitem>
-                                            <para>referrer: The user responsible for this group
+                                            <para><emphasis>referrer</emphasis>: The user responsible for this group
                                             </para>
                                         </listitem>
                                         <listitem>
-                                            <para>email: The email address to notify when a map is
+                                            <para><emphasis>email</emphasis>: The email address to notify when a map is
                                                 downloaded</para>
                                         </listitem>
                                         <listitem>
-                                            <para>label: The localized labels used to show the
+                                            <para><emphasis>label</emphasis>: The localized labels used to show the
                                                 group on screen. See <xref
                                                   linkend="xml_response_groups"/>.</para>
                                         </listitem>
@@ -536,23 +536,23 @@
                             </figure>
                         </listitem>
                         <listitem>
-                            <para>operations: This is the container for the operations</para>
+                            <para><emphasis>operations</emphasis>: This is the container for the operations</para>
                             <itemizedlist>
                                 <listitem>
-                                    <para>operation [0..n]: This is a possible operation on
+                                    <para><emphasis>operation [0..n]</emphasis>: This is a possible operation on
                                         metadata. This element has an id attribute which represents
                                         the local identifier for the operation.</para>
                                     <itemizedlist>
                                         <listitem>
-                                            <para>name: Short name for the operation.</para>
+                                            <para><emphasis>name</emphasis>: Short name for the operation.</para>
                                         </listitem>
                                         <listitem>
-                                            <para>reserved: Can be y or n and is used to
+                                            <para><emphasis>reserved</emphasis>: Can be y or n and is used to
                                                 distinguish between system reserved and user defined
                                                 operations.</para>
                                         </listitem>
                                         <listitem>
-                                            <para>label: The localized labels used to show the
+                                            <para><emphasis>label</emphasis>: The localized labels used to show the
                                                 operation on screen. See <xref
                                                   linkend="xml_response_operations"/>.</para>
                                         </listitem>
@@ -573,31 +573,31 @@
                             </figure>
                         </listitem>
                         <listitem>
-                            <para>regions: This is the container for geographical regions</para>
+                            <para><emphasis>regions</emphasis>: This is the container for geographical regions</para>
                             <itemizedlist>
                                 <listitem>
-                                    <para>region [0..n]: This is a region present into the system.
+                                    <para><emphasis>region [0..n]</emphasis>: This is a region present into the system.
                                         This element has an id attribute which represents the local
                                         identifier for the operation.</para>
                                     <itemizedlist>
                                         <listitem>
-                                            <para>north: North coordinate of the bounding box.
+                                            <para><emphasis>north</emphasis>: North coordinate of the bounding box.
                                             </para>
                                         </listitem>
                                         <listitem>
-                                            <para>south: South coordinate of the bounding box.
+                                            <para><emphasis>south</emphasis>: South coordinate of the bounding box.
                                             </para>
                                         </listitem>
                                         <listitem>
-                                            <para>west: West coordinate of the bounding box.
+                                            <para><emphasis>west</emphasis>: West coordinate of the bounding box.
                                             </para>
                                         </listitem>
                                         <listitem>
-                                            <para>east: east coordinate of the bounding box.
+                                            <para><emphasis>east</emphasis>: east coordinate of the bounding box.
                                             </para>
                                         </listitem>
                                         <listitem>
-                                            <para>label: The localized labels used to show the
+                                            <para><emphasis>label</emphasis>: The localized labels used to show the
                                                 region on screen. See <xref
                                                   linkend="xml_response_regions"/>.</para>
                                         </listitem>
@@ -621,16 +621,16 @@
                             </figure>
                         </listitem>
                         <listitem>
-                            <para>sources: This is the container.</para>
+                            <para><emphasis>sources</emphasis>: This is the container.</para>
                             <itemizedlist>
                                 <listitem>
-                                    <para>source [0..n]: A source known to the remote node.</para>
+                                    <para><emphasis>source [0..n]</emphasis>: A source known to the remote node.</para>
                                     <itemizedlist>
                                         <listitem>
-                                            <para>name: Source’s name</para>
+                                            <para><emphasis>name</emphasis>: Source’s name</para>
                                         </listitem>
                                         <listitem>
-                                            <para>uuid: Source’s unique identifier</para>
+                                            <para><emphasis>uuid</emphasis>: Source’s unique identifier</para>
                                         </listitem>
                                     </itemizedlist>
                                 </listitem>
@@ -646,49 +646,49 @@
                             </figure>
                         </listitem>
                         <listitem>
-                            <para>users: This is the container for user information</para>
+                            <para><emphasis>users</emphasis>: This is the container for user information</para>
                             <itemizedlist>
                                 <listitem>
-                                    <para>user [0..n]: A user of the system</para>
+                                    <para><emphasis>user [0..n]</emphasis>: A user of the system</para>
                                     <itemizedlist>
                                         <listitem>
-                                            <para>id: The local identifier of the user</para>
+                                            <para><emphasis>id</emphasis>: The local identifier of the user</para>
                                         </listitem>
                                         <listitem>
-                                            <para>username: The login name</para>
+                                            <para><emphasis>username</emphasis>: The login name</para>
                                         </listitem>
                                         <listitem>
-                                            <para>surname: The user’s surname. Used for display
+                                            <para><emphasis>surname</emphasis>: The user’s surname. Used for display
                                                 purposes.</para>
                                         </listitem>
                                         <listitem>
-                                            <para>name: The user’s name. Used for display purposes.
+                                            <para><emphasis>name</emphasis>: The user’s name. Used for display purposes.
                                             </para>
                                         </listitem>
                                         <listitem>
-                                            <para>profile: User’s profile, like Administrator,
+                                            <para><emphasis>profile</emphasis>: User’s profile, like Administrator,
                                                 Editor, UserAdmin etc...</para>
                                         </listitem>
                                         <listitem>
-                                            <para>address:</para>
+                                            <para><emphasis>address</emphasis>:</para>
                                         </listitem>
                                         <listitem>
-                                            <para>state:</para>
+                                            <para><emphasis>state</emphasis>:</para>
                                         </listitem>
                                         <listitem>
-                                            <para>zip:</para>
+                                            <para><emphasis>zip</emphasis>:</para>
                                         </listitem>
                                         <listitem>
-                                            <para>country:</para>
+                                            <para><emphasis>country</emphasis>:</para>
                                         </listitem>
                                         <listitem>
-                                            <para>email:</para>
+                                            <para><emphasis>email</emphasis>:</para>
                                         </listitem>
                                         <listitem>
-                                            <para>organisation:</para>
+                                            <para><emphasis>organisation</emphasis>:</para>
                                         </listitem>
                                         <listitem>
-                                            <para>kind:</para>
+                                            <para><emphasis>kind</emphasis>:</para>
                                         </listitem>
                                     </itemizedlist>
                                 </listitem>
@@ -751,15 +751,15 @@
     <params>...</params> 
 </request>]]></programlisting>
                     </figure>
-                    <para>where:</para>
-                    <para>site A container for site information where the request will be forwarded.</para>
-                    <para>url Indicates the remote url to connect to. Usually points to a
+                    <para><emphasis>where</emphasis>:</para>
+                    <para><emphasis>site</emphasis> A container for site information where the request will be forwarded.</para>
+                    <para><emphasis>url</emphasis> Indicates the remote url to connect to. Usually points to a
                         GeoNetwork’s xml service but can point to any XML service. type Its only
                         purpose is to discriminate geonetwork nodes which use a different
                         authentication scheme. The value geonetwork indicates these nodes. Any other
-                        value, or if the element is missing, indicate a generic node. account This
+                        value, or if the element is missing, indicate a generic node. <emphasis>account</emphasis> This
                         element is optional. If present, the provided credentials will be used to
-                        authenticate to the remote site. params This is just a container for the
+                        authenticate to the remote site. <emphasis>params</emphasis> This is just a container for the
                         request that must be executed remotely.</para>
                     <figure id="xml_server_info_request">
                         <title>Request for info from a remote server</title>
@@ -904,19 +904,19 @@
                         omitted for clarity.</para>
                     <itemizedlist>
                         <listitem>
-                            <para>node: The root element. It has a mandatory id attribute that
+                            <para><emphasis>node</emphasis>: The root element. It has a mandatory <emphasis>id</emphasis> attribute that
                                 represents the internal identifier and a mandatory type attribute
                                 which indicates the harvesting type.</para>
                             <itemizedlist>
                                 <listitem>
-                                    <para>site: A container for site information.</para>
+                                    <para><emphasis>site</emphasis>: A container for site information.</para>
                                     <itemizedlist>
                                         <listitem>
-                                            <para>name (<emphasis>string</emphasis>): The node’s
+                                            <para><emphasis>name (string)</emphasis>: The node’s
                                                 name used to describe the harvesting.</para>
                                         </listitem>
                                         <listitem>
-                                            <para>uuid (<emphasis>string</emphasis>): This is a
+                                            <para><emphasis>uuid (string)</emphasis>: This is a
                                                 system generated unique identifier associated to the
                                                 harvesting node. This is used as the source field
                                                 into the Metadata table to group all metadata from
@@ -926,7 +926,7 @@
                                             <para>account: A container for account information.</para>
                                             <itemizedlist>
                                                 <listitem>
-                                                  <para>use (<emphasis>boolean</emphasis>): true
+                                                  <para><emphasis>use (boolean)</emphasis>: true
                                                   means that the harvester will use the
                                                   provided username and password to
                                                   authenticate itself. The authentication
@@ -934,11 +934,11 @@
                                                   </para>
                                                 </listitem>
                                                 <listitem>
-                                                  <para>username (<emphasis>string</emphasis>):
+                                                  <para><emphasis>username (string)</emphasis>:
                                                   Username on the remote node.</para>
                                                 </listitem>
                                                 <listitem>
-                                                  <para>password (<emphasis>string</emphasis>):
+                                                  <para><emphasis>password (string)</emphasis>:
                                                   Password on the remote node.</para>
                                                 </listitem>
                                             </itemizedlist>
@@ -949,16 +949,16 @@
                                     <para>options: A container for generic options.</para>
                                     <itemizedlist>
                                         <listitem>
-                                            <para>every (<emphasis>integer</emphasis>): Harvesting
+                                            <para><emphasis>every (integer):</emphasis> Harvesting
                                                 interval in minutes.</para>
                                         </listitem>
                                         <listitem>
-                                            <para>oneRunOnly (<emphasis>boolean</emphasis>): After
+                                            <para><emphasis>oneRunOnly (boolean)</emphasis>: After
                                                 the first run, the entry’s status will be set to
                                                 inactive.</para>
                                         </listitem>
                                         <listitem>
-                                            <para>status (<emphasis>string</emphasis>): Indicates
+                                            <para><emphasis>status (string)</emphasis>: Indicates
                                                 if the harvesting from this node is stopped
                                                 (inactive) or if the harvester is waiting for the
                                                 timeout (active).</para>
@@ -966,17 +966,17 @@
                                     </itemizedlist>
                                 </listitem>
                                 <listitem>
-                                    <para>privileges [0..1]: A container for privileges that must be
+                                    <para><emphasis>privileges [0..1]</emphasis>: A container for privileges that must be
                                         associated to the harvested metadata. This optional element
                                         is present only if the harvesting type supports it.</para>
                                     <itemizedlist>
                                         <listitem>
-                                            <para>group [0..n]: A container for allowed operations
+                                            <para><emphasis>group [0..n]</emphasis>: A container for allowed operations
                                                 associated to this group. It has the id attribute
                                                 which value is the identifier of a GeoNetwork group.</para>
                                             <itemizedlist>
                                                 <listitem>
-                                                  <para>operation [0..n]: Specifies an operation
+                                                  <para><emphasis>operation [0..n]</emphasis>: Specifies an operation
                                                   to associate to the containing group. It has
                                                   a name attribute which value is one of the
                                                   supported operation names. The only
@@ -990,46 +990,46 @@
                                     </itemizedlist>
                                 </listitem>
                                 <listitem>
-                                    <para>categories [0..1]: This is a container for categories to
+                                    <para><emphasis>categories [0..1]</emphasis>: This is a container for categories to
                                         assign to each imported metadata. This optional element is
                                         present if the harvesting type supports it.</para>
                                     <itemizedlist>
                                         <listitem>
-                                            <para>category (<emphasis>integer</emphasis>) [0..n]:
+                                            <para><emphasis>category (integer) [0..n]</emphasis>:
                                                 Represents a local category and the id attribute is
                                                 its local identifier.</para>
                                         </listitem>
                                     </itemizedlist>
                                 </listitem>
                                 <listitem>
-                                    <para>info: A container for general information.</para>
+                                    <para><emphasis>info</emphasis>: A container for general information.</para>
                                     <itemizedlist>
                                         <listitem>
-                                            <para>lastRun (<emphasis>string</emphasis>): The
+                                            <para><emphasis>lastRun (string)</emphasis>: The
                                                 lastRun element will be filled as soon as the
                                                 harvester starts harvesting from this entry. The
                                                 value is the</para>
                                         </listitem>
                                         <listitem>
-                                            <para>running (<emphasis>boolean</emphasis>): True if
+                                            <para><emphasis>running (boolean)</emphasis>: True if
                                                 the harvester is currently running.</para>
                                         </listitem>
                                     </itemizedlist>
                                 </listitem>
                                 <listitem>
-                                    <para>error: This element will be present if the harvester
+                                    <para><emphasis>error</emphasis>: This element will be present if the harvester
                                         encounters an error during harvesting.</para>
                                     <itemizedlist>
                                         <listitem>
-                                            <para>code (<emphasis>string</emphasis>): The error
+                                            <para><emphasis>code (string)</emphasis>: The error
                                                 code, in string form.</para>
                                         </listitem>
                                         <listitem>
-                                            <para>message (<emphasis>string</emphasis>): The
+                                            <para><emphasis>message (string)</emphasis>: The
                                                 description of the error.</para>
                                         </listitem>
                                         <listitem>
-                                            <para>object (<emphasis>string</emphasis>): The object
+                                            <para><emphasis>object (string)</emphasis>: The object
                                                 that caused the error (if any). This element can be
                                                 present or not depending on the case.</para>
                                         </listitem>
@@ -1109,19 +1109,19 @@
                                     </itemizedlist>
                                 </listitem>
                                 <listitem>
-                                    <para>privileges [0..1]: Can be omitted but doing so the
+                                    <para><emphasis>privileges [0..1]</emphasis>: Can be omitted but doing so the
                                         harvested metadata will not be visible. Please note that
                                         privileges are taken into account only if the harvesting
                                         type supports them.</para>
                                     <itemizedlist>
                                         <listitem>
-                                            <para>group [0..n]: It must have the id attribute which
+                                            <para><emphasis>group [0..n]</emphasis>: It must have the <emphasis>id</emphasis> attribute which
                                                 value should be the identifier of a GeoNetwork
                                                 group. If the id is not a valid group id, all
                                                 contained operations will be discarded.</para>
                                             <itemizedlist>
                                                 <listitem>
-                                                  <para>operation [0..n]: It must have a name
+                                                  <para><emphasis>operation [0..n]</emphasis>: It must have a <emphasis>name</emphasis>
                                                   attribute which value must be one of the
                                                   supported operation names.</para>
                                                 </listitem>
@@ -1130,12 +1130,12 @@
                                     </itemizedlist>
                                 </listitem>
                                 <listitem>
-                                    <para>categories [0..1]: Please, note that categories will be
+                                    <para><emphasis>categories [0..1]</emphasis>: Please, note that categories will be
                                         assigned to metadata only if the harvesting type supports
                                         them.</para>
                                     <itemizedlist>
                                         <listitem>
-                                            <para>category (<emphasis>integer</emphasis>) [0..n]:
+                                            <para><emphasis>category (integer) [0..n]</emphasis>:
                                                 The mandatory id attribute is the category’s local
                                                 identifier.</para>
                                         </listitem>
@@ -1155,66 +1155,66 @@
                         following XML information should be provided:</para>
                     <itemizedlist>
                         <listitem>
-                            <para>node: The type attribute is mandatory and must be geonetwork.</para>
+                            <para><emphasis>node</emphasis>: The type attribute is mandatory and must be geonetwork.</para>
                             <itemizedlist>
                                 <listitem>
-                                    <para>site</para>
+                                    <para><emphasis>site</emphasis></para>
                                     <itemizedlist>
                                         <listitem>
-                                            <para>host (<emphasis>string</emphasis>, ”): The
+                                            <para><emphasis>host (string, ”)</emphasis>: The
                                                 GeoNetwork node’s host name or IP address.</para>
                                         </listitem>
                                         <listitem>
-                                            <para>port (<emphasis>string</emphasis>, ’80’): The
+                                            <para><emphasis>port (string, ’80’)</emphasis>: The
                                                 port to connect to.</para>
                                         </listitem>
                                         <listitem>
-                                            <para>servlet (<emphasis>string</emphasis>,
-                                                ’geonetwork’). The servlet name choosen in the
+                                            <para><emphasis>servlet (string,
+                                                ’geonetwork’)</emphasis>: The servlet name choosen in the
                                                 remote site.</para>
                                         </listitem>
                                     </itemizedlist>
                                 </listitem>
                                 <listitem>
-                                    <para>searches [0..1]: A container for search parameters.</para>
+                                    <para><emphasis>searches [0..1]</emphasis>: A container for search parameters.</para>
                                     <itemizedlist>
                                         <listitem>
-                                            <para>search [0..n]: A container for a single search on
+                                            <para><emphasis>search [0..n]</emphasis>: A container for a single search on
                                                 a siteID. You can specify 0 or more searches. If no
                                                 search element is provided, an unconstrained search
                                                 is performed.</para>
                                             <itemizedlist>
                                                 <listitem>
-                                                  <para>freeText (<emphasis>string</emphasis>, ”)
+                                                  <para><emphasis>freeText (string, ”)</emphasis>
                                                  : Free text to search. This and the
                                                   following parameters are the same used
                                                   during normal search using the web
                                                   interface.</para>
                                                 </listitem>
                                                 <listitem>
-                                                  <para>title (<emphasis>string</emphasis>, ”):
+                                                  <para><emphasis>title (string, ”)</emphasis>:
                                                   Search the title field.</para>
                                                 </listitem>
                                                 <listitem>
-                                                  <para>abstract (<emphasis>string</emphasis>, ”)
+                                                  <para><emphasis>abstract (string, ”)</emphasis>
                                                  : Search the abstract field.</para>
                                                 </listitem>
                                                 <listitem>
-                                                  <para>keywords (<emphasis>string</emphasis>, ”)
+                                                  <para><emphasis>keywords (string, ”)</emphasis>
                                                  : Search the keywords fields.</para>
                                                 </listitem>
                                                 <listitem>
-                                                  <para>digital (<emphasis>boolean</emphasis>,
-                                                  ’false’): Search for metadata in digital
+                                                  <para><emphasis>digital (boolean,
+                                                  ’false’)</emphasis>: Search for metadata in digital
                                                   form.</para>
                                                 </listitem>
                                                 <listitem>
-                                                  <para>hardcopy (<emphasis>boolean</emphasis>,
-                                                  ’false’): Search for metadata in printed
+                                                  <para><emphasis>hardcopy (boolean,
+                                                  ’false’)</emphasis>: Search for metadata in printed
                                                   form.</para>
                                                 </listitem>
                                                 <listitem>
-                                                  <para>source (<emphasis>string</emphasis>, ”):
+                                                  <para><emphasis>source (string, ”)</emphasis>:
                                                   One of the sources present on the remote
                                                   node.</para>
                                                 </listitem>
@@ -1223,12 +1223,12 @@
                                     </itemizedlist>
                                 </listitem>
                                 <listitem>
-                                    <para>groupsCopyPolicy [0..1]: Container for copy policies of
+                                    <para><emphasis>groupsCopyPolicy [0..1]</emphasis>: Container for copy policies of
                                         remote groups. This mechanism is used to retain remote
                                         metadata privileges.</para>
                                     <itemizedlist>
                                         <listitem>
-                                            <para>group: There is one copy policy for each remote
+                                            <para><emphasis>group</emphasis>: There is one copy policy for each remote
                                                 group. This element must have 2 mandatory
                                                 attributes: <emphasis>name</emphasis> and
                                                   <emphasis>policy</emphasis>. The name attribute
@@ -1300,18 +1300,18 @@
                         provided.</para>
                     <itemizedlist>
                         <listitem>
-                            <para>node: The type attribute is mandatory and must be webdav.</para>
+                            <para><emphasis>node</emphasis>: The type attribute is mandatory and must be webdav.</para>
                             <itemizedlist>
                                 <listitem>
                                     <para>site</para>
                                     <itemizedlist>
                                         <listitem>
-                                            <para>url (<emphasis>string</emphasis>, ”): The URL to
+                                            <para><emphasis>url (string, ”)</emphasis>: The URL to
                                                 harvest from. If provided, must be a valid URL
                                                 starting with ’HTTP://’.</para>
                                         </listitem>
                                         <listitem>
-                                            <para>icon (<emphasis>string</emphasis>, ’default.gif’)
+                                            <para><emphasis>icon (string, ’default.gif’)</emphasis>
                                                : Icon file used to represent this node in the
                                                 search results. The icon must be present into the
                                                 images/harvesting folder.</para>
@@ -1322,12 +1322,12 @@
                                     <para>options</para>
                                     <itemizedlist>
                                         <listitem>
-                                            <para>recurse (<emphasis>boolean</emphasis>, ’false’):
+                                            <para><emphasis>recurse (boolean, ’false’)</emphasis>:
                                                 When true, folders are scanned recursively to find
                                                 metadata.</para>
                                         </listitem>
                                         <listitem>
-                                            <para>validate (<emphasis>boolean</emphasis>, ’false’):
+                                            <para><emphasis>validate (boolean, ’false’)</emphasis>:
                                                 When true, GeoNetwork will validate every metadata
                                                 against its schema. If the metadata is not valid, it
                                                 will not be imported.</para>
@@ -1377,18 +1377,18 @@
                         information should be provided:</para>
                     <itemizedlist>
                         <listitem>
-                            <para>node: The type attribute is mandatory and must be csw.</para>
+                            <para><emphasis>node</emphasis>: The type attribute is mandatory and must be csw.</para>
                             <itemizedlist>
                                 <listitem>
-                                    <para>site</para>
+                                    <para><emphasis>site</emphasis></para>
                                     <itemizedlist>
                                         <listitem>
-                                            <para>capabilitiesUrl (<emphasis>string</emphasis>):
+                                            <para><emphasis>capabilitiesUrl (string)</emphasis>:
                                                 URL of the capabilities file that will be used to
                                                 retrieve the operations address.</para>
                                         </listitem>
                                         <listitem>
-                                            <para>icon (<emphasis>string</emphasis>, ’default.gif’)
+                                            <para><emphasis>icon (string, ’default.gif’)</emphasis>
                                                : Icon file used to represent this node in the
                                                 search results. The icon must be present into the
                                                 images/harvesting folder.</para>
@@ -1396,27 +1396,27 @@
                                     </itemizedlist>
                                 </listitem>
                                 <listitem>
-                                    <para>searches [0..1]</para>
+                                    <para><emphasis>searches [0..1]</emphasis></para>
                                     <itemizedlist>
                                         <listitem>
-                                            <para>search [0..n]: Contains search parameters. If
+                                            <para><emphasis>search [0..n]</emphasis>: Contains search parameters. If
                                                 this element is missing, an unconstrained search
                                                 will be performed.</para>
                                             <itemizedlist>
                                                 <listitem>
-                                                  <para>freeText (<emphasis>string</emphasis>, ”)
+                                                  <para><emphasis>freeText (string, ”)</emphasis>
                                                  : Search the entire metadata.</para>
                                                 </listitem>
                                                 <listitem>
-                                                  <para>title (<emphasis>string</emphasis>, ”):
+                                                  <para><emphasis>title (string, ”)</emphasis>:
                                                   Search the dc:title queryable.</para>
                                                 </listitem>
                                                 <listitem>
-                                                  <para>abstract (<emphasis>string</emphasis>, ”):
+                                                  <para><emphasis>abstract (string, ”)</emphasis>:
                                                   Search the dc:abstract queryable.</para>
                                                 </listitem>
                                                 <listitem>
-                                                  <para>subject (<emphasis>string</emphasis>, ”):
+                                                  <para><emphasis>subject (string, ”)</emphasis>:
                                                   Search the dc:subject queryable.</para>
                                                 </listitem>
                                             </itemizedlist>
@@ -1781,149 +1781,149 @@
                         following elements:</para>
                     <itemizedlist>
                         <listitem>
-                            <para>site: A container for site information.</para>
+                            <para><emphasis>site</emphasis>: A container for site information.</para>
                             <itemizedlist>
                                 <listitem>
-                                    <para>name: Site’s name.</para>
+                                    <para><emphasis>name</emphasis>: Site’s name.</para>
                                 </listitem>
                                 <listitem>
-                                    <para>organization: Site’s organization name.</para>
+                                    <para><emphasis>organization</emphasis>: Site’s organization name.</para>
                                 </listitem>
                             </itemizedlist>
                         </listitem>
                         <listitem>
-                            <para>server: A container for server information.</para>
+                            <para><emphasis>server</emphasis>: A container for server information.</para>
                             <itemizedlist>
                                 <listitem>
-                                    <para>host: Name of the host from which the site is reached.
+                                    <para><emphasis>host</emphasis>: Name of the host from which the site is reached.
                                     </para>
                                 </listitem>
                                 <listitem>
-                                    <para>port: Port number of the previous host.</para>
+                                    <para><emphasis>port</emphasis>: Port number of the previous host.</para>
                                 </listitem>
                             </itemizedlist>
                         </listitem>
                         <listitem>
-                            <para>intranet: Information about the intranet of the organization.</para>
+                            <para><emphasis>intranet</emphasis>: Information about the intranet of the organization.</para>
                             <itemizedlist>
                                 <listitem>
-                                    <para>network: IP address that specifies the network.</para>
+                                    <para><emphasis>network</emphasis>: IP address that specifies the network.</para>
                                 </listitem>
                                 <listitem>
-                                    <para>netmask: netmask of the network.</para>
+                                    <para><emphasis>netmask</emphasis>: netmask of the network.</para>
                                 </listitem>
                             </itemizedlist>
                         </listitem>
                         <listitem>
-                            <para>z3950: Configuration about Z39.50 protocol.</para>
+                            <para><emphasis>z3950</emphasis>: Configuration about Z39.50 protocol.</para>
                             <itemizedlist>
                                 <listitem>
-                                    <para>enable: true means that the server component is running.
+                                    <para><emphasis>enable</emphasis>: true means that the server component is running.
                                     </para>
                                 </listitem>
                                 <listitem>
-                                    <para>port: Port number to use to listen for incoming Z39.50
+                                    <para><emphasis>port</emphasis>: Port number to use to listen for incoming Z39.50
                                         requests.</para>
                                 </listitem>
                             </itemizedlist>
                         </listitem>
                         <listitem>
-                            <para>proxy: Proxy configuration</para>
+                            <para><emphasis>proxy</emphasis>: Proxy configuration</para>
                             <itemizedlist>
                                 <listitem>
-                                    <para>use: true means that the proxy is used when connecting to
+                                    <para><emphasis>use</emphasis>: true means that the proxy is used when connecting to
                                         external nodes.</para>
                                 </listitem>
                                 <listitem>
-                                    <para>host: Proxy’s server host.</para>
+                                    <para><emphasis>host</emphasis>: Proxy’s server host.</para>
                                 </listitem>
                                 <listitem>
-                                    <para>port: Proxy’s server port.</para>
+                                    <para><emphasis>port</emphasis>: Proxy’s server port.</para>
                                 </listitem>
                                 <listitem>
-                                    <para>username: Proxy’s credentials.</para>
+                                    <para><emphasis>username</emphasis>: Proxy’s credentials.</para>
                                 </listitem>
                                 <listitem>
-                                    <para>password: Proxy’s credentials.</para>
+                                    <para><emphasis>password</emphasis>: Proxy’s credentials.</para>
                                 </listitem>
                             </itemizedlist>
                         </listitem>
                         <listitem>
-                            <para>feedback: A container for feeback information</para>
+                            <para><emphasis>feedback</emphasis>: A container for feeback information</para>
                             <itemizedlist>
                                 <listitem>
-                                    <para>email: Administrator’s email address</para>
+                                    <para><emphasis>email</emphasis>: Administrator’s email address</para>
                                 </listitem>
                                 <listitem>
-                                    <para>mailServer: Email server to use to send feedback</para>
+                                    <para><emphasis>mailServer</emphasis>: Email server to use to send feedback</para>
                                     <itemizedlist>
                                         <listitem>
-                                            <para>host: Email’s host address</para>
+                                            <para><emphasis>host</emphasis>: Email’s host address</para>
                                         </listitem>
                                         <listitem>
-                                            <para>port: Email’s port to use in host address</para>
+                                            <para><emphasis>port</emphasis>: Email’s port to use in host address</para>
                                         </listitem>
                                     </itemizedlist>
                                 </listitem>
                             </itemizedlist>
                         </listitem>
                         <listitem>
-                            <para>removedMetadata: A container for removed metadata information</para>
+                            <para><emphasis>removedMetadata</emphasis>: A container for removed metadata information</para>
                             <itemizedlist>
                                 <listitem>
-                                    <para>dir: Folder used to store removed metadata in MEF
+                                    <para><emphasis>dir</emphasis>: Folder used to store removed metadata in MEF
                                     format</para>
                                 </listitem>
                             </itemizedlist>
                         </listitem>
                         <listitem>
-                            <para>ldap: A container for LDAP parameters</para>
+                            <para><emphasis>ldap</emphasis>: A container for LDAP parameters</para>
                             <itemizedlist>
                                 <listitem>
-                                    <para>use:</para>
+                                    <para><emphasis>use</emphasis>:</para>
                                 </listitem>
                                 <listitem>
-                                    <para>host:</para>
+                                    <para><emphasis>host</emphasis>:</para>
                                 </listitem>
                                 <listitem>
-                                    <para>port:</para>
+                                    <para><emphasis>port</emphasis>:</para>
                                 </listitem>
                                 <listitem>
-                                    <para>defaultProfile:</para>
+                                    <para><emphasis>defaultProfile</emphasis>:</para>
                                 </listitem>
                                 <listitem>
-                                    <para>login:</para>
+                                    <para><emphasis>login</emphasis>:</para>
                                     <itemizedlist>
                                         <listitem>
-                                            <para>userDN:</para>
+                                            <para><emphasis>userDN</emphasis>:</para>
                                         </listitem>
                                         <listitem>
-                                            <para>password:</para>
+                                            <para><emphasis>password</emphasis>:</para>
                                         </listitem>
                                     </itemizedlist>
                                 </listitem>
                                 <listitem>
-                                    <para>distinguishedNames:</para>
+                                    <para><emphasis>distinguishedNames</emphasis>:</para>
                                     <itemizedlist>
                                         <listitem>
-                                            <para>base:</para>
+                                            <para><emphasis>base</emphasis>:</para>
                                         </listitem>
                                         <listitem>
-                                            <para>users:</para>
+                                            <para><emphasis>users</emphasis>:</para>
                                         </listitem>
                                     </itemizedlist>
                                 </listitem>
                                 <listitem>
-                                    <para>userAttribs:</para>
+                                    <para><emphasis>userAttribs</emphasis>:</para>
                                     <itemizedlist>
                                         <listitem>
-                                            <para>name:</para>
+                                            <para><emphasis>name</emphasis>:</para>
                                         </listitem>
                                         <listitem>
-                                            <para>password:</para>
+                                            <para><emphasis>password</emphasis>:</para>
                                         </listitem>
                                         <listitem>
-                                            <para>profile:</para>
+                                            <para><emphasis>profile</emphasis>:</para>
                                         </listitem>
                                     </itemizedlist>
                                 </listitem>
@@ -2368,11 +2368,13 @@
                     <title>Request</title>
                     <para>This service accepts requests in GET/POST and XML form. The input
                         parameters are:</para>
-                    <para>uuid the universal unique identifier of the metadata format which format
-                        to use. Can be one of: simple, partial, full. skipUuid If provided, tells
+                    <para><emphasis>uuid</emphasis> the universal unique identifier of the metadata</para>
+                    <para><emphasis>format</emphasis> which format
+                        to use. Can be one of: <code>simple, partial, full</code>.</para>
+                    <para><emphasis>skipUuid</emphasis> If provided, tells
                         the exporter to not export the metadata’s uuid. Without the uuid (which is a
                         unique key inside the database) the metadata can be imported over and over
-                        again. Can be one of: true, false. The default value is false.</para>
+                        again. Can be one of: <code>true, false</code>. The default value is false.</para>
                 </section>
                 <section>
                     <title>Response</title>
@@ -2394,7 +2396,7 @@
                 <section>
                     <title>Request</title>
                     <para>The service accepts a <literal>multipart/form-data</literal> POST request
-                        with a single mefFile parameter that must contain the MEF
+                        with a single <emphasis>mefFile</emphasis> parameter that must contain the MEF
                     information.</para>
                 </section>
                 <section>
@@ -2476,24 +2478,24 @@
                         this:</para>
                     <itemizedlist>
                         <listitem>
-                            <para>id (<emphasis>integer</emphasis>): This is the local GeoNetwork
+                            <para><emphasis>id (integer)</emphasis>: This is the local GeoNetwork
                                 identifier of the metadata whose relations are requested.</para>
                         </listitem>
                         <listitem>
-                            <para>relation (<emphasis>string</emphasis>, ’normal’): This optional
+                            <para><emphasis>relation (string, ’normal’)</emphasis>: This optional
                                 parameter identifies the kind of relation that the client wants to
                                 be returned. It can be one of these values:</para>
                             <itemizedlist>
                                 <listitem>
-                                    <para>normal: The service performs a query into the id field
+                                    <para><emphasis>normal</emphasis>: The service performs a query into the id field
                                         and returns all relatedId records.</para>
                                 </listitem>
                                 <listitem>
-                                    <para>reverse: The service performs a query into the relatedId
+                                    <para><emphasis>reverse</emphasis>: The service performs a query into the relatedId
                                         field and returns all id records.</para>
                                 </listitem>
                                 <listitem>
-                                    <para>full: Includes both normal and reverse queries
+                                    <para><emphasis>full</emphasis>: Includes both normal and reverse queries
                                         (duplicated ids are removed).</para>
                                 </listitem>
                             </itemizedlist>
@@ -2517,25 +2519,25 @@
                     <para>Each metadata element has the following structure:</para>
                     <itemizedlist>
                         <listitem>
-                            <para>title: Metadata title</para>
+                            <para><emphasis>title</emphasis>: Metadata title</para>
                         </listitem>
                         <listitem>
-                            <para>abstract: A brief explanation of the metadata</para>
+                            <para><emphasis>abstract</emphasis>: A brief explanation of the metadata</para>
                         </listitem>
                         <listitem>
-                            <para>keyword: Keywords found inside the metadata</para>
+                            <para><emphasis>keyword</emphasis>: Keywords found inside the metadata</para>
                         </listitem>
                         <listitem>
-                            <para>image: Information about thumbnails</para>
+                            <para><emphasis>image</emphasis>: Information about thumbnails</para>
                         </listitem>
                         <listitem>
-                            <para>link: A link to the source site</para>
+                            <para><emphasis>link</emphasis>: A link to the source site</para>
                         </listitem>
                         <listitem>
-                            <para>geoBox: coordinates of the bounding box</para>
+                            <para><emphasis>geoBox</emphasis>: coordinates of the bounding box</para>
                         </listitem>
                         <listitem>
-                            <para>geonet:info: A container for GeoNetwork related
+                            <para><emphasis>geonet:info</emphasis>: A container for GeoNetwork related
                             information</para>
                         </listitem>
                     </itemizedlist>
@@ -2585,20 +2587,20 @@
                     supported schemas are:</para>
                 <itemizedlist>
                     <listitem>
-                        <para>ISO-19115 (iso19115): GeoNetwork implements an old version of the
+                        <para><emphasis>ISO-19115 (iso19115)</emphasis>: GeoNetwork implements an old version of the
                             draft, which uses short names for elements. This is not so standard so
                             this schema is obsolete and will be removed in future releases.</para>
                     </listitem>
                     <listitem>
-                        <para>ISO-19139 (iso19139): This is the XML encoding of the ISO 19115:2007
-                            metadata specification.</para>
+                        <para><emphasis>ISO-19139 (iso19139)</emphasis>: This is the XML encoding of the ISO 19115:2007 metadata and ISO 19119
+                            service metadata specifications.</para>
                     </listitem>
                     <listitem>
-                        <para>Dublin core (dublin-core): This is a simple metadata schema based on
+                        <para><emphasis>Dublin core (dublin-core)</emphasis>: This is a simple metadata schema based on
                             a set of elements capable of describing any metadata.</para>
                     </listitem>
                     <listitem>
-                        <para>FGDC (fgdc-std): It stands for Federal Geographic Data Committee and
+                        <para><emphasis>FGDC (fgdc-std)</emphasis>: It stands for Federal Geographic Data Committee and
                             it is a metadata schema used in North America.</para>
                     </listitem>
                 </itemizedlist>
@@ -2622,14 +2624,14 @@
                         descriptions:</para>
                     <itemizedlist>
                         <listitem>
-                            <para>element: It must contain a schema and a name attribute. The first
+                            <para><emphasis>element</emphasis>: It must contain a <emphasis>schema</emphasis> and a <emphasis>name</emphasis> attribute. The first
                                 one must be one of the supported schemas (see the section above).
                                 The second must be the qualified name of the element which
                                 information must be retrieved. The namespace must be declared into
                                 this element or into the root element of the request.</para>
                         </listitem>
                         <listitem>
-                            <para>codelist: Works like the previous one but returns information
+                            <para><emphasis>codelist</emphasis>: Works like the previous one but returns information
                                 about codelists.</para>
                         </listitem>
                     </itemizedlist>
@@ -2649,19 +2651,19 @@
                         following:</para>
                     <itemizedlist>
                         <listitem>
-                            <para>element: A container for information about an element. It has a
+                            <para><emphasis>element</emphasis>: A container for information about an element. It has a
                                 name attribute which contains the qualified name of the element.</para>
                             <itemizedlist>
                                 <listitem>
-                                    <para>label: The human readable name of the element, localized
+                                    <para><emphasis>label</emphasis>: The human readable name of the element, localized
                                         into the request’s language.</para>
                                 </listitem>
                                 <listitem>
-                                    <para>description: A generic description of the element.
+                                    <para><emphasis>description</emphasis>: A generic description of the element.
                                     </para>
                                 </listitem>
                                 <listitem>
-                                    <para>condition [0..1]: This element is optional and indicates
+                                    <para><emphasis>condition [0..1]</emphasis>: This element is optional and indicates
                                         if the element must satisfy a condition, like the element is
                                         always mandatory or is mandatory if another one is
                                     missing.</para>
@@ -2673,20 +2675,20 @@
                                 name attribute which contains the qualified name of the codelist.</para>
                             <itemizedlist>
                                 <listitem>
-                                    <para>entry [1..n]: A container for a codelist entry. There can
+                                    <para><emphasis>entry [1..n]</emphasis>: A container for a codelist entry. There can
                                         be many entries.</para>
                                     <itemizedlist>
                                         <listitem>
-                                            <para>code: The entry’s code. This is the value that
+                                            <para><emphasis>code</emphasis>: The entry’s code. This is the value that
                                                 will be present inside the metadata.</para>
                                         </listitem>
                                         <listitem>
-                                            <para>label: This is a human readable name, used to
+                                            <para><emphasis>label</emphasis>: This is a human readable name, used to
                                                 show the entry into the user interface. It is
                                                 localized.</para>
                                         </listitem>
                                         <listitem>
-                                            <para>description: A generic localized description of
+                                            <para><emphasis>description</emphasis>: A generic localized description of
                                                 the codelist.</para>
                                         </listitem>
                                     </itemizedlist>

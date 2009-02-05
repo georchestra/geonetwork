@@ -35,13 +35,12 @@
                             <listitem>
                                 <formalpara>
                                     <title>Z39.50 listening port</title>
-                                    <para>This is the most probable source of conflicts. You have to
-                                        edit the <literal>web/WEB-INF/config.xml</literal> file of the second
-                                        installation and choose a value other than the default one,
-                                        which is 2100. Use for example 2101 but keep in mind that
-                                        remote nodes usually use 2100 so your second node will not
-                                        be reachable. You cannot use the system configuration web
-                                        form the first time because if the port conflicts, the
+                                    <para>This is the most probable source of conflicts. You can
+                                        change the port in the System preferences panel under
+                                        Administrative tools. Use for example 2101 but keep in mind
+                                        that remote nodes usually use 2100 so your second node will
+                                        not be reachable. You cannot use the system configuration
+                                        web form the first time because if the port conflicts, the
                                         server won't start.</para>
                                 </formalpara>
                             </listitem>
@@ -127,32 +126,32 @@
                             FATAL. The log options are, with increasing log intensity:</para>
                         <itemizedlist>
                             <listitem>
-                                <para>OFF - The OFF Level has the highest possible rank and is
+                                <para><emphasis>OFF</emphasis> - The OFF Level has the highest possible rank and is
                                     intended to turn off logging.</para>
                             </listitem>
                             <listitem>
-                                <para>FATAL - The FATAL level designates very severe error events
+                                <para><emphasis>FATAL</emphasis> - The FATAL level designates very severe error events
                                     that will presumably lead the application to abort.</para>
                             </listitem>
                             <listitem>
-                                <para>ERROR - The ERROR level designates error events that might
+                                <para><emphasis>ERROR</emphasis> - The ERROR level designates error events that might
                                     still allow the application to continue running.</para>
                             </listitem>
                             <listitem>
-                                <para>WARN - The WARN level designates potentially harmful
+                                <para><emphasis>WARN</emphasis> - The WARN level designates potentially harmful
                                     situations.</para>
                             </listitem>
                             <listitem>
-                                <para>INFO - The INFO level designates informational messages that
+                                <para><emphasis>INFO</emphasis> - The INFO level designates informational messages that
                                     highlight the progress of the application at coarse-grained
                                     level.</para>
                             </listitem>
                             <listitem>
-                                <para>DEBUG - The DEBUG Level designates fine-grained informational
+                                <para><emphasis>DEBUG</emphasis> - The DEBUG Level designates fine-grained informational
                                     events that are most useful to debug an application.</para>
                             </listitem>
                             <listitem>
-                                <para>ALL - The ALL Level has the lowest possible rank and is
+                                <para><emphasis>ALL</emphasis> - The ALL Level has the lowest possible rank and is
                                     intended to turn on all logging.</para>
                             </listitem>
                         </itemizedlist>
