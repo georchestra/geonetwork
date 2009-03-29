@@ -14,11 +14,14 @@ label,         VARCHAR
 0	fr	Intranet
 0	es	Intranet
 0	cn	Intranet
+0	ru	Локальная сеть
 1	en	All
 1	fr	Tous
 1	es	All
 1	cn	All
+1	ru	Все
 2	en	Sample group
 2	fr	Sample group
 2	es	Sample group
 2	cn	Sample group
+2	ru	Пример группы

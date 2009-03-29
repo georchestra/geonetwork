@@ -29,6 +29,16 @@ label,         VARCHAR
 9	es	Directorios
 8	es	Audio/V~00EDdeo
 10	es	Otros recursos de informaci~00F3n
+1	ru	Карты и графика
+2	ru	Наборы данных
+3	ru	Интерактивные ресурсы
+4	ru	Компьютерные программы
+5	ru	Практические ситуации
+6	ru	Материалы конференций
+7	ru	Фотографии
+8	ru	Аудио/Видео
+9	ru	Каталоги/справочники
+10	ru	Другие ресурсы
 1	cn	Maps & graphics
 2	cn	Datasets
 3	cn	Interactive resources

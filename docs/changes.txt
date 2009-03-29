@@ -20,6 +20,8 @@
 --- Changes
 --------------------------------------------------------------------------------
 
+- Added russian translation (Thanks to Igor V. Burago) #93
+
 - Improve CSW 2.0.2 ISO Profil support (http://trac.osgeo.org/geonetwork/wiki/CSW202Improvements)
 
 - Added import XML/MEF file (http://trac.osgeo.org/geonetwork/wiki/MetadataImport)

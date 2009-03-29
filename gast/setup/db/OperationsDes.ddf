@@ -34,3 +34,8 @@ label,         VARCHAR
 3	fr	Notifier
 5	fr	Interactive Map
 6	fr	Epingler
+0	ru	Просмотр
+1	ru	Загрузка
+3	ru	Уведомление
+5	ru	Интерактивная карта
+6	ru	Предлагаемая карта
