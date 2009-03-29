@@ -1,7 +1,7 @@
 -- ======================================================================
 -- ===   Sql Script for Database : Geonet
 -- ===
--- === Build : 148
+-- === Build : 151
 -- ======================================================================
 
 CREATE TABLE Relations
@@ -225,7 +225,7 @@ CREATE TABLE Metadata
     isHarvested  char(1)        default 'n' not null,
     createDate   varchar(24)    not null,
     changeDate   varchar(24)    not null,
-    data         longtext       not null,
+    data         text           not null,
     source       varchar(250)   not null,
     title        varchar(255),
     root         varchar(255),

@@ -64,3 +64,31 @@ value,         VARCHAR
 
 110	87	name	cn
 112	87	profile	profile
+
+120	1	csw	
+121	120	enable	true
+122	120	contactId	
+123	120	individualName	
+124	120	positionName	
+125	120	contactInfo	
+126	120	role	
+127	120	title	
+128	120	abstract	
+129	120	fees	
+130	120	accessConstraints	
+
+160	125	phone	
+161	125	address	
+162	125	hoursOfService	
+163	125	contactInstructions	
+
+140	160	voice	
+141	160	facsimile	
+
+150	161	deliveryPoint	
+151	161	city	
+152	161	administrativeArea	
+153	161	postalCode	
+154	161	country	
+155	161	email	
+

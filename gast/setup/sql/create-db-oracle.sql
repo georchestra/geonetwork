@@ -1,7 +1,7 @@
 REM ======================================================================
 REM ===   Sql Script for Database : Geonet
 REM ===
-REM === Build : 148
+REM === Build : 151
 REM ======================================================================
 
 CREATE TABLE Relations
@@ -205,10 +205,10 @@ CREATE TABLE Metadata
     source       varchar(250)   not null,
     title        varchar(255),
     root         varchar(255),
-    harvestUuid  varchar(250)		default null,
+    harvestUuid  varchar(250)   default null,
     owner        int            not null,
-    groupOwner   int						default null,
-    harvestUri   varchar(255)		default null,
+    groupOwner   int            default null,
+    harvestUri   varchar(255)   default null,
     rating       int            default 0 not null,
     popularity   int            default 0 not null,
     primary key(id),

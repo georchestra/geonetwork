@@ -20,6 +20,12 @@
 --- Changes
 --------------------------------------------------------------------------------
 
+- Improve CSW 2.0.2 ISO Profil support
+
+- Added import XML/MEF file 
+
+- Added SelectionManager
+
 - Added multilingual support in installer
 
 - Added french translation of the documentation
