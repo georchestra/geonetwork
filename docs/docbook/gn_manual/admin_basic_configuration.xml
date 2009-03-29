@@ -27,61 +27,11 @@
                     </imageobject>
                 </mediaobject>
             </figure>
-            
+
             <para>Clicking the page’s link you will get the set of parameters that you can change
-                (<xref linkend="admin_config_options"/>). Here follows a detailed description of
+                    (<xref linkend="admin_config_options"/>). Here follows a detailed description of
                 them: </para>
-            <para>Site General site parameters.</para>
-            <para><emphasis>Name</emphasis> The name of the GeoNetwork’s installation. This name
-                will be used to identify the node in operations like the harvesting.</para>
-            <para><emphasis>organization</emphasis> The organization the node belongs to. Just for
-                informative reasons.</para>
-            <para><emphasis>Server</emphasis> Here you have to enter the address of your
-                GeoNetwork’s node. This address is important because it will be used to access the
-                node. </para>
-            <para><emphasis>Host</emphasis> The node’s address or IP number. If your node is
-                publicly accessible from the Internet, you have to use the machine’s domain/address.
-                If your node is hidden into your private network and you have a firewall or web
-                server that redirects incoming calls to the node, you have to enter the public
-                address of the firewall or web server. A typical configuration is to have an Apache
-                web server on address A that is publicly accessible and redirects the requests to a
-                Tomcat server on a private address B. In this case you have to enter A in the host
-                parameter.</para>
-            <para><emphasis>port</emphasis> The node’s port (usually 80 or 8080). If the node is
-                hidden, you have to enter the port on the public firewall or web server.</para>
-            <para><emphasis>Intranet</emphasis> A common need for an organization is to discriminate
-                between internal anonymous users (users that access the node from within the
-                organization) and external ones (users from the Internet). Node’s administrators can
-                specify different privileges for internal and external anonymous users and, in order
-                to do so, they have to specify the parameters of the internal network. </para>
-            <para><emphasis>Network</emphasis> The internal network’s address in IP form.</para>
-            <para><emphasis>netmask</emphasis> The network’s mask.</para>
-            <para><emphasis>Z39.50</emphasis> GeoNetwork can act as a Z39.50 server, which is an OGC
-                communication protocol to query and retrieve metadata. </para>
-            <para><emphasis>Enable</emphasis> Check this option to start the Z39.50 submodule.
-                Please, notice that GeoNetwork must be restarted in order to make this change
-                active.</para>
-            <para><emphasis>port</emphasis> This is the port on which GeoNetwork will be listening
-                for incoming Z39.50 requests. Usually, the value of 2100 is a standard one, but to
-                have multiple GeoNetwork nodes on the same machine you have to change this value in
-                order to avoid port conflicts between the different nodes.</para>
-            <para><emphasis>Proxy</emphasis> In some occasions (like harvesting) GeoNetwork must be
-                able to connect to remote sites and this may be denied if an organization uses proxy
-                servers. In this cases, GeoNetwork must be configured to use the proxy server in
-                order to route outgoing requests. </para>
-            <para><emphasis>Host</emphasis> The proxy’s name or address to use (usually an IP
-                address).</para>
-            <para><emphasis>port</emphasis> The proxy’s port to use.</para>
-            <para><emphasis>Feedback</emphasis> GeoNetwork can provide some feedback to the
-                administrator if some events happen, for example a metadata is downloaded or some
-                feedback is provided using the online form. You have to configure GeoNetwork with
-                proper parameters to send an email. </para>
-            <para><emphasis>Email</emphasis> This is the email address that will be used to send
-                feedback to the administrator.</para>
-            <para><emphasis>SMTP host</emphasis> Organization’s mail server to use when sending
-                emails</para>
-            <para><emphasis>SMTP port</emphasis> Mail server’s SMTP port (usually 25). </para>
-            
+
             <figure id="admin_config_options">
                 <title>The configuration options</title>
                 <mediaobject>
@@ -115,6 +65,125 @@
                         the host and port values.</para>
                 </listitem>
             </orderedlist>
+
+            <section>
+                <title>Site General site parameters.</title>
+                <para><emphasis>Name</emphasis> The name of the GeoNetwork’s installation. This name
+                    will be used to identify the node in operations like the harvesting.</para>
+                <para><emphasis>organization</emphasis> The organization the node belongs to. Just
+                    for informative reasons.</para>
+                <para><emphasis>Server</emphasis> Here you have to enter the address of your
+                    GeoNetwork’s node. This address is important because it will be used to access
+                    the node. </para>
+                <para><emphasis>Host</emphasis> The node’s address or IP number. If your node is
+                    publicly accessible from the Internet, you have to use the machine’s
+                    domain/address. If your node is hidden into your private network and you have a
+                    firewall or web server that redirects incoming calls to the node, you have to
+                    enter the public address of the firewall or web server. A typical configuration
+                    is to have an Apache web server on address A that is publicly accessible and
+                    redirects the requests to a Tomcat server on a private address B. In this case
+                    you have to enter A in the host parameter.</para>
+                <para><emphasis>port</emphasis> The node’s port (usually 80 or 8080). If the node is
+                    hidden, you have to enter the port on the public firewall or web server.</para>
+                <para><emphasis>Intranet</emphasis> A common need for an organization is to
+                    discriminate between internal anonymous users (users that access the node from
+                    within the organization) and external ones (users from the Internet). Node’s
+                    administrators can specify different privileges for internal and external
+                    anonymous users and, in order to do so, they have to specify the parameters of
+                    the internal network. </para>
+                <para><emphasis>Network</emphasis> The internal network’s address in IP form.</para>
+                <para><emphasis>netmask</emphasis> The network’s mask.</para>
+            </section>
+            <section>
+                <title>Remote connection (CSW, Z39.50)</title>
+                <section>
+                    <title>CSW configuration</title>
+                    <para>When using CSW service, a client will ask for a description of the
+                        service. This description also known as GetCapabilities document, describes
+                        the main service's properties. The administration section allows
+                        configuration of the following CSW properties:</para>
+                    <orderedlist>
+                        <listitem>
+                            <para><emphasis>Enable</emphasis> option allows you to turn on/off CSW
+                                services. If this option is disabled, other catalogues could not
+                                connect to the node using CSW protocol.</para>
+                        </listitem>
+                        <listitem>
+                            <para>
+                                <emphasis>Contact</emphasis> is the main contact who is defined in
+                                the GetCapabilities document of the CSW service. This contact is one
+                                user of the catalogue. </para>
+                        </listitem>
+                        <listitem>
+                            <para>
+                                <emphasis>Title</emphasis> is the title of your CSW service. </para>
+                        </listitem>
+                        <listitem>
+                            <para>
+                                <emphasis>Abstract</emphasis> is the abstract of your CSW service.
+                            </para>
+                        </listitem>
+                        <listitem>
+                            <para>
+                                <emphasis>Fees</emphasis>
+                            </para>
+                        </listitem>
+                        <listitem>
+                            <para>
+                                <emphasis>Access constraints</emphasis>
+                            </para>
+                        </listitem>
+                    </orderedlist>
+                    <para>The service description also contains the main keywords of the catalogue.
+                        The list of keywords is generated by the catalogue based on metadata
+                        content.</para>
+                    <!-- TODO : Add documentation about config-csw.xml options -->
+                </section>
+                <section>
+                    <title>Z39.50 configuration</title>
+                    <para><emphasis>Z39.50</emphasis> GeoNetwork can act as a Z39.50 server, which
+                        is an OGC communication protocol to query and retrieve metadata. </para>
+                    <para><emphasis>Enable</emphasis> Check this option to start the Z39.50
+                        submodule. Please, notice that GeoNetwork must be restarted in order to make
+                        this change active.</para>
+                    <para><emphasis>port</emphasis> This is the port on which GeoNetwork will be
+                        listening for incoming Z39.50 requests. Usually, the value of 2100 is a
+                        standard one, but to have multiple GeoNetwork nodes on the same machine you
+                        have to change this value in order to avoid port conflicts between the
+                        different nodes.</para>
+                </section>
+            </section>
+            <section>
+                <title>Proxy configuration</title>
+                <para><emphasis>Proxy</emphasis> In some occasions (like harvesting) GeoNetwork must
+                    be able to connect to remote sites and this may be denied if an organization
+                    uses proxy servers. In this cases, GeoNetwork must be configured to use the
+                    proxy server in order to route outgoing requests. </para>
+                <para><emphasis>Host</emphasis> The proxy’s name or address to use (usually an IP
+                    address).</para>
+                <para><emphasis>port</emphasis> The proxy’s port to use.</para>
+            </section>
+            <section>
+                <title>Email &amp; notification</title>
+                <para><emphasis>Feedback</emphasis> GeoNetwork can provide some feedback to the
+                    administrator if some events happen, for example a metadata is downloaded or
+                    some feedback is provided using the online form. You have to configure
+                    GeoNetwork with proper parameters to send an email. </para>
+                <para><emphasis>Email</emphasis> This is the email address that will be used to send
+                    feedback to the administrator.</para>
+                <para><emphasis>SMTP host</emphasis> Organization’s mail server to use when sending
+                    emails</para>
+                <para><emphasis>SMTP port</emphasis> Mail server’s SMTP port (usually 25). </para>
+            </section>
+            <section>
+                <title>Removed metadata</title>
+                <para>Defined the directory to use to store removed metadata on delete actions. This
+                    is used as a backup directory.</para>
+            </section>
+            <section>
+                <title>LDAP Authentication</title>
+                <para>This section define how to connect LDAP authentication system.</para>
+            </section>
         </section>
     </chapter>
 </book>

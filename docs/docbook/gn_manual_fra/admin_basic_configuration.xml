@@ -31,90 +31,7 @@
             <para>En cliquant sur le lien vous obtenez la liste des paramètres que vous pouvez
                 modifier (<xref linkend="admin_config_options"/>). Ces paramètres sont décris de la
                 manière suivante : </para>
-            <para>Paramètre général du site. </para>
-            <orderedlist>
-                <listitem>
-                    <para>nom : Le nom de l'installation de GeoNetwork. Ce nom sera utilisé pour
-                        identifier le noeud dans les opérations tel que le moissonage.</para>
-                </listitem>
-                <listitem>
-                    <para>organisation : L'organisation à laquelle le noeud appartient. Uniquement
-                        informatif.</para>
-                </listitem>
-            </orderedlist>
 
-            <para>Serveur. </para>
-            <orderedlist>
-                <listitem>
-                    <para>hôte : L'adresse du noeud GeoNetwork. Cette adresse est importante car
-                        utilisée pour l'accès au catalogue. L'adresse du noeud ou son adresse IP
-                        peut être saisie. Si le noeud est public (ie. accessible sur Internet) vous
-                        devez utiliser le nom de domaine du serveur. Si le noeud est placé sur un
-                        réseau privé et que vous avez un parfeu ou un serveur web s'occupant des
-                        redirections (ie. reverse proxy) dans ce cas vous devez saisir l'adresse du
-                        parfeu ou serveur web accessible depuis Internet.</para>
-                </listitem>
-                <listitem>
-                    <para>Port : Le numéro du port (habituellement 80 ou 8080).</para>
-                </listitem>
-            </orderedlist>
-
-            <para>Intranet : Un besoin fréquent est de pouvoir distinguer un utilisateur Internet
-                d'un utilisateur Intranet (ie. sur le réseau local). Les privilèges sur les
-                métadonnées peuvent être définis pour ces 2 types d'utilisateurs. Pour cela, les
-                paramètres suivants doivent être renseignés. </para>
-            <orderedlist>
-                <listitem>
-                    <para>réseau : L'adresse IP du réseau.</para>
-                </listitem>
-                <listitem>
-                    <para>masque de sous réseau.</para>
-                </listitem>
-            </orderedlist>
-
-
-            <para>Serveur Z39.50 : GeoNetwork peut être un serveur Z39.50. Activez cette option en
-                cochant la case.</para>
-            <orderedlist>
-                <listitem>
-                    <para>Cochez cette option pour activer le module. Attention, vous devez
-                        redémarrer GeoNetwork pour activer cette fonction.</para>
-                </listitem>
-                <listitem>
-                    <para>port : Cette option définie le port sur lequel GeoNetwork écoute les
-                        requêtes Z39.50. En général, la valeur est 2100. Celle-ci est la plus
-                        commune pour le serveur Z39.50. Cependant, si vous souhaitez déployer
-                        plusieurs noeuds GeoNetwork, vous devez utiliser des ports différents afin
-                        d'éviter les conflits de ports. Par ailleurs, dans le cas où le noeud est
-                        localisé derrière un proxy, il est nécessaire de le configurer afin de
-                        router les requêtes.</para>
-                </listitem>
-            </orderedlist>
-
-            <para>Proxy</para>
-            <orderedlist>
-                <listitem>
-                    <para>host : Le nom ou l'adresse IP du proxy.</para>
-                </listitem>
-                <listitem>
-                    <para>port : Le port à utiliser.</para>
-                </listitem>
-            </orderedlist>
-
-            <para>Alerte par email : GeoNetwork peut envoyer des messages à l'administrateur du
-                noeud sur certains événements tel que le téléchargement des données ou l'utilisation
-                du formulaire Contact. Pour cela, vous devez configurer GeoNetwork.</para>
-            <orderedlist>
-                <listitem>
-                    <para>email : L'adresse email à laquelle les alertes sont envoyées.</para>
-                </listitem>
-                <listitem>
-                    <para>serveur SMTP : Le serveur SMTP devant être utilisé.</para>
-                </listitem>
-                <listitem>
-                    <para>port SMTP : Le port SMTP devant être utilisé (en général 25).</para>
-                </listitem>
-            </orderedlist>
 
             <figure id="admin_config_options">
                 <title>Options de configuration</title>
@@ -158,6 +75,157 @@
                         paramètres.</para>
                 </listitem>
             </orderedlist>
+
+
+            <section>
+                <title>Paramètre général du site. </title>
+                <orderedlist>
+                    <listitem>
+                        <para>nom : Le nom de l'installation de GeoNetwork. Ce nom sera utilisé pour
+                            identifier le noeud dans les opérations tel que le moissonage.</para>
+                    </listitem>
+                    <listitem>
+                        <para>organisation : L'organisation à laquelle le noeud appartient.
+                            Uniquement informatif.</para>
+                    </listitem>
+                </orderedlist>
+            </section>
+            <section>
+                <title>Serveur.</title>
+                <orderedlist>
+                    <listitem>
+                        <para>hôte : L'adresse du noeud GeoNetwork. Cette adresse est importante car
+                            utilisée pour l'accès au catalogue. L'adresse du noeud ou son adresse IP
+                            peut être saisie. Si le noeud est public (ie. accessible sur Internet)
+                            vous devez utiliser le nom de domaine du serveur. Si le noeud est placé
+                            sur un réseau privé et que vous avez un parfeu ou un serveur web
+                            s'occupant des redirections (ie. reverse proxy) dans ce cas vous devez
+                            saisir l'adresse du parfeu ou serveur web accessible depuis
+                            Internet.</para>
+                    </listitem>
+                    <listitem>
+                        <para>Port : Le numéro du port (habituellement 80 ou 8080).</para>
+                    </listitem>
+                </orderedlist>
+
+                <para>Intranet : Un besoin fréquent est de pouvoir distinguer un utilisateur
+                    Internet d'un utilisateur Intranet (ie. sur le réseau local). Les privilèges sur
+                    les métadonnées peuvent être définis pour ces 2 types d'utilisateurs. Pour cela,
+                    les paramètres suivants doivent être renseignés. </para>
+                <orderedlist>
+                    <listitem>
+                        <para>réseau : L'adresse IP du réseau.</para>
+                    </listitem>
+                    <listitem>
+                        <para>masque de sous réseau.</para>
+                    </listitem>
+                </orderedlist>
+            </section>
+
+            <section>
+                <title>Connection distante (CSW, Z39.50)</title>
+                <section>
+                    <title>Configuration du service CSW</title>
+                    <para>Lors de l'utilisation du service CSW, les clients demandent une
+                        description du service. Cette description est accessible via le document
+                        GetCapabilities transmis par le service. La configuration du service CSW
+                        permet la définition des propriétés suivantes :</para>
+                    <orderedlist>
+                        <listitem>
+                            <para><emphasis>Activer</emphasis> permet d'activer ou pas le service.
+                                Si inactif, les autres catalogues ne peuvent se connecter au
+                                catalogue via CSW.</para>
+                        </listitem>
+                        <listitem>
+                            <para>
+                                <emphasis>Contact</emphasis> permet de définir le contact pour le
+                                service. Ce contact est un utilisateur définit dans les utilisateurs
+                                du catalogue.</para>
+                        </listitem>
+                        <listitem>
+                            <para>
+                                <emphasis>Titre</emphasis> permet de décrire le service. </para>
+                        </listitem>
+                        <listitem>
+                            <para>
+                                <emphasis>Abstract</emphasis> correspond au résumé. Il peut indiquer
+                                la couverture géographique et thématique du catalogue. </para>
+                        </listitem>
+                        <listitem>
+                            <para>
+                                <emphasis>Fees</emphasis>
+                            </para>
+                        </listitem>
+                        <listitem>
+                            <para>
+                                <emphasis>Access constraints</emphasis> / Contrainte d'accès
+                            </para>
+                        </listitem>
+                    </orderedlist>
+                    <para>La description du service contient également des mots clés. Ces mots-clés
+                        sont automatiquement définis par le catalogue à partir des mots clés les
+                        plus fréquent dans le catalogue.</para>
+                    <!-- TODO : Add documentation about config-csw.xml options -->
+                </section>
+                <section>
+                    <title>Serveur Z39.50</title>
+                    <para>Serveur Z39.50 : GeoNetwork peut être un serveur Z39.50. Activez cette
+                        option en cochant la case.</para>
+                    <orderedlist>
+                        <listitem>
+                            <para>Cochez cette option pour activer le module. Attention, vous devez
+                                redémarrer GeoNetwork pour activer cette fonction.</para>
+                        </listitem>
+                        <listitem>
+                            <para>port : Cette option définie le port sur lequel GeoNetwork écoute
+                                les requêtes Z39.50. En général, la valeur est 2100. Celle-ci est la
+                                plus commune pour le serveur Z39.50. Cependant, si vous souhaitez
+                                déployer plusieurs noeuds GeoNetwork, vous devez utiliser des ports
+                                différents afin d'éviter les conflits de ports. Par ailleurs, dans
+                                le cas où le noeud est localisé derrière un proxy, il est nécessaire
+                                de le configurer afin de router les requêtes.</para>
+                        </listitem>
+                    </orderedlist>
+                </section>
+            </section>
+            <section>
+                <title>Configuration du proxy</title>
+                <orderedlist>
+                    <listitem>
+                        <para>host : Le nom ou l'adresse IP du proxy.</para>
+                    </listitem>
+                    <listitem>
+                        <para>port : Le port à utiliser.</para>
+                    </listitem>
+                </orderedlist>
+            </section>
+            <section>
+                <title>Notification &amps; email</title>
+                <para>Alerte par email : GeoNetwork peut envoyer des messages à l'administrateur du
+                    noeud sur certains événements tel que le téléchargement des données ou
+                    l'utilisation du formulaire Contact. Pour cela, vous devez configurer
+                    GeoNetwork.</para>
+                <orderedlist>
+                    <listitem>
+                        <para>email : L'adresse email à laquelle les alertes sont envoyées.</para>
+                    </listitem>
+                    <listitem>
+                        <para>serveur SMTP : Le serveur SMTP devant être utilisé.</para>
+                    </listitem>
+                    <listitem>
+                        <para>port SMTP : Le port SMTP devant être utilisé (en général 25).</para>
+                    </listitem>
+                </orderedlist>
+            </section>
+            <section>
+                <title>Métadonnées supprimées</title>
+                <para>Définir le répertoire utilisé pour stocker les métadonnées
+                    supprimées.</para>
+            </section>
+            <section>
+                <title>Authentification LDAP</title>
+                <para>Propriété de la connection à un serveur LDAP.</para>
+            </section>
         </section>
     </chapter>
 </book>
