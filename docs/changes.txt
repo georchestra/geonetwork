@@ -20,11 +20,11 @@
 --- Changes
 --------------------------------------------------------------------------------
 
-- Improve CSW 2.0.2 ISO Profil support
+- Improve CSW 2.0.2 ISO Profil support (http://trac.osgeo.org/geonetwork/wiki/CSW202Improvements)
 
-- Added import XML/MEF file 
+- Added import XML/MEF file (http://trac.osgeo.org/geonetwork/wiki/MetadataImport)
 
-- Added SelectionManager
+- Added SelectionManager (http://trac.osgeo.org/geonetwork/wiki/SelectionManager)
 
 - Added multilingual support in installer
 
