@@ -24,8 +24,8 @@
 		
 	<!-- =================================================================================== -->
 
-	<property name="version" value="2.3.0" />
-	<property name="subVersion" value="alpha1" />
+	<property name="version" value="2.4.0" />
+	<property name="subVersion" value="RC0" />
 	<property name="javaVersion" value="1.5.0" /> <!-- Minimum version required -->
 	<property name="jre_url" value="http://java.sun.com/javase/downloads/index_jdk5.jsp" />
 	<property name="OS" value="Compiled on ${os.name} (${osys})" />
