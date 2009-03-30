@@ -12,6 +12,7 @@ email,         VARCHAR
 referrer,      INTEGER
 
 [DATA]
+-1	GUEST	self-registered users		
 0	intranet			
 1	all			
 2	sample			

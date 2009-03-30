@@ -92,3 +92,14 @@ value,         VARCHAR
 154	161	country	
 155	161	email	
 
+170	1	shib	
+171	170	use	false
+172	170	path	/geonetwork/srv/en/shib.user.login
+173	170	attrib	
+174	173	username	REMOTE_USER
+175	173	surname	Shib-Person-surname
+176	173	firstname	Shib-InetOrgPerson-givenName
+177	173	profile	Shib-EP-Entitlement
+
+190	1	userSelfRegistration	
+191	190	enable	false

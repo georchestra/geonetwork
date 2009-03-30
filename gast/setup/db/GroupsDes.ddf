@@ -10,6 +10,11 @@ langId,        VARCHAR
 label,         VARCHAR
 
 [DATA]
+-1	en	GUEST
+-1	fr	GUEST
+-1	es	GUEST
+-1	cn	GUEST
+-1	ru	GUEST
 0	en	Intranet
 0	fr	Intranet
 0	es	Intranet

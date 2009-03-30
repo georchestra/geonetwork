@@ -36,6 +36,7 @@ label,         VARCHAR
 6	fr	Epingler
 0	ru	Просмотр
 1	ru	Загрузка
+2	ru	Editing
 3	ru	Уведомление
 5	ru	Интерактивная карта
 6	ru	Предлагаемая карта
