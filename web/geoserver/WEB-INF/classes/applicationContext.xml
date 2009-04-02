@@ -3,7 +3,7 @@
 
 <beans>
 
-	<!--  application state module -->
+		<!--  application state module -->
 	<bean id="applicationState"
 		class="org.vfny.geoserver.global.ApplicationState">
 		<constructor-arg ref="data"/>
@@ -18,4 +18,17 @@
  		<constructor-arg ref="applicationState"/>
  	</bean>
  	
+   <bean id="dispatcherMapping" 
+    class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+	 <property name="alwaysUseFullPath" value="true"/>
+	 <property name="mappings">
+      <props>
+        <prop key="/ows">dispatcher</prop>
+        <prop key="/ows/**">dispatcher</prop>
+        <prop key="/styles/**">filePublisher</prop>
+        <prop key="/www/**">filePublisher</prop>
+      </props>
+    </property>
+  </bean>
+  
 </beans>

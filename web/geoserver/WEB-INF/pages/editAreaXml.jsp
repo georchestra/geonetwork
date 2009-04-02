@@ -1,5 +1,5 @@
 <script language="Javascript" type="text/javascript"
-	src="http://localhost:8080/geoserver/editarea/edit_area_full.js"></script>
+	src="../../editarea/edit_area_full.js"></script>
 <script language="Javascript" type="text/javascript">
 		// initialisation
 		editAreaLoader.init({

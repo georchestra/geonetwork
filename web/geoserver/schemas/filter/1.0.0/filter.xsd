@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema targetNamespace="http://www.opengis.net/ogc" xmlns:ogc="http://www.opengis.net/ogc" xmlns:gml="http://www.opengis.net/gml" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
 	<xsd:include schemaLocation="expr.xsd"/>
-	<xsd:import namespace="http://www.opengis.net/gml" schemaLocation="../../gml/2.1.2/geometry.xsd"/>
+	<xsd:import namespace="http://www.opengis.net/gml" schemaLocation="../../gml/2.1.2.1/geometry.xsd"/>
 	<!-- ============================================= -->
 	<!-- FILTER EXPRESSION                             -->
 	<!-- ============================================= -->

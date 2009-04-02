@@ -97,8 +97,10 @@
    		<put name="status" value="/WEB-INF/pages/data/status.jsp"/>
         <put name="locationForwards" value="welcome:config"/>
    		<put name="configActions" value="/WEB-INF/pages/configActions.jsp"/>
+      <!-- Removed, since for the moment the configuration is stored in property files
         <put name="menuForwards"
              value="config.server.login"/>
+      -->
    	</definition>
    	
         <definition name="config.server.login" extends=".mainLayout">

@@ -1,39 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XML Spy v4.3 U (http://www.xmlspy.com) by John D Evans (Global Science & Technology, Inc) -->
-<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Steven Keens (PCI Geomatics Inc.) -->
-<xs:schema targetNamespace="http://www.opengis.net/wcs" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:gml="http://www.opengis.net/gml" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opengis.net/wcs" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0.0" xml:lang="en">
+<xs:schema targetNamespace="http://www.opengis.net/wcs" xmlns:gml="http://www.opengis.net/gml" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opengis.net/wcs" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0.1" xml:lang="en">
 	<xs:annotation>
-		<xs:appinfo>getCoverage.xsd v1.0.0 2003-08-27</xs:appinfo>
+		<xs:appinfo>getCoverage.xsd v1.0.1 2005-07-18</xs:appinfo>
 		<xs:documentation>This schema defines the GetCoverage operation request and response XML elements and types, used by an OGC Web Coverage Service (WCS). This schema is believed to be a GML Application Schema. </xs:documentation>
 		<xs:documentation>AEW 03/07/22 Changes made:
-		[xmlns:t=""] above
-		[version="1.0.0" xml:lang="en"] above
-		[abstract="true"] from CoverageRequest
-		CoverageRequestType with CoverageRequest
-		names of all elements in CoverageRequest to start with lower case letter
-		new OutputType for "output" element in CoverageRequest
-		restriction of DomainSetType from DomainSubsetType, to make schema valid
-		documention to DomainSubsetType, CoverageRequest, RangeSubsetType
-		definition of "name" in RangeSubsetType, to produce valid schema. Should this "name" attribute be changed to "label"?
-		definition of axisSubset in RangeSubsetType
+			Removed [xmlns:t=""] above
+			Added [version="1.0.0" xml:lang="en"] above
+			Removed [abstract="true"] from CoverageRequest
+			Combined CoverageRequestType with CoverageRequest
+			Changed names of all elements in CoverageRequest to start with lower case letter
+			Defined new OutputType for "output" element in CoverageRequest
+			Removed restriction of DomainSetType from DomainSubsetType, to make schema valid
+			Added documention to DomainSubsetType, CoverageRequest, RangeSubsetType
+			Changed definition of "name" in RangeSubsetType, to produce valid schema. Should this "name" attribute be changed to "label"?
+			Simplified definition of axisSubset in RangeSubsetType
 		</xs:documentation>
 		<xs:documentation>AEW 03/07/29 Changes made:
-		documentation to DomainSubsetType, GridOp
+			Added documentation to DomainSubsetType, GridOp
 		</xs:documentation>
 		<xs:documentation>AEW 03/08/01 Changes made:
-		documentation of many types
+			Edited documentation of many types
 		</xs:documentation>
 		<xs:documentation>JDE 03/08/27 Changes made:
-		both GetCoverage/@service and DescribeCoverage/@version required
+		 	Made both GetCoverage/@service and DescribeCoverage/@version required
+		</xs:documentation>
+		<xs:documentation>AEW 04/07/17 Changes made:
+		 	Changed "import" statement for the "wcs" namespace to an "include" statement.
+		 	Added "import" statement for "gml" namespace used in gml4wcs.xsd. 
 		</xs:documentation>
 	</xs:annotation>
 	<!-- ==========================================================
-          includes and imports
+           includes and imports
 	========================================================== -->
-	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="gml4wcs.xsd"/>
-	<xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://schemas.opengis.net/gml/3.0.0/xlink/xlinks.xsd"/>
 	<xs:include schemaLocation="./describeCoverage.xsd"/>
-	<!-- ======================================================= -->
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="./gml4wcs.xsd"/>
+	<!-- ==============================================================
+       elements and types
+	============================================================== -->
 	<xs:element name="GetCoverage">
 		<xs:annotation>
 			<xs:documentation>Request to a WCS to perform the GetCoverage operation. In this XML encoding, no "request" parameter is included, since the element name specifies the specific operation. </xs:documentation>

@@ -20,7 +20,7 @@ application directory.
 <script type="text/javascript" src="js_color_picker_v2.js"></script>
 
 <!-- ================================ -->
-<!-- ---------- JAVASCRIPT ---------- -->
+<!--            JAVASCRIPT            -->
 <!-- ================================ -->
 <script language="JavaScript" type="text/JavaScript">
 <!--
@@ -66,7 +66,7 @@ function setup()
 			log("ft info: "+ftInfo);
 			columnNames = document.getElementById('hidden_ft_attrNames').innerHTML;
 
-			ftInfoSplit = ftInfo.split(",");
+			ftInfoSplit = ftInfo.substring(1, ftInfo.length - 1).split(",");
 			for(i=0;i<ftInfoSplit.length;i++)
 			{
 				var g = ftInfoSplit[i].split(":")[1];
@@ -180,9 +180,9 @@ function generateColorPicker(colorFieldName)
 	
 	result = '<input name="'+colorFieldName+'" id="'+colorFieldName+'" size="7" ';
 	result += 'onChange="relateColor(\''+colorFieldName+'\', this.value);"> ';
-	result += '<script language="javascript">relateColor(\'pick'+colorFieldName+'\', getObj(\''+colorFieldName+'\').value);</scr'+'ipt> ';
+	result += '<scr' + 'ipt language="javascript">relateColor(\'pick'+colorFieldName+'\', getObj(\''+colorFieldName+'\').value);</scr'+'ipt> ';
 	result += '<a href="javascript:pickColor(\''+colorFieldName+'\');" id="pick'+colorFieldName+'" name="pick'+colorFieldName+'" style="border: 1px solid #000000; font-family:Verdana; font-size:10px; background=#FFFF33; ';
-	result += 'text-decoration: none; " ><img src="../../data/images/colorpicker.jpg" width=12 height=12 border="none"></a>';
+	result += 'text-decoration: none; " ><img src="../../images/colorpicker.jpg" width=12 height=12 border="none"></a>';
 
 	return result;
 }
@@ -273,9 +273,7 @@ function generatePointSLD()
 	// check values to make sure they are in range and valid
 	if (propertyName != "none" && (labelColor == null || labelColor == "") )
 		return "ERROR: label name specified, but no text color specified.";
-	if (labelColor == null || labelColor == "")
-		return "ERROR: Label color cannot be empty";
-	if (labelColor.length != 7)
+	if (propertyName != "none" && labelColor.length != 7)
 		return "ERROR: Label color must be 7 characters long in hexadecimal (#00ff23).";
 	if (fillColor == null || fillColor == "")
 		return "ERROR: Point color cannot be empty";
@@ -329,9 +327,7 @@ function generateLineSLD()
 	// check values to make sure they are in range and valid
 	if (propertyName != "none" && (labelColor == null || labelColor == "") )
 		return "ERROR: label name specified, but no text color specified.";
-	if (labelColor == null || labelColor == "")
-		return "ERROR: Label color cannot be empty";
-	if (labelColor.length != 7)
+	if (propertyName != "none" && labelColor.length != 7)
 		return "ERROR: Label color must be 7 characters long in hexadecimal (#00ff23).";
 	if (lineColor == null || lineColor == "")
 		return "ERROR: Line color cannot be empty";
@@ -383,9 +379,7 @@ function generatePolygonSLD()
 	// check values to make sure they are in range and valid
 	if (propertyName != "none" && (labelColor == null || labelColor == "") )
 		return "ERROR: label name specified, but no text color specified.";
-	if (labelColor == null || labelColor == "")
-		return "ERROR: Label color cannot be empty";
-	if (labelColor.length != 7)
+	if (propertyName != "none" && labelColor.length != 7)
 		return "ERROR: Label color must be 7 characters long in hexadecimal (#00ff23).";
 	if (fillColor == null || fillColor == "")
 		return "ERROR: Polygon fill color cannot be empty";
@@ -436,7 +430,7 @@ function saveStyle(SLD)
 	}
 
 	// build XML POST query
-	URL  = "/geoserver/wms?request=putstyles";//"http://"+SERVERHOSTNAME+"/
+	URL  = "/geoserver/wms/putstyles?";//"http://"+SERVERHOSTNAME+"/
 
 	getXML(URL,SLD,XMLProgressFunction);
 	
@@ -1010,7 +1004,7 @@ function nothing()
 -->
 </script>
 <!-- ================================ -->
-<!-- --- END -- JAVASCRIPT ---------- -->
+<!--     END  - JAVASCRIPT            -->
 <!-- ================================ -->
 
 

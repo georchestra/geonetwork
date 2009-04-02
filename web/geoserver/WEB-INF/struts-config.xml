@@ -51,6 +51,10 @@
 	        type="java.lang.String[]" 
 	    />
 	    <form-property 
+            name="EscapedFTNamespaceList" 
+            type="java.lang.String[]" 
+        />
+	    <form-property 
 	        name="BBoxList" 
 	        type="java.lang.String[]" 
 	    />
@@ -70,6 +74,10 @@
             name="CoverageStatus" 
             type="java.lang.Integer[]" 
         />
+		<form-property 
+			name="BaseUrl" 
+			type="java.lang.String" 
+		/>	
 		</form-bean>
 
     	<form-bean
@@ -543,7 +551,14 @@
                  >
                  <forward name="success" path="/WEB-INF/pages/srsList.jsp"/>
           </action>
-          
+          <action
+                    path="/config/data/srsHelp"
+                    type="org.vfny.geoserver.action.SrsHelpAction"
+                    name="srsInfoForm"
+                    scope="request"
+                 >
+                 <forward name="success" path="/WEB-INF/pages/srsList.jsp"/>
+          </action>
           
           <!-- mapPreview -->
           

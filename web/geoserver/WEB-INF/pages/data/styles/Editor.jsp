@@ -9,7 +9,7 @@
     <td class="label"><bean:message key="label.styleID"/>:</td>
     <td class="datum"><html:text property="styleID" size="60"/></td>
   </tr>
-   <!--- add the "fully validate" option-->
+    <!-- - add the "fully validate" option-->
   <tr>
     <td class="label">&nbsp;</td>
     <td><html:checkbox property="fullyValidate">Fully Validate against the SLD schema</html:checkbox></td>

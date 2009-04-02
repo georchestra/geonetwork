@@ -3,6 +3,7 @@
 <%@ taglib uri="/tags/struts-bean" prefix="bean" %>
 <%@ taglib uri="/tags/struts-html" prefix="html" %>
 <%@ taglib uri="/tags/struts-logic" prefix="logic" %>
+<%@ taglib prefix='c' uri='http://java.sun.com/jstl/core' %>
 
 <tiles:importAttribute scope="request"/>
 
@@ -15,6 +16,7 @@
 
 <%@page import="org.vfny.geoserver.global.GeoServer"%>
 <%@page import="org.vfny.geoserver.util.Requests"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html:html locale="true" xhtml="true">
   <head>
     <title>
@@ -65,9 +67,13 @@
 	   div.appendChild(text);
 	   body = div.innerHTML;
 	   
+	   var username = document.getElementById("username").value;
+	   var password = document.getElementById("password").value;
 	   iFrameBody.innerHTML = "<form action='http://<%=request.getServerName()%>:<%=request.getServerPort()%><%=request.getContextPath()%>/TestWfsPost' method='POST'>\n" + 
 	                          "<input type='hidden' name='url' value='" + url + "'/>\n" +
 	                          "<textarea style='visibility:hidden' name='body' />" + body + "</textarea>\n" + 
+	                          "<input type='hidden' name='username' value='" + username + "'/>\n" + 
+	                          "<input type='hidden' name='password' value='" + password + "'/>\n" +
 	                          "<input type='hidden' value='submit'/>\n" +
 	                          "</form>";
 	   var form = iFrameBody.firstChild;
@@ -111,30 +117,16 @@
 	window.onresize=resize_iframe; 
 
 		-->
-	</script>
-  	
+	</script>  	
     <style type="text/css">
       <!-- @import url("<html:rewrite forward='style'/>"); -->
     </style>
   
     <link type="image/gif" href="<html:rewrite forward='icon'/>" rel="icon"/>
     <link href="<html:rewrite forward='favicon'/>" rel="SHORTCUT ICON"/>
-    <% 
-	    GeoServer gs = (GeoServer) getServletContext().getAttribute(GeoServer.WEB_CONTAINER_KEY);
-        String baseUrl = Requests.getBaseJspUrl(request, gs);
-    %>
-     <base href="<%=baseUrl%>"/> 
-    <!-- <html:base/> -->
   </head>
   <body>
   
-<!-- Security Check (for non application layers -->
-<logic:notEqual name="layer" value="application">  
-  <logic:notPresent name="GEOSERVER.USER">
-    <logic:redirect forward="login" />
-  </logic:notPresent>
-</logic:notEqual>
-    
 <table class="page" height="100%">
   <tbody>
 	<tr class="header" height="1%">
@@ -144,34 +136,30 @@
               <bean:message key="geoserver.logo"/>
             </a>
           </span>
-          <span class="license">
-            <a href="<bean:message key="link.license"/>">&copy;</a>
-          </span>
 		</td>
         <td style="width: 1em">
         </td>
 		<td style="vertical-align: bottom; white-space: nowrap;">
-          <span class="site">
-<logic:notEmpty name="GeoServer" property="title">
+          <div class="site-head">
+	         <div class="selfclear">
+<span class="site"><a href="<%=request.getContextPath()%>/welcome.do"><logic:notEmpty name="GeoServer" property="title">
               <bean:write name="GeoServer" property="title"/>
 </logic:notEmpty>
 <logic:empty name="GeoServer" property="title">
               <bean:message key="message.noTitle"/>
-</logic:empty>            
-          </span>			
-		</td>	
-		<td style="vertical-align: bottom; white-space: nowrap; text-align: right;">
-			<span class="contact">
+</logic:empty></a></span>
+			
+			 <span class="contact">
 			   <a href="<bean:message key="label.credits.url"/>"><bean:message key="label.credits"/></a>
-			</span>
-<logic:notEmpty name="GeoServer" property="contactParty">
-            <span class="contact">		
+<logic:notEmpty name="GeoServer" property="contactParty">		
               <bean:message key="label.contact"/>: 	
               <html:link forward="contact">
                 <bean:write name="GeoServer" property="contactParty"/>
-              </html:link>
-            </span>            
-</logic:notEmpty>                
+              </html:link>         
+</logic:notEmpty>
+				</span>     
+      </div>       
+      </div>          
         </td>
 	</tr>
 	
@@ -184,8 +172,7 @@
       </td>
       <td style="width: 1em">
       </td>      
-      <td style="vertical-align: top;"
-          rowspan="1" colspan="2">
+      <td style="vertical-align: top;">
             
         <table class="main">
           <tbody>
@@ -195,16 +182,13 @@
               </td>
               <td class="loginStatus">
                 <span class="loginStatus">                  
-<logic:present name="GEOSERVER.USER">
-                    <html:link forward="logout">
-				      <bean:message key="label.logout"/>
-			        </html:link>
-</logic:present>                  
-<logic:notPresent name="GEOSERVER.USER">
+<%if(Requests.isLoggedIn(request)) {%>
+                    <a href="<%=request.getContextPath()%>/j_acegi_logout"><bean:message key="label.logout"/></a>
+<%} else {%>                  
                     <html:link forward="login">
                       <bean:message key="label.login"/>
                     </html:link>
-</logic:notPresent>                  
+<%}%>                  
                 </span>
               </td>
             </tr>

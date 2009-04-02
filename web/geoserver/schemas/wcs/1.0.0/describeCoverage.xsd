@@ -1,39 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XML Spy v4.3 U (http://www.xmlspy.com) by John D Evans (Global Science & Technology, Inc) -->
-<xs:schema xmlns:gml="http://www.opengis.net/gml" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.opengis.net/wcs" targetNamespace="http://www.opengis.net/wcs" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0.0" xml:lang="en">
-
+<xs:schema targetNamespace="http://www.opengis.net/wcs" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opengis.net/wcs" xmlns:gml="http://www.opengis.net/gml" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0.1" xml:lang="en">
 	<xs:annotation>
-		<xs:appinfo>describeCoverage.xsd v1.0.0 2003-08-27</xs:appinfo>
+		<xs:appinfo>describeCoverage.xsd v1.0.1 2005-07-18</xs:appinfo>
 		<xs:documentation>This schema defines the DescribeCoverage operation request and reply XML elements and types, used by an OGC Web Coverage Service (WCS). </xs:documentation>
 		<xs:documentation>JDE 2003-07-24 changes:
-	first and third "include" below to "import" so as to bring more than one namespace
-	spatialDomain a global element so as to substitute for it in GetCoverage spatialSubset
+		Changed first and third "include" below to "import" so as to bring more than one namespace
+		Made spatialDomain a global element so as to substitute for it in GetCoverage spatialSubset
 		</xs:documentation>
 		<xs:documentation> JDE 2003-07-28 - Made temporalSubset of type TimeSequenceType (from owsBase.xsd, uses gml:timePosition).		</xs:documentation>
 		<xs:documentation>AEW 03/07/29 Changes made:
-		documentation of some elements and types
+			Edited documentation of some elements and types
 		</xs:documentation>
 		<xs:documentation>AEW 03/07/30 Changes made:
-		defintion of temporalDomain element, makiing first letter of name lower case
+			Corrrected defintion of temporalDomain element, makiing first letter of name lower case
 		</xs:documentation>
 		<xs:documentation>AEW 03/08/01 Changes made:
-		documentation of many types
+			Edited documentation of many types
 		</xs:documentation>
 		<xs:documentation>JDE 03/08/27 Changes made:
-		DescribeCoverage/@service and DescribeCoverage/@version required
-		CoverageDescription/@version (required) and CoverageDescription/@updateSequence (optional)
+		 	Made DescribeCoverage/@service and DescribeCoverage/@version required
+			Added CoverageDescription/@version (required) and CoverageDescription/@updateSequence (optional)
+		</xs:documentation>
+		<xs:documentation>AEW 04/07/14 Changes made:
+		 	Changed two "import" statement for the "wcs" namespace to  "include" statements. 
+		 	Added "import" statement for the "gml" namespace used in gml4wcs.xsd.
+		</xs:documentation>
+		<xs:documentation>AEW 05/07/15 Changes made:
+		 	Changed documentation of updateSequence attribute in CoverageDescription element
 		</xs:documentation>
 	</xs:annotation>
 	<!-- ==============================================================
-          includes and imports
+           includes and imports
 	============================================================== -->
-	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="gml4wcs.xsd"/>
-	<xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://schemas.opengis.net/gml/3.0.0/xlink/xlinks.xsd"/>
 	<xs:include schemaLocation="./wcsCapabilities.xsd"/>
 	<xs:include schemaLocation="./values.xsd"/>
-	<xs:include schemaLocation="./owsBase.xsd"/>
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="./gml4wcs.xsd"/>
 	<!-- ==============================================================
-      elements and types
+       elements and types
 	============================================================== -->
 	<xs:element name="DescribeCoverage">
 		<xs:annotation>
@@ -63,7 +66,7 @@
 			<xs:attribute name="version" type="xs:string" use="required" fixed="1.0.0"/>
 			<xs:attribute name="updateSequence" type="xs:string" use="optional">
 				<xs:annotation>
-					<xs:documentation>TBD. </xs:documentation>
+					<xs:documentation>Service metadata (Capabilities) document version, having values that are "increased" whenever any change is made in service metadata document. Values are selected by each server, and are always opaque to clients. </xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
 		</xs:complexType>
@@ -84,7 +87,7 @@
 					<xs:element ref="supportedFormats"/>
 					<xs:element ref="supportedInterpolations" minOccurs="0">
 						<xs:annotation>
-							<xs:documentation>Specifies whether and how the server can interpolate coverage values over the spatial domain, when a GetCoverage request requires resampling, reprojection, or other generalization. If supportedInterpolations is absent or empty with no default, then clients should assume nearest-neighbor interpolation. If the only interpolation method listed is none, clients can only retrieve coverages from this layer in its native CRS and at its native resolution. </xs:documentation>
+							<xs:documentation>Specifies whether and how the server can interpolate coverage values over the spatial domain, when a GetCoverage request requires resampling, reprojection, or other generalization. If supportedInterpolations is absent or empty with no default, then clients should assume nearest-neighbor interpolation. If the only interpolation method listed is ‘none’, clients can only retrieve coverages from this layer in its native CRS and at its native resolution. </xs:documentation>
 						</xs:annotation>
 					</xs:element>
 				</xs:sequence>
@@ -92,7 +95,7 @@
 		</xs:complexContent>
 	</xs:complexType>
 	<!-- =============================================================
-	elements and types			
+		DomainSet elements and types			
 	============================================================== -->
 	<xs:element name="domainSet" type="DomainSetType"/>
 	<!-- =========================================================== -->
@@ -114,8 +117,10 @@
 	<xs:complexType name="SpatialDomainType">
 		<xs:annotation>
 			<xs:documentation>Defines the spatial domain of a coverage offering. A server shall describe the spatial domain by its edges, using one or more gml:Envelope elements. The gml:EnvelopeWithTimePeriod element may be used in place of gml:Envelope, to add the time bounds of the coverage offering. Each of these elements describes a bounding box defined by two points in space (or two positions in space and two in time). This bounding box could simply duplicate the information in the lonLatEnvelope of CoverageOfferingBrief; but the intent is to describe the locations in more detail (e.g., in several different CRSs, or several rectangular areas instead of one overall bounding box). 
-addition, a server can describe the internal grid structure of a coverage offering, using a gml:Grid (or gml:RectifiedGrid) in addition to a gml:Envelope. This element can help clients assess the fitness of the gridded data for their use (e.g. its native resolution, inferred from the offsetVector of a gml:RectifiedGrid), and to formulate grid coverage requests expressed in the internal grid coordinate reference system.
-, a server can describe the spatial domain by means of a (repeatable) gml:Polygon, representing the polygon(s) covered by the coverage spatial domain. This is particularly useful for areas that are poorly approximated by a gml:Envelope (such as satellite image swaths, island groups, other non-convex areas). </xs:documentation>
+
+In addition, a server can describe the internal grid structure of a coverage offering, using a gml:Grid (or gml:RectifiedGrid) in addition to a gml:Envelope. This element can help clients assess the fitness of the gridded data for their use (e.g. its native resolution, inferred from the offsetVector of a gml:RectifiedGrid), and to formulate grid coverage requests expressed in the internal grid coordinate reference system.
+
+Finally, a server can describe the spatial domain by means of a (repeatable) gml:Polygon, representing the polygon(s) covered by the coverage spatial domain. This is particularly useful for areas that are poorly approximated by a gml:Envelope (such as satellite image swaths, island groups, other non-convex areas). </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element ref="gml:Envelope" maxOccurs="unbounded"/>
@@ -130,7 +135,7 @@ addition, a server can describe the internal grid structure of a coverage offeri
 		</xs:annotation>
 	</xs:element>
 	<!-- =============================================================
-		RangeSet description elements and types 	
+		 RangeSet description elements and types 	
 	============================================================== -->
 	<xs:element name="rangeSet">
 		<xs:annotation>
@@ -159,7 +164,7 @@ addition, a server can describe the internal grid structure of a coverage offeri
 					</xs:element>
 					<xs:element name="nullValues" type="valueEnumType" minOccurs="0">
 						<xs:annotation>
-							<xs:documentation>Values used when valid values are not available. (The coverage encoding may specify a fixed value for null (e.g. 99999 or N/A), but often the choice is up to the provider and must be communicated to the client outside of the coverage itself.) </xs:documentation>
+							<xs:documentation>Values used when valid values are not available. (The coverage encoding may specify a fixed value for null (e.g. “–99999” or “N/A”), but often the choice is up to the provider and must be communicated to the client outside of the coverage itself.) </xs:documentation>
 						</xs:annotation>
 					</xs:element>
 				</xs:sequence>
@@ -178,7 +183,7 @@ addition, a server can describe the internal grid structure of a coverage offeri
 		</xs:complexContent>
 	</xs:complexType>
 	<!-- ==============================================================
-	elements and types for describing valid values in the DomainSet and RangeSet
+		Common elements and types for describing valid values in the DomainSet and RangeSet
 	============================================================== -->
 	<xs:element name="axisDescription">
 		<xs:annotation>
@@ -195,7 +200,7 @@ addition, a server can describe the internal grid structure of a coverage offeri
 	<!-- ========================================================== -->
 	<xs:complexType name="AxisDescriptionType">
 		<xs:annotation>
-			<xs:documentation>Description of a measured or observed quantity, and list of the valid quantity values (values for which measurements are available or by which aggregate values are available). The semantic is the URI of the quantity (for example observable or mathematical variable). The refSys attribute is a URI to a reference system, and the refSysLabel is the label used by client to refer the reference system. </xs:documentation>
+			<xs:documentation>Description of a measured or observed quantity, and list of the “valid” quantity values (values for which measurements are available or “by which” aggregate values are available). The semantic is the URI of the quantity (for example observable or mathematical variable). The refSys attribute is a URI to a reference system, and the refSysLabel is the label used by client to refer the reference system. </xs:documentation>
 		</xs:annotation>
 		<xs:complexContent>
 			<xs:extension base="AbstractDescriptionType">

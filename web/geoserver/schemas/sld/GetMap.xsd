@@ -9,7 +9,7 @@
 
 
 <xs:import namespace="http://www.opengis.net/gml"
-	schemaLocation="geometry.xsd"/>
+	schemaLocation="../gml/2.1.2.1/geometry.xsd"/>
 
 <xs:import namespace="http://www.opengis.net/sld"
 	schemaLocation="StyledLayerDescriptor.xsd"/>

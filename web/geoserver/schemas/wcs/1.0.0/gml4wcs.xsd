@@ -17,7 +17,7 @@
 		<documentation>JDE 2003-07-30 Added TimeDurationType</documentation>
 	</annotation>
 	<!-- ======== includes and imports =================================== -->
-	<import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://schemas.opengis.net/gml/3.0.0/xlink/xlinks.xsd"/>
+	<import namespace="http://www.w3.org/1999/xlink" schemaLocation="../../xlink/1.0.0/xlinks.xsd"/>
 	<!-- ===========================================================
 	GML profile elements and types from gmlBase.xsd	============================================================== -->
 	<element name="_Object" abstract="true">

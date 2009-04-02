@@ -13,9 +13,6 @@
   <span class="project">
     <a href="http://geoserver.org/">GeoServer</a>
   </span>
-  <span class="license">
-    <a href="http://docs.codehaus.org/display/GEOSDOC/License">&copy;</a>
-  </span>
   <h1>LOADING ...</h1>
 <center><br>
 <center><h2>Please Wait</h2><center>

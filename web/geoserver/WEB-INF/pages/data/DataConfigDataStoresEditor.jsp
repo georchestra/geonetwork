@@ -2,8 +2,6 @@
 <%@ taglib uri="/tags/struts-html" prefix="html" %>
 <%@ taglib uri="/tags/struts-logic" prefix="logic" %>
 
-<logic:present name="GEOSERVER.USER" property="dataStoreConfig" scope="session">
-
 <html:form action="/config/data/storeSubmit" onsubmit="return checkspaces(this)">
   <table class="info">	
 	<tr>
@@ -132,7 +130,6 @@
 	</tr>						
   </table>
 </html:form>
-</logic:present>
 <br>
 &nbsp;&nbsp;<font color="red">*</font> = <bean:message key="config.data.store.editor.requiredField"/>
 

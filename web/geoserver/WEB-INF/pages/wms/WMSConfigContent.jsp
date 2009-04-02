@@ -38,6 +38,14 @@
 		<html:text property="onlineResource" size="60"/>
 	</td></tr>
 	
+	<tr><td align="right">
+		<span class="help" title="<bean:message key="help.wms.crsList"/>">
+			<bean:message key="wms.crsList"/>:
+		</span>
+		</td><td colspan=2>
+			<html:textarea property="capabilitiesCrs" cols="60" rows="3"/>
+	</td></tr>
+
 	<tr><td align="right" valign="top">
 		<span class="help" title="<bean:message key="help.baseMaps"/>">
 			<bean:message key="label.baseMaps"/>:
@@ -96,7 +104,7 @@
 		        </td>
 		        <td>
 		        &nbsp;-&nbsp;
-		        <a href="../../../srsHelp.do">
+		        <a href="srsHelp.do">
 		              <bean:message key="label.SRSList"/>
 		            </a>
 		        </td>

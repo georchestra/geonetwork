@@ -10,7 +10,7 @@
 </logic:notPresent>
 
 </span>
-
+<div class="info-text">
 <p>
 <bean:message key="text.welcome1"/>
 </p>
@@ -29,12 +29,12 @@
 
 <ul>
   <li>
-    <a href="http://docs.codehaus.org/display/GEOSDOC/Documentation">
+    <a href="http://geoserver.org/display/GEOSDOC/Documentation">
       Documentation
     </a>
   </li>
   <li>
-    <a href="http://docs.codehaus.org/display/GEOS/Home">
+    <a href="http://geoserver.org/">
       Wiki
     </a>
   </li>
@@ -44,7 +44,7 @@
     </a>
    </li>
    <li>
-    <a href="http://www.moximedia.com:8080/imf-ows/imf.jsp?site=gs_users">
+    <a href="http://sigma.openplans.org/users/">
       User Map
     </a>
   </li>
@@ -53,12 +53,12 @@
 <p>
 	<bean:message key="text.visitDemoPage"/>
 </p>
-
-	<a href="../../../wcs?service=WCS&request=GetCapabilities">WCS Capabilities</a>
+</div>
+	<a href="./ows?service=WCS&request=GetCapabilities">WCS Capabilities</a>
 	<br>
-	<a href="../../../wfs?service=WFS&request=GetCapabilities">WFS Capabilities</a>
+	<a href="./ows?service=WFS&request=GetCapabilities">WFS Capabilities</a>
 	<br>
-	<a href="../../../wms?service=WMS&request=GetCapabilities">WMS Capabilities</a>
+	<a href="./ows?service=WMS&request=GetCapabilities">WMS Capabilities</a>
 	<br><br>
-	<a href="../../../srsHelp.do"><bean:message key="label.SRSList"/></a>
+	<a href="./srsHelp.do"><bean:message key="label.SRSList"/></a>
 <br>

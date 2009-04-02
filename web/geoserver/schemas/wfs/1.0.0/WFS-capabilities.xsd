@@ -334,14 +334,16 @@
    <xsd:element name="GML2" type="wfs:EmptyType"/>
    <!-- WFS schema isn't enough, so we're adding these in for GeoServer as
         output types, so that our clients can validate their caps docs. -->
-   <xsd:element name="GML2-GZIP" type="wfs:EmptyType"/>
-   <xsd:element name="SHAPE-ZIP" type="wfs:EmptyType"/>
+   <xsd:element name="_OutputFormat" type="wfs:EmptyType" />
+   <xsd:element name="GML2-GZIP" type="wfs:EmptyType" substitutionGroup="wfs:_OutputFormat"/>
+   <xsd:element name="SHAPE-ZIP" type="wfs:EmptyType" substitutionGroup="wfs:_OutputFormat"/>
+   <xsd:element name="GML3" type="wfs:EmptyType" substitutionGroup="wfs:_OutputFormat"/>
+   <xsd:element name="GEOJSON" type="wfs:EmptyType" substitutionGroup="wfs:_OutputFormat"/>
    <xsd:complexType name="ResultFormatType">
-      <xsd:sequence maxOccurs="unbounded">
+      <xsd:choice maxOccurs="unbounded">
          <xsd:element ref="wfs:GML2"/>
-         <xsd:element ref="wfs:GML2-GZIP" minOccurs="0"/>
-         <xsd:element ref="wfs:SHAPE-ZIP" minOccurs="0"/>
-      </xsd:sequence>
+         <xsd:element ref="wfs:_OutputFormat" />
+      </xsd:choice>
    </xsd:complexType>
 
    <!-- The SchemaDescriptionLanguageType type defines the schema languages

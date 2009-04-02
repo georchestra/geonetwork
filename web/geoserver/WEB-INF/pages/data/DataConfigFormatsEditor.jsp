@@ -8,8 +8,6 @@ response.setDateHeader("Expires", 0);
 response.setHeader("Cache-Control", "no-cache");
 %>
 
-<logic:present name="GEOSERVER.USER" property="dataFormatConfig" scope="session">
-
 <html:form action="/config/data/formatSubmit">
   <table class="info">	
 	<tr>
@@ -90,6 +88,5 @@ response.setHeader("Cache-Control", "no-cache");
 	</tr>						
   </table>
 </html:form>
-</logic:present>
 <br>
 &nbsp;&nbsp;<font color="red">*</font> = <bean:message key="config.data.format.editor.requiredField"/>

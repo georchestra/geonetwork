@@ -6,9 +6,9 @@
             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
             elementFormDefault="qualified">
   <xsd:import namespace="http://www.w3.org/1999/xlink"
-              schemaLocation="xlinks.xsd"/>
+              schemaLocation="../xlink/1.0.0/xlinks.xsd"/>
   <xsd:import namespace="http://www.opengis.net/ogc"
-              schemaLocation="filter.xsd"/>
+              schemaLocation="../filter/1.0.0/filter.xsd"/>
 
 <!-- *********************************************************************** -->
   <xsd:annotation>
@@ -568,9 +568,12 @@
             <xsd:element ref="sld:LabelPlacement" minOccurs="0"/>
             <xsd:element ref="sld:Halo" minOccurs="0"/>
             <xsd:element ref="sld:Fill" minOccurs="0"/>
+            
+            <!-- GeoServer specific extensions, these are not part of the SLD 1.0 standard -->
+            <xsd:element ref="sld:Graphic" minOccurs="0"/>
             <xsd:element ref="sld:Priority" minOccurs="0"/>
-        
             <xsd:element ref="sld:VendorOption" minOccurs="0" maxOccurs="unbounded" />                 
+                 
 
           </xsd:sequence>
         </xsd:extension>

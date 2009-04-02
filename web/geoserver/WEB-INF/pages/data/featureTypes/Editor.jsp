@@ -55,6 +55,16 @@ function prepareFormData(){
 		<bean:write name="typesEditorForm" property="typeName"/>
       </td>
     </tr>
+    <tr>
+      <td class="label">
+		<span class="help" title="<bean:message key="help.type.alias"/>">
+          <bean:message key="label.alias"/>:
+        </span>
+      </td>
+      <td class="datum">
+		<html:text property="alias" size="30" />
+      </td>
+    </tr>
 	<tr>
       <td class="label">
 		<span class="help" title="<bean:message key="help.type.style"/>">
@@ -80,7 +90,7 @@ function prepareFormData(){
         <table>
         	<tr>
         		<td>
-        			<html:select property="panelStyleIds" multiple="multiple">
+        			<html:select property="panelStyleIds" multiple="multiple" size="8">
           				<html:options property="styles"/>
         			</html:select>
         		</td>
@@ -90,7 +100,7 @@ function prepareFormData(){
         			<input type="button" value="<<" style="width:30" onClick="removeStyle()">
         		</td>
         		<td>
-        			<html:select property="otherSelectedStyles" style="width:130" multiple="multiple">
+        			<html:select property="otherSelectedStyles" style="width:130" multiple="multiple" size="8">
         				<html:options property="typeStyles"/>
         			</html:select>
         		</td>
@@ -122,7 +132,7 @@ function prepareFormData(){
         </td>
         <td>
         &nbsp;-&nbsp;
-        <a href="../../../srsHelp.do">
+        <a href="srsHelp.do">
               <bean:message key="label.SRSList"/>
             </a>
         </td>
@@ -130,11 +140,11 @@ function prepareFormData(){
         </tr>
         </table>
 	</td></tr>
-	<!------------------------->
+ <!-- ===================================================================== -->
 	
 	
 	
-	<!------ This puts in the SRS WKT definition --->
+	 <!--  This puts in the SRS WKT definition  -->
 	
 	<tr>
 	<td class="label">
@@ -142,7 +152,7 @@ function prepareFormData(){
           <bean:message key="label.type.srswkt"/>:
         </span>
 	  </td>
-	  <td class="greyedOut2">
+	  <td class="greyedout2">
               <bean:write name="typesEditorForm" property="SRSWKT"/>
             </td>
 	</tr>
@@ -153,7 +163,7 @@ function prepareFormData(){
           <bean:message key="label.type.crswkt"/>:
         </span>
 	  </td>
-	  <td class="greyedOut2">
+	  <td class="greyedout2">
               <bean:write name="typesEditorForm" property="nativeSRSWKT"/>
             </td>
 	</tr>
@@ -165,7 +175,7 @@ function prepareFormData(){
           <bean:message key="label.type.srshandling"/>:
         </span>
 	  </td>
-	  <td class="greyedOut2">
+	  <td class="greyedout2">
               <html:select property="srsHandling">
 	             <html:options property="allSrsHandling"/>
               </html:select>
@@ -173,7 +183,7 @@ function prepareFormData(){
 	</tr>
 	
 	
-	<!-------------------------->
+	 <!-- ================= -->
 
     <tr>
       <td class="label">
@@ -197,10 +207,14 @@ function prepareFormData(){
           <bean:message key="config.data.calculateBoundingBox.label"/>
         </html:submit><br/>
         
-      <!-------------------------------------------------------------->
-      <!----- This will add the bounding box of the data (in its CRS) to the page --->
-      <!----- Its only added if its actually been calculated (i.e. they presed the generate bbox button) --->
+       <!-- =========================================================================== -->
+       <!-- This will add the bounding box of the data (in its CRS) to the page  -->
+       <!-- Its only added if its actually been calculated (i.e. they presed the generate bbox button) -->
 
+<html:hidden property="nativeMinX"/>
+<html:hidden property="nativeMinY"/>
+<html:hidden property="nativeMaxX"/>
+<html:hidden property="nativeMaxY"/>
 <html:hidden property="dataMinX"/>
 <html:hidden property="dataMinY"/>
 <html:hidden property="dataMaxX"/>
@@ -209,45 +223,45 @@ function prepareFormData(){
 <logic:notEmpty name="typesEditorForm"  property="dataMinX">
         <table border=0 width=90%>
           <tr>
-            <td class="greyedOut">
+            <td class="greyedout">
               <span class="help" title="<bean:message key="help.type.dataminx"/>">
                 <bean:message key="label.type.dataminx"/>:
               </span>
             </td>
-            <td class="greyedOut">
+            <td class="greyedout">
               <bean:write name="typesEditorForm" property="dataMinX"/>
             </td>
-            <td class="greyedOut">
+            <td class="greyedout">
               <span class="help" title="<bean:message key="help.type.dataminy"/>">
                 <bean:message key="label.type.dataminy"/>:
               </span>
             </td>
-            <td class="greyedOut">
+            <td class="greyedout">
               <bean:write name="typesEditorForm" property="dataMinY"/>
             </td>
           </tr>
           <tr>
-            <td class="greyedOut">
+            <td class="greyedout">
               <span class="help" title="<bean:message key="help.type.datamaxx"/>">
                 <bean:message key="label.type.datamaxx"/>:
               </span>
             </td>
-            <td class="greyedOut">
+            <td class="greyedout">
              <bean:write name="typesEditorForm" property="dataMaxX"/>
             </td>
-            <td class="greyedOut">
+            <td class="greyedout">
               <span class="help" title="<bean:message key="help.type.datamaxy"/>">
                 <bean:message key="label.type.datamaxy"/>:
               </span>
             </td>
-            <td class="greyedOut">
+            <td class="greyedout">
              <bean:write name="typesEditorForm" property="dataMaxY"/>
             </td>
           </tr>
         </table>
         
 </logic:notEmpty>        
-<!-------------------------------------------------------------->
+ <!-- ========================================================= -->
         
         
         <table border=0>
@@ -389,7 +403,6 @@ function prepareFormData(){
     		<html:checkbox property="cachingEnabled" />
     	</td>
     </tr>
-    
     <tr>
     	<td class="label">
     		<span class="help" title="<bean:message key="help.type.cacheMaxAge" />">
@@ -400,8 +413,75 @@ function prepareFormData(){
     		<html:text property="cacheMaxAge" size="10" />
     	</td>
     </tr>
-
+    <tr> <td class="label">
+             <span class="help" title="<bean:message key="help.type.searchingEnabled" />">
+                 <bean:message key="label.searchingEnabled"/>:
+             </span>
+         </td>
+         <td class="datum">
+             <html:checkbox property="indexingEnabled"/>
+         </td>
+    </tr>
+    <tr> <td class="label">
+             <span class="help" title="<bean:message key="help.type.regionateAttribute" />">
+                   <bean:message key="label.regionateAttribute"/>:
+             </span>
+         </td>
+         <td class="datum">
+             <html:select property="regionateAttribute">
+                <option value="null"> None </option>
+                <html:options property="attributeNames" labelProperty="attributeDescriptions"/>
+             </html:select>
+         </td>
+    </tr>
+    <tr> <td class="label">
+             <span class="help" title="<bean:message key="help.type.regionateStrategy" />">
+                  <bean:message key="label.regionateStrategy"/>:
+             </span>
+         </td>
+         <td class="datum">
+             <html:select property="regionateStrategy">
+                 <html:options property="availableStrategies"/>
+             </html:select>
+         </td>
+     </tr>
+     <tr>
+         <td class="label">
+              <span class="help" title="<bean:message key="help.type.regionateStrategy"/>">
+              <bean:message key="label.regionateFeatureLimit"/>:
+              </span>
+         </td>
+         <td class="datum">
+            <html:text property="regionateFeatureLimit"/>
+         </td>
+     </tr>
+     <tr>
+         <td class="label">
+              <span class="help" title="<bean:message key="help.type.nameTemplate"/>">
+              <bean:message key="label.nameTemplate"/>:
+              </span>
+         </td>
+         <td class="datum">
+            <html:select property="nameTemplate">
+                <option value="null" selected="selected"> Use Current Template </option>
+                <html:options property="attributeNames" labelProperty="attributeDescriptions"/>
+            </html:select>
+            * Changes to this setting will not take effect until you save.
+         </td>
+     </tr>
+   
     <tr>
+    	<td class="label">
+    		<span class="help" title="<bean:message key="help.global.maxFeatures" />">
+    			<bean:message key="label.maxFeatures" />:
+    		</span>
+    	</td>
+    	<td class="datum">
+    		<html:text property="maxFeatures" size="10" />
+    	</td>
+    </tr>
+
+    <!--tr>
       <td class="label">
 		<span class="help" title="<bean:message key="help.type.base"/>">
 			<bean:message key="label.base"/>:
@@ -415,7 +495,7 @@ function prepareFormData(){
 			<bean:message key="label.change"/>
 		</html:submit>
       </td>
-    </tr>
+    </tr-->
 
   <% boolean first = true;
      org.vfny.geoserver.form.data.AttributeDisplay attributeDisplay = null;;
@@ -427,7 +507,7 @@ function prepareFormData(){
      int attributesSize = attributes.size(); %>
              
     <% if (!("--".equals(form.getSchemaBase())) ) { %>
-    <tr>
+    <!--tr>
       <td class="label">
 		<span class="help" title="<bean:message key="help.type.schemaName"/>">
           <bean:message key="label.schemaName"/>:
@@ -436,8 +516,8 @@ function prepareFormData(){
 	  <td class="datum">
 		<html:text property="schemaName" size="60"/>
 	  </td>
-	</tr>
-    <% } %>    
+	</tr-->
+    <%} %>    
 
 <logic:iterate id="attribute" indexId="index" name="typesEditorForm" property="attributes">
 	<tr>
@@ -470,7 +550,7 @@ function prepareFormData(){
             <td><bean:message key="label.max"/>:<html:text size="2" property='<%= "attributes[" + index + "].maxOccurs"%>'/></td>
             <td width=16>
               <% if (first == false) { %>
-          	  <html:image src="../../../data/images/up.png" 
+          	  <html:image src="images/up.png" 
           	  	          titleKey="type.title.up" 
           	  	          property="action" 
           	  	          value='<%= "up_"+ index%>'/>
@@ -479,14 +559,14 @@ function prepareFormData(){
           	</td>
           	<td width=16>
           	  <% if (attributesSize-1 != index.intValue()) { %>
-          	  <html:image src="../../../data/images/down.png" 
+          	  <html:image src="images/down.png" 
           	              titleKey="type.title.down" 
           	              property="action" 
           	              value='<%= "down_"+ index%>'/>
           	  <% } %>
           	</td> 
           	<td width=16>
-          	  <html:image src="../../../data/images/delete.png" 
+          	  <html:image src="../../../images/delete.png" 
           	  	          titleKey="type.title.delete" 
           	  	          property="action" 
           	  	          value='<%= "delete_"+ index%>'/>

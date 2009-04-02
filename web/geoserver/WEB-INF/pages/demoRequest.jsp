@@ -20,7 +20,7 @@
 		   -->
         </html:form>		  
       </td>
-    <form action="../../../TestWfsPost" method="POST">    
+    <form action="TestWfsPost" method="POST">    
     </tr>
       <tr>
         <td class="label"><bean:message key="label.URL"/>:</td>
@@ -34,6 +34,14 @@
           <textarea rows="6" cols="90" name="body" id="body"><bean:write name="demoRequestForm" property="body"/></textarea>
         </td>
       </tr>    
+      <tr>
+        <td class="label"><bean:message key="label.username"/>:</td>
+        <td class="datum">
+          <input type="text" size="30" name="username" id="username"><bean:write name="demoRequestForm" property="username"/>
+          <bean:message key="label.password"/>:
+          <input type="password" size="30" name="password" id="password"><bean:write name="demoRequestForm" property="username"/>
+        </td>      
+      </tr>
       <tr>
         <td class="label" width="1%"></td>
         <td class="datum" width="99%">

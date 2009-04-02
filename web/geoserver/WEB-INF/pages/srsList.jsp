@@ -3,7 +3,7 @@
 <%@ taglib uri="/tags/struts-html" prefix="html" %>
 <%@ taglib uri="/tags/struts-logic" prefix="logic" %>
 
-<!---   
+ <!-- -   
           This JSP expect to have a:
           
           <form-bean 
@@ -21,10 +21,10 @@
 	
 	   given to it.  The id list is a list of integers (as strings) - these are the EPSG:# codes.
 	   The Definition list is the WKT of that EPSG code.
-  --->
+  - -->
 
 <!-- ALL THIS STUFF TAKEN FROM MAINLAYOUT.JSP -->
-<!------------------------------------------------------------------------>
+ <!-- ================================================== -->
 <html:html locale="true" xhtml="true">
   <head>
     <title>
@@ -55,9 +55,6 @@
               <bean:message key="geoserver.logo"/>
             </a>
           </span>
-          <span class="license">
-            <a href="<bean:message key="link.license"/>">&copy;</a>
-          </span>
 		</td>
         <td style="width: 1em">
         </td>
@@ -86,13 +83,13 @@
         </td>
 	</tr>
 	</table>
-<!------------------------------------------------------------------------>
+ <!-- ================================================== -->
 
 <h1> <bean:message key="srsList.title"/> </h1>
 
-<!------------------------------------------------------------------------>
-<!-- DISPLAY THE LIST OF SRS AND THEIR DEFINITIONS                       ->
-<!------------------------------------------------------------------------>
+ <!-- ================================================== -->
+<!-- DISPLAY THE LIST OF SRS AND THEIR DEFINITIONS                       -->
+ <!-- ================================================== -->
 
 
 <table border=1 cellspacing="0" cellpadding="2" width=95%>
@@ -107,10 +104,10 @@
  <logic:iterate id="it_value" indexId="idx" name="srsInfoForm" property="srsIDList">
 	<tr>
 	     <td valign="top" align="right">
-	          <bean:write property="<%= "srsIDList[" + idx + "]" %>" name="srsInfoForm"/>
+	          <bean:write property='<%= "srsIDList[" + idx + "]" %>' name="srsInfoForm"/>
 	     </td>
-	     <td class="greyedOut2">
-	     	<pre><bean:write property="<%= "srsDefinitionList[" + idx + "]" %>" name="srsInfoForm"/></pre>
+	     <td class="greyedout2">
+	     	<pre><bean:write property='<%= "srsDefinitionList[" + idx + "]" %>' name="srsInfoForm"/></pre>
 	     </td>
 	</tr>
 </logic:iterate>

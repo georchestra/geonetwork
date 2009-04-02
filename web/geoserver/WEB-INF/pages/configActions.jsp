@@ -55,6 +55,20 @@
 </logic:empty>
       </td>
     </tr>
+    <tr>
+      <td class="node">
+        Update Sequence:
+      </td>
+      <td class="timestamp">
+<logic:notEmpty name="GeoServer" property="updateSequence">
+        <bean:write name="GeoServer"
+                    property="updateSequence"/>
+</logic:notEmpty>
+<logic:empty name="GeoServer" property="updateSequence">
+        --
+</logic:empty>
+      </td>
+    </tr>
   </tbody>
 </table>
 
