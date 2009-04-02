@@ -50,8 +50,8 @@
     <div><p style="text-align: center;">
       Autres documents:<xsl:text>    </xsl:text>
       <a href="../../Manual_fra.pdf" title="Manual in pdf format" target="_blank">Le manuel au format PDF</a><xsl:text>  |  </xsl:text>
-      <a href="../../license.html" title="GPL license" target="_blank">License</a><xsl:text>  |  </xsl:text>
-      <a href="../../readme.html" title="Readme" target="_blank">Readme</a><xsl:text>  |  </xsl:text>
+      <a href="../../license_fra.html" title="GPL license" target="_blank">License</a><xsl:text>  |  </xsl:text>
+      <a href="../../readme_fra.html" title="Readme" target="_blank">Readme</a><xsl:text>  |  </xsl:text>
       <a href="../../changes.txt" title="Changes" target="_blank">Changes</a></p>
     </div>
   </xsl:template>

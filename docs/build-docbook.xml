@@ -173,6 +173,7 @@
     <copy todir="${@{type}.target.dir.image}/images">
       <fileset dir="${docbook.src.dir}/@{dir}/images"/>
     </copy>
+
     <copy todir="${@{type}.target.dir.image}/@{lang}/images">
       <fileset dir="${docbook.src.dir}/@{dir}/images"/>
     </copy>

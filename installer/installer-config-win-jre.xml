@@ -38,8 +38,8 @@
 	<!-- =================================================================================== -->
 	
 	<resources>
-		<res id="HTMLLicencePanel.licence" src="../docs/license.html"/>
-		<res id="HTMLLicencePanel.licence_fra" src="../docs/license_fra.html"/>
+		<res id="HTMLLicencePanel.licence" src="../web/geonetwork/docs/license.html"/>
+		<res id="HTMLLicencePanel.licence_fra" src="../web/geonetwork/docs/license_fra.html"/>
 		<res id="HTMLInfoPanel.info"       src="../.props/readme.html"/>
 		<res id="HTMLInfoPanel.info_fra"       src="../.props/readme_fra.html"/>
 		<res id="Installer.image"          src="installer.png"/>
@@ -73,21 +73,22 @@
 		<pack id="core" name="Core" required="no" preselected="yes">
 			<description/>
 			
-			<fileset dir="../docs" targetdir="$INSTALL_PATH/docs">
+			<fileset dir="../docs" targetdir="$INSTALL_PATH/web/geonetwork/docs">
 				<exclude name="build/**"/>
 				<exclude name="build.xml"/>
 				<exclude name="build-docbook.xml"/>
 				<exclude name="docbook/**"/>
 				<exclude name="html/**"/>
+				<exclude name="images/**"/>
 			</fileset>						
 
-			<fileset dir="../docs/html" targetdir="$INSTALL_PATH/docs"/>
+			<fileset dir="../docs/html" targetdir="$INSTALL_PATH/web/geonetwork/docs"/>
 			
-			<singlefile src="../.props/readme.html" target="$INSTALL_PATH/docs/readme.html" override="true"/>
+			<singlefile src="../.props/readme.html" target="$INSTALL_PATH/web/geonetwork/docs/readme.html" override="true"/>
 
 			<fileset dir="../bin"   targetdir="$INSTALL_PATH/bin">
 				<exclude name="jre/**"/>
-				<exclude name="jetty.xml_with_geoserver"/>
+<!--				<exclude name="jetty.xml_with_geoserver"/>-->
 			</fileset>
 			
 			<singlefile target="$INSTALL_PATH/bin/start-geonetwork.bat" src="../bin/jre/start-geonetwork-jre.bat" override="true"/>
@@ -97,12 +98,12 @@
 			<fileset dir="../jre1.5.0_12"  targetdir="$INSTALL_PATH/jre1.5.0_12" />
 			
 			<fileset dir="../gast"  targetdir="$INSTALL_PATH/gast">			
-				<exclude name="log/gast.log*"/>
+				<exclude name="logs/gast.log*"/>
 			</fileset>
 			
 			<fileset dir="../jetty" targetdir="$INSTALL_PATH/jetty">
-				<exclude name="log/*.log"/>
-				<exclude name="log/archive/*.log"/>
+				<exclude name="logs/*.log"/>
+				<exclude name="logs/archive/*.log"/>
 			</fileset>
 			
 			<fileset dir="../web"   targetdir="$INSTALL_PATH/web">
@@ -110,14 +111,22 @@
 				<exclude name="geonetwork/WEB-INF/db/account.prop"/>
 				<exclude name="geonetwork/WEB-INF/db/data/*"/>
 				<exclude name="geonetwork/WEB-INF/db/log/*"/>
-				<exclude name="geonetwork/WEB-INF/data/00000-00099/**"/>
 				<exclude name="geonetwork/WEB-INF/lucene/*"/>
-				<exclude name="geonetwork/WEB-INF/removed"/>
-				<exclude name="intermap/log/*"/>
+				<exclude name="intermap/logs/*"/>
 				<exclude name="intermap/WEB-INF/mapServers.xml_with_geoserver"/>
 				<exclude name="geoserver/**"/>
 			</fileset>
+
+			<fileset dir="../data"   targetdir="$INSTALL_PATH/data">
+				<exclude name="00000-00099/**"/>
+				<exclude name="geoserver_data/**"/>
+				<exclude name="removed/**"/>
+			</fileset>
 			
+			<fileset dir="../schematrons"   targetdir="$INSTALL_PATH/schematrons">
+				<exclude name="saxon*"/>
+			</fileset>
+
 			<executable targetfile="$INSTALL_PATH/bin/start-geonetwork.sh" />
 			<executable targetfile="$INSTALL_PATH/bin/stop-geonetwork.sh" />
 			<executable targetfile="$INSTALL_PATH/bin/gast.sh" />
@@ -150,16 +159,17 @@
 		<pack name="GeoServer web map server" required="no" preselected="yes" id="geoserver">
 			<description/>
 			
-			<fileset dir="../web/geoserver" targetdir="$INSTALL_PATH/web/geoserver">
+			<fileset dir="../web/geoserver" targetdir="$INSTALL_PATH/web/geoserver" />
+
+			<fileset dir="../data/geoserver_data" targetdir="$INSTALL_PATH/data/geoserver_data">
 				<exclude name="data/catalog.xml_jpg"/>
 				<exclude name="data/coverages/BlueMarble_world/world-topo-bathy-200407-3x8640x4320.jpg"/>
 				<exclude name="data/coverages/BlueMarble_world/world-topo-bathy-200407-3x8640x4320.wld"/>
 				<exclude name="data/coverages/BlueMarble_world/info.xml_jpg"/>
 			</fileset>
+
 			<singlefile target="$INSTALL_PATH/web/intermap/WEB-INF/mapServers.xml" 
 					src="../web/intermap/WEB-INF/mapServers.xml_with_geoserver" override="true"/>
-			<singlefile target="$INSTALL_PATH/bin/jetty.xml" 
-					src="../bin/jetty.xml_with_geoserver" override="true"/>
 		</pack>
 		
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
