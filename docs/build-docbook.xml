@@ -133,7 +133,7 @@
     <attribute name="xsl"/>
     <attribute name="lang"/>
     <sequential>
-
+      
     <property name="@{type}.target.dir" value="${target.dir}/@{dir}/@{target}/@{lang}"/>
     <property name="@{type}.target.dir.image" value="${target.dir}/@{dir}/@{target}"/>    	
     <property name="@{type}.target.file" value="${@{type}.target.dir}/@{file}"/>
@@ -151,7 +151,7 @@
       </filterset>
     </copy>
 
-    <copy overwrite="true" failonerror="false" filtering="on" file="${styles.src.dir}/@{type}/custom.xsl" tofile="${@{type}.tmp.custom}">
+    <copy overwrite="true" failonerror="false" filtering="on" file="${styles.src.dir}/@{type}/custom_@{lang}.xsl" tofile="${@{type}.tmp.custom}">
       <filterset refid="filterset.dbf.location"/>
       <filterset>
         <filter token="@{type}.target.dir" value="${@{type}.target.path}" />
@@ -160,7 +160,6 @@
 
     <!-- No custom style file around. Use the vanilla one. -->
     <copy overwrite="false" failonerror="true" file="${dbf.style.src.dir}/custom.xsl" tofile="${@{type}.tmp.custom}"/>
-
     <mkdir dir="${@{type}.target.dir}/" />
 
     <!-- copy custom title page. If we don't have one, use the custom one. -->
@@ -174,7 +173,10 @@
     <copy todir="${@{type}.target.dir.image}/images">
       <fileset dir="${docbook.src.dir}/@{dir}/images"/>
     </copy>
-
+    <copy todir="${@{type}.target.dir.image}/@{lang}/images">
+      <fileset dir="${docbook.src.dir}/@{dir}/images"/>
+    </copy>
+      
     <saxon input="${docbook.src.dir}/@{dir}/@{file}.xml"
            output="${@{type}.target.file}.xml"
            style="${@{type}.tmp.style}"/>

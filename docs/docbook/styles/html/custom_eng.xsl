@@ -49,10 +49,10 @@
     <hr />
     <div><p style="text-align: center;">
       Other documents:<xsl:text>    </xsl:text>
-      <a href="Manual.pdf" title="Manual in pdf format" target="_blank">The complete manual in pdf format</a><xsl:text>  |  </xsl:text>
-      <a href="license.html" title="GPL license" target="_blank">License</a><xsl:text>  |  </xsl:text>
-      <a href="readme.html" title="Readme" target="_blank">Readme</a><xsl:text>  |  </xsl:text>
-      <a href="changes.txt" title="Changes" target="_blank">Changes</a></p>
+      <a href="../../Manual.pdf" title="Manual in pdf format" target="_blank">The complete manual in pdf format</a><xsl:text>  |  </xsl:text>
+      <a href="../../license.html" title="GPL license" target="_blank">License</a><xsl:text>  |  </xsl:text>
+      <a href="../../readme.html" title="Readme" target="_blank">Readme</a><xsl:text>  |  </xsl:text>
+      <a href="../../changes.txt" title="Changes" target="_blank">Changes</a></p>
     </div>
   </xsl:template>
 
