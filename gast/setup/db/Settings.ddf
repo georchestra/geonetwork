@@ -49,7 +49,7 @@ value,         VARCHAR
 64	62	port	25
 
 70	1	removedMetadata	
-71	70	dir	WEB-INF/removed
+71	70	dir	../../data/removed
 
 80	1	ldap	
 81	80	use	false
