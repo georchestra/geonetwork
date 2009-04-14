@@ -1,6 +1,23 @@
 ================================================================================
 ===
-=== GeoNetwork 2.3.x (current svn trunk) : List of changes
+=== GeoNetwork 2.4.x RC1: List of changes
+===
+================================================================================
+--------------------------------------------------------------------------------
+--- Changes
+--------------------------------------------------------------------------------
+
+- Allow Featured map result to be limited to a specified bounding box (global is 
+  default)
+  
+- Fix to prevent Stack Overflow when validating large metadata documents
+  The setting now defaults to 2 megabyte (-Xss2M) but should be increased even 
+  further (to -Xss10M or even -Xss20M for very large metadata documents)
+  (thanks to Richard Fozzard)
+
+================================================================================
+===
+=== GeoNetwork 2.4.x RC0: List of changes
 ===
 ================================================================================
 --------------------------------------------------------------------------------
@@ -28,9 +45,37 @@
 
 - Added SelectionManager (http://trac.osgeo.org/geonetwork/wiki/SelectionManager)
 
+- Ajax Editor Controls and other Editor Enhancements  
+  (http://trac.osgeo.org/geonetwork/wiki/AjaxEditorControlsAndValidation)
+
+- More operations on a selected set of metadata records 
+  (http://trac.osgeo.org/geonetwork/wiki/MoreMassiveOperations)
+
+- Improve user interface for file upload/download
+  (http://trac.osgeo.org/geonetwork/wiki/FileUploadAndDownload)
+
+- Restore editing rights and ownership enhancements
+  (http://trac.osgeo.org/geonetwork/wiki/Permissions)
+  
+- User Self-Registration Service (http://trac.osgeo.org/geonetwork/wiki/SelfRegistration)
+  option to Administration->System Configuration to enable/disable UserSelfRegistration
+
+- Add Shibboleth as an authentication option (http://trac.osgeo.org/geonetwork/wiki/ShibbolethAuth)
+
+- Upgraded GeoServer to version 1.7.3
+
+- Upgraded Jetty servlet container to version 6.1.14
+
+- Moved data folder out of WEB-INF folder to ./data in the root of the application
+
 - Added multilingual support in installer
 
 - Added french translation of the documentation
+
+- Added file system harvester to harvest metadata from local directory (from the server perspective)
+
+- Added ArcSDE harvester to harvest metadata from an ArcSDE geodatabase 
+  (requires dummy library to be replaced with ESRI Java API to work)
 
 - Added support for printing search result in PDF format 
 (http://trac.osgeo.org/geonetwork/wiki/PrintPdf)
