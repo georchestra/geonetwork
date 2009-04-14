@@ -29,17 +29,36 @@
             fields provided by the metadata templates, while at the same time avoiding duplication
             of information throughout the form.</para>
 
-        <para>The most important fields that may not be waived while compiling a standard based
-            metadata record are the following: <emphasis role="bold">Title, Date of Creation o
-                Publication, Abstract, Language used for documenting data, Topic Category, Scale,
-                Maintenance and Update Frequency, Metadata Author, Language Used for Documenting
-                Metadata</emphasis>.</para>
-
+        <para>The most important, mandatory fields that should not be skipped while compiling a standard based
+            metadata record are the following:</para>
+        <orderedlist>
+            <listitem><para>Title</para></listitem>
+            <listitem><para>Date of Creation or Publication</para></listitem>
+            <listitem><para>Abstract</para></listitem>
+            <listitem><para>Language used for documenting data</para></listitem>
+            <listitem><para>Topic Category</para></listitem>
+            <listitem><para>Scale</para></listitem>
+            <listitem><para>Maintenance and Update Frequency</para></listitem>
+            <listitem><para>Metadata Author</para></listitem>
+            <listitem><para>Language Used for Documenting Metadata</para></listitem>
+        </orderedlist>
+        
         <para>In addition to the main mandatory fields, we recommend you to fill out these optional
-            but critical fields (if information is available): <emphasis role="bold">Purpose -
-                Keywords - Presentation Form - Status - Spatial Representation Type - Geographic
-                Location - Reference System Info - Temporal Extent - Data Quality Info - Access and
-                Use Constraints - Point of Contact - Distribution Info: Online Resources.</emphasis></para>
+            but critical fields (if information is available): </para>
+        <orderedlist>
+            <listitem><para>Purpose</para></listitem>
+            <listitem><para>Keywords</para></listitem>
+            <listitem><para>Presentation Form</para></listitem>
+            <listitem><para>Status</para></listitem>
+            <listitem><para>Spatial Representation Type</para></listitem>
+            <listitem><para>Geographic Location</para></listitem>
+            <listitem><para>Reference System Info</para></listitem>
+            <listitem><para>Temporal Extent</para></listitem>
+            <listitem><para>Data Quality Info</para></listitem>
+            <listitem><para>Access and Use Constraints</para></listitem>
+            <listitem><para>Point of Contact</para></listitem>
+            <listitem><para>Distribution Info: Online Resources</para></listitem>
+        </orderedlist>
 
         <para>
             <emphasis>
