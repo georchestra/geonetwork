@@ -1012,7 +1012,7 @@
                     The type of import allows to define if the harvester has to produce only one metadata
                     for the service or if it should loop over datasets served by the service and produce
                     also metadata for each datasets. For each dataset the second checkbox allow to generate
-                    metadata for the dataset using an XML document referenced in the metadataURL attribute
+                    metadata for the dataset using an XML document referenced in the MetadataURL attribute
                     of the dataset in the GetCapability document. If this document is loaded but it is not valid
                     (ie. unknown schema, bad xml format), the GetCapability document is used.
                     For WMS, thumbnails could be created during harvesting.

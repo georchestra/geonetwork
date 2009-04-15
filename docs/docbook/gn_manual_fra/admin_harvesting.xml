@@ -966,7 +966,7 @@
                 <para> Le type d'import permet de définir si le moissonnage doit produire seulement
                     une fiche de métadonnée pour le service ou si il doit également créer les
                     métadonnées pour chaque donnée disponible au sein du service. Pour chaque jeux
-                    de données, la deuxième option permet d'utiliser l'attribut metadataURL du
+                    de données, la deuxième option permet d'utiliser l'attribut MetadataURL du
                     document GetCapabilities pour générer la métadonnée. Le document référencé dans
                     cet attribut doit être un document XML valide dans un format connu par
                     GeoNetwork. Pour les WMS, les imagettes peuvent être créées automatiquement. </para>
