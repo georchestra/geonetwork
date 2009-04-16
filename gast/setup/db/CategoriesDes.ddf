@@ -60,3 +60,13 @@ label,         VARCHAR
 4	fr	Applications
 3	fr	Ressources interactives
 6	fr	Conf~00E9rences
+1	de	Karten & Grafiken
+2	de	Datensets
+3	de	Interaktive Resourcen
+4	de	Applikationen
+5	de	Fallstudien
+6	de	Konferenz Ergebnisse
+7	de	Photo
+8	de	Audio/Video
+9	de	Verzeichnisse
+10	de	Andere Resourcen

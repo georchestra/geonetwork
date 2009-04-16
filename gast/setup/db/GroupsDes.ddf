@@ -15,18 +15,22 @@ label,         VARCHAR
 -1	es	GUEST
 -1	cn	GUEST
 -1	ru	GUEST
+-1	de	GAST
 0	en	Intranet
 0	fr	Intranet
 0	es	Intranet
 0	cn	Intranet
 0	ru	Локальная сеть
+0	de	Intranet
 1	en	All
 1	fr	Tous
 1	es	All
 1	cn	All
 1	ru	Все
+1	de	Alle
 2	en	Sample group
 2	fr	Sample group
 2	es	Sample group
 2	cn	Sample group
 2	ru	Пример группы
+2	de	Beispielgruppe

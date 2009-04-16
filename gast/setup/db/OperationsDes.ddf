@@ -40,3 +40,9 @@ label,         VARCHAR
 3	ru	Уведомление
 5	ru	Интерактивная карта
 6	ru	Предлагаемая карта
+0	de	Veröffentlichen
+1	de	Download
+2	de	Editieren
+3	de	Benachrichtigen
+5	de	Interaktive Karte
+6	de	Featured
