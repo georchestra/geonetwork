@@ -1882,12 +1882,12 @@ label,         VARCHAR
 312	es	Norwegian Nynorsk; Nynorsk, Norwegian
 312	fr	Norv~00E9gien nynorsk; nynorsk, norv~00E9gien
 312	ru	Norwegian Nynorsk; Nynorsk, Norwegian
-313	cn	Bokm~00E5l, Norwegian; Norwegian Bokm~005l
+313	cn	Bokm~00E5l, Norwegian; Norwegian Bokm~00E5l
 313	de	Bokmal
-313	en	Bokm~00E5l, Norwegian; Norwegian Bokm~005l
-313	es	Bokm~00E5l, Norwegian; Norwegian Bokm~005l
+313	en	Bokm~00E5l, Norwegian; Norwegian Bokm~00E5l
+313	es	Bokm~00E5l, Norwegian; Norwegian Bokm~00E5l
 313	fr	Norv~00E9gien bokm~00E5l
-313	ru	Bokm~00E5l, Norwegian; Norwegian Bokm~005l
+313	ru	Bokm~00E5l, Norwegian; Norwegian Bokm~00E5l
 314	cn	Nogai
 314	de	Nogaisch
 314	en	Nogai
