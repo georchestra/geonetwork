@@ -14,6 +14,22 @@
   The setting now defaults to 2 megabyte (-Xss2M) but should be increased even 
   further (to -Xss10M or even -Xss20M for very large metadata documents)
   (thanks to Richard Fozzard)
+  
+- Updated German translation (thanks to David Arndt)
+
+- Updated French translation (thanks to Etienne)
+
+- Fixed bug #90 and #91 - Thanks to Tom Kralidis
+
+- Fixed missing loc file for csw:records.
+
+- Ensure that Metadata.data column is of type longtext for MySQL. Thanks to Tom.
+
+- WebDAV harvesting improvements
+
+- ArcSDE metadata harvesting
+
+- import cleanup
 
 ================================================================================
 ===

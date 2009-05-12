@@ -222,7 +222,7 @@
                             informations moissonées auparavant et en crée de nouvelles. GeoNetwork
                             génére les identifiants pour toutes les métadonnées (aussi bien pour les
                             services que les données). Cependant, pour les données, si la métadonnée
-                            est créée en utilisant document XML distant si un attribut metadataUrl
+                            est créée en utilisant document XML distant si un attribut MetadataUrl
                             est présent dans le document GetCapability), l'identifiant de ce
                             document est conservé.</para>
                     </listitem>
