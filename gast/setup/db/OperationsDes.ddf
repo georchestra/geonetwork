@@ -46,3 +46,9 @@ label,         VARCHAR
 3	de	Benachrichtigen
 5	de	Interaktive Karte
 6	de	Featured
+0	nl	Publiceren
+1	nl	Download
+2	nl	Bewerken
+3	nl	Informeren
+5	nl	Interactieve Kaart
+6	nl	In het spotlicht

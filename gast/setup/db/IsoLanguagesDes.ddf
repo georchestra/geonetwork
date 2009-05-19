@@ -16,2901 +16,3385 @@ label,         VARCHAR
 1	es	Afar
 1	fr	Afar
 1	ru	Afar
+1	nl	Afar
 2	cn	Abkhazian
 2	de	Abchasisch
 2	en	Abkhazian
 2	es	Abkhazian
 2	fr	Abkhaze
 2	ru	Abkhazian
+2	nl	Abkhazian
 3	cn	Achinese
 3	de	Aceh-Sprache
 3	en	Achinese
 3	es	Achinese
 3	fr	Aceh
 3	ru	Achinese
+3	nl	Achinese
 4	cn	Acoli
 4	de	Acholi-Sprache
 4	en	Acoli
 4	es	Acoli
 4	fr	Acoli
 4	ru	Acoli
+4	nl	Acoli
 5	cn	Adangme
 5	de	Adangme-Sprache
 5	en	Adangme
 5	es	Adangme
 5	fr	Adangme
 5	ru	Adangme
+5	nl	Adangme
 6	cn	Adyghe; Adygei
 6	de	Adygisch
 6	en	Adyghe; Adygei
 6	es	Adyghe; Adygei
 6	fr	Adygh~00E9
 6	ru	Adyghe; Adygei
+6	nl	Adyghe; Adygei
 7	cn	Afro-Asiatic (Other)
 7	de	Hamitosemitische Sprachen (Andere)
 7	en	Afro-Asiatic (Other)
 7	es	Afro-Asiatic (Other)
 7	fr	Afro-asiatiques, autres langues
 7	ru	Afro-Asiatic (Other)
+7	nl	Afro-Asiatic (Other)
 8	cn	Afrihili
 8	de	Afrihili
 8	en	Afrihili
 8	es	Afrihili
 8	fr	Afrihili
 8	ru	Afrihili
+8	nl	Afrihili
 9	cn	Afrikaans
 9	de	Afrikaans
 9	en	Afrikaans
 9	es	Afrikaans
 9	fr	Afrikaans
 9	ru	Afrikaans
+9	nl	Afrikaans
 10	cn	Ainu
 10	de	Ainu-Sprache
 10	en	Ainu
 10	es	Ainu
 10	fr	A~00EFnou
 10	ru	Ainu
+10	nl	Ainu
 11	cn	Akan
 11	de	Akan-Sprache
 11	en	Akan
 11	es	Akan
 11	fr	Akan
 11	ru	Akan
+11	nl	Akan
 12	cn	Akkadian
 12	de	Akkadisch
 12	en	Akkadian
 12	es	Akkadian
 12	fr	Akkadien
 12	ru	Akkadian
+12	nl	Akkadian
 13	cn	Albanian
 13	de	Albanisch
 13	en	Albanian
 13	es	Albanian
 13	fr	Albanais
 13	ru	Albanian
+13	nl	Albanian
 14	cn	Aleut
 14	de	Aleutisch
 14	en	Aleut
 14	es	Aleut
 14	fr	Al~00E9oute
 14	ru	Aleut
+14	nl	Aleut
 15	cn	Algonquian languages
 15	de	Algonkin-Sprachen (Andere)
 15	en	Algonquian languages
 15	es	Algonquian languages
 15	fr	Algonquines, langues
 15	ru	Algonquian languages
+15	nl	Algonquian languages
 16	cn	Southern Altai
 16	de	Südaltaisch
 16	en	Southern Altai
 16	es	Southern Altai
 16	fr	Altai du Sud
 16	ru	Southern Altai
+16	nl	Southern Altai
 17	cn	Amharic
 17	de	Amharisch
 17	en	Amharic
 17	es	Amharic
 17	fr	Amharique
 17	ru	Amharic
+17	nl	Amharic
 18	cn	English, Old (ca.450-1100)
 18	de	Altenglisch
 18	en	English, Old (ca.450-1100)
 18	es	English, Old (ca.450-1100)
 18	fr	Anglo-saxon (ca.450-1100)
 18	ru	English, Old (ca.450-1100)
+18	nl	English, Old (ca.450-1100)
 19	cn	Angika
 19	de	Anga-Sprache
 19	en	Angika
 19	es	Angika
 19	fr	Angika
 19	ru	Angika
+19	nl	Angika
 20	cn	Apache languages
 20	de	Apachen-Sprache
 20	en	Apache languages
 20	es	Apache languages
 20	fr	Apache
 20	ru	Apache languages
+20	nl	Apache languages
 21	cn	Arabic
 21	de	Arabisch
 21	en	Arabic
 21	es	Arabic
 21	fr	Arabe
 21	ru	Arabic
+21	nl	Arabisch
 22	cn	Aramaic
 22	de	Aramäisch
 22	en	Aramaic
 22	es	Aramaic
 22	fr	Aram~00E9en
 22	ru	Aramaic
+22	nl	Aramaic
 23	cn	Aragonese
 23	de	Aragonesisch
 23	en	Aragonese
 23	es	Aragonese
 23	fr	Aragonais
 23	ru	Aragonese
+23	nl	Aragonese
 24	cn	Armenian
 24	de	Armenisch
 24	en	Armenian
 24	es	Armenian
 24	fr	Arm~00E9nien
 24	ru	Armenian
+24	nl	Armenian
 25	cn	Mapudungun; Mapuche
 25	de	Arauka-Sprachen
 25	en	Mapudungun; Mapuche
 25	es	Mapudungun; Mapuche
 25	fr	Mapudungun; mapuche; mapuce
 25	ru	Mapudungun; Mapuche
+25	nl	Mapudungun; Mapuche
 26	cn	Arapaho
 26	de	Arapaho-Sprache
 26	en	Arapaho
 26	es	Arapaho
 26	fr	Arapaho
 26	ru	Arapaho
+26	nl	Arapaho
 27	cn	Artificial (Other)
 27	de	Kunstsprachen (Andere)
 27	en	Artificial (Other)
 27	es	Artificial (Other)
 27	fr	Artificielles, autres langues
 27	ru	Artificial (Other)
+27	nl	Artificial (Other)
 28	cn	Arawak
 28	de	Arawak-Sprachen
 28	en	Arawak
 28	es	Arawak
 28	fr	Arawak
 28	ru	Arawak
+28	nl	Arawak
 29	cn	Assamese
 29	de	Assamesisch
 29	en	Assamese
 29	es	Assamese
 29	fr	Assamais
 29	ru	Assamese
+29	nl	Assamese
 30	cn	Asturian; Bable
 30	de	Asturisch
 30	en	Asturian; Bable
 30	es	Asturian; Bable
 30	fr	Asturien; bable
 30	ru	Asturian; Bable
+30	nl	Asturian; Bable
 31	cn	Athapascan languages
 31	de	Athapaskische Sprachen
 31	en	Athapascan languages
 31	es	Athapascan languages
 31	fr	Athapascanes, langues
 31	ru	Athapascan languages
+31	nl	Athapascan languages
 32	cn	Australian languages
 32	de	Australische Sprachen
 32	en	Australian languages
 32	es	Australian languages
 32	fr	Australiennes, langues
 32	ru	Australian languages
+32	nl	Australian languages
 33	cn	Avaric
 33	de	Awarisch
 33	en	Avaric
 33	es	Avaric
 33	fr	Avar
 33	ru	Avaric
+33	nl	Avaric
 34	cn	Avestan
 34	de	Avestisch
 34	en	Avestan
 34	es	Avestan
 34	fr	Avestique
 34	ru	Avestan
+34	nl	Avestan
 35	cn	Awadhi
 35	de	Awadhi
 35	en	Awadhi
 35	es	Awadhi
 35	fr	Awadhi
 35	ru	Awadhi
+35	nl	Awadhi
 36	cn	Aymara
 36	de	Aymará-Sprache
 36	en	Aymara
 36	es	Aymara
 36	fr	Aymara
 36	ru	Aymara
+36	nl	Aymara
 37	cn	Azerbaijani
 37	de	Aserbaidschanisch
 37	en	Azerbaijani
 37	es	Azerbaijani
 37	fr	Az~00E9ri
 37	ru	Azerbaijani
+37	nl	Azerbaijani
 38	cn	Banda languages
 38	de	Banda-Sprachen
 38	en	Banda languages
 38	es	Banda languages
 38	fr	Banda, langues
 38	ru	Banda languages
+38	nl	Banda languages
 39	cn	Bamileke languages
 39	de	Bamileke-Sprache
 39	en	Bamileke languages
 39	es	Bamileke languages
 39	fr	Bamil~00E9k~00E9s, langues
 39	ru	Bamileke languages
+39	nl	Bamileke languages
 40	cn	Bashkir
 40	de	Baschkirisch
 40	en	Bashkir
 40	es	Bashkir
 40	fr	Bachkir
 40	ru	Bashkir
+40	nl	Bashkir
 41	cn	Baluchi
 41	de	Belutschisch
 41	en	Baluchi
 41	es	Baluchi
 41	fr	Baloutchi
 41	ru	Baluchi
+41	nl	Baluchi
 42	cn	Bambara
 42	de	Bambara-Sprache
 42	en	Bambara
 42	es	Bambara
 42	fr	Bambara
 42	ru	Bambara
+42	nl	Bambara
 43	cn	Balinese
 43	de	Balinesisch
 43	en	Balinese
 43	es	Balinese
 43	fr	Balinais
 43	ru	Balinese
+43	nl	Balinese
 44	cn	Basque
 44	de	Baskisch
 44	en	Basque
 44	es	Basque
 44	fr	Basque
 44	ru	Basque
+44	nl	Basque
 45	cn	Basa
 45	de	Basaa-Sprache
 45	en	Basa
 45	es	Basa
 45	fr	Basa
 45	ru	Basa
+45	nl	Basa
 46	cn	Baltic (Other)
 46	de	Baltische Sprachen (Andere)
 46	en	Baltic (Other)
 46	es	Baltic (Other)
 46	fr	Baltiques, autres langues
 46	ru	Baltic (Other)
+46	nl	Baltic (Other)
 47	cn	Beja
 47	de	Bedauye
 47	en	Beja
 47	es	Beja
 47	fr	Bedja
 47	ru	Beja
+47	nl	Beja
 48	cn	Belarusian
 48	de	Weißrussisch
 48	en	Belarusian
 48	es	Belarusian
 48	fr	Bi~00E9lorusse
 48	ru	Belarusian
+48	nl	Belarusian
 49	cn	Bemba
 49	de	Bemba-Sprache
 49	en	Bemba
 49	es	Bemba
 49	fr	Bemba
 49	ru	Bemba
+49	nl	Bemba
 50	cn	Bengali
 50	de	Bengali
 50	en	Bengali
 50	es	Bengali
 50	fr	Bengali
 50	ru	Bengali
+50	nl	Bengali
 51	cn	Berber (Other)
 51	de	Berbersprachen (Andere)
 51	en	Berber (Other)
 51	es	Berber (Other)
 51	fr	Berb~00E8res, autres langues
 51	ru	Berber (Other)
+51	nl	Berber (Other)
 52	cn	Bhojpuri
 52	de	Bhojpuri
 52	en	Bhojpuri
 52	es	Bhojpuri
 52	fr	Bhojpuri
 52	ru	Bhojpuri
+52	nl	Bhojpuri
 53	cn	Bihari
 53	de	Bihari
 53	en	Bihari
 53	es	Bihari
 53	fr	Bihari
 53	ru	Bihari
+53	nl	Bihari
 54	cn	Bikol
 54	de	Bikol
 54	en	Bikol
 54	es	Bikol
 54	fr	Bikol
 54	ru	Bikol
+54	nl	Bikol
 55	cn	Bini; Edo
 55	de	Edo-Sprache
 55	en	Bini; Edo
 55	es	Bini; Edo
 55	fr	Bini; edo
 55	ru	Bini; Edo
+55	nl	Bini; Edo
 56	cn	Bislama
 56	de	Beach-la-mar
 56	en	Bislama
 56	es	Bislama
 56	fr	Bichlamar
 56	ru	Bislama
+56	nl	Bislama
 57	cn	Siksika
 57	de	Blackfoot-Sprache
 57	en	Siksika
 57	es	Siksika
 57	fr	Blackfoot
 57	ru	Siksika
+57	nl	Siksika
 58	cn	Bantu (Other)
 58	de	Bantusprachen (Andere)res langues
 58	en	Bantu (Other)
 58	es	Bantu (Other)
 58	fr	Bantoues, autres langues
 58	ru	Bantu (Other)
+58	nl	Bantu (Other)
 59	cn	Bosnian
 59	de	Bosnisch
 59	en	Bosnian
 59	es	Bosnian
 59	fr	Bosniaque
 59	ru	Bosnian
+59	nl	Bosnian
 60	cn	Braj
 60	de	Braj-Bhakha
 60	en	Braj
 60	es	Braj
 60	fr	Braj
 60	ru	Braj
+60	nl	Braj
 61	cn	Breton
 61	de	Bretonisch
 61	en	Breton
 61	es	Breton
 61	fr	Breton
 61	ru	Breton
+61	nl	Breton
 62	cn	Batak languages
 62	de	Batak-Sprache
 62	en	Batak languages
 62	es	Batak languages
 62	fr	Batak, langues
 62	ru	Batak languages
+62	nl	Batak languages
 63	cn	Buriat
 63	de	Burjatisch
 63	en	Buriat
 63	es	Buriat
 63	fr	Bouriate
 63	ru	Buriat
+63	nl	Buriat
 64	cn	Buginese
 64	de	Bugi-Sprache
 64	en	Buginese
 64	es	Buginese
 64	fr	Bugi
 64	ru	Buginese
+64	nl	Buginese
 65	cn	Bulgarian
 65	de	Bulgarisch
 65	en	Bulgarian
 65	es	Bulgarian
 65	fr	Bulgare
 65	ru	Bulgarian
+65	nl	Bulgarian
 66	cn	Burmese
 66	de	Birmanisch
 66	en	Burmese
 66	es	Burmese
 66	fr	Birman
 66	ru	Burmese
+66	nl	Burmese
 67	cn	Blin; Bilin
 67	de	Biliin-Sprache
 67	en	Blin; Bilin
 67	es	Blin; Bilin
 67	fr	Blin; bilen
 67	ru	Blin; Bilin
+67	nl	Blin; Bilin
 68	cn	Caddo
 68	de	Caddo-Sprachen
 68	en	Caddo
 68	es	Caddo
 68	fr	Caddo
 68	ru	Caddo
+68	nl	Caddo
 69	cn	Central American Indian (Other)
 69	de	Indianersprachen. Zentralamerika (Ande
 69	en	Central American Indian (Other)
 69	es	Central American Indian (Other)
 69	fr	Indiennes d'Am~00E9rique centrale, aut
 69	ru	Central American Indian (Other)
+69	nl	Central American Indian (Other)
 70	cn	Galibi Carib
 70	de	Karibische Sprachen
 70	en	Galibi Carib
 70	es	Galibi Carib
 70	fr	Karib; galibi; carib
 70	ru	Galibi Carib
+70	nl	Galibi Carib
 71	cn	Catalan; Valencian
 71	de	Katalanisch
 71	en	Catalan; Valencian
 71	es	Catalan; Valencian
 71	fr	Catalan; valencienavonic; Old Bulgarian; Old Church Slavonic
 71	ru	Catalan; Valencianavonic; Old Bulgarian; Old Church Slavonic
+71	nl	Catalan; Valencian
 72	cn	Caucasian (Other)avonic; Old Bulgarian; Old Church Slavonic
 72	de	Kaukasische Sprachen (Andere)avonic; Old Bulgarian; Old Church Slavonic
 72	en	Caucasian (Other)on liturgique; vieux bulgare
 72	es	Caucasian (Other)
 72	fr	Caucasiennes, autres langues
 72	ru	Caucasian (Other)
+72	nl	Caucasian (Other)on liturgique; vieux bulgare
 73	cn	Cebuano
 73	de	Cebuano
 73	en	Cebuano
 73	es	Cebuano
 73	fr	Cebuano
 73	ru	Cebuano
+73	nl	Cebuano
 74	cn	Celtic (Other)
 74	de	Keltische Sprachen (Andere)
 74	en	Celtic (Other)
 74	es	Celtic (Other)
 74	fr	Celtiques, autres langues
 74	ru	Celtic (Other)
+74	nl	Celtic (Other)
 75	cn	Chamorro
 75	de	Chamorro-Sprache
 75	en	Chamorro
 75	es	Chamorro
 75	fr	Chamorro
 75	ru	Chamorro
+75	nl	Chamorro
 76	cn	Chibcha
 76	de	Chibcha-Sprachen
 76	en	Chibcha
 76	es	Chibcha
 76	fr	Chibcha
 76	ru	Chibcha
+76	nl	Chibcha
 77	cn	Chechen
 77	de	Tschetschenisch
 77	en	Chechen
 77	es	Chechenher)
 77	fr	Tch~00E9tch~00E8neher)
 77	ru	Chechenher)
+77	nl	Chechen
 78	cn	Chagataiher)
 78	de	Chagatai
 78	en	Chagataier)
 78	es	Chagataier)
 78	fr	Djaghata~00EFer)
 78	ru	Chagataier)
+78	nl	Chagataier)
 79	cn	Chineseutres
 79	de	Chinesisch(Other)
 79	en	Chinese(Other)
 79	es	Chinese(Other)
 79	fr	Chinois(Other)
 79	ru	Chinesees
+79	nl	Chinese(Other)
 80	cn	Chuukese
 80	de	Trukesisch
 80	en	Chuukese
 80	es	Chuukese
 80	fr	Chuuk
 80	ru	Chuukese
+80	nl	Chuukese
 81	cn	Mari
 81	de	Tscheremissisch
 81	en	Mari
 81	es	Mari
 81	fr	Mari
 81	ru	Mari
+81	nl	Mari
 82	cn	Chinook jargon
 82	de	Chinook Jargon
 82	en	Chinook jargon
 82	es	Chinook jargon
 82	fr	Chinook, jargon
 82	ru	Chinook jargon
+82	nl	Chinook jargon
 83	cn	Choctaw
 83	de	Choctaw-Sprache
 83	en	Choctaw
 83	es	Choctaw
 83	fr	Choctaw
 83	ru	Choctaw
+83	nl	Choctaw
 84	cn	Chipewyan
 84	de	Chipewyan-Sprache
 84	en	Chipewyan
 84	es	Chipewyan
 84	fr	Chipewyan
 84	ru	Chipewyan
+84	nl	Chipewyan
 85	cn	Cherokee
 85	de	Cherokee-Sprache
 85	en	Cherokee
 85	es	Cherokee
 85	fr	Cherokee
 85	ru	Cherokee
+85	nl	Cherokee
 86	cn	Church Slavic; Old Slavonic; Church Sl
 86	de	Kirchenslawisch
 86	en	Church Slavic; Old Slavonic; Church Sl
 86	es	Church Slavic; Old Slavonic; Church Sl
 86	fr	Slavon d'~00E9glise; vieux slave; slav
 86	ru	Church Slavic; Old Slavonic; Church Sl
+86	nl	Church Slavic; Old Slavonic; Church Sl
 87	cn	Chuvash
 87	de	Tschuwaschisch
 87	en	Chuvash
 87	es	Chuvash
 87	fr	Tchouvache
 87	ru	Chuvash
+87	nl	Chuvash
 88	cn	Cheyenne
 88	de	Cheyenne-Sprache
 88	en	Cheyenne
 88	es	Cheyenne
 88	fr	Cheyenne
 88	ru	Cheyenne
+88	nl	Cheyenne
 89	cn	Chamic languages
 89	de	Cham-Sprachen
 89	en	Chamic languages
 89	es	Chamic languages
 89	fr	Chames, langues
 89	ru	Chamic languages
+89	nl	Chamic languages
 90	cn	Coptic
 90	de	Koptisch
 90	en	Coptic
 90	es	Coptic
 90	fr	Copte
 90	ru	Coptic
+90	nl	Coptic
 91	cn	Cornish
 91	de	Kornisch
 91	en	Cornish
 91	es	Cornish
 91	fr	Cornique
 91	ru	Cornish
+91	nl	Cornish
 92	cn	Corsican
 92	de	Korsisch
 92	en	Corsican
 92	es	Corsican
 92	fr	Corse
 92	ru	Corsican
+92	nl	Corsican
 93	cn	Creoles and pidgins, English based (Ot
 93	de	Kreolisch-Englisch (Andere)
 93	en	Creoles and pidgins, English based (Ot
 93	es	Creoles and pidgins, English based (Ot
 93	fr	Cr~00E9oles et pidgins anglais, autres
 93	ru	Creoles and pidgins, English based (Ot
+93	nl	Creoles and pidgins, English based (Ot
 94	cn	Creoles and pidgins, French-based (Oth
 94	de	Kreolisch-Französisch (Andere)
 94	en	Creoles and pidgins, French-based (Oth
 94	es	Creoles and pidgins, French-based (Oth
 94	fr	Cr~00E9oles et pidgins fran~00E7ais, a
 94	ru	Creoles and pidgins, French-based (Oth
+94	nl	Creoles and pidgins, French-based (Oth
 95	cn	Creoles and pidgins, Portuguese-based 
 95	de	Kreolisch-Portugiesisch (Andere)
 95	en	Creoles and pidgins, Portuguese-based 
 95	es	Creoles and pidgins, Portuguese-based 
 95	fr	Cr~00E9oles et pidgins portugais, autr
 95	ru	Creoles and pidgins, Portuguese-based 
+95	nl	Creoles and pidgins, Portuguese-based 
 96	cn	Cree
 96	de	Cree-Sprache
 96	en	Cree
 96	es	Cree
 96	fr	Cree
 96	ru	Cree
+96	nl	Cree
 97	cn	Crimean Tatar; Crimean Turkish
 97	de	Krimtatarisch
 97	en	Crimean Tatar; Crimean Turkish
 97	es	Crimean Tatar; Crimean Turkish
 97	fr	Tatar de Crim~00E9
 97	ru	Crimean Tatar; Crimean Turkish
+97	nl	Crimean Tatar; Crimean Turkish
 98	cn	Creoles and pidgins (Other)
 98	de	Kreolische Sprachen; Pidginsprachen (A
 98	en	Creoles and pidgins (Other)
 98	es	Creoles and pidgins (Other)
 98	fr	Cr~00E9oles et pidgins divers
 98	ru	Creoles and pidgins (Other)
+98	nl	Creoles and pidgins (Other)
 99	cn	Kashubian
 99	de	Kaschubisch
 99	en	Kashubian
 99	es	Kashubian
 99	fr	Kachoube
 99	ru	Kashubian
+99	nl	Kashubian
 100	cn	Cushitic (Other)
 100	de	Kuschitische Sprachen (Andere)
 100	en	Cushitic (Other)
 100	es	Cushitic (Other)
 100	fr	Couchitiques, autres langues
 100	ru	Cushitic (Other)
+100	nl	Cushitic (Other)
 101	cn	Czech
 101	de	Tschechisch
 101	en	Czech
 101	es	Czech
 101	fr	Tch~00E8que
 101	ru	Czech
+101	nl	Czech
 102	cn	Dakota
 102	de	Dakota-Sprache
 102	en	Dakota
 102	es	Dakota
 102	fr	Dakota
 102	ru	Dakota
+102	nl	Dakota
 103	cn	Danish
 103	de	Dänisch
 103	en	Danish
 103	es	Danish
 103	fr	Danois
 103	ru	Danish
+103	nl	Danish
 104	cn	Dargwa
 104	de	Darginisch
 104	en	Dargwa
 104	es	Dargwa
 104	fr	Dargwa
 104	ru	Dargwa
+104	nl	Dargwa
 105	cn	Land Dayak languages
 105	de	Dajakisch
 105	en	Land Dayak languages
 105	es	Land Dayak languages
 105	fr	Dayak, langues
 105	ru	Land Dayak languages
+105	nl	Land Dayak languages
 106	cn	Delaware
 106	de	Delaware-Sprache
 106	en	Delaware
 106	es	Delaware
 106	fr	Delaware
 106	ru	Delaware
+106	nl	Delaware
 107	cn	Slave (Athapascan)
 107	de	Slave-Sprache
 107	en	Slave (Athapascan)
 107	es	Slave (Athapascan)
 107	fr	Esclave (athapascan)
 107	ru	Slave (Athapascan)
+107	nl	Slave (Athapascan)
 108	cn	Dogrib
 108	de	Dogrib-Sprache
 108	en	Dogrib
 108	es	Dogrib
 108	fr	Dogrib
 108	ru	Dogrib
+108	nl	Dogrib
 109	cn	Dinka
 109	de	Dinka-Sprache
 109	en	Dinka
 109	es	Dinka
 109	fr	Dinka
 109	ru	Dinka
+109	nl	Dinka
 110	cn	Divehi; Dhivehi; Maldivian
 110	de	Maledivisch
 110	en	Divehi; Dhivehi; Maldivian
 110	es	Divehi; Dhivehi; Maldivian
 110	fr	Maldivien
 110	ru	Divehi; Dhivehi; Maldivian
+110	nl	Divehi; Dhivehi; Maldivian
 111	cn	Dogri
 111	de	Dogri
 111	en	Dogri
 111	es	Dogri
 111	fr	Dogri
 111	ru	Dogri
+111	nl	Dogri
 112	cn	Dravidian (Other)
 112	de	Drawidische Sprachen (Andere)
 112	en	Dravidian (Other)
 112	es	Dravidian (Other)
 112	fr	Dravidiennes, autres langues
 112	ru	Dravidian (Other)
+112	nl	Dravidian (Other)
 113	cn	Lower Sorbian
 113	de	Niedersorbisch
 113	en	Lower Sorbian
 113	es	Lower Sorbian
 113	fr	Bas-sorabe
 113	ru	Lower Sorbian
+113	nl	Lower Sorbian
 114	cn	Duala
 114	de	Duala-Sprachen
 114	en	Duala
 114	es	Duala
 114	fr	Douala
 114	ru	Duala
+114	nl	Duala
 115	cn	Dutch, Middle (ca.1050-1350)
 115	de	Mittelniederländisch
 115	en	Dutch, Middle (ca.1050-1350)
 115	es	Dutch, Middle (ca.1050-1350)
 115	fr	N~00E9erlandais moyen (ca. 1050-1350)
 115	ru	Dutch, Middle (ca.1050-1350)
+115	nl	Nederlands, Midden (ca.1050-1350)
 116	cn	Dutch; Flemish
 116	de	Niederländisch
 116	en	Dutch; Flemish
 116	es	Dutch; Flemish
 116	fr	N~00E9erlandais; flamand
 116	ru	Dutch; Flemish
+116	nl	Nederlands; Vlaams
 117	cn	Dyula
 117	de	Dyula-Sprache
 117	en	Dyula
 117	es	Dyula
 117	fr	Dioula
 117	ru	Dyula
+117	nl	Dyula
 118	cn	Dzongkha
 118	de	Dzongkha
 118	en	Dzongkha
 118	es	Dzongkha
 118	fr	Dzongkha
 118	ru	Dzongkha
+118	nl	Dzongkha
 119	cn	Efik
 119	de	Efik
 119	en	Efik
 119	es	Efik
 119	fr	Efik
 119	ru	Efik
+119	nl	Efik
 120	cn	Egyptian (Ancient)
 120	de	Ägyptisch
 120	en	Egyptian (Ancient)
 120	es	Egyptian (Ancient)
 120	fr	~00C9gyptien
 120	ru	Egyptian (Ancient)
+120	nl	Egyptian (Ancient)
 121	cn	Ekajuk
 121	de	Ekajuk
 121	en	Ekajuk
 121	es	Ekajuk
 121	fr	Ekajuk
 121	ru	Ekajuk
+121	nl	Ekajuk
 122	cn	Elamite
 122	de	Elamisch
 122	en	Elamite
 122	es	Elamite
 122	fr	~00C9lamite
 122	ru	Elamite
+122	nl	Elamite
 123	cn	English
 123	de	Englisch
 123	en	English
 123	es	English
 123	fr	Anglais
 123	ru	English
+123	nl	Engels
 124	cn	English, Middle (1100-1500)
 124	de	Mittelenglisch
 124	en	English, Middle (1100-1500)
 124	es	English, Middle (1100-1500)
 124	fr	Anglais moyen (1100-1500)
 124	ru	English, Middle (1100-1500)
+124	nl	Engels, Midden (1100-1500)
 125	cn	Esperanto
 125	de	Esperanto
 125	en	Esperanto
 125	es	Esperanto
 125	fr	Esp~00E9ranto
 125	ru	Esperanto
+125	nl	Esperanto
 126	cn	Estonian
 126	de	Estnisch
 126	en	Estonian
 126	es	Estonian
 126	fr	Estonien
 126	ru	Estonian
+126	nl	Estonian
 127	cn	Ewe
 127	de	Ewe-Sprache
 127	en	Ewe
 127	es	Ewe
 127	fr	~00C9w~00E9
 127	ru	Ewe
+127	nl	Ewe
 128	cn	Ewondo
 128	de	Ewondos
 128	en	Ewondo
 128	es	Ewondo
 128	fr	~00C9wondo
 128	ru	Ewondo
+128	nl	Ewondo
 129	cn	Fang
 129	de	Pangwe-Sprache
 129	en	Fang
 129	es	Fang
 129	fr	Fang
 129	ru	Fang
+129	nl	Fang
 130	cn	Faroese
 130	de	Färöisch
 130	en	Faroese
 130	es	Faroese
 130	fr	F~00E9ro~00EFen
 130	ru	Faroese
+130	nl	Faroese
 131	cn	Fanti
 131	de	Fante-Sprache
 131	en	Fanti
 131	es	Fanti
 131	fr	Fanti
 131	ru	Fanti
+131	nl	Fanti
 132	cn	Fijian
 132	de	Fidschi-Sprache
 132	en	Fijian
 132	es	Fijian
 132	fr	Fidjien
 132	ru	Fijian
+132	nl	Fijian
 133	cn	Filipino; Pilipino
 133	de	Pilipino
 133	en	Filipino; Pilipino
 133	es	Filipino; Pilipino
 133	fr	Filipino; pilipino
 133	ru	Filipino; Pilipino
+133	nl	Filipino; Pilipino
 134	cn	Finnish
 134	de	Finnisch
 134	en	Finnish
 134	es	Finnish
 134	fr	Finnois
 134	ru	Finnish
+134	nl	Finnish
 135	cn	Finno-Ugrian (Other)
 135	de	Finnougrische Sprache (Andere)
 135	en	Finno-Ugrian (Other)
 135	es	Finno-Ugrian (Other)
 135	fr	Finno-ougriennes, autres langues
 135	ru	Finno-Ugrian (Other)
+135	nl	Finno-Ugrian (Other)
 136	cn	Fon
 136	de	Fon-Sprache
 136	en	Fon
 136	es	Fon
 136	fr	Fon
 136	ru	Fon
+136	nl	Fon
 137	cn	French
 137	de	Französisch
 137	en	French
 137	es	French
 137	fr	Fran~00E7ais
 137	ru	French
+137	nl	Frans
 138	cn	French, Middle (ca.1400-1600)
 138	de	Mittelfranzösisch
 138	en	French, Middle (ca.1400-1600)
 138	es	French, Middle (ca.1400-1600)
 138	fr	Fran~00E7ais moyen (1400-1600)
 138	ru	French, Middle (ca.1400-1600)
+138	nl	French, Middle (ca.1400-1600)
 139	cn	French, Old (842-ca.1400)
 139	de	Altfranzösisch
 139	en	French, Old (842-ca.1400)
 139	es	French, Old (842-ca.1400)
 139	fr	Fran~00E7ais ancien (842-ca.1400)
 139	ru	French, Old (842-ca.1400)
+139	nl	French, Old (842-ca.1400)
 140	cn	Northern Frisian
 140	de	Nordfriesisch
 140	en	Northern Frisian
 140	es	Northern Frisian
 140	fr	Frison septentrional
 140	ru	Northern Frisian
+140	nl	Northern Frisian
 141	cn	Eastern Frisian
 141	de	Ostfriesisch
 141	en	Eastern Frisian
 141	es	Eastern Frisian
 141	fr	Frison oriental
 141	ru	Eastern Frisian
+141	nl	Eastern Frisian
 142	cn	Western Frisian
 142	de	Friesisch
 142	en	Western Frisian
 142	es	Western Frisian
 142	fr	Frison occidental
 142	ru	Western Frisian
+142	nl	Western Frisian
 143	cn	Fulah
 143	de	Ful
 143	en	Fulah
 143	es	Fulah
 143	fr	Peul
 143	ru	Fulah
+143	nl	Fulah
 144	cn	Friulian
 144	de	Friulisch
 144	en	Friulian
 144	es	Friulian
 144	fr	Frioulan
 144	ru	Friulian
+144	nl	Friulian
 145	cn	Ga
 145	de	Ga-Sprache
 145	en	Ga
 145	es	Ga
 145	fr	Ga
 145	ru	Ga
+145	nl	Ga
 146	cn	Gayo
 146	de	Gayo-Sprache
 146	en	Gayo
 146	es	Gayo
 146	fr	Gayo
 146	ru	Gayo
+146	nl	Gayo
 147	cn	Gbaya
 147	de	Gbaya-Sprache
 147	en	Gbaya
 147	es	Gbaya
 147	fr	Gbaya
 147	ru	Gbaya
+147	nl	Gbaya
 148	cn	Germanic (Other)
 148	de	Germanische Sprachen (Andere)
 148	en	Germanic (Other)
 148	es	Germanic (Other)
 148	fr	Germaniques, autres langues
 148	ru	Germanic (Other)
+148	nl	Germaans (Overige)
 149	cn	Georgian
 149	de	Georgisch
 149	en	Georgian
 149	es	Georgian
 149	fr	G~00E9orgien
 149	ru	Georgian
+149	nl	Georgian
 150	cn	German
 150	de	Deutsch
 150	en	German
 150	es	German
 150	fr	Allemand
 150	ru	German
+150	nl	Duits
 151	cn	Geez
 151	de	Altäthiopisch
 151	en	Geez
 151	es	Geez
 151	fr	Gu~00E8ze
 151	ru	Geez
+151	nl	Geez
 152	cn	Gilbertese
 152	de	Gilbertesisch
 152	en	Gilbertese
 152	es	Gilbertese
 152	fr	Kiribati
 152	ru	Gilbertese
+152	nl	Gilbertese
 153	cn	Gaelic; Scottish Gaelic
 153	de	Gälisch-Schottisch
 153	en	Gaelic; Scottish Gaelic
 153	es	Gaelic; Scottish Gaelic
 153	fr	Ga~00E9lique; ga~00E9lique ~00E9cossai
 153	ru	Gaelic; Scottish Gaelic
+153	nl	Gaelic; Scottish Gaelic
 154	cn	Irish
 154	de	Irisch
 154	en	Irish
 154	es	Irish
 154	fr	Irlandais
 154	ru	Irish
+154	nl	Irish
 155	cn	Galician
 155	de	Galicisch
 155	en	Galician
 155	es	Galician
 155	fr	Galicien
 155	ru	Galician
+155	nl	Galician
 156	cn	Manx
 156	de	Manx
 156	en	Manx
 156	es	Manx
 156	fr	Manx; mannois
 156	ru	Manx
+156	nl	Manx
 157	cn	German, Middle High (ca.1050-1500)
 157	de	Mittelhochdeutsch
 157	en	German, Middle High (ca.1050-1500)
 157	es	German, Middle High (ca.1050-1500)
 157	fr	Allemand, moyen haut (ca. 1050-1500)
 157	ru	German, Middle High (ca.1050-1500)
+157	nl	German, Middle High (ca.1050-1500)
 158	cn	German, Old High (ca.750-1050)
 158	de	Althochdeutsch
 158	en	German, Old High (ca.750-1050)
 158	es	German, Old High (ca.750-1050)
 158	fr	Allemand, vieux haut (ca. 750-1050)
 158	ru	German, Old High (ca.750-1050)
+158	nl	German, Old High (ca.750-1050)
 159	cn	Gondi
 159	de	Gondi-Sprache
 159	en	Gondi
 159	es	Gondi
 159	fr	Gond
 159	ru	Gondi
+159	nl	Gondi
 160	cn	Gorontalo
 160	de	Gorontalesisch
 160	en	Gorontalo
 160	es	Gorontalo
 160	fr	Gorontalo
 160	ru	Gorontaloanguage Association)
+160	nl	Gorontalo
 161	cn	Gothicanguage Association)
 161	de	Gotischanguage Association)
 161	en	Gothicanguage Association)
 161	es	Gothictionale)
 161	fr	Gothique
 161	ru	Gothic
+161	nl	Gothicanguage Association)
 162	cn	Grebo
 162	de	Grebo-Sprache
 162	en	Grebo
 162	es	Grebo
 162	fr	Grebo
 162	ru	Grebo
+162	nl	Grebo
 163	cn	Greek, Ancient (to 1453)
 163	de	Griechisch
 163	en	Greek, Ancient (to 1453)
 163	es	Greek, Ancient (to 1453)
 163	fr	Grec ancien (jusqu'~00E0 1453)
 163	ru	Greek, Ancient (to 1453)
+163	nl	Greek, Ancient (to 1453)
 164	cn	Greek, Modern (1453-)
 164	de	Neugriechisch
 164	en	Greek, Modern (1453-)
 164	es	Greek, Modern (1453-)
 164	fr	Grec moderne (apr~00E8s 1453)
 164	ru	Greek, Modern (1453-)
+164	nl	Greek, Modern (1453-)
 165	cn	Guarani
 165	de	Guaraní-Sprache
 165	en	Guarani
 165	es	Guarani
 165	fr	Guarani
 165	ru	Guarani
+165	nl	Guarani
 166	cn	Swiss German; Alemannic
 166	de	Schweizerdeutsch
 166	en	Swiss German; Alemannic
 166	es	Swiss German; Alemannic
 166	fr	Al~00E9manique
 166	ru	Swiss German; Alemannic
+166	nl	Swiss German; Alemannic
 167	cn	Gujarati
 167	de	Gujarati-Sprache
 167	en	Gujarati
 167	es	Gujarati
 167	fr	Goudjrati
 167	ru	Gujarati
+167	nl	Gujarati
 168	cn	Gwich'in
 168	de	Kutchin-Sprache
 168	en	Gwich'in
 168	es	Gwich'in
 168	fr	Gwich'in
 168	ru	Gwich'in
+168	nl	Gwich'in
 169	cn	Haida
 169	de	Haida-Sprache
 169	en	Haida
 169	es	Haida
 169	fr	Haida
 169	ru	Haida
+169	nl	Haida
 170	cn	Haitian; Haitian Creole
 170	de	Haitien
 170	en	Haitian; Haitian Creole
 170	es	Haitian; Haitian Creole
 170	fr	Ha~00EFtien; cr~00E9ole ha~00EFtien
 170	ru	Haitian; Haitian Creole
+170	nl	Haitian; Haitian Creole
 171	cn	Hausa
 171	de	Haussa-Sprache
 171	en	Hausa
 171	es	Hausa
 171	fr	Haoussa
 171	ru	Hausa
+171	nl	Hausa
 172	cn	Hawaiian
 172	de	Hawaiisch
 172	en	Hawaiian
 172	es	Hawaiian
 172	fr	Hawa~00EFen
 172	ru	Hawaiian
+172	nl	Hawaiian
 173	cn	Hebrew
 173	de	Hebräisch
 173	en	Hebrew
 173	es	Hebrew
 173	fr	H~00E9breu
 173	ru	Hebrew
+173	nl	Hebrew
 174	cn	Herero
 174	de	Herero-Sprache
 174	en	Herero
 174	es	Herero
 174	fr	Herero
 174	ru	Herero
+174	nl	Herero
 175	cn	Hiligaynon
 175	de	Hiligaynon-Sprache
 175	en	Hiligaynon
 175	es	Hiligaynon
 175	fr	Hiligaynon
 175	ru	Hiligaynon
+175	nl	Hiligaynon
 176	cn	Himachali
 176	de	Himachali
 176	en	Himachali
 176	es	Himachali
 176	fr	Himachali
 176	ru	Himachali
+176	nl	Himachali
 177	cn	Hindi
 177	de	Hindi
 177	en	Hindi
 177	es	Hindi
 177	fr	Hindi
 177	ru	Hindi
+177	nl	Hindi
 178	cn	Hittite
 178	de	Hethitisch
 178	en	Hittite
 178	es	Hittite
 178	fr	Hittite
 178	ru	Hittite
+178	nl	Hittite
 179	cn	Hmong
 179	de	Miao-Sprachen
 179	en	Hmong
 179	es	Hmong
 179	fr	Hmong
 179	ru	Hmong
+179	nl	Hmong
 180	cn	Hiri Motu
 180	de	Hiri Motu
 180	en	Hiri Motu
 180	es	Hiri Motu
 180	fr	Hiri motu
 180	ru	Hiri Motu
+180	nl	Hiri Motu
 181	cn	Upper Sorbian
 181	de	Obersorbisch
 181	en	Upper Sorbian
 181	es	Upper Sorbian
 181	fr	Haut-sorabe
 181	ru	Upper Sorbian
+181	nl	Upper Sorbian
 182	cn	Hungarian
 182	de	Ungarisch
 182	en	Hungarian
 182	es	Hungarian
 182	fr	Hongrois
 182	ru	Hungarian
+182	nl	Hungarian
 183	cn	Hupa
 183	de	Hupa-Sprache
 183	en	Hupa
 183	es	Hupa
 183	fr	Hupa
 183	ru	Hupa
+183	nl	Hupa
 184	cn	Iban
 184	de	Iban-Sprache
 184	en	Iban
 184	es	Iban
 184	fr	Iban
 184	ru	Iban
+184	nl	Iban
 185	cn	Igbo
 185	de	Ibo-Sprache
 185	en	Igbo
 185	es	Igbo
 185	fr	Igbo
 185	ru	Igbo
+185	nl	Igbo
 186	cn	Icelandic
 186	de	Isländisch
 186	en	Icelandic
 186	es	Icelandic
 186	fr	Islandais
 186	ru	Icelandic
+186	nl	Icelandic
 187	cn	Ido
 187	de	Ido
 187	en	Ido
 187	es	Ido
 187	fr	Ido
 187	ru	Ido
+187	nl	Ido
 188	cn	Sichuan Yi
 188	de	Lalo-Sprache
 188	en	Sichuan Yi
 188	es	Sichuan Yi
 188	fr	Yi de Sichuan
 188	ru	Sichuan Yi
+188	nl	Sichuan Yi
 189	cn	Ijo languages
 189	de	Ijo-Sprache
 189	en	Ijo languages
 189	es	Ijo languages
 189	fr	Ijo, langues
 189	ru	Ijo languages
+189	nl	Ijo languages
 190	cn	Inuktitut
 190	de	Inuktitut
 190	en	Inuktitut
 190	es	Inuktitut
 190	fr	Inuktitut
 190	ru	Inuktitut
+190	nl	Inuktitut
 191	cn	Interlingue
 191	de	Interlingue
 191	en	Interlingue
 191	es	Interlingue
 191	fr	Interlingue
 191	ru	Interlingue
+191	nl	Interlingue
 192	cn	Iloko
 192	de	Ilokano-Sprache
 192	en	Iloko
 192	es	Iloko
 192	fr	Ilocano
 192	ru	Iloko
+192	nl	Iloko
 193	cn	Interlingua (International Auxiliary L
 193	de	Interlingua (International Auxiliary L
 193	en	Interlingua (International Auxiliary L
 193	es	Interlingua (International Auxiliary L
 193	fr	Interlingua (langue auxiliaire interna
 193	ru	Interlingua (International Auxiliary L
+193	nl	Interlingua (International Auxiliary L
 194	cn	Indic (Other)
 194	de	Indoarische Sprqachen (Andere)
 194	en	Indic (Other)
 194	es	Indic (Other)
 194	fr	Indo-aryennes, autres langues
 194	ru	Indic (Other)
+194	nl	Indic (Other)
 195	cn	Indonesian
 195	de	Bahasa Indonesia
 195	en	Indonesian
 195	es	Indonesian
 195	fr	Indon~00E9sien
 195	ru	Indonesian
+195	nl	Indonesian
 196	cn	Indo-European (Other)
 196	de	Indogermanische Sprachen (Andere)
 196	en	Indo-European (Other)
 196	es	Indo-European (Other)
 196	fr	Indo-europ~00E9ennes, autres langues
 196	ru	Indo-European (Other)
+196	nl	Indo-European (Other)
 197	cn	Ingush
 197	de	Inguschisch
 197	en	Ingush
 197	es	Ingush
 197	fr	Ingouche
 197	ru	Ingush
+197	nl	Ingush
 198	cn	Inupiaq
 198	de	Inupik
 198	en	Inupiaq
 198	es	Inupiaq
 198	fr	Inupiaq
 198	ru	Inupiaq
+198	nl	Inupiaq
 199	cn	Iranian (Other)
 199	de	Iranische Sprachen (Andere)
 199	en	Iranian (Other)
 199	es	Iranian (Other)
 199	fr	Iraniennes, autres langues
 199	ru	Iranian (Other)
+199	nl	Iranian (Other)
 200	cn	Iroquoian languages
 200	de	Irokesische Sprachen (Andere)
 200	en	Iroquoian languages
 200	es	Iroquoian languages
 200	fr	Iroquoises, langues (famille)
 200	ru	Iroquoian languages
+200	nl	Iroquoian languages
 201	cn	Italian
 201	de	Italienisch
 201	en	Italian
 201	es	Italian
 201	fr	Italien
 201	ru	Italian
+201	nl	Italiaans
 202	cn	Javanese
 202	de	Javanisch
 202	en	Javanese
 202	es	Javanese
 202	fr	Javanais
 202	ru	Javanese
+202	nl	Javanese
 203	cn	Lojban
 203	de	Lojban
 203	en	Lojban
 203	es	Lojban
 203	fr	Lojban
 203	ru	Lojban
+203	nl	Lojban
 204	cn	Japanese
 204	de	Japanisch
 204	en	Japanese
 204	es	Japanese
 204	fr	Japonais
 204	ru	Japanese
+204	nl	Japanese
 205	cn	Judeo-Persian
 205	de	Jüdisch-Persisch
 205	en	Judeo-Persian
 205	es	Judeo-Persian
 205	fr	Jud~00E9o-persan
 205	ru	Judeo-Persian
+205	nl	Judeo-Persian
 206	cn	Judeo-Arabic
 206	de	Jüdisch Arabisch
 206	en	Judeo-Arabic
 206	es	Judeo-Arabic
 206	fr	Jud~00E9o-arabe
 206	ru	Judeo-Arabic
+206	nl	Judeo-Arabic
 207	cn	Kara-Kalpak
 207	de	Karakalpakisch
 207	en	Kara-Kalpak
 207	es	Kara-Kalpak
 207	fr	Karakalpak
 207	ru	Kara-Kalpak
+207	nl	Kara-Kalpak
 208	cn	Kabyle
 208	de	Kabylisch
 208	en	Kabyle
 208	es	Kabyle
 208	fr	Kabyle
 208	ru	Kabyle
+208	nl	Kabyle
 209	cn	Kachin; Jingpho
 209	de	Kachin-Sprache
 209	en	Kachin; Jingpho
 209	es	Kachin; Jingpho
 209	fr	Kachin; jingpho
 209	ru	Kachin; Jingpho
+209	nl	Kachin; Jingpho
 210	cn	Kalaallisut; Greenlandic
 210	de	Grönländisch
 210	en	Kalaallisut; Greenlandic
 210	es	Kalaallisut; Greenlandic
 210	fr	Groenlandais
 210	ru	Kalaallisut; Greenlandic
+210	nl	Kalaallisut; Greenlandic
 211	cn	Kamba
 211	de	Kamba-Sprache
 211	en	Kamba
 211	es	Kamba
 211	fr	Kamba
 211	ru	Kamba
+211	nl	Kamba
 212	cn	Kannada
 212	de	Kannada
 212	en	Kannada
 212	es	Kannada
 212	fr	Kannada
 212	ru	Kannada
+212	nl	Kannada
 213	cn	Karen languages
 213	de	Karenisch
 213	en	Karen languages
 213	es	Karen languages
 213	fr	Karen, langues
 213	ru	Karen languages
+213	nl	Karen languages
 214	cn	Kashmiri
 214	de	Kaschmiri
 214	en	Kashmiri
 214	es	Kashmiri
 214	fr	Kashmiri
 214	ru	Kashmiri
+214	nl	Kashmiri
 215	cn	Kanuri
 215	de	Kanuri-Sprache
 215	en	Kanuri
 215	es	Kanuri
 215	fr	Kanouri
 215	ru	Kanuri
+215	nl	Kanuri
 216	cn	Kawi
 216	de	Kawi
 216	en	Kawi
 216	es	Kawi
 216	fr	Kawi
 216	ru	Kawi
+216	nl	Kawi
 217	cn	Kazakh
 217	de	Kasachisch
 217	en	Kazakh
 217	es	Kazakh
 217	fr	Kazakh
 217	ru	Kazakh
+217	nl	Kazakh
 218	cn	Kabardian
 218	de	Kabardinisch
 218	en	Kabardian
 218	es	Kabardian
 218	fr	Kabardien
 218	ru	Kabardian
+218	nl	Kabardian
 219	cn	Khasi
 219	de	Khasi-Sprache
 219	en	Khasi
 219	es	Khasi
 219	fr	Khasi
 219	ru	Khasi
+219	nl	Khasi
 220	cn	Khoisan (Other)
 220	de	Khoisan-Sprache (Andere)
 220	en	Khoisan (Other)
 220	es	Khoisan (Other)
 220	fr	Khoisan, autres langues
 220	ru	Khoisan (Other)
+220	nl	Khoisan (Other)
 221	cn	Central Khmer
 221	de	Kambodschanisch
 221	en	Central Khmer
 221	es	Central Khmer
 221	fr	Khmer central
 221	ru	Central Khmer
+221	nl	Central Khmer
 222	cn	Khotanese
 222	de	Sakisch
 222	en	Khotanese
 222	es	Khotanese
 222	fr	Khotanais
 222	ru	Khotanese
+222	nl	Khotanese
 223	cn	Kikuyu; Gikuyu
 223	de	Kikuyu-Sprache
 223	en	Kikuyu; Gikuyu
 223	es	Kikuyu; Gikuyu
 223	fr	Kikuyu
 223	ru	Kikuyu; Gikuyu
+223	nl	Kikuyu; Gikuyu
 224	cn	Kinyarwanda
 224	de	Rwanda-Sprache
 224	en	Kinyarwanda
 224	es	Kinyarwanda
 224	fr	Rwanda
 224	ru	Kinyarwanda
+224	nl	Kinyarwanda
 225	cn	Kirghiz; Kyrgyz
 225	de	Kirgisisch
 225	en	Kirghiz; Kyrgyz
 225	es	Kirghiz; Kyrgyz
 225	fr	Kirghizes
 225	ru	Kirghiz; Kyrgyz
+225	nl	Kirghiz; Kyrgyz
 226	cn	Kimbundu
 226	de	Kimbundu-Sprache
 226	en	Kimbundu
 226	es	Kimbundu
 226	fr	Kimbundu
 226	ru	Kimbundu
+226	nl	Kimbundu
 227	cn	Konkani
 227	de	Konkani
 227	en	Konkani
 227	es	Konkani
 227	fr	Konkani
 227	ru	Konkani
+227	nl	Konkani
 228	cn	Komi
 228	de	Komi-Sprache
 228	en	Komi
 228	es	Komi
 228	fr	Kom
 228	ru	Komi
+228	nl	Komi
 229	cn	Kongo
 229	de	Kongo-Sprache
 229	en	Kongo
 229	es	Kongo
 229	fr	Kongo
 229	ru	Kongo
+229	nl	Kongo
 230	cn	Korean
 230	de	Koreanisch
 230	en	Korean
 230	es	Korean
 230	fr	Cor~00E9en
 230	ru	Korean
+230	nl	Korean
 231	cn	Kosraean
 231	de	Kosraeanisch
 231	en	Kosraean
 231	es	Kosraean
 231	fr	Kosrae
 231	ru	Kosraean
+231	nl	Kosraean
 232	cn	Kpelle
 232	de	Kpelle-Sprache
 232	en	Kpelle
 232	es	Kpelle
 232	fr	Kpell~00E9
 232	ru	Kpelle
+232	nl	Kpelle
 233	cn	Karachay-Balkar
 233	de	Karatschaiisch-Balkarisch
 233	en	Karachay-Balkar
 233	es	Karachay-Balkar
 233	fr	Karatchai balkar
 233	ru	Karachay-Balkar
+233	nl	Karachay-Balkar
 234	cn	Karelian
 234	de	Karelisch
 234	en	Karelian
 234	es	Karelian
 234	fr	Car~00E9lien
 234	ru	Karelian
+234	nl	Karelian
 235	cn	Kru languages
 235	de	Kru-Sprachen
 235	en	Kru languages
 235	es	Kru languages
 235	fr	Krou, langues
 235	ru	Kru languages
+235	nl	Kru languages
 236	cn	Kurukh
 236	de	Oraon-Sprache
 236	en	Kurukh
 236	es	Kurukh
 236	fr	Kurukh
 236	ru	Kurukh
+236	nl	Kurukh
 237	cn	Kuanyama; Kwanyama
 237	de	Kwanyama-Sprache
 237	en	Kuanyama; Kwanyama
 237	es	Kuanyama; Kwanyama
 237	fr	Kuanyama; kwanyama
 237	ru	Kuanyama; Kwanyama
+237	nl	Kuanyama; Kwanyama
 238	cn	Kumyk
 238	de	Kumükisch
 238	en	Kumyk
 238	es	Kumyk
 238	fr	Koumyk
 238	ru	Kumyk
+238	nl	Kumyk
 239	cn	Kurdish
 239	de	Kurdisch
 239	en	Kurdish
 239	es	Kurdish
 239	fr	Kurde
 239	ru	Kurdish
+239	nl	Kurdish
 240	cn	Kutenai
 240	de	Kutenai-Sprache
 240	en	Kutenai
 240	es	Kutenai
 240	fr	Kutenai
 240	ru	Kutenai
+240	nl	Kutenai
 241	cn	Ladino
 241	de	Judenspanisch
 241	en	Ladino
 241	es	Ladino
 241	fr	Jud~00E9o-espagnol
 241	ru	Ladino
+241	nl	Ladino
 242	cn	Lahnda
 242	de	Lahnda
 242	en	Lahnda
 242	es	Lahnda
 242	fr	Lahnda
 242	ru	Lahnda
+242	nl	Lahnda
 243	cn	Lamba
 243	de	Lamba-Sprache <Bantusprache>
 243	en	Lamba
 243	es	Lamba
 243	fr	Lamba
 243	ru	Lamba
+243	nl	Lamba
 244	cn	Lao
 244	de	Laotisch
 244	en	Lao
 244	es	Lao
 244	fr	Lao
 244	ru	Lao
+244	nl	Lao
 245	cn	Latin
 245	de	Latein
 245	en	Latin
 245	es	Latin
 245	fr	Latin
 245	ru	Latin
+245	nl	Latin
 246	cn	Latvian
 246	de	Lettisch
 246	en	Latvian
 246	es	Latvian
 246	fr	Letton
 246	ru	Latvian
+246	nl	Latvian
 247	cn	Lezghian
 247	de	Lesgisch
 247	en	Lezghian
 247	es	Lezghian
 247	fr	Lezghien
 247	ru	Lezghian
+247	nl	Lezghian
 248	cn	Limburgan; Limburger; Limburgish
 248	de	Limburgisch
 248	en	Limburgan; Limburger; Limburgish
 248	es	Limburgan; Limburger; Limburgish
 248	fr	Limbourgeois
 248	ru	Limburgan; Limburger; Limburgish
+248	nl	Limburgan; Limburger; Limburgish
 249	cn	Lingala
 249	de	Lingala
 249	en	Lingala
 249	es	Lingala
 249	fr	Lingala
 249	ru	Lingalaes langues
+249	nl	Lingala
 250	cn	Lithuanian
 250	de	Litauisch
 250	en	Lithuanian
 250	es	Lithuanian
 250	fr	Lituanien
 250	ru	Lithuanian
+250	nl	Lithuanian
 251	cn	Mongo
 251	de	Mongo-Sprache
 251	en	Mongo
 251	es	Mongo
 251	fr	Mongo
 251	ru	Mongo
+251	nl	Mongo
 252	cn	Lozi
 252	de	Rotse-Spache
 252	en	Lozi
 252	es	Lozi
 252	fr	Lozi
 252	ru	Lozi
+252	nl	Lozi
 253	cn	Luxembourgish; Letzeburgesch
 253	de	Luxemburgisch
 253	en	Luxembourgish; Letzeburgesch
 253	es	Luxembourgish; Letzeburgesch
 253	fr	Luxembourgeois
 253	ru	Luxembourgish; Letzeburgesch
+253	nl	Luxembourgish; Letzeburgesch
 254	cn	Luba-Lulua
 254	de	Lulua-Sprache
 254	en	Luba-Lulua
 254	es	Luba-Lulua
 254	fr	Luba-lulua
 254	ru	Luba-Lulua
+254	nl	Luba-Lulua
 255	cn	Luba-Katangaxon, Low
 255	de	Luba-Katanga-Sprachexon, Low
 255	en	Luba-Katangaxon, Low
 255	es	Luba-Katangaxon, Low
 255	fr	Luba-katanga; saxon, bas
 255	ru	Luba-Katanga
+255	nl	Luba-Katangaxon, Low
 256	cn	Ganda
 256	de	Ganda-Sprache
 256	en	Ganda
 256	es	Ganda
 256	fr	Ganda
 256	ru	Ganda
+256	nl	Ganda
 257	cn	Luiseno
 257	de	Luiseño-Sprache
 257	en	Luiseno
 257	es	Luiseno
 257	fr	Luiseno
 257	ru	Luiseno
+257	nl	Luiseno
 258	cn	Lunda
 258	de	Lunda-Sprache
 258	en	Lunda
 258	es	Lunda
 258	fr	Lunda
 258	ru	Lunda
+258	nl	Lunda
 259	cn	Luo (Kenya and Tanzania)
 259	de	Luo-Sprache
 259	en	Luo (Kenya and Tanzania)
 259	es	Luo (Kenya and Tanzania)
 259	fr	Luo (Kenya et Tanzanie)
 259	ru	Luo (Kenya and Tanzania)
+259	nl	Luo (Kenya and Tanzania)
 260	cn	Lushai
 260	de	Lushai-Sprache
 260	en	Lushai
 260	es	Lushai
 260	fr	Lushai0E9gien
 260	ru	Lushai00E5l
+260	nl	Lushai
 261	cn	Macedonian00E5l
 261	de	Makedonisch00E5l
 261	en	Macedonian00E5l
 261	es	Macedonian
 261	fr	Mac~00E9donien
 261	ru	Macedonian
+261	nl	Macedonian00E5l
 262	cn	Madurese
 262	de	Maduresisch
 262	en	Madurese
 262	es	Madurese
 262	fr	Madourais
 262	ru	Madurese
+262	nl	Madurese
 263	cn	Magahi
 263	de	Khotta
 263	en	Magahi
 263	es	Magahi
 263	fr	Magahi
 263	ru	Magahi
+263	nl	Magahi
 264	cn	Marshallese
 264	de	Marschallesisch
 264	en	Marshallese
 264	es	Marshallese
 264	fr	Marshall
 264	ru	Marshallese
+264	nl	Marshallese
 265	cn	Maithili
 265	de	Maithili
 265	en	Maithili
 265	es	Maithili
 265	fr	Maithili
 265	ru	Maithilil Nepal Bhasa
+265	nl	Maithili
 266	cn	Makasarl Nepal Bhasa
 266	de	Makassarischl Nepal Bhasa
 266	en	Makasarl Nepal Bhasa
 266	es	Makasar
 266	fr	Makassar
 266	ru	Makasar
+266	nl	Makasarl Nepal Bhasa
 267	cn	Malayalam
 267	de	Malayalam
 267	en	Malayalam
 267	es	Malayalam
 267	fr	Malayalam
 267	ru	Malayalam
+267	nl	Malayalam
 268	cn	Mandingo
 268	de	Malinke Sprache
 268	en	Mandingo
 268	es	Mandingo
 268	fr	Mandingue
 268	ru	Mandingo
+268	nl	Mandingo
 269	cn	Maori
 269	de	Maori-Sprache
 269	en	Maori
 269	es	Maori
 269	fr	Maori
 269	ru	Maori
+269	nl	Maori
 270	cn	Austronesian (Other)
 270	de	Austronesische Sprachen (Andere)
 270	en	Austronesian (Other)
 270	es	Austronesian (Other)
 270	fr	Malayo-polyn~00E9siennes, autres langu
 270	ru	Austronesian (Other)
+270	nl	Austronesian (Other)
 271	cn	Marathi
 271	de	Marathi
 271	en	Marathi
 271	es	Marathil
 271	fr	Marathe
 271	ru	Marathi
+271	nl	Marathi
 272	cn	Masai
 272	de	Massai-Sprache
 272	en	Masai
 272	es	Masai
 272	fr	Massa~00EF
 272	ru	Masai
+272	nl	Masai
 273	cn	Malay
 273	de	Malaiisch
 273	en	Malay
 273	es	Malay
 273	fr	Malais
 273	ru	Malay
+273	nl	Malay
 274	cn	Moksha
 274	de	Mokscha-Sprache
 274	en	Moksha
 274	es	Moksha
 274	fr	Moksa
 274	ru	Moksha
+274	nl	Moksha
 275	cn	Mandar
 275	de	Mandaresisch
 275	en	Mandar
 275	es	Mandar
 275	fr	Mandar
 275	ru	Mandar
+275	nl	Mandar
 276	cn	Mende
 276	de	Mende-Sprache
 276	en	Mende
 276	es	Mende
 276	fr	Mend~00E9
 276	ru	Mende
+276	nl	Mende
 277	cn	Irish, Middle (900-1200)
 277	de	Mittelirisch
 277	en	Irish, Middle (900-1200)
 277	es	Irish, Middle (900-1200)
 277	fr	Irlandais moyen (900-1200)
 277	ru	Irish, Middle (900-1200)
+277	nl	Irish, Middle (900-1200)
 278	cn	Mi'kmaq; Micmac
 278	de	Micmac-Sprache
 278	en	Mi'kmaq; Micmac
 278	es	Mi'kmaq; Micmac
 278	fr	Mi'kmaq; micmac
 278	ru	Mi'kmaq; Micmac
+278	nl	Mi'kmaq; Micmac
 279	cn	Minangkabau
 279	de	Minangkabau-Sprache
 279	en	Minangkabau
 279	es	Minangkabau
 279	fr	Minangkabau
 279	ru	Minangkabau
+279	nl	Minangkabau
 280	cn	Miscellaneous languages
 280	de	Einzelne andere Sprachen
 280	en	Miscellaneous languages
 280	es	Miscellaneous languages
 280	fr	Diverses, langues
 280	ru	Miscellaneous languages
+280	nl	Miscellaneous languages
 281	cn	Mon-Khmer (Other)
 281	de	Mon-Khmer-Sprachen (Andere)
 281	en	Mon-Khmer (Other)
 281	es	Mon-Khmer (Other)
 281	fr	M~00F4n-khmer, autres langues
 281	ru	Mon-Khmer (Other)
+281	nl	Mon-Khmer (Other)
 282	cn	Malagasy
 282	de	Malagassi-Sprache
 282	en	Malagasy
 282	es	Malagasy
 282	fr	Malgache
 282	ru	Malagasy
+282	nl	Malagasy
 283	cn	Maltese
 283	de	Maltesisch
 283	en	Maltese
 283	es	Maltese
 283	fr	Maltais
 283	ru	Maltese
+283	nl	Maltese
 284	cn	Manchu
 284	de	Mandschurisch
 284	en	Manchu
 284	es	Manchu
 284	fr	Mandchou
 284	ru	Manchu
+284	nl	Manchu
 285	cn	Manipuri
 285	de	Meithei-Sprache
 285	en	Manipuri
 285	es	Manipuri
 285	fr	Manipuri
 285	ru	Manipuri
+285	nl	Manipuri
 286	cn	Manobo languages
 286	de	Manobo-Sprache
 286	en	Manobo languages
 286	es	Manobo languages
 286	fr	Manobo, langues
 286	ru	Manobo languages
+286	nl	Manobo languages
 287	cn	Mohawk
 287	de	Mohawk-Sprache
 287	en	Mohawk
 287	es	Mohawk
 287	fr	Mohawk
 287	ru	Mohawk
+287	nl	Mohawk
 288	cn	Moldavian
 288	de	Moldauisch
 288	en	Moldavian
 288	es	Moldavian
 288	fr	Moldave
 288	ru	Moldavian
+288	nl	Moldavian
 289	cn	Mongolian
 289	de	Mongolisch
 289	en	Mongolian
 289	es	Mongolian
 289	fr	Mongol
 289	ru	Mongolian
+289	nl	Mongolian
 290	cn	Mossi
 290	de	Mossi-Sprache
 290	en	Mossi
 290	es	Mossi
 290	fr	Mor~00E9
 290	ru	Mossi
+290	nl	Mossi
 291	cn	Multiple languages
 291	de	Mehrere Sprachen
 291	en	Multiple languages
 291	es	Multiple languages)
 291	fr	Multilingue
 291	ru	Multiple languages
+291	nl	Multiple languages
 292	cn	Munda languages
 292	de	Mundasprachen (Andere)
 292	en	Munda languages
 292	es	Munda languages
 292	fr	Mounda, langues
 292	ru	Munda languages
+292	nl	Munda languages
 293	cn	Creek
 293	de	Muskogisch
 293	en	Creek
 293	es	Creek
 293	fr	Muskogee
 293	ru	Creek
+293	nl	Creek
 294	cn	Mirandese
 294	de	Mirandesisch
 294	en	Mirandese
 294	es	Mirandese
 294	fr	Mirandais
 294	ru	Mirandese
+294	nl	Mirandese
 295	cn	Marwari
 295	de	Marwari
 295	en	Marwari
 295	es	Marwari
 295	fr	Marvari
 295	ru	Marwari
+295	nl	Marwari
 296	cn	Mayan languages
 296	de	Maya-Sprachen
 296	en	Mayan languages
 296	es	Mayan languages
 296	fr	Maya, langues
 296	ru	Mayan languages
+296	nl	Mayan languages
 297	cn	Erzya
 297	de	Erza-Mordwinisch
 297	en	Erzya
 297	es	Erzya
 297	fr	Erza
 297	ru	Erzya
+297	nl	Erzya
 298	cn	Nahuatl languages
 298	de	Nahuatl
 298	en	Nahuatl languages
 298	es	Nahuatl languages
 298	fr	Nahuatl, langues
 298	ru	Nahuatl languages
+298	nl	Nahuatl languages
 299	cn	North American Indian
 299	de	Indianersprachen, Nordamerika (Andere)
 299	en	North American Indian
 299	es	North American Indian
 299	fr	Indiennes d'Am~00E9rique du Nord, autr
 299	ru	North American Indian
+299	nl	North American Indian
 300	cn	Neapolitan
 300	de	Neapel, Mundart
 300	en	Neapolitan
 300	es	Neapolitan
 300	fr	Napolitain
 300	ru	Neapolitan
+300	nl	Neapolitan
 301	cn	Nauru
 301	de	Nauranisch
 301	en	Nauru
 301	es	Nauru
 301	fr	Nauruan
 301	ru	Nauru
+301	nl	Nauru
 302	cn	Navajo; Navaho
 302	de	Navajo-Sprache
 302	en	Navajo; Navaho
 302	es	Navajo; Navaho
 302	fr	Navaho
 302	ru	Navajo; Navaho
+302	nl	Navajo; Navaho
 303	cn	Ndebele, South; South Ndebele
 303	de	Ndebele-Sprache (Transvaaal)
 303	en	Ndebele, South; South Ndebele
 303	es	Ndebele, South; South Ndebele
 303	fr	Nd~00E9b~00E9l~00E9 du Sud
 303	ru	Ndebele, South; South Ndebele
+303	nl	Ndebele, South; South Ndebele
 304	cn	Ndebele, North; North Ndebele
 304	de	Ndebele-Sprache (Simbabwe)
 304	en	Ndebele, North; North Ndebele
 304	es	Ndebele, North; North Ndebele
 304	fr	Nd~00E9b~00E9l~00E9 du Nord
 304	ru	Ndebele, North; North Ndebele
+304	nl	Ndebele, North; North Ndebele
 305	cn	Ndonga
 305	de	Ndonga
 305	en	Ndonga
 305	es	Ndonga
 305	fr	Ndongas langues
 305	ru	Ndonga
+305	nl	Ndonga
 306	cn	Low German; Low Saxon; German, Low; Sa
 306	de	Niederdeutsch
 306	en	Low German; Low Saxon; German, Low; Sa
 306	es	Low German; Low Saxon; German, Low; Sa
 306	fr	Bas allemand; bas saxon; allemand, bas
 306	ru	Low German; Low Saxon; German, Low; Sa
+306	nl	Low German; Low Saxon; German, Low; Sa
 307	cn	Nepali
 307	de	Nepali
 307	en	Nepali
 307	es	Nepali
 307	fr	N~00E9palais
 307	ru	Nepali
+307	nl	Nepali
 308	cn	Nepal Bhasa; Newari
 308	de	Newari
 308	en	Nepal Bhasa; Newari
 308	es	Nepal Bhasa; Newari
 308	fr	Nepal bhasa; newari
 308	ru	Nepal Bhasa; Newari
+308	nl	Nepal Bhasa; Newari
 309	cn	Nias
 309	de	Nias-Sprache
 309	en	Nias
 309	es	Nias
 309	fr	Nias
 309	ru	Nias
+309	nl	Nias
 310	cn	Niger-Kordofanian (Other)
 310	de	Nigerkordofanische Sprache (Andere)
 310	en	Niger-Kordofanian (Other)
 310	es	Niger-Kordofanian (Other)
 310	fr	Nig~00E9ro-congolaises, autres langues
 310	ru	Niger-Kordofanian (Other)
+310	nl	Niger-Kordofanian (Other)
 311	cn	Niuean
 311	de	Niue-Sprache
 311	en	Niuean
 311	es	Niuean
 311	fr	Niu~00E9
 311	ru	Niuean
+311	nl	Niuean
 312	cn	Norwegian Nynorsk; Nynorsk, Norwegian
 312	de	Nynorsk
 312	en	Norwegian Nynorsk; Nynorsk, Norwegian
 312	es	Norwegian Nynorsk; Nynorsk, Norwegian
 312	fr	Norv~00E9gien nynorsk; nynorsk, norv~00E9gien
 312	ru	Norwegian Nynorsk; Nynorsk, Norwegian
+312	nl	Norwegian Nynorsk; Nynorsk, Norwegian
 313	cn	Bokm~00E5l, Norwegian; Norwegian Bokm~00E5l
 313	de	Bokmal
 313	en	Bokm~00E5l, Norwegian; Norwegian Bokm~00E5l
 313	es	Bokm~00E5l, Norwegian; Norwegian Bokm~00E5l
 313	fr	Norv~00E9gien bokm~00E5l
 313	ru	Bokm~00E5l, Norwegian; Norwegian Bokm~00E5l
+313	nl	Bokm~00E5l, Norwegian; Norwegian Bokm~00E5l
 314	cn	Nogai
 314	de	Nogaisch
 314	en	Nogai
 314	es	Nogai
 314	fr	Noga~00EF; nogay
 314	ru	Nogai
+314	nl	Nogai
 315	cn	Norse, Old
 315	de	Altnorwegisch
 315	en	Norse, Old
 315	es	Norse, Old
 315	fr	Norrois, vieux
 315	ru	Norse, Old
+315	nl	Norse, Old
 316	cn	Norwegian
 316	de	Norwegisch
 316	en	Norwegian
 316	es	Norwegian
 316	fr	Norv~00E9gien
 316	ru	Norwegian
+316	nl	Norwegian
 317	cn	Pedi; Sepedi; Northern Sotho
 317	de	Pedi-Sprache
 317	en	Pedi; Sepedi; Northern Sotho
 317	es	Pedi; Sepedi; Northern Sotho
 317	fr	Pedi; sepedi; sotho du Nord
 317	ru	Pedi; Sepedi; Northern Sotho
+317	nl	Pedi; Sepedi; Northern Sotho
 318	cn	Nubian languages
 318	de	Nubische Sprachen
 318	en	Nubian languages
 318	es	Nubian languages
 318	fr	Nubiennes, langues
 318	ru	Nubian languages
+318	nl	Nubian languages
 319	cn	Classical Newari; Old Newari; Classica
 319	de	Alt-Newari
 319	en	Classical Newari; Old Newari; Classica
 319	es	Classical Newari; Old Newari; Classica
 319	fr	Newari classique
 319	ru	Classical Newari; Old Newari; Classica
+319	nl	Classical Newari; Old Newari; Classica
 320	cn	Chichewa; Chewa; Nyanja
 320	de	Nyanja-Sprache
 320	en	Chichewa; Chewa; Nyanja
 320	es	Chichewa; Chewa; Nyanja
 320	fr	Chichewa; chewa; nyanja
 320	ru	Chichewa; Chewa; Nyanja
+320	nl	Chichewa; Chewa; Nyanja
 321	cn	Nyamwezi
 321	de	Nyamwezi-Sprache
 321	en	Nyamwezi
 321	es	Nyamwezi
 321	fr	Nyamwezi
 321	ru	Nyamwezi
+321	nl	Nyamwezi
 322	cn	Nyankole
 322	de	Nkole-Sprache
 322	en	Nyankole
 322	es	Nyankole
 322	fr	Nyankol~00E9
 322	ru	Nyankole
+322	nl	Nyankole
 323	cn	Nyoro
 323	de	Nyoro-Sprache
 323	en	Nyoro
 323	es	Nyoro
 323	fr	Nyoro
 323	ru	Nyoro
+323	nl	Nyoro
 324	cn	Nzima
 324	de	Nzima-Sprache
 324	en	Nzima
 324	es	Nzima
 324	fr	Nzema
 324	ru	Nzima
+324	nl	Nzima
 325	cn	Occitan (post 1500); Proven~00E7al
 325	de	Okzitanisch
 325	en	Occitan (post 1500); Proven~00E7al
 325	es	Occitan (post 1500); Proven~00E7al
 325	fr	Occitan (apr~00E8s 1500); proven~00E7a
 325	ru	Occitan (post 1500); Proven~00E7al
+325	nl	Occitan (post 1500); Proven~00E7al
 326	cn	Ojibwa
 326	de	Ojibwa-Sprache
 326	en	Ojibwa
 326	es	Ojibwa
 326	fr	Ojibwa
 326	ru	Ojibwa
+326	nl	Ojibwa
 327	cn	Oriya
 327	de	Oriya-Sprache
 327	en	Oriya
 327	es	Oriya
 327	fr	Oriya
 327	ru	Oriya
+327	nl	Oriya
 328	cn	Oromo
 328	de	Galla-Sprache
 328	en	Oromo
 328	es	Oromo
 328	fr	Galla
 328	ru	Oromo
+328	nl	Oromo
 329	cn	Osage
 329	de	Osage-Sprache
 329	en	Osage
 329	es	Osage
 329	fr	Osage
 329	ru	Osage
+329	nl	Osage
 330	cn	Ossetian; Ossetic
 330	de	Ossetisch
 330	en	Ossetian; Ossetic
 330	es	Ossetian; Ossetic
 330	fr	Oss~00E8te
 330	ru	Ossetian; Ossetic
+330	nl	Ossetian; Ossetic
 331	cn	Turkish, Ottoman (1500-1928)
 331	de	Osmanisch
 331	en	Turkish, Ottoman (1500-1928)
 331	es	Turkish, Ottoman (1500-1928)
 331	fr	Turc ottoman (1500-1928)
 331	ru	Turkish, Ottoman (1500-1928)
+331	nl	Turkish, Ottoman (1500-1928)
 332	cn	Otomian languages
 332	de	Otomangue-Sprachen
 332	en	Otomian languages
 332	es	Otomian languages
 332	fr	Otomangue, langues
 332	ru	Otomian languages
+332	nl	Otomian languages
 333	cn	Papuan (Other)
 333	de	Papuasprachen (Andere)
 333	en	Papuan (Other)
 333	es	Papuan (Other)
 333	fr	Papoues, autres langues
 333	ru	Papuan (Other)
+333	nl	Papuan (Other)
 334	cn	Pangasinan
 334	de	Pangasinan-Sprache
 334	en	Pangasinan
 334	es	Pangasinan
 334	fr	Pangasinan
 334	ru	Pangasinan
+334	nl	Pangasinan
 335	cn	Pahlavi
 335	de	Mittelpersisch
 335	en	Pahlavi
 335	es	Pahlavi
 335	fr	Pahlavi
 335	ru	Pahlavi
+335	nl	Pahlavi
 336	cn	Pampanga
 336	de	Pampanggan-Sprache
 336	en	Pampanga
 336	es	Pampanga
 336	fr	Pampangan
 336	ru	Pampanga
+336	nl	Pampanga
 337	cn	Panjabi; Punjabi
 337	de	Pandschabi-Sprache
 337	en	Panjabi; Punjabi
 337	es	Panjabi; Punjabi
 337	fr	Pendjabi
 337	ru	Panjabi; Punjabi
+337	nl	Panjabi; Punjabi
 338	cn	Papiamento
 338	de	Papiamento
 338	en	Papiamento
 338	es	Papiamento
 338	fr	Papiamento
 338	ru	Papiamento
+338	nl	Papiamento
 339	cn	Palauan
 339	de	Palau-Sprache
 339	en	Palauan
 339	es	Palauan
 339	fr	Palau
 339	ru	Palauan
+339	nl	Palauan
 340	cn	Persian, Old (ca.600-400 B.C.)
 340	de	Altpersisch
 340	en	Persian, Old (ca.600-400 B.C.)
 340	es	Persian, Old (ca.600-400 B.C.)
 340	fr	Perse, vieux (ca. 600-400 av. J.-C.)
 340	ru	Persian, Old (ca.600-400 B.C.)
+340	nl	Persian, Old (ca.600-400 B.C.)
 341	cn	Persian
 341	de	Persisch
 341	en	Persian
 341	es	Persian
 341	fr	Persan
 341	ru	Persian
+341	nl	Persian
 342	cn	Philippine (Other)
 342	de	Philippinen-Austronesisch (Andere)
 342	en	Philippine (Other)
 342	es	Philippine (Other)
 342	fr	Philippines, autres langues
 342	ru	Philippine (Other)
+342	nl	Philippine (Other)
 343	cn	Phoenician
 343	de	Phönikisch
 343	en	Phoenician
 343	es	Phoenician
 343	fr	Ph~00E9nicien
 343	ru	Phoenician
+343	nl	Phoenician
 344	cn	Pali
 344	de	Pali
 344	en	Pali
 344	es	Pali
 344	fr	Pali
 344	ru	Pali
+344	nl	Pali
 345	cn	Polish
 345	de	Polnisch
 345	en	Polish
 345	es	Polish
 345	fr	Polonais
 345	ru	Polish
+345	nl	Polish
 346	cn	Pohnpeian
 346	de	Ponapeanisch
 346	en	Pohnpeian
 346	es	Pohnpeian
 346	fr	Pohnpei
 346	ru	Pohnpeian
+346	nl	Pohnpeian
 347	cn	Portuguese
 347	de	Portugiesisch
 347	en	Portuguese
 347	es	Portuguese
 347	fr	Portugais
 347	ru	Portuguese
+347	nl	Portuguese
 348	cn	Prakrit languages
 348	de	Prakrit
 348	en	Prakrit languages
 348	es	Prakrit languages
 348	fr	Pr~00E2krit
 348	ru	Prakrit languages
+348	nl	Prakrit languages
 349	cn	Proven~00E7al, Old (to 1500)
 349	de	Altokzitanisch
 349	en	Proven~00E7al, Old (to 1500)
 349	es	Proven~00E7al, Old (to 1500)
 349	fr	Proven~00E7al ancien (jusqu'~00E0 1500
 349	ru	Proven~00E7al, Old (to 1500)
+349	nl	Proven~00E7al, Old (to 1500)
 350	cn	Pushto
 350	de	Paschtu
 350	en	Pushto
 350	es	Pushto
 350	fr	Pachto
 350	ru	Pushto
+350	nl	Pushto
 351	cn	Reserved for local use
 351	de	Reserviert für den lokalen Gebrauch
 351	en	Reserved for local use
 351	es	Reserved for local use
 351	fr	R~00E9serv~00E9e ~00E0 l'usage local
 351	ru	Reserved for local use
+351	nl	Reserved for local use
 352	cn	Quechua
 352	de	Quechua-Sprache
 352	en	Quechua
 352	es	Quechua
 352	fr	Quechua
 352	ru	Quechua
+352	nl	Quechua
 353	cn	Rajasthani
 353	de	Rajasthani
 353	en	Rajasthani
 353	es	Rajasthani
 353	fr	Rajasthani
 353	ru	Rajasthani
+353	nl	Rajasthani
 354	cn	Rapanui
 354	de	Osterinsel-Sprache
 354	en	Rapanui
 354	es	Rapanui
 354	fr	Rapanui
 354	ru	Rapanui
+354	nl	Rapanui
 355	cn	Rarotongan; Cook Islands Maori
 355	de	Rarotonganisch
 355	en	Rarotongan; Cook Islands Maori
 355	es	Rarotongan; Cook Islands Maori
 355	fr	Rarotonga; maori des ~00EEles Cook
 355	ru	Rarotongan; Cook Islands Maori
+355	nl	Rarotongan; Cook Islands Maori
 356	cn	Romance (Other)
 356	de	Romanische Sprachen (Andere)
 356	en	Romance (Other)
 356	es	Romance (Other)
 356	fr	Romanes, autres langues
 356	ru	Romance (Other)
+356	nl	Romance (Other)
 357	cn	Romansh
 357	de	Rätoromanisch
 357	en	Romansh
 357	es	Romansh
 357	fr	Romanche
 357	ru	Romansh
+357	nl	Romansh
 358	cn	Romany
 358	de	Romani Sprache
 358	en	Romany
 358	es	Romany
 358	fr	Tsigane
 358	ru	Romany
+358	nl	Romany
 359	cn	Romanian
 359	de	Rumänisch
 359	en	Romanian
 359	es	Romanian
 359	fr	Roumain
 359	ru	Romanian
+359	nl	Romanian
 360	cn	Rundi
 360	de	Rundi-Sprache
 360	en	Rundi
 360	es	Rundi
 360	fr	Rundi
 360	ru	Rundi
+360	nl	Rundi
 361	cn	Aromanian; Arumanian; Macedo-Romanian
 361	de	Aromanian; Arumanian; Macedo-Romanian
 361	en	Aromanian; Arumanian; Macedo-Romanian
 361	es	Aromanian; Arumanian; Macedo-Romanian
 361	fr	Aroumain; mac~00E9do-roumain
 361	ru	Aromanian; Arumanian; Macedo-Romanian
+361	nl	Aromanian; Arumanian; Macedo-Romanian
 362	cn	Russian
 362	de	Russisch
 362	en	Russian
 362	es	Russian
 362	fr	Russe
 362	ru	Russian
+362	nl	Russisch
 363	cn	Sandawe
 363	de	Sandawe-Sprache
 363	en	Sandawe
 363	es	Sandawe
 363	fr	Sandawe
 363	ru	Sandawe
+363	nl	Sandawe
 364	cn	Sango
 364	de	Sango-Sprache
 364	en	Sango
 364	es	Sango
 364	fr	Sango
 364	ru	Sango
+364	nl	Sango
 365	cn	Yakut
 365	de	Jakutisch
 365	en	Yakut
 365	es	Yakut
 365	fr	Iakoute
 365	ru	Yakut
+365	nl	Yakut
 366	cn	South American Indian (Other)
 366	de	Indianersprachen, Südamerika (Andere)
 366	en	South American Indian (Other)
 366	es	South American Indian (Other)
 366	fr	Indiennes d'Am~00E9rique du Sud, autre
 366	ru	South American Indian (Other)
+366	nl	South American Indian (Other)
 367	cn	Salishan languages
 367	de	Salish-Sprache
 367	en	Salishan languages
 367	es	Salishan languages
 367	fr	Salish, langues
 367	ru	Salishan languages
+367	nl	Salishan languages
 368	cn	Samaritan Aramaic
 368	de	Samaritanisch
 368	en	Samaritan Aramaic
 368	es	Samaritan Aramaic
 368	fr	Samaritain
 368	ru	Samaritan Aramaic
+368	nl	Samaritan Aramaic
 369	cn	Sanskrit
 369	de	Sanskrit
 369	en	Sanskrit
 369	es	Sanskrit
 369	fr	Sanskrit
 369	ru	Sanskrit
+369	nl	Sanskrit
 370	cn	Sasak
 370	de	Sasak
 370	en	Sasak
 370	es	Sasak
 370	fr	Sasak
 370	ru	Sasak
+370	nl	Sasak
 371	cn	Santali
 371	de	Santali
 371	en	Santali
 371	es	Santali
 371	fr	Santal
 371	ru	Santali
+371	nl	Santali
 372	cn	Serbian
 372	de	Serbisch
 372	en	Serbian
 372	es	Serbian
 372	fr	Serbe
 372	ru	Serbian
+372	nl	Serbian
 373	cn	Sicilian
 373	de	Sizilianisch
 373	en	Sicilian
 373	es	Sicilian
 373	fr	Sicilien
 373	ru	Sicilian
+373	nl	Sicilian
 374	cn	Scots
 374	de	Schottisch
 374	en	Scots
 374	es	Scots
 374	fr	~00C9cossais
 374	ru	Scots
+374	nl	Scots
 375	cn	Croatian
 375	de	Kroatisch
 375	en	Croatian
 375	es	Croatian
 375	fr	Croate
 375	ru	Croatian
+375	nl	Croatian
 376	cn	Selkup
 376	de	Selkupisch
 376	en	Selkup
 376	es	Selkup
 376	fr	Selkoupe
 376	ru	Selkup
+376	nl	Selkup
 377	cn	Semitic (Other)
 377	de	Semitische Sprachen (Andere)
 377	en	Semitic (Other)
 377	es	Semitic (Other)
 377	fr	S~00E9mitiques, autres langues
 377	ru	Semitic (Other)
+377	nl	Semitic (Other)
 378	cn	Irish, Old (to 900)
 378	de	Altirisch
 378	en	Irish, Old (to 900)
 378	es	Irish, Old (to 900)
 378	fr	Irlandais ancien (jusqu'~00E0 900)
 378	ru	Irish, Old (to 900)
+378	nl	Irish, Old (to 900)
 379	cn	Sign Languages
 379	de	Zeichensprache
 379	en	Sign Languages
 379	es	Sign Languages
 379	fr	Langues des signes
 379	ru	Sign Languages
+379	nl	Sign Languages
 380	cn	Shan
 380	de	Schan-Sprache
 380	en	Shan
 380	es	Shan
 380	fr	Chan
 380	ru	Shan
+380	nl	Shan
 381	cn	Sidamo
 381	de	Sidamo-Sprache
 381	en	Sidamo
 381	es	Sidamo
 381	fr	Sidamo
 381	ru	Sidamo
+381	nl	Sidamo
 382	cn	Sinhala; Sinhalese
 382	de	Singhalesisch
 382	en	Sinhala; Sinhalese
 382	es	Sinhala; Sinhalese
 382	fr	Singhalais
 382	ru	Sinhala; Sinhalese
+382	nl	Sinhala; Sinhalese
 383	cn	Siouan languages
 383	de	Sioux-Sprachen
 383	en	Siouan languages
 383	es	Siouan languages
 383	fr	Sioux, langues
 383	ru	Siouan languages
+383	nl	Siouan languages
 384	cn	Sino-Tibetan (Other)
 384	de	Sinotibetische Sprachen (Andere)
 384	en	Sino-Tibetan (Other)
 384	es	Sino-Tibetan (Other)
 384	fr	Sino-tib~00E9taines, autres langues
 384	ru	Sino-Tibetan (Other)
+384	nl	Sino-Tibetan (Other)
 385	cn	Slavic (Other)
 385	de	Slawische Sprachen (Andere)
 385	en	Slavic (Other)
 385	es	Slavic (Other)
 385	fr	Slaves, autres langues
 385	ru	Slavic (Other)
+385	nl	Slavic (Other)
 386	cn	Slovak
 386	de	Slowakisch
 386	en	Slovak
 386	es	Slovak
 386	fr	Slovaque
 386	ru	Slovak
+386	nl	Slovak
 387	cn	Slovenian
 387	de	Slowenisch
 387	en	Slovenian
 387	es	Slovenian
 387	fr	Slov~00E8ne
 387	ru	Slovenian
+387	nl	Slovenian
 388	cn	Southern Sami
 388	de	Südsaamisch
 388	en	Southern Sami
 388	es	Southern Sami
 388	fr	Sami du Sud
 388	ru	Southern Sami
+388	nl	Southern Sami
 389	cn	Northern Sami
 389	de	Nordsaamisch
 389	en	Northern Sami
 389	es	Northern Sami
 389	fr	Sami du Nord
 389	ru	Northern Sami
+389	nl	Northern Sami
 390	cn	Sami languages (Other)
 390	de	Saamisch (Andere)
 390	en	Sami languages (Other)
 390	es	Sami languages (Other)
 390	fr	Sami, autres langues
 390	ru	Sami languages (Other)
+390	nl	Sami languages (Other)
 391	cn	Lule Sami
 391	de	Lulesaamisch
 391	en	Lule Sami
 391	es	Lule Sami
 391	fr	Sami de Lule
 391	ru	Lule Sami
+391	nl	Lule Sami
 392	cn	Inari Sami
 392	de	Inarisaamisch
 392	en	Inari Sami
 392	es	Inari Sami
 392	fr	Sami d'Inari
 392	ru	Inari Sami
+392	nl	Inari Sami
 393	cn	Samoan
 393	de	Samoanisch
 393	en	Samoan
 393	es	Samoan
 393	fr	Samoan
 393	ru	Samoan
+393	nl	Samoan
 394	cn	Skolt Sami
 394	de	Skoltsaamisch
 394	en	Skolt Sami
 394	es	Skolt Sami
 394	fr	Sami skolt
 394	ru	Skolt Sami
+394	nl	Skolt Sami
 395	cn	Shona
 395	de	Schona-Sprache
 395	en	Shona
 395	es	Shona
 395	fr	Shona
 395	ru	Shona
+395	nl	Shona
 396	cn	Sindhi
 396	de	Sindhi-Sprache
 396	en	Sindhi
 396	es	Sindhi
 396	fr	Sindhi
 396	ru	Sindhi
+396	nl	Sindhi
 397	cn	Soninke
 397	de	Soninke-Sprache
 397	en	Soninke
 397	es	Soninke
 397	fr	Sonink~00E9
 397	ru	Soninke
+397	nl	Soninke
 398	cn	Sogdian
 398	de	Sogdisch
 398	en	Sogdian
 398	es	Sogdian
 398	fr	Sogdien
 398	ru	Sogdian
+398	nl	Sogdian
 399	cn	Somali
 399	de	Somali
 399	en	Somali
 399	es	Somali
 399	fr	Somali
 399	ru	Somali
+399	nl	Somali
 400	cn	Songhai languages
 400	de	Songhai-Sprache
 400	en	Songhai languages
 400	es	Songhai languages
 400	fr	Songhai, langues
 400	ru	Songhai languages
+400	nl	Songhai languages
 401	cn	Sotho, Southern
 401	de	Süd-Sotho-Sprache
 401	en	Sotho, Southern
 401	es	Sotho, Southern
 401	fr	Sotho du Sud
 401	ru	Sotho, Southern
+401	nl	Sotho, Southern
 402	cn	Spanish; Castilian
 402	de	Spanisch
 402	en	Spanish; Castilian
 402	es	Spanish; Castilian
 402	fr	Espagnol; castillan
 402	ru	Spanish; Castilian
+402	nl	Spaans; Castiliaans
 403	cn	Sardinian
 403	de	Sardisch
 403	en	Sardinian; Zazaki
 403	es	Sardinian; Zazaki
 403	fr	Sarde; Zazaki
 403	ru	Sardinian; Zazaki
+403	nl	Sardinian; Zazaki
 404	cn	Sranan Tongo; zazaki
 404	de	Sranantongo
 404	en	Sranan Tongo
 404	es	Sranan Tongo
 404	fr	Sranan tongo
 404	ru	Sranan Tongo
+404	nl	Sranan Tongo
 405	cn	Serer
 405	de	Serer-Sprache
 405	en	Serer
 405	es	Serer
 405	fr	S~00E9r~00E8re
 405	ru	Serer
+405	nl	Serer
 406	cn	Nilo-Saharan (Other)
 406	de	Nilosaharanische Sprachen (Andere)
 406	en	Nilo-Saharan (Other)
 406	es	Nilo-Saharan (Other)
 406	fr	Nilo-sahariennes, autres langues
 406	ru	Nilo-Saharan (Other)
+406	nl	Nilo-Saharan (Other)
 407	cn	Swati
 407	de	Swasi-Sprache
 407	en	Swati
 407	es	Swati
 407	fr	Swati
 407	ru	Swati
+407	nl	Swati
 408	cn	Sukuma
 408	de	Sukuma-Sprache
 408	en	Sukuma
 408	es	Sukuma
 408	fr	Sukuma
 408	ru	Sukuma
+408	nl	Sukuma
 409	cn	Sundanese
 409	de	Sundanesisch
 409	en	Sundanese
 409	es	Sundanese
 409	fr	Soundanais
 409	ru	Sundanese
+409	nl	Sundanese
 410	cn	Susu
 410	de	Susu
 410	en	Susu
 410	es	Susu
 410	fr	Soussou
 410	ru	Susu
+410	nl	Susu
 411	cn	Sumerian
 411	de	Sumerisch
 411	en	Sumerian
 411	es	Sumerian
 411	fr	Sum~00E9rien
 411	ru	Sumerian
+411	nl	Sumerian
 412	cn	Swahili
 412	de	Swahili
 412	en	Swahili
 412	es	Swahili
 412	fr	Swahili
 412	ru	Swahili
+412	nl	Swahili
 413	cn	Swedish
 413	de	Schwedisch
 413	en	Swedish
 413	es	Swedish
 413	fr	Su~00E9dois
 413	ru	Swedish
+413	nl	Swedish
 414	cn	Syriac
 414	de	Syrisch
 414	en	Syriac
 414	es	Syriac
 414	fr	Syriaque
 414	ru	Syriac
+414	nl	Syriac
 415	cn	Tahitian
 415	de	Tahitisch
 415	en	Tahitian
 415	es	Tahitianre)
 415	fr	Tahitien
 415	ru	Tahitian
+415	nl	Tahitian
 416	cn	Tai (Other)
 416	de	Thaisprachen (Andere)
 416	en	Tai (Other)
 416	es	Tai (Other)
 416	fr	Tha~00EFes, autres langues
 416	ru	Tai (Other)
+416	nl	Tai (Other)
 417	cn	Tamil
 417	de	Tamil
 417	en	Tamil
 417	es	Tamil
 417	fr	Tamoul
 417	ru	Tamil
+417	nl	Tamil
 418	cn	Tatar
 418	de	Tatarisch
 418	en	Tatar
 418	es	Tatar
 418	fr	Tatar
 418	ru	Tatar
+418	nl	Tatar
 419	cn	Telugu
 419	de	Telugu-Sprache
 419	en	Telugu
 419	es	Telugu
 419	fr	T~00E9lougou
 419	ru	Telugu
+419	nl	Telugu
 420	cn	Timne
 420	de	Temne-Sprache
 420	en	Timnendere)
 420	es	Timne
 420	fr	Temne
 420	ru	Timne
+420	nl	Timnendere)
 421	cn	Tereno
 421	de	Tereno-Sprache
 421	en	Tereno
 421	es	Tereno
 421	fr	Tereno
 421	ru	Tereno
+421	nl	Tereno
 422	cn	Tetum
 422	de	Tetum-Sprache
 422	en	Tetum
 422	es	Tetum
 422	fr	Tetum
 422	ru	Tetum
+422	nl	Tetum
 423	cn	Tajik
 423	de	Tadschikisch
 423	en	Tajik
 423	es	Tajik
 423	fr	Tadjik
 423	ru	Tajik
+423	nl	Tajik
 424	cn	Tagalog
 424	de	Tagalog
 424	en	Tagalog
 424	es	Tagalog
 424	fr	Tagalog
 424	ru	Tagalog
+424	nl	Tagalog
 425	cn	Thai
 425	de	Thailändisch
 425	en	Thai
 425	es	Thai
 425	fr	Tha~00EF
 425	ru	Thai
+425	nl	Thai
 426	cn	Tibetan
 426	de	Tibetisch
 426	en	Tibetan
 426	es	Tibetan
 426	fr	Tib~00E9tain
 426	ru	Tibetan
+426	nl	Tibetan
 427	cn	Tigre
 427	de	Tigre-Sprachen
 427	en	Tigre
 427	es	Tigre
 427	fr	Tigr~00E9
 427	ru	Tigre
+427	nl	Tigre
 428	cn	Tigrinya
 428	de	Tigrinja-Sprache
 428	en	Tigrinya
 428	es	Tigrinya
 428	fr	Tigrigna
 428	ru	Tigrinya
+428	nl	Tigrinya
 429	cn	Tiv
 429	de	Tiv-Sprache
 429	en	Tiv
 429	es	Tiv
 429	fr	Tiv
 429	ru	Tiv
+429	nl	Tiv
 430	cn	Tokelau
 430	de	Tokelauanisch
 430	en	Tokelau
 430	es	Tokelau
 430	fr	Tokelau
 430	ru	Tokelau
+430	nl	Tokelau
 431	cn	Klingon; tlhIngan-Hol
 431	de	Klingonisch
 431	en	Klingon; tlhIngan-Hol
 431	es	Klingon; tlhIngan-Hol
 431	fr	Klingon
 431	ru	Klingon; tlhIngan-Hol
+431	nl	Klingon; tlhIngan-Hol
 432	cn	Tlingit
 432	de	Tlingit-Sprache
 432	en	Tlingit
 432	es	Tlingit
 432	fr	Tlingit
 432	ru	Tlingit
+432	nl	Tlingit
 433	cn	Tamashek
 433	de	Tamaseq
 433	en	Tamashek
 433	es	Tamashek
 433	fr	Tamacheq
 433	ru	Tamashek
+433	nl	Tamashek
 434	cn	Tonga (Nyasa)
 434	de	Tonga (Bantusprache,Malawi)
 434	en	Tonga (Nyasa)
 434	es	Tonga (Nyasa)
 434	fr	Tonga (Nyasa)
 434	ru	Tonga (Nyasa)
+434	nl	Tonga (Nyasa)
 435	cn	Tonga (Tonga Islands)
 435	de	Tongaisch
 435	en	Tonga (Tonga Islands)
 435	es	Tonga (Tonga Islands)
 435	fr	Tongan (~00CEles Tonga)
 435	ru	Tonga (Tonga Islands)
+435	nl	Tonga (Tonga Islands)
 436	cn	Tok Pisin
 436	de	Neumelanesischanguage Association)
 436	en	Tok Pisin
 436	es	Tok Pisin
 436	fr	Tok pisin
 436	ru	Tok Pisin
+436	nl	Tok Pisin
 437	cn	Tsimshian
 437	de	Tsimshian-Sprache
 437	en	Tsimshian
 437	es	Tsimshian
 437	fr	Tsimshian
 437	ru	Tsimshian
+437	nl	Tsimshian
 438	cn	Tswana
 438	de	Tswana-Sprache
 438	en	Tswana
 438	es	Tswana
 438	fr	Tswana
 438	ru	Tswana
+438	nl	Tswana
 439	cn	Tsonga
 439	de	Tsonga-Sprache
 439	en	Tsonga
 439	es	Tsonga
 439	fr	Tsonga
 439	ru	Tsonga
+439	nl	Tsonga
 440	cn	Turkmen
 440	de	Turkmenisch
 440	en	Turkmen
 440	es	Turkmen
 440	fr	Turkm~00E8ne
 440	ru	Turkmen
+440	nl	Turkmen
 441	cn	Tumbuka
 441	de	Tumbuka-Sprache
 441	en	Tumbuka
 441	es	Tumbuka
 441	fr	Tumbuka
 441	ru	Tumbuka
+441	nl	Tumbuka
 442	cn	Tupi languages
 442	de	Tupi-Sprache
 442	en	Tupi languages
 442	es	Tupi languages
 442	fr	Tupi, langues
 442	ru	Tupi languages
+442	nl	Tupi languages
 443	cn	Turkish
 443	de	Türkisch
 443	en	Turkish
 443	es	Turkish
 443	fr	Turc
 443	ru	Turkish
+443	nl	Turkish
 444	cn	Altaic (Other)
 444	de	Altaische Sprachen (Andere)
 444	en	Altaic (Other)
 444	es	Altaic (Other)
 444	fr	Alta~00EFques, autres langues
 444	ru	Altaic (Other)
+444	nl	Altaic (Other)
 445	cn	Tuvalu
 445	de	Elliceanisch
 445	en	Tuvalu
 445	es	Tuvalu
 445	fr	Tuvalu
 445	ru	Tuvalu
+445	nl	Tuvalu
 446	cn	Twi
 446	de	Twi-Sprache
 446	en	Twi
 446	es	Twi
 446	fr	Twi
 446	ru	Twi
+446	nl	Twi
 447	cn	Tuvinian
 447	de	Tuwinisch
 447	en	Tuvinian
 447	es	Tuvinian
 447	fr	Touva
 447	ru	Tuvinian
+447	nl	Tuvinian
 448	cn	Udmurt
 448	de	Udumurtisch
 448	en	Udmurt
 448	es	Udmurt
 448	fr	Oudmourte
 448	ru	Udmurt
+448	nl	Udmurt
 449	cn	Ugaritic
 449	de	Ugaritisch
 449	en	Ugaritic
 449	es	Ugaritic
 449	fr	Ougaritique
 449	ru	Ugaritic
+449	nl	Ugaritic
 450	cn	Uighur; Uyghur
 450	de	Uigurisch
 450	en	Uighur; Uyghur
 450	es	Uighur; Uyghur
 450	fr	Ou~00EFgour
 450	ru	Uighur; Uyghur
+450	nl	Uighur; Uyghur
 451	cn	Ukrainian
 451	de	Ukrainisch
 451	en	Ukrainian
 451	es	Ukrainian
 451	fr	Ukrainien
 451	ru	Ukrainian
+451	nl	Ukrainian
 452	cn	Umbundu
 452	de	Mbundu-Sprache
 452	en	Umbundu
 452	es	Umbundu
 452	fr	Umbundu
 452	ru	Umbundu
+452	nl	Umbundu
 453	cn	Undetermined
 453	de	Nicht zu entscheiden
 453	en	Undetermined
 453	es	Undetermined
 453	fr	Ind~00E9termin~00E9e
 453	ru	Undetermined
+453	nl	Undetermined
 454	cn	Urdu
 454	de	Urdu
 454	en	Urdu
 454	es	Urdu
 454	fr	Ourdou
 454	ru	Urdu
+454	nl	Urdu
 455	cn	Uzbek
 455	de	Usbekisch
 455	en	Uzbek
 455	es	Uzbek
 455	fr	Ouszbek
 455	ru	Uzbek
+455	nl	Uzbek
 456	cn	Vai
 456	de	Vai-Sprache
 456	en	Vai
 456	es	Vai
 456	fr	Va~00EF
 456	ru	Vai
+456	nl	Vai
 457	cn	Venda
 457	de	Venda-Sprache
 457	en	Venda
 457	es	Venda
 457	fr	Venda
 457	ru	Venda
+457	nl	Venda
 458	cn	Vietnamese
 458	de	Vietnamesisch
 458	en	Vietnamese
 458	es	Vietnamese
 458	fr	Vietnamien
 458	ru	Vietnamese
+458	nl	Vietnamese
 459	cn	Volap~00FCk
 459	de	Volapük
 459	en	Volap~00FCk
 459	es	Volap~00FCk
 459	fr	Volap~00FCk
 459	ru	Volap~00FCk
+459	nl	Volap~00FCk
 460	cn	Votic
 460	de	Wotisch
 460	en	Votic
 460	es	Votic
 460	fr	Vote
 460	ru	Votic
+460	nl	Votic
 461	cn	Wakashan languages
 461	de	Wakash-Sprachen
 461	en	Wakashan languages
 461	es	Wakashan languages
 461	fr	Wakashennes, langues
 461	ru	Wakashan languages
+461	nl	Wakashan languages
 462	cn	Walamo
 462	de	Walamo-Sprache
 462	en	Walamo
 462	es	Walamo
 462	fr	Walamo
 462	ru	Walamo
+462	nl	Walamo
 463	cn	Waray
 463	de	Waray
 463	en	Waray
 463	es	Waray
 463	fr	Waray
 463	ru	Waray
+463	nl	Waray
 464	cn	Washo
 464	de	Washo-Sprache
 464	en	Washo
 464	es	Washo
 464	fr	Washo
 464	ru	Washo
+464	nl	Washo
 465	cn	Welsh
 465	de	Kymrisch
 465	en	Welsh
 465	es	Welsh
 465	fr	Gallois
 465	ru	Welsh
+465	nl	Welsh
 466	cn	Sorbian languages
 466	de	Sorbisch
 466	en	Sorbian languages
 466	es	Sorbian languages
 466	fr	Sorabes, langues
 466	ru	Sorbian languages
+466	nl	Sorbian languages
 467	cn	Walloon
 467	de	Wallonisch
 467	en	Walloon
 467	es	Walloon
 467	fr	Wallon
 467	ru	Walloon
+467	nl	Walloon
 468	cn	Wolof
 468	de	Wolof-Sprache
 468	en	Wolof
 468	es	Wolof
 468	fr	Wolof
 468	ru	Wolof
+468	nl	Wolof
 469	cn	Kalmyk; Oirat
 469	de	Kalmükisch
 469	en	Kalmyk; Oirat
 469	es	Kalmyk; Oirat
 469	fr	Kalmouk; o~00EFrat
 469	ru	Kalmyk; Oirat
+469	nl	Kalmyk; Oirat
 470	cn	Xhosa
 470	de	Xhosa-Sprache
 470	en	Xhosa
 470	es	Xhosa
 470	fr	Xhosa
 470	ru	Xhosa
+470	nl	Xhosa
 471	cn	Yao
 471	de	Yao-Sprache (Bantusprache)
 471	en	Yao
 471	es	Yao
 471	fr	Yao
 471	ru	Yao
+471	nl	Yao
 472	cn	Yapese
 472	de	Yapesisch
 472	en	Yapese
 472	es	Yapese
 472	fr	Yapois
 472	ru	Yapese
+472	nl	Yapese
 473	cn	Yiddish
 473	de	Jiddisch
 473	en	Yiddish
 473	es	Yiddish
 473	fr	Yiddish
 473	ru	Yiddish
+473	nl	Yiddish
 474	cn	Yoruba
 474	de	Yoruba-Sprache
 474	en	Yoruba
 474	es	Yoruba
 474	fr	Yoruba
 474	ru	Yoruba
+474	nl	Yoruba
 475	cn	Yupik languages
 475	de	Yupik-Sprache
 475	en	Yupik languages
 475	es	Yupik languages
 475	fr	Yupik, langues
 475	ru	Yupik languages
+475	nl	Yupik languages
 476	cn	Zapotec
 476	de	Zapotekisch
 476	en	Zapotec
 476	es	Zapotec
 476	fr	Zapot~00E8que
 476	ru	Zapotec
+476	nl	Zapotec
 477	cn	Zenaga
 477	de	Zenaga
 477	en	Zenaga
 477	es	Zenaga
 477	fr	Zenaga
 477	ru	Zenaga
+477	nl	Zenaga
 478	cn	Zhuang; Chuang
 478	de	Zhuang
 478	en	Zhuang; Chuang
 478	es	Zhuang; Chuang
 478	fr	Zhuang; chuang
 478	ru	Zhuang; Chuang
+478	nl	Zhuang; Chuang
 479	cn	Zande languages
 479	de	Zande-Sprachen
 479	en	Zande languages
 479	es	Zande languages
 479	fr	Zand~00E9, langues
 479	ru	Zande languages
+479	nl	Zande languages
 480	cn	Zulu
 480	de	Zulu-Sprache
 480	en	Zulu
 480	es	Zulu
 480	fr	Zoulou
 480	ru	Zulu
+480	nl	Zulu
 481	cn	Zuni
 481	de	Zuñi-Sprache
 481	en	Zuni
 481	es	Zuni
 481	fr	Zuni
 481	ru	Zuni
+481	nl	Zuni
 482	cn	No linguistic content
 482	de	Kein linguistischer Inhalt
 482	en	No linguistic content
 482	es	No linguistic content
 482	fr	Pas de contenu linguistique
 482	ru	No linguistic content
+482	nl	No linguistic content
 483	cn	N'Ko
 483	de	Nkole-Sprache
 483	en	N'Ko
 483	es	N'Ko
 483	fr	N'ko
 483	ru	N'Ko
+483	nl	N'Ko
 484	cn	Zaza; Dimili; Dimli; Kirdki; Kirmanjki
 484	de	Zazaki
 484	en	Zaza; Dimili; Dimli; Kirdki; Kirmanjki
 484	es	Zaza; Dimili; Dimli; Kirdki; Kirmanjki
 484	fr	Zaza; dimili; dimli; kirdki; kirmanjki
 484	ru	Zaza; Dimili; Dimli; Kirdki; Kirmanjki
+484	nl	Zaza; Dimili; Dimli; Kirdki; Kirmanjki	

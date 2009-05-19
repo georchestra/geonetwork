@@ -10,27 +10,31 @@ langId,        VARCHAR
 label,         VARCHAR
 
 [DATA]
--1	en	GUEST
--1	fr	GUEST
--1	es	GUEST
--1	cn	GUEST
--1	ru	GUEST
--1	de	GAST
+-1	en	Guest
+-1	fr	Guest
+-1	es	Guest
+-1	cn	Guest
+-1	ru	Guest
+-1	de	Gast
+-1	nl	Gast
 0	en	Intranet
 0	fr	Intranet
 0	es	Intranet
 0	cn	Intranet
 0	ru	Локальная сеть
 0	de	Intranet
+0	nl	Intranet
 1	en	All
 1	fr	Tous
 1	es	All
 1	cn	All
 1	ru	Все
 1	de	Alle
+1	nl	Iedereen
 2	en	Sample group
 2	fr	Sample group
 2	es	Sample group
 2	cn	Sample group
 2	ru	Пример группы
 2	de	Beispielgruppe
+2	nl	Voorbeeldgroep
