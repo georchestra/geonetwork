@@ -178,6 +178,9 @@
 			<description/>
 			
 			<fileset dir="../csw" targetdir="$INSTALL_PATH/csw"/>
+			
+			<executable targetfile="$INSTALL_PATH/csw/cswClient.sh" />
+			
 		</pack>
 		
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
