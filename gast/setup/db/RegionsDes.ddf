@@ -169,7 +169,7 @@ label,         VARCHAR
 24	en	British Indian Ocean Ter
 24	es	British Indian Ocean Ter
 24	fr	British Indian Ocean Ter
-24	nl	Brits Territorium in de Indische Oceaan
+24	nl	Brits Ter Indische Oceaan
 24	ru	British Indian Ocean Ter
 25	cn	Solomon Islands
 25	de	Solomon Inseln
@@ -477,7 +477,7 @@ label,         VARCHAR
 71	en	French South Terr
 71	es	French South Terr
 71	fr	French South Terr
-71	nl	Franse Zuidelijke en Antarctische Gebieden
+71	nl	Franse Zuid. Terr
 71	ru	French South Terr
 72	cn	Djibouti
 72	de	Djibouti
@@ -1247,7 +1247,7 @@ label,         VARCHAR
 191	en	Saint Vincent/Grenadines
 191	es	Saint Vincent/Grenadines
 191	fr	Saint Vincent/Grenadines
-191	nl	Saint Vincent en de Grenadines
+191	nl	Saint Vincent/Grenadines
 191	ru	Saint Vincent/Grenadines
 192	cn	San Marino
 192	de	San Marino
@@ -1520,7 +1520,7 @@ label,         VARCHAR
 232	en	US Minor Outlying Is
 232	es	US Minor Outlying Is
 232	fr	US Minor Outlying Is
-232	nl	Kleine Pacifische eilanden van de Verenigde Staten
+232	nl	Kl Pacifische Eilanden vd US
 232	ru	US Minor Outlying Is
 233	cn	Burkina Faso
 233	de	Burkina Faso
@@ -1674,7 +1674,7 @@ label,         VARCHAR
 271	en	SouthGeorgia/Sandwich Is
 271	es	SouthGeorgia/Sandwich Is
 271	fr	Ile Sandwich
-271	nl	Zuid-Georgi~00EB en de Zuidelijke Sandwicheilanden
+271	nl	Zuid-Georgi~00EB & Sandwicheilanden
 271	ru	SouthGeorgia/Sandwich Is
 303	cn	Western Europe
 303	de	Westeuropa
@@ -1800,7 +1800,7 @@ label,         VARCHAR
 325	en	Near East and North Africa
 325	es	Near East and North Africa
 325	fr	Afrique - nord et proche orient
-325	nl	Middenoosten en Noordelijk Afrika
+325	nl	Middenoosten en Noord Afrika
 325	ru	Near East and North Africa
 334	cn	Eastern Europe
 334	de	??stliches Europa
