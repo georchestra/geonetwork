@@ -109,6 +109,7 @@ CREATE TABLE Users
     name          varchar(32),
     profile       varchar(32)    not null,
     address       varchar(128),
+    city          varchar(128),
     state         varchar(32),
     zip           varchar(16),
     country       varchar(128),
