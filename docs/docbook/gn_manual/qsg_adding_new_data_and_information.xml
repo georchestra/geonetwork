@@ -783,7 +783,7 @@
                     </mediaobject>
                 </figure>
 
-                <para>Below is a brief description for each privilege to help you identify which
+                <para>Below is a brief description of each privilege to help you identify which
                     ones you should assign to which group(s).</para>
 
                 <para><emphasis role="bold">Publish</emphasis>: Users in the specified group/s are
