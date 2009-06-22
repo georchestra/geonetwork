@@ -869,7 +869,7 @@
                 Metadata</emphasis> that is displayed (<xref linkend="xml_import"/>) is the
                     <emphasis role="bold">Metadata</emphasis> text area, where the user can paste
                 the XML metadata to import. Below this, there is the <emphasis role="bold"
-                >Type</emphasis> choise, which allows you select the type of record that you are
+                >Type</emphasis> choice, which allows you select the type of record that you are
                 going to create (Metadata, Template and Subtemplate). Then you can apply a
                 stylesheet to convert your metadata input from ArcCatalog8 to ISO1915 or from
                 ISO19115 to ISO19139, if required. Otherwise you can just leave
@@ -880,7 +880,7 @@
                 in charge of the metadata and the <emphasis role="bold">Category</emphasis> that you
                 want to assign to your metadata. By clicking the <emphasis role="bold"
                 >Insert</emphasis> button the metadata is imported into the system; please note that
-                all links to external files, for istance to thumbnails or data for download, have to
+                all links to external files, for instance to thumbnails or data for download, have to
                 be removed from the metadata input, to avoid any conflict within the data
                 repository.</para>
 
@@ -936,7 +936,7 @@
 
                 <listitem>
                     <para>Click the <emphasis role="bold">Insert</emphasis> button and the metadata
-                        will be imported into the system.</para>
+                        is imported into the system.</para>
                 </listitem>
             </orderedlist>
 
