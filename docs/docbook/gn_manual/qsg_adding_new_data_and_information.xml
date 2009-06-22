@@ -847,7 +847,7 @@
             <para>A more advanced procedure to upload a new metadata record in the GeoNetwork system
                 is using an XML document. This procedure is particularly useful for users who
                 already have metadata in XML format, for instance created by some GIS application.
-                To this regard, it has to be noted that the metadata must be in one of the standards
+                It should be noted that the metadata must be in one of the standards
                 used by GeoNetwork: ISO19115, FGDC and Dublin Core.</para>
 
             <para>To start the metadata uploading process through the <emphasis role="bold">XML
