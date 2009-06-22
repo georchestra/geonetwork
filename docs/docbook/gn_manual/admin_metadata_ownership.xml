@@ -140,7 +140,7 @@
                 privileges for one group, that group is listed here. Target group This is the
                 destination group of the transfering process. All privileges relative to the
                 source group are transferred to the target group. The target group drop down is
-                filled with all groups visible to the logged user (tipically an administrator or
+                filled with all groups visible to the logged user (typically an administrator or
                 a user administrator). By default, the source group is selected in the target
                 drop down. Privileges to groups All and Intranet are not transferrable. Target
                 editor Once a target group is selected, this drop down is filled with all

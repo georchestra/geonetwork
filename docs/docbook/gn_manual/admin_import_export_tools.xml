@@ -26,7 +26,7 @@
                         example, if you want to perform stress tests.</para>
                 </listitem>
             </orderedlist>
-            <para>Metadata are exported using the MEF format.</para>
+            <para>Metadata are exported using the <glossterm id="glos-mef">MEF</glossterm> format.</para>
             <important>
                 <title>Ownership</title>
                 <para>Please, consider that the MEF format version 1.0 does not take into account

@@ -462,7 +462,7 @@
             <para>There are no restrictions for users to search and access
                 <emphasis role="bold">public information</emphasis> in a GeoNetwork opensource based catalog. To get access to
                 <emphasis role="bold">restricted information</emphasis> or advanced functionality, an account to log
-                in is required. This should be provided by the GNos
+                in is required. This should be provided by the GeoNetwork
                 administrator.</para>
             <para>To log in, simply go to the homepage and enter your username and password in the
                 dedicated fields on the top right corner, then click the login button.

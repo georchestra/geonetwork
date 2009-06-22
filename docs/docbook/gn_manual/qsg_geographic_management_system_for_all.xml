@@ -97,14 +97,15 @@
                     thousand people and is now also available for download from the <ulink
                         url="http://geonetwork-opensource.org">GeoNetwork Community website</ulink>.</para>
     
-                <para>The latest release of GeoNetwork opensource is the result
-                    of another round of critical improvements, supported by FAO, the UN Office for the
+                <para>GeoNetwork opensource is the result of the collaborative development of many contributors.
+                    These include among others the Food and Agriculture Organization (FAO), the UN Office for the
                     Coordination of Humanitarian Affairs (UNOCHA), the Consultative Group on
-                    International Agricultural Research (CSI-CGIAR), UNEP and other donors. Support for
-                    the final metadata standard ISO19115:2003 has been enabled by using the
+                    International Agricultural Research (CSI-CGIAR), The UN Environmental Programme (UNEP),
+                    The European Space Agency (ESA) and many others. Support for
+                    the metadata standard ISO19115:2003 has been added by using the
                     ISO19139:2007 implementation specification schema published in May 2007. The release
                     also serves as the open source reference implementation of the OGC Catalog Service
-                    for the Web (CSW 2.0.1) specification. Improvements to give users a more responsive
+                    for the Web (CSW 2.0.2) specification. Improvements to give users a more responsive
                     and interactive experience have been substantial and include a new Web map viewer
                     and a complete revision of search interface.</para>
             </section>
@@ -194,7 +195,7 @@
 
             <para>Source code is maintained in a publicly accessible code repository, hosted at an
                 independent service provider, <ulink url="http://sourceforge.net/projects/geonetwork">
-                SourceForge.net</ulink> that hosts thousands of FOSS projects.
+                SourceForge.net</ulink> that hosts thousands of <glossterm id="glos-foss">FOSS</glossterm> projects.
                 Developers and users have full access to all sections of the source code, while
                 trusted developers can make changes in the repository itself. A special mailing list
                 has been established to monitor changes in the code repository. This so-called

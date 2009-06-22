@@ -57,7 +57,7 @@
                 <listitem>
                     <para>server : Used when it is necessary to build absolute URLs to the
                         GeoNetwork server. This is the case, for example, when creating links inside
-                        a metadata or when providing CS/W capabilities. </para>
+                        a metadata or when providing CSW capabilities. </para>
 
                     <itemizedlist>
                         <listitem>
@@ -482,7 +482,7 @@
                 </itemizedlist>
             </section>
             <section>
-                <title>Nodes of type csw</title>
+                <title>Nodes of type CSW</title>
                 <para>This type of harvesting is capable of querying a Catalogue Services for the
                     Web (CSW) server and retrieving all found metadata. </para>
                 <itemizedlist>

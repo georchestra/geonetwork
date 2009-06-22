@@ -30,26 +30,29 @@
                     <para>An old GeoNetwork 2.0 node.</para>
                 </listitem>
                 <listitem>
-                    <para>A WebDAV server.</para>
+                    <para>A <glossterm id="glos-webdav">WebDAV</glossterm> server.</para>
                 </listitem>
                 <listitem>
-                    <para>A CSW 2.0.1 or 2.0.2 catalog server.</para>
+                    <para>A <glossterm id="glo-csw">CSW</glossterm> 2.0.1 or 2.0.2 catalog server.</para>
                 </listitem>
                 <listitem>
-                    <para>An OAI-PMH server.</para>
+                    <para>An <glossterm id="glos-oaipmh">OAI-PMH</glossterm> server.</para>
                 </listitem>
                 <listitem>
-                    <para>An OGC service using its GetCapabilities document. These include WMS, WFS, WPS and WCS services.</para>
+                    <para>An <glossterm id="glos-ogc">OGC</glossterm> service using its GetCapabilities document. These include 
+                        <glossterm id="glos-wms">WMS</glossterm>, <glossterm id="glos-wfs">WFS</glossterm>, 
+                        <glossterm id="glos-wps">WPS</glossterm> and <glossterm id="glos-wcs">WCS</glossterm> services.</para>
                 </listitem>
             </orderedlist>
 
         </section>
         <section>
             <title>Mechanism overview</title>
-            <para>The harvesting mechanism is based on the concept of a <emphasis>universally unique identifier (uuid)</emphasis>.
+            <para>The harvesting mechanism is based on the concept of a <emphasis>universally unique identifier 
+                (<glossterm id="glos-uuid">uuid</glossterm>)</emphasis>.
                 This is a special id because it is not only
                 unique locally to the node that generated it but it is unique across all the world.
-                It is a combination of the network interface’s MAC address, the current date/time
+                It is a combination of the network interface’s <glossterm id="glos-mac">MAC address</glossterm>, the current date/time
                 and a random number. Every time you create a new metadata in GeoNetwork, a new uuid
                 is generated and assigned to it.</para>
             <para>Another important concept behind the harvesting is the <emphasis>last change date</emphasis>. 
@@ -212,7 +215,7 @@
 
                 <orderedlist>
                     <listitem>
-                        <para>Every time the harvester is ran, it will remove previously harvested information
+                        <para>Every time the harvester runs, it will remove previously harvested information
                         and create new ones. GeoNetwork will generate the id for all metadata (both service and datasets).
                         Therefor, for datasets, if the metadata is created using a remote xml document (ie.
                         if a MetadataUrl tag is in the GetCapability document), the uuid of 

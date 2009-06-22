@@ -20,6 +20,7 @@
                 <listitem><para>GeoServer (All)<footnote id="os_support"><para>All = Windows, Linux and Mac OS X</para></footnote> <ulink url="http://www.geoserver.org"/></para></listitem>
                 <listitem><para>MapServer (All) <ulink url="http://www.mapserver.org/"/></para></listitem>
                 <listitem><para>MapGuide Open Source (Windows &amp; Linux) <ulink url="http://www.osgeo.org/mapguide"/></para></listitem>
+                <listitem><para>Deegree (All) <ulink url="http://www.osgeo.org/deegree"/></para></listitem>
             </itemizedlist>
         </section>
 
@@ -35,11 +36,10 @@
         </section>        
 
         <section>
-            <title>Web Map Viewers</title>
+            <title>Web Map Viewer and Map Server Management</title>
             <itemizedlist>
                 <listitem><para>OpenLayers (All) <ulink url="http://www.osgeo.org/openlayers"/></para></listitem>
                 <listitem><para>MapBender (All) <ulink url="http://www.osgeo.org/mapbender"/></para></listitem>
-                <listitem><para>MapBuilder (All) <ulink url="http://www.osgeo.org/mapbuilder"/></para></listitem>
             </itemizedlist>
         </section>
     </appendix>

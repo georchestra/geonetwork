@@ -18,7 +18,7 @@
                 and maintenance.</para>
 
             <para>The search interface has been completely overhauled to provide highly interactive
-                searching capabilities. Furthermore, the new version of GNos embeds GeoServer as map
+                searching capabilities. Furthermore, the new version of GeoNetwork embeds GeoServer as map
                 server. Users can now not only overlay OGC web map services available on the web,
                 but also create their own map services for other users to browse without having to
                 download additional plugins. Maps created with web map services can be now saved as
@@ -35,11 +35,11 @@
                 services according to OGC specifications. Harvesting in the new version is fully
                 compatible with GeoNetwork 2.0 and higher nodes.</para>
 
-            <para>We have added avanced online and offline administration funcionalities to
+            <para>We have added advanced online and offline administration functionalities to
                 configure, backup and migrate the application. We have also added a convenient
                 import and export format "MEF" or <literal>Metadata Exchange Format</literal>, 
                 that allows the users to
-                move metadata, previews and even data in a convenient single file. GNos can be
+                move metadata, previews and even data in a convenient single file. GeoNetwork can be
                 easily expanded with plugins to export/import metadata to/from other software
                 supporting MEF.</para>
 
@@ -80,14 +80,14 @@
             <para>Some general system requirements for the software to run without problems are
                 listed below:</para>
 
-            <para><emphasis role="bold">Processor</emphasis>: 1 GHz or higher</para>
+            <para><emphasis role="bold">Processor</emphasis>: 2 GHz or higher</para>
 
-            <para><emphasis role="bold">Memory (RAM)</emphasis>: 512 MB or higher</para>
+            <para><emphasis role="bold">Memory (RAM)</emphasis>: 1 GB or higher</para>
 
-            <para><emphasis role="bold">Disk Space</emphasis>: 30 MB minimum. However, it is
-                suggested to have a minimum of 250 MB of free disk space. Additional space is
+            <para><emphasis role="bold">Disk Space</emphasis>: 200 MB minimum. However, it is
+                suggested to have a minimum of 1 GB of free disk space. Additional space is
                 required depending on the amount of spatial data that you expect to upload into the
-                internal geodatabse.</para>
+                internal geodatabase.</para>
 
             <para><emphasis role="bold">Other Software requirements</emphasis>: A Java Runtime
                 Environment (JRE 1.5.0). For server installations, Apache Tomcat and a dedicated
@@ -118,7 +118,7 @@
                 <para>GeoNetwork should work normally with the following browsers:</para>
                 <orderedlist>
                     <listitem>
-                        <para>Firefox v1.5+ (All)<footnoteref linkend="all_os"/></para>
+                        <para>Firefox v2+ (All)<footnoteref linkend="all_os"/></para>
                     </listitem>
                     <listitem>
                         <para>Internet Explorer v6+ (Windows)</para>
@@ -145,14 +145,14 @@
             <orderedlist>
                 <listitem>
                     <para>Double click on <emphasis role="bold"
-                        >geonetwork-install-2.2.0.exe</emphasis> to start the GeoNetwok opensource
+                        >geonetwork-install-2.4.0.exe</emphasis> to start the GeoNetwork opensource
                         desktop installer</para>
                 </listitem>
 
                 <listitem>
                     <para>Follow the instructions on screen (<xref linkend="installer"/>). You 
                     can choose to install sample data, install the embedded map server (based on 
-                    <ulink url="http://www.geoserver.org">GeoServer</ulink> and the CSW 2.0.1 
+                    <ulink url="http://www.geoserver.org">GeoServer</ulink> and the CSW 2.0.2 
                     test client. Developers may be interested in installing the source code
                     and installer building tools. Full source code can be found in the 
                     GeoNetwork SubVersion code repository.</para>
@@ -170,7 +170,7 @@
                 </listitem>
 
                 <listitem>
-                    <para>Click Start &gt; Programs &gt; Geonetwork desktop &gt; Open
+                    <para>Click Start &gt; Programs &gt; GeoNetwork desktop &gt; Open
                         GeoNetwork opensource to start using GeoNetwork opensource, or connect your
                         Web browser to <ulink url="http://localhost:8080/geonetwork/"/></para>
                 </listitem>
@@ -220,7 +220,7 @@
             	<para>To run the installation from the commandline, issue the following command in a 
             	terminal window and hit enter to start:</para>
             	<programlisting> 
-<![CDATA[java -jar geonetwork-install-2.2.0-0.jar install.xml
+<![CDATA[java -jar geonetwork-install-2.4.0-0.jar install.xml
 [ Starting automated installation ]
 [ Starting to unpack ]
 [ Processing package: Core (1/3) ]
@@ -233,7 +233,7 @@
 							</programlisting>
 							<para>You can also run the installation with lots of debug output. To do so run the 
 							installer with the flag <literal>-DTRACE=true</literal>: </para>
-                            <programlisting>java -DTRACE=true -jar geonetwork-install-2.2.0-0.jar</programlisting>
+                            <programlisting>java -DTRACE=true -jar geonetwork-install-2.4.0-0.jar</programlisting>
 						</section>
             <para>
                 <guilabel/>

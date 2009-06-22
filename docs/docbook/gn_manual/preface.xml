@@ -7,8 +7,8 @@
         <title>Preface</title>
         <formalpara>
             <title>About this Project</title>
-            <para>This document provides guidelines to use and customize the GeoNetwork opensource
-                software. This project started out as a Spatial Data Catalog System for the <ulink
+            <para>This document provides guidelines to install, configure, use and customize the GeoNetwork opensource
+                software. The GeoNetwork project started out as a Spatial Data Catalog System for the <ulink
                     url="http://www.fao.org">Food and Agriculture Organization of the United Nations
                     (FAO)</ulink>, the <ulink
                     url="http://vam.wfp.org">United Nations World Food Programme (WFP)</ulink> and
@@ -16,7 +16,7 @@
                     url="http://www.unep.org">United Nations Environmental Programme (UNEP)</ulink>.
                 At present the project is widely used as the basis of Spatial Data Infrastructures
                 all around the world. The project is part of the Open Source Geospatial Foundation
-                (OSGeo) and can be found at <ulink
+                (<glossterm id="glos-osgeo">OSGeo</glossterm>) and can be found at <ulink
                     url="http://geonetwork-opensource.org" />. </para>
         </formalpara>
         <formalpara>
