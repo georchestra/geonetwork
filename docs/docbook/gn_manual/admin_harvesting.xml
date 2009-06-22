@@ -33,7 +33,7 @@
                     <para>A <glossterm linkend="glos-webdav">WebDAV</glossterm> server.</para>
                 </listitem>
                 <listitem>
-                    <para>A <glossterm linkend="glo-csw">CSW</glossterm> 2.0.1 or 2.0.2 catalog server.</para>
+                    <para>A <glossterm linkend="glos-csw">CSW</glossterm> 2.0.1 or 2.0.2 catalog server.</para>
                 </listitem>
                 <listitem>
                     <para>An <glossterm linkend="glos-oaipmh">OAI-PMH</glossterm> server.</para>

@@ -24,13 +24,39 @@
             <qandadiv>
                 <title>Administrators FAQ</title>
                 <qandaentry>
+                    <question><para>I want to run GeoNetwork on another port than port 8080. What should I do?</para></question>
+                    <answer>
+                        <para>To change the default port 8080, take the following steps:</para>
+                        <orderedlist>
+                            <listitem><para>Change the servlet engine configuration. 
+                                When running on the embedded Jetty, the configuration file to change is bin/jetty.xml</para></listitem>
+                            <listitem><para>Search intermap/WEB-INF/config.xml for 8080 and change it to the new port number</para></listitem>
+                            <listitem><para>Change the map service URLs for the local GeoServer layers that GeoNetwork connects to by default. 
+                            The file to change is web/intermap/WEB-INF/mapServers.xml</para></listitem>
+                            <listitem><para>On Windows systems, change the startup script bin/win/start-stdln.html</para></listitem>
+                            <listitem><para>Start the GeoNetwork application and login as Administrator. In the System configuration panel 
+                            you will need to change the Server port number</para></listitem>
+                            <listitem><para>If you changed the port number after uploading data in the system while using another port, 
+                                you may need to start GAST and run the Metadata Sync in order to update the download links in the metadata.</para></listitem>
+                        </orderedlist>
+                        <para>Other affected, but non-critical files:</para>
+                        <itemizedlist>
+                            <listitem><para>geonetwork/xml/csw/test/csw-Harvest.xml</para></listitem>
+                            <listitem><para>geonetwork/xml/schemas/iso19139/process/thumbnails-host-url-relocator.xsl</para></listitem>
+                            <listitem><para>geonetwork/xml/validation/csw202_apiso100/csw/2.0.2/examples/wsdl/2.0.2/service.wsdl</para></listitem>
+                            <listitem><para>intermap/static/iframepoc.html</para></listitem>
+                        </itemizedlist>
+                    </answer>
+                </qandaentry>
+                
+                <qandaentry>
                     <question>
                         <para>I am having difficulty installing multiple instances of GeoNetwork on
                             the same server</para>
                     </question>
                     <answer>
                         <para>To run multiple installation you have to change the ports that
-                            GeoNetwork uses in order to avoid conflicts. The port are:</para>
+                            GeoNetwork uses in order to avoid conflicts. The ports are:</para>
                         <itemizedlist>
                             <listitem>
                                 <formalpara>
@@ -52,11 +78,10 @@
                                             <listitem>
                                                 <formalpara>
                                                   <title>Jetty's listening port</title>
-                                                  <para>This can be modified using GAST and its
-                                                  default value is usually 8080. To run a
+                                                  <para>This can be modified in the bin/jetty.xml configuration file. 
+                                                  The default value is 8080. To run a
                                                   second installation use a different value,
-                                                  like 8081. The affected file is
-                                                  bin/jetty.xml.</para>
+                                                  like 8081.</para>
                                                 </formalpara>
                                             </listitem>
                                             <listitem>

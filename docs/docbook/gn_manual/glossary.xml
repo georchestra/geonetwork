@@ -25,8 +25,6 @@
                 <para>International Standards Organisation.</para>
             </glossdef>
         </glossentry>
-
-
         <glossentry
             id="glos-gn">
             <glossterm>GeoNetwork</glossterm>
@@ -90,7 +88,16 @@
                 <para>Service Oriented Architecture.</para>
             </glossdef>
         </glossentry>
-<!--        <glossentry
+        <glossentry id="glos-fgdc">
+            <glossterm>FGDC</glossterm>
+            <glossdef>
+                <para>The Federal Geographic Data Committee (FGDC) is an interagency committee 
+                    that promotes the coordinated development, use, sharing, and dissemination of 
+                    geospatial data on a national basis in the USA. See <ulink url="http://www.fgdc.gov"/></para>
+            </glossdef>
+        </glossentry>
+        
+        <!--        <glossentry
             id="glos-jms">
             <glossterm>JMS</glossterm>
             <glossdef>
@@ -335,7 +342,23 @@
                 <para>Free and Open Source Software.</para>
             </glossdef>
         </glossentry>
-<!--        <glossentry
+        <glossentry
+            id="glos-jdbc">
+            <glossterm>JDBC</glossterm>
+            <glossdef>
+                <para>The Java Database Connectivity (JDBC) API is the industry standard for 
+                    database-independent connectivity between the Java programming language and a 
+                    wide range of databases – SQL databases and other tabular data sources, such 
+                    as spreadsheets or flat files. The JDBC API provides a call-level API for 
+                    SQL-based database access.</para>
+                 <para>JDBC technology allows you to use the Java programming language to exploit 
+                    "Write Once, Run Anywhere" capabilities for applications that require access 
+                    to enterprise data. With a JDBC technology-enabled driver, you can connect 
+                    all corporate data even in a heterogeneous environment.</para>
+            </glossdef>
+        </glossentry>
+        
+        <!--        <glossentry
             id="glos-">
             <glossterm></glossterm>
             <glossdef>
