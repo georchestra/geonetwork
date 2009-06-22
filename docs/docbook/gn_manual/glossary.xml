@@ -14,7 +14,8 @@
             id="glos-csw">
             <glossterm>CSW</glossterm>
             <glossdef>
-                <para>Catalog Service for the Web.</para>
+                <para>Catalog Service for the Web. The OGC Catalog Service defines common interfaces 
+                    to discover, browse, and query metadata about data, services, and other potential resources.</para>
                 <glossseealso otherterm="glos-ogc"/>
             </glossdef>
         </glossentry>
@@ -22,14 +23,26 @@
             id="glos-iso">
             <glossterm>ISO</glossterm>
             <glossdef>
-                <para>International Standards Organisation.</para>
+                <para>International Standards Organisation is an international-standard-setting body 
+                    composed of representatives from various national standards organizations. <ulink url="http://www.iso.org"></ulink>.</para>
+                <glossseealso otherterm="glos-tc211"/>
             </glossdef>
         </glossentry>
+        <glossentry id="glos-tc211">
+            <glossterm>ISO TC211</glossterm>
+            <glossdef><para>ISO/TC 211 is a standard technical committee formed within ISO, 
+                tasked with covering the areas of digital geographic information (such as 
+                used by geographic information systems) and geomatics. It is responsible 
+                for preparation of a series of International Standards and Technical 
+                Specifications numbered in the range starting at 19101.</para></glossdef>
+        </glossentry>
+        
         <glossentry
             id="glos-gn">
             <glossterm>GeoNetwork</glossterm>
             <glossdef>
-                <para>GeoNetwork opensource.</para>
+                <para>GeoNetwork opensource is a standards based, Free and Open Source catalog 
+                    application to manage spatially referenced resources through the web.<ulink url="http://geonetwork-opensource.org"/></para>
             </glossdef>
         </glossentry>
         <glossentry
@@ -50,7 +63,8 @@
             id="glos-xsd">
             <glossterm>XSD</glossterm>
             <glossdef>
-                <para>XML Schema.</para>
+                <para>XML Schema, published as a W3C recommendation in May 2001, is one of 
+                    several XML schema languages. <ulink url="http://en.wikipedia.org/wiki/XSD" /></para>
             </glossdef>
         </glossentry>
 <!--        <glossentry
@@ -76,16 +90,23 @@
         </glossentry> -->
         <glossentry
             id="glos-db">
-            <glossterm>DB</glossterm>
+            <glossterm>DB (or DBMS)</glossterm>
             <glossdef>
-                <para>Database.</para>
+                <para>A database management system (DBMS) is computer software that 
+                    manages databases. DBMSes may use any of a variety of database models, 
+                    such as the network model or relational model. In large systems, 
+                    a DBMS allows users and other software to store and retrieve data 
+                    in a structured way.</para>
             </glossdef>
         </glossentry>
         <glossentry
             id="glos-soa">
             <glossterm>SOA</glossterm>
             <glossdef>
-                <para>Service Oriented Architecture.</para>
+                <para>Service Oriented Architecture provides methods for systems 
+                    development and integration where systems package functionality 
+                    as interoperable services. A SOA infrastructure allows different 
+                    applications to exchange data with one another.</para>
             </glossdef>
         </glossentry>
         <glossentry id="glos-fgdc">
@@ -143,63 +164,81 @@
             id="glos-soap">
             <glossterm>SOAP</glossterm>
             <glossdef>
-                <para>Simple Object Access Protocol.</para>
+                <para>Simple Object Access Protocol is a protocol specification for 
+                    exchanging structured information in the implementation of Web 
+                    Services in computer networks.</para>
             </glossdef>
         </glossentry>
         <glossentry
             id="glos-ogc">
             <glossterm>OGC</glossterm>
             <glossdef>
-                <para>Open Geospatial Consortium.</para>
+                <para>Open Geospatial Consortium. A standards organization for geospatial 
+                    information systems <ulink url="http://www.opengeospatial.org"/></para>
             </glossdef>
         </glossentry>
         <glossentry
             id="glos-osgeo">
             <glossterm >OSGeo</glossterm>
             <glossdef>
-                <para>Open Source Geospatial Foundation.</para>
+                <para>The Open Source Geospatial Foundation (OSGeo), is a non-profit 
+                    non-governmental organization whose mission is to support and 
+                    promote the collaborative development of open geospatial technologies 
+                    and data. <ulink url="http://www.osgeo.org"/></para>
             </glossdef>
         </glossentry>
         <glossentry
             id="glos-fao">
             <glossterm>FAO</glossterm>
             <glossdef>
-                <para>Food and Agriculture Organisation fo the United Nations.</para>
+                <para>Food and Agriculture Organisation of the United Nations is a specialised 
+                    agency of the United Nations that leads international efforts to defeat 
+                    hunger. <ulink url="http://www.fao.org"/></para>
             </glossdef>
         </glossentry>
         <glossentry
             id="glos-wfp">
             <glossterm>WFP</glossterm>
             <glossdef>
-                <para>World Food Programme of the United Nations.</para>
+                <para>World Food Programme of the United Nations is the food aid branch 
+                    of the United Nations, and the world's largest humanitarian 
+                    organization. <ulink url="http://www.wfp.org"></ulink></para>
             </glossdef>
         </glossentry>
         <glossentry
             id="glos-unep">
             <glossterm>UNEP</glossterm>
             <glossdef>
-                <para>United Nations Environmental Programme.</para>
+                <para>The UN Environment Programme (UNEP) coordinates United Nations 
+                    environmental activities, assisting developing countries in implementing 
+                    environmentally sound policies and encourages sustainable development 
+                    through sound environmental practices. <ulink url="http://www.unep.org"/></para>
             </glossdef>
         </glossentry>
         <glossentry
             id="glos-ocha">
             <glossterm>OCHA</glossterm>
             <glossdef>
-                <para>United Nations Office for the Coordination of Humanitarian Affairs.</para>
+                <para>United Nations Office for the Coordination of Humanitarian Affairs 
+                    is designed to strengthen the UN's response to complex emergencies 
+                    and natural disasters. <ulink url="http://ochaonline.un.org/"></ulink></para>
             </glossdef>
         </glossentry>
         <glossentry
             id="glos-url">
             <glossterm>URL</glossterm>
             <glossdef>
-                <para>Uniform Resource Locator.</para>
+                <para>A Uniform Resource Locator specifies where an identified resource 
+                    is available and the mechanism for retrieving it.</para>
             </glossdef>
         </glossentry>
         <glossentry
             id="glos-gast">
             <glossterm>GAST</glossterm>
             <glossdef>
-                <para>GeoNetwork Administrator Survival Tool. A desktop application that allows administrators of a GeoNetwork catalog to perform a range of admin operations.</para>
+                <para>GeoNetwork Administrator Survival Tool. A desktop application 
+                    that allows administrators of a GeoNetwork catalog to perform a 
+                    range of admin operations.</para>
             </glossdef>
         </glossentry>
         <glossentry
@@ -226,7 +265,10 @@
             id="glos-wms">
             <glossterm>WMS</glossterm>
             <glossdef>
-                <para>Web Map Service.</para>
+                <para>Web Map Service is a standard protocol for serving georeferenced 
+                    map images over the Internet that are generated by a map server using 
+                    data from a GIS database. The specification was developed and first 
+                    published by the Open Geospatial Consortium in 1999.</para>
                 <glossseealso otherterm="glos-ogc"/>
             </glossdef>
         </glossentry>
@@ -234,7 +276,9 @@
             id="glos-wfs">
             <glossterm>WFS</glossterm>
             <glossdef>
-                <para>Web Feature Service.</para>
+                <para>Web Feature Service provides an interface allowing requests for 
+                    geographical features across the web using platform-independent calls. 
+                    One can think of geographical features as the "source code" behind a map.</para>
                 <glossseealso otherterm="glos-ogc"/>
             </glossdef>
         </glossentry>
@@ -242,7 +286,9 @@
             id="glos-wcs">
             <glossterm>WCS</glossterm>
             <glossdef>
-                <para>Web Coverage Service.</para>
+                <para>Web Coverage Service provides an interface allowing requests for 
+                    geographical coverages across the web using platform-independent calls. 
+                    The coverages are objects (or images) in a geographical area</para>
                 <glossseealso otherterm="glos-ogc"/>
             </glossdef>
         </glossentry>
@@ -250,7 +296,10 @@
             id="glos-wps">
             <glossterm>WPS</glossterm>
             <glossdef>
-                <para>Web Processing Service.</para>
+                <para>Web Processing Service is designed to standardize the way that 
+                    GIS calculations are made available to the Internet. WPS can describe 
+                    any calculation (i.e. process) including all of its inputs and outputs, 
+                    and trigger its execution as a Web Service.</para>
                 <glossseealso otherterm="glos-ogc"/>
             </glossdef>
         </glossentry>
@@ -332,14 +381,19 @@
             id="glos-esa">
             <glossterm>ESA</glossterm>
             <glossdef>
-                <para>European Space Agency.</para>
+                <para>European Space Agency is an intergovernmental organisation dedicated 
+                    to the exploration of space. <ulink url="http://www.esa.int"/></para>
             </glossdef>
         </glossentry>
         <glossentry
             id="glos-foss">
             <glossterm>FOSS</glossterm>
             <glossdef>
-                <para>Free and Open Source Software.</para>
+                <para>Free and Open Source Software, also F/OSS, FOSS, or FLOSS 
+                    (free/libre/open source software) is software which is liberally 
+                    licensed to grant the right of users to study, change, and improve 
+                    its design through the availability of its source 
+                    code. <ulink url="http://en.wikipedia.org/wiki/FOSS"/></para>
             </glossdef>
         </glossentry>
         <glossentry
