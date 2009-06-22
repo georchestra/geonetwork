@@ -6,9 +6,9 @@
         <title>GeoNetwork’s Administrator Survival Tool - GAST</title>
         <section>
             <title>What is GAST?</title>
-            <para><glossterm id="glos-gast">GAST</glossterm> stands for <literal>GeoNetwork’s Administrator Survival Tool</literal> and is a standalone
+            <para><glossterm linkend="glos-gast">GAST</glossterm> stands for <literal>GeoNetwork’s Administrator Survival Tool</literal> and is a standalone
                 application whose purpose is to simplify some low level tasks like change of the
-                servlet, configuration of the <glossterm id="glos-jdbc">JDBC</glossterm> account, setup the database and so on. Most
+                servlet, configuration of the <glossterm linkend="glos-jdbc">JDBC</glossterm> account, setup the database and so on. Most
                 of the GAST’s facilities work only for the GeoNetwork’s installation where GAST
                 is in. This implies that if you are using a servlet container other than Jetty
                 (like Tomcat) you will not be able to change some options (like the servlet’s

@@ -39,7 +39,7 @@
         </section>
         <section>
             <title>Thesaurus / SKOS format</title>
-            <para>The Simple Knowledge Organisation Systems (<glossterm id="glos-skos">SKOS</glossterm>)
+            <para>The Simple Knowledge Organisation Systems (<glossterm linkend="glos-skos">SKOS</glossterm>)
                 <literal>http://www.w3.org/2004/02/skos/</literal> is an area of work developing
                 specifications and standards to support the use of knowledge organisation systems
                 (KOS) such as thesauri, classification schemes. This format is used by GeoNetwork to

@@ -195,7 +195,7 @@
 
             <para>Source code is maintained in a publicly accessible code repository, hosted at an
                 independent service provider, <ulink url="http://sourceforge.net/projects/geonetwork">
-                SourceForge.net</ulink> that hosts thousands of <glossterm id="glos-foss">FOSS</glossterm> projects.
+                    SourceForge.net</ulink> that hosts thousands of <glossterm linkend="glos-foss">FOSS</glossterm> projects.
                 Developers and users have full access to all sections of the source code, while
                 trusted developers can make changes in the repository itself. A special mailing list
                 has been established to monitor changes in the code repository. This so-called

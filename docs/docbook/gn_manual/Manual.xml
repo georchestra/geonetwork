@@ -26,13 +26,6 @@
     </mediaobject>
   </bookinfo>
   <toc/>
-  <xi:include href="glossary.xml" xpointer="glossary" xmlns:xi="http://www.w3.org/2001/XInclude">
-    <xi:fallback>
-      <para>
-        <emphasis>FIXME: MISSING XINCLUDE CONTENT - Glossary</emphasis>
-      </para>
-    </xi:fallback>
-  </xi:include>
   <xi:include href="preface.xml" xpointer="preface" xmlns:xi="http://www.w3.org/2001/XInclude">
     <xi:fallback>
       <para>
@@ -300,5 +293,12 @@
     </xi:fallback>
   </xi:include>
   <!--  </part> -->
+  <xi:include href="glossary.xml" xpointer="glossary" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <xi:fallback>
+      <para>
+        <emphasis>FIXME: MISSING XINCLUDE CONTENT - Glossary</emphasis>
+      </para>
+    </xi:fallback>
+  </xi:include>
   <index/>
 </book>

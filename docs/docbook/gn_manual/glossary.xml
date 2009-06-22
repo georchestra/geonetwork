@@ -44,7 +44,8 @@
             id="glos-xml">
             <glossterm>XML</glossterm>
             <glossdef>
-                <para>Extensible Markup Language.</para>
+                <para>Extensible Markup Language is a general-purpose specification for 
+                    creating custom markup languages.</para>
             </glossdef>
         </glossentry>
         <glossentry
@@ -309,14 +310,6 @@
             <glossdef>
                 <para>Lightweight Directory Access Protocol is an application protocol 
                     for querying and modifying directory services running over TCP/IP.</para>
-            </glossdef>
-        </glossentry>
-        <glossentry
-            id="glos-xml">
-            <glossterm>XML</glossterm>
-            <glossdef>
-                <para>Extensible Markup Language is a general-purpose specification for 
-                    creating custom markup languages.</para>
             </glossdef>
         </glossentry>
         <glossentry

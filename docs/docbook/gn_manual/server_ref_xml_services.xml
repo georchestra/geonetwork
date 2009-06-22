@@ -38,7 +38,7 @@
                         encoding specified into the prologue of the XML document. Using this form,
                         any type of request can be made (structured or not) so any service can be
                         called.</para>
-                    <para><emphasis><glossterm id="glos-soap">SOAP</glossterm></emphasis> The content type is <literal>application/soap+xml</literal>.
+                    <para><emphasis><glossterm linkend="glos-soap">SOAP</glossterm></emphasis> The content type is <literal>application/soap+xml</literal>.
                         SOAP is a simple protocol used to access objects and services using XML.
                         Clients that use this protocol can embed XML requests into a SOAP structure.
                         On the server side, GeoNetwork will remove the SOAP structure and feed the
