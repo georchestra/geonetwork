@@ -17,20 +17,20 @@
             editor for your work group.</para>
 
         <para>For the metadata creation using the online editor, GeoNetwork provides a set of simplified
-            metadata templates based on the cited standards: <glossterm id="glos-iso">ISO</glossterm>, 
-            <glossterm id="glos-fgdc">FGDC</glossterm> and <glossterm id="glos-dc">DC</glossterm>. The templates for
+            metadata templates based on the cited standards: <glossterm linkend="glos-iso">ISO</glossterm>, 
+            <glossterm linkend="glos-fgdc">FGDC</glossterm> and <glossterm linkend="glos-dc">DC</glossterm>. The templates for
             vector and raster based on the ISO 19139 are the preferred ones since they are devised
             in a way that hides the complexity of the ISO19115 standard in the default view. At the
             same time those templates are extensible with new elements to fit specialized needs
             through the advanced view.</para>
 
-        <para>To produce a good metadata record, always try to gather as much details as possible on
+        <para>To produce a good metadata record, always try to gather as much detail as possible on
             the resource that you want to describe taking into account the metadata elements that
-            have been presented in the previous chapter. The next step is to fill out properly the
-            fields provided by the metadata templates, while at the same time avoiding duplication
-            of information throughout the form.</para>
+            have been presented in the previous chapter. The next step is to properly fill out the
+            fields provided by the metadata templates, while avoiding duplicating
+            information throughout the form.</para>
 
-        <para>The most important, mandatory fields that should not be skipped while compiling a standard based
+        <para>The most important mandatory fields that should not be skipped while compiling a standard based
             metadata record are the following:</para>
         <orderedlist>
             <listitem><para>Title</para></listitem>
@@ -63,14 +63,14 @@
 
         <para>
             <emphasis>
-                <emphasis>You should also prepare an image of your data that is required to be
+                <emphasis>You should also prepare an image of your data which will be
                     displayed in search results as thumbnail.</emphasis>
             </emphasis>
         </para>
 
         <para>
             <emphasis>
-                <emphasis>Next section will guide you through the process of metadata creation using
+                <emphasis>The next section will guide you through the process of metadata creation using
                     the online editor.</emphasis>
             </emphasis>
         </para>
@@ -101,7 +101,7 @@
 
                 <listitem>
                     <para>Select the <emphasis role="bold">Group</emphasis> the metadata will belong
-                        to. These are the groups authorized to add metadata to by your
+                        to. These are the groups you are authorized to add metadata to by your
                         administrator.</para>
                 </listitem>
 
@@ -171,7 +171,7 @@
                     <listitem>
                         <para>After selecting the correct template, you should identify which group
                             of users the metadata will belong to (<xref linkend="select_group"/>)
-                            and finally click on <emphasis role="bold">Create</emphasis>.</para>
+                            and then click on <emphasis role="bold">Create</emphasis>.</para>
 
                         <figure id="select_group">
                             <title>Group selection</title>
@@ -217,7 +217,7 @@
                     applications (data discovery, determination of data fitness for use, data
                     access, data transfer and use of digital data) is defined here, along with
                     optional metadata elements to allow for a more extensive standard description of
-                    geographic data, if required. However, if should be there a need to add more
+                    geographic data, if required. However, should there be a need to add more
                     metadata elements, you can switch to the advanced view at any time while
                     editing.</para>
 
@@ -240,9 +240,9 @@
                 <para>The <emphasis role="bold">XML View</emphasis> shows the entire content of the
                     metadata in the original hierarchical structure; different colors allow to
                     distinguish between an element's name and its value. The XML structure is
-                    composed of tags and to every tag must correspond a closing tag (<xref
-                        linkend="xml_view"/>). The content is entirely contained withing the two,
-                    i.e.</para>
+                    composed of elements delimited by opening and closing tags (<xref
+                        linkend="xml_view"/>). The content is entirely contained within the two,
+                    e.g.</para>
 <programlisting><![CDATA[<gmd:language>
     <gco:CharacterString>eng</gco:CharacterString>
 </gmd:language>]]></programlisting>
@@ -256,19 +256,18 @@
                     </mediaobject>
                 </figure>
 
-                <para>Nevertheless, the use of the XML view requires some knowledge of the XML
-                    language.</para>
+                <para>Nevertheless, the use of the XML view requires some knowledge of XML
+                    languages.</para>
 
                 <para>Both the <emphasis role="bold">Default</emphasis> and the <emphasis
                         role="bold">Advanced Views</emphasis> are composed of
                     <literal>mandatory</literal>, <literal>conditional</literal> and
                         <literal>optional</literal> metadata fields. The meaning of mandatory and
                     optional is fairly intuitive; the mandatory fields are required, like
-                        <literal>Title</literal> and <literal>Abstract</literal> for instance,
-                    whereas the optional fields can be provided but are not fundamental, depending
-                    on the metadata author. The conditional fields may be considered mandatory under
-                    certain circumstances: essentially a conditional requirement indicates that the
-                    presence of a specified data element is dependent on the value or presence of
+                        <literal>Title</literal> and <literal>Abstract</literal>,
+                    whereas optional fields may be provided but are not required. The conditional fields may be considered 
+                    mandatory under certain circumstances: essentially a conditional requirement indicates that the
+                    presence of a specified data element depends on the value, or the presence of
                     other data elements in the same section. For instance, the <literal>Individual
                         name</literal> metadata element of the <literal>Point of Contact</literal>,
                     which is a conditional element of the Identification section, becomes mandatory
@@ -289,7 +288,7 @@
                         <emphasis role="bold">highly recommended</emphasis> are flagged with
                         <emphasis role="bold">red asterisk</emphasis>
                     <emphasis role="bold">[*]</emphasis>. The standard definition for each field can
-                    be read by passing the mouse on the element name.</para>
+                    be viewed by hovering the mouse over the element name.</para>
 
                 <para>The <emphasis role="bold">Default View</emphasis> is the preferred view as it
                     provides a selection of the available metadata elements, facilitating both the
@@ -349,7 +348,7 @@
                 well as general document like reports, projects, papers, etc. For the purpose of
                 this Quick Start Guide, an example of required and useful metadata elements to
                 properly describe a thematic map will be provided hereafter. You should gather as
-                much information as possible to identify and understand the map’s resource and
+                much information as possible to identify and understand the map's resource and
                 characteristics you want to describe. Use the default view to start. If necessary,
                 you can always switch to advanced view or come back later and edit the record with
                 the additonal information collected.</para>
@@ -358,8 +357,7 @@
                 <title>Entering Metadata For Your Map</title>
 
                 <para>Please follow these steps to enter your map's metadata. Note that we will only
-                    go through the fields that have been identified as compulsory (i.e. those fields
-                    marked with the asterix <emphasis role="bold">[*],</emphasis> mandatory or
+                    go through the fields that are marked with the asterix <emphasis role="bold">[*],</emphasis> mandatory or
                     highly recommended).</para>
 
                 <para><indexterm>
@@ -395,12 +393,12 @@
                         <primary>purpose</primary>
                     </indexterm>
                     <emphasis role="bold">Purpose</emphasis>: Enter a short summary of the purposes
-                    for your map to be developed.</para>
+                    of your map.</para>
 
                 <para><indexterm>
                         <primary>status</primary>
                     </indexterm>
-                    <emphasis role="bold">Status</emphasis>: Specify the status of your map within
+                    <emphasis role="bold">Status</emphasis>: Specify the status of your map choosing from
                     the following options: completed, historical archive, obsolete, ongoing,
                     planned, required, under development.</para>
 
@@ -408,7 +406,7 @@
                         <primary>point of contact</primary>
                     </indexterm>
                     <emphasis role="bold">Point of Contact</emphasis>: Enter all mandatory
-                    information and others you have at hand for the contact of the person(s)
+                    information and other data you have at hand for the contact of the person(s)
                     associated with this resources of the map. Note that some fields are only
                     conditionally mandatory, such as Organization Name if Individual Name and
                     Position are not entered.</para>
@@ -548,7 +546,7 @@
                         <primary>metadata author</primary>
                     </indexterm>
                     <emphasis role="bold">Metadata Author *</emphasis> : Provide information about
-                    the author of the map, including the person’s name, organization, position, role
+                    the author of the map, including the personâ€™s name, organization, position, role
                     and any other contact information available.</para>
 
                 <para>After completion of this section, you may select the <emphasis role="bold"
@@ -604,7 +602,7 @@
                         <para>To create a small or large thumbnail, click on the
                             <literal>Browse</literal> button next to either one. It is recommended
                             that you use 180 pixels for small thumbnails and 800x600 for large
-                            thumbnails. Using the ‘Large thumbnail’ option allows you to create both
+                            thumbnails. Using the "Large thumbnail" option allows you to create both
                             a small and large thumbnail in one go.</para>
                     </listitem>
                     <listitem>
@@ -668,8 +666,8 @@
                         <para>Make sure the total size of the compressed file is reasonable (less
                             than 50 MB). Should your data be bigger than 50MB, consider a different
                             mechanism to serve this data, e.g. through an FTP or HTTP server and
-                            than link the resource through an online resource ‘Web address
-                        (URL)’.</para>
+                            than link the resource through an online resource "Web address
+                        (URL)".</para>
                     </listitem>
                     <listitem>
                         <para>You can create several smaller files when appropriate and upload them
