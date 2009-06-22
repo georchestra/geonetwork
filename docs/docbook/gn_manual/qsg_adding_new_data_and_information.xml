@@ -92,8 +92,8 @@
                 <listitem>
                     <para>Select the metadata standard <emphasis role="bold">Template</emphasis>, if
                         possible, using the preferred ones (<xref linkend="metadata_creation"/>).
-                        GeoNetwork opensource comes by default with support for three metadata
-                        standards, ISO19139, FGDC and Dublin core. For the ISO standard, two
+                        GeoNetwork opensource comes by default with support for four metadata
+                        standards, ISO19139, FGDC, Dublin core and WMS. For the ISO standard, two
                         templates have been developed; one for vector and one for raster data. Both
                         contain a relevant set of elements to describe the respective types of data.
                         More templates can be developed online.</para>
