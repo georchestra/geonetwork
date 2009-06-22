@@ -705,8 +705,8 @@
                             where the file to be released is stored. Consider if you want to upload
                             multiple files as one unique zip file or as multiple separate downloads.
                             It is a good idea to add additional documentation with the datasets that
-                            provide the user with information related to the data described. Remind:
-                            the size of a single file to upload can't exceed 50 Mbytes;</para>
+                            provide the user with information related to the data described. Reminder:
+                            the size of a single file to upload can't exceed 100 Mbytes;</para>
                     </listitem>
 
                     <listitem>
