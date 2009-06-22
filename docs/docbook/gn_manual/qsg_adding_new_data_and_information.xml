@@ -787,13 +787,13 @@
                     ones you should assign to which group(s).</para>
 
                 <para><emphasis role="bold">Publish</emphasis>: Users in the specified group/s are
-                    able to see the map, i.e. if searching with matching criteria.</para>
+                    allowed to see the map, i.e. if searching with matching criteria.</para>
 
                 <para><emphasis role="bold">Download</emphasis>: Users in the specified group/s are
-                    able to download the map.</para>
+                    allowed to download the map.</para>
 
                 <para><emphasis role="bold">Interactive Map</emphasis>: Users in the specified
-                    group/s are able to get an interactive map. <emphasis role="bold">The
+                    group/s are allowed to get an interactive map. <emphasis role="bold">The
                         interactive map</emphasis> has to be created separately using a Web Map
                     Server, which is part of the GeoNetwork opensource application.</para>
 
