@@ -49,7 +49,7 @@
 		</form>
 		
 		<!-- Jetty - - - - - - - - - - - - - - - - - - - - - - - - -->
-		
+<!--		
 		<form>
 			<id>jetty</id>
 			<image>16x16/package_settings.png</image>
@@ -70,6 +70,7 @@
 				${8}
 			</precon>
 		</form>
+-->
 		
 		<!-- DBMS - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		
