@@ -17,8 +17,8 @@
             editor for your work group.</para>
 
         <para>For the metadata creation using the online editor, GeoNetwork provides a set of simplified
-            metadata templates based on the cited standards: <glossterm id="glos-iso">ISO</glossterm>, 
-            <glossterm id="glos-fgdc">FGDC</glossterm> and <glossterm id="glos-dc">DC</glossterm>. The templates for
+            metadata templates based on the cited standards: <glossterm linkend="glos-iso">ISO</glossterm>, 
+            <glossterm linkend="glos-fgdc">FGDC</glossterm> and <glossterm linkend="glos-dc">DC</glossterm>. The templates for
             vector and raster based on the ISO 19139 are the preferred ones since they are devised
             in a way that hides the complexity of the ISO19115 standard in the default view. At the
             same time those templates are extensible with new elements to fit specialized needs
