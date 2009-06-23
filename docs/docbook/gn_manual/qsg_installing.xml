@@ -6,7 +6,7 @@
         <title>Installing the software</title>
 
         <section>
-            <title>New version - New funtionalities</title>
+            <title>New version - New functionalities</title>
 
             <para>The new GeoNetwork opensource comes with substantial upgrades of different
                 components for a more intuitive and responsive user-system interaction. Web 2.0
@@ -31,7 +31,7 @@
 
             <para>The new version has a number of different harvesting interfaces allowing users to
                 connect their own server to many other catalogues around the world. This is the
-                result of the implementation of the open source reference for the web catalog
+                result of the implementation of the open source reference for the web catalogue
                 services according to OGC specifications. Harvesting in the new version is fully
                 compatible with GeoNetwork 2.0 and higher nodes.</para>
 
@@ -165,7 +165,7 @@
 
                 <listitem>
                     <para>Click Start &gt; Programs &gt; GeoNetwork desktop &gt; Start
-                        server to start the Geonetwork opensource Web server. The first time you do
+                        server to start the GeoNetwork opensource Web server. The first time you do
                         this, the system will require about 1 minute to complete startup.</para>
                 </listitem>
 
@@ -203,7 +203,7 @@
             	<para>At the end of the installation process you can choose to save the installation
             	script (<xref linkend="install_script"/>).</para>
             <figure id="install_script">
-                <title>Save the installation script for commandline installations</title>
+                <title>Save the installation script for command line installations</title>
                 <mediaobject>
                     <imageobject>
                         <imagedata fileref="images/install_script.png" width="11cm" align="center"/>
@@ -212,12 +212,12 @@
             </figure>
             </section>
             <section>
-            	<title>Commandline installation</title>
+            	<title>Command line installation</title>
             	<para>If you downloaded the platform independent installer (a .jar file), you can
-            	perform commandline installations on computers without a graphical interface. You first
+            	perform command line installations on computers without a graphical interface. You first
             	need to generate an install script (see <xref linkend="install_script"/>). This install 
             	script can be edited in a text editor to change some installation parameters.</para>
-            	<para>To run the installation from the commandline, issue the following command in a 
+            	<para>To run the installation from the command line, issue the following command in a 
             	terminal window and hit enter to start:</para>
             	<programlisting> 
 <![CDATA[java -jar geonetwork-install-2.4.0-0.jar install.xml

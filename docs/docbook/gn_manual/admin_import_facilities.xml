@@ -5,6 +5,85 @@
     <chapter id="import_facilities">
         <title>Import facilities</title>
         <section>
+            <title>File import</title>
+            <para>The file import facility allows you to import metadata records in XML format or MEF format
+                or copy/paste XML metadata to insert. In order to use this facility, you have to be logged in 
+                as an administrator. After the login step, go to the administration page and select the 
+                Metadata insert link.
+            </para>
+            <para>
+                Clicking the link, you will reach the metadata import file's page as illustrated in 
+                <xref linkend="admin_xmlfileimport_options"/>. You have to specify a set of parameters
+                to make the import working. Depending on the insert type you will perform: </para>
+            <section>
+                <title>XML file import</title>
+                <figure id="admin_xmlfileimport_options">
+                    <title>
+                        The XML file import options
+                    </title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="images/admin/xmlfileimport-options.png" width="10cm" align="center" />
+                        </imageobject>
+                    </mediaobject>
+                </figure>
+                <para>
+                    For both, XML and MEF file import, you could choose actions to be performed at import.
+                    Import actions options are: <emphasis role="bold">No action on import</emphasis> (nothing 
+                    done during import process), <emphasis role="bold">Overwrite metadata with same UUID</emphasis>
+                    (this option will delete existing metadata with the same UUID, and add the new one), 
+                    <emphasis role="bold">Generate UUID for inserted metadata</emphasis> (this option will force a new
+                    UUID for each metadata inserted).
+                </para>
+                <para>
+                    Stylesheet option: This is a powerful option because allows you to specify a stylesheet for 
+                    an XSL transformation. The drop down control is filled with files taken from the 
+                    web/xsl/conversion/import folder: all XSL files you put there will be made available. 
+                    This is a dynamic process so you don’t have to  restart GeoNetwork. The purpose of this option 
+                    is to allow the conversion of a metadata into a suitable format that is supported by GeoNetwork.
+                    Validate option: This is a simple validation step that you can choose to perform. 
+                    The metadata is validated against its schema. Group option: You have to select a group to 
+                    associate to the imported metadata. Usually the group is the creator of the metadata set.
+                    Category option: You can specify one category to associate to your metadata in order to
+                    simplify the search.  
+                </para>
+            </section>
+            <section>
+                <title>MEF file import</title>
+                <figure id="admin_meffileimport_options">
+                    <title>
+                        The MEF file import options
+                    </title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="images/admin/meffileimport-options.png" width="10cm" align="center" />
+                        </imageobject>
+                    </mediaobject>
+                </figure>
+                <para>
+                    As presented before, only actions options could be selected during a MEF import.
+                </para>
+            </section>
+            <section>
+                <title>XML metadata insert</title>
+                <figure id="admin_xmlinsert_options">
+                    <title>
+                        The XML insert options
+                    </title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="images/admin/xmlinsert-options.png" width="10cm" align="center" />
+                        </imageobject>
+                    </mediaobject>
+                </figure>
+                <para>
+                    Choosing the radio button Copy/Paste, you could perform an XML insert, directly copy/pasting 
+                    your metadata record. Please refer to XML import for options you could use.
+                    Note that it is not possible to perform actions during import with this method.
+                </para>
+            </section>
+        </section>
+        <section>
             <title>Batch import</title>
             <para>The batch import facility allows you to import a set of metadata into the
                 system all at once. In order to use this facility, you have to be logged in as
@@ -39,10 +118,10 @@
                 against its schema. Group You have to select a group to associate to the
                 imported metadata. Usually the group is the creator of the metadata set.
                 Category You can specify one category to associate to your metadata in order to
-                simplify the search. Stylesheet This is a powerfull option because allows you to
+                simplify the search. Stylesheet This is a powerful option because allows you to
                 specify a stylesheet for an XSL transformation. The drop down control is filled
-                with files taken from the web/xsl/conversion/import folder : all XSL files you
-                put there will be made available. This is a dymanic process so you don’t have to
+                with files taken from the web/xsl/conversion/import folder: all XSL files you
+                put there will be made available. This is a dynamic process so you don’t have to
                 restart GeoNetwork. The purpose of this option is to allow the conversion of a
                 metadata into a suitable format that is supported by GeoNetwork. Therefore, it
                 is important that the result of the transformation matches the schema format
@@ -75,30 +154,30 @@
                 
                 <orderedlist>
                     <listitem>
-                        <para>categoryMapping [1] : this element specifies the mapping of
+                        <para>categoryMapping [1]: this element specifies the mapping of
                             directories to categories. </para>
                         
                         <orderedlist>
                             <listitem>
-                                <para>mapping [0..n] : This element can appear 0 or more times
+                                <para>mapping [0..n]: This element can appear 0 or more times
                                     and maps one directory name to a category name. It must have
                                     a dir attribute that indicates the directory and a to
                                     attribute that indicates the category name. </para>
                             </listitem>
                             <listitem>
-                                <para>default [1] : This element specifies a default mapping of
+                                <para>default [1]: This element specifies a default mapping of
                                     categories for all directories that do not match the other
                                     mapping elements. It must have only the to attribute.</para>
                             </listitem>
                         </orderedlist>
                     </listitem>
                     <listitem>
-                        <para>schemaMapping [1] : this element specifies the mapping of
+                        <para>schemaMapping [1]: this element specifies the mapping of
                             directories to metadata schemas. </para>
                         
                         <orderedlist>
                             <listitem>
-                                <para>mapping [0..n] : This element can appear 0 or more times
+                                <para>mapping [0..n]: This element can appear 0 or more times
                                     and maps one directory to the schema name that must be used
                                     when importing. The provided schema must match the one used
                                     by the metadata contained into the specified directory,
@@ -107,7 +186,7 @@
                                     that indicates the schema name. </para>
                             </listitem>
                             <listitem>
-                                <para>default [1] : default behaviour to use when all other
+                                <para>default [1]: default behaviour to use when all other
                                     mapping elements do not match. It must have only the to
                                     attribute.</para>
                             </listitem>

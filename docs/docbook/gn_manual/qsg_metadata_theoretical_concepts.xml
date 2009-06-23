@@ -25,9 +25,9 @@
         </section>
 
         <section>
-            <title>Why do we need Standardized Metadata?</title>
+            <title>Why do we need Standardised Metadata?</title>
 
-            <para>Standardized metadata support users in effectively and efficiently accessing data
+            <para>Standardised metadata support users in effectively and efficiently accessing data
                 by using a common set of terminology and metadata elements that allow for a quick
                 means of data discovery and retrieval from metadata clearinghouses. The metadata
                 based on standards ensure information consistency and quality and avoid that
@@ -40,7 +40,7 @@
             <indexterm><primary>Metadata</primary><secondary>FGDC</secondary></indexterm>
             <indexterm><primary>Metadata</primary><secondary>Dublin Core</secondary></indexterm>
             <para>Geographic data, which can be defined as any data with a geographic component, is
-                often produced by one individual or organization, and may address the needs of
+                often produced by one individual or organisation, and may address the needs of
                 various users, including information system analysts, programme planners, developers
                 of geographic information or policy makers. Proper standard documentation on
                 geographic data enable different users to better evaluate the appropriateness of
@@ -51,7 +51,7 @@
                 approved by the international community in April 2003 as a tool to define metadata
                 in the field of geographic information - and the <emphasis role="bold"
                 >FGDC</emphasis> - the metadata standard adopted in the United States by the Federal
-                Geographic Data Committee. In addition, GNos supports also the international
+                Geographic Data Committee. In addition, GeoNetwork opensource supports also the international
                 standard <emphasis role="bold">Dublin Core</emphasis> for the description of general
                 documents.</para>
 

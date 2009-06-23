@@ -15,14 +15,14 @@
                         Once you have the backup, you can decide to import all or only some of them.</para>
                 </listitem>
                 <listitem>
-                    <para><emphasis role="bold">Move your metadata</emphasis> from one GeoNetwork catalog to another. This
+                    <para><emphasis role="bold">Move your metadata</emphasis> from one GeoNetwork catalogue to another. This
                         can be done to mirror your metadata or to upgrade an old installation.
                         In the last case, you export your metadata from your old installation
-                        and then reimport them into the new one.</para>
+                        and then re-import them into the new one.</para>
                 </listitem>
                 <listitem>
-                    <para>Fill the system with <emphasis role="bold">test data</emphasis>. Using the ’skip uuid’ option, you can
-                        reimport the same metadata over and over again. This is usefull, for
+                    <para>Fill the system with <emphasis role="bold">test data</emphasis>. Using the ’skip UUID’ option, you can
+                        re-import the same metadata over and over again. This is useful, for
                         example, if you want to perform stress tests.</para>
                 </listitem>
             </orderedlist>
@@ -56,21 +56,21 @@
                     <formalpara>
                         <title>Input folder</title>
                         <para>the source folder in your system that GAST will scan to
-                            collect metadata to import. GAST will try to import all files with the mef
-                            extension.<note><para>Subfolders are not scanned.</para></note></para>
+                            collect metadata to import. GAST will try to import all files with the MEF
+                            extension.<note><para>Sub-folders are not scanned.</para></note></para>
                     </formalpara>
                 </listitem>
                 <listitem>
                     <formalpara>
                         <title>Browse button</title>
                         <para>Navigate through your file system to choose an output
-                            location or enter it manually into the textfield.</para>
+                            location or enter it manually into the text field.</para>
                     </formalpara>
                 </listitem>
                 <listitem>
                     <formalpara>
                         <title>Import</title>
-                        <para>This will start the process. A progress dialog will be
+                        <para>This will start the process. A progress dialogue will be
                             opened to show the import status.</para>
                     </formalpara>
                 </listitem>
@@ -113,8 +113,8 @@
                     <formalpara>
                         <title>Skip UUID</title>
                         <para>Normally this option is not required (see <xref linkend="warn_skipuuid"/>). If you
-                            select it, you will loose the metadata’s unique identifier (uuid) but you will
-                            be able to reimport that metadata over and over again. This is usefull to fill
+                            select it, you will loose the metadata’s unique identifier (UUID) but you will
+                            be able to re-import that metadata over and over again. This is useful to fill
                             the system with test data.</para>
                     </formalpara>
                 </listitem>
@@ -130,7 +130,7 @@
                 <listitem>
                     <formalpara>
                         <title>Export</title>
-                        <para>This will start the export process. A progress dialog will be
+                        <para>This will start the export process. A progress dialogue will be
                             opened to show the export status.</para>
                     </formalpara>
                 </listitem>

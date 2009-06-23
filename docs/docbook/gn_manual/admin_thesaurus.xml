@@ -2,7 +2,8 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
                       "http://www.docbook.org/xml/4.4/docbookx.dtd">
 <book>
-    <chapter id="thesaurus">
+    <chapter
+        id="thesaurus">
         <title>Thesaurus</title>
         <section>
             <title>Introduction</title>
@@ -10,41 +11,42 @@
 
             <itemizedlist>
                 <listitem>
-                    <para><emphasis>Metadata editing</emphasis>: controlled vocabulary on the metadata editing interface
-                        for ISO and Dublin Core</para>
+                    <para><emphasis>Metadata editing</emphasis>: controlled vocabulary on the
+                        metadata editing interface for ISO and Dublin Core</para>
                 </listitem>
                 <listitem>
-                    <para><emphasis>Administration interface</emphasis> allows import/export/creation/browse
-                    thesaurus</para>
+                    <para><emphasis>Administration interface</emphasis> allows
+                        import/export/creation/browse thesaurus</para>
                 </listitem>
                 <listitem>
-                    <para><emphasis>Search interface</emphasis>: a list of keyword is proposed for the keyword
-                    criteria</para>
+                    <para><emphasis>Search interface</emphasis>: a list of keyword is proposed for
+                        the keyword criteria</para>
                 </listitem>
             </itemizedlist>
             <para>On a node, thesaurus types could be defined as:</para>
 
             <itemizedlist>
                 <listitem>
-                    <para><emphasis>External</emphasis>: When a thesaurus is imported, it is flagged to ”external” which
-                        means that users are not allowed to edit the thesaurus. This thesaurus is
-                        managed by an external organisation.</para>
+                    <para><emphasis>External</emphasis>: When a thesaurus is imported, it is flagged
+                        to ”external” which means that users are not allowed to edit the thesaurus.
+                        This thesaurus is managed by an external organisation.</para>
                 </listitem>
                 <listitem>
-                    <para><emphasis>Local</emphasis>: When a thesaurus is created, it is flagged to ”local” which means
-                        that users are allowed to edit the thesaurus.</para>
+                    <para><emphasis>Local</emphasis>: When a thesaurus is created, it is flagged to
+                        ”local” which means that users are allowed to edit the thesaurus.</para>
                 </listitem>
             </itemizedlist>
 
         </section>
         <section>
             <title>Thesaurus / SKOS format</title>
-            <para>The Simple Knowledge Organisation Systems (<glossterm linkend="glos-skos">SKOS</glossterm>)
-                <literal>http://www.w3.org/2004/02/skos/</literal> is an area of work developing
+            <para>The Simple Knowledge Organisation Systems (<glossterm
+                    linkend="glos-skos">SKOS</glossterm>)
+                    <literal>http://www.w3.org/2004/02/skos/</literal> is an area of work developing
                 specifications and standards to support the use of knowledge organisation systems
                 (KOS) such as thesauri, classification schemes. This format is used by GeoNetwork to
                 store thesaurus information.</para>
-            <para>A concept is defined by an identifier, a prefered label, a definition and links
+            <para>A concept is defined by an identifier, a preferred label, a definition and links
                 with other concepts. Labels and definitions could be stored in multiple languages
                 (using the xml:lang attributes). Three type of links between concepts have been
                 defined in the SKOS format:</para>
@@ -60,23 +62,23 @@
                     <para>narrower terms</para>
                 </listitem>
             </itemizedlist>
-            <para>For example, a concept ”ABLETTE” could be defined as follow with a label in french
-                and english, linked to broader concept:</para>
-<programlisting><?db-font-size 75% ?><![CDATA[
+            <para>For example, a concept ”ABLETTE” could be defined as follow with a label in French
+                and English, linked to broader concept:</para>
+            <programlisting><?db-font-size 75% ?><![CDATA[
 <skos:Concept rdf:about="http://www.oieau.org/concept#c4fc54576dc00227b82a709287ac3681">
     <skos:prefLabel xml:lang="fr">ABLETTE</skos:prefLabel> 
     <skos:prefLabel xml:lang="en">BLEAK</skos:prefLabel>
     <skos:broader rdf:resource="http://www.oieau.org/concept#9f25ece36d04776e09492c66627cccb9"/> 
 </skos:Concept>]]></programlisting>
             <para>GeoNetwork support multilingual thesaurus (e.g. Agrovoc). Search and edition are
-                made based on current user interface language (i.e. if the interface is in english,
-                when editing metadata, GeoNetwork will only search for concept in english).</para>
+                made based on current user interface language (i.e. if the interface is in English,
+                when editing metadata, GeoNetwork will only search for concept in English).</para>
 
         </section>
         <section>
             <title>Thesaurus administration</title>
             <para>To reach the thesaurus administration page you have to be logged in as an
-                administrator. From the administration page, click the link ”Manage thesaurii”.
+                administrator. From the administration page, click the link ”Manage thesauri”.
                 Figure 5.3 shows the list of thesaurus available in the GeoNetwork node. The page
                 shows a list of thesaurus that have been created or imported. The upper part of the
                 page allows user to edit/add/modify/consult thesaurus. The lower part allows upload
@@ -94,17 +96,21 @@
                     upload. When creating a thesaurus, the name of the thesaurus will be the
                     filename of the thesaurus.</para>
 
-                <figure id="admin_thesaurus_admin">
+                <figure
+                    id="admin_thesaurus_admin">
                     <title>Administration interface for thesaurus</title>
                     <mediaobject>
                         <imageobject>
-                            <imagedata fileref="images/thesaurus/thesaurus-Admin.png" width="13cm" align="center"/>
+                            <imagedata
+                                fileref="images/thesaurus/thesaurus-Admin.png"
+                                width="13cm"
+                                align="center" />
                         </imageobject>
                     </mediaobject>
                 </figure>
 
                 <para>For each thesaurus the following buttons are available:</para>
-                <para>Download Link to the rdf file. Delete Remove thesaurus from the current node.
+                <para>Download Link to the RFD file. Delete Remove thesaurus from the current node.
                     View If type is external, the view button allows to search and view concepts.
                     Edit If type is local, the edit button allows to search, add, remove and view
                     concepts.</para>
@@ -117,25 +123,37 @@
                     file and click upload. The file is located in
                         <literal>/web/xml/codelist/external/thesauri/category/</literal>.</para>
 
-                <figure id="admin_thesaurus_upload">
+                <figure
+                    id="admin_thesaurus_upload">
                     <title>Upload interface for thesaurus</title>
                     <mediaobject>
                         <imageobject>
-                            <imagedata fileref="images/thesaurus/thesaurus-upload.png" width="13cm" align="center"/>
+                            <imagedata
+                                fileref="images/thesaurus/thesaurus-upload.png"
+                                width="13cm"
+                                align="center" />
                         </imageobject>
                     </mediaobject>
                 </figure>
 
                 <para>At the bottom of the page there are the following buttons:</para>
-                <para>Back Go back to the main administration page. Upload Upload the selected rdf
-                    file to the node. Then it will list all thesaurus available on the node.</para>
-
+                <orderedlist>
+                    <listitem>
+                        <para><emphasis>Back</emphasis>: Go back to the main administration
+                            page.</para>
+                    </listitem>
+                    <listitem>
+                        <para><emphasis>Upload</emphasis>: Upload the selected RFD file to the node.
+                            Then it will list all thesaurus available on the node.</para>
+                    </listitem>
+                </orderedlist>
             </section>
         </section>
         <section>
             <title>Editing/browsing thesaurus: add/remove/browse keywords</title>
             <para>From the thesaurus administration interface, click on the edit button for a local
-                thesaurus or the view button for an external thesaurus. This interface allows:</para>
+                thesaurus or the view button for an external thesaurus. This interface
+                allows:</para>
 
             <itemizedlist>
                 <listitem>
@@ -147,20 +165,28 @@
             </itemizedlist>
             <para>Use the textbox and the type of search in order to search for keywords.</para>
 
-            <figure id="admin_thesaurus_browse">
+            <figure
+                id="admin_thesaurus_browse">
                 <title>Browse interface for thesaurus</title>
                 <mediaobject>
                     <imageobject>
-                        <imagedata fileref="images/thesaurus/thesaurus-KeywordSearch.png" width="12cm" align="center"/>
+                        <imagedata
+                            fileref="images/thesaurus/thesaurus-KeywordSearch.png"
+                            width="12cm"
+                            align="center" />
                     </imageobject>
                 </mediaobject>
             </figure>
 
-            <figure id="admin_thesaurus_keyword">
+            <figure
+                id="admin_thesaurus_keyword">
                 <title>Keyword description</title>
                 <mediaobject>
                     <imageobject>
-                        <imagedata fileref="images/thesaurus/thesaurus-KeywordDesc.png" width="12cm" align="center"/>
+                        <imagedata
+                            fileref="images/thesaurus/thesaurus-KeywordDesc.png"
+                            width="12cm"
+                            align="center" />
                     </imageobject>
                 </mediaobject>
             </figure>
@@ -168,15 +194,20 @@
         </section>
         <section>
             <title>Metadata editing: adding keywords</title>
-            <para>When editing metadata in ISO or Dublin core, the keyword fields autocomplete when
+            <para>When editing metadata in ISO or Dublin core, the keyword fields auto-complete when
                 editor fill the fields. Keywords available in all thesaurus know by the current node
-                are returned. Editor could select one of the list or could type any other keywords.</para>
+                are returned. Editor could select one of the list or could type any other
+                keywords.</para>
 
-            <figure id="admin_thesaurus_keyword_edit">
-                <title>Autocomplete in keywords editor</title>
+            <figure
+                id="admin_thesaurus_keyword_edit">
+                <title>Auto-complete in keywords editor</title>
                 <mediaobject>
                     <imageobject>
-                        <imagedata fileref="images/thesaurus/thesaurus-EditKeywords.png" width="11cm" align="center"/>
+                        <imagedata
+                            fileref="images/thesaurus/thesaurus-EditKeywords.png"
+                            width="11cm"
+                            align="center" />
                     </imageobject>
                 </mediaobject>
             </figure>
@@ -190,20 +221,28 @@
                 display. User could type in the keyword field or click the icon to get the list of
                 keywords available.</para>
 
-            <figure id="admin_thesaurus_search">
+            <figure
+                id="admin_thesaurus_search">
                 <title>Thesaurus search interface</title>
                 <mediaobject>
                     <imageobject>
-                        <imagedata fileref="images/thesaurus/thesaurus-SearchInterface.png" width="11cm" align="center"/>
+                        <imagedata
+                            fileref="images/thesaurus/thesaurus-SearchInterface.png"
+                            width="11cm"
+                            align="center" />
                     </imageobject>
                 </mediaobject>
             </figure>
 
-            <figure id="admin_thesaurus_search_auto">
-                <title>Autocomplete function in thesaurus search interface</title>
+            <figure
+                id="admin_thesaurus_search_auto">
+                <title>Auto-complete function in thesaurus search interface</title>
                 <mediaobject>
                     <imageobject>
-                        <imagedata fileref="images/thesaurus/thesaurus-SearchKeywordAutocomp.png" width="7cm" align="center"/>
+                        <imagedata
+                            fileref="images/thesaurus/thesaurus-SearchKeywordAutocomp.png"
+                            width="7cm"
+                            align="center" />
                     </imageobject>
                 </mediaobject>
             </figure>

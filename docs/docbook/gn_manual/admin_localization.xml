@@ -3,18 +3,18 @@
                       "http://www.docbook.org/xml/4.4/docbookx.dtd">
 <book>
     <chapter id="admin_localization">
-        <title>Localization</title>
+        <title>Localisation</title>
         <section>
-            <title>Localization of dynamic user interface elements</title>
-            <para>The user interface of GeoNetwork can be localized into several languages
+            <title>Localisation of dynamic user interface elements</title>
+            <para>The user interface of GeoNetwork can be localised into several languages
                 through XML language files. But beside static text, there
                 is also more dynamic text that can be added and changed interactively.
                 This text is stored in the database and is translated 
-                using the localization form that is part of the administrative functions
+                using the Localisation form that is part of the administrative functions
                 (<xref linkend="admin_localization_where"/>). </para>
                 
 			 <figure id="admin_localization_where">
-                <title>How to open the localization form</title>
+                <title>How to open the Localisation form</title>
                 <mediaobject>
                     <imageobject>
                         <imagedata fileref="images/admin/web-localization-where.png" width="11cm" align="center" />
@@ -22,7 +22,7 @@
                 </mediaobject>
             </figure>
 
-            <para>The form allows you to localize the following entities:
+            <para>The form allows you to localise the following entities:
                 <emphasis>Groups</emphasis>, <emphasis>Categories</emphasis>,
                 <emphasis>Operations</emphasis> and <emphasis>Regions</emphasis>. The form
                 (<xref linkend="admin_localization_form"/>) subdivided in a left and a right panel. </para>
@@ -42,7 +42,7 @@
                 changes a label and chooses another target language without saving,
                 the label change is lost.</para></important>
 			 <figure id="admin_localization_form">
-                <title>The localization form</title>
+                <title>The Localisation form</title>
                 <mediaobject>
                     <imageobject>
                         <imagedata fileref="images/admin/web-localization.png" width="11cm" align="center" />

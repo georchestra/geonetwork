@@ -7,9 +7,9 @@
         <title>Preface</title>
         <formalpara>
             <title>About this Project</title>
-            <para>This document provides guidelines to install, configure, use and customize the GeoNetwork opensource
-                software. The GeoNetwork project started out as a Spatial Data Catalog System for the <ulink
-                    url="http://www.fao.org">Food and Agriculture Organization of the United Nations
+            <para>This document provides guidelines to install, configure, use and customise the GeoNetwork opensource
+                software. The GeoNetwork project started out as a Spatial Data Catalogue System for the <ulink
+                    url="http://www.fao.org">Food and Agriculture organisation of the United Nations
                     (FAO)</ulink>, the <ulink
                     url="http://vam.wfp.org">United Nations World Food Programme (WFP)</ulink> and
                 the <ulink

@@ -6,51 +6,51 @@
         <title>Harvesting</title>
         <section>
             <title>Structure</title>
-            <para>The harvesting capability is built around 3 areas: Javascript code, Java code and
+            <para>The harvesting capability is built around 3 areas: JavaScript code, Java code and
                 XSL stylesheets (on both the server and client side). </para>
 
             <section>
-                <title>Javascript code</title>
+                <title>JavaScript code</title>
                 <para>This refers to the web interface. The code is located in the
                     web/geonetwork/scripts/harvesting folder. Here, there is a subfolder for each
                     harvesting type plus some classes for the main page. These are: </para>
 
                 <orderedlist>
                     <listitem>
-                        <para>harvester.js : This is an abstract class that must be implemented by
+                        <para><emphasis>harvester.js</emphasis>: This is an abstract class that must be implemented by
                             harvesting types. It defines some information retrieval methods
                             (getType, getLabel, etc...) used to handle the harvesting type, plus one
                             getUpdateRequest method used to build the XML request to insert or
                             update entries. </para>
                     </listitem>
                     <listitem>
-                        <para>harvester-model.js : Another abstract class that must be implemented
+                        <para><emphasis>harvester-model.js</emphasis>: Another abstract class that must be implemented
                             by harvesting types. When creating the XML request, the only method
                             substituteCommon takes care of adding common information like privileges
                             and categories taken from the user interface. </para>
                     </listitem>
                     <listitem>
-                        <para>harvester-view.js : This is an important abstract class that must be
+                        <para><emphasis>harvester-view.js</emphasis>: This is an important abstract class that must be
                             implemented by harvesting types. It takes care of many common aspects of
                             the user interface. It provides methods to add group’s privileges, to
                             select categories, to check data for validity and to set and get common
                             data from the user interface. </para>
                     </listitem>
                     <listitem>
-                        <para>harvesting.js : This is the main Javascript file that takes care of
+                        <para><emphasis>harvesting.js</emphasis>: This is the main JavaScript file that takes care of
                             everything. It starts all the submodules, loads XML strings from the
                             server and displays the main page that lists all harvesting nodes.
                         </para>
                     </listitem>
                     <listitem>
-                        <para>model.js : Performs all XML requests to the server, handles errors and
+                        <para><emphasis>model.js</emphasis>: Performs all XML requests to the server, handles errors and
                             decode responses. </para>
                     </listitem>
                     <listitem>
-                        <para>view.js : Handles all updates and changes on the main page. </para>
+                        <para><emphasis>view.js</emphasis>: Handles all updates and changes on the main page. </para>
                     </listitem>
                     <listitem>
-                        <para>util.js : just a couple of utility methods.</para>
+                        <para><emphasis>util.js</emphasis>: just a couple of utility methods.</para>
                     </listitem>
                 </orderedlist>
 
@@ -63,14 +63,14 @@
 
                 <orderedlist>
                     <listitem>
-                        <para>AbstractHarvester : This is the main class that a new harvesting type
+                        <para><emphasis>AbstractHarvester</emphasis>: This is the main class that a new harvesting type
                             must extends. It takes care of all aspects like adding, updating,
                             removing, starting, stopping of harvesting nodes. Some abstract methods
                             must be implemented to properly tune the behaviour of a particular
                             harvesting type. </para>
                     </listitem>
                     <listitem>
-                        <para>AbstractParams : All harvesting parameters must be enclosed in a class
+                        <para><emphasis>AbstractParams</emphasis>: All harvesting parameters must be enclosed in a class
                             that extends this abstract one. Doing so, all common parameters can be
                             transparently handled by this abstract class.</para>
                     </listitem>
@@ -80,14 +80,14 @@
             </section>
             <section>
                 <title>XSL stylesheets</title>
-                <para>Stylesheets are spread in some foders and are used by both the Javascript code
+                <para>Stylesheets are spread in some folders and are used by both the JavaScript code
                     and the server. The main folder is located at web/geonetwork/xsl/harvesting.
                     Here there are some general stylesheets, plus one subfolder for each harvesting
                     type. The general stylesheets are: </para>
 
                 <orderedlist>
                     <listitem>
-                        <para>buttons.xsl : Defines all button present in the main page
+                        <para><emphasis>buttons.xsl</emphasis>: Defines all button present in the main page
                                 (<emphasis>activate</emphasis>, <emphasis>deactivate</emphasis>,
                                 <emphasis>run</emphasis>, <emphasis>remove</emphasis>,
                                 <emphasis>back</emphasis>, <emphasis>add</emphasis>,
@@ -97,16 +97,16 @@
                                 (<emphasis>back</emphasis> and <emphasis>save</emphasis>). </para>
                     </listitem>
                     <listitem>
-                        <para>client-error-tip.xsl : This stylesheet is used by the browser to build
-                            tooltips when an harvesting error occured. It will show the error class,
+                        <para><emphasis>client-error-tip.xsl</emphasis>: This stylesheet is used by the browser to build
+                            tooltips when an harvesting error occurred. It will show the error class,
                             the message and the stacktrace. </para>
                     </listitem>
                     <listitem>
-                        <para>client-node-row.xsl : This is also used by the browser to add one row
+                        <para><emphasis>client-node-row.xsl</emphasis>: This is also used by the browser to add one row
                             to the list of harvesting nodes in the main page. </para>
                     </listitem>
                     <listitem>
-                        <para>harvesting.xsl : This is the main stylesheet. It generates the html
+                        <para><emphasis>harvesting.xsl</emphasis>: This is the main stylesheet. It generates the HTML
                             page of the main page and includes all panels from all the harvesting
                             nodes.</para>
                     </listitem>
@@ -115,50 +115,50 @@
 
                 <orderedlist>
                     <listitem>
-                        <para>xxx.xsl : This is the server stylesheets who builds all panels for
+                        <para><emphasis>xxx.xsl</emphasis>: This is the server stylesheets who builds all panels for
                             editing the parameters. XXX is the harvesting type. Usually, it has the
                             following panels: site information, search criteria, options, privileges
                             and categories. </para>
                     </listitem>
                     <listitem>
-                        <para>client-privil-row.xsl : This is used by the Javascript code to add
+                        <para><emphasis>client-privil-row.xsl</emphasis>: This is used by the JavaScript code to add
                             rows in the group’s privileges panel. </para>
                     </listitem>
                     <listitem>
-                        <para>client-result-tip.xsl : This is used by the Javascript code (which
-                            inherits from harvester-view.js) to show the tooltip when the harvesting
-                            has been successfull. </para>
+                        <para><emphasis>client-result-tip.xsl</emphasis>: This is used by the JavaScript code (which
+                            inherits from harvester-view.js) to show the tool tip when the harvesting
+                            has been successful. </para>
                     </listitem>
                     <listitem>
-                        <para>client-search-row.xsl : Used in some harvesting types to generate the
-                            html for the search criteria panel.</para>
+                        <para><emphasis>client-search-row.xsl</emphasis>: Used in some harvesting types to generate the
+                            HTML for the search criteria panel.</para>
                     </listitem>
                 </orderedlist>
-                <para>As you may have guessed, all client side stylesheets (those used by Javascript
+                <para>As you may have guessed, all client side stylesheets (those used by JavaScript
                     code) start with the prefix client-. </para>
                 <para>Another set of stylesheets are located in web/geonetwork/xsl/xml/harvesting
                     and are used by the xml.harvesting.get service. This service is used by the
-                    Javascript code to retrieve all the nodes the system is currently harvesting
+                    JavaScript code to retrieve all the nodes the system is currently harvesting
                     from. This implies that a stylesheet (one for each harvesting type) must be
                     provided to convert from the internal setting structure to an XML structure
                     suitable to clients. </para>
-                <para>The last file to take into consideration contains all localized strings and is
+                <para>The last file to take into consideration contains all localised strings and is
                     located at web/geonetwork/loc/XX/xml/harvesting.xml (where XX refers to a
-                    language code). This file is used by both Javascript code and the server. </para>
+                    language code). This file is used by both JavaScript code and the server. </para>
 
             </section>
         </section>
         <section>
             <title>Data storage</title>
             <para>Harvesting nodes are stored inside the Settings table. Further useful information
-                can be found in chapters ?? and ??. </para>
+                can be found in the chapter Harvesting. </para>
             <para>The SourceNames table is used to keep track of the uuid/name couple when metadata
                 get migrated to different sites. </para>
 
         </section>
         <section>
             <title>Guidelines</title>
-            <para>To add a new harvesting type, follows these steps: </para>
+            <para>To add a new harvesting type, follow these steps: </para>
 
             <orderedlist>
                 <listitem>
@@ -193,9 +193,9 @@
 
             <orderedlist>
                 <listitem>
-                    <para>Every harvesting node (not type) must generate its UUID. This uuid is used
+                    <para>Every harvesting node (not type) must generate its UUID. This UUID is used
                         to remove metadata when the harvesting node is removed and to check if a
-                        metadata (which has another uuid) has been already harvested by another
+                        metadata (which has another UUID) has been already harvested by another
                         node. </para>
                 </listitem>
                 <listitem>
@@ -204,7 +204,7 @@
                 </listitem>
                 <listitem>
                     <para>Every harvesting type must save in the folder images/logos a GIF image
-                        whose name is the node’s uuid. This image must be deleted when the
+                        whose name is the node’s UUID. This image must be deleted when the
                         harvesting node is removed. This is necessary to propagate harvesting
                         information to other GeoNetwork nodes. </para>
                 </listitem>
@@ -226,7 +226,7 @@
                         deactivated. </para>
                 </listitem>
                 <listitem>
-                    <para>If a metadata already exists (its uuid exists) but belong to another node,
+                    <para>If a metadata already exists (its UUID exists) but belong to another node,
                         it must not be updated even if it has been changed. This way the harvesting
                         will not conflict with the other one. As a side effect, this prevent locally
                         created metadata from being changed. </para>

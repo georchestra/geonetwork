@@ -18,10 +18,10 @@
                 which is fast and well suited for most applications. If you need a stronger one, you
                 can install Tomcat from the Apache Software Foundation (http://tomcat.apache.org).
                 It provides load balance, fault tolerance and other corporate needed stuff. If you
-                work for an organization, it is probable that you already have it up and running.
+                work for an organisation, it is probable that you already have it up and running.
                 The tested version is 5.5 but GeoNetwork should work with all other versions. </para>
             <para>Regarding storage, you need a Database Management System (DBMS) like Oracle,
-                MySQL, PostgreSQL and so on. GeoNetwork comes with an embedded one (McKoi) which is
+                MySQL, Postgresql and so on. GeoNetwork comes with an embedded one (McKoi) which is
                 used by default during installation. This DBMS can be used for small or desktop
                 installations, where the speed is not an issue. You can use this DBMS for several
                 thousands of metadata. If you manage more than 10.000 metadata it is better to use a
@@ -30,8 +30,8 @@
             <para>GeoNetwork does not require a strong machine to run. A good performance can be
                 obtained even with 128 Mb of RAM. The suggested amount is 512 Mb. For the hard disk
                 space, you have to consider the space required for the application itself (about 40
-                Mb) and the space required for data maps, which can require 50 Gb or more. A simple
-                disk of 250 Gb should be ok. Maybe you can choose a fast one to reduce backup time
+                Mb) and the space required for data maps, which can require 50 GB or more. A simple
+                disk of 250 GB should be OK. Maybe you can choose a fast one to reduce backup time
                 but GeoNetwork itself does not speed up on a faster disk. You also need some space
                 for the search index which is located in web/WEB-INF/lucene. Even with a lot of
                 metadata the index is small so usually 10-20 Mb of space is enough. </para>
@@ -58,7 +58,7 @@
                     full source. </para>
                 <para>You also need the Ant tool to run the build script. You can download Ant from
                     http://ant.apache.org. Version 1.6.5 works but any other recent version should
-                    be ok. Once installed, you should have the ant command in your path (on Windows
+                    be OK. Once installed, you should have the ant command in your path (on Windows
                     systems, you have to open a shell to check). </para>
                 <para>When all is in place, go inside the GeoNetwork’s root folder (the one where
                     the build.xml file is located) and issue the ant command. You should see an

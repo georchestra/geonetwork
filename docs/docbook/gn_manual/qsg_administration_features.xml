@@ -14,11 +14,11 @@
             <title>Creating new user Groups</title>
 
             <para>The administrator can create new groups of users. User groups can correspond
-                to logical units within an organization. For example groups for Fisheries, Agriculture, Land
+                to logical units within an organisation. For example groups for Fisheries, Agriculture, Land
                 and Water, Health etcetera.</para>
 
             <para>To create new groups you should be logged on with an account that has administrative privileges. 
-                To log in, simply go to the homepage and enter your username and password in the top 
+                To log in, simply go to the home page and enter your username and password in the top 
                 right corner fields, then click on the login button (<xref linkend="login_form"/>).</para>
         
             <important>
@@ -93,7 +93,7 @@
             
             <important>
                 <para>The <literal>Name</literal> should <emphasis>NOT</emphasis> contain spaces! 
-                    You can use the localization functions to provide localised names for groups.</para>
+                    You can use the Localisation functions to provide localised names for groups.</para>
             </important>
             
             <para>Access privileges can be set per metadata record. You can define privileges on a per Group basis. 
@@ -234,7 +234,7 @@
                     <itemizedlist>
                         <listitem>
                             <para>Rights on reviewing metadata content within the own group and
-                                authorizing its publication</para>
+                                authorising its publication</para>
                         </listitem>
                     </itemizedlist>
                 </listitem>
@@ -255,7 +255,7 @@
                 <listitem>
                     <para>Registered User Profile</para>
                     
-                    <para>The Registred User has more access privileges than unlogged users:</para>
+                    <para>The Registered User has more access privileges than non-authenticated Guest users:</para>
                     
                     <itemizedlist>
                         <listitem>

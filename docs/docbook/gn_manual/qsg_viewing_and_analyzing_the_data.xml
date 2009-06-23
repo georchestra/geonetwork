@@ -3,12 +3,12 @@
                       "http://www.docbook.org/xml/4.4/docbookx.dtd">
 <book id="vaatd">
     <chapter id="viewing_and_analyzing_the_data">
-        <title>Viewing and Analyzing the Data</title>
+        <title>Viewing and Analysing the Data</title>
 
         <para>Once you have completed your search, you view details of a particular record by
             clicking on the <emphasis role="bold">Metadata</emphasis> button.</para>
 
-        <para>The metadata profiles used by GNos to present and describe geographic data and general
+        <para>The metadata profiles used by GeoNetwork opensource to present and describe geographic data and general
             documents stored in the catalogue are based on the<emphasis role="bold"> International
                 Standard</emphasis>
             <emphasis role="bold">ISO 19115</emphasis><emphasis role="bold">:2003</emphasis>,
@@ -29,7 +29,7 @@
                 spatial and temporal extent, the spatial representation and reference, the quality
                 and distribution of a geographic dataset.</para>
 
-            <para>The metadata profile is organized in sections and the most important, illustrated
+            <para>The metadata profile is organised in sections and the most important, illustrated
                 in <xref linkend="main_sections"/>, are the: <emphasis role="bold">Identification Section,
                     Distribution Section, Reference System Section, Data Quality Section and
                     Metadata Section</emphasis>. These sections are described here in details.</para>
@@ -67,7 +67,7 @@
                     </figure>
                 </para>
 
-                <para>This section also contains information about the person or organization
+                <para>This section also contains information about the person or organisation
                     responsible for the data and who is considered to be a <emphasis role="bold"
                         >point of contact</emphasis> for the resource i.e. the dataset owner,
                     originator, distributor, publisher, etc. and it provides information on
@@ -231,8 +231,8 @@
             <section>
                 <title>Metadata Information Section</title>
 
-                <para>This section contains information about the metadata itself: the <emphasis
-                        role="bold">Global Unique Identifier</emphasis> (GUID) assigned to the
+                <para>This section contains information about the metadata itself: the 
+                    <glossterm linkend="glos-uuid">Universally Unique Identifier (UUID)</glossterm> assigned to the
                     record (this is the ‘File identifier’), <emphasis role="bold"
                     >language</emphasis> and <emphasis role="bold">character</emphasis>
                     <emphasis role="bold">set</emphasis> used, <emphasis role="bold">date</emphasis>

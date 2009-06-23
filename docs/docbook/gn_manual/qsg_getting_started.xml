@@ -6,8 +6,8 @@
         <title>Getting Started</title>
         <indexterm><primary>login</primary></indexterm>
         
-        <para>Please make sure you have opened the homepage of the GeoNetwork based 
-            catalog.<footnote><para>If you installed the software on your local machine
+        <para>Please make sure you have opened the home page of the GeoNetwork based 
+            catalogue.<footnote><para>If you installed the software on your local machine
             and started it, the default URL is <ulink url="http://localhost:8080/geonetwork"/></para></footnote></para>
     
         <para>There are many different ways to search the catalogue for maps and other geographic
@@ -103,7 +103,7 @@
                 categories is provided to the user to identify data at a more generic level:
                     <emphasis role="bold">Applications</emphasis>, <emphasis role="bold"
                 >Audio/Video</emphasis>, <emphasis role="bold">Case study and best
-                practices</emphasis>, <emphasis role="bold">Conference proceedings</emphasis>,
+                practises</emphasis>, <emphasis role="bold">Conference proceedings</emphasis>,
                     <emphasis role="bold">Datasets</emphasis>, <emphasis role="bold"
                 >Directories</emphasis>, <emphasis role="bold">Interactive resources</emphasis>,
                     <emphasis role="bold">Maps and graphics</emphasis>, <emphasis role="bold">Other
@@ -130,7 +130,7 @@
 
             <para>The advanced search option (<xref linkend="advanced_search"/>) works similarly to the default search.
                 However, you can be more specific in your search criteria as it offers different
-                elements to look for data, each of them focussing one of the following aspects: <emphasis role="bold">What?, Where?, When?</emphasis>
+                elements to look for data, each of them focusing one of the following aspects: <emphasis role="bold">What?, Where?, When?</emphasis>
             </para>
 
             <figure id="advanced_search">
@@ -161,7 +161,7 @@
             <para>In the <emphasis role="bold">WHAT?</emphasis> section the elements are all related
                 to the data content. Through them, in addition to searching only free keywords in
                 the entire metadata content, you can also search directly in the title or abstract
-                fields and add more keywords to customize your search further. You can also specify
+                fields and add more keywords to customise your search further. You can also specify
                 the level of accuracy you wish to reach in performing your search (<xref linkend="adv_what_options"/>).</para>
 
             <itemizedlist>
@@ -305,15 +305,15 @@
 
             <itemizedlist>
                 <listitem>
-                    <para>To limit your queries to only one <emphasis role="bold">Catalog</emphasis>
+                    <para>To limit your queries to only one <emphasis role="bold">Catalogue</emphasis>
                         out of those made available by the installation through the harvesting
-                        process, highlight the catalog of preference or just keep <emphasis
+                        process, highlight the catalogue of preference or just keep <emphasis
                             role="bold">Any</emphasis> selected to search all sites. (See more info
                         about <emphasis role="bold">data harvesting</emphasis> in Section 4 Chapter
                         1 of these guidelines).</para>
                 </listitem>
                 <listitem>
-                    <para>To search for data organized by <emphasis role="bold">Category</emphasis>,
+                    <para>To search for data organised by <emphasis role="bold">Category</emphasis>,
                         such as Applications, Datasets, etc., simply highlight the category you wish
                         to search in from the related drop-down list, otherwise we suggest to leave
                         this field in <emphasis role="bold">Any</emphasis> Category.</para>
@@ -326,7 +326,7 @@
                 </listitem>
             </itemizedlist>
 
-            <para>At last, you can customize the number of output results per page in the <emphasis
+            <para>At last, you can customise the number of output results per page in the <emphasis
                     role="bold">Hits Per Page</emphasis> field. Simply highlight the number of
                 records to be displayed or leave the field set on the default number (10).</para>
 
@@ -348,7 +348,7 @@
         </section>
 
         <section>
-            <title>Analyzing Search Results</title>
+            <title>Analysing Search Results</title>
 
             <para>The output of a search provides you a list of the metadata records that should fit
                 your request. For each record, the result page shows the title, an abstract and the
@@ -412,7 +412,7 @@
                     <para><emphasis role="bold">Interactive Map</emphasis>: The map service is also
                         optional. When this button is shown, an interactive map for this layer is
                         available and, by default, it will be displayed on the map screen of the
-                        simple search. To better visualize the map through the map viewer, <emphasis
+                        simple search. To better visualise the map through the map viewer, <emphasis
                             role="bold">click</emphasis> on <emphasis role="bold">Open Map
                         Viewer</emphasis> on the bottom left of the map screen (<xref linkend="interactive_map"/>).</para>
 
@@ -460,11 +460,11 @@
             <para>GeoNetwork uses a system of <emphasis>Privileges</emphasis> 
                 ,<emphasis>Roles</emphasis> and <emphasis>User groups</emphasis>.</para>
             <para>There are no restrictions for users to search and access
-                <emphasis role="bold">public information</emphasis> in a GeoNetwork opensource based catalog. To get access to
+                <emphasis role="bold">public information</emphasis> in a GeoNetwork opensource based catalogue. To get access to
                 <emphasis role="bold">restricted information</emphasis> or advanced functionality, an account to log
                 in is required. This should be provided by the GeoNetwork
                 administrator.</para>
-            <para>To log in, simply go to the homepage and enter your username and password in the
+            <para>To log in, simply go to the home page and enter your username and password in the
                 dedicated fields on the top right corner, then click the login button.
                 (See <xref linkend="login"/>)</para>
             

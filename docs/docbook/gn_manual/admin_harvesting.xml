@@ -33,7 +33,7 @@
                     <para>A <glossterm linkend="glos-webdav">WebDAV</glossterm> server.</para>
                 </listitem>
                 <listitem>
-                    <para>A <glossterm linkend="glos-csw">CSW</glossterm> 2.0.1 or 2.0.2 catalog server.</para>
+                    <para>A <glossterm linkend="glos-csw">CSW</glossterm> 2.0.1 or 2.0.2 catalogue server.</para>
                 </listitem>
                 <listitem>
                     <para>An <glossterm linkend="glos-oaipmh">OAI-PMH</glossterm> server.</para>
@@ -49,11 +49,11 @@
         <section>
             <title>Mechanism overview</title>
             <para>The harvesting mechanism is based on the concept of a <emphasis>universally unique identifier 
-                (<glossterm linkend="glos-uuid">uuid</glossterm>)</emphasis>.
+                (<glossterm linkend="glos-uuid">UUID</glossterm>)</emphasis>.
                 This is a special id because it is not only
                 unique locally to the node that generated it but it is unique across all the world.
                 It is a combination of the network interface’s <glossterm linkend="glos-mac">MAC address</glossterm>, the current date/time
-                and a random number. Every time you create a new metadata in GeoNetwork, a new uuid
+                and a random number. Every time you create a new metadata in GeoNetwork, a new UUID
                 is generated and assigned to it.</para>
             <para>Another important concept behind the harvesting is the <emphasis>last change date</emphasis>. 
                 Every time you change a metadata, its last change date is
@@ -61,13 +61,13 @@
                 system to find out if the metadata has been modified since last update.</para>
             <para>These two concepts allow GeoNetwork to fetch a remote metadata, check if it has
                 been updated and remove it locally if it has been removed remotely. Furthermore,
-                thanks to uuids, a hierarchy of harvesting nodes can be built where B harvests from
+                thanks to UUIDs, a hierarchy of harvesting nodes can be built where B harvests from
                 C and A harvests from B. Even loops can be created because harvested metadata cannot
                 be modified.</para>
 
         </section>
         <section>
-            <title>Harvesting lifecycle</title>
+            <title>Harvesting life cycle</title>
             <para>When a harvesting node is set, there is no harvested metadata. During the first
                 run, all remote matching metadata are retrieved and stored locally. After the first
                 run, only changed metadata are retrieved. Harvested metadata are not editable for
@@ -101,7 +101,7 @@
         </section>
         <section>
             <title>Multiple harvesting and hierarchies</title>
-            <para>Catalogues that provide uuids for metadata (for example GeoNetwork and a CSW
+            <para>Catalogues that provide UUIDs for metadata (for example GeoNetwork and a CSW
                 server) can be harvested several times without having to take care about metadata
                 overlap. This allows the possibility to perform a thematic search and a metadata
                 belonging to multiple searches is harvested only once and not duplicated.</para>
@@ -125,7 +125,7 @@
             </orderedlist>
             <para>In this scenario, Node (D) will get the same metadata (a) from all 3 nodes (A),
                 (B), (C). The metadata will flow to (D) following 3 different paths but thanks to
-                its uuid only one copy will be stored. When (a) will be changed in (A), a new
+                its UUID only one copy will be stored. When (a) will be changed in (A), a new
                 version will flow to (D) but, thanks to the change date, the copy in (D) will be
                 updated with the most recent version.</para>
 
@@ -158,8 +158,8 @@
                             this one.</para>
                     </listitem>
                     <listitem>
-                        <para>The metadata uuid is taken from the info.xml file of the MEF bundle.
-                            Any uuid stored inside the metadata will be overwritten with this
+                        <para>The metadata UUID is taken from the info.xml file of the MEF bundle.
+                            Any UUID stored inside the metadata will be overwritten with this
                         one.</para>
                     </listitem>
                 </orderedlist>
@@ -171,8 +171,8 @@
                 <orderedlist>
                     <listitem>
                         <para>The same metadata could be harvested several times by different
-                            harvesting nodes. Anyway, this is not a good practice because every copy
-                            of the metadata will have a different uuid and the system will fill with
+                            harvesting nodes. Anyway, this is not a good practise because every copy
+                            of the metadata will have a different UUID and the system will fill with
                             different copies of the same metadata.</para>
                     </listitem>
                 </orderedlist>
@@ -198,12 +198,12 @@
 
                 <orderedlist>
                     <listitem>
-                        <para>The id of the remote server must be a uuid. If not, metadata can be
+                        <para>The id of the remote server must be a UUID. If not, metadata can be
                             harvested but during hierarchical propagation id clashes could corrupt
                             harvested metadata.</para>
                     </listitem>
                     <listitem>
-                        <para>During harvesting, GeoNetwork will try to autodetect the schema of
+                        <para>During harvesting, GeoNetwork will try to auto detect the schema of
                             each metadata. If the schema is not supported the metadata is
                         skipped.</para>
                     </listitem>
@@ -217,8 +217,8 @@
                     <listitem>
                         <para>Every time the harvester runs, it will remove previously harvested information
                         and create new ones. GeoNetwork will generate the id for all metadata (both service and datasets).
-                        Therefor, for datasets, if the metadata is created using a remote xml document (ie.
-                        if a MetadataUrl tag is in the GetCapability document), the uuid of 
+                        Therefor, for datasets, if the metadata is created using a remote XML document (ie.
+                        if a MetadataUrl tag is in the GetCapability document), the UUID of 
                         the document is used.</para>
                     </listitem>
                     <listitem>
@@ -251,14 +251,17 @@
                 
             <orderedlist>
                 <listitem>
-                	<para><emphasis>Select</emphasis> This is just a checkbox to select one or more nodes. The selected nodes
+                	<para><emphasis>Select</emphasis> This is just a check box to select one or more nodes. The selected nodes
                 		will be affected by the first row of buttons (start, stop, run, remove). For
         		        example, if you select 3 nodes and press the Remove button, these 3 nodes will be
 		                removed.</para>
                 </listitem>
                 <listitem>
-            		<para><emphasis>Name</emphasis> This is the node’s name provided by the administrator. Type The node’s
-                		harvesting type choosed when the node was created (geonetwork, web folder etc...).</para>
+            		<para><emphasis>Name</emphasis> This is the node’s name provided by the administrator.</para>
+                </listitem>
+                <listitem>
+                    <para><emphasis>Type</emphasis> The node’s harvesting type chosen when the node was 
+                        created (GeoNetwork, web folder etc...).</para>
                 </listitem>
                 <listitem>
             		<para><emphasis>Status</emphasis> This is an icon that reflects the node’s current status. See <xref
@@ -268,7 +271,7 @@
                 <listitem>
             		<para><emphasis>Errors</emphasis> This column reflects the status of the last harvesting run,
                 		which could have succeeded or not. The result is reflected on this icon and a
-                		tooltip will show detailed information. See <xref
+                		tool tip will show detailed information. See <xref
                 		linkend="admin_harvesting_status_2"/> for all different icons.</para>
                 </listitem>
                 <listitem>
@@ -296,8 +299,8 @@
             </figure>
 
             <para>The bottom side of the page contains two rows of buttons. The first row contains buttons 
-                that can operate on a set of nodes. You can select the nodes using the checkbox on the first 
-                column and then press the proper button. When the button finishes its action, the checkboxes 
+                that can operate on a set of nodes. You can select the nodes using the check box on the first 
+                column and then press the proper button. When the button finishes its action, the check boxes 
                 are cleared. Here is the meaning of each button:</para>
 
             <orderedlist>
@@ -309,15 +312,15 @@
                 <listitem>
             <para><emphasis>Deactivate</emphasis> Stops harvesting from a node. Please notice that this does not mean that
                 a currently running harvesting will be stopped but it means that this node will be
-                ignored during future harvestings.</para>
+                ignored during future harvesting.</para>
                 </listitem>
                 <listitem>
             <para><emphasis>Run</emphasis> This button simply tells the harvesting
-                engine to start harvesting immediately. This is usefull for testing during the
+                engine to start harvesting immediately. This is useful for testing during the
                 harvesting setup.</para>
                 </listitem>
                 <listitem>
-            <para><emphasis>Remove</emphasis> Remove all currently selected nodes. A dialog will ask the
+            <para><emphasis>Remove</emphasis> Remove all currently selected nodes. A dialogue will ask the
             user to confirm the action.</para>
                 </listitem>
             </orderedlist>
@@ -332,8 +335,8 @@
             <para><emphasis>Add</emphasis> This button allows to create new harvesting nodes.</para>
                 </listitem>
                 <listitem>
-            <para><emphasis>Refresh</emphasis> Refreshes the current list of nodes quering the server. This
-                can be usefull to see if the harvesting list has been altered by someone else or if
+            <para><emphasis>Refresh</emphasis> Refreshes the current list of nodes querying the server. This
+                can be useful to see if the harvesting list has been altered by someone else or if
                 any harvesting process started.</para>
                 </listitem>
             </orderedlist>
@@ -428,8 +431,8 @@
                                </para>
                             </entry>
                             <entry>
-                                <para>The harvesting was ok, no errors were found. In this case, a
-                                    tooltip will show some harvesting results (like the number of
+                                <para>The harvesting was OK, no errors were found. In this case, a
+                                    tool tip will show some harvesting results (like the number of
                                     harvested metadata etc...).</para>
                             </entry>
                         </row>
@@ -441,7 +444,7 @@
                             </entry>
                             <entry>
                                 <para>The harvesting was aborted due to an unexpected condition. In
-                                    this case, a tooltip will show some information about the
+                                    this case, a tool tip will show some information about the
                                 error.</para>
                             </entry>
                         </row>
@@ -451,7 +454,7 @@
 
             <section>
                 <title>Harvesting result tips</title>
-                <para>If the harvesting succeeds, a tooltip will show detailed information about the
+                <para>If the harvesting succeeds, a tool tip will show detailed information about the
                     harvesting process. This way you can check if the harvester worked as expected
                     or if there is something to fix to the harvesting parameters or somewhere else.
                     The result tip is like a table, where each row refers to</para>
@@ -463,12 +466,12 @@
                     updated because their last change date was different from the remote one.
                     Unchanged Local metadata left unchanged. Their remote last change date did not
                     change. Unknown schema Number of skipped metadata because their format was not
-                    recognized by GeoNetwork. Unretrievable Number of metadata that were ready to be
+                    recognised by GeoNetwork. Unretrievable Number of metadata that were ready to be
                     retrieved from the remote server but for some reason there was an exception
                     during the data transfer process. Bad Format Number of skipped metadata because
                     they did not have a valid XML representation. Does not validate Number of
                     metadata which did not validate against their schema. These metadata were
-                    harvestable with success but skipped due to the validation process. Usually,
+                    harvested with success but skipped due to the validation process. Usually,
                     there is an option to force validation: if you want to harvest these metadata
                     anyway, simply turn it off.</para>
 
@@ -731,14 +734,14 @@
                 the contents of a web page (a list of files) with their change date.</para>
             	</listitem>
             	<listitem>
-            <para><emphasis>Catalog Services for the Web 2.0</emphasis> The Open Geospatial Consortium 
+            <para><emphasis>Catalogue Services for the Web 2.0</emphasis> The Open Geospatial Consortium 
             	Catalogue Services for the Web and it is a search interface for catalogues developed by 
             	the Open Geospatial Consortium. GeoNetwork implements version 2.0 of this protocol.</para>
             	</listitem>
             	<listitem>
             <para><emphasis>GeoNetwork v2.0 remote node</emphasis> GeoNetwork 2.1 introduced a new 
             	powerful harvesting engine which is not compatible with GeoNetwork version 2.0 based 
-            	catalogs. Old 2.0 servers can still harvest from 2.1 servers but harvesting metadata 
+            	catalogues. Old 2.0 servers can still harvest from 2.1 servers but harvesting metadata 
             	from a v2.0 server requires this harvesting type. This harvesting type is 
             	deprecated.</para>
             	</listitem>
@@ -768,7 +771,7 @@
                 <title>Adding a GeoNetwork node</title>
                 <para>This type of harvesting allows you to connect to a GeoNetwork node, perform a
                     simple search as in the main page and retrieve all matched metadata. The search
-                    is usefull because it allows you to focus only on metadata of interest. Once you
+                    is useful because it allows you to focus only on metadata of interest. Once you
                     add a node of this type, you will get a page like the one shown in <xref
                         linkend="admin_harvesting_gn"/>. The meaning of the options is the
                     following:</para>
@@ -813,7 +816,7 @@
                         <para>Copy: Privileges are copied.</para>
                     </listitem>
                     <listitem>
-                        <para>Copy to intranet: Privileges are copied but to the Intranet group.
+                        <para>Copy to Intranet: Privileges are copied but to the Intranet group.
                             This way public metadata can be made protected.</para>
                     </listitem>
                     <listitem>
@@ -826,7 +829,7 @@
                 <orderedlist>
                     <listitem>
                         <para>Copy: Privileges are copied only if there is a local group with the
-                            same (not localized) name as the remote group.</para>
+                            same (not localised) name as the remote group.</para>
                     </listitem>
                     <listitem>
                         <para>Create and copy: Privileges are copied. If there is no local group
@@ -861,7 +864,7 @@
                 <para>Name This is a short description of the node. It will be shown in the
                     harvesting main page. URL The remote URL from which metadata will be harvested.
                     Each file found that ends with .xml will indicate a metadata and will be
-                    retrieved, converted into xml and imported. Icon Just an icon to assign to
+                    retrieved, converted into XML and imported. Icon Just an icon to assign to
                     harvested metadata. The icon will be used when showing search results. Use
                     account Account credentials for a basic HTTP authentication toward the remote
                     URL. Options General harvesting options:</para>
@@ -905,12 +908,12 @@
                     the web DAV harvesting. In this case the URL points to the capabilities document
                     of the CSW server. This document is used to discover the location of the
                     services to call to query and retrieve metadata. Search Using the Add button,
-                    you can add several search criteria. You can query only the fields recognized by
+                    you can add several search criteria. You can query only the fields recognised by
                     the CSW protocol. Options General harvesting options:</para>
                 <para>Every This is the harvesting period. The smallest value is 1 minute while the
-                    greatest value si 100 days. One run only If this option is checked, the
+                    greatest value is 100 days. One run only If this option is checked, the
                     harvesting will do only one run after which it will become inactive. Privileges
-                    Please, see web DAV harvesting. Catagories Please, see web DAV harvesting.</para>
+                    Please, see web DAV harvesting. Categories Please, see web DAV harvesting.</para>
                 <para>At the bottom of the page there are the following buttons:</para>
                 <para>Back Go back to the main harvesting page. The harvesting is not added. Save
                     Saves node’s data creating a new harvesting node. Then it will go back to the
@@ -921,7 +924,7 @@
                 <title>Adding an OAI-PMH node</title>
                 <para>An OAI-PMH server implements a harvesting protocol that GeoNetwork, acting as
                     a client, can use to harvest metadata. If you are requesting the oai_dc output
-                    format, GeoNetwork will convert it into its dublin core format. Other formats
+                    format, GeoNetwork will convert it into its Dublin Core format. Other formats
                     can be harvested only if GeoNetwork supports them and is able to autodetect the
                     schema from the metadata. <xref linkend="admin_harvesting_oaipmh"/> shows all
                     available options, which are:</para>
@@ -979,9 +982,9 @@
                         <emphasis>set</emphasis> and <emphasis>prefix</emphasis> drop down lists
                     will be empty. They will contain only the previously selected entries, plus the
                     default ones if they were not selected. Furthermore, the set name will not be
-                    localized but the internal code string will be displayed. You have to press the
+                    localised but the internal code string will be displayed. You have to press the
                     retrieve info button again to connect to the remote server and retrieve the
-                    localized name and all set and prefix information.</para>
+                    localised name and all set and prefix information.</para>
             </section>
             <section>
                 <title>Adding an OGC Service (ie. WMS, WFS, WCS)</title>
@@ -1000,7 +1003,7 @@
                     </mediaobject>
                 </figure>
 
-                <para>Site: Name is the name of the catalog and will be one of the search criteria. 
+                <para>Site: Name is the name of the catalogue and will be one of the search criteria. 
                     The type of OGC service indicates if the harvester has to query for a specific kind of service.
                     Supported type are WMS (1.0.0 and 1.1.1), WFS (1.0.0 and 1.1.0, WCS (1.0.0) and WPS (0.4.0 and
                     1.0.0). The service URL is the URL of the service to contact (without parameters like 
@@ -1015,9 +1018,9 @@
                     The type of import allows to define if the harvester has to produce only one metadata
                     for the service or if it should loop over datasets served by the service and produce
                     also metadata for each datasets. For each dataset the second checkbox allow to generate
-                    metadata for the dataset using an XML document referenced in the MetadataURL attribute
+                    metadata for the dataset using an XML document referenced in the MetadataUrl attribute
                     of the dataset in the GetCapability document. If this document is loaded but it is not valid
-                    (ie. unknown schema, bad xml format), the GetCapability document is used.
+                    (ie. unknown schema, bad XML format), the GetCapability document is used.
                     For WMS, thumbnails could be created during harvesting.
                 </para>
                 <para> 

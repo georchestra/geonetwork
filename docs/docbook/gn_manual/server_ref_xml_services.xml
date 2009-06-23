@@ -33,7 +33,7 @@
                         could be used to send XML documents, this possibility is not considered on
                         the server side.</para>
                     <para><emphasis>XML</emphasis> The content type is <literal>application/xml</literal>.
-                        This is the common case when the client is not a browser but a specialized
+                        This is the common case when the client is not a browser but a specialised
                         client. The request is a pure XML document in string form, encoded using the
                         encoding specified into the prologue of the XML document. Using this form,
                         any type of request can be made (structured or not) so any service can be
@@ -313,12 +313,12 @@
                 <para><xref linkend="mef_export_exception"/> shows an example of exception generated
                     by the mef.export service. The service complains about a missing parameter, as
                     you can see from the content of the id attribute. The object element contains
-                    the xml request with an unknown test paremeter while the mandatory uuid
+                    the xml request with an unknown test parameter while the mandatory UUID
                     parameter (as specified by the message element) is missing.</para>
                 <figure id="mef_export_exception">
                     <title>An example of generated exception</title>
                     <programlisting><?db-font-size 75% ?><![CDATA[<error>
-    <message>uuid</message> 
+    <message>UUID</message> 
     <class>MissingParameterEx</class> 
     <stack> 
         <at class="jeeves.utils.Util" file="Util.java" line="66" 
@@ -354,26 +354,33 @@
                     interface to retrieve information about a remote node.</para>
                 <section>
                     <title>Request</title>
-                    <para>The xml request should contain at least one type element to indicates the
+                    <para>The XML request should contain at least one type element to indicates the
                         kind of information to retrieve. More type elements can be specified to
                         obtain more information at once. The set of allowed values are:</para>
-                    <para>site Returns general information about the site like its name, id, etc...
-                        categories Returns all site’s categories groups Returns all site’s groups
-                        visible to the requesting user. If the user does not authenticate
-                        theirselves, only the intranet and the all groups are visible. operations
-                        Returns all possible operations on metadata regions Returns all geographical
-                        regions usable for queries sources Returns all geonetwork sources that the
-                        remote site knows. The result will contain:</para>
+                    <orderedlist>
+                        <listitem><para><emphasis>site</emphasis>: Returns general information about the site like its name, id, etc...</para></listitem>
+                        
+                        <listitem><para><emphasis>categories</emphasis>: Returns all site’s categories</para></listitem> 
+                        <listitem><para><emphasis>groups</emphasis>: Returns all site’s groups visible to the requesting user. If the user does not authenticate
+                        himself, only the Intranet and the all groups are visible. </para></listitem>
+                        
+                        <listitem><para><emphasis>operations</emphasis>: Returns all possible operations on metadata</para></listitem> 
+                        
+                        <listitem><para><emphasis>regions</emphasis>: Returns all geographical regions usable for queries</para></listitem> 
+                        
+                        <listitem><para><emphasis>sources</emphasis>: Returns all GeoNetwork sources that the remote site knows.</para></listitem> 
+                    </orderedlist>
+                        <para>The result will contain:</para>
                     <itemizedlist>
                         <listitem>
                             <para>The remote node’s name and siteId</para>
                         </listitem>
                         <listitem>
-                            <para>All source uuids and names that have been discovered through
+                            <para>All source UUIDs and names that have been discovered through
                                 harvesting.</para>
                         </listitem>
                         <listitem>
-                            <para>All source uuids and names of metadata that have been imported
+                            <para>All source UUIDs and names of metadata that have been imported
                                 into the remote node through the MEF format.</para>
                         </listitem>
                     </itemizedlist>
@@ -386,10 +393,10 @@
                             <para>User administrators can see all users they can administrate and
                                 all other user administrators in the same group set. The group set
                                 is defined by all groups visible to the user administration, beside
-                                the All and the intranet groups.</para>
+                                the All and the Intranet groups.</para>
                         </listitem>
                         <listitem>
-                            <para>A logged user can se only theirself.</para>
+                            <para>An authenticated user can see only himself.</para>
                         </listitem>
                         <listitem>
                             <para>A guest cannot see any user.</para>
@@ -429,11 +436,11 @@
                                 </listitem>
                                 <listitem>
                                     <para><emphasis>platform</emphasis>: This is just a container to hold the site’s
-                                        backend</para>
+                                        back end</para>
                                     <itemizedlist>
                                         <listitem>
-                                            <para><emphasis>name</emphasis>: Plaform name. For GeoNetwork installations
-                                                it must be geonetwork.</para>
+                                            <para><emphasis>name</emphasis>: Platform name. For GeoNetwork installations
+                                                it must be GeoNetwork.</para>
                                         </listitem>
                                         <listitem>
                                             <para><emphasis>version</emphasis>: Platform version, given in the X.Y.Z
@@ -451,7 +458,7 @@
                                 <title>Example site information</title>
                                 <programlisting><?db-font-size 75% ?><![CDATA[<site> 
     <name>My site</name> 
-    <organization>FAO</organization> 
+    <organisation>FAO</organization> 
     <siteId>0619cc50-708b-11da-8202-000d9335906e</siteId> 
     <platform> 
         <name>geonetwork</name> 
@@ -466,14 +473,14 @@
                                 <listitem>
                                     <para><emphasis>category [0..n]</emphasis>: A single GeoNetwork’s category. This
                                         element has an id attribute which represents the local
-                                        identifier for the category. It can be usefull to a client
+                                        identifier for the category. It can be useful to a client
                                         to link back to this category.</para>
                                     <itemizedlist>
                                         <listitem>
                                             <para><emphasis>name</emphasis>: Category’s name</para>
                                         </listitem>
                                         <listitem>
-                                            <para><emphasis>label</emphasis>: The localized labels used to show the
+                                            <para><emphasis>label</emphasis>: The localised labels used to show the
                                                 category on screen. See <xref
                                                   linkend="xml_response_categories"/>.</para>
                                         </listitem>
@@ -497,8 +504,8 @@
                             <para><emphasis>groups</emphasis>: This is the container for groups</para>
                             <itemizedlist>
                                 <listitem>
-                                    <para><emphasis>group [2..n]</emphasis>: This is a Geonetwork group. There are at
-                                        least the internet and intranet groups. This element has an
+                                    <para><emphasis>group [2..n]</emphasis>: This is a GeoNetwork group. There are at
+                                        least the Internet and Intranet groups. This element has an
                                         id attribute which represents the local identifier for the
                                         group.</para>
                                     <itemizedlist>
@@ -517,7 +524,7 @@
                                                 downloaded</para>
                                         </listitem>
                                         <listitem>
-                                            <para><emphasis>label</emphasis>: The localized labels used to show the
+                                            <para><emphasis>label</emphasis>: The localised labels used to show the
                                                 group on screen. See <xref
                                                   linkend="xml_response_groups"/>.</para>
                                         </listitem>
@@ -554,7 +561,7 @@
                                                 operations.</para>
                                         </listitem>
                                         <listitem>
-                                            <para><emphasis>label</emphasis>: The localized labels used to show the
+                                            <para><emphasis>label</emphasis>: The localised labels used to show the
                                                 operation on screen. See <xref
                                                   linkend="xml_response_operations"/>.</para>
                                         </listitem>
@@ -599,7 +606,7 @@
                                             </para>
                                         </listitem>
                                         <listitem>
-                                            <para><emphasis>label</emphasis>: The localized labels used to show the
+                                            <para><emphasis>label</emphasis>: The localised labels used to show the
                                                 region on screen. See <xref
                                                   linkend="xml_response_regions"/>.</para>
                                         </listitem>
@@ -632,7 +639,7 @@
                                             <para><emphasis>name</emphasis>: Source’s name</para>
                                         </listitem>
                                         <listitem>
-                                            <para><emphasis>uuid</emphasis>: Source’s unique identifier</para>
+                                            <para><emphasis>UUID</emphasis>: Source’s unique identifier</para>
                                         </listitem>
                                     </itemizedlist>
                                 </listitem>
@@ -642,7 +649,7 @@
                                 <programlisting><?db-font-size 75% ?><![CDATA[<sources> 
     <source> 
         <name>My Host</name> 
-        <uuid>0619cc50-708b-11da-8202-000d9335906e</uuid> 
+        <UUID>0619cc50-708b-11da-8202-000d9335906e</uuid> 
     </source> 
 </sources>]]></programlisting>
                             </figure>
@@ -718,11 +725,11 @@
                     </itemizedlist>
                 </section>
                 <section>
-                    <title>Localized entities</title>
-                    <para>Localized entities have a general label element which contains the
-                        localized strings in all supported languages. This element has as many
+                    <title>localised entities</title>
+                    <para>localised entities have a general label element which contains the
+                        localised strings in all supported languages. This element has as many
                         children as the supported languages. Each child has a name that reflect the
-                        language code while its content is the localized text. Here is an example of
+                        language code while its content is the localised text. Here is an example of
                         such elements:</para>
                     <programlisting><?db-font-size 75% ?><![CDATA[<label> 
     <en>Editors</en> 
@@ -733,8 +740,8 @@
             </section>
             <section>
                 <title>xml.forward</title>
-                <para>This is just a router service. It is used by Javascript code to connect to a
-                    remote host because a Javascript program cannot access a machine other than its
+                <para>This is just a router service. It is used by JavaScript code to connect to a
+                    remote host because a JavaScript program cannot access a machine other than its
                     server. For example, it is used by the harvesting web interface to query a
                     remote host and retrieve the list of site ids.</para>
                 <section>
@@ -753,16 +760,22 @@
     <params>...</params> 
 </request>]]></programlisting>
                     </figure>
-                    <para><emphasis>where</emphasis>:</para>
-                    <para><emphasis>site</emphasis> A container for site information where the request will be forwarded.</para>
-                    <para><emphasis>url</emphasis> Indicates the remote url to connect to. Usually points to a
-                        GeoNetwork’s xml service but can point to any XML service. type Its only
-                        purpose is to discriminate geonetwork nodes which use a different
-                        authentication scheme. The value geonetwork indicates these nodes. Any other
-                        value, or if the element is missing, indicate a generic node. <emphasis>account</emphasis> This
-                        element is optional. If present, the provided credentials will be used to
-                        authenticate to the remote site. <emphasis>params</emphasis> This is just a container for the
-                        request that must be executed remotely.</para>
+                    <para><emphasis>Where</emphasis>:</para>
+                    <orderedlist>
+                    <listitem><para><emphasis>site</emphasis>: A container for site information where the request will be forwarded.</para></listitem>
+                    <listitem><para><emphasis>url</emphasis>: Refers to the remote URL to connect to. Usually it points to a
+                        GeoNetwork XML service but it can point to any XML service. </para></listitem>
+                        
+                        <listitem><para><emphasis>type</emphasis>: Its only purpose is to distinguish GeoNetwork nodes which use a different
+                        authentication scheme. The value GeoNetwork refers to these nodes. Any other
+                        value, or if the element is missing, refers to a generic node.</para></listitem> 
+                        
+                        <listitem><para><emphasis>account</emphasis>: This element is optional. If present, the provided credentials will be used to
+                        authenticate to the remote site.</para></listitem>
+                        
+                        <listitem><para><emphasis>params</emphasis>: This is just a container for the request that must be executed remotely.</para></listitem>
+                    </orderedlist>
+                    
                     <figure id="xml_server_info_request">
                         <title>Request for info from a remote server</title>
                         <programlisting><?db-font-size 75% ?><![CDATA[<request> 
@@ -811,12 +824,12 @@
                         nodes container. You get as many node elements as are configured. <xref
                             linkend="xml_harvesting_get"/> shows an example of output.</para>
                     <figure id="xml_harvesting_get">
-                        <title>Example of an xml.harvesting.get response for a geonetwork node</title>
+                        <title>Example of an xml.harvesting.get response for a GeoNetwork node</title>
                         <programlisting><?db-font-size 75% ?><![CDATA[<nodes> 
     <node id="125" type="geonetwork"> 
         <site> 
             <name>test 1</name> 
-            <uuid>0619cc50-708b-11da-8202-000d9335aaae</uuid> 
+            <UUID>0619cc50-708b-11da-8202-000d9335aaae</uuid> 
             <host>localhost</host> 
             <port>8080</port> 
             <servlet>geonetwork</servlet> 
@@ -835,8 +848,8 @@
                 <digital>false</digital> 
                 <hardcopy>false</hardcopy> 
                 <source> 
-                    <uuid>0619cc50-708b-11da-8202-000d9335906e</uuid> 
-                    <name>Food and Agriculture Organization</name> 
+                    <UUID>0619cc50-708b-11da-8202-000d9335906e</uuid> 
+                    <name>Food and Agriculture organisation</name> 
                 </source> 
             </search> 
         </searches> 
@@ -860,13 +873,13 @@
 </nodes>]]></programlisting>
                     </figure>
                     <para>If you specify an id, you get a response like that one in <xref
-                            linkend="xml_response_webdav"/> (for a web DAV node).</para>
+                            linkend="xml_response_webdav"/> (for a WebDAV node).</para>
                     <figure id="xml_response_webdav">
                         <title>Example of an xml.harvesting.get response for a WebDAV node</title>
                         <programlisting><?db-font-size 75% ?><![CDATA[<node id="165" type="webdav"> 
     <site> 
         <name>test 1</name> 
-        <uuid>0619cc50-708b-11da-8202-000d9335aaae</uuid> 
+        <UUID>0619cc50-708b-11da-8202-000d9335aaae</uuid> 
         <url>http://www.mynode.org/metadata</url> 
         <icon>default.gif</icon> 
         <account> 
@@ -918,7 +931,7 @@
                                                 name used to describe the harvesting.</para>
                                         </listitem>
                                         <listitem>
-                                            <para><emphasis>uuid (string)</emphasis>: This is a
+                                            <para><emphasis>UUID (string)</emphasis>: This is a
                                                 system generated unique identifier associated to the
                                                 harvesting node. This is used as the source field
                                                 into the Metadata table to group all metadata from
@@ -1064,7 +1077,7 @@
                         (after the parameter’s type) and are used when the parameter is omitted. If
                         no default is provided, the parameter is mandatory. If the type is boolean,
                         only the true and false strings are allowed.</para>
-                    <para>All harvesting nodes share a common XML structure that must be honored.
+                    <para>All harvesting nodes share a common XML structure that must be honoured.
                         Please, refer to the previous section for elements explanation. Each node
                         type can add extra information to that structure. The common structure is
                         here described:</para>
@@ -1157,7 +1170,7 @@
                         following XML information should be provided:</para>
                     <itemizedlist>
                         <listitem>
-                            <para><emphasis>node</emphasis>: The type attribute is mandatory and must be geonetwork.</para>
+                            <para><emphasis>node</emphasis>: The type attribute is mandatory and must be GeoNetwork.</para>
                             <itemizedlist>
                                 <listitem>
                                     <para><emphasis>site</emphasis></para>
@@ -1172,7 +1185,7 @@
                                         </listitem>
                                         <listitem>
                                             <para><emphasis>servlet (string,
-                                                ’geonetwork’)</emphasis>: The servlet name choosen in the
+                                                ’geonetwork’)</emphasis>: The servlet name chosen in the
                                                 remote site.</para>
                                         </listitem>
                                     </itemizedlist>
@@ -1248,8 +1261,8 @@
                                                 exist. copyToIntranet works only for the remote
                                                 group named all, which represents the public group.
                                                 This policy copies privileges of the remote group
-                                                named <emphasis>all</emphasis> to the local intranet
-                                                group. This is usefull to restrict metadata
+                                                named <emphasis>all</emphasis> to the local Intranet
+                                                group. This is useful to restrict metadata
                                             access.</para>
                                         </listitem>
                                     </itemizedlist>
@@ -1260,7 +1273,7 @@
                     <para><xref linkend="xml_request_harvesting_add"/> shows an example of an XML
                         request to create a GeoNetwork node.</para>
                     <figure id="xml_request_harvesting_add">
-                        <title>Example of an xml.harvesting.add request for a geonetwork node</title>
+                        <title>Example of an xml.harvesting.add request for a GeoNetwork node</title>
                         <programlisting><?db-font-size 75% ?><![CDATA[<node type="geonetwork"> 
     <site> 
         <name>South Africa</name> 
@@ -1302,7 +1315,7 @@
                         provided.</para>
                     <itemizedlist>
                         <listitem>
-                            <para><emphasis>node</emphasis>: The type attribute is mandatory and must be webdav.</para>
+                            <para><emphasis>node</emphasis>: The type attribute is mandatory and must be WebDAV.</para>
                             <itemizedlist>
                                 <listitem>
                                     <para>site</para>
@@ -1565,12 +1578,17 @@
                     </listitem>
                 </itemizedlist>
                 <para>So, you need to specify only the elements you want to change. However, there
-                    are some exceptions:</para>
-                <para>privileges If this element is omitted, privileges will not be changed. If
-                    specified, new privileges will replace the old ones. categories Like the
-                    previous one. searches Some harvesting types support multiple searches on the
+                are some exceptions:</para>
+                <orderedlist>
+                
+                <listitem><para><emphasis>privileges</emphasis>: If this element is omitted, privileges will not be changed. If
+                    specified, new privileges will replace the old ones.</para> </listitem>
+                    <listitem><para><emphasis>categories</emphasis>: Like the previous one.</para></listitem> 
+                    <listitem><para><emphasis>searches</emphasis>: Some harvesting types support multiple searches on the
                     same remote note. When supported, the updated behaviour should be like the
-                    previous ones.</para>
+                    previous ones.</para></listitem>
+                </orderedlist>
+                
                 <para>Note that you cannot change the type of an node once it has been created.</para>
                 <section>
                     <title>Request</title>
@@ -1588,11 +1606,14 @@
                 <para>These services are put together because they share a common request interface.
                     Their purpose is obviously to remove, start, stop or run a harvesting node. In
                     detail:</para>
-                <para>start When created, a node is in the inactive state. This operation makes it
-                    active, that is the countdown is started and the harvesting will be performed at
-                    the timeout. stop Makes a node inactive. Inactive nodes are never harvested. run
-                    Just start the harvester now. Used to test the harvesting.</para>
-                <section>
+                    <orderedlist>
+                        <listitem><para><emphasis>start</emphasis>: When created, a node is in the inactive state. This operation makes it
+                            active, that is the countdown is started and the harvesting will be performed at
+                            the timeout.</para></listitem>
+                        <listitem><para><emphasis>stop</emphasis>: Makes a node inactive. Inactive nodes are never harvested.</para></listitem>
+                        <listitem><para><emphasis>run</emphasis>: Just start the harvester now. Used to test the harvesting.</para></listitem>
+                    </orderedlist>
+                    <section>
                     <title>Request</title>
                     <para>A set of ids to operate on. Example:</para>
                     <programlisting><?db-font-size 75% ?><![CDATA[<request>
@@ -1612,7 +1633,7 @@
     <id status="not-found">456</id>
     <id status="inactive">789</id>
 </request>]]></programlisting>
-                    <para><xref linkend="table_service_status"/> summarizes, for each service, the
+                    <para><xref linkend="table_service_status"/> summarises, for each service, the
                         possible status values.</para>
                     <table frame="all" id="table_service_status">
                         <title>Summary of status values</title>
@@ -1754,7 +1775,7 @@
             <section>
                 <title>Introduction</title>
                 <para>The GeoNetwork’s configuration is made up of a set of parameters that can be
-                    changed to accomodate any installation need. These parameters are subdivided
+                    changed to accommodate any installation need. These parameters are subdivided
                     into 2 groups:</para>
                 <itemizedlist>
                     <listitem>
@@ -1779,7 +1800,7 @@
                 <section>
                     <title>Response</title>
                     <para>The response is an XML tree similar to the system hierarchy into the
-                        settings structure. See ?? for more information. The response has the
+                        settings structure. The response has the
                         following elements:</para>
                     <itemizedlist>
                         <listitem>
@@ -1789,7 +1810,7 @@
                                     <para><emphasis>name</emphasis>: Site’s name.</para>
                                 </listitem>
                                 <listitem>
-                                    <para><emphasis>organization</emphasis>: Site’s organization name.</para>
+                                    <para><emphasis>organisation</emphasis>: Site’s organisation name.</para>
                                 </listitem>
                             </itemizedlist>
                         </listitem>
@@ -1806,7 +1827,7 @@
                             </itemizedlist>
                         </listitem>
                         <listitem>
-                            <para><emphasis>intranet</emphasis>: Information about the intranet of the organization.</para>
+                            <para><emphasis>Intranet</emphasis>: Information about the Intranet of the organisation.</para>
                             <itemizedlist>
                                 <listitem>
                                     <para><emphasis>network</emphasis>: IP address that specifies the network.</para>
@@ -1851,7 +1872,7 @@
                             </itemizedlist>
                         </listitem>
                         <listitem>
-                            <para><emphasis>feedback</emphasis>: A container for feeback information</para>
+                            <para><emphasis>feedback</emphasis>: A container for feedback information</para>
                             <itemizedlist>
                                 <listitem>
                                     <para><emphasis>email</emphasis>: Administrator’s email address</para>
@@ -1939,13 +1960,13 @@
                         <programlisting><?db-font-size 75% ?><![CDATA[<config> 
     <site> 
         <name>dummy</name> 
-        <organization>dummy</organization> 
+        <organisation>dummy</organization> 
     </site> 
     <server> 
         <host>localhost</host> 
         <port>8080</port> 
     </server> 
-    <intranet> 
+    <Intranet> 
         <network>127.0.0.1</network> 
         <netmask>255.255.255.0</netmask> 
     </intranet> 
@@ -2339,7 +2360,7 @@
                 </section>
                 <section>
                     <title>Response</title>
-                    <para>On success, the service returns a response element with the ok text.
+                    <para>On success, the service returns a response element with the OK text.
                         Example:</para>
                     <programlisting><?db-font-size 75% ?><![CDATA[<response>ok</response>]]></programlisting>
                     <para>Otherwise a proper error element is returned.</para>
@@ -2370,11 +2391,11 @@
                     <title>Request</title>
                     <para>This service accepts requests in GET/POST and XML form. The input
                         parameters are:</para>
-                    <para><emphasis>uuid</emphasis> the universal unique identifier of the metadata</para>
+                    <para><emphasis>UUID</emphasis> the universal unique identifier of the metadata</para>
                     <para><emphasis>format</emphasis> which format
                         to use. Can be one of: <code>simple, partial, full</code>.</para>
                     <para><emphasis>skipUuid</emphasis> If provided, tells
-                        the exporter to not export the metadata’s uuid. Without the uuid (which is a
+                        the exporter to not export the metadata’s UUID. Without the UUID (which is a
                         unique key inside the database) the metadata can be imported over and over
                         again. Can be one of: <code>true, false</code>. The default value is false.</para>
                 </section>
@@ -2383,7 +2404,7 @@
                     <para>The service’s response is a MEF file with these characteristics:</para>
                     <itemizedlist>
                         <listitem>
-                            <para>the name of the file is the metadata’s uuid</para>
+                            <para>the name of the file is the metadata’s UUID</para>
                         </listitem>
                         <listitem>
                             <para>the extension of the file is mef</para>
@@ -2403,7 +2424,7 @@
                 </section>
                 <section>
                     <title>Response</title>
-                    <para>If all goes well, the service returns an ok element containing the local
+                    <para>If all goes well, the service returns an OK element containing the local
                         id of the created metadata. Example:</para>
                     <programlisting><?db-font-size 75% ?><![CDATA[<ok>123</ok>]]></programlisting>
                 </section>
@@ -2566,7 +2587,7 @@
         <isTemplate>n</isTemplate> 
         <title/> 
         <source>38b75c1b-634b-443e-9c36-a12e89b4c866</source> 
-        <uuid>84b4190b-de43-4bd7-b25f-6ed47eb239ac</uuid> 
+        <UUID>84b4190b-de43-4bd7-b25f-6ed47eb239ac</uuid> 
         <isHarvested>n</isHarvested> 
         <view>true</view> 
         <admin>false</admin> 
@@ -2615,7 +2636,7 @@
             <section>
                 <title>xml.schema.info</title>
                 <para>This service returns information about a set of schema elements or codelists.
-                    The returned information consists of a localized label, a description,
+                    The returned information consists of a localised label, a description,
                     conditions that the element must satisfy etc...</para>
                 <section>
                     <title>Request</title>
@@ -2642,7 +2663,7 @@
     <codelist schema="iso19115" name="DateTypCd" /> 
 </request>]]></programlisting>
                     <para>Note</para>
-                    <para>The returned text is localized depending on the language specified during
+                    <para>The returned text is localised depending on the language specified during
                         the service call. A call to <uri>/geonetwork/srv/en/xml.schema.info</uri>
                         will return text in the English language.</para>
                 </section>
@@ -2657,7 +2678,7 @@
                                 name attribute which contains the qualified name of the element.</para>
                             <itemizedlist>
                                 <listitem>
-                                    <para><emphasis>label</emphasis>: The human readable name of the element, localized
+                                    <para><emphasis>label</emphasis>: The human readable name of the element, localised
                                         into the request’s language.</para>
                                 </listitem>
                                 <listitem>
@@ -2687,10 +2708,10 @@
                                         <listitem>
                                             <para><emphasis>label</emphasis>: This is a human readable name, used to
                                                 show the entry into the user interface. It is
-                                                localized.</para>
+                                                localised.</para>
                                         </listitem>
                                         <listitem>
-                                            <para><emphasis>description</emphasis>: A generic localized description of
+                                            <para><emphasis>description</emphasis>: A generic localised description of
                                                 the codelist.</para>
                                         </listitem>
                                     </itemizedlist>
@@ -2726,7 +2747,7 @@
                 </section>
                 <section>
                     <title>Error management</title>
-                    <para>Beside the normal exceptions management discussed in section ??, the
+                    <para>Beside the normal exceptions management, the
                         service can encounter some errors trying to retrieve an element/codelist
                         information. In this case, the object is copied verbatim to the response
                         with the addition of an error attribute that describes the encountered
@@ -2734,7 +2755,7 @@
                             linkend="table_schema_errors"/>. Here follows an example of such
                         response:</para>
                     <programlisting><?db-font-size 75% ?><![CDATA[<response>
-    <element schemma="iso19139" name="blablabla" error="not-found"/>
+    <element schema="iso19139" name="blablabla" error="not-found"/>
 </response>]]></programlisting>
                     <table frame="all" id="table_schema_errors">
                         <title>Possible errors returned by xml.schema.info service</title>

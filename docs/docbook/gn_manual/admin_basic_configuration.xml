@@ -44,10 +44,10 @@
 
             <para>At the bottom of the page there are some buttons with the following purpose: </para>
             <para>Back Simply returns to the main administration page. Save Saves the current
-                options. If some options are invalid, the system will show a dialog with the wrong
-                parameter and will focus its textfield on the page. Once the configuration is saved
-                a success dialog will be shown. Refresh This button simply refreshes the displayed
-                options taking the new values from the server. This can be usefull if some options
+                options. If some options are invalid, the system will show a dialogue with the wrong
+                parameter and will focus its text field on the page. Once the configuration is saved
+                a success dialogue will be shown. Refresh This button simply refreshes the displayed
+                options taking the new values from the server. This can be useful if some options
                 get changed dynamically (for example by another user). </para>
 
             <para>Public host and port usage </para>
@@ -70,7 +70,7 @@
                 <title>Site General site parameters.</title>
                 <para><emphasis>Name</emphasis> The name of the GeoNetwork’s installation. This name
                     will be used to identify the node in operations like the harvesting.</para>
-                <para><emphasis>organization</emphasis> The organization the node belongs to. Just
+                <para><emphasis>organisation</emphasis> The organisation the node belongs to. Just
                     for informative reasons.</para>
                 <para><emphasis>Server</emphasis> Here you have to enter the address of your
                     GeoNetwork’s node. This address is important because it will be used to access
@@ -85,14 +85,14 @@
                     you have to enter A in the host parameter.</para>
                 <para><emphasis>port</emphasis> The node’s port (usually 80 or 8080). If the node is
                     hidden, you have to enter the port on the public firewall or web server.</para>
-                <para><emphasis>Intranet</emphasis> A common need for an organization is to
+                <para><emphasis>Intranet</emphasis> A common need for an organisation is to
                     discriminate between internal anonymous users (users that access the node from
-                    within the organization) and external ones (users from the Internet). Node’s
+                    within the organisation) and external ones (users from the Internet). Node’s
                     administrators can specify different privileges for internal and external
                     anonymous users and, in order to do so, they have to specify the parameters of
                     the internal network. </para>
                 <para><emphasis>Network</emphasis> The internal network’s address in IP form.</para>
-                <para><emphasis>netmask</emphasis> The network’s mask.</para>
+                <para><emphasis>Netmask</emphasis> The network’s mask.</para>
             </section>
             <section>
                 <title>Remote connection (CSW, Z39.50)</title>
@@ -156,7 +156,7 @@
             <section>
                 <title>Proxy configuration</title>
                 <para><emphasis>Proxy</emphasis> In some occasions (like harvesting) GeoNetwork must
-                    be able to connect to remote sites and this may be denied if an organization
+                    be able to connect to remote sites and this may be denied if an organisation
                     uses proxy servers. In this cases, GeoNetwork must be configured to use the
                     proxy server in order to route outgoing requests. </para>
                 <para><emphasis>Host</emphasis> The proxy’s name or address to use (usually an IP
@@ -171,8 +171,8 @@
                     GeoNetwork with proper parameters to send an email. </para>
                 <para><emphasis>Email</emphasis> This is the email address that will be used to send
                     feedback to the administrator.</para>
-                <para><emphasis><glossterm linkend="glos-smtp">SMTP</glossterm> host</emphasis> Organization’s mail server to use when sending
-                    emails</para>
+                <para><emphasis><glossterm linkend="glos-smtp">SMTP</glossterm> host</emphasis> Organisation’s mail server to use when sending
+                    email</para>
                 <para><emphasis>SMTP port</emphasis> Mail server’s SMTP port (usually 25). </para>
             </section>
             <section>

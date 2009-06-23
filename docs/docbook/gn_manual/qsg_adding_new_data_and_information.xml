@@ -21,7 +21,7 @@
             <glossterm linkend="glos-fgdc">FGDC</glossterm> and <glossterm linkend="glos-dc">DC</glossterm>. The templates for
             vector and raster based on the ISO 19139 are the preferred ones since they are devised
             in a way that hides the complexity of the ISO19115 standard in the default view. At the
-            same time those templates are extensible with new elements to fit specialized needs
+            same time those templates are extensible with new elements to fit specialised needs
             through the advanced view.</para>
 
         <para>To produce a good metadata record, always try to gather as much details as possible on
@@ -101,7 +101,7 @@
 
                 <listitem>
                     <para>Select the <emphasis role="bold">Group</emphasis> the metadata will belong
-                        to. These are the groups authorized to add metadata to by your
+                        to. These are the groups authorised to add metadata to by your
                         administrator.</para>
                 </listitem>
 
@@ -210,7 +210,7 @@
                     </mediaobject>
                 </figure>
 
-                <para>In the previous chapter you have analyzed the metadata structure as it is
+                <para>In the previous chapter you have analysed the metadata structure as it is
                     presented in the <emphasis role="bold">Default View</emphasis>. A selection of
                     the main fields from different categories of information is shown in one single
                     view. The minimum set of metadata required to serve the full range of metadata
@@ -222,9 +222,9 @@
                     editing.</para>
 
                 <para>In the <emphasis role="bold">Advanced View</emphasis>, the ISO profile offers
-                    the possibility to visualize and edit the entire metadata structure organized in
+                    the possibility to visualise and edit the entire metadata structure organised in
                     sections accessible through tabs from the left column. You can use this view to
-                    write more advanced metadata descriptions or templates to fit specialized needs.
+                    write more advanced metadata descriptions or templates to fit specialised needs.
                         (<xref linkend="advanced_view"/>)</para>
 
                 <figure id="advanced_view">
@@ -238,7 +238,7 @@
                 </figure>
 
                 <para>The <emphasis role="bold">XML View</emphasis> shows the entire content of the
-                    metadata in the original hierarchical structure; different colors allow to
+                    metadata in the original hierarchical structure; different colours allow to
                     distinguish between an element's name and its value. The XML structure is
                     composed of tags and to every tag must correspond a closing tag (<xref
                         linkend="xml_view"/>). The content is entirely contained withing the two,
@@ -272,7 +272,7 @@
                     other data elements in the same section. For instance, the <literal>Individual
                         name</literal> metadata element of the <literal>Point of Contact</literal>,
                     which is a conditional element of the Identification section, becomes mandatory
-                    if another element of the same section, <literal>Organization name</literal> or
+                    if another element of the same section, <literal>organisation name</literal> or
                         <literal>Position name</literal> is not already defined (<xref
                         linkend="point_of_contact2"/>).</para>
                 <figure id="point_of_contact2">
@@ -294,7 +294,7 @@
                 <para>The <emphasis role="bold">Default View</emphasis> is the preferred view as it
                     provides a selection of the available metadata elements, facilitating both the
                     user and the editor in reading and editing a metadata record, and at the same
-                    time it ensures that a geospatial data can be properly described, through :</para>
+                    time it ensures that a geospatial data can be properly described, through:</para>
 
                 <itemizedlist>
                     <listitem>
@@ -307,7 +307,7 @@
                             description of geographic data, if required;</para>
                     </listitem>
                     <listitem>
-                        <para>a method for extending metadata to fit specialized needs.</para>
+                        <para>a method for extending metadata to fit specialised needs.</para>
                     </listitem>
                 </itemizedlist>
 
@@ -344,7 +344,7 @@
         <section>
             <title>Entering Metadata for your Map</title>
 
-            <para>As we mentioned in the introduction to this guide, GNos provides tools to describe
+            <para>As we mentioned in the introduction to this guide, GeoNetwork opensource provides tools to describe
                 any type of geographic data (vector layers, raster, tables, map services, etc.) as
                 well as general document like reports, projects, papers, etc. For the purpose of
                 this Quick Start Guide, an example of required and useful metadata elements to
@@ -352,20 +352,20 @@
                 much information as possible to identify and understand the map’s resource and
                 characteristics you want to describe. Use the default view to start. If necessary,
                 you can always switch to advanced view or come back later and edit the record with
-                the additonal information collected.</para>
+                the additional information collected.</para>
 
             <section>
                 <title>Entering Metadata For Your Map</title>
 
                 <para>Please follow these steps to enter your map's metadata. Note that we will only
                     go through the fields that have been identified as compulsory (i.e. those fields
-                    marked with the asterix <emphasis role="bold">[*],</emphasis> mandatory or
+                    marked with the asterisk <emphasis role="bold">[*],</emphasis> mandatory or
                     highly recommended).</para>
 
                 <para><indexterm>
                         <primary>title</primary>
                     </indexterm>
-                    <emphasis role="bold">Title *</emphasis> : Under the <emphasis role="bold"
+                    <emphasis role="bold">Title *</emphasis>: Under the <emphasis role="bold"
                         >Identification Info</emphasis> field, give your map a <emphasis role="bold"
                         >name</emphasis>. There will be a default name of your data. Use free text
                     to describe your map here.</para>
@@ -373,7 +373,7 @@
                 <para><indexterm>
                         <primary>date</primary>
                     </indexterm>
-                    <emphasis role="bold">Date *</emphasis> : Indicate the exact <emphasis
+                    <emphasis role="bold">Date *</emphasis>: Indicate the exact <emphasis
                         role="bold">date</emphasis> of <emphasis role="bold">creation</emphasis>,
                         <emphasis role="bold">publication</emphasis> or <emphasis role="bold"
                         >revision</emphasis> on your map.</para>
@@ -389,7 +389,7 @@
                 <para><indexterm>
                         <primary>abstract</primary>
                     </indexterm>
-                    <emphasis role="bold">Abstract *</emphasis> : Enter some description of the map.</para>
+                    <emphasis role="bold">Abstract *</emphasis>: Enter some description of the map.</para>
 
                 <para><indexterm>
                         <primary>purpose</primary>
@@ -410,13 +410,13 @@
                     <emphasis role="bold">Point of Contact</emphasis>: Enter all mandatory
                     information and others you have at hand for the contact of the person(s)
                     associated with this resources of the map. Note that some fields are only
-                    conditionally mandatory, such as Organization Name if Individual Name and
+                    conditionally mandatory, such as organisation Name if Individual Name and
                     Position are not entered.</para>
 
                 <para><indexterm>
                         <primary>maintenance and update frequency</primary>
                     </indexterm>
-                    <emphasis role="bold">Maintenance and update frequency *</emphasis> : Specify
+                    <emphasis role="bold">Maintenance and update frequency *</emphasis>: Specify
                     the frequency with which you expect to make changes and additions to your map
                     after the initial version is completed. If any changes are scheduled you can
                     leave <literal>As Needed</literal> selected from the drop-down list.</para>
@@ -445,7 +445,7 @@
                 <para><indexterm>
                         <primary>other constraints</primary>
                     </indexterm>
-                    <emphasis role="bold">Other Constraints *</emphasis> : Enter other constraint
+                    <emphasis role="bold">Other Constraints *</emphasis>: Enter other constraint
                     here to assure the protection of privacy and intellectual property. Note that
                     this field is conditionally mandatory if Access and Use constraints are not
                     entered.</para>
@@ -460,32 +460,32 @@
                 <para><indexterm>
                         <primary>scale denominator</primary>
                     </indexterm>
-                    <emphasis role="bold">Scale Denominator *</emphasis> : Enter the denominator for
+                    <emphasis role="bold">Scale Denominator *</emphasis>: Enter the denominator for
                     an equivalent scale of a hard copy of the map.</para>
 
                 <para><indexterm>
                         <primary>language</primary>
                     </indexterm>
-                    <emphasis role="bold">Language *</emphasis> : Select the language used within
+                    <emphasis role="bold">Language *</emphasis>: Select the language used within
                     your map</para>
 
                 <para><indexterm>
                         <primary>topic category</primary>
                     </indexterm>
-                    <emphasis role="bold">Topic category *</emphasis> : Specify the main ISO
+                    <emphasis role="bold">Topic category *</emphasis>: Specify the main ISO
                     category/ies through which your map could be classified (see Annex for the
                     complete list of ISO topic categories).</para>
 
                 <para><indexterm>
                         <primary>temporal extent</primary>
                     </indexterm>
-                    <emphasis role="bold">Temporal Extent *</emphasis> : Enter the starting and
+                    <emphasis role="bold">Temporal Extent *</emphasis>: Enter the starting and
                     ending date of the validity period.</para>
 
                 <para><indexterm>
                         <primary>geographic bounding box</primary>
                     </indexterm>
-                    <emphasis role="bold">Geographic Bounding Box *</emphasis> : Enter the longitude
+                    <emphasis role="bold">Geographic Bounding Box *</emphasis>: Enter the longitude
                     and latitude for the map or select a region from the predefined drop-down list.
                     Make sure you use degrees for the unit of the geographic coordinates as they are
                     the basis for the geographic searches.</para>
@@ -517,7 +517,7 @@
                     <emphasis role="bold">Reference System Info</emphasis>: Enter information about
                     the spatial reference system of your map. The <emphasis role="bold">default view
                         contains</emphasis> one element to provide the <emphasis role="bold"
-                        >alphanumeric value</emphasis> identifying the reference system used. GNos
+                        >alphanumeric value</emphasis> identifying the reference system used. GeoNetwork opensource
                     uses the <emphasis role="bold">EPSG codes</emphasis> which are numeric codes
                     associated with coordinate system definitions. For instance, EPSG:4326 is
                     Geographic lat-long WGS84, and EPSG:32611 is "UTM zone 11 North, WGS84". Using
@@ -547,8 +547,8 @@
                 <para><indexterm>
                         <primary>metadata author</primary>
                     </indexterm>
-                    <emphasis role="bold">Metadata Author *</emphasis> : Provide information about
-                    the author of the map, including the person’s name, organization, position, role
+                    <emphasis role="bold">Metadata Author *</emphasis>: Provide information about
+                    the author of the map, including the person’s name, organisation, position, role
                     and any other contact information available.</para>
 
                 <para>After completion of this section, you may select the <emphasis role="bold"
@@ -708,7 +708,7 @@
                             multiple files as one unique zip file or as multiple separate downloads.
                             It is a good idea to add additional documentation with the datasets that
                             provide the user with information related to the data described. Remind:
-                            the size of a single file to upload can't exceed 50 Mbytes;</para>
+                            the size of a single file to upload can't exceed 100 Megabytes;</para>
                     </listitem>
 
                     <listitem>
@@ -871,18 +871,18 @@
                 Metadata</emphasis> that is displayed (<xref linkend="xml_import"/>) is the
                     <emphasis role="bold">Metadata</emphasis> text area, where the user can paste
                 the XML metadata to import. Below this, there is the <emphasis role="bold"
-                >Type</emphasis> choise, which allows you select the type of record that you are
+                >Type</emphasis> choice, which allows you select the type of record that you are
                 going to create (Metadata, Template and Subtemplate). Then you can apply a
                 stylesheet to convert your metadata input from ArcCatalog8 to ISO1915 or from
                 ISO19115 to ISO19139, if required. Otherwise you can just leave
                 <replaceable>none</replaceable> selected. The <emphasis role="bold">Destination
                     schema</emphasis> list provides you with four options to choose the final
-                standard layout for your metadata (ISO19115, ISO19139, FDGDC and Dublin Core).
+                standard layout for your metadata (ISO19115, ISO19139, FGDC and Dublin Core).
                 Finally you should select the <emphasis role="bold">Group</emphasis> as main group
                 in charge of the metadata and the <emphasis role="bold">Category</emphasis> that you
                 want to assign to your metadata. By clicking the <emphasis role="bold"
                 >Insert</emphasis> button the metadata is imported into the system; please note that
-                all links to external files, for istance to thumbnails or data for download, have to
+                all links to external files, for instance to thumbnails or data for download, have to
                 be removed from the metadata input, to avoid any conflict within the data
                 repository.</para>
 

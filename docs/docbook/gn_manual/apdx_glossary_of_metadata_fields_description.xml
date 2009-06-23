@@ -6,7 +6,7 @@
         <title>Glossary of Metadata Fields Description</title>
 
         <para>This glossary provides you with brief descriptions of the minimum set of metadata
-            fields required to properly describe a geoghaphical data as well as some optional
+            fields required to properly describe a geographical data as well as some optional
             elements highly suggested for a more extensive standard description.
             <!--Note: the <emphasis
                 role="bold">mandatory</emphasis> fields are in bold in the following list. --></para>
@@ -113,7 +113,7 @@
         </formalpara>
         <formalpara>
             <title>Electronic mail address</title>
-            <para>Address of the electronic mailbox of the responsible organization or
+            <para>Address of the electronic mailbox of the responsible organisation or
             individual</para>
         </formalpara>
         <formalpara>
@@ -131,7 +131,7 @@
         </formalpara>
         <formalpara>
             <title>Facsimile</title>
-            <para>Telephone number of a facsimile machine for the responsible organization or
+            <para>Telephone number of a facsimile machine for the responsible organisation or
                 individual</para>
         </formalpara>
         <formalpara>
@@ -235,7 +235,7 @@
         </formalpara>
         <formalpara>
             <title>Point of Contact - Organisation name</title>
-            <para>Name of the responsible organization</para>
+            <para>Name of the responsible organisation</para>
         </formalpara>
         <formalpara>
             <title>Other constraints</title>
@@ -244,7 +244,7 @@
         </formalpara>
         <formalpara>
             <title>Point of contact</title>
-            <para>Identification of, and means of communication with, person(s) and organizations(s)
+            <para>Identification of, and means of communication with, person(s) and organisations(s)
                 associated with the resource(s)</para>
         </formalpara>
         <formalpara>
@@ -354,7 +354,7 @@
         </formalpara>
         <formalpara>
             <title>Voice</title>
-            <para>Telephone number by which individuals can speak to the responsible organization or
+            <para>Telephone number by which individuals can speak to the responsible organisation or
                 individual</para>
         </formalpara>
         <formalpara>
