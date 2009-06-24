@@ -185,6 +185,7 @@
 			<description/>
 			
 			<fileset dir="../src"       targetdir="$INSTALL_PATH/src"/>
+			<fileset dir="../jeeves"       targetdir="$INSTALL_PATH/jeeves"/>
 			<file    src="../build.xml" targetdir="$INSTALL_PATH"/>
 		</pack>
 		
