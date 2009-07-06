@@ -1,0 +1,494 @@
+r4519 | ticheler | 2009-07-06 10:45:23 CEST
+
+- Updated CSW harvester (thanks Jose)
+----------------------------------------------------------------------------
+r4504 | fxprunayre | 2009-07-03 10:16:10 CEST
+
+Saxon does not support copy of attributes to a variable root.
+----------------------------------------------------------------------------
+r4496 | justb | 2009-07-02 18:40:22 CEST
+
+test: separate DB+config (/resources, maven-like), always setup DB on first run (no GAST anymore)
+----------------------------------------------------------------------------
+r4480 | heikkidoeleman | 2009-06-28 12:53:19 CEST
+
+schemaLocation for service metadata
+----------------------------------------------------------------------------
+r4476 | sppigot | 2009-06-26 23:25:16 CEST
+
+Old code (prior to caching) didn't show exception when language file failed.
+Also saxon likes to have its own copy of the xml so clone needed.
+
+----------------------------------------------------------------------------
+r4475 | justb | 2009-06-26 20:43:48 CEST
+
+test: fix xml verification (xml comments) in protocol test framework
+----------------------------------------------------------------------------
+r4462 | justb | 2009-06-26 09:50:54 CEST
+
+test: fix some namespace bugs in xml protocol test framework
+----------------------------------------------------------------------------
+r4460 | mcoudert | 2009-06-26 08:26:02 CEST
+
+#12 Added missing entries for Serbia and Montenegro
+#17 Fixed transparency for png thumbnail
+#113 Fixed intermap map loading on IE.
+----------------------------------------------------------------------------
+r4459 | fxprunayre | 2009-06-25 15:48:53 CEST
+
+Do not trigger all onchange onkeyup events. Only validation one.
+----------------------------------------------------------------------------
+r4458 | fxprunayre | 2009-06-25 14:47:10 CEST
+
+Add README to define how to turn off XSL caching mechanism. Comment output info from XSL caching.
+----------------------------------------------------------------------------
+r4457 | sppigot | 2009-06-25 13:17:53 CEST
+
+Changes to date-time handling functions for switch to saxon
+
+----------------------------------------------------------------------------
+r4456 | fxprunayre | 2009-06-25 12:35:37 CEST
+
+Added helper mechanism with example in english iso and dublin-core format.
+Added validating event for mandatory and numeric fields (red border for invalid or missing content).
+Exclude namespace for stylesheet to clean HTML output documents.
+----------------------------------------------------------------------------
+r4455 | fxprunayre | 2009-06-25 12:09:25 CEST
+
+Add missing language links.
+----------------------------------------------------------------------------
+r4450 | fxprunayre | 2009-06-25 08:43:57 CEST
+
+Fixed missing str:tokenize function. Due to xalan to saxon switch, some exslt functions are not available anymore (eg. str:tokenize). Saxon does not support this function because it's available in XSL version 2.0.
+----------------------------------------------------------------------------
+r4449 | sppigot | 2009-06-24 19:57:49 CEST
+
+Add caching xslt and switch from xalan to saxon
+
+----------------------------------------------------------------------------
+r4448 | fxprunayre | 2009-06-24 19:47:20 CEST
+
+Added draft CSW service tests.
+----------------------------------------------------------------------------
+r4447 | justb | 2009-06-24 18:38:35 CEST
+
+add harvesting Invoke GN service for the purpose of GN service test framework (synchronous run)
+----------------------------------------------------------------------------
+r4446 | sppigot | 2009-06-24 18:18:23 CEST
+
+Cache localized xml files for guiservices in jeeves (speeds up service 
+dispatch on windows)
+
+----------------------------------------------------------------------------
+r4445 | justb | 2009-06-24 18:09:33 CEST
+
+GN service test framework: added a readme file
+----------------------------------------------------------------------------
+r4441 | justb | 2009-06-24 17:45:28 CEST
+
+first version of local Jeeves engine +  GN service test framework + some sample tests
+----------------------------------------------------------------------------
+r4436 | sppigot | 2009-06-24 13:06:18 CEST
+
+Provide jeeves code for trunk as per ticket #116
+
+----------------------------------------------------------------------------
+r4430 | ticheler | 2009-06-24 00:45:06 CEST
+
+German strings update. Thanks to David Arndt
+----------------------------------------------------------------------------
+r4429 | ticheler | 2009-06-24 00:29:42 CEST
+
+- documentation graphics
+----------------------------------------------------------------------------
+r4428 | ticheler | 2009-06-24 00:08:45 CEST
+
+- Spelling and updates to documentation
+----------------------------------------------------------------------------
+r4424 | fxprunayre | 2009-06-23 22:35:00 CEST
+
+Added some gml:* to translation.
+----------------------------------------------------------------------------
+r4422 | fxprunayre | 2009-06-23 22:17:44 CEST
+
+Some gml:* translation. Thanks Etienne.
+----------------------------------------------------------------------------
+r4418 | sppigot | 2009-06-23 20:31:26 CEST
+
+Fixes for ticket numbers:
+
+48 - Editing user profile requires new password
+65 - Ampersands in URLs
+107 - could not perform search, create new metadata, upload thumbnail in ipv6 network
+109 - GAST export and FileID with value <> UUID
+114 - Changing port in GAST doesn't work
+
+----------------------------------------------------------------------------
+r4406 | ticheler | 2009-06-23 11:45:13 CEST
+
+- glossary fixes
+----------------------------------------------------------------------------
+r4393 | fxprunayre | 2009-06-23 09:16:55 CEST
+
+CSS styling for select input form.
+----------------------------------------------------------------------------
+r4392 | fxprunayre | 2009-06-23 08:39:55 CEST
+
+Search form advanced, Fixed #120 and #121.
+----------------------------------------------------------------------------
+r4387 | ticheler | 2009-06-22 20:33:30 CEST
+
+- Expanded glossary with more definitions
+----------------------------------------------------------------------------
+r4379 | ticheler | 2009-06-22 20:00:14 CEST
+
+- Documentation updates. Port configuration changes. Glossary updates.
+----------------------------------------------------------------------------
+r4371 | ticheler | 2009-06-22 18:51:57 CEST
+
+- updated glossterm references
+----------------------------------------------------------------------------
+r4367 | ticheler | 2009-06-22 17:43:51 CEST
+
+- Added glossary entries
+- Small content updates
+----------------------------------------------------------------------------
+r4366 | josegar74 | 2009-06-22 17:19:24 CEST
+
+Ticket 70
+----------------------------------------------------------------------------
+r4365 | fxprunayre | 2009-06-22 17:04:01 CEST
+
+CSW / added typename parameter values for DescribeRecord operation. For GetRecords, the parameter name is typeNames (Error in spec 07-045. typenames p68 and typename in annexe E p114).
+----------------------------------------------------------------------------
+r4364 | josegar74 | 2009-06-22 17:01:34 CEST
+
+Ticket 70
+----------------------------------------------------------------------------
+r4363 | josegar74 | 2009-06-22 16:48:40 CEST
+
+Ticket 118
+----------------------------------------------------------------------------
+r4362 | heikkidoeleman | 2009-06-22 16:45:10 CEST
+
+The RSS pubDate should follow the RFC-822 Date and Time specifications (dd mm yy hh:mm:ss zzz), so the format "2009-04-21T00:00:01" would be "21 Apr 2009 00:00:01 EST", with the zone value depending on the appropriate timezone. 
+----------------------------------------------------------------------------
+r4361 | heikkidoeleman | 2009-06-22 16:07:24 CEST
+
+Added schemaLocation to GetRecordResponse
+----------------------------------------------------------------------------
+r4360 | fxprunayre | 2009-06-22 16:05:08 CEST
+
+CSW / CONSTRAINTLANGUAGE values are uppercase.
+----------------------------------------------------------------------------
+r4359 | fxprunayre | 2009-06-22 14:55:13 CEST
+
+CSW / Fixed brief-summary-full response. Removed dc:URI element for now. It could be better to add dclite4g support which contains more information (including dc:URI).
+----------------------------------------------------------------------------
+r4358 | ticheler | 2009-06-22 14:50:41 CEST
+
+- Remove local jar files (see ticket #115) 
+----------------------------------------------------------------------------
+r4357 | heikkidoeleman | 2009-06-22 14:44:01 CEST
+
+Add schemaLocation for ISO19139 metadata that does not contain an SV_ServiceIdentication element
+----------------------------------------------------------------------------
+r4356 | heikkidoeleman | 2009-06-22 14:26:31 CEST
+
+Added http://www.isotc211.org/2005/srv service metadata namespace
+----------------------------------------------------------------------------
+r4355 | fxprunayre | 2009-06-22 12:43:22 CEST
+
+Remove extraneous namespace. Applied patch provided by rjwalker. #66
+----------------------------------------------------------------------------
+r4354 | heikkidoeleman | 2009-06-22 12:35:46 CEST
+
+Added schemaLocation and xsi namespace declaration to DescribeRecordResponse
+----------------------------------------------------------------------------
+r4353 | fxprunayre | 2009-06-22 12:15:35 CEST
+
+CSW / add schema location to ows:ExceptionReport. #83.
+----------------------------------------------------------------------------
+r4351 | fxprunayre | 2009-06-22 09:37:48 CEST
+
+Add languageCode codelist handler. 
+Added operatesOn handler.
+----------------------------------------------------------------------------
+r4350 | fxprunayre | 2009-06-22 09:36:58 CEST
+
+Added missing SV_ParameterDirection. Fixed quarterly codelist identifier.
+----------------------------------------------------------------------------
+r4349 | fxprunayre | 2009-06-22 09:36:33 CEST
+
+Import XML file as template
+----------------------------------------------------------------------------
+r4348 | fxprunayre | 2009-06-22 09:36:20 CEST
+
+CSW / Fixed duplicate title in brief response.
+----------------------------------------------------------------------------
+r4344 | fxprunayre | 2009-06-21 12:54:15 CEST
+
+Fix non localised string
+----------------------------------------------------------------------------
+r4341 | fxprunayre | 2009-06-21 11:55:39 CEST
+
+Fixed list of keywords in search interface. #112
+----------------------------------------------------------------------------
+r4340 | fxprunayre | 2009-06-21 11:25:43 CEST
+
+Fixed exception when trying to load a deleted document from Lucene index. Formatting.
+----------------------------------------------------------------------------
+r4339 | fxprunayre | 2009-06-21 10:45:36 CEST
+
+Codelist label should use loc files label instead of identifier.
+----------------------------------------------------------------------------
+r4338 | fxprunayre | 2009-06-20 10:04:37 CEST
+
+Forward service's parameters to XSL process in MassiveXSLProcessing service. Added example to update gmd:url prefix.
+----------------------------------------------------------------------------
+r4337 | fxprunayre | 2009-06-20 09:49:40 CEST
+
+Added TM_PeriodDuration widget in editor. xsd:duration is composed of years, month, days, hours, minutes, seconds in P0Y0M0DT1H0M0S format. If non number value are set, error class is set to element (red border and text). Decimal are only allowed for seconds.
+Improve label for TM_PeriodDuration.
+Fixed tooltip display for mandatory simple element.
+----------------------------------------------------------------------------
+r4237 | sppigot | 2009-06-12 15:29:50 CEST
+
+Fix for ticket #110 - make Urls in operatesOn include hostname
+----------------------------------------------------------------------------
+r4213 | heikkidoeleman | 2009-06-04 19:04:11 CEST
+
+Prevent NullPointerException if database localization data is not consistent; put out warning instead.
+----------------------------------------------------------------------------
+r4170 | sppigot | 2009-05-30 15:15:07 CEST
+
+1. Restore asterisk marking for mandatory elements to editor - elements that 
+   have minOccurs = 1 in schema are shown with red asterisk so users can see 
+   which elements are mandatory when filling out the form
+2. Fix bug in gast that occurs when installing/using gast on machines not 
+   connected to internet. Bug was caused by attempt to parse remote dtd in 
+   jetty.xml file - bug was UnknownHostException: jetty.mortbay.org
+ 
+----------------------------------------------------------------------------
+r4156 | ticheler | 2009-05-29 13:32:13 CEST
+
+- Removed version number (issue #61)
+----------------------------------------------------------------------------
+r4154 | ticheler | 2009-05-29 13:16:40 CEST
+
+- Fix for bug #68
+----------------------------------------------------------------------------
+r4146 | ticheler | 2009-05-29 10:39:13 CEST
+
+- transaction edit patch (thanks Mathieu)
+----------------------------------------------------------------------------
+r4138 | ticheler | 2009-05-29 00:49:38 CEST
+
+- transaction security fix
+----------------------------------------------------------------------------
+r4113 | ticheler | 2009-05-27 23:13:00 CEST
+
+- Localization updates
+----------------------------------------------------------------------------
+r4112 | ticheler | 2009-05-27 22:28:50 CEST
+
+- Make CSW test page and i18n test pages available from the administrator window
+----------------------------------------------------------------------------
+r4111 | ticheler | 2009-05-27 22:17:15 CEST
+
+- Added Dutch translation for InterMap
+----------------------------------------------------------------------------
+r4110 | ticheler | 2009-05-27 22:16:44 CEST
+
+- Add city field to user profile for CSW capabilities document
+----------------------------------------------------------------------------
+r4109 | ticheler | 2009-05-27 22:15:51 CEST
+
+- Remove last search results link until it works as expected
+----------------------------------------------------------------------------
+r4108 | ticheler | 2009-05-27 22:14:51 CEST
+
+- PDF generating fix removing a custom date format call that causes problems on o.a. OS X 
+----------------------------------------------------------------------------
+r4107 | ticheler | 2009-05-27 22:13:48 CEST
+
+- Localization test service updates and moved service to admin profile for performance reasons (resource demanding service)
+----------------------------------------------------------------------------
+r4105 | ticheler | 2009-05-27 21:30:30 CEST
+
+- Added City element to user properties
+----------------------------------------------------------------------------
+r4104 | ticheler | 2009-05-27 16:13:54 CEST
+
+- Stylesheet fix for batch import
+----------------------------------------------------------------------------
+r4098 | ticheler | 2009-05-27 12:40:18 CEST
+
+- Shorten some Dutch country names to better fit the list width.
+----------------------------------------------------------------------------
+r4088 | ticheler | 2009-05-27 09:27:13 CEST
+
+- Fix for faulty commit
+----------------------------------------------------------------------------
+r4087 | ticheler | 2009-05-27 09:26:43 CEST
+
+- Added Dutch translation & non-translated required files
+----------------------------------------------------------------------------
+r4084 | fxprunayre | 2009-05-27 07:21:39 CEST
+
+Added searcho on uuid required by display selected only action.
+----------------------------------------------------------------------------
+r4076 | ticheler | 2009-05-26 16:15:29 CEST
+
+- Make cswClient.sh script executable
+----------------------------------------------------------------------------
+r4075 | ticheler | 2009-05-26 16:09:36 CEST
+
+- Fix that was ignored a long time
+----------------------------------------------------------------------------
+r4065 | ticheler | 2009-05-25 17:15:42 CEST
+
+- Fix related to IE display of advanced search form & stretched banner
+----------------------------------------------------------------------------
+r4064 | ticheler | 2009-05-25 17:14:10 CEST
+
+- Added Dutch translation & non-translated required files
+----------------------------------------------------------------------------
+r4059 | ticheler | 2009-05-25 14:37:26 CEST
+
+- Fix for faulty commit
+----------------------------------------------------------------------------
+r4041 | sppigot | 2009-05-21 04:07:58 CEST
+
+Fix for tabbing through content displayed in modalbox - thanks to Craig Jones, eMII
+
+----------------------------------------------------------------------------
+r4016 | ticheler | 2009-05-19 23:36:10 CEST
+
+- Dutch translation
+----------------------------------------------------------------------------
+r3971 | sppigot | 2009-05-19 04:12:42 CEST
+
+Ensure simple and advanced search respect sortOrder if sortBy selected as a
+search option.
+
+----------------------------------------------------------------------------
+r3970 | sppigot | 2009-05-19 03:48:03 CEST
+
+Tidy up splitWord - fix for ticket #108 - an alternative needs to be found
+
+----------------------------------------------------------------------------
+r3898 | fxprunayre | 2009-05-16 19:19:44 CEST
+
+Fixed sorting option due to change on MainUtil.
+----------------------------------------------------------------------------
+r3853 | sppigot | 2009-05-14 12:58:30 CEST
+
+Fixes for tickets #98 and #100 - FGDC schema design causes issues for editor (#98) and stackoverflow for regular expression checking (#100)
+
+----------------------------------------------------------------------------
+r3839 | fxprunayre | 2009-05-14 10:12:59 CEST
+
+It's better to tokenized spec title.
+----------------------------------------------------------------------------
+r3837 | fxprunayre | 2009-05-14 08:55:52 CEST
+
+csw / Minor fix for dc full format response. Update testsuite results http://trac.osgeo.org/geonetwork/wiki/CSW2020TestSuiteResults
+----------------------------------------------------------------------------
+r3836 | sppigot | 2009-05-14 02:17:39 CEST
+
+Fix dateStamp display as per ticket #105
+----------------------------------------------------------------------------
+r3826 | fxprunayre | 2009-05-13 22:16:19 CEST
+
+Cleaning :
+ * admin / misc styling fix (admin css, missing localised string mainly in JS alert, sorting list). 
+ * admin / make common templates for metadata import and batch import forms.
+ * admin / if no templates available, display message rather than an empty list.
+ * admin, search / if no categories, hide option and set default option to none (to be continued). Some users are not using categories at all.
+ * add some FIXME to be discussed for cleaning. Mainly in XSL templates and localised stuff in JS. In JS, it could be better to create an array of localised string needed in JS files. This could allow to make a better separation with JS and XSL files (ie. remove all JS from XSL files) and call this array to retrieve localised string from JS.
+ * edit / edit buttons : localisation and truncate title if larger than XX character.
+ * Do not capitalize all element name to avoid Point Of Contact. Fixe capitalize in localisation files if needed.
+Add :
+ * import / Add batch MEF import
+ * edit / sort enumeration (eg. in ISO topic category and service direction)
+Fix :
+ * edit / Use new layout for gmd:MD_Metadata/gmd:Contact
+ * edit / When duplicating metadata only groupOwner could be set (not a multiple select box)
+ * Fix some JS error for non escaped character in localised file (french mainly).
+----------------------------------------------------------------------------
+r3825 | fxprunayre | 2009-05-13 22:14:17 CEST
+
+csw / SummaryComparator should not trigger exception when numeric comparison occurs on wrong data type (eg. scale denominator). Those values are pushed to the bottom of the list.
+----------------------------------------------------------------------------
+r3824 | fxprunayre | 2009-05-13 22:12:01 CEST
+
+harvesting / OGC-WxS harvester set coupledResource elements and not only operatesOn.
+----------------------------------------------------------------------------
+r3823 | fxprunayre | 2009-05-13 21:49:27 CEST
+
+ * improve french translation (merge from geocat.ch and GeoSource, Thanks Annina and Etienne)
+ * improve CSW dc mapping response for service metadata in ISO or ISO profil
+----------------------------------------------------------------------------
+r3815 | sppigot | 2009-05-13 13:00:32 CEST
+
+Bugs:
+1. Add support for proxies to OAI and OGC (thumbnail) harvesters
+2. Delete public/private resources after MEF backup in both Delete and MassiveDelete
+3. Fix bug in metadata copy/paste reported by Heikki (Ticket 104)
+4. Add results page for metadata batch import and metadata copy/paste
+
+----------------------------------------------------------------------------
+r3810 | ticheler | 2009-05-12 14:32:54 CEST
+
+- Several small updates related to the upcoming RC2 release
+----------------------------------------------------------------------------
+r3490 | fxprunayre | 2009-05-03 19:21:50 CEST
+
+Renamed summary config file.
+----------------------------------------------------------------------------
+r3487 | fxprunayre | 2009-05-03 19:18:48 CEST
+
+Added a new massive action to process selected metadata with an XSL transformation declared for the metadata schema. In each xml/schemas/schemaId directory, a process could be added in a directory called process. Then the process could be called using the following URL:
+http://localhost:8080/geonetwork/srv/en/metadata.massive.processing?process=keywords-comma-exploder
+In that example the process named keywords-comma-exploder.xsl is called.
+This service is only allowed to admin user (maintenance operations).
+Initialized with 2 processes for iso19139 schema:
+ * explode keyword when editor use 'keyword1, keyword2' in one gmd:keyword element
+ * keyword mapping.
+----------------------------------------------------------------------------
+r3483 | fxprunayre | 2009-05-03 19:06:02 CEST
+
+Fixed issue on ogc:or.
+Fixed GetDomain with propertyName with space mixed with separator.
+Improve filter parsing.
+Improve geometry extractor.
+Improve error message on filter parsing.
+Added transaction operation, login action is required before to set up identification.
+Added harvest operation (asynchronous only) but unactivated it:
+ * Todo : add a login action, add a notification action
+ * Harvest operation does not allow to restrict harvested records by criterias
+ * Harvest operation does not allow to define privileges for harvested records
+ * Harvest operation does not allow to define logos
+... it's recommended to use GeoNetwork harvesting mechanism instead for the time being.
+Update OGC Testsuite: http://trac.osgeo.org/geonetwork/wiki/CSW2020TestSuiteResults
+Known issue: mixing spatial filter and complex ogc:and/ogc:or operator.
+
+Thanks to Mathieu, Jesse and Zhuahua Zha
+----------------------------------------------------------------------------
+r3394 | fxprunayre | 2009-04-30 12:45:38 CEST
+
+Fixed autodetectschema detection for ISO profil.
+----------------------------------------------------------------------------
+r3312 | sppigot | 2009-04-28 07:42:33 CEST
+
+Left out a character in the hex guessing game :-) on the language lines
+shown in the diff
+
+----------------------------------------------------------------------------
+r3311 | sppigot | 2009-04-28 07:34:14 CEST
+
+Fix problems (I'm guessing here) with IsoLanguagesDes.ddf that causes String
+index errors when decoding hex characters during loading of database tables.
+Protect hex character decoder from future errors.
+----------------------------------------------------------------------------

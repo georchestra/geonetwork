@@ -1,5 +1,50 @@
 ================================================================================
 ===
+=== GeoNetwork 2.4.x RC2: List of changes (See also changes 2.4.0RC2.txt)
+===
+================================================================================
+--------------------------------------------------------------------------------
+--- Changes
+--------------------------------------------------------------------------------
+- improve french translation (merge from geocat.ch and GeoSource, Thanks Annina 
+  and Etienne)
+- improve CSW dc mapping response for service metadata in ISO or ISO profil
+- harvesting / OGC-WxS harvester set coupledResource elements and not only 
+  operatesOn.
+- admin / misc styling fix (admin css, missing localised string mainly in JS 
+  alert, sorting list). 
+- admin / make common templates for metadata import and batch import forms.
+- admin / if no templates available, display message rather than an empty list.
+- admin, search / if no categories, hide option and set default option to none 
+  (to be continued). Some users are not using categories at all.
+- add some FIXME to be discussed for cleaning. Mainly in XSL templates and 
+  localised stuff in JS. In JS, it could be better to create an array of 
+  localised string needed in JS files. This could allow to make a better 
+  separation with JS and XSL files (ie. remove all JS from XSL files) and call 
+  this array to retrieve localised string from JS.
+- edit / edit buttons : localisation and truncate title if larger than XX character.
+- Do not capitalize all element name to avoid Point Of Contact. Fixe capitalize 
+  in localisation files if needed.
+- import / Add batch MEF import
+- edit / sort enumeration (eg. in ISO topic category and service direction)
+ 
+--------------------------------------------------------------------------------
+--- Bug fixes
+--------------------------------------------------------------------------------
+
+- Add support for proxies to OAI and OGC (thumbnail) harvesters
+- Delete public/private resources after MEF backup in both Delete and MassiveDelete
+- Fix bug in metadata copy/paste reported by Heikki (Ticket 104)
+- Add results page for metadata batch import and metadata copy/paste
+- csw / SummaryComparator should not trigger exception when numeric comparison 
+  occurs on wrong data type (eg. scale denominator). Those values are pushed to 
+  the bottom of the list.
+- edit / Use new layout for gmd:MD_Metadata/gmd:Contact
+- edit / When duplicating metadata only groupOwner could be set (not a multiple select box)
+- Fix some JS error for non escaped character in localised file (french mainly).
+
+================================================================================
+===
 === GeoNetwork 2.4.x RC1: List of changes
 ===
 ================================================================================
