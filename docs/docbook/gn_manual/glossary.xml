@@ -369,6 +369,16 @@
             </glossdef>
         </glossentry>
         <glossentry
+            id="glos-shibboleth">
+            <glossterm>Shibboleth</glossterm>
+            <glossdef>
+                <para>The Shibboleth System is a standards based, open source software package 
+                    for web single sign-on across or within organisational boundaries. It allows 
+                    sites to make informed authorisation decisions for individual access of 
+                    protected online resources in a privacy-preserving manner.</para>
+            </glossdef>
+        </glossentry>
+        <glossentry
             id="glos-dc">
             <glossterm>DC</glossterm>
             <glossdef>

@@ -9,6 +9,11 @@
             <para>Most of the GeoNetwork system configuration parameters can be changed using the
                 web interface. Those parameters that cannot be changed through the web interface can
                 usually be changed using the <glossterm linkend="glos-gast">GAST</glossterm> application.</para>
+            <important><para>Configuration of these parameters is critically important for a proper 
+                functioning of the GeoNetwork catalogue in an operational context. Failing to 
+                properly change these settings may result in a system that does not function as 
+                expected. For example, downloads may fail to be correctly processed, or metadata 
+                harvesting from other servers may not work.</para></important>
             <para>To get to the System configuration, you must be logged on as administrator first.
                 Open the Administration page and select System configuration (<xref
                     linkend="admin_config_where"/>. The link is surrounded with a red rectangle). </para>
@@ -95,45 +100,32 @@
                 <para><emphasis>Netmask</emphasis> The network’s mask.</para>
             </section>
             <section>
-                <title>Remote connection (CSW, Z39.50)</title>
+                <title>Catalogue services (CSW, Z39.50)</title>
                 <section>
-                    <title>CSW configuration</title>
-                    <para>When using CSW service, a client will ask for a description of the
-                        service. This description also known as GetCapabilities document, describes
+                    <title>OGC CSW configuration</title>
+                    <para>When using Open Geospatial Catalogue Service for the Web (OGC-CSW) service, 
+                        a client will ask for a description of the
+                        service. This description, provided in the form of a GetCapabilities document, describes
                         the main service's properties. The administration section allows
                         configuration of the following CSW properties:</para>
-                    <orderedlist>
-                        <listitem>
-                            <para><emphasis>Enable</emphasis> option allows you to turn on/off CSW
-                                services. If this option is disabled, other catalogues could not
-                                connect to the node using CSW protocol.</para>
-                        </listitem>
-                        <listitem>
-                            <para>
-                                <emphasis>Contact</emphasis> is the main contact who is defined in
-                                the GetCapabilities document of the CSW service. This contact is one
-                                user of the catalogue. </para>
-                        </listitem>
-                        <listitem>
-                            <para>
-                                <emphasis>Title</emphasis> is the title of your CSW service. </para>
-                        </listitem>
-                        <listitem>
-                            <para>
-                                <emphasis>Abstract</emphasis> is the abstract of your CSW service.
-                            </para>
-                        </listitem>
-                        <listitem>
-                            <para>
-                                <emphasis>Fees</emphasis>
-                            </para>
-                        </listitem>
-                        <listitem>
-                            <para>
-                                <emphasis>Access constraints</emphasis>
-                            </para>
-                        </listitem>
-                    </orderedlist>
+                    <para><emphasis>Enable</emphasis>: This option allows you to start or stop the CSW
+                        services. If this option is disabled, other catalogues cannot
+                        connect to the node using CSW protocol.</para>
+                    <para>
+                        <emphasis>Contact</emphasis>: The main contact who is defined in
+                        the GetCapabilities document of the CSW service. This contact is one
+                        user of the catalogue. </para>
+                    <para>
+                        <emphasis>Title</emphasis>: The title of your CSW service. </para>
+                    <para>
+                        <emphasis>Abstract</emphasis>: The abstract of your CSW service.
+                    </para>
+                    <para>
+                        <emphasis>Fees</emphasis>
+                    </para>
+                    <para>
+                        <emphasis>Access constraints</emphasis>
+                    </para>
                     <para>The service description also contains the main keywords of the catalogue.
                         The list of keywords is generated by the catalogue based on metadata
                         content.</para>
@@ -141,12 +133,12 @@
                 </section>
                 <section>
                     <title>Z39.50 configuration</title>
-                    <para><emphasis><glossterm linkend="glos-z3950">Z39.50</glossterm></emphasis> GeoNetwork can act as a Z39.50 server, which
+                    <para><emphasis><glossterm linkend="glos-z3950">Z39.50</glossterm></emphasis>: GeoNetwork can act as a Z39.50 server, which
                         is an OGC communication protocol to query and retrieve metadata. </para>
-                    <para><emphasis>Enable</emphasis> Check this option to start the Z39.50
+                    <para><emphasis>Enable</emphasis>: Check this option to start the Z39.50
                         submodule. Please, notice that GeoNetwork must be restarted in order to make
                         this change active.</para>
-                    <para><emphasis>port</emphasis> This is the port on which GeoNetwork will be
+                    <para><emphasis>port</emphasis>: This is the port on which GeoNetwork will be
                         listening for incoming Z39.50 requests. Usually, the value of 2100 is a
                         standard one, but to have multiple GeoNetwork nodes on the same machine you
                         have to change this value in order to avoid port conflicts between the
@@ -155,34 +147,86 @@
             </section>
             <section>
                 <title>Proxy configuration</title>
-                <para><emphasis>Proxy</emphasis> In some occasions (like harvesting) GeoNetwork must
+                <para><emphasis>Proxy</emphasis>: In some occasions (like harvesting) GeoNetwork must
                     be able to connect to remote sites and this may be denied if an organisation
                     uses proxy servers. In this cases, GeoNetwork must be configured to use the
                     proxy server in order to route outgoing requests. </para>
-                <para><emphasis>Host</emphasis> The proxy’s name or address to use (usually an IP
+                
+                <figure id="admin_config_options_proxy">
+                    <title>The proxy configuration options</title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="images/admin/web-config-options-proxy.png" width="7cm"
+                                align="center"/>
+                        </imageobject>
+                    </mediaobject>
+                </figure>
+                
+                <para><emphasis>Host</emphasis>: The proxy’s name or address to use (usually an IP
                     address).</para>
-                <para><emphasis>port</emphasis> The proxy’s port to use.</para>
+                <para><emphasis>Port</emphasis>: The proxy’s port to use.</para>
+                <para><emphasis>Username</emphasis> (optional): a username should be provided if the proxy server requires authentication.</para>
+                <para><emphasis>Password</emphasis> (optional): a password should be provided if the proxy server requires authentication.</para>
             </section>
             <section>
                 <title>Email &amp; notification</title>
-                <para><emphasis>Feedback</emphasis> GeoNetwork can provide some feedback to the
-                    administrator if some events happen, for example a metadata is downloaded or
-                    some feedback is provided using the online form. You have to configure
-                    GeoNetwork with proper parameters to send an email. </para>
-                <para><emphasis>Email</emphasis> This is the email address that will be used to send
-                    feedback to the administrator.</para>
-                <para><emphasis><glossterm linkend="glos-smtp">SMTP</glossterm> host</emphasis> Organisation’s mail server to use when sending
-                    email</para>
-                <para><emphasis>SMTP port</emphasis> Mail server’s SMTP port (usually 25). </para>
+                <para><emphasis>Feedback</emphasis> GeoNetwork can sometimes send email, for example if a metadata is downloaded or
+                    if a user provides feedback using the online form. You have to configure
+                    the mail server GeoNetwork should use in order to enable it to send email. </para>
+                
+                
+                <figure id="admin_config_options_mailserver">
+                    <title>The mail server configuration options</title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="images/admin/web-config-options-mailserver.png" width="7cm"
+                                align="center"/>
+                        </imageobject>
+                    </mediaobject>
+                </figure>
+                
+                <para><emphasis>Email</emphasis>: This is the email address that will be used to send
+                    the email (the From address).</para>
+                <para><emphasis><glossterm linkend="glos-smtp">SMTP</glossterm> host</emphasis>: the mail server address to use when sending
+                    email.</para>
+                <para><emphasis>SMTP port</emphasis>: the mail server SMTP port (usually 25). </para>
             </section>
             <section>
                 <title>Removed metadata</title>
-                <para>Defined the directory to use to store removed metadata on delete actions. This
-                    is used as a backup directory.</para>
+                <para>Defines the directory used to store a backup of metadata and data after a delete action. This
+                    directory is used as a backup directory to allow system administrators to recover metadata and possibly 
+                    related data after erroneous deletion. By default the <literal>removed</literal> directory 
+                    is created under the data folder</para>
             </section>
             <section>
                 <title><glossterm linkend="glos-ldap">LDAP</glossterm> Authentication</title>
-                <para>This section define how to connect LDAP authentication system.</para>
+                <para>The section defines how to connect to an LDAP authentication system.</para>
+                
+                <figure id="admin_config_options_ldap">
+                    <title>The LDAP configuration options</title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="images/admin/web-config-options-ldap.png" width="10cm"
+                                align="center"/>
+                        </imageobject>
+                    </mediaobject>
+                </figure>
+                
+            </section>
+            <section>
+                <title><glossterm linkend="glos-shibboleth">Shibboleth</glossterm> Authentication</title>
+                <para>The section defines how to connect to a Shibboleth authentication system.</para>
+                
+                <figure id="admin_config_options_shibboleth">
+                    <title>The Shibboleth configuration options</title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="images/admin/web-config-options-shibboleth.png" width="10cm"
+                                align="center"/>
+                        </imageobject>
+                    </mediaobject>
+                </figure>
+                
             </section>
         </section>
     </chapter>
