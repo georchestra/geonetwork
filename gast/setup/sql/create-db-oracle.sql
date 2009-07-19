@@ -29,8 +29,7 @@ CREATE TABLE Settings
     parentId  int,
     name      varchar(32)    not null,
     value     varchar(250),
-    primary key(id),
-    foreign key(parentId) references Settings(id)
+    primary key(id)
   );
 
 REM ======================================================================
@@ -69,9 +68,7 @@ CREATE TABLE IsoLanguagesDes
     idDes   int,
     langId  varchar(5),
     label   varchar(96)   not null,
-    primary key(idDes,langId),
-    foreign key(idDes) references IsoLanguages(id),
-    foreign key(langId) references Languages(id)
+    primary key(idDes,langId)
   );
 
 REM ======================================================================
@@ -93,9 +90,7 @@ CREATE TABLE RegionsDes
     idDes   int,
     langId  varchar(5),
     label   varchar(96)   not null,
-    primary key(idDes,langId),
-    foreign key(idDes) references Regions(id),
-    foreign key(langId) references Languages(id)
+    primary key(idDes,langId)
   );
 
 REM ======================================================================
@@ -137,9 +132,7 @@ CREATE TABLE OperationsDes
     idDes   int,
     langId  varchar(5),
     label   varchar(96)   not null,
-    primary key(idDes,langId),
-    foreign key(idDes) references Operations(id),
-    foreign key(langId) references Languages(id)
+    primary key(idDes,langId)
   );
 
 REM ======================================================================
@@ -152,8 +145,7 @@ CREATE TABLE Groups
     email        varchar(32),
     referrer     int,
     primary key(id),
-    unique(name),
-    foreign key(referrer) references Users(id)
+    unique(name)
   );
 
 REM ======================================================================
@@ -163,9 +155,7 @@ CREATE TABLE GroupsDes
     idDes   int,
     langId  varchar(5),
     label   varchar(96)   not null,
-    primary key(idDes,langId),
-    foreign key(idDes) references Groups(id),
-    foreign key(langId) references Languages(id)
+    primary key(idDes,langId)
   );
 
 REM ======================================================================
@@ -174,9 +164,7 @@ CREATE TABLE UserGroups
   (
     userId   int,
     groupId  int,
-    primary key(userId,groupId),
-    foreign key(userId) references Users(id),
-    foreign key(groupId) references Groups(id)
+    primary key(userId,groupId)
   );
 
 REM ======================================================================
@@ -186,9 +174,7 @@ CREATE TABLE CategoriesDes
     idDes   int,
     langId  varchar(5),
     label   varchar(96)   not null,
-    primary key(idDes,langId),
-    foreign key(idDes) references Categories(id),
-    foreign key(langId) references Languages(id)
+    primary key(idDes,langId)
   );
 
 REM ======================================================================
@@ -213,13 +199,8 @@ CREATE TABLE Metadata
     rating       int            default 0 not null,
     popularity   int            default 0 not null,
     primary key(id),
-    unique(uuid),
-    foreign key(owner) references Users(id),
-    foreign key(groupOwner) references Groups(id)
+    unique(uuid)
   );
-
-CREATE INDEX MetadataNDX1 ON Metadata(uuid);
-CREATE INDEX MetadataNDX2 ON Metadata(source);
 
 REM ======================================================================
 
@@ -227,9 +208,7 @@ CREATE TABLE MetadataCateg
   (
     metadataId  int,
     categoryId  int,
-    primary key(metadataId,categoryId),
-    foreign key(metadataId) references Metadata(id),
-    foreign key(categoryId) references Categories(id)
+    primary key(metadataId,categoryId)
   );
 
 REM ======================================================================
@@ -239,10 +218,7 @@ CREATE TABLE OperationAllowed
     groupId      int,
     metadataId   int,
     operationId  int,
-    primary key(groupId,metadataId,operationId),
-    foreign key(groupId) references Groups(id),
-    foreign key(metadataId) references Metadata(id),
-    foreign key(operationId) references Operations(id)
+    primary key(groupId,metadataId,operationId)
   );
 
 REM ======================================================================
@@ -252,9 +228,33 @@ CREATE TABLE MetadataRating
     metadataId  int,
     ipAddress   varchar(32),
     rating      int           not null,
-    primary key(metadataId,ipAddress),
-    foreign key(metadataId) references Metadata(id)
+    primary key(metadataId,ipAddress)
   );
 
 REM ======================================================================
 
+REM CREATE INDEX MetadataNDX1 ON Metadata(uuid);
+CREATE INDEX MetadataNDX2 ON Metadata(source);
+
+ALTER TABLE CategoriesDes ADD FOREIGN KEY (idDes) REFERENCES Categories (id);
+ALTER TABLE CategoriesDes ADD FOREIGN KEY (langId) REFERENCES Languages (id);
+ALTER TABLE Groups ADD FOREIGN KEY (referrer) REFERENCES Users (id);
+ALTER TABLE GroupsDes ADD FOREIGN KEY (langId) REFERENCES Languages (id);
+ALTER TABLE GroupsDes ADD FOREIGN KEY (idDes) REFERENCES Groups (id);
+ALTER TABLE IsoLanguagesDes ADD FOREIGN KEY (langId) REFERENCES Languages (id);
+ALTER TABLE IsoLanguagesDes ADD FOREIGN KEY (idDes) REFERENCES IsoLanguages (id);
+ALTER TABLE Metadata ADD FOREIGN KEY (owner) REFERENCES Users (id);
+ALTER TABLE Metadata ADD FOREIGN KEY (groupOwner) REFERENCES Groups (id);
+ALTER TABLE MetadataCateg ADD FOREIGN KEY (categoryId) REFERENCES Categories (id);
+ALTER TABLE MetadataCateg ADD FOREIGN KEY (metadataId) REFERENCES Metadata (id);
+ALTER TABLE MetadataRating ADD FOREIGN KEY (metadataId) REFERENCES Metadata (id);
+ALTER TABLE OperationAllowed ADD FOREIGN KEY (operationId) REFERENCES Operations (id);
+ALTER TABLE OperationAllowed ADD FOREIGN KEY (groupId) REFERENCES Groups (id);
+ALTER TABLE OperationAllowed ADD FOREIGN KEY (metadataId) REFERENCES Metadata (id);
+ALTER TABLE OperationsDes ADD FOREIGN KEY (langId) REFERENCES Languages (id);
+ALTER TABLE OperationsDes ADD FOREIGN KEY (idDes) REFERENCES Operations (id);
+ALTER TABLE RegionsDes ADD FOREIGN KEY (langId) REFERENCES Languages (id);
+ALTER TABLE RegionsDes ADD FOREIGN KEY (idDes) REFERENCES Regions (id);
+ALTER TABLE Settings ADD FOREIGN KEY (parentId) REFERENCES Settings (id);
+ALTER TABLE UserGroups ADD FOREIGN KEY (userId) REFERENCES Users (id);
+ALTER TABLE UserGroups ADD FOREIGN KEY (groupId) REFERENCES Groups (id);
