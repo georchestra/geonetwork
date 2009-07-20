@@ -26,6 +26,7 @@
 			<os family="windows"/>
 			<os family="mac"/>
 		</laf>
+		<modifier value="false" key="showDebugWindow" />
 	</guiprefs>
 	
 	<!-- =================================================================================== -->
