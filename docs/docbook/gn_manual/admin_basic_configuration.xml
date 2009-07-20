@@ -41,8 +41,7 @@
                 <title>The configuration options</title>
                 <mediaobject>
                     <imageobject>
-                        <imagedata fileref="images/admin/web-config-options.png" width="11cm"
-                            align="center"/>
+                        <imagedata fileref="images/admin/web-config-options.png" width="8.609cm" align="center"/>
                     </imageobject>
                 </mediaobject>
             </figure>
@@ -199,34 +198,51 @@
                     is created under the data folder</para>
             </section>
             <section>
-                <title><glossterm linkend="glos-ldap">LDAP</glossterm> Authentication</title>
-                <para>The section defines how to connect to an LDAP authentication system.</para>
+                <title>Authentication</title>
+								<para>In this section you define the source against which GeoNetwork will authenticate users and passwords.</para>
+                <figure id="admin_authentication_config_options">
+                 		<title>Authentication configuration options</title>
+                 		<mediaobject>
+                     		<imageobject>
+                         		<imagedata fileref="images/admin/web-config-options-authentication.png" width="6.321cm" align="center"/>
+                       	</imageobject>
+                  	</mediaobject>
+               	</figure>
+								<para>By default, users are authenticated against info held in the GeoNetwork database. When the GeoNetwork database is used as the authentication source, the user self-registation function can be enabled.</para>
+								<para>You may choose to authenticate logins against either the GeoNetwork database tables or LDAP (the lightweight directory access protocol) but not both. The next section describes how to authenticate against LDAP.</para>
+								<para>In addition to either of these options, you may also configure other authentication sources. At present, Shibboleth is the only additional authentication source that can be configured. Shibboleth is typically used for national access federations such as the Australian Access Federation. Configuring shibboleth authentication in GeoNetwork to use such a federation would allow not only users from a local database or LDAP directory to use your installation, but any user from such a federation.</para>
+            		<section>
+                		<title><glossterm linkend="glos-ldap">LDAP</glossterm> Authentication</title>
+                		<para>The section defines how to connect to an LDAP authentication system.</para>
                 
-                <figure id="admin_config_options_ldap">
-                    <title>The LDAP configuration options</title>
-                    <mediaobject>
-                        <imageobject>
-                            <imagedata fileref="images/admin/web-config-options-ldap.png" width="10cm"
-                                align="center"/>
-                        </imageobject>
-                    </mediaobject>
-                </figure>
+                		<figure id="admin_config_options_ldap">
+                    		<title>The LDAP configuration options</title>
+                    		<mediaobject>
+                        		<imageobject>
+                            		<imagedata fileref="images/admin/web-config-options-ldap.png" width="9.54cm"
+                                		align="center"/>
+                        		</imageobject>
+                    		</mediaobject>
+                		</figure>
+
+                		<para>Typically all users must have their details in the LDAP directory to login to GeoNetwork. However if a user is added to the GeoNetwork database with the Administrator profile then they will be able to login without their details being present in the LDAP directory.</para>
                 
-            </section>
-            <section>
-                <title><glossterm linkend="glos-shibboleth">Shibboleth</glossterm> Authentication</title>
-                <para>The section defines how to connect to a Shibboleth authentication system.</para>
-                
-                <figure id="admin_config_options_shibboleth">
-                    <title>The Shibboleth configuration options</title>
-                    <mediaobject>
-                        <imageobject>
-                            <imagedata fileref="images/admin/web-config-options-shibboleth.png" width="10cm"
-                                align="center"/>
-                        </imageobject>
-                    </mediaobject>
-                </figure>
-                
+            		</section>
+            		<section>
+                		<title><glossterm linkend="glos-shibboleth">Shibboleth</glossterm> Authentication</title>
+                		<para>When using either the GeoNetwork database or LDAP for authentication, you can also configure shibboleth to allow authentication against access federations.</para>
+                		<figure id="admin_config_options_shibboleth">
+                    		<title>The Shibboleth configuration options</title>
+                    		<mediaobject>
+                        		<imageobject>
+                            		<imagedata fileref="images/admin/web-config-options-shibboleth.png" width="12.7cm"
+                                		align="center"/>
+                        		</imageobject>
+                    		</mediaobject>
+                		</figure>
+               			<para>Shibboleth authentication requires interaction with Apache web server. In particular, the apache web server must be configured to require Shibboleth authentication to access the path entered in the configuration. The apache web server configuration will contain the details of the shibboleth server that works out where a user is located (sometimes called a 'where are you from' server).</para>
+										<para>The remainder of the shibboleth login configuration describes how shibboleth authentication attributes are mapped to GeoNetwork user database fields as once a user is authenticated against shibboleth, their details are copied to the local GeoNetwork database.</para>
+            		</section>
             </section>
         </section>
     </chapter>
