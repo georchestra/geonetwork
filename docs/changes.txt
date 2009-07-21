@@ -1,5 +1,48 @@
 ================================================================================
 ===
+=== GeoNetwork 2.4.0 Final: List of changes (See also changes 2.4.0.txt)
+===
+================================================================================
+--------------------------------------------------------------------------------
+--- Changes
+--------------------------------------------------------------------------------
+
+- Added MD5 checksum creation to installer build process
+- Alter sections of manual that describe system configuration to include
+- Bring fgdc thumbnail handling into line with ISO (ie. add thumbnail upload/button to editor)
+- bulk import.
+- Capabilities_Filter section is mandatory
+- CSW / Fix fallback to POST method if existing.
+- csw:csw-2.0.2-GetCapabilities-tc7.1 and ...-tc7.2 
+- details on shibboleth and reorganisation for authentication.
+- Documentation updates related to System configuration
+- Enhancement - ticket #131 - add thumbnail display for fgdc metadata
+- Fix bug with permissions when GN in Z server role
+- Fix for Oracle SQL create database script
+- Fix includes in summary/brief metadata returned by z3950 so that they work with saxon
+- Fix links to manual.pdf
+- Fixed checkBoxAsBoolean for multiple checkboxes, thanks FXP
+- Folder related to Jeeves
+- folder related to xslt caching
+- For type gco:Boolean use a checkbox control in the editor. If user checks / unchecks the box, the value of a hidden input is set to true or false respectively.
+- group authentication options to include self-registration, clarify choices
+- Handle <image type="unknown" ..> links to thumbnails from all standards by scaling down
+- harvest from geonetwork node wasn't updating thumbnails
+- harvested records should not be synced by metadata sync in gast
+- Make sure gast picks up xslt transformer factory choices from services
+- Minor fix required to pass two tests from OGC CSW 2.0.2 test suite
+- modalbox fixes including tabbing between form fields
+- Prevent confusing error caused by attempting to add a thumbnail with empty filename
+- Remove unnecessary include which caused saxon to return an error when doing
+- Remove unused xalan namespace from xslt
+- removing geonetwork APIs from SVN
+- Show thumbnail for fgdc in full metadata view but not in embedded view
+- Small documentation updates to trunk
+- Tidy validation error/no-error reporting and fix ticket #127
+- updated, synchronized files for all languages
+
+================================================================================
+===
 === GeoNetwork 2.4.x RC2: List of changes (See also changes 2.4.0RC2.txt)
 ===
 ================================================================================
