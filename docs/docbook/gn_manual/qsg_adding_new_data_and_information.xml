@@ -780,7 +780,7 @@
 
                     <mediaobject>
                         <imageobject>
-                            <imagedata fileref="images/privilegesSetting1.png" width="11cm" align="center"/>
+                            <imagedata fileref="images/privilegesSetting1.png" width="12cm" align="center"/>
                         </imageobject>
                     </mediaobject>
                 </figure>
@@ -802,8 +802,11 @@
                 <para><emphasis role="bold">Featured</emphasis>: When selected, the map is placed in
                     the Features Maps of the home page and it appears there randomly.</para>
 
-                <para><emphasis role="bold">Notify</emphasis>: Users in that work group receive
-                    notification that the map has been uploaded.</para>
+                <para><emphasis role="bold">Editing</emphasis>: When selected, the editors of the 
+                    group(s) concerned can edit the respective metadata record.</para>
+                
+                <para><emphasis role="bold">Notify</emphasis>: A notification email is send to the
+                    emailaddress of the group, informing that the map has been downloaded.</para>
             </section>
 
             <section>
@@ -835,7 +838,7 @@
 
                     <mediaobject>
                         <imageobject>
-                            <imagedata fileref="images/categoriesManag.png" width="11cm" align="center"/>
+                            <imagedata fileref="images/categoriesManag.png" width="8cm" align="center"/>
                         </imageobject>
                     </mediaobject>
                 </figure>
