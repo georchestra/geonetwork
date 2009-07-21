@@ -142,6 +142,8 @@
 
 		<ant dir="." target="wininstall"  />	
 	
+	<checksum file="../geonetwork-${release}/geonetwork-install-${release}-${subVersion}.jar" forceOverwrite="yes"/>
+		
 	</target>
 	
 	<!-- =================================================================================== -->
@@ -161,6 +163,8 @@
 			fileVersion="${version}.0" 
 			productVersion="${version}.0"/>
 
+	<checksum file="../geonetwork-${release}/geonetwork-install-${release}-${subVersion}.exe" forceOverwrite="yes"/>
+		
 	</target>
 
 	<!-- =================================================================================== -->
@@ -175,6 +179,8 @@
 					installerType="standard" 
 					basedir="${basedir}"/> 
 
+		<checksum file="../geonetwork-${release}/geonetwork-install-win-jre-${release}-${subVersion}.jar" forceOverwrite="yes"/>
+		
 		<echo message="Building Windows installer with JRE on ${osys} using launch4j"/>
 
 		<launch4j configFile="${basedir}/launch4j/launch4jConfig-jre.xml"
@@ -185,6 +191,8 @@
 			fileVersion="${version}.0" 
 			productVersion="${version}.0"/>
 
+	<checksum file="../geonetwork-${release}/geonetwork-install-with-jre-${release}-${subVersion}.exe" forceOverwrite="yes"/>
+		
 	</target>
 
 	<!-- =================================================================================== -->
