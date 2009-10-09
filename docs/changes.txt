@@ -1,5 +1,47 @@
 ================================================================================
 ===
+=== GeoNetwork 2.4.2 minor bug fix release: List of changes
+===
+================================================================================
+--------------------------------------------------------------------------------
+--- Bug fixes
+--------------------------------------------------------------------------------
+
+158: CSW harvesting. Send preferred outputSchema from Capabilties in requests
+155: CSW harverting only supports 2.0.2 servers 
+156:Proxy server is not used for all CSW harvesting operations (also fixed OGCWXS harvester)
+Fix for ticket 125: Increase perfomance of showing metadata executing increase popularity asynchronously
+Fixed keyword identifier with no #. See #147.
+Close existing Lucene searcher. Fixed type issue.
+Case insensitive UUID handling
+Fixed bad attribute name. Thanks Richard Walker.
+Fixed javascript error with IE8 (#145). Thanks to Christopher and Andrew.
+Fixed UUID generation when inserting metadata with option : "Generate UUID ..." (#144).
+updated change log
+Inline documentation
+
+================================================================================
+===
+=== GeoNetwork 2.4.1 minor bug fix release: List of changes
+===
+================================================================================
+--------------------------------------------------------------------------------
+--- Bug fixes
+--------------------------------------------------------------------------------
+
+- Corrected Dutch translation
+- Fixed force rebuild index on startup.
+- Fixed hardcoded english strings in javascript. Use the translate(tagName) function and the js attribute in loc file now.
+- Added login support for CSW operations from CSW test page to easily test transactions.
+- Translation fix. Thanks Jean Pommier.
+- Added doc to disabled caching and use Saxon.
+- #141 Fixed XSL compilation error for RSS services (due to additional bracket). Thanks to Roger and Jean.
+- Fixed typo in codelists (#140).
+- Fixed category search menu. See #139
+- Fixed keyword autocompletion. Thanks Richard Walker. #134
+
+================================================================================
+===
 === GeoNetwork 2.4.0 Final: List of changes (See also changes 2.4.0.txt)
 ===
 ================================================================================
