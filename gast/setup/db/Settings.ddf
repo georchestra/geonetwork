@@ -106,3 +106,6 @@ value,         VARCHAR
 
 200	1	clickablehyperlinks	
 201	200	enable	true
+
+210	1	localrating	
+211	210	enable	false
