@@ -103,3 +103,6 @@ value,         VARCHAR
 
 190	1	userSelfRegistration	
 191	190	enable	false
+
+200	1	clickablehyperlinks	
+201	200	enable	true
