@@ -85,7 +85,7 @@
 	<shortcut
 		name="Documentation" 
 		description="GeoNetwork opensource documentation"
-		target="$INSTALL_PATH/docs/"
+		target="$INSTALL_PATH/web/geonetwork/docs/"
 		commandLine="" 
 		workingDirectory="$INSTALL_PATH" 
 		iconFile="$INSTALL_PATH/bin/ico/docs.ico" 
@@ -101,7 +101,7 @@
   <shortcut 
 		name="Release notes " 
 		description="GeoNetwork desktop release notes "
-		target="$INSTALL_PATH\docs\readme.html"
+		target="$INSTALL_PATH/web/geonetwork/docs/readme.html"
 		commandLine="" 
 		workingDirectory="$INSTALL_PATH" 
 		iconFile="$INSTALL_PATH/bin/ico/text.ico" 
@@ -118,7 +118,7 @@
   <shortcut 
 		name="GPL License" 
 		description="GeoNetwork opensource GNU-GPL license "
-		target="$INSTALL_PATH\docs\license.html"
+		target="$INSTALL_PATH/web/geonetwork/docs/license.html"
 		commandLine="" 
 		workingDirectory="$INSTALL_PATH" 
 		iconFile="$INSTALL_PATH/bin/ico/text.ico" 
