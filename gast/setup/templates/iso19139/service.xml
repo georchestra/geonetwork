@@ -9,6 +9,9 @@
     <gmd:characterSet>
         <gmd:MD_CharacterSetCode codeListValue="utf8" codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_CharacterSetCode"/>
     </gmd:characterSet>
+	<gmd:hierarchyLevel> 
+		<gmd:MD_ScopeCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_ScopeCode" codeListValue="service" /> 
+	</gmd:hierarchyLevel>
     <gmd:contact>
         <gmd:CI_ResponsibleParty>
             <gmd:individualName>
