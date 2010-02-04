@@ -236,6 +236,7 @@ CREATE TABLE Metadata
     harvestUri   varchar(255)   default null,
     rating       int            default 0 not null,
     popularity   int            default 0 not null,
+	displayorder int,
 
     primary key(id),
     unique(uuid),
