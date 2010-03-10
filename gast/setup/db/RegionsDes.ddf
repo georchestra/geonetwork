@@ -2031,4 +2031,293 @@ label,         VARCHAR
 9999	fr	Monde
 9999	nl	Wereld
 9999	ru	World
+1	pt	Armenia
+2	pt	Afghanistan
+3	pt	Albania
+4	pt	Algeria
+5	pt	American Samoa
+6	pt	Andorra
+7	pt	Angola
+8	pt	Antigua and Barbuda
+9	pt	Argentina
+10	pt	Australia
+11	pt	Austria
+12	pt	Bahamas
+13	pt	Bahrain
+14	pt	Barbados
+16	pt	Bangladesh
+17	pt	Bermuda
+18	pt	Bhutan
+19	pt	Bolivia
+20	pt	Botswana
+21	pt	Brazil
+22	pt	Aruba
+23	pt	Belize
+24	pt	British Indian Ocean Ter
+25	pt	Solomon Islands
+26	pt	Brunei Darussalam
+27	pt	Bulgaria
+28	pt	Myanmar
+29	pt	Burundi
+30	pt	Antarctica
+31	pt	Bouvet Island
+32	pt	Cameroon
+33	pt	Canada
+35	pt	Cape Verde
+36	pt	Cayman Island
+37	pt	Central African Republic
+38	pt	Sri Lanka
+39	pt	Chad
+40	pt	Chile
+41	pt	China, Mainland
+42	pt	Christmas Island
+43	pt	Cocos Islands
+44	pt	Colombia
+45	pt	Comoros
+46	pt	Congo, Republic of
+47	pt	Cook Islands
+48	pt	Costa Rica
+49	pt	Cuba
+50	pt	Cyprus
+52	pt	Azerbaijan, Republic of
+53	pt	Benin
+54	pt	Denmark
+55	pt	Dominica
+56	pt	Dominican Republic
+57	pt	Belarus
+58	pt	Ecuador
+59	pt	Egypt
+60	pt	El Salvador
+61	pt	Equatorial Guinea
+63	pt	Estonia
+64	pt	Faeroe Islands
+65	pt	Falkland Islands
+66	pt	Fiji Islands
+67	pt	Finland
+68	pt	France
+69	pt	French Guiana
+70	pt	French Polynesia
+71	pt	French South Terr
+72	pt	Djibouti
+73	pt	Georgia
+74	pt	Gabon
+75	pt	Gambia
+76	pt	Gaza Strip
+79	pt	Germany
+80	pt	Bosnia and Herzegovina
+81	pt	Ghana
+82	pt	Gibraltar
+83	pt	Kiribati
+84	pt	Greece
+85	pt	Greenland
+86	pt	Grenada
+87	pt	Guadeloupe
+88	pt	Guam
+89	pt	Guatemala
+90	pt	Guinea
+91	pt	Guyana
+92	pt	Heard and McDonald Is
+93	pt	Haiti
+95	pt	Honduras
+97	pt	Hungary
+98	pt	Croatia
+99	pt	Iceland
+100	pt	India
+101	pt	Indonesia
+102	pt	Iran, Islamic Rep of
+103	pt	Iraq
+104	pt	Ireland
+105	pt	Israel
+106	pt	Italy
+107	pt	Ivory Coast
+108	pt	Kazakhstan
+109	pt	Jamaica
+110	pt	Japan
+112	pt	Jordan
+113	pt	Kyrgyzstan
+114	pt	Kenya
+115	pt	Cambodia
+116	pt	Korea, Dem People's Rep
+117	pt	Korea, Republic of
+118	pt	Kuwait
+119	pt	Latvia
+120	pt	Laos
+121	pt	Lebanon
+122	pt	Lesotho
+123	pt	Liberia
+124	pt	Libyan Arab Jamahiriya
+125	pt	Liechtensten
+126	pt	Lithuania
+127	pt	Marshall Island
+129	pt	Madagascar
+130	pt	Malawi
+131	pt	Malaysia
+132	pt	Maldives
+133	pt	Mali
+134	pt	Malta
+135	pt	Martinique
+136	pt	Mauritania
+137	pt	Mauritius
+138	pt	Mexico
+139	pt	Midway Islands
+140	pt	Monaco
+141	pt	Mongolia
+142	pt	Montserrat
+143	pt	Morocco
+144	pt	Mozambique
+145	pt	Micronesia,Fed States of
+146	pt	Moldova, Republic of
+147	pt	Namibia
+148	pt	Nauru
+149	pt	Nepal
+150	pt	Netherlands
+151	pt	Neth Antilles
+153	pt	NewCaledonia
+154	pt	Macedonia
+155	pt	Vanuatu
+156	pt	New Zealand
+157	pt	Nicaragua
+158	pt	Niger
+159	pt	Nigeria
+160	pt	Niue
+161	pt	Norfolk Island
+162	pt	Norway
+163	pt	Northern Mariana Is
+165	pt	Pakistan
+166	pt	Panama
+167	pt	Czech Republic
+168	pt	Papua New Guinea
+169	pt	Paraguay
+170	pt	Peru
+171	pt	Philippines
+172	pt	Pitcairn Islands
+173	pt	Poland
+174	pt	Portugal
+175	pt	Guinea-Bissau
+176	pt	East Timor
+177	pt	Puerto Rico
+178	pt	Eritrea
+179	pt	Qatar
+181	pt	Zimbabwe
+182	pt	Reunion
+183	pt	Romania
+184	pt	Rwanda
+185	pt	Russian Federation
+187	pt	Saint Helena
+188	pt	Saint Kitts and Nevis
+189	pt	Saint Lucia
+190	pt	Saint Pierre & Miquelon
+191	pt	Saint Vincent/Grenadines
+192	pt	San Marino
+193	pt	Sao Tome and Principe
+194	pt	Saudi Arabia
+195	pt	Senegal
+196	pt	Seychelles
+197	pt	Sierra Leone
+198	pt	Slovenia
+199	pt	Slovakia
+200	pt	Singapore
+201	pt	Somalia
+202	pt	South Africa
+203	pt	Spain
+205	pt	Western Sahara
+206	pt	Sudan
+207	pt	Suriname
+208	pt	Tajikistan
+209	pt	Swaziland
+210	pt	Sweden
+211	pt	Switzerland
+212	pt	Syrian Arab Republic
+213	pt	Turkmenistan
+214	pt	China, Taiwan Prov of
+215	pt	Tanzania, United Rep of
+216	pt	Thailand
+217	pt	Togo
+218	pt	Tokelau
+219	pt	Tonga
+220	pt	Trinidad and Tobago
+221	pt	Oman
+222	pt	Tunisia
+223	pt	Turkey
+224	pt	Turks and Caicos Is
+225	pt	United Arab Emirates
+226	pt	Uganda
+227	pt	Tuvalu
+229	pt	United Kingdom
+230	pt	Ukraine
+231	pt	United States of America
+232	pt	US Minor Outlying Is
+233	pt	Burkina Faso
+234	pt	Uruguay
+235	pt	Uzbekistan
+236	pt	Venezuela
+237	pt	Viet Nam
+238	pt	Ethiopia
+239	pt	British Virgin Island
+240	pt	US Virgin Islands
+242	pt	Wake Island
+243	pt	Wallis and Futuna Is
+244	pt	Samoa
+245	pt	West Bank
+249	pt	Yemen
+250	pt	Congo, Dem Republic of
+251	pt	Zambia
+255	pt	Belgium
+256	pt	Luxembourg
+258	pt	Anguilla
+260	pt	Svalbard Is
+264	pt	Isle of Man
+270	pt	Mayotte
+271	pt	SouthGeorgia/Sandwich Is
+303	pt	Western Europe
+307	pt	Intergvt Author Devpment
+310	pt	North Western Africa
+311	pt	Western Africa
+312	pt	Central Africa
+313	pt	Eastern Africa
+314	pt	Southern Africa
+315	pt	Latin Amer & Caribbean
+316	pt	Central America
+317	pt	Caribbean
+318	pt	South America
+319	pt	Near East
+320	pt	Near East in Africa
+321	pt	Near East in Asia
+322	pt	Far East
+323	pt	South Asia
+324	pt	East & South East Asia
+325	pt	Near East and North Africa
+334	pt	Eastern Europe
+335	pt	Europe
+337	pt	Asia
+338	pt	Africa
+348	pt	Latin America
+370	pt	Serbia
+371	pt	Montenegro
+390	pt	South of Sahara
+421	pt	North Africa
+427	pt	Europe, Non-EU Countries
+428	pt	North America
+469	pt	USSR, Former Area of
+1008	pt	Arctic Sea
+1009	pt	Atlantic, Northwest
+1010	pt	Atlantic, Northeast
+1011	pt	Atlantic, Western Central
+1012	pt	Atlantic, Eastern Central
+1013	pt	Mediterran and Black Sea
+1014	pt	Atlantic, Southwest
+1015	pt	Atlantic, Southeast
+1016	pt	Atlantic, Antarctic
+1017	pt	Indian Ocean, Western
+1018	pt	Indian Ocean, Eastern
+1019	pt	Indian Ocean, Antarctic
+1020	pt	Pacific, Northwest
+1021	pt	Pacific, Northeast
+1022	pt	Pacific, Western Central
+1023	pt	Pacific, Eastern Central
+1024	pt	Pacific, Southwest
+1025	pt	Pacific, Southeast
+1026	pt	Pacific, Antarctic
+1220	pt	All fishing areas
+9999	pt	World
 

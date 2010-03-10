@@ -38,3 +38,7 @@ label,         VARCHAR
 2	ru	Пример группы
 2	de	Beispielgruppe
 2	nl	Voorbeeldgroep
+0	pt	Intranet
+-1	pt	Convidado
+1	pt	Todos
+2	pt	Grupo de Amostra
