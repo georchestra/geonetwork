@@ -21,4 +21,4 @@ organisation,  VARCHAR
 kind,          VARCHAR
 
 [DATA]
-1	admin	d033e22ae348aeb566fc214aec3585c4da997	admin	admin	Administrator								
+1	admin	d033e22ae348aeb5660fc2140aec35850c4da997	admin	admin	Administrator								
