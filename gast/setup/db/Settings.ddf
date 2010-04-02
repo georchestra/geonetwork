@@ -59,6 +59,9 @@ value,         VARCHAR
 86	80	distinguishedNames	
 87	80	userAttribs	
 
+90	1	selectionmanager	
+91	90	maxrecords	1000
+
 100	86	base	dc=fao,dc=org
 101	86	users	ou=people
 
@@ -109,3 +112,14 @@ value,         VARCHAR
 
 210	1	localrating	
 211	210	enable	false
+
+600	1	indexoptimizer	
+601	600	enable	true
+602	600	at	
+603	602	hour	0
+604	602	min	0
+605	602	sec	0
+606	600	interval	
+607	606	day	0
+608	606	hour	24	
+609	606	min	0
