@@ -28,11 +28,11 @@ label,         VARCHAR
 3	cn	Notify
 5	cn	Interactive Map
 6	cn	Featured
-0	fr	Publish
+0	fr	Publier
 1	fr	T~00E9l~00E9charger
-2	fr	Editing
+2	fr	Editer
 3	fr	Notifier
-5	fr	Interactive Map
+5	fr	Carte interactive
 6	fr	Epingler
 0	ru	Просмотр
 1	ru	Загрузка
