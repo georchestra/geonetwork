@@ -113,6 +113,11 @@ value,         VARCHAR
 210	1	localrating	
 211	210	enable	false
 
+220	1	downloadservice	
+221	220	leave	false
+222	220	simple	true
+223	220	withdisclaimer	false
+
 600	1	indexoptimizer	
 601	600	enable	true
 602	600	at	
