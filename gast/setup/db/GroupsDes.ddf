@@ -11,7 +11,7 @@ label,         VARCHAR
 
 [DATA]
 -1	en	Guest
--1	fr	Guest
+-1	fr	Invité
 -1	es	Guest
 -1	cn	Guest
 -1	ru	Guest
@@ -32,7 +32,7 @@ label,         VARCHAR
 1	de	Alle
 1	nl	Iedereen
 2	en	Sample group
-2	fr	Sample group
+2	fr	Groupe par défaut
 2	es	Sample group
 2	cn	Sample group
 2	ru	Пример группы
