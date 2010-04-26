@@ -140,6 +140,8 @@
 
 		<ant dir="../docs" target="all"  />
 		
+		<ant dir="../geoserver" target="all"  />
+		
 		<delete dir="../geonetwork-${release}"/>
 		<mkdir  dir="../geonetwork-${release}"/>
 
