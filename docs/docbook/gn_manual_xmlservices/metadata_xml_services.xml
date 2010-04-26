@@ -1,0 +1,3513 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+"http://www.docbook.org/xml/4.4/docbookx.dtd">
+<book>
+  <chapter id="metadata_xml_services">
+    <title>Metadata services</title>
+
+    <section>
+      <title>Retrieve metadata services</title>
+
+      <section>
+        <title>Search metadata (xml.search)</title>
+
+        <para>The <emphasis>xml.search</emphasis> service can be used to
+        retrieve the metadata stored in GeoNetwork.</para>
+
+        <para>Requires authentication: Optional</para>
+
+        <section>
+          <title>Request</title>
+
+          <para>Search configuration parameters (all values are
+          optional)</para>
+
+          <para><itemizedlist>
+              <listitem>
+                <para><emphasis>remote<emphasis>: Search in local catalog or
+                in a remote catalog. Values: off (default), on</emphasis>
+                </emphasis></para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>extended</emphasis>: Values: on, off
+                (default)</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>timeout</emphasis>: Timeout for request in
+                seconds (default: 20)</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>hitsPerPage</emphasis>: Results per page
+                (default: 10)</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>similarity</emphasis>: Lucene accuracy for
+                searches (default 0.8)</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>sortBy</emphasis>: Sorting criteria. Values:
+                relevance (default), rating, popularity, changeDate,
+                title</para>
+              </listitem>
+            </itemizedlist></para>
+
+          <para>Search parameters (all values are optional):</para>
+
+          <para><itemizedlist>
+              <listitem>
+                <para><emphasis>eastBL, southBL, northBL, westBL<emphasis>:
+                Bounding box to restrict the search</emphasis>
+                </emphasis></para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>relation</emphasis>: Bounding box criteria.
+                Values: equal, overlaps (default), encloses, fullyOutsideOf,
+                intersection, crosses, touches, within</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>any</emphasis>: Text to search in a free text
+                search</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>title</emphasis>: Metadata title</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>abstract</emphasis>: Metadata abstract</para>
+              </listitem>
+
+              <listitem>
+                <para>themeKey: Metadata keywords. To search for several use a
+                value like "Global" or "watersheds"</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>template</emphasis>: Indicates if search for
+                templates or not. Values: n (default), y</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>dynamic</emphasis>: Map type. Values: off
+                (default), on</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>download</emphasis>: Map type. Values: off
+                (default), on</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>digital</emphasis>: Map type. Values: off
+                (default), on</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>paper</emphasis>: Map type. Values: off
+                (default), on</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>group</emphasis>: Filter metadata by group, if
+                missing search in all groups</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>attrset</emphasis>:</para>
+              </listitem>
+
+              <listitem>
+                <para>dateFrom: Filter metadata created after specified
+                date</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>dateTo</emphasis>: Filter metadata created
+                before specified date</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>category</emphasis>: Metadata category. If not
+                specified, search all categories</para>
+              </listitem>
+            </itemizedlist></para>
+
+          <para>Examples:</para>
+
+          <para><figure id="metadatasearch_xml_request_example1">
+              <title>Request to search for all metadata example</title>
+
+              <programlisting><?db-font-size 75% ?>
+Url: 
+http://localhost:8080/geonetwork/srv/en/xml.search
+
+Mime-type: 
+application/xml
+
+Post request:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;request /&gt;</programlisting>
+            </figure></para>
+
+          <para><figure id="metadatasearch_xml_request_example2">
+              <title>Request with free text search example</title>
+
+              <programlisting><?db-font-size 75% ?>
+Url: 
+http://localhost:8080/geonetwork/srv/en/xml.search
+
+Mime-type: 
+application/xml
+
+Post request:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;request&gt;
+  &lt;any&gt;africa&lt;/any&gt;
+&lt;/request&gt;</programlisting>
+            </figure></para>
+
+          <para><figure id="metadatasearch_xml_request_example3">
+              <title>Request with a geographic search example</title>
+
+              <programlisting><?db-font-size 75% ?>
+Url: 
+http://localhost:8080/geonetwork/srv/en/xml.search
+
+Mime-type: 
+application/xml
+
+Post request:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;request&gt;
+  &lt;any&gt;africa&lt;/any&gt;
+  &lt;eastBL&gt;74.91574&lt;/eastBL&gt;
+  &lt;southBL&gt;29.40611&lt;/southBL&gt;
+  &lt;northBL&gt;38.47198&lt;/northBL&gt;
+  &lt;westBL&gt;60.50417&lt;/westBL&gt;
+  &lt;relation&gt;overlaps&lt;/relation&gt;
+  &lt;sortBy&gt;relevance&lt;/sortBy&gt;
+  &lt;attrset&gt;geo&lt;/attrset&gt;
+&lt;/request&gt;</programlisting>
+            </figure> <figure id="metadatasearch_xml_request_example4">
+              <title>Request to search using dates and keywords
+              example</title>
+
+              <programlisting><?db-font-size 75% ?>
+Url: 
+http://localhost:8080/geonetwork/srv/en/xml.search
+
+Mime-type: 
+application/xml
+
+Post request:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;request&gt;
+  &lt;title&gt;africa&lt;/title&gt;
+  &lt;themekey&gt;"Global" or "World"&lt;/themekey&gt;
+  &lt;dateFrom&gt;2000-02-03T12:47:00&lt;/dateFrom&gt;
+  &lt;dateTo&gt;2010-02-03T12:49:00&lt;/dateTo&gt;
+&lt;/request&gt;</programlisting>
+            </figure></para>
+        </section>
+
+        <section>
+          <title>Response</title>
+
+          <para>The response is the metadata record with additional
+          <emphasis>geonet:info</emphasis> section. The main fields for
+          <emphasis>geonet:info</emphasis> are:</para>
+
+          <para><itemizedlist>
+              <listitem>
+                <para>response: Response container.</para>
+
+                <itemizedlist>
+                  <listitem>
+                    <para><emphasis>summary</emphasis>: Attribute
+                    <emphasis>count</emphasis> indicates the number of
+                    metadata records retrieved</para>
+
+                    <itemizedlist>
+                      <listitem>
+                        <para><emphasis>keywords</emphasis>: List of keywords
+                        that are part of the metadata resultset. Each keyword
+                        contains the value and the number of occurences in the
+                        retrieved metadata</para>
+                      </listitem>
+                    </itemizedlist>
+                  </listitem>
+
+                  <listitem>
+                    <para><emphasis>metadata</emphasis>: Container for
+                    metadata records found. Each record contains an
+                    <emphasis>geonet:info</emphasis> element with the
+                    following information:</para>
+
+                    <itemizedlist>
+                      <listitem>
+                        <para><emphasis>title</emphasis>: RSS channel
+                        title</para>
+                      </listitem>
+
+                      <listitem>
+                        <para><emphasis>description</emphasis>: RSS channel
+                        description</para>
+                      </listitem>
+
+                      <listitem>
+                        <para><emphasis>item</emphasis>: Metadata RSS item
+                        (one item for each metadata retrieved)</para>
+
+                        <itemizedlist>
+                          <listitem>
+                            <para><emphasis>id</emphasis>: Metadata internal
+                            identifier</para>
+                          </listitem>
+
+                          <listitem>
+                            <para><emphasis>uuid</emphasis> : Metadata
+                            Universally Unique Identifier (UUID)</para>
+                          </listitem>
+
+                          <listitem>
+                            <para><emphasis>schema</emphasis>: Metadata
+                            schema</para>
+                          </listitem>
+
+                          <listitem>
+                            <para><emphasis>createDate</emphasis>: Metadata
+                            creation date</para>
+                          </listitem>
+
+                          <listitem>
+                            <para><emphasis>changeDate</emphasis>: Metadata last
+                            modification date</para>
+                          </listitem>
+
+                          <listitem>
+                            <para><emphasis>source</emphasis>: Source catalogue
+                            the metadata</para>
+                          </listitem>
+
+                          <listitem>
+                            <para><emphasis>category</emphasis>: Metadata
+                            category (Can be multiple elements)</para>
+                          </listitem>
+
+                          <listitem>
+                            <para><emphasis>score</emphasis>: Value indicating
+                            the accuracy of search</para>
+                          </listitem>
+                        </itemizedlist>
+                      </listitem>
+                    </itemizedlist>
+                  </listitem>
+                </itemizedlist>
+              </listitem>
+            </itemizedlist> <figure id="metadatasearch_xml_response_example">
+              <title>Metadata search response example</title>
+
+              <programlisting><?db-font-size 75% ?>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;response from="1" to="7"&gt;
+	&lt;summary count="7" type="local"&gt;
+		&lt;keywords&gt;
+			&lt;keyword count="2" name="Global"/&gt;
+			&lt;keyword count="2" name="World"/&gt;
+			&lt;keyword count="2" name="watersheds"/&gt;
+			&lt;keyword count="1" name="Biology"/&gt;
+			&lt;keyword count="1" name="water resources"/&gt;
+			&lt;keyword count="1" name="endangered plant species"/&gt;
+			&lt;keyword count="1" name="Africa"/&gt;
+			&lt;keyword count="1" name="Eurasia"/&gt;
+			&lt;keyword count="1" name="endangered animal species"/&gt;
+			&lt;keyword count="1" name="Antarctic ecosystem"/&gt;
+		&lt;/keywords&gt;
+	&lt;/summary&gt;
+	&lt;metadata xmlns:gmx="http://www.isotc211.org/2005/gmx"&gt;
+		&lt;geonet:info xmlns:geonet="http://www.fao.org/geonetwork"&gt;
+			&lt;id&gt;12&lt;/id&gt;
+			&lt;uuid&gt;bc179f91-11c1-4878-b9b4-2270abde98eb&lt;/uuid&gt;
+			&lt;schema&gt;iso19139&lt;/schema&gt;
+			&lt;createDate&gt;2007-07-25T12:05:45&lt;/createDate&gt;
+			&lt;changeDate&gt;2007-11-06T12:10:47&lt;/changeDate&gt;
+			&lt;source&gt;881a1630-d4e7-4c9c-aa01-7a9bbbbc47b2&lt;/source&gt;
+			&lt;category&gt;maps&lt;/category&gt;
+			&lt;category&gt;interactiveResources&lt;/category&gt;
+			&lt;score&gt;1.0&lt;/score&gt;
+		&lt;/geonet:info&gt;
+	&lt;/metadata&gt;
+	&lt;metadata xmlns:gmx="http://www.isotc211.org/2005/gmx"&gt;
+		&lt;geonet:info xmlns:geonet="http://www.fao.org/geonetwork"&gt;
+			&lt;id&gt;11&lt;/id&gt;
+			&lt;uuid&gt;5df54bf0-3a7d-44bf-9abf-84d772da8df1&lt;/uuid&gt;
+			&lt;schema&gt;iso19139&lt;/schema&gt;
+			&lt;createDate&gt;2007-07-19T14:45:07&lt;/createDate&gt;
+			&lt;changeDate&gt;2007-11-06T12:13:00&lt;/changeDate&gt;
+			&lt;source&gt;881a1630-d4e7-4c9c-aa01-7a9bbbbc47b2&lt;/source&gt;
+			&lt;category&gt;maps&lt;/category&gt;
+			&lt;category&gt;datasets&lt;/category&gt;
+			&lt;category&gt;interactiveResources&lt;/category&gt;
+			&lt;score&gt;0.9178859&lt;/score&gt;
+		&lt;/geonet:info&gt;
+	&lt;/metadata&gt;
+&lt;/response&gt;</programlisting>
+            </figure></para>
+        </section>
+      </section>
+
+      <section>
+        <title>Get metadata (xml.metadata.get)</title>
+
+        <para>The <emphasis>xml.metadata.get</emphasis> service can be used to
+        retrieve a metadata record stored in GeoNetwork.</para>
+
+        <para>Requires authentication: Optional</para>
+
+        <section>
+          <title>Request</title>
+
+          <para>Parameters (one of them mandatory):</para>
+
+          <para><itemizedlist>
+              <listitem>
+                <para><emphasis>uuid</emphasis> : Metadata Universally Unique
+                Identifier (UUID)</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>id</emphasis>: Metadata internal
+                identifier</para>
+              </listitem>
+            </itemizedlist>Example:</para>
+
+          <figure id="metadataget_xml_request_example">
+            <title>Get metadata request example</title>
+
+            <programlisting><?db-font-size 75% ?>
+Url: 
+http://localhost:8080/geonetwork/srv/en/xml.metadata.get
+Mime-type: 
+application/xml
+
+Post request:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;request&gt;
+  &lt;uuid&gt;aa9bc613-8eef-4859-a9eb-4df35d8b21e4&lt;/uuid&gt;
+&lt;/request&gt;</programlisting>
+          </figure>
+        </section>
+
+        <section>
+          <title>Response</title>
+
+          <para>The response is the metadata record with additional
+          <emphasis>geonet:info</emphasis> section. The principal fields for
+          <emphasis>geonet:info</emphasis> are:</para>
+
+          <para><itemizedlist>
+              <listitem>
+                <para><emphasis>schema</emphasis>: Metadata schema</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>createDate</emphasis>: Metadata creation
+                date</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>changeDate</emphasis>: Metadata last
+                modification date</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>isTemplate</emphasis>: Indicates if the
+                metadata returned is a template</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>title</emphasis>: Metadata title</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>source</emphasis>: Source catalogue the
+                metadata</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>uuid</emphasis> : Metadata Universally Unique
+                Identifier (UUID)</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>isHarvested</emphasis>: Indicates if the
+                metadata is harvested</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>popularity</emphasis>: Indicates how often the
+                record is retrieved</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>rating</emphasis>: Average rating provided by
+                users</para>
+              </listitem>
+
+              <listitem>
+                <para>State of operation on metadata for the user: view,
+                notify, download, dynamic, featured, edit</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>owner</emphasis>: Indicates if the user that
+                executed the service is the owner of metadata</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>ownername</emphasis>: Metadata owner
+                name</para>
+              </listitem>
+            </itemizedlist></para>
+
+          <figure id="metadataget_xml_response_example">
+            <title>Get metadata response example</title>
+
+            <programlisting><?db-font-size 75% ?>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;Metadata xmlns:geonet="http://www.fao.org/geonetwork" 
+  xmlns:csw="http://www.opengis.net/cat/csw/2.0.2"&gt;
+  &lt;mdFileID&gt;aa9bc613-8eef-4859-a9eb-4df35d8b21e4&lt;/mdFileID&gt;
+  
+  ...
+
+  &lt;geonet:info&gt;
+    &lt;id&gt;10&lt;/id&gt;
+    &lt;schema&gt;iso19115&lt;/schema&gt;
+    &lt;createDate&gt;2005-08-23T17:58:18&lt;/createDate&gt;
+    &lt;changeDate&gt;2007-03-12T17:49:50&lt;/changeDate&gt;
+    &lt;isTemplate&gt;n&lt;/isTemplate&gt;
+    &lt;title /&gt;
+    &lt;source&gt;881a1630-d4e7-4c9c-aa01-7a9bbbbc47b2&lt;/source&gt;
+    &lt;uuid&gt;aa9bc613-8eef-4859-a9eb-4df35d8b21e4&lt;/uuid&gt;
+    &lt;isHarvested&gt;n&lt;/isHarvested&gt;
+    &lt;popularity&gt;0&lt;/popularity&gt;
+    &lt;rating&gt;0&lt;/rating&gt;
+    &lt;view&gt;true&lt;/view&gt;
+    &lt;notify&gt;true&lt;/notify&gt;
+    &lt;download&gt;true&lt;/download&gt;
+    &lt;dynamic&gt;true&lt;/dynamic&gt;
+    &lt;featured&gt;true&lt;/featured&gt;
+    &lt;edit&gt;true&lt;/edit&gt;
+    &lt;owner&gt;true&lt;/owner&gt;
+    &lt;ownername&gt;admin&lt;/ownername&gt;
+    &lt;subtemplates /&gt;
+  &lt;/geonet:info&gt;
+&lt;/Metadata&gt;</programlisting>
+          </figure>
+
+          <para>Exceptions:</para>
+
+          <para><itemizedlist>
+              <listitem>
+                <para><emphasis>Request must contain a UUID or an
+                ID</emphasis>, when no uuid or id parameter is provided</para>
+              </listitem>
+            </itemizedlist></para>
+        </section>
+
+        <section>
+          <title>Errors</title>
+
+          <itemizedlist>
+            <listitem>
+              <para><emphasis>Operation not allowed (error id:
+              operation-not-allowed)</emphasis>, when the user is not allowed
+              to show the metadata record. Returned 403 HTTP code</para>
+            </listitem>
+          </itemizedlist>
+        </section>
+      </section>
+
+      <section>
+        <title>RSS Search: Search metadata and retrieve in RSS format
+        (rss.search)</title>
+
+        <para>The <emphasis>rss.search</emphasis> service can be used to
+        retrieve metadata records in RSS format, using regular search
+        parameters. This service can be configured in
+        <emphasis>WEB-INF\config.xml</emphasis> file setting the next
+        parameters:</para>
+
+        <para><itemizedlist>
+            <listitem>
+              <para><emphasis>maxSummaryKeys</emphasis>: Maximum number of RSS
+              records to retrieve (default = 10)</para>
+            </listitem>
+          </itemizedlist></para>
+
+        <para>Requires authentication: Optional. If not provided only public
+        metadata records are retrieved</para>
+
+        <section>
+          <title>Request</title>
+
+          <para>Parameters:</para>
+
+          <para><itemizedlist>
+              <listitem>
+                <para><emphasis>georss</emphasis>: valid values are simple,
+                simplepoint and default. See also <ulink
+                url="http://georss.org">http://georss.org</ulink></para>
+
+                <itemizedlist>
+                  <listitem>
+                    <para><emphasis>simple</emphasis>: Bounding box in georss
+                    simple format</para>
+                  </listitem>
+
+                  <listitem>
+                    <para><emphasis>simplepoint</emphasis>: Bounding box in
+                    georss simplepoint format</para>
+                  </listitem>
+
+                  <listitem>
+                    <para><emphasis>default</emphasis>: Bounding box in georss
+                    GML format</para>
+                  </listitem>
+                </itemizedlist>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>eastBL, southBL, northBL, westBL<emphasis>:
+                Bounding box to restrict the search</emphasis>
+                </emphasis></para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>relation</emphasis>: Bounding box criteria.
+                Values: equal, overlaps (default), encloses, fullyOutsideOf,
+                intersection, crosses, touches, within</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>any</emphasis>: Text to search in a free text
+                search</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>title</emphasis>: Metadata title</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>abstract</emphasis>: Metadata abstract</para>
+              </listitem>
+
+              <listitem>
+                <para>themeKey: Metadata keywords. To search for several use a
+                value like "Global" or "watersheds"</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>dynamic</emphasis>: Map type. Values: off
+                (default), on</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>download</emphasis>: Map type. Values: off
+                (default), on</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>digital</emphasis>: Map type. Values: off
+                (default), on</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>paper</emphasis>: Map type. Values: off
+                (default), on</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>group</emphasis>: Filter metadata by group, if
+                missing search in all groups</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>attrset</emphasis>:</para>
+              </listitem>
+
+              <listitem>
+                <para>dateFrom: Filter metadata created after specified
+                date</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>dateTo</emphasis>: Filter metadata created
+                before specified date</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>category</emphasis>: Metadata category. If not
+                specified, search all categories</para>
+              </listitem>
+            </itemizedlist></para>
+
+          <para>Example:</para>
+
+          <para><figure id="rsssearch_xml_request_example">
+              <title>RSS search request example</title>
+
+              <programlisting><?db-font-size 75% ?>
+Url: 
+http://localhost:8080/geonetwork/srv/en/rss.search
+
+Mime-type: 
+application/xml
+
+Post request:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;request&gt;
+&lt;georss&gt;simplepoint&lt;/georss&gt;
+&lt;any&gt;africa&lt;/any&gt;
+&lt;eastBL&gt;74.91574&lt;/eastBL&gt;
+&lt;southBL&gt;29.40611&lt;/southBL&gt;
+&lt;northBL&gt;38.47198&lt;/northBL&gt;
+&lt;westBL&gt;60.50417&lt;/westBL&gt;
+&lt;relation&gt;overlaps&lt;/relation&gt;
+&lt;sortBy&gt;relevance&lt;/sortBy&gt;
+&lt;attrset&gt;geo&lt;/attrset&gt;
+&lt;/request&gt;
+							</programlisting>
+            </figure></para>
+        </section>
+
+        <section>
+          <title>Response</title>
+
+          <para>Here follows the principal fields of the response:</para>
+
+          <itemizedlist>
+            <listitem>
+              <para><emphasis>channel</emphasis>: This is the container for
+              the RSS response</para>
+
+              <itemizedlist>
+                <listitem>
+                  <para><emphasis>title</emphasis>: RSS channel title</para>
+                </listitem>
+
+                <listitem>
+                  <para>description: RSS channel description</para>
+                </listitem>
+
+                <listitem>
+                  <para>item: Metadata RSS item (one item for each metadata
+                  retrieved)</para>
+
+                  <itemizedlist>
+                    <listitem>
+                      <para>title: Metadata title</para>
+                    </listitem>
+
+                    <listitem>
+                      <para>link: Link to show metadata page. Additional link
+                      elements (with rel="alternate") to OGC WXS services,
+                      shapefile/images files, Google KML, etc. can be returned
+                      depending on metadata</para>
+                    </listitem>
+
+                    <listitem>
+                      <para>description: Metadata description</para>
+                    </listitem>
+
+                    <listitem>
+                      <para>pubDate: Metadata publication date</para>
+                    </listitem>
+
+                    <listitem>
+                      <para>media: Metadata thumbnails</para>
+                    </listitem>
+
+                    <listitem>
+                      <para>georrs:point: Bounding box in georss simplepoint
+                      format</para>
+                    </listitem>
+                  </itemizedlist>
+                </listitem>
+              </itemizedlist>
+            </listitem>
+          </itemizedlist>
+
+          <para><figure id="rsssearch_xml_response_example">
+              <title>RSS latest response example</title>
+
+              <programlisting><?db-font-size 75% ?>
+Mimetype:  
+application/rss+xml
+
+Response:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;rss xmlns:media="http://search.yahoo.com/mrss/" xmlns:georss="http://www.georss.org/georss" 
+xmlns:gml="http://www.opengis.net/gml" version="2.0"&gt;
+&lt;channel&gt;
+&lt;title&gt;GeoNetwork opensource portal to spatial data and information&lt;/title&gt;
+&lt;link&gt;http://localhost:8080/geonetwork&lt;/link&gt;
+&lt;description&gt;GeoNetwork opensource provides Internet access to interactive maps, 
+satellite imagery and related spatial databases ... &lt;/description&gt;
+&lt;language&gt;en&lt;/language&gt;
+&lt;copyright&gt;All rights reserved. Your generic copyright statement &lt;/copyright&gt;
+&lt;category&gt;Geographic metadata catalog&lt;/category&gt;
+&lt;generator&gt;GeoNetwork opensource&lt;/generator&gt;
+&lt;ttl&gt;30&lt;/ttl&gt;
+&lt;item&gt;
+&lt;title&gt;Hydrological Basins in Africa (Sample record, please remove!)&lt;/title&gt;
+&lt;link&gt;http://localhost:8080/geonetwork?uuid=5df54bf0-3a7d-44bf-9abf-84d772da8df1&lt;/link&gt;
+&lt;link href="http://geonetwork3.fao.org/ows/296?SERVICE=wms$amp;VERSION=1.1.1&amp;REQUEST=GetMap
+&amp;BBOX=-17.3,-34.6,51.1,38.2&amp;LAYERS=hydrological_basins&amp;SRS=EPSG:4326&amp;WIDTH=200
+&amp;HEIGHT=213&amp;FORMAT=image/png&amp;TRANSPARENT=TRUE&amp;STYLES=default" type="image/png" 
+rel="alternate" title="Hydrological basins in Africa"/&gt;
+&lt;link href="http://localhost:8080/geonetwork/srv/en/google.kml?
+uuid=5df54bf0-3a7d-44bf-9abf-84d772da8df1&amp;layers=hydrological_basins" 
+type="application/vnd.google-earth.kml+xml" 
+rel="alternate" title="Hydrological basins in Africa"/&gt;
+&lt;category&gt;Geographic metadata catalog&lt;/category&gt;
+&lt;description&gt;&lt;![CDATA[ ... ]]&gt;&lt;/description&gt;
+&lt;pubDate&gt;06 Nov 2007 12:13:00 EST&lt;/pubDate&gt;
+&lt;guid&gt;http://localhost:8080/geonetwork?uuid=5df54bf0-3a7d-44bf-9abf-84d772da8df1&lt;/guid&gt;
+&lt;media:content url="/geonetwork/srv/en/resources.get?id=11&amp;fname=thumbnail_s.gif
+&amp;access=public" type="image/gif" width="100"/&gt;
+&lt;media:text&gt;Major hydrological basins and their sub-basins ...&lt;/media:text&gt;
+&lt;!--Bounding box in georss simplepoint format (default) (http://georss.org)--&gt;
+&lt;georss:point&gt;16.9 1.8&lt;/georss:point&gt;
+&lt;/item&gt;
+&lt;/channel&gt;
+&lt;/rss&gt;
+							</programlisting>
+            </figure></para>
+        </section>
+      </section>
+
+      <section>
+        <title>RSS latest: Get latest updated metadata (rss.latest)</title>
+
+        <para>The <emphasis>rss.latest</emphasis> service can be used to
+        retrieve the latest added metadata records in RSS format. This service
+        can be configured in <emphasis>WEB-INF\config.xml</emphasis> file
+        setting the next parameters:</para>
+
+        <para><itemizedlist>
+            <listitem>
+              <para><emphasis>maxItems</emphasis>: Maximum number of RSS
+              records to retrieve (default = 20)</para>
+            </listitem>
+
+            <listitem>
+              <para><emphasis>timeBetweenUpdates</emphasis>: Minutes to query
+              database for new metadata (default = 60)</para>
+            </listitem>
+          </itemizedlist></para>
+
+        <para>Requires authentication: Optional. If not provided only public
+        metadata records are retrieved</para>
+
+        <section>
+          <title>Request</title>
+
+          <para>Parameters:</para>
+
+          <para><itemizedlist>
+              <listitem>
+                <para><emphasis>georss</emphasis>: valid values are simple,
+                simplepoint and default. See also <ulink
+                url="http://georss.org">http://georss.org</ulink></para>
+
+                <itemizedlist>
+                  <listitem>
+                    <para><emphasis>simple</emphasis>: Bounding box in georss
+                    simple format</para>
+                  </listitem>
+
+                  <listitem>
+                    <para><emphasis>simplepoint</emphasis>: Bounding box in
+                    georss simplepoint format</para>
+                  </listitem>
+
+                  <listitem>
+                    <para><emphasis>default</emphasis>: Bounding box in georss
+                    GML format</para>
+                  </listitem>
+                </itemizedlist>
+              </listitem>
+            </itemizedlist></para>
+
+          <para>Example:</para>
+
+          <para><figure id="rsslatest_xml_request_example">
+              <title>RSS latest request example</title>
+
+              <programlisting><?db-font-size 75% ?>
+Url: 
+http://localhost:8080/geonetwork/srv/en/rss.latest
+
+Mime-type: 
+application/xml
+
+Post request:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;request&gt;
+&lt;georss&gt;default&lt;/georss&gt;
+&lt;maxItems&gt;1&lt;/maxItems&gt;
+&lt;/request&gt;
+</programlisting>
+            </figure></para>
+        </section>
+
+        <section>
+          <title>Response</title>
+
+          <para>Here follows the principal fields of the response:</para>
+
+          <itemizedlist>
+            <listitem>
+              <para><emphasis>channel</emphasis>: This is the container for
+              the RSS response</para>
+
+              <itemizedlist>
+                <listitem>
+                  <para><emphasis>title</emphasis>: RSS channel title</para>
+                </listitem>
+
+                <listitem>
+                  <para>description: RSS channel description</para>
+                </listitem>
+
+                <listitem>
+                  <para>item: Metadata RSS item (one item for each metadata
+                  retrieved)</para>
+
+                  <itemizedlist>
+                    <listitem>
+                      <para>title: Metadata title</para>
+                    </listitem>
+
+                    <listitem>
+                      <para>link: Link to show metadata page. Additional link
+                      elements (with rel="alternate") to OGC WXS services,
+                      shapefile/images files, Google KML, etc. can be returned
+                      depending on metadata</para>
+                    </listitem>
+
+                    <listitem>
+                      <para>description: Metadata description</para>
+                    </listitem>
+
+                    <listitem>
+                      <para>pubDate: Metadata publication date</para>
+                    </listitem>
+
+                    <listitem>
+                      <para>media: Metadata thumbnails</para>
+                    </listitem>
+
+                    <listitem>
+                      <para>georrs:where: Bounding box with the metadata
+                      extent</para>
+                    </listitem>
+                  </itemizedlist>
+                </listitem>
+              </itemizedlist>
+            </listitem>
+          </itemizedlist>
+
+          <para><figure id="rsslatest_xml_response_example">
+              <title>RSS latest response example</title>
+
+              <programlisting><?db-font-size 75% ?>
+Mimetype:  
+application/rss+xml
+
+Response:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;rss xmlns:media="http://search.yahoo.com/mrss/" xmlns:georss="http://www.georss.org/georss" 
+  xmlns:gml="http://www.opengis.net/gml" version="2.0"&gt;
+&lt;channel&gt;
+  &lt;title&gt;GeoNetwork opensource portal to spatial data and information&lt;/title&gt;
+  &lt;link&gt;http://localhost:8080/geonetwork&lt;/link&gt;
+  &lt;description&gt;GeoNetwork opensource provides Internet access to interactive maps, 
+  satellite imagery and related spatial databases ... &lt;/description&gt;
+  &lt;language&gt;en&lt;/language&gt;
+  &lt;copyright&gt;All rights reserved. Your generic copyright statement &lt;/copyright&gt;
+  &lt;category&gt;Geographic metadata catalog&lt;/category&gt;
+  &lt;generator&gt;GeoNetwork opensource&lt;/generator&gt;
+  &lt;ttl&gt;30&lt;/ttl&gt;
+  &lt;item&gt;
+    &lt;title&gt;Hydrological Basins in Africa (Sample record, please remove!)&lt;/title&gt;
+    &lt;link&gt;http://localhost:8080/geonetwork?uuid=5df54bf0-3a7d-44bf-9abf-84d772da8df1&lt;/link&gt;
+    &lt;link href="http://geonetwork3.fao.org/ows/296?SERVICE=wms$amp;VERSION=1.1.1&amp;REQUEST=GetMap
+      &amp;BBOX=-17.3,-34.6,51.1,38.2&amp;LAYERS=hydrological_basins&amp;SRS=EPSG:4326&amp;WIDTH=200
+      &amp;HEIGHT=213&amp;FORMAT=image/png&amp;TRANSPARENT=TRUE&amp;STYLES=default" type="image/png" 
+      rel="alternate" title="Hydrological basins in Africa"/&gt;
+    &lt;link href="http://localhost:8080/geonetwork/srv/en/google.kml?
+      uuid=5df54bf0-3a7d-44bf-9abf-84d772da8df1&amp;layers=hydrological_basins" 
+      type="application/vnd.google-earth.kml+xml" 
+      rel="alternate" title="Hydrological basins in Africa"/&gt;
+    &lt;category&gt;Geographic metadata catalog&lt;/category&gt;
+    &lt;description&gt;&lt;![CDATA[ ... ]]&gt;&lt;/description&gt;
+    &lt;pubDate&gt;06 Nov 2007 12:13:00 EST&lt;/pubDate&gt;
+    &lt;guid&gt;http://localhost:8080/geonetwork?uuid=5df54bf0-3a7d-44bf-9abf-84d772da8df1&lt;/guid&gt;
+    &lt;media:content url="/geonetwork/srv/en/resources.get?id=11&amp;fname=thumbnail_s.gif
+      &amp;access=public" type="image/gif" width="100"/&gt;
+      &lt;media:text&gt;Major hydrological basins and their sub-basins ...&lt;/media:text&gt;
+   &lt;!--Bounding box in georss GML format (http://georss.org)--&gt;
+   &lt;georss:where&gt;
+     &lt;gml:Envelope&gt;
+       &lt;gml:lowerCorner&gt;-34.6 -17.3&lt;/gml:lowerCorner&gt;
+       &lt;gml:upperCorner&gt;38.2 51.1&lt;/gml:upperCorner&gt;
+     &lt;/gml:Envelope&gt;
+   &lt;/georss:where&gt;
+  &lt;/item&gt;
+&lt;/channel&gt;
+&lt;/rss&gt;</programlisting>
+            </figure></para>
+        </section>
+      </section>
+    </section>
+
+    <section>
+      <title>Metadata administration services</title>
+
+      <section>
+        <title>Update operations allowed for a metadata
+        (metadata.admin)</title>
+
+        <para>The <emphasis>metadata.admin</emphasis> service updates the
+        operations allowed for a metadata with the list of operations allowed
+        send in the parameters, <emphasis role="bold">deleting all the
+        operations allowed assigned previously</emphasis>.</para>
+
+        <para>Requires authentication: Yes</para>
+
+        <section>
+          <title>Request to metadata.admin service</title>
+
+          <para>Parameters:</para>
+
+          <para><itemizedlist>
+              <listitem>
+                <para><emphasis> <emphasis>id: Identifier of metadata to
+                update</emphasis></emphasis></para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>_G_O</emphasis>: <emphasis>(can be multiple
+                elements)</emphasis></para>
+
+                <itemizedlist>
+                  <listitem>
+                    <para>G: Group identifier</para>
+                  </listitem>
+
+                  <listitem>
+                    <para>O: Operation identifier</para>
+                  </listitem>
+                </itemizedlist>
+              </listitem>
+            </itemizedlist></para>
+
+          <para>Operation identifiers:</para>
+
+          <itemizedlist>
+            <listitem>
+              <para>0: view</para>
+            </listitem>
+
+            <listitem>
+              <para>1: download</para>
+            </listitem>
+
+            <listitem>
+              <para>2: editing</para>
+            </listitem>
+
+            <listitem>
+              <para>3: notify</para>
+            </listitem>
+
+            <listitem>
+              <para>4: dynamic</para>
+            </listitem>
+
+            <listitem>
+              <para>5: featured</para>
+            </listitem>
+          </itemizedlist>
+
+          <para>Example:</para>
+
+          <para><figure id="metadataupdateops_xml_request_example">
+              <title>Request metadata update operations allowed
+              example</title>
+
+              <programlisting><?db-font-size 75% ?><emphasis role="bold">POST</emphasis>
+
+Url: 
+http://localhost:8080/geonetwork/srv/en/metadata.admin
+
+Mime-type: 
+application/xml
+
+Post request:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;request&gt;
+  &lt;id&gt;6&lt;/id&gt;
+  &lt;_1_2 /&gt;
+  &lt;_1_1 /&gt;
+&lt;/request&gt;
+
+
+<emphasis role="bold">GET</emphasis>
+
+Url:
+http://localhost:8080/geonetwork/srv/en/metadata.admin?id=6&amp;_1_2&amp;_1_1</programlisting>
+            </figure></para>
+        </section>
+
+        <section>
+          <title>Response to metadata.admin service</title>
+
+          <para>The response contains the identifier of the metadata
+          updated.</para>
+
+          <para><figure id="metadataupdateops_xml_response_example">
+              <title>Response metadata update operations allowed
+              example</title>
+
+              <programlisting><?db-font-size 75% ?>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;request&gt;
+  &lt;id&gt;6&lt;/id&gt;
+&lt;/request&gt;</programlisting>
+            </figure></para>
+        </section>
+
+        <section>
+          <title>Errors</title>
+
+          <itemizedlist>
+            <listitem>
+              <para><emphasis>Service not allowed (error id:
+              service-not-allowed)</emphasis>, when the user is not
+              authenticated or his profile has no rights to execute the
+              service. Returned 401 HTTP code</para>
+            </listitem>
+
+            <listitem>
+              <para>Metadata not found (error id: metadata-not-found) if not
+              exists a metadata record with the identifier provided</para>
+            </listitem>
+
+            <listitem>
+              <para>ERROR: insert or update on table "operationallowed"
+              violates foreign key 'operationallowed_operationid_fkey », if an
+              operation identifier provided is not valid</para>
+            </listitem>
+
+            <listitem>
+              <para>ERROR: insert or update on table "operationallowed"
+              violates foreign key 'operationallowed_groupid_fkey », if a
+              group identifier provided is not valid</para>
+            </listitem>
+          </itemizedlist>
+        </section>
+      </section>
+
+      <section>
+        <title>Massive update privilegies
+        (metadata.massive.update.privileges)</title>
+
+        <para>The <emphasis>metadata.massive.update.privileges</emphasis>
+        service updates the operations allowed for a selected metadata with
+        the list of operations allowed send in the parameters, <emphasis
+        role="bold">deleting all the operations allowed assigned
+        previously</emphasis>.</para>
+
+        <para>This service requires a previous call to
+        <emphasis>metadata.select</emphasis> service to select the metadata
+        records to update.</para>
+
+        <para>Requires authentication: Yes</para>
+
+        <section>
+          <title>Request to metadata.select service</title>
+
+          <para>Parameters:</para>
+
+          <para><itemizedlist>
+              <listitem>
+                <para><emphasis> <emphasis>id: Identifier of metadata to
+                select</emphasis></emphasis></para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>selected</emphasis>: Selection state. Values:
+                add, add-all, remove, remove-all</para>
+              </listitem>
+            </itemizedlist></para>
+
+          <para>Example:</para>
+
+          <para><figure id="selmetadata0_xml_request_example">
+              <title>Select metadata request examples</title>
+
+              <programlisting><?db-font-size 75% ?>
+<emphasis role="bold">Select all metadata allowed</emphasis>
+
+Url: 
+http://localhost:8080/geonetwork/srv/en/metadata.select
+
+Mime-type: 
+application/xml
+
+Post request:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;request&gt;
+  &lt;selected&gt;add-all&lt;/selected&gt;
+&lt;/request&gt;
+
+
+<emphasis role="bold">Select a metadata record</emphasis>
+
+Url: 
+http://localhost:8080/geonetwork/srv/en/metadata.select
+
+Mime-type: 
+application/xml
+
+Post request:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;request&gt;
+  &lt;id&gt;2&lt;/id&gt;
+  &lt;selected&gt;add&lt;/selected&gt;
+&lt;/request&gt;
+
+
+<emphasis role="bold">Clear metadata </emphasis>selection
+Url: 
+http://localhost:8080/geonetwork/srv/en/metadata.select
+
+Mime-type: 
+application/xml
+
+Post request:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;request&gt;
+  &lt;selected&gt;remove-all&lt;/selected&gt;
+&lt;/request&gt;
+
+</programlisting>
+            </figure></para>
+        </section>
+
+        <section>
+          <title>Response to metadata.select service</title>
+
+          <para>The response contains the number of metadata selected.</para>
+
+          <para><figure id="selmetadata0_xml_response_example">
+              <title>Response select metadata example</title>
+
+              <programlisting><?db-font-size 75% ?>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;request&gt;
+  &lt;Selected&gt;10&lt;/Selected&gt;
+&lt;/request&gt;</programlisting>
+            </figure></para>
+        </section>
+
+        <section>
+          <title>Request to metadata.massive.update.privileges</title>
+
+          <para>Parameters:</para>
+
+          <para><itemizedlist>
+              <listitem>
+                <para><emphasis>_G_O</emphasis>: <emphasis>(can be multiple
+                elements)</emphasis></para>
+
+                <itemizedlist>
+                  <listitem>
+                    <para>G: Group identifier</para>
+                  </listitem>
+
+                  <listitem>
+                    <para>O: Operation identifier</para>
+                  </listitem>
+                </itemizedlist>
+              </listitem>
+            </itemizedlist></para>
+
+          <para>Operation identifiers:</para>
+
+          <itemizedlist>
+            <listitem>
+              <para>0: view</para>
+            </listitem>
+
+            <listitem>
+              <para>1: download</para>
+            </listitem>
+
+            <listitem>
+              <para>2: editing</para>
+            </listitem>
+
+            <listitem>
+              <para>3: notify</para>
+            </listitem>
+
+            <listitem>
+              <para>4: dynamic</para>
+            </listitem>
+
+            <listitem>
+              <para>5: featured</para>
+            </listitem>
+          </itemizedlist>
+
+          <para>Example:</para>
+
+          <para><figure id="metadataupdateops_massive_xml_request_example">
+              <title>Request metadata massive update privilegies
+              example</title>
+
+              <programlisting><?db-font-size 75% ?><emphasis role="bold">POST</emphasis>
+
+Url: 
+http://localhost:8080/geonetwork/srv/en/metadata.massive.update.privileges
+
+Mime-type: 
+application/xml
+
+Post request:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;request&gt;
+  &lt;_1_2 /&gt;
+  &lt;_1_1 /&gt;
+&lt;/request&gt;
+
+
+<emphasis role="bold">GET</emphasis>
+
+Url:
+http://localhost:8080/geonetwork/srv/en/metadata.massive.update.privileges?_1_2&amp;_1_1</programlisting>
+            </figure></para>
+        </section>
+
+        <section>
+          <title>Response to metadata.massive.update.privileges</title>
+
+          <para>If request is executed succesfully HTTP 200 status code is
+          returned. If request fails an HTTP status code error is returned and
+          the response contains the XML document with the exception.</para>
+        </section>
+
+        <section>
+          <title>Errors</title>
+
+          <itemizedlist>
+            <listitem>
+              <para><emphasis>Service not allowed (error id:
+              service-not-allowed)</emphasis>, when the user is not
+              authenticated or his profile has no rights to execute the
+              service. Returned 401 HTTP code</para>
+            </listitem>
+
+            <listitem>
+              <para>Metadata not found (error id: metadata-not-found) if not
+              exists a metadata record with the identifier provided</para>
+            </listitem>
+
+            <listitem>
+              <para>ERROR: insert or update on table "operationallowed"
+              violates foreign key 'operationallowed_operationid_fkey », if an
+              operation identifier provided is not valid</para>
+            </listitem>
+
+            <listitem>
+              <para>ERROR: insert or update on table "operationallowed"
+              violates foreign key 'operationallowed_groupid_fkey », if a
+              group identifier provided is not valid</para>
+            </listitem>
+          </itemizedlist>
+        </section>
+      </section>
+    </section>
+
+    <section>
+      <title>Metadata ownership services</title>
+
+      <para>This services allow to manage the metadata ownership (the user who
+      created the metadata), for example to get information about the users
+      who created metadata records or transfer the ownership of metadata
+      records to another user. Only users with
+      <emphasis>Administrator</emphasis> and <emphasis>UserAdmin</emphasis>
+      profiles can execute these services.</para>
+
+      <section>
+        <title>Massive new owner (metadata.massive.newowner)</title>
+
+        <para>The <emphasis>metadata.massive.newowner</emphasis> service
+        allows to change the owner of a group of metadata. This service
+        requires a previous call to <emphasis>metadata.select</emphasis>
+        service to select the metadata records to update.</para>
+
+        <para>Requires authentication: Yes</para>
+
+        <section>
+          <title>Request to metadata.select service</title>
+
+          <para>Parameters:</para>
+
+          <para><itemizedlist>
+              <listitem>
+                <para><emphasis> <emphasis>id: Identifier of metadata to
+                select (can be multiple elements)</emphasis>
+                </emphasis></para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>selected</emphasis>: Selection state. Values:
+                add, add-all, remove, remove-all</para>
+              </listitem>
+            </itemizedlist></para>
+
+          <para>Example:</para>
+
+          <para><figure id="selmetadata_xml_request_example">
+              <title>Select metadata request example</title>
+
+              <programlisting><?db-font-size 75% ?>
+Url: 
+http://localhost:8080/geonetwork/srv/en/metadata.select
+
+Mime-type: 
+application/xml
+
+Post request:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;request&gt;
+  &lt;selected&gt;add-all&lt;/selected&gt;
+&lt;/request&gt;</programlisting>
+            </figure></para>
+        </section>
+
+        <section>
+          <title>Response to metadata.select service</title>
+
+          <para>The response contains the number of metadata selected.</para>
+
+          <para><figure id="selmetadata_xml_response_example">
+              <title>Select metadata response example</title>
+
+              <programlisting><?db-font-size 75% ?>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;request&gt;
+  &lt;Selected&gt;10&lt;/Selected&gt;
+&lt;/request&gt;</programlisting>
+            </figure></para>
+        </section>
+
+        <section>
+          <title>Request to metadata.massive.newowner</title>
+
+          <para>Once the metadata records have been selected can be
+          <emphasis>metadata.massive.newowner</emphasis> invoked with the next
+          parameters:</para>
+
+          <para><itemizedlist>
+              <listitem>
+                <para><emphasis>user<emphasis>: (mandatory) New owner user
+                identifier</emphasis> </emphasis></para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>group<emphasis>: (mandatory) New owner group
+                user identifier</emphasis> </emphasis></para>
+              </listitem>
+            </itemizedlist></para>
+
+          <para><figure id="massivenewowner_xml_request_example">
+              <title>Transfer ownership request example</title>
+
+              <programlisting><?db-font-size 75% ?>
+Url: 
+http://localhost:8080/geonetwork/srv/en/metadata.massive.newowner
+
+Mime-type: 
+application/xml
+
+Post request:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;request&gt;
+  &lt;user&gt;2&lt;/user&gt;
+  &lt;group&gt;2&lt;/group&gt;
+&lt;/request&gt;</programlisting>
+            </figure></para>
+        </section>
+
+        <section>
+          <title>Response to metadata.massive.newowner</title>
+
+          <para>If request is executed succesfully HTTP 200 status code is
+          returned. If request fails an HTTP status code error is returned and
+          the response contains the XML document with the exception.</para>
+        </section>
+      </section>
+
+      <section>
+        <title>Transfer ownership (xml.ownership.transfer)</title>
+
+        <para>The <emphasis>xml.ownership.transfer</emphasis> service can be
+        used to transfer ownership and privileges of metadata owned by a user
+        (in a group) to another user (in a group). This service should be used
+        with data retrieved from previous invocations to the services <link
+        linkend="xml.ownership.editors">xml.ownership.editors</link> and <link
+        linkend="xml.ownership.groups">xml.ownership.groups</link>, described
+        below.</para>
+
+        <para>Requires authentication: Yes</para>
+
+        <section>
+          <title>Request</title>
+
+          <para>Parameters:</para>
+
+          <para><itemizedlist>
+              <listitem>
+                <para><emphasis>sourceUser<emphasis>: (mandatory) Identifier
+                of the user to transfer the ownership of her
+                metadata</emphasis> </emphasis></para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>sourceGroup</emphasis>: (mandatory) Identifier
+                of source group of the metadata to transfer ownership</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>targetUser</emphasis>: (mandatory) Identifier
+                of the user to get the set the new metadata ownership</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>targetGroup</emphasis>: (mandatory) Identifier
+                of target group of the transferred ownership metadata</para>
+              </listitem>
+            </itemizedlist></para>
+
+          <para>Example: In the next example we are going to transfer the
+          ownership and privileges of metadata owned of user John (id=2) in
+          group RWS (id=5) to user Samantha(id=7) in group NLR (id=6)</para>
+
+          <para><figure id="transferownership_xml_request_example">
+              <title>Transfer ownership request example</title>
+
+              <programlisting><?db-font-size 75% ?>
+Url: 
+http://localhost:8080/geonetwork/srv/en/xml.ownership.transfer
+
+Mime-type: 
+application/xml
+
+Post request:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;request&gt;
+  &lt;sourceUser&gt;2&lt;/sourceUser&gt;
+  &lt;sourceGroup&gt;5&lt;/sourceGroup&gt;
+  &lt;targetUser&gt;7&lt;/targetUser&gt;
+  &lt;targetGroup&gt;6&lt;/targetGroup&gt;
+&lt;/request&gt;</programlisting>
+            </figure></para>
+        </section>
+
+        <section>
+          <title>Response</title>
+
+          <para>Here follows the structure of the response:</para>
+
+          <para><itemizedlist>
+              <listitem>
+                <para><emphasis>response</emphasis>: This is the container for
+                the response</para>
+
+                <para><itemizedlist>
+                    <listitem>
+                      <para><emphasis>privileges</emphasis>: Transferred
+                      privileges</para>
+                    </listitem>
+
+                    <listitem>
+                      <para><emphasis>metadata</emphasis>: Transferred
+                      metadata records</para>
+                    </listitem>
+                  </itemizedlist></para>
+              </listitem>
+            </itemizedlist></para>
+
+          <para><figure id="transferownership_xml_response_example">
+              <title>Transfer ownership response example</title>
+
+              <programlisting><?db-font-size 75% ?>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;response&gt;
+  &lt;privileges&gt;4&lt;/privileges&gt;
+  &lt;metadata&gt;2&lt;/metadata&gt;
+&lt;/response&gt;</programlisting>
+            </figure></para>
+        </section>
+
+        <section>
+          <title>Errors</title>
+
+          <para><itemizedlist>
+              <listitem>
+                <para><emphasis>Service not allowed (error id:
+                service-not-allowed)</emphasis>, when the user is not
+                authenticated or his profile has no rights to execute the
+                service. Returned 401 HTTP code</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>Missing parameter (error id:
+                missing-parameter)</emphasis>, when mandatory parameters are
+                not provided</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>bad-parameter XXXX</emphasis>, when a
+                mandatory parameter is empty</para>
+              </listitem>
+            </itemizedlist></para>
+        </section>
+      </section>
+
+      <section>
+        <title id="xml.ownership.editors">Retrieve metadata owners
+        (xml.ownership.editors)</title>
+
+        <para>The <emphasis>xml.ownership.editors</emphasis> service can be
+        used to retrieve the users that own metadata records.</para>
+
+        <para>Requires authentication: Yes</para>
+
+        <section>
+          <title>Request</title>
+
+          <para>Parameters:</para>
+
+          <para><itemizedlist>
+              <listitem>
+                <para><emphasis>None</emphasis></para>
+              </listitem>
+            </itemizedlist></para>
+
+          <para>Example:<figure id="metadataeditors_xml_reuest_example">
+              <title>Retrieve metadata owners request example</title>
+
+              <programlisting><?db-font-size 75% ?>
+Url: 
+http://localhost:8080/geonetwork/srv/en/xml.ownership.editors
+
+Mime-type: 
+application/xml
+
+Post request:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;request /&gt;</programlisting>
+            </figure></para>
+        </section>
+
+        <section>
+          <title>Response</title>
+
+          <para>Here follows the structure of the response:</para>
+
+          <para><itemizedlist>
+              <listitem>
+                <para><emphasis>root</emphasis>: This is the container for the
+                response</para>
+
+                <para><itemizedlist>
+                    <listitem>
+                      <para><emphasis>editor</emphasis>: Container for each
+                      editor user information</para>
+
+                      <itemizedlist>
+                        <listitem>
+                          <para><emphasis>id</emphasis>: User
+                          identifier</para>
+                        </listitem>
+
+                        <listitem>
+                          <para><emphasis>username</emphasis>: User
+                          login</para>
+                        </listitem>
+
+                        <listitem>
+                          <para><emphasis>name</emphasis>: User name</para>
+                        </listitem>
+
+                        <listitem>
+                          <para><emphasis>surname</emphasis>: User
+                          surname</para>
+                        </listitem>
+
+                        <listitem>
+                          <para><emphasis>profile</emphasis>: User
+                          profile</para>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </itemizedlist></para>
+              </listitem>
+            </itemizedlist></para>
+
+          <figure id="metadata_xml_response_example">
+            <title>Retrieve metadata editors response example</title>
+
+            <programlisting><?db-font-size 75% ?>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;root&gt;
+  &lt;editor&gt;
+    &lt;id&gt;1&lt;/id&gt;
+    &lt;username&gt;admin&lt;/username&gt;
+    &lt;name&gt;admin&lt;/name&gt;
+    &lt;surname&gt;admin&lt;/surname&gt;
+    &lt;profile&gt;Administrator&lt;/profile&gt;
+  &lt;/editor&gt;
+  &lt;editor&gt;
+    &lt;id&gt;2&lt;/id&gt;
+    &lt;username&gt;samantha&lt;/username&gt;
+    &lt;name&gt;Samantha&lt;/name&gt;
+    &lt;surname&gt;Smith&lt;/surname&gt;
+    &lt;profile&gt;Editor&lt;/profile&gt;
+  &lt;/editor&gt;
+&lt;/root&gt;</programlisting>
+          </figure>
+        </section>
+
+        <section>
+          <title>Errors</title>
+
+          <para><itemizedlist>
+              <listitem>
+                <para><emphasis>Service not allowed (error id:
+                service-not-allowed)</emphasis>, when the user is not
+                authenticated or his profile has no rights to execute the
+                service. Returned 401 HTTP code</para>
+              </listitem>
+            </itemizedlist></para>
+        </section>
+      </section>
+
+      <section>
+        <title id="xml.ownership.groups">Retrieve groups/users allowed to
+        transfer metadata ownership from a user (xml.ownership.groups)</title>
+
+        <para>The <emphasis>xml.ownership.groups</emphasis> service can be
+        used to retrieve the groups/users to which can be transferred the
+        metadata ownership/privilegies from the specified user.</para>
+
+        <section>
+          <title>Request</title>
+
+          <para>Parameters:</para>
+
+          <para><itemizedlist>
+              <listitem>
+                <para><emphasis>id<emphasis>: (mandatory) User identifier of
+                the user to check to which groups/users can be transferred the
+                ownership/privilegies of her metadata</emphasis>
+                </emphasis></para>
+              </listitem>
+            </itemizedlist></para>
+
+          <para><figure id="groupownership_xml_request_example">
+              <title>Retrieve ownership groups request example</title>
+
+              <programlisting><?db-font-size 75% ?>
+Url: 
+http://localhost:8080/geonetwork/srv/en/xml.ownership.groups
+
+Mime-type: 
+application/xml
+
+Post request:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;request&gt;
+  &lt;id&gt;2&lt;/id&gt;
+&lt;/request&gt;</programlisting>
+            </figure></para>
+        </section>
+
+        <section>
+          <title>Response</title>
+
+          <para>Here follows the structure of the response:</para>
+
+          <para><itemizedlist>
+              <listitem>
+                <para><emphasis>response</emphasis>: This is the container for
+                the response</para>
+
+                <para><itemizedlist>
+                    <listitem>
+                      <para><emphasis>targetGroup</emphasis>: Allowed target
+                      group to transfer ownership of user metadata (can be
+                      multiple <emphasis>targetGroup</emphasis>
+                      elements)</para>
+
+                      <itemizedlist>
+                        <listitem>
+                          <para><emphasis>id, name, description, email,
+                          referrer, label</emphasis>: Group information</para>
+                        </listitem>
+
+                        <listitem>
+                          <para><emphasis>editor</emphasis>: Users of the
+                          group that own metadata (can be multiple
+                          <emphasis>editor</emphasis> elements)</para>
+
+                          <itemizedlist>
+                            <listitem>
+                              <para><emphasis>id,surname, name</emphasis>:
+                              Metadata user owner information</para>
+                            </listitem>
+                          </itemizedlist>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </itemizedlist></para>
+              </listitem>
+            </itemizedlist></para>
+
+          <figure id="groupownership_xml_response_example">
+            <title>Retrieve ownership groups response example</title>
+
+            <programlisting><?db-font-size 75% ?>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;response&gt;
+  &lt;targetGroup&gt;
+    &lt;id&gt;2&lt;/id&gt;
+    &lt;name&gt;sample&lt;/name&gt;
+    &lt;description&gt;Demo group&lt;/description&gt;
+    &lt;email&gt;group@mail.net&lt;/email&gt;
+    &lt;referrer /&gt;
+    &lt;label&gt;
+      &lt;en&gt;Sample group&lt;/en&gt;
+      &lt;fr&gt;Sample group&lt;/fr&gt;
+      &lt;es&gt;Sample group&lt;/es&gt;
+      &lt;de&gt;Beispielgruppe&lt;/de&gt;
+      &lt;nl&gt;Voorbeeldgroep&lt;/nl&gt;
+    &lt;/label&gt;
+    &lt;editor&gt;
+      &lt;id&gt;12&lt;/id&gt;
+      &lt;surname /&gt;
+      &lt;name /&gt;
+    &lt;/editor&gt;
+    &lt;editor&gt;
+      &lt;id&gt;13&lt;/id&gt;
+      &lt;surname /&gt;
+      &lt;name&gt;Samantha&lt;/name&gt;
+    &lt;/editor&gt;
+  &lt;/targetGroup&gt;
+  &lt;targetGroup&gt;
+    &lt;id&gt;6&lt;/id&gt;
+    &lt;name&gt;RWS&lt;/name&gt;
+    &lt;description /&gt;
+    &lt;email /&gt;
+    &lt;referrer /&gt;
+    &lt;label&gt;
+      &lt;de&gt;RWS&lt;/de&gt;
+      &lt;fr&gt;RWS&lt;/fr&gt;
+      &lt;en&gt;RWS&lt;/en&gt;
+      &lt;es&gt;RWS&lt;/es&gt;
+      &lt;nl&gt;RWS&lt;/nl&gt;
+    &lt;/label&gt;
+    &lt;editor&gt;
+      &lt;id&gt;7&lt;/id&gt;
+      &lt;surname /&gt;
+      &lt;name&gt;Samantha&lt;/name&gt;
+    &lt;/editor&gt;
+  &lt;/targetGroup&gt;
+  
+  ...
+
+&lt;/response&gt;</programlisting>
+          </figure>
+        </section>
+
+        <section>
+          <title>Errors</title>
+
+          <para><itemizedlist>
+              <listitem>
+                <para><emphasis>Service not allowed (error id:
+                service-not-allowed)</emphasis>, when the user is not
+                authenticated or his profile has no rights to execute the
+                service. Returned 401 HTTP code</para>
+              </listitem>
+            </itemizedlist></para>
+        </section>
+      </section>
+    </section>
+
+    <section>
+      <title>Metadata editing</title>
+
+      <para>This services allow to maintaining the metadata in the
+      catalog.</para>
+
+      <section>
+        <title>Insert metadata (metadata.insert)</title>
+
+        <para>The <emphasis>metadata.insert</emphasis> service allows to
+        create a new metadata record in the catalog.</para>
+
+        <para>Requires authentication: Yes</para>
+
+        <section>
+          <title>Request</title>
+
+          <para>Parameters:</para>
+
+          <para><itemizedlist>
+              <listitem>
+                <para><emphasis>data</emphasis>: (mandatory) Contains the
+                metadata record</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>group</emphasis> (mandatory): Owner group
+                identifier for metadata</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>isTemplate</emphasis>: indicates if the
+                metadata content is a new template or not. Default value:
+                "n"</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>title</emphasis>: Metadata title. Only
+                required if isTemplate = "y"</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>category</emphasis> (mandatory): Metadata
+                category. Use "_none_" value to don't assign any
+                category</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>styleSheet</emphasis> (mandatory): Stylesheet
+                name to transform the metadata before inserting in the
+                catalog. Use "_none_" value to don't apply any
+                stylesheet</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>validate</emphasis>: Indicates if the metadata
+                should be validated before inserting in the catalog. Values:
+                on, off (default)</para>
+              </listitem>
+            </itemizedlist></para>
+
+          <para>Example:</para>
+
+          <para><figure id="insertmetadata_request_example">
+              <title>Insert metadata request example</title>
+
+              <programlisting><?db-font-size 75% ?>
+Url: 
+http://localhost:8080/geonetwork/srv/en/metadata.insert
+
+Mime-type: 
+application/xml
+
+Post request:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;request&gt;
+  &lt;group&gt;2&lt;/group&gt;
+  &lt;category&gt;_none_&lt;/category&gt;
+  &lt;styleSheet&gt;_none_&lt;/styleSheet&gt;
+  &lt;data&gt;&lt;![CDATA[
+&lt;gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+...
+
+      &lt;/gmd:DQ_DataQuality&gt;
+  &lt;/gmd:dataQualityInfo&gt;
+&lt;/gmd:MD_Metadata&gt;]]&gt;
+  &lt;/data&gt;
+&lt;/request&gt;</programlisting>
+            </figure></para>
+        </section>
+
+        <section>
+          <title>Response</title>
+
+          <para>If request is executed succesfully HTTP 200 status code is
+          returned. If request fails an HTTP status code error is returned and
+          the response contains the XML document with the exception.</para>
+
+          <para>If validate parameter is set to "on" and the provided metadata
+          is not valid confirming the xsd schema an exception report is
+          returned.</para>
+
+          <figure id="validationmetadata_report_example">
+            <title>Validation metadata report</title>
+
+            <programlisting><?db-font-size 75% ?>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;error id="xsd-validation-error"&gt;
+  &lt;message&gt;XSD Validation error(s)&lt;/message&gt;
+  &lt;class&gt;XSDValidationErrorEx&lt;/class&gt;
+  &lt;stack&gt;
+    &lt;at class="org.fao.geonet.services.metadata.ImportFromDir" 
+      file="ImportFromDir.java" line="297" method="validateIt" /&gt;
+    &lt;at class="org.fao.geonet.services.metadata.ImportFromDir" 
+      file="ImportFromDir.java" line="281" method="validateIt" /&gt;
+    &lt;at class="org.fao.geonet.services.metadata.Insert" 
+      file="Insert.java" line="102" method="exec" /&gt;
+    &lt;at class="jeeves.server.dispatchers.ServiceInfo" 
+      file="ServiceInfo.java" line="238" method="execService" /&gt;
+    &lt;at class="jeeves.server.dispatchers.ServiceInfo" 
+      file="ServiceInfo.java" line="141" method="execServices" /&gt;
+    &lt;at class="jeeves.server.dispatchers.ServiceManager" 
+      file="ServiceManager.java" line="377" method="dispatch" /&gt;
+    &lt;at class="jeeves.server.JeevesEngine" 
+      file="JeevesEngine.java" line="621" method="dispatch" /&gt;
+    &lt;at class="jeeves.server.sources.http.JeevesServlet" 
+      file="JeevesServlet.java" line="174" method="execute" /&gt;
+    &lt;at class="jeeves.server.sources.http.JeevesServlet" 
+      file="JeevesServlet.java" line="99" method="doPost" /&gt;
+    &lt;at class="javax.servlet.http.HttpServlet" 
+      file="HttpServlet.java" line="727" method="service" /&gt;
+  &lt;/stack&gt;
+  &lt;object&gt;
+    &lt;xsderrors&gt;
+      &lt;error&gt;
+        &lt;message&gt;ERROR(1) org.xml.sax.SAXParseException: cvc-datatype-valid.1.2.1: '' is not a valid value for 'dateTime'. (Element: gco:DateTime with parent element: gmd:date)&lt;/message&gt;
+        &lt;xpath&gt;gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date/gco:DateTime&lt;/xpath&gt;
+      &lt;/error&gt;
+      &lt;error&gt;
+        &lt;message&gt;ERROR(2) org.xml.sax.SAXParseException: cvc-type.3.1.3: The value '' of element 'gco:DateTime' is not valid. (Element: gco:DateTime with parent element: gmd:date)&lt;/message&gt;
+        &lt;xpath&gt;gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date/gco:DateTime&lt;/xpath&gt;
+      &lt;/error&gt;
+      &lt;error&gt;
+        &lt;message&gt;ERROR(3) org.xml.sax.SAXParseException: cvc-datatype-valid.1.2.1: '' is not a valid value for 'integer'. (Element: gco:Integer with parent element: gmd:denominator)&lt;/message&gt;
+        &lt;xpath&gt;gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/gmd:equivalentScale/gmd:MD_RepresentativeFraction/gmd:denominator/gco:Integer&lt;/xpath&gt;
+      &lt;/error&gt;
+      &lt;error&gt;
+        &lt;message&gt;ERROR(4) org.xml.sax.SAXParseException: cvc-type.3.1.3: The value '' of element 'gco:Integer' is not valid. (Element: gco:Integer with parent element: gmd:denominator)&lt;/message&gt;
+        &lt;xpath&gt;gmd:identificationInfo/gmd:MD_DataIdentification/gmd:spatialResolution/gmd:MD_Resolution/gmd:equivalentScale/gmd:MD_RepresentativeFraction/gmd:denominator/gco:Integer&lt;/xpath&gt;
+      &lt;/error&gt;
+    &lt;/xsderrors&gt;
+  &lt;/object&gt;
+  &lt;request&gt;
+    &lt;language&gt;en&lt;/language&gt;
+    &lt;service&gt;metadata.insert&lt;/service&gt;
+  &lt;/request&gt;
+&lt;/error&gt;
+</programlisting>
+          </figure>
+        </section>
+
+        <section>
+          <title>Errors</title>
+
+          <para><itemizedlist>
+              <listitem>
+                <para><emphasis>Service not allowed (error id:
+                service-not-allowed)</emphasis>, when the user is not
+                authenticated or his profile has no rights to execute the
+                service. Returned 401 HTTP code</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>Missing parameter (error id:
+                missing-parameter)</emphasis>, when mandatory parameters are
+                not provided. Returned 400 HTTP code</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>bad-parameter XXXX</emphasis>, when a
+                mandatory parameter is empty. Returned 400 HTTP code</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>ERROR: duplicate key violates unique
+                constraint "metadata_uuid_key"</emphasis>, if exists another
+                metadata record in catalog with the same uuid of the metadata
+                provided to insert</para>
+              </listitem>
+            </itemizedlist></para>
+        </section>
+      </section>
+
+      <section>
+        <title>Update metadata (metadata.update)</title>
+
+        <para>The metadata.update service allows to update the content of a
+        metadata record in the catalog.</para>
+
+        <para>Requires authentication: Yes</para>
+
+        <section>
+          <title>Request</title>
+
+          <para>Parameters:</para>
+
+          <para><itemizedlist>
+              <listitem>
+                <para><emphasis>id<emphasis>: (mandatory) Identifier of the
+                metadata to update</emphasis> </emphasis></para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>version</emphasis>: (mandatory) This parameter
+                is used to check if another user has updated the metadata
+                after we retrieved it and before involking the update metadata
+                service. <emphasis role="bold">CHECK how to provide value to
+                the user</emphasis></para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>isTemplate</emphasis>: indicates if the
+                metadata content is a new template or not. Default value:
+                "n"</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>showValidationErrors</emphasis>: Indicates if
+                the metadata should be validated before updating in the
+                catalog.</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>title</emphasis>: Metadata title (for
+                templates)</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>data</emphasis> (mandatory) Contains the
+                metadata record</para>
+              </listitem>
+            </itemizedlist></para>
+
+          <para><figure id="updatemetadata_request_example">
+              <title>Update metadata request example</title>
+
+              <programlisting><?db-font-size 75% ?>
+Url: 
+http://localhost:8080/geonetwork/srv/en/metadata.update
+
+Mime-type: 
+application/xml
+
+Post request:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;request&gt;
+  &lt;id&gt;11&lt;/id&gt;
+  <emphasis role="bold">&lt;version&gt;1&lt;/version&gt;</emphasis>
+  &lt;data&gt;&lt;![CDATA[
+&lt;gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+...
+
+      &lt;/gmd:DQ_DataQuality&gt;
+  &lt;/gmd:dataQualityInfo&gt;
+&lt;/gmd:MD_Metadata&gt;]]&gt;
+  &lt;/data&gt;
+&lt;/request&gt;</programlisting>
+            </figure></para>
+        </section>
+
+        <section>
+          <title>Response</title>
+
+          <para>If request is executed succesfully HTTP 200 status code is
+          returned. If request fails an HTTP status code error is returned and
+          the response contains the XML document with the exception.</para>
+        </section>
+
+        <section>
+          <title>Errors</title>
+
+          <para><itemizedlist>
+              <listitem>
+                <para><emphasis>Service not allowed (error id:
+                service-not-allowed)</emphasis>, when the user is not
+                authenticated or his profile has no rights to execute the
+                service. Returned 401 HTTP code</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>Missing parameter (error id:
+                missing-parameter)</emphasis>, when mandatory parameters are
+                not provided. Returned 400 HTTP code</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>bad-parameter XXXX</emphasis>, when a
+                mandatory parameter is empty. Returned 400 HTTP code</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>Concurrent update (error id:
+                client)</emphasis>, when the version number provided is
+                different from actual version number for metatada. Returned
+                400 HTTP code</para>
+              </listitem>
+            </itemizedlist></para>
+        </section>
+      </section>
+
+      <section>
+        <title id="h">Delete metadata (metadata.delete)</title>
+
+        <para>The <emphasis>metadata.delete</emphasis> service allows to
+        remove a metadata record from the catalog. The metadata content is
+        backup in MEF format by default in data\removed folder. This folder
+        can be configured in geonetwork\WEB-INF\config.xml.</para>
+
+        <para>Requires authentication: Yes</para>
+
+        <section>
+          <title>Request</title>
+
+          <para>Parameters:</para>
+
+          <para><itemizedlist>
+              <listitem>
+                <para><emphasis>id</emphasis>: (mandatory) Identifier of the
+                metadata to delete</para>
+              </listitem>
+            </itemizedlist></para>
+
+          <para>Example:<figure id="deletemetadatal_request_example">
+              <title>Delete metadata request example</title>
+
+              <programlisting><?db-font-size 75% ?>
+Url: 
+http://localhost:8080/geonetwork/srv/en/metadata.delete
+
+Mime-type: 
+application/xml
+
+Post request:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;request&gt;
+  &lt;id&gt;10&lt;/id&gt;
+&lt;/request&gt;
+</programlisting>
+            </figure></para>
+        </section>
+
+        <section>
+          <title>Response</title>
+
+          <para>If request is executed succesfully HTTP 200 status code is
+          returned. If request fails an HTTP status code error is returned and
+          the response contains the XML document with the exception.</para>
+        </section>
+
+        <section>
+          <title>Errors</title>
+
+          <para><itemizedlist>
+              <listitem>
+                <para><emphasis>Service not allowed (error id:
+                service-not-allowed)</emphasis>, when the user is not
+                authenticated or his profile has no rights to execute the
+                service. Returned 401 HTTP code</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>Metadata not found (error id:
+                error)</emphasis>, if the identifier provided don't correspond
+                to an existing metadata. Returned 500 HTTP code</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>Operation not allowed</emphasis>
+                <emphasis>(error id: operation-not-allowed)<emphasis>, when
+                the user is not authorized to edit the metadata. To edit a
+                metadata:</emphasis></emphasis></para>
+
+                <itemizedlist>
+                  <listitem>
+                    <para>The user is the metadata owner</para>
+                  </listitem>
+
+                  <listitem>
+                    <para>The user is an Administrator</para>
+                  </listitem>
+
+                  <listitem>
+                    <para>The user has edit rights over the metadata</para>
+                  </listitem>
+
+                  <listitem>
+                    <para>The user is a Reviewer and/or UserAdmin and the
+                    metadata groupOwner is one of his groups</para>
+                  </listitem>
+                </itemizedlist>
+              </listitem>
+            </itemizedlist></para>
+        </section>
+      </section>
+    </section>
+
+    <section>
+      <title>Harvesting services</title>
+
+      <section>
+        <title>Introduction</title>
+
+        <para>This chapter provides a detailed explanation of the GeoNetwork’s
+        harvesting services. These services allow a complete control over the
+        harvesting behaviour. They are used by the web interface and can be
+        used by any other client.</para>
+      </section>
+
+      <section>
+        <title>xml.harvesting.get</title>
+
+        <para>Retrieves information about one or all configured harvesting
+        nodes.</para>
+
+        <section>
+          <title>Request</title>
+
+          <para>Called with no parameters returns all nodes. Example:</para>
+
+          <programlisting><?db-font-size 75% ?>
+&lt;request/&gt;</programlisting>
+
+          <para>Otherwise, an id parameter can be specified:</para>
+
+          <programlisting><?db-font-size 75% ?>
+&lt;request&gt; 
+    &lt;id&gt;123&lt;/id&gt; 
+&lt;/request&gt;</programlisting>
+        </section>
+
+        <section>
+          <title>Response</title>
+
+          <para>When called with no parameters the service provide its output
+          inside a nodes container. You get as many node elements as are
+          configured. <xref linkend="xml_harvesting_get" /> shows an example
+          of output.</para>
+
+          <figure id="xml_harvesting_get">
+            <title>Example of an xml.harvesting.get response for a GeoNetwork
+            node</title>
+
+            <programlisting><?db-font-size 75% ?>
+&lt;nodes&gt; 
+    &lt;node id="125" type="geonetwork"&gt; 
+        &lt;site&gt; 
+            &lt;name&gt;test 1&lt;/name&gt; 
+            &lt;UUID&gt;0619cc50-708b-11da-8202-000d9335aaae&lt;/uuid&gt; 
+            &lt;host&gt;localhost&lt;/host&gt; 
+            &lt;port&gt;8080&lt;/port&gt; 
+            &lt;servlet&gt;geonetwork&lt;/servlet&gt; 
+            &lt;account&gt; 
+                &lt;use&gt;false&lt;/use&gt; 
+                &lt;username /&gt; 
+                &lt;password /&gt; 
+            &lt;/account&gt; 
+        &lt;/site&gt; 
+        &lt;searches&gt; 
+            &lt;search&gt; 
+                &lt;freeText /&gt; 
+                &lt;title /&gt; 
+                &lt;abstract /&gt; 
+                &lt;keywords /&gt; 
+                &lt;digital&gt;false&lt;/digital&gt; 
+                &lt;hardcopy&gt;false&lt;/hardcopy&gt; 
+                &lt;source&gt; 
+                    &lt;UUID&gt;0619cc50-708b-11da-8202-000d9335906e&lt;/uuid&gt; 
+                    &lt;name&gt;Food and Agriculture organisation&lt;/name&gt; 
+                &lt;/source&gt; 
+            &lt;/search&gt; 
+        &lt;/searches&gt; 
+        &lt;options&gt; 
+            &lt;every&gt;90&lt;/every&gt; 
+            &lt;oneRunOnly&gt;false&lt;/oneRunOnly&gt; 
+            &lt;status&gt;inactive&lt;/status&gt; 
+        &lt;/options&gt; 
+        &lt;info&gt; 
+            &lt;lastRun /&gt; 
+            &lt;running&gt;false&lt;/running&gt; 
+        &lt;/info&gt; 
+        &lt;groupsCopyPolicy&gt; 
+            &lt;group name="all" policy="copy"/&gt; 
+            &lt;group name="mygroup" policy="createAndCopy"/&gt; 
+        &lt;/groupsCopyPolicy&gt; 
+        &lt;categories&gt; 
+            &lt;category id="4"/&gt; 
+        &lt;/categories&gt; 
+    &lt;/node&gt; 
+&lt;/nodes&gt;</programlisting>
+          </figure>
+
+          <para>If you specify an id, you get a response like that one in
+          <xref linkend="xml_response_webdav" /> (for a WebDAV node).</para>
+
+          <figure id="xml_response_webdav">
+            <title>Example of an xml.harvesting.get response for a WebDAV
+            node</title>
+
+            <programlisting><?db-font-size 75% ?>
+&lt;node id="165" type="webdav"&gt; 
+    &lt;site&gt; 
+        &lt;name&gt;test 1&lt;/name&gt; 
+        &lt;UUID&gt;0619cc50-708b-11da-8202-000d9335aaae&lt;/uuid&gt; 
+        &lt;url&gt;http://www.mynode.org/metadata&lt;/url&gt; 
+        &lt;icon&gt;default.gif&lt;/icon&gt; 
+        &lt;account&gt; 
+            &lt;use&gt;true&lt;/use&gt; 
+            &lt;username&gt;admin&lt;/username&gt; 
+            &lt;password&gt;admin&lt;/password&gt; 
+        &lt;/account&gt; 
+    &lt;/site&gt; 
+    &lt;options&gt; 
+        &lt;every&gt;90&lt;/every&gt; 
+        &lt;oneRunOnly&gt;false&lt;/oneRunOnly&gt; 
+        &lt;recurse&gt;false&lt;/recurse&gt; 
+        &lt;validate&gt;true&lt;/validate&gt; 
+        &lt;status&gt;inactive&lt;/status&gt; 
+    &lt;/options&gt; 
+    &lt;privileges&gt; 
+        &lt;group id="0"&gt; 
+            &lt;operation name="view" /&gt; 
+        &lt;/group&gt; 
+        &lt;group id="14"&gt; 
+            &lt;operation name="download" /&gt; 
+        &lt;/group&gt; 
+    &lt;/privileges&gt; 
+    &lt;categories&gt; 
+        &lt;category id="2"/&gt; 
+    &lt;/categories&gt; 
+    &lt;info&gt; 
+        &lt;lastRun /&gt; 
+        &lt;running&gt;false&lt;/running&gt; 
+    &lt;/info&gt; 
+&lt;/node&gt;</programlisting>
+          </figure>
+
+          <para>The node’s structure has a common XML format, plus some
+          additional information provided by the harvesting types. In the
+          following structure, each element has a cardinality specified using
+          the [x..y] notation, where x and y denote the minimum and the
+          maximum values. The cardinality [1..1] is omitted for
+          clarity.</para>
+
+          <itemizedlist>
+            <listitem>
+              <para><emphasis>node</emphasis>: The root element. It has a
+              mandatory <emphasis>id</emphasis> attribute that represents the
+              internal identifier and a mandatory type attribute which
+              indicates the harvesting type.</para>
+
+              <itemizedlist>
+                <listitem>
+                  <para><emphasis>site</emphasis>: A container for site
+                  information.</para>
+
+                  <itemizedlist>
+                    <listitem>
+                      <para><emphasis>name (string)</emphasis>: The node’s
+                      name used to describe the harvesting.</para>
+                    </listitem>
+
+                    <listitem>
+                      <para><emphasis>UUID (string)</emphasis>: This is a
+                      system generated unique identifier associated to the
+                      harvesting node. This is used as the source field into
+                      the Metadata table to group all metadata from the remote
+                      node.</para>
+                    </listitem>
+
+                    <listitem>
+                      <para>account: A container for account
+                      information.</para>
+
+                      <itemizedlist>
+                        <listitem>
+                          <para><emphasis>use (boolean)</emphasis>: true means
+                          that the harvester will use the provided username
+                          and password to authenticate itself. The
+                          authentication mechanism depends on the harvesting
+                          type.</para>
+                        </listitem>
+
+                        <listitem>
+                          <para><emphasis>username (string)</emphasis>:
+                          Username on the remote node.</para>
+                        </listitem>
+
+                        <listitem>
+                          <para><emphasis>password (string)</emphasis>:
+                          Password on the remote node.</para>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </itemizedlist>
+                </listitem>
+
+                <listitem>
+                  <para>options: A container for generic options.</para>
+
+                  <itemizedlist>
+                    <listitem>
+                      <para><emphasis>every (integer):</emphasis> Harvesting
+                      interval in minutes.</para>
+                    </listitem>
+
+                    <listitem>
+                      <para><emphasis>oneRunOnly (boolean)</emphasis>: After
+                      the first run, the entry’s status will be set to
+                      inactive.</para>
+                    </listitem>
+
+                    <listitem>
+                      <para><emphasis>status (string)</emphasis>: Indicates if
+                      the harvesting from this node is stopped (inactive) or
+                      if the harvester is waiting for the timeout
+                      (active).</para>
+                    </listitem>
+                  </itemizedlist>
+                </listitem>
+
+                <listitem>
+                  <para><emphasis>privileges [0..1]</emphasis>: A container
+                  for privileges that must be associated to the harvested
+                  metadata. This optional element is present only if the
+                  harvesting type supports it.</para>
+
+                  <itemizedlist>
+                    <listitem>
+                      <para><emphasis>group [0..n]</emphasis>: A container for
+                      allowed operations associated to this group. It has the
+                      id attribute which value is the identifier of a
+                      GeoNetwork group.</para>
+
+                      <itemizedlist>
+                        <listitem>
+                          <para><emphasis>operation [0..n]</emphasis>:
+                          Specifies an operation to associate to the
+                          containing group. It has a name attribute which
+                          value is one of the supported operation names. The
+                          only supported operations are:
+                          <emphasis>view</emphasis>,
+                          <emphasis>dynamic</emphasis>,
+                          <emphasis>featured</emphasis>.</para>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </itemizedlist>
+                </listitem>
+
+                <listitem>
+                  <para><emphasis>categories [0..1]</emphasis>: This is a
+                  container for categories to assign to each imported
+                  metadata. This optional element is present if the harvesting
+                  type supports it.</para>
+
+                  <itemizedlist>
+                    <listitem>
+                      <para><emphasis>category (integer) [0..n]</emphasis>:
+                      Represents a local category and the id attribute is its
+                      local identifier.</para>
+                    </listitem>
+                  </itemizedlist>
+                </listitem>
+
+                <listitem>
+                  <para><emphasis>info</emphasis>: A container for general
+                  information.</para>
+
+                  <itemizedlist>
+                    <listitem>
+                      <para><emphasis>lastRun (string)</emphasis>: The lastRun
+                      element will be filled as soon as the harvester starts
+                      harvesting from this entry. The value is the</para>
+                    </listitem>
+
+                    <listitem>
+                      <para><emphasis>running (boolean)</emphasis>: True if
+                      the harvester is currently running.</para>
+                    </listitem>
+                  </itemizedlist>
+                </listitem>
+
+                <listitem>
+                  <para><emphasis>error</emphasis>: This element will be
+                  present if the harvester encounters an error during
+                  harvesting.</para>
+
+                  <itemizedlist>
+                    <listitem>
+                      <para><emphasis>code (string)</emphasis>: The error
+                      code, in string form.</para>
+                    </listitem>
+
+                    <listitem>
+                      <para><emphasis>message (string)</emphasis>: The
+                      description of the error.</para>
+                    </listitem>
+
+                    <listitem>
+                      <para><emphasis>object (string)</emphasis>: The object
+                      that caused the error (if any). This element can be
+                      present or not depending on the case.</para>
+                    </listitem>
+                  </itemizedlist>
+                </listitem>
+              </itemizedlist>
+            </listitem>
+          </itemizedlist>
+        </section>
+
+        <section>
+          <title>Errors</title>
+
+          <itemizedlist>
+            <listitem>
+              <para>ObjectNotFoundEx If the id parameter is provided but the
+              node cannot be found.</para>
+            </listitem>
+          </itemizedlist>
+        </section>
+      </section>
+
+      <section>
+        <title>xml.harvesting.add</title>
+
+        <para>Create a new harvesting node. The node can be of any type
+        supported by GeoNetwork (GeoNetwork node, web folder etc...). When a
+        new node is created, its status is set to inactive. A call to the
+        xml.harvesting.start service is required to start harvesting.</para>
+
+        <section>
+          <title>Request</title>
+
+          <para>The service requires an XML tree with all information the
+          client wants to add. In the following sections, default values are
+          given in parenthesis (after the parameter’s type) and are used when
+          the parameter is omitted. If no default is provided, the parameter
+          is mandatory. If the type is boolean, only the true and false
+          strings are allowed.</para>
+
+          <para>All harvesting nodes share a common XML structure that must be
+          honoured. Please, refer to the previous section for elements
+          explanation. Each node type can add extra information to that
+          structure. The common structure is here described:</para>
+
+          <itemizedlist>
+            <listitem>
+              <para>node: The root container. The type attribute is mandatory
+              and must be one of the supported harvesting types.</para>
+
+              <itemizedlist>
+                <listitem>
+                  <para>site [0..1]</para>
+
+                  <itemizedlist>
+                    <listitem>
+                      <para>name (<emphasis>string</emphasis>, ”)</para>
+                    </listitem>
+
+                    <listitem>
+                      <para>account [0..1]</para>
+
+                      <itemizedlist>
+                        <listitem>
+                          <para>use (<emphasis>boolean</emphasis>,
+                          ’false’)</para>
+                        </listitem>
+
+                        <listitem>
+                          <para>username (<emphasis>string</emphasis>,
+                          ”)</para>
+                        </listitem>
+
+                        <listitem>
+                          <para>password (<emphasis>string</emphasis>,
+                          ”)</para>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </itemizedlist>
+                </listitem>
+
+                <listitem>
+                  <para>options [0..1]</para>
+
+                  <itemizedlist>
+                    <listitem>
+                      <para>every (<emphasis>integer</emphasis>, ’90’)</para>
+                    </listitem>
+
+                    <listitem>
+                      <para>oneRunOnly (<emphasis>boolean</emphasis>,
+                      ’false’)</para>
+                    </listitem>
+                  </itemizedlist>
+                </listitem>
+
+                <listitem>
+                  <para><emphasis>privileges [0..1]</emphasis>: Can be omitted
+                  but doing so the harvested metadata will not be visible.
+                  Please note that privileges are taken into account only if
+                  the harvesting type supports them.</para>
+
+                  <itemizedlist>
+                    <listitem>
+                      <para><emphasis>group [0..n]</emphasis>: It must have
+                      the <emphasis>id</emphasis> attribute which value should
+                      be the identifier of a GeoNetwork group. If the id is
+                      not a valid group id, all contained operations will be
+                      discarded.</para>
+
+                      <itemizedlist>
+                        <listitem>
+                          <para><emphasis>operation [0..n]</emphasis>: It must
+                          have a <emphasis>name</emphasis> attribute which
+                          value must be one of the supported operation
+                          names.</para>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </itemizedlist>
+                </listitem>
+
+                <listitem>
+                  <para><emphasis>categories [0..1]</emphasis>: Please, note
+                  that categories will be assigned to metadata only if the
+                  harvesting type supports them.</para>
+
+                  <itemizedlist>
+                    <listitem>
+                      <para><emphasis>category (integer) [0..n]</emphasis>:
+                      The mandatory id attribute is the category’s local
+                      identifier.</para>
+                    </listitem>
+                  </itemizedlist>
+                </listitem>
+              </itemizedlist>
+            </listitem>
+          </itemizedlist>
+
+          <para>Please note that even if clients can store empty values (”)
+          for many parameters, before starting the harvesting entry those
+          parameters should be properly set in order to avoid errors.</para>
+
+          <para>In the following sections, the XML structures described
+          inherit from this one here so the common elements have been removed
+          for clarity reasons (unless they are containers and contain new
+          children).</para>
+
+          <para>Standard GeoNetwork harvesting</para>
+
+          <para>To create a node capable of harvesting from another GeoNetwork
+          node, the following XML information should be provided:</para>
+
+          <itemizedlist>
+            <listitem>
+              <para><emphasis>node</emphasis>: The type attribute is mandatory
+              and must be GeoNetwork.</para>
+
+              <itemizedlist>
+                <listitem>
+                  <para><emphasis>site</emphasis></para>
+
+                  <itemizedlist>
+                    <listitem>
+                      <para><emphasis>host (string, ”)</emphasis>: The
+                      GeoNetwork node’s host name or IP address.</para>
+                    </listitem>
+
+                    <listitem>
+                      <para><emphasis>port (string, ’80’)</emphasis>: The port
+                      to connect to.</para>
+                    </listitem>
+
+                    <listitem>
+                      <para><emphasis>servlet (string,
+                      ’geonetwork’)</emphasis>: The servlet name chosen in the
+                      remote site.</para>
+                    </listitem>
+                  </itemizedlist>
+                </listitem>
+
+                <listitem>
+                  <para><emphasis>searches [0..1]</emphasis>: A container for
+                  search parameters.</para>
+
+                  <itemizedlist>
+                    <listitem>
+                      <para><emphasis>search [0..n]</emphasis>: A container
+                      for a single search on a siteID. You can specify 0 or
+                      more searches. If no search element is provided, an
+                      unconstrained search is performed.</para>
+
+                      <itemizedlist>
+                        <listitem>
+                          <para><emphasis>freeText (string, ”)</emphasis> :
+                          Free text to search. This and the following
+                          parameters are the same used during normal search
+                          using the web interface.</para>
+                        </listitem>
+
+                        <listitem>
+                          <para><emphasis>title (string, ”)</emphasis>: Search
+                          the title field.</para>
+                        </listitem>
+
+                        <listitem>
+                          <para><emphasis>abstract (string, ”)</emphasis> :
+                          Search the abstract field.</para>
+                        </listitem>
+
+                        <listitem>
+                          <para><emphasis>keywords (string, ”)</emphasis> :
+                          Search the keywords fields.</para>
+                        </listitem>
+
+                        <listitem>
+                          <para><emphasis>digital (boolean,
+                          ’false’)</emphasis>: Search for metadata in digital
+                          form.</para>
+                        </listitem>
+
+                        <listitem>
+                          <para><emphasis>hardcopy (boolean,
+                          ’false’)</emphasis>: Search for metadata in printed
+                          form.</para>
+                        </listitem>
+
+                        <listitem>
+                          <para><emphasis>source (string, ”)</emphasis>: One
+                          of the sources present on the remote node.</para>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </itemizedlist>
+                </listitem>
+
+                <listitem>
+                  <para><emphasis>groupsCopyPolicy [0..1]</emphasis>:
+                  Container for copy policies of remote groups. This mechanism
+                  is used to retain remote metadata privileges.</para>
+
+                  <itemizedlist>
+                    <listitem>
+                      <para><emphasis>group</emphasis>: There is one copy
+                      policy for each remote group. This element must have 2
+                      mandatory attributes: <emphasis>name</emphasis> and
+                      <emphasis>policy</emphasis>. The name attribute is the
+                      remote group’s name. If the remote group is renamed, it
+                      is not found anymore and the copy policy is skipped. The
+                      policy attribute represents the policy itself and can
+                      be: <emphasis>copy</emphasis>,
+                      <emphasis>createAndCopy</emphasis>,
+                      <emphasis>copyToIntranet</emphasis>. copy means that
+                      remote privileges are copied locally if there is locally
+                      a group with the same name as the
+                      <emphasis>name</emphasis> attribute. createAndCopy works
+                      like <emphasis>copy</emphasis> but the group is created
+                      locally if it does not exist. copyToIntranet works only
+                      for the remote group named all, which represents the
+                      public group. This policy copies privileges of the
+                      remote group named <emphasis>all</emphasis> to the local
+                      Intranet group. This is useful to restrict metadata
+                      access.</para>
+                    </listitem>
+                  </itemizedlist>
+                </listitem>
+              </itemizedlist>
+            </listitem>
+          </itemizedlist>
+
+          <para><xref linkend="xml_request_harvesting_add" /> shows an example
+          of an XML request to create a GeoNetwork node.</para>
+
+          <figure id="xml_request_harvesting_add">
+            <title>Example of an xml.harvesting.add request for a GeoNetwork
+            node</title>
+
+            <programlisting><?db-font-size 75% ?>
+&lt;node type="geonetwork"&gt; 
+    &lt;site&gt; 
+        &lt;name&gt;South Africa&lt;/name&gt; 
+        &lt;host&gt;south.africa.org&lt;/host&gt; 
+        &lt;port&gt;8080&lt;/port&gt; 
+        &lt;servlet&gt;geonetwork&lt;/servlet&gt; 
+        &lt;account&gt; 
+            &lt;use&gt;true&lt;/use&gt; 
+            &lt;username&gt;admin&lt;/username&gt; 
+            &lt;password&gt;admin&lt;/password&gt; 
+        &lt;/account&gt; 
+    &lt;/site&gt; 
+    &lt;searches&gt; 
+        &lt;search&gt; 
+            &lt;freeText /&gt; 
+            &lt;title /&gt; 
+            &lt;abstract /&gt; 
+            &lt;keywords /&gt; 
+            &lt;digital&gt;true&lt;/digital&gt; 
+            &lt;hardcopy&gt;false&lt;/hardcopy&gt; 
+            &lt;source&gt;0619cc50-708b-11da-8202-000d9335906e&lt;/source&gt; 
+        &lt;/search&gt; 
+    &lt;/searches&gt; 
+    &lt;options&gt; 
+        &lt;every&gt;90&lt;/every&gt; 
+        &lt;oneRunOnly&gt;false&lt;/oneRunOnly&gt; 
+    &lt;/options&gt; 
+    &lt;groupsCopyPolicy&gt; 
+        &lt;group name="all" policy="copy"/&gt; 
+        &lt;group name="mygroup" policy="createAndCopy"/&gt; 
+    &lt;/groupsCopyPolicy&gt; 
+    &lt;categories&gt; 
+        &lt;category id="4"/&gt; 
+    &lt;/categories&gt; 
+&lt;/node&gt;</programlisting>
+          </figure>
+
+          <para>WebDAV harvesting</para>
+
+          <para>To create a web DAV node, the following XML information should
+          be provided.</para>
+
+          <itemizedlist>
+            <listitem>
+              <para><emphasis>node</emphasis>: The type attribute is mandatory
+              and must be WebDAV.</para>
+
+              <itemizedlist>
+                <listitem>
+                  <para>site</para>
+
+                  <itemizedlist>
+                    <listitem>
+                      <para><emphasis>url (string, ”)</emphasis>: The URL to
+                      harvest from. If provided, must be a valid URL starting
+                      with ’HTTP://’.</para>
+                    </listitem>
+
+                    <listitem>
+                      <para><emphasis>icon (string, ’default.gif’)</emphasis>
+                      : Icon file used to represent this node in the search
+                      results. The icon must be present into the
+                      images/harvesting folder.</para>
+                    </listitem>
+                  </itemizedlist>
+                </listitem>
+
+                <listitem>
+                  <para>options</para>
+
+                  <itemizedlist>
+                    <listitem>
+                      <para><emphasis>recurse (boolean, ’false’)</emphasis>:
+                      When true, folders are scanned recursively to find
+                      metadata.</para>
+                    </listitem>
+
+                    <listitem>
+                      <para><emphasis>validate (boolean, ’false’)</emphasis>:
+                      When true, GeoNetwork will validate every metadata
+                      against its schema. If the metadata is not valid, it
+                      will not be imported.</para>
+                    </listitem>
+                  </itemizedlist>
+                </listitem>
+              </itemizedlist>
+            </listitem>
+          </itemizedlist>
+
+          <para>This type supports both privileges and categories
+          assignment.</para>
+
+          <para><xref linkend="xml_request_harvesting_add_entry" /> shows an
+          example of an XML request to create a web DAV entry.</para>
+
+          <figure id="xml_request_harvesting_add_entry">
+            <title>Example of an xml.harvesting.add request for a WebDAV
+            node</title>
+
+            <programlisting><?db-font-size 75% ?>
+&lt;node type="webdav"&gt; 
+    &lt;site&gt; 
+        &lt;name&gt;Asia remote node&lt;/name&gt; 
+        &lt;url&gt;http://www.mynode.org/metadata&lt;/url&gt; 
+        &lt;icon&gt;default.gif&lt;/icon&gt; 
+        &lt;account&gt; 
+            &lt;use&gt;true&lt;/use&gt; 
+            &lt;username&gt;admin&lt;/username&gt; 
+            &lt;password&gt;admin&lt;/password&gt; 
+        &lt;/account&gt; 
+    &lt;/site&gt; 
+    &lt;options&gt; 
+        &lt;every&gt;90&lt;/every&gt; 
+        &lt;oneRunOnly&gt;false&lt;/oneRunOnly&gt; 
+        &lt;recurse&gt;false&lt;/recurse&gt; 
+        &lt;validate&gt;true&lt;/validate&gt; 
+    &lt;/options&gt; 
+    &lt;privileges&gt; 
+        &lt;group id="0"&gt; 
+            &lt;operation name="view" /&gt; 
+        &lt;/group&gt; 
+        &lt;group id="14"&gt; 
+            &lt;operation name="features" /&gt; 
+        &lt;/group&gt; 
+    &lt;/privileges&gt; 
+    &lt;categories&gt; 
+        &lt;category id="4"/&gt; 
+    &lt;/categories&gt; 
+&lt;/node&gt;</programlisting>
+          </figure>
+
+          <para>CSW harvesting</para>
+
+          <para>To create a node to harvest from a CSW capable server, the
+          following XML information should be provided:</para>
+
+          <itemizedlist>
+            <listitem>
+              <para><emphasis>node</emphasis>: The type attribute is mandatory
+              and must be csw.</para>
+
+              <itemizedlist>
+                <listitem>
+                  <para><emphasis>site</emphasis></para>
+
+                  <itemizedlist>
+                    <listitem>
+                      <para><emphasis>capabilitiesUrl (string)</emphasis>: URL
+                      of the capabilities file that will be used to retrieve
+                      the operations address.</para>
+                    </listitem>
+
+                    <listitem>
+                      <para><emphasis>icon (string, ’default.gif’)</emphasis>
+                      : Icon file used to represent this node in the search
+                      results. The icon must be present into the
+                      images/harvesting folder.</para>
+                    </listitem>
+                  </itemizedlist>
+                </listitem>
+
+                <listitem>
+                  <para><emphasis>searches [0..1]</emphasis></para>
+
+                  <itemizedlist>
+                    <listitem>
+                      <para><emphasis>search [0..n]</emphasis>: Contains
+                      search parameters. If this element is missing, an
+                      unconstrained search will be performed.</para>
+
+                      <itemizedlist>
+                        <listitem>
+                          <para><emphasis>freeText (string, ”)</emphasis> :
+                          Search the entire metadata.</para>
+                        </listitem>
+
+                        <listitem>
+                          <para><emphasis>title (string, ”)</emphasis>: Search
+                          the dc:title queryable.</para>
+                        </listitem>
+
+                        <listitem>
+                          <para><emphasis>abstract (string, ”)</emphasis>:
+                          Search the dc:abstract queryable.</para>
+                        </listitem>
+
+                        <listitem>
+                          <para><emphasis>subject (string, ”)</emphasis>:
+                          Search the dc:subject queryable.</para>
+                        </listitem>
+                      </itemizedlist>
+                    </listitem>
+                  </itemizedlist>
+                </listitem>
+              </itemizedlist>
+            </listitem>
+          </itemizedlist>
+
+          <para>This type supports both privileges and categories
+          assignment.</para>
+
+          <para><xref linkend="xml_request_harvesting_add_csw" /> shows an
+          example of an XML request to create a CSW entry.</para>
+
+          <figure id="xml_request_harvesting_add_csw">
+            <title>Example of an xml.harvesting.add request for a CSW
+            node</title>
+
+            <programlisting><?db-font-size 75% ?>
+&lt;node type="csw"&gt; 
+    &lt;site&gt; 
+        &lt;name&gt;Minos CSW server&lt;/name&gt; 
+        &lt;capabilitiesUrl&gt;http://www.minos.org/csw?request=GetCapabilities 
+            &amp;amp;amp;service=CSW&amp;amp;amp;acceptVersions=2.0.1&lt;/capabilitiesUrl&gt; 
+        &lt;icon&gt;default.gif&lt;/icon&gt; 
+        &lt;account&gt; 
+            &lt;use&gt;true&lt;/use&gt; 
+            &lt;username&gt;admin&lt;/username&gt; 
+            &lt;password&gt;admin&lt;/password&gt; 
+        &lt;/account&gt; 
+    &lt;/site&gt; 
+    &lt;options&gt; 
+        &lt;every&gt;90&lt;/every&gt; 
+        &lt;oneRunOnly&gt;false&lt;/oneRunOnly&gt; 
+        &lt;recurse&gt;false&lt;/recurse&gt; 
+        &lt;validate&gt;true&lt;/validate&gt; 
+    &lt;/options&gt; 
+    &lt;privileges&gt; 
+        &lt;group id="0"&gt; 
+            &lt;operation name="view" /&gt; 
+        &lt;/group&gt; 
+        &lt;group id="14"&gt; 
+            &lt;operation name="features" /&gt; 
+        &lt;/group&gt; 
+    &lt;/privileges&gt; 
+    &lt;categories&gt; 
+        &lt;category id="4"/&gt; 
+    &lt;/categories&gt; 
+&lt;/node&gt;</programlisting>
+          </figure>
+        </section>
+
+        <section>
+          <title>Response</title>
+
+          <para>The service’s response is the output of the
+          <literal>xml.harvesting.get</literal> service of the newly created
+          node.</para>
+        </section>
+
+        <section>
+          <title>Summary</title>
+
+          <para>The following table:</para>
+
+          <table frame="all" id="harvesting_types">
+            <title>Summary of features of the supported harvesting
+            types</title>
+
+            <tgroup cols="4">
+              <colspec colname="c1" colnum="1" />
+
+              <colspec colname="c2" colnum="2" />
+
+              <colspec colname="c3" colnum="3" />
+
+              <colspec colname="c4" colnum="4" />
+
+              <thead>
+                <row>
+                  <entry><para>Harvesting type</para></entry>
+
+                  <entry><para>Authentication</para></entry>
+
+                  <entry><para>Privileges ?</para></entry>
+
+                  <entry><para>Categories ?</para></entry>
+                </row>
+              </thead>
+
+              <tbody>
+                <row>
+                  <entry><para>GeoNetwork</para></entry>
+
+                  <entry><para>native</para></entry>
+
+                  <entry><para>through policies</para></entry>
+
+                  <entry><para>yes</para></entry>
+                </row>
+
+                <row>
+                  <entry><para>Web DAV</para></entry>
+
+                  <entry><para>HTTP digest</para></entry>
+
+                  <entry><para>yes</para></entry>
+
+                  <entry><para>yes</para></entry>
+                </row>
+
+                <row>
+                  <entry><para>CSW</para></entry>
+
+                  <entry><para>HTTP Basic</para></entry>
+
+                  <entry><para>yes</para></entry>
+
+                  <entry><para>yes</para></entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </table>
+        </section>
+      </section>
+
+      <section>
+        <title>xml.harvesting.update</title>
+
+        <para>This service is responsible for changing the node’s parameters.
+        A typical request has a node root element and must include the id
+        attribute:</para>
+
+        <programlisting>
+					<?db-font-size 75% ?>&lt;node id="24"&gt; 
+    ... 
+&lt;/node&gt;</programlisting>
+
+        <para>The body of the node element depends on the node’s type. The
+        update policy is this:</para>
+
+        <itemizedlist>
+          <listitem>
+            <para>If an element is specified, the associated parameter is
+            updated.</para>
+          </listitem>
+
+          <listitem>
+            <para>If an element is not specified, the associated parameter
+            will not be changed.</para>
+          </listitem>
+        </itemizedlist>
+
+        <para>So, you need to specify only the elements you want to change.
+        However, there are some exceptions:</para>
+
+        <orderedlist>
+          <listitem>
+            <para><emphasis>privileges</emphasis>: If this element is omitted,
+            privileges will not be changed. If specified, new privileges will
+            replace the old ones.</para>
+          </listitem>
+
+          <listitem>
+            <para><emphasis>categories</emphasis>: Like the previous
+            one.</para>
+          </listitem>
+
+          <listitem>
+            <para><emphasis>searches</emphasis>: Some harvesting types support
+            multiple searches on the same remote note. When supported, the
+            updated behaviour should be like the previous ones.</para>
+          </listitem>
+        </orderedlist>
+
+        <para>Note that you cannot change the type of an node once it has been
+        created.</para>
+
+        <section>
+          <title>Request</title>
+
+          <para>The request is the same as that used to add an entry. Only the
+          id attribute is mandatory.</para>
+        </section>
+
+        <section>
+          <title>Response</title>
+
+          <para>The response is the same as the xml.harvesting.get called on
+          the updated entry.</para>
+        </section>
+      </section>
+
+      <section>
+        <title>xml.harvesting.remove/start/stop/run</title>
+
+        <para>These services are put together because they share a common
+        request interface. Their purpose is obviously to remove, start, stop
+        or run a harvesting node. In detail:</para>
+
+        <orderedlist>
+          <listitem>
+            <para><emphasis>start</emphasis>: When created, a node is in the
+            inactive state. This operation makes it active, that is the
+            countdown is started and the harvesting will be performed at the
+            timeout.</para>
+          </listitem>
+
+          <listitem>
+            <para><emphasis>stop</emphasis>: Makes a node inactive. Inactive
+            nodes are never harvested.</para>
+          </listitem>
+
+          <listitem>
+            <para><emphasis>run</emphasis>: Just start the harvester now. Used
+            to test the harvesting.</para>
+          </listitem>
+        </orderedlist>
+
+        <section>
+          <title>Request</title>
+
+          <para>A set of ids to operate on. Example:</para>
+
+          <programlisting><?db-font-size 75% ?>
+&lt;request&gt;
+    &lt;id&gt;123&lt;/id&gt;
+    &lt;id&gt;456&lt;/id&gt;
+    &lt;id&gt;789&lt;/id&gt;
+&lt;/request&gt;</programlisting>
+
+          <para>If the request is empty, nothing is done.</para>
+        </section>
+
+        <section>
+          <title>Response</title>
+
+          <para>The same as the request but every id has a status attribute
+          indicating the success or failure of the operation. For example, the
+          response to the previous request could be:</para>
+
+          <programlisting><?db-font-size 75% ?>
+&lt;request&gt;
+    &lt;id status="ok"&gt;123&lt;/id&gt;
+    &lt;id status="not-found"&gt;456&lt;/id&gt;
+    &lt;id status="inactive"&gt;789&lt;/id&gt;
+&lt;/request&gt;</programlisting>
+
+          <para><xref linkend="table_service_status" /> summarises, for each
+          service, the possible status values.</para>
+
+          <table frame="all" id="table_service_status">
+            <title>Summary of status values</title>
+
+            <tgroup cols="5">
+              <colspec colname="c1" colnum="1" />
+
+              <colspec colname="c2" colnum="2" />
+
+              <colspec colname="c3" colnum="3" />
+
+              <colspec colname="c4" colnum="4" />
+
+              <thead>
+                <row>
+                  <entry><para>Status value</para></entry>
+
+                  <entry><para>remove</para></entry>
+
+                  <entry><para>start</para></entry>
+
+                  <entry><para>stop</para></entry>
+
+                  <entry><para>run</para></entry>
+                </row>
+              </thead>
+
+              <tbody>
+                <row>
+                  <entry><para>ok</para></entry>
+
+                  <entry><para>+</para></entry>
+
+                  <entry><para>+</para></entry>
+
+                  <entry><para>+</para></entry>
+
+                  <entry><para>+</para></entry>
+                </row>
+
+                <row>
+                  <entry><para>not-found</para></entry>
+
+                  <entry><para>+</para></entry>
+
+                  <entry><para>+</para></entry>
+
+                  <entry><para>+</para></entry>
+
+                  <entry><para>+</para></entry>
+                </row>
+
+                <row>
+                  <entry><para>inactive</para></entry>
+
+                  <entry><para>-</para></entry>
+
+                  <entry><para>-</para></entry>
+
+                  <entry><para>-</para></entry>
+
+                  <entry><para>+</para></entry>
+                </row>
+
+                <row>
+                  <entry><para>already-inactive</para></entry>
+
+                  <entry><para>-</para></entry>
+
+                  <entry><para>-</para></entry>
+
+                  <entry><para>+</para></entry>
+
+                  <entry><para>-</para></entry>
+                </row>
+
+                <row>
+                  <entry><para>already-active</para></entry>
+
+                  <entry><para>-</para></entry>
+
+                  <entry><para>+</para></entry>
+
+                  <entry><para>-</para></entry>
+
+                  <entry><para>-</para></entry>
+                </row>
+
+                <row>
+                  <entry><para>already-running</para></entry>
+
+                  <entry><para>-</para></entry>
+
+                  <entry><para>-</para></entry>
+
+                  <entry><para>-</para></entry>
+
+                  <entry><para>+</para></entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </table>
+        </section>
+      </section>
+    </section>
+
+    <section>
+      <title>MEF services</title>
+
+      <section>
+        <title>Introduction</title>
+
+        <para>This chapter describes the services related to the Metadata
+        Exchange Format. These services allow to import/export metadata using
+        the MEF format.</para>
+      </section>
+
+      <section>
+        <title>mef.export</title>
+
+        <para>As the name suggests, this service exports a GeoNetwork’s
+        metadata using the MEF file format.</para>
+
+        <para>This service is public but metadata access rules apply. For a
+        partial export, the view privilege is enough but for a full export the
+        download privilege is also required. Without a login step, only
+        partial exports on public metadata are allowed.</para>
+
+        <para>This service uses the system’s temporary directory to build the
+        MEF file. With full exports of big data maybe it is necessary to
+        change this directory. In this case, use the Java’s -D command line
+        option to set the new directory before running GeoNetwork (if you use
+        Jetty, simply change the script into the bin directory).</para>
+
+        <section>
+          <title>Request</title>
+
+          <para>This service accepts requests in GET/POST and XML form. The
+          input parameters are:</para>
+
+          <para><emphasis>UUID</emphasis> the universal unique identifier of
+          the metadata</para>
+
+          <para><emphasis>format</emphasis> which format to use. Can be one
+          of: <code>simple, partial, full</code>.</para>
+
+          <para><emphasis>skipUuid</emphasis> If provided, tells the exporter
+          to not export the metadata’s UUID. Without the UUID (which is a
+          unique key inside the database) the metadata can be imported over
+          and over again. Can be one of: <code>true, false</code>. The default
+          value is false.</para>
+        </section>
+
+        <section>
+          <title>Response</title>
+
+          <para>The service’s response is a MEF file with these
+          characteristics:</para>
+
+          <itemizedlist>
+            <listitem>
+              <para>the name of the file is the metadata’s UUID</para>
+            </listitem>
+
+            <listitem>
+              <para>the extension of the file is mef</para>
+            </listitem>
+          </itemizedlist>
+        </section>
+      </section>
+
+      <section>
+        <title>mef.import</title>
+
+        <para>This service is reserved to administrators and is used to import
+        a metadata provided in the MEF format.</para>
+
+        <section>
+          <title>Request</title>
+
+          <para>The service accepts a <literal>multipart/form-data</literal>
+          POST request with a single <emphasis>mefFile</emphasis> parameter
+          that must contain the MEF information.</para>
+        </section>
+
+        <section>
+          <title>Response</title>
+
+          <para>If all goes well, the service returns an OK element containing
+          the local id of the created metadata. Example:</para>
+
+          <programlisting>
+						<?db-font-size 75% ?>&lt;ok&gt;123&lt;/ok&gt;</programlisting>
+        </section>
+      </section>
+
+      <section>
+        <title>Metadata ownership</title>
+
+        <para>Version 1.0 of the MEF format does not take into account the
+        metadata owner (the creator) and the group owner. This implies that
+        this information is not contained into the MEF file. During import,
+        the user that is performing this operation will become the metadata
+        owner and the group owner will be set to null.</para>
+      </section>
+    </section>
+  </chapter>
+</book>

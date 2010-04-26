@@ -1,0 +1,647 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+"http://www.docbook.org/xml/4.4/docbookx.dtd">
+<book>
+	<chapter id="system_xml_services">
+		<title>System configuration</title>
+		<section>
+			<title>System configuration</title>
+			<section>
+				<title>Introduction</title>
+				<para>The GeoNetwork’s configuration is made up of a set of parameters that can be
+                    changed to accommodate any installation need. These parameters are subdivided
+                    into 2 groups:</para>
+				<itemizedlist>
+					<listitem>
+						<para>parameters that can be easily changed through a web interface.</para>
+					</listitem>
+					<listitem>
+						<para>parameters not accessible from a web interface and that must be
+                            changed when the system is not running.</para>
+					</listitem>
+				</itemizedlist>
+				<para>The first group of parameters can be queried or changed through 2 services:
+                    xml.config.get and xml.config.update. The second group of parameters can be
+                    changed using the GAST tool.</para>
+			</section>
+			<section>
+				<title>xml.config.get</title>
+				<para>This service returns the system configuration’s parameters.</para>
+				<section>
+					<title>Request</title>
+					<para>No parameters are needed.</para>
+				</section>
+				<section>
+					<title>Response</title>
+					<para>The response is an XML tree similar to the system hierarchy into the
+                        settings structure. The response has the
+                        following elements:</para>
+					<itemizedlist>
+						<listitem>
+							<para>
+								<emphasis>site</emphasis>: A container for site information.</para>
+							<itemizedlist>
+								<listitem>
+									<para>
+										<emphasis>name</emphasis>: Site’s name.</para>
+								</listitem>
+								<listitem>
+									<para>
+										<emphasis>organisation</emphasis>: Site’s organisation name.</para>
+								</listitem>
+							</itemizedlist>
+						</listitem>
+						<listitem>
+							<para>
+								<emphasis>server</emphasis>: A container for server information.</para>
+							<itemizedlist>
+								<listitem>
+									<para>
+										<emphasis>host</emphasis>: Name of the host from which the site is reached.
+                                    </para>
+								</listitem>
+								<listitem>
+									<para>
+										<emphasis>port</emphasis>: Port number of the previous host.</para>
+								</listitem>
+							</itemizedlist>
+						</listitem>
+						<listitem>
+							<para>
+								<emphasis>Intranet</emphasis>: Information about the Intranet of the organisation.</para>
+							<itemizedlist>
+								<listitem>
+									<para>
+										<emphasis>network</emphasis>: IP address that specifies the network.</para>
+								</listitem>
+								<listitem>
+									<para>
+										<emphasis>netmask</emphasis>: netmask of the network.</para>
+								</listitem>
+							</itemizedlist>
+						</listitem>
+						<listitem>
+							<para>
+								<emphasis>z3950</emphasis>: Configuration about Z39.50 protocol.</para>
+							<itemizedlist>
+								<listitem>
+									<para>
+										<emphasis>enable</emphasis>: true means that the server component is running.
+                                    </para>
+								</listitem>
+								<listitem>
+									<para>
+										<emphasis>port</emphasis>: Port number to use to listen for incoming Z39.50
+                                        requests.</para>
+								</listitem>
+							</itemizedlist>
+						</listitem>
+						<listitem>
+							<para>
+								<emphasis>proxy</emphasis>: Proxy configuration</para>
+							<itemizedlist>
+								<listitem>
+									<para>
+										<emphasis>use</emphasis>: true means that the proxy is used when connecting to
+                                        external nodes.</para>
+								</listitem>
+								<listitem>
+									<para>
+										<emphasis>host</emphasis>: Proxy’s server host.</para>
+								</listitem>
+								<listitem>
+									<para>
+										<emphasis>port</emphasis>: Proxy’s server port.</para>
+								</listitem>
+								<listitem>
+									<para>
+										<emphasis>username</emphasis>: Proxy’s credentials.</para>
+								</listitem>
+								<listitem>
+									<para>
+										<emphasis>password</emphasis>: Proxy’s credentials.</para>
+								</listitem>
+							</itemizedlist>
+						</listitem>
+						<listitem>
+							<para>
+								<emphasis>feedback</emphasis>: A container for feedback information</para>
+							<itemizedlist>
+								<listitem>
+									<para>
+										<emphasis>email</emphasis>: Administrator’s email address</para>
+								</listitem>
+								<listitem>
+									<para>
+										<emphasis>mailServer</emphasis>: Email server to use to send feedback</para>
+									<itemizedlist>
+										<listitem>
+											<para>
+												<emphasis>host</emphasis>: Email’s host address</para>
+										</listitem>
+										<listitem>
+											<para>
+												<emphasis>port</emphasis>: Email’s port to use in host address</para>
+										</listitem>
+									</itemizedlist>
+								</listitem>
+							</itemizedlist>
+						</listitem>
+						<listitem>
+							<para>
+								<emphasis>removedMetadata</emphasis>: A container for removed metadata information</para>
+							<itemizedlist>
+								<listitem>
+									<para>
+										<emphasis>dir</emphasis>: Folder used to store removed metadata in MEF
+                                    format</para>
+								</listitem>
+							</itemizedlist>
+						</listitem>
+						<listitem>
+							<para>
+								<emphasis>ldap</emphasis>: A container for LDAP parameters</para>
+							<itemizedlist>
+								<listitem>
+									<para>
+										<emphasis>use</emphasis>:</para>
+								</listitem>
+								<listitem>
+									<para>
+										<emphasis>host</emphasis>:</para>
+								</listitem>
+								<listitem>
+									<para>
+										<emphasis>port</emphasis>:</para>
+								</listitem>
+								<listitem>
+									<para>
+										<emphasis>defaultProfile</emphasis>:</para>
+								</listitem>
+								<listitem>
+									<para>
+										<emphasis>login</emphasis>:</para>
+									<itemizedlist>
+										<listitem>
+											<para>
+												<emphasis>userDN</emphasis>:</para>
+										</listitem>
+										<listitem>
+											<para>
+												<emphasis>password</emphasis>:</para>
+										</listitem>
+									</itemizedlist>
+								</listitem>
+								<listitem>
+									<para>
+										<emphasis>distinguishedNames</emphasis>:</para>
+									<itemizedlist>
+										<listitem>
+											<para>
+												<emphasis>base</emphasis>:</para>
+										</listitem>
+										<listitem>
+											<para>
+												<emphasis>users</emphasis>:</para>
+										</listitem>
+									</itemizedlist>
+								</listitem>
+								<listitem>
+									<para>
+										<emphasis>userAttribs</emphasis>:</para>
+									<itemizedlist>
+										<listitem>
+											<para>
+												<emphasis>name</emphasis>:</para>
+										</listitem>
+										<listitem>
+											<para>
+												<emphasis>password</emphasis>:</para>
+										</listitem>
+										<listitem>
+											<para>
+												<emphasis>profile</emphasis>:</para>
+										</listitem>
+									</itemizedlist>
+								</listitem>
+							</itemizedlist>
+						</listitem>
+					</itemizedlist>
+					<para>
+						<xref linkend="xml_response_config_get"/> shows an example of
+                            <literal>xml.config.get</literal> response.</para>
+					<figure id="xml_response_config_get">
+						<title>Example of xml.config.get response</title>
+						<programlisting><?db-font-size 75% ?>
+<![CDATA[<config> 
+    <site> 
+        <name>dummy</name> 
+        <organisation>dummy</organization> 
+    </site> 
+    <server> 
+        <host>localhost</host> 
+        <port>8080</port> 
+    </server> 
+    <Intranet> 
+        <network>127.0.0.1</network> 
+        <netmask>255.255.255.0</netmask> 
+    </intranet> 
+    <z3950> 
+        <enable>true</enable> 
+        <port>2100</port> 
+    </z3950> 
+    <proxy> 
+        <use>false</use> 
+        <host/> 
+        <port/> 
+        <username>proxyuser</username> 
+        <password>proxypass</password> 
+    </proxy> 
+    <feedback> 
+        <email/> 
+        <mailServer> 
+            <host/> 
+            <port>25</port> 
+        </mailServer> 
+    </feedback> 
+    <removedMetadata> 
+        <dir>WEB-INF/removed</dir> 
+    </removedMetadata> 
+    <ldap> 
+        <use>false</use> 
+        <host /> 
+        <port /> 
+        <defaultProfile>RegisteredUser</defaultProfile> 
+        <login> 
+            <userDN>cn=Manager</userDN> 
+            <password /> 
+        </login> 
+        <distinguishedNames> 
+            <base>dc=fao,dc=org</base> 
+            <users>ou=people</users> 
+        </distinguishedNames> 
+        <userAttribs> 
+            <name>cn</name> 
+            <password>userPassword</password> 
+            <profile>profile</profile> 
+        </userAttribs> 
+    </ldap> 
+</config>]]></programlisting>
+					</figure>
+				</section>
+			</section>
+			<section>
+				<title>xml.config.update</title>
+				<para>This service is used to update the system’s information and so it is
+                    restricted to administrators.</para>
+				<section>
+					<title>Request</title>
+					<para>The request format must have the same structure returned by the
+                            <literal>xml.config.get</literal> service and can contain only elements
+                        that the caller wants to be updated. If an element is not included, it will
+                        not be updated. However, when included some elements require mandatory
+                        information (i.e. the value cannot be empty). Please, refer to <xref linkend="table_config_parameters"/>.</para>
+					<table frame="all" id="table_config_parameters">
+						<title>Mandatory and optional parameters for the xml.config.update service</title>
+						<tgroup cols="3">
+							<colspec colnum="1" colname="c1"/>
+							<colspec colnum="2" colname="c2"/>
+							<colspec colnum="3" colname="c3"/>
+							<thead>
+								<row>
+									<entry>
+										<para>Parameter</para>
+									</entry>
+									<entry>
+										<para>Type</para>
+									</entry>
+									<entry>
+										<para>Mandatory</para>
+									</entry>
+								</row>
+							</thead>
+							<tbody>
+								<row>
+									<entry>
+										<para>site/name</para>
+									</entry>
+									<entry>
+										<para>string</para>
+									</entry>
+									<entry>
+										<para>yes</para>
+									</entry>
+								</row>
+								<row>
+									<entry>
+										<para>site/organization</para>
+									</entry>
+									<entry>
+										<para>string</para>
+									</entry>
+									<entry>
+										<para>-</para>
+									</entry>
+								</row>
+								<row>
+									<entry>
+										<para>server/host</para>
+									</entry>
+									<entry>
+										<para>string</para>
+									</entry>
+									<entry>
+										<para>yes</para>
+									</entry>
+								</row>
+								<row>
+									<entry>
+										<para>server/port</para>
+									</entry>
+									<entry>
+										<para>integer</para>
+									</entry>
+									<entry>
+										<para>-</para>
+									</entry>
+								</row>
+								<row>
+									<entry>
+										<para>intranet/network</para>
+									</entry>
+									<entry>
+										<para>string</para>
+									</entry>
+									<entry>
+										<para>yes</para>
+									</entry>
+								</row>
+								<row>
+									<entry>
+										<para>intranet/netmask</para>
+									</entry>
+									<entry>
+										<para>string</para>
+									</entry>
+									<entry>
+										<para>yes</para>
+									</entry>
+								</row>
+								<row>
+									<entry>
+										<para>z3950/enable</para>
+									</entry>
+									<entry>
+										<para>bool</para>
+									</entry>
+									<entry>
+										<para>yes</para>
+									</entry>
+								</row>
+								<row>
+									<entry>
+										<para>z3950/port</para>
+									</entry>
+									<entry>
+										<para>integer</para>
+									</entry>
+									<entry>
+										<para>-</para>
+									</entry>
+								</row>
+								<row>
+									<entry>
+										<para>proxy/use</para>
+									</entry>
+									<entry>
+										<para>bool</para>
+									</entry>
+									<entry>
+										<para>yes</para>
+									</entry>
+								</row>
+								<row>
+									<entry>
+										<para>proxy/host</para>
+									</entry>
+									<entry>
+										<para>string</para>
+									</entry>
+									<entry>
+										<para>-</para>
+									</entry>
+								</row>
+								<row>
+									<entry>
+										<para>proxy/port</para>
+									</entry>
+									<entry>
+										<para>integer</para>
+									</entry>
+									<entry>
+										<para>-</para>
+									</entry>
+								</row>
+								<row>
+									<entry>
+										<para>proxy/username</para>
+									</entry>
+									<entry>
+										<para>string</para>
+									</entry>
+									<entry>
+										<para>-</para>
+									</entry>
+								</row>
+								<row>
+									<entry>
+										<para>proxy/password</para>
+									</entry>
+									<entry>
+										<para>string</para>
+									</entry>
+									<entry>
+										<para>-</para>
+									</entry>
+								</row>
+								<row>
+									<entry>
+										<para>feedback/email</para>
+									</entry>
+									<entry>
+										<para>string</para>
+									</entry>
+									<entry>
+										<para>-</para>
+									</entry>
+								</row>
+								<row>
+									<entry>
+										<para>feedback/mailServer/host</para>
+									</entry>
+									<entry>
+										<para>string</para>
+									</entry>
+									<entry>
+										<para>-</para>
+									</entry>
+								</row>
+								<row>
+									<entry>
+										<para>feedback/mailServer/port</para>
+									</entry>
+									<entry>
+										<para>integer</para>
+									</entry>
+									<entry>
+										<para>-</para>
+									</entry>
+								</row>
+								<row>
+									<entry>
+										<para>removedMetadata/dir</para>
+									</entry>
+									<entry>
+										<para>string</para>
+									</entry>
+									<entry>
+										<para>yes</para>
+									</entry>
+								</row>
+								<row>
+									<entry>
+										<para>ldap/use</para>
+									</entry>
+									<entry>
+										<para>bool</para>
+									</entry>
+									<entry>
+										<para>yes</para>
+									</entry>
+								</row>
+								<row>
+									<entry>
+										<para>ldap/host</para>
+									</entry>
+									<entry>
+										<para>string</para>
+									</entry>
+									<entry>
+										<para>-</para>
+									</entry>
+								</row>
+								<row>
+									<entry>
+										<para>ldap/port</para>
+									</entry>
+									<entry>
+										<para>integer</para>
+									</entry>
+									<entry>
+										<para>-</para>
+									</entry>
+								</row>
+								<row>
+									<entry>
+										<para>ldap/defaultProfile</para>
+									</entry>
+									<entry>
+										<para>string</para>
+									</entry>
+									<entry>
+										<para>yes</para>
+									</entry>
+								</row>
+								<row>
+									<entry>
+										<para>ldap/login/userDN</para>
+									</entry>
+									<entry>
+										<para>string</para>
+									</entry>
+									<entry>
+										<para>yes</para>
+									</entry>
+								</row>
+								<row>
+									<entry>
+										<para>ldap/login/password</para>
+									</entry>
+									<entry>
+										<para>string</para>
+									</entry>
+									<entry>
+										<para>-</para>
+									</entry>
+								</row>
+								<row>
+									<entry>
+										<para>ldap/distinguishedNames/base</para>
+									</entry>
+									<entry>
+										<para>string</para>
+									</entry>
+									<entry>
+										<para>yes</para>
+									</entry>
+								</row>
+								<row>
+									<entry>
+										<para>ldap/distinguishedNames/users</para>
+									</entry>
+									<entry>
+										<para>string</para>
+									</entry>
+									<entry>
+										<para>yes</para>
+									</entry>
+								</row>
+								<row>
+									<entry>
+										<para>ldap/userAttribs/name</para>
+									</entry>
+									<entry>
+										<para>string</para>
+									</entry>
+									<entry>
+										<para>yes</para>
+									</entry>
+								</row>
+								<row>
+									<entry>
+										<para>ldap/userAttribs/password</para>
+									</entry>
+									<entry>
+										<para>string</para>
+									</entry>
+									<entry>
+										<para>yes</para>
+									</entry>
+								</row>
+								<row>
+									<entry>
+										<para>ldap/userAttribs/profile</para>
+									</entry>
+									<entry>
+										<para>string</para>
+									</entry>
+									<entry>
+										<para>-</para>
+									</entry>
+								</row>
+							</tbody>
+						</tgroup>
+					</table>
+				</section>
+				<section>
+					<title>Response</title>
+					<para>On success, the service returns a response element with the OK text.
+                        Example:</para>
+					<programlisting>
+						<?db-font-size 75% ?><![CDATA[<response>ok</response>]]></programlisting>
+					<para>Otherwise a proper error element is returned.</para>
+				</section>
+			</section>
+		</section>
+	</chapter>
+</book>

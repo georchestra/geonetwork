@@ -1,0 +1,1006 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+"http://www.docbook.org/xml/4.4/docbookx.dtd">
+<book>
+	<chapter id="user_xml_services">
+		<title>User services</title>
+		<section>
+			<title>Users retrieving</title>
+			<section>
+				<title>Users list (xml.user.list)</title>
+				<para>The <emphasis>xml.user.list</emphasis> service can be used to
+        retrieve the users defined in GeoNetwork.</para>
+				<para>Requires authentication: Yes</para>
+				<section>
+					<title>Request</title>
+					<para>Parameters:</para>
+					<para>
+						<itemizedlist>
+							<listitem>
+								<para>
+									<emphasis>None</emphasis>
+								</para>
+							</listitem>
+						</itemizedlist>
+					</para>
+					<para>Example:</para>
+					<para>
+						<figure id="userlist_xml_request_example">
+							<title>User list request example</title>
+							<programlisting><?db-font-size 75% ?>
+Url: 
+http://localhost:8080/geonetwork/srv/en/xml.user.list
+
+Mime-type: 
+application/xml
+
+Post request:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;request /&gt;</programlisting>
+						</figure>
+					</para>
+				</section>
+				<section>
+					<title>Response</title>
+					<para>Here follows the structure of the response:</para>
+					<itemizedlist>
+						<listitem>
+							<para>
+								<emphasis>record</emphasis>: This is the container for
+              each user element returned</para>
+							<itemizedlist>
+								<listitem>
+									<para>
+										<emphasis>id</emphasis>: User identifier</para>
+								</listitem>
+								<listitem>
+									<para>
+										<emphasis>username</emphasis>: Login name for the
+                  user</para>
+								</listitem>
+								<listitem>
+									<para>
+										<emphasis>password</emphasis>: Password encoded in
+                  md5</para>
+								</listitem>
+								<listitem>
+									<para>
+										<emphasis>surname</emphasis>: User surname</para>
+								</listitem>
+								<listitem>
+									<para>
+										<emphasis>name</emphasis>: User name</para>
+								</listitem>
+								<listitem>
+									<para>
+										<emphasis>profile</emphasis>: User profile. The
+                  profiles defined in GeoNetwork are: Administrator, User
+                  administrator, Content Reviewer, Editor, Registered
+                  user</para>
+								</listitem>
+								<listitem>
+									<para>
+										<emphasis>address</emphasis>: User physical
+                  address</para>
+								</listitem>
+								<listitem>
+									<para>
+										<emphasis>city</emphasis>: User address city</para>
+								</listitem>
+								<listitem>
+									<para>
+										<emphasis>state</emphasis>: User address state</para>
+								</listitem>
+								<listitem>
+									<para>
+										<emphasis>zip</emphasis>: User address zip</para>
+								</listitem>
+								<listitem>
+									<para>
+										<emphasis>country</emphasis>: User address
+                  country</para>
+								</listitem>
+								<listitem>
+									<para>
+										<emphasis>email</emphasis>: User email address</para>
+								</listitem>
+								<listitem>
+									<para>
+										<emphasis>organisation</emphasis>: User
+                  organisation/department</para>
+								</listitem>
+								<listitem>
+									<para>
+										<emphasis>kind</emphasis>: Kind of organisation</para>
+								</listitem>
+							</itemizedlist>
+						</listitem>
+					</itemizedlist>
+					<para>
+						<figure id="userlist_xml_response_example">
+							<title>User list response example</title>
+							<programlisting><?db-font-size 75% ?>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;response&gt;
+  &lt;record&gt;
+    &lt;id&gt;1&lt;/id&gt;
+    &lt;username&gt;admin&lt;/username&gt;
+    &lt;password&gt;d033e22ae348aeb566fc214aec3585c4da997&lt;/password&gt;
+    &lt;surname&gt;admin&lt;/surname&gt;
+    &lt;name&gt;admin&lt;/name&gt;
+    &lt;profile&gt;Administrator&lt;/profile&gt;
+    &lt;address /&gt;
+    &lt;city /&gt;
+    &lt;state /&gt;
+    &lt;zip /&gt;
+    &lt;country /&gt;
+    &lt;email /&gt;
+    &lt;organisation /&gt;
+    &lt;kind /&gt;
+  &lt;/record&gt;
+  &lt;record&gt;
+    &lt;id&gt;2&lt;/id&gt;
+    &lt;username&gt;editor&lt;/username&gt;
+    &lt;password&gt;ab41949825606da179db7c89ddcedcc167b64847&lt;/password&gt;
+    &lt;surname&gt;Smith&lt;/surname&gt;
+    &lt;name&gt;John&lt;/name&gt;
+    &lt;profile&gt;Editor&lt;/profile&gt;
+    &lt;address /&gt;
+    &lt;city&gt;Amsterdam&lt;/city&gt;
+    &lt;state /&gt;
+    &lt;zip /&gt;
+    &lt;country&gt;nl&lt;/country&gt;
+    &lt;email&gt;john.smith@mail.com&lt;/email&gt;
+    &lt;organisation /&gt;
+    &lt;kind&gt;gov&lt;/kind&gt;
+  &lt;/record&gt;
+&lt;/response&gt;</programlisting>
+						</figure>
+					</para>
+					<para>Exceptions:</para>
+					<para>
+						<itemizedlist>
+							<listitem>
+								<para><emphasis>Service not allowed (error id: service-not-allowed)</emphasis>, when the
+                user is not authenticated or his profile has no rights to
+                execute the service</para>
+							</listitem>
+						</itemizedlist>
+					</para>
+				</section>
+			</section>
+			<section>
+				<title>User groups list (xml.usergroups.list)</title>
+				<para>The <emphasis>xml.usergroups.list</emphasis> service can be used
+        to retrieve the groups assigned to a user.</para>
+				<para>Requires authentication: Yes</para>
+				<section>
+					<title>Request</title>
+					<para>Parameters:</para>
+					<para>
+						<itemizedlist>
+							<listitem>
+								<para>
+									<emphasis>id: </emphasis>User identifier (multiple id
+                elements can be espeficied)
+								</para>
+							</listitem>
+						</itemizedlist>
+					</para>
+					<para>Example:</para>
+					<para>
+						<figure id="usergrouplist_xml_request_example">
+							<title>User groups list request example</title>
+							<programlisting><?db-font-size 75% ?>
+Url: 
+http://localhost:8080/geonetwork/srv/en/xml.usergroups.list
+
+Mime-type: 
+application/xml
+
+Post request:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;request&gt;
+  &lt;id&gt;3&lt;/id&gt;
+&lt;request&gt;</programlisting>
+						</figure>
+					</para>
+				</section>
+				<section>
+					<title>Response</title>
+					<para>Here follows the structure of the response:</para>
+					<para>
+						<itemizedlist>
+							<listitem>
+								<para>
+									<emphasis>group: </emphasis>This is the container for
+                each user group element returned
+								</para>
+								<para>
+									<itemizedlist>
+										<listitem>
+											<para>
+												<emphasis>id</emphasis>: Group identifier</para>
+										</listitem>
+										<listitem>
+											<para>name: Group name</para>
+										</listitem>
+										<listitem>
+											<para>description: Group description</para>
+										</listitem>
+									</itemizedlist>
+								</para>
+							</listitem>
+						</itemizedlist>
+					</para>
+					<para>
+						<figure id="usergrouplist_xml_response_example">
+							<title>User groups list response example</title>
+							<programlisting><?db-font-size 75% ?>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;groups&gt;
+  &lt;group&gt;
+    &lt;id&gt;3&lt;/id&gt;
+    &lt;name&gt;RWS&lt;/name&gt;
+    &lt;description /&gt;
+  &lt;/group&gt;
+&lt;/groups&gt;</programlisting>
+						</figure>
+					</para>
+					<para>Exceptions:</para>
+					<para>
+						<itemizedlist>
+							<listitem>
+								<para><emphasis>Service not allowed (error id: service-not-allowed)</emphasis>, when the
+                user is not authenticated or his profile has no rights to
+                execute the service</para>
+							</listitem>
+							<listitem>
+								<para><emphasis>User XXXX doesn't exist</emphasis>, if no exists a user with
+                provided <emphasis>id</emphasis> value</para>
+							</listitem>
+						</itemizedlist>
+					</para>
+				</section>
+			</section>
+			<section>
+				<title>User information (user.get)</title>
+				<para>Retrieves user information. <emphasis role="bold">Non XML
+        response.</emphasis>
+				</para>
+			</section>
+		</section>
+		<section>
+			<title>Users maintenance</title>
+			<section>
+				<title>Create a user (user.update)</title>
+				<para>The <emphasis>user.update</emphasis> service can be used to
+        create new users, update user information and reset user password,
+        depending on the value of the <emphasis>operation</emphasis>
+        parameter. Only users with profiles <emphasis>Administrator</emphasis>
+        or <emphasis>UserAdmin</emphasis> can create new users.</para>
+				<para>Users with profile <emphasis>Administrator</emphasis> can create
+        users in any group, while users with profile
+        <emphasis>UserAdmin</emphasis> can create users only in the groups
+        where they belong.</para>
+				<para>Requires authentication: Yes</para>
+				<section>
+					<title>Request</title>
+					<para>Parameters:</para>
+					<para>
+						<itemizedlist>
+							<listitem>
+								<para>
+									<emphasis>operation</emphasis>: (mandatory) <emphasis role="bold">newuser</emphasis>
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>username</emphasis>: (mandatory) User login
+                name</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>password</emphasis>: (mandatory) User
+                password</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>profile</emphasis>: (mandatory) User
+                profile</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>surname</emphasis>:User surname</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>name</emphasis>: User name</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>address</emphasis>: User physical
+                address</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>city</emphasis>: User address city</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>state</emphasis>: User address state</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>zip</emphasis>: User address zip</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>country</emphasis>: User address
+                country</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>email</emphasis>: User email</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>org</emphasis>: User
+                organisation/departament</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>kind</emphasis>: Kind of organisation</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>groups</emphasis>: Group identifier to set for
+                the user, can be multiple <emphasis>groups</emphasis>
+                elements</para>
+								<itemizedlist>
+									<listitem>
+										<para>
+											<emphasis>groupid</emphasis>: Group
+                    identifier</para>
+									</listitem>
+								</itemizedlist>
+							</listitem>
+						</itemizedlist>
+					</para>
+					<para>Example:</para>
+					<para>
+						<figure id="userupdate_xml_request_example">
+							<title>User create request example</title>
+							<programlisting><?db-font-size 75% ?>
+Url: 
+http://localhost:8080/geonetwork/srv/en/user.update
+
+Mime-type: 
+application/xml
+
+Post request:
+&lt;request&gt;
+  &lt;operation&gt;<emphasis role="bold">newuser</emphasis>&lt;/operation&gt;
+  &lt;username&gt;samantha&lt;/username&gt;
+  &lt;password&gt;editor2&lt;/password&gt;
+  &lt;profile&gt;Editor&lt;/profile&gt;
+  &lt;name&gt;Samantha&lt;/name&gt;
+  &lt;city&gt;Amsterdam&lt;/city&gt;
+  &lt;country&gt;Netherlands&lt;/country&gt;
+  &lt;email&gt;samantha@mail.net&lt;/email&gt;
+  &lt;groups&gt;2&lt;/groups&gt;
+  &lt;groups&gt;4&lt;/groups&gt;
+&lt;/request&gt;</programlisting>
+						</figure>
+					</para>
+				</section>
+				<section>
+					<title>Response</title>
+					<para>If request it's executed succesfully HTTP 200 status code it's
+          returned. If request fails an HTTP status code error it's returned
+          and the response contains the XML document with the
+          exception.</para>
+				</section>
+				<section>
+					<title>Errors</title>
+					<para>
+						<itemizedlist>
+							<listitem>
+								<para><emphasis>Service not allowed (error id: service-not-allowed)</emphasis>, when the
+                user is not authenticated or his profile has no rights to
+                execute the service. Returned 401 HTTP code</para>
+							</listitem>
+							<listitem>
+								<para><emphasis>Missing parameter (error id: missing-parameter)</emphasis>, when mandatory parameters
+                are not provided</para>
+							</listitem>
+							<listitem>
+								<para><emphasis>bad-parameter</emphasis>, when a mandatory fields is empty</para>
+							</listitem>
+							<listitem>
+								<para><emphasis>Unknow profile XXXX (error id: error)</emphasis>, when the profile is
+                not valid</para>
+							</listitem>
+							<listitem>
+								<para><emphasis>ERROR: duplicate key violates unique constraint
+                "users_username_key"</emphasis>, when trying to create a new user using an existing
+                username</para>
+							</listitem>
+							<listitem>
+								<para><emphasis>ERROR: insert or update on table "usergroups" violates
+                foreign key constraint "usergroups_groupid_fkey"</emphasis>, when group
+                identifier is not an existing group identifier</para>
+							</listitem>
+							<listitem>
+								<para><emphasis>ERROR: tried to add group id XX to user XXXX - not
+                allowed because you are not a member of that group</emphasis>, when the
+                authenticated user has profile <emphasis>UserAdmin</emphasis> and tries to add the
+                user to a group in which the <emphasis>UserAdmin</emphasis> user is not allowed
+                to manage</para>
+							</listitem>
+							<listitem>
+								<para><emphasis>ERROR: you don't have rights to do this</emphasis>, when the
+                authenticated user has a profile that is not
+                <emphasis>Administrator</emphasis> or
+                <emphasis>UserAdmin</emphasis>
+								</para>
+							</listitem>
+						</itemizedlist>
+					</para>
+				</section>
+			</section>
+			<section>
+				<title>Update user information (user.update)</title>
+				<para>The <emphasis>user.update</emphasis> service can be used to
+        create new users, update user information and reset user password,
+        depending on the value of the <emphasis>operation</emphasis>
+        parameter. Only users with profiles <emphasis>Administrator</emphasis>
+        or <emphasis>UserAdmin</emphasis> can update users information.</para>
+				<para>Users with profile <emphasis>Administrator</emphasis> can update
+        any user, while users with profile <emphasis>UserAdmin</emphasis> can
+        update users only in the groups where they belong.</para>
+				<para>Requires authentication: Yes</para>
+				<section>
+					<title>Request</title>
+					<para>Parameters:</para>
+					<para>
+						<itemizedlist>
+							<listitem>
+								<para>
+									<emphasis>operation</emphasis>: (mandatory) <emphasis role="bold">editinfo</emphasis>
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>id</emphasis>: (mandatory) Identifier of the
+                user to update</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>username</emphasis>: (mandatory) User login
+                name</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>password</emphasis>: (mandatory) User
+                password</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>profile</emphasis>: (mandatory) User
+                profile</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>surname</emphasis>: User surname</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>name</emphasis>: User name</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>address</emphasis>: User physical
+                address</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>city</emphasis>: User address city</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>state</emphasis>: User address state</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>zip</emphasis>: User address zip</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>country</emphasis>: User address
+                country</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>email</emphasis>: User email</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>org</emphasis>: User
+                organisation/departament</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>kind</emphasis>: Kind of organisation</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>groups</emphasis>: Group identifier to set for
+                the user, can be multiple <emphasis>groups</emphasis>
+                elements</para>
+								<itemizedlist>
+									<listitem>
+										<para>
+											<emphasis>groupid</emphasis>: Group
+                    identifier</para>
+									</listitem>
+								</itemizedlist>
+							</listitem>
+						</itemizedlist>
+					</para>
+					<para>
+						<emphasis>Remarks</emphasis>: If an optional parameter it's
+          not provided the value it's updated in the database with an empty
+          string.</para>
+					<para>Example:</para>
+					<para>
+						<figure id="userupdateinfor_request_example">
+							<title>Update user information request example</title>
+							<programlisting><?db-font-size 75% ?>
+Url: 
+http://localhost:8080/geonetwork/srv/en/user.update
+
+Mime-type: 
+application/xml
+
+Post request:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;request&gt;
+  &lt;operation&gt;<emphasis role="bold">editinfo</emphasis>&lt;/operation&gt;
+  &lt;id&gt;5&lt;/id&gt;
+  &lt;username&gt;samantha&lt;/username&gt;
+  &lt;password&gt;editor2&lt;/password&gt;
+  &lt;profile&gt;Editor&lt;/profile&gt;
+  &lt;name&gt;Samantha&lt;/name&gt;
+  &lt;city&gt;Rotterdam&lt;/city&gt;
+  &lt;country&gt;Netherlands&lt;/country&gt;
+  &lt;email&gt;samantha@mail.net&lt;/email&gt;
+&lt;/request&gt;</programlisting>
+						</figure>
+					</para>
+				</section>
+				<section>
+					<title>Response</title>
+					<para>If request it's executed succesfully HTTP 200 status code it's
+          returned. If request fails an HTTP status code error it's returned
+          and the response contains the XML document with the
+          exception.</para>
+				</section>
+				<section>
+					<title>Errors</title>
+					<para>
+						<itemizedlist>
+							<listitem>
+								<para><emphasis>Service not allowed (error id: service-not-allowed)</emphasis>, when the 
+                user is not authenticated or his profile has no rights to
+                execute the service. Returned 401 HTTP code</para>
+							</listitem>
+							<listitem>
+								<para><emphasis>Missing parameter (error id: missing-parameter)</emphasis>, when the mandatory parameters
+                are not provided. Returned 400 HTTP code</para>
+							</listitem>
+							<listitem>
+								<para><emphasis>bad-parameter</emphasis>, when a mandatory field is empty.
+                Returned 400 HTTP code</para>
+							</listitem>
+							<listitem>
+								<para><emphasis>Unknow profile XXXX (error id: error)</emphasis>, when the  profile is
+                not valid. Returned 500 HTTP code</para>
+							</listitem>
+							<listitem>
+								<para><emphasis>ERROR: duplicate key violates unique constraint
+                "users_username_key"</emphasis>, when trying to create a new user using an existing
+                username. Returned 500 HTTP code</para>
+							</listitem>
+							<listitem>
+								<para><emphasis>ERROR: insert or update on table "usergroups" violates
+                foreign key constraint "usergroups_groupid_fkey"</emphasis>, when the group
+                identifier is not an existing group identifier. Returned 500
+                HTTP code</para>
+							</listitem>
+							<listitem>
+								<para><emphasis>ERROR: tried to add group id XX to user XXXX - not
+                allowed because you are not a member of that group</emphasis>, when the
+                authenticated user has profile <emphasis>UserAdmin</emphasis> and tries to add the
+                user to a group in which the <emphasis>UserAdmin</emphasis> user is not allowed
+                to manage. Returned 500 HTTP code</para>
+							</listitem>
+							<listitem>
+								<para><emphasis>ERROR: you don't have rights to do this</emphasis>, when  the
+                authenticated user has a profile that is not
+                <emphasis>Administrator</emphasis> or
+                <emphasis>UserAdmin<emphasis>. Returned 500 HTTP
+                code</emphasis>
+									</emphasis>
+								</para>
+							</listitem>
+						</itemizedlist>
+					</para>
+				</section>
+			</section>
+			<section>
+				<title>Reset user password (user.update)</title>
+				<para>The <emphasis>user.update</emphasis> service can be used to
+        create new users, update user information and reset user password,
+        depending on the value of the <emphasis>operation</emphasis>
+        parameter. Only users with profiles <emphasis>Administrator</emphasis>
+        or <emphasis>UserAdmin</emphasis> can reset users password.</para>
+				<para>Users with profile <emphasis>Administrator</emphasis> can reset
+        the password for any user, while users with profile
+        <emphasis>UserAdmin</emphasis> can reset the password for users only
+        in the groups where they belong.</para>
+				<para>Requires authentication: Yes</para>
+				<section>
+					<title>Request</title>
+					<para>Parameters:</para>
+					<para>
+						<itemizedlist>
+							<listitem>
+								<para>
+									<emphasis>operation</emphasis>: (mandatory) <emphasis role="bold">resetpw</emphasis>
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>id</emphasis>: (mandatory) Identifier of the
+                user to reset the password</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>username</emphasis>: (mandatory) User login
+                name</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>password</emphasis>: (mandatory) User new
+                password</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>profile</emphasis>: (mandatory) User
+                profile</para>
+							</listitem>
+						</itemizedlist>
+					</para>
+					<para>Example:</para>
+					<para>
+						<figure id="userresetpw_request_example">
+							<title>Reset user password request example</title>
+							<programlisting><?db-font-size 75% ?>
+Url: 
+http://localhost:8080/geonetwork/srv/en/user.update
+
+Mime-type: 
+application/xml
+
+Post request:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;request&gt;
+  &lt;operation&gt;<emphasis role="bold">resetpw</emphasis>&lt;/operation&gt;
+  &lt;id&gt;2&lt;/id&gt;
+  &lt;username&gt;editor&lt;/username&gt;
+  &lt;password&gt;newpassword&lt;/password&gt;
+  &lt;profile&gt;Editor&lt;/profile&gt;
+&lt;/request&gt;</programlisting>
+						</figure>
+					</para>
+				</section>
+				<section>
+					<title>Response</title>
+					<para>If request it's executed succesfully HTTP 200 status code it's
+          returned. If request fails an HTTP status code error it's returned
+          and the response contains the XML document with the
+          exception.</para>
+				</section>
+				<section>
+					<title>Errors</title>
+					<para>
+						<itemizedlist>
+							<listitem>
+								<para><emphasis>Service not allowed (error id: service-not-allowed)</emphasis>, when the
+                user is not authenticated or his profile has no rights to
+                execute the service. Returned 401 HTTP code</para>
+							</listitem>
+							<listitem>
+								<para><emphasis>Missing parameter (error id: missing-parameter)</emphasis>, when the mandatory parameters
+                are not provided. Returned 400 HTTP code</para>
+							</listitem>
+							<listitem>
+								<para><emphasis>bad-parameter</emphasis>, when a mandatory field is empty.
+                Returned 400 HTTP code</para>
+							</listitem>
+							<listitem>
+								<para><emphasis>Unknow profile XXXX (error id: error)</emphasis>, when the profile is
+                not valid. Returned 500 HTTP code</para>
+							</listitem>
+							<listitem>
+								<para><emphasis>ERROR: you don't have rights to do this</emphasis>, when the
+                authenticated user has a profile that it's not
+                <emphasis>Administrator</emphasis> or
+                <emphasis>UserAdmin<emphasis>. Returned 500 HTTP
+                code</emphasis>
+									</emphasis>
+								</para>
+							</listitem>
+						</itemizedlist>
+					</para>
+				</section>
+			</section>
+			<section>
+				<title>Update current authenticated user information
+        (user.infoupdate)</title>
+				<para>The <emphasis>user.infoupdate</emphasis> service can be used to
+        update the information related to the current authenticated
+        user.</para>
+				<para>Requires authentication: Yes</para>
+				<section>
+					<title>Request</title>
+					<para>Parameters:</para>
+					<para>
+						<itemizedlist>
+							<listitem>
+								<para>
+									<emphasis>surname</emphasis>: (mandatory) User
+                surname</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>name</emphasis>: (mandatory) User name</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>address</emphasis>: User physical
+                address</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>city</emphasis>: User address city</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>state</emphasis>: User address state</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>zip</emphasis>: User address zip</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>country</emphasis>: User address
+                country</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>email</emphasis>: User email</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>org</emphasis>: User
+                organisation/departament</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>kind</emphasis>: Kind of organisation</para>
+							</listitem>
+						</itemizedlist>
+					</para>
+					<para>
+						<emphasis>Remarks</emphasis>: If an optional parameter it's
+          not provided the value it's updated in the database with an empty
+          string.</para>
+					<para>Example:</para>
+					<para>
+						<figure id="userupdateinfo_request_example">
+							<title>Current user info update request example</title>
+							<programlisting><?db-font-size 75% ?>
+Url: 
+http://localhost:8080/geonetwork/srv/en/user.infoupdate
+
+Mime-type: 
+application/xml
+
+Post request:
+&lt;request&gt;
+  &lt;name&gt;admin&lt;/name&gt;
+  &lt;surname&gt;admin&lt;/surname&gt;
+  &lt;address&gt;address&lt;/address&gt;
+  &lt;city&gt;Amsterdam&lt;/city&gt;
+  &lt;zip&gt;55555&lt;/zip&gt;
+  &lt;country&gt;Netherlands&lt;/country&gt;
+  &lt;email&gt;user@mail.net&lt;/email&gt;
+  &lt;org&gt;GeoCat&lt;/org&gt;
+  &lt;kind&gt;gov&lt;/kind&gt;
+&lt;/request&gt;</programlisting>
+						</figure>
+					</para>
+				</section>
+				<section>
+					<title>Response</title>
+					<para>If request it's executed succesfully HTTP 200 status code it's
+          returned. If request fails an HTTP status code error it's returned
+          and the response contains the XML document with the
+          exception.</para>
+				</section>
+				<section>
+					<title>Errors</title>
+					<para>
+						<itemizedlist>
+							<listitem>
+								<para><emphasis>Service not allowed (error id: service-not-allowed)</emphasis>, when the
+                user is not authenticated. Returned 401 HTTP code</para>
+							</listitem>
+						</itemizedlist>
+					</para>
+				</section>
+			</section>
+			<section>
+				<title>Change current authenticated user password
+        (user.pwupdate)</title>
+				<para>The<emphasis> user.pwupdate</emphasis> service can be used to
+        change the password of the current user authenticated.</para>
+				<para>Requires authentication: Yes</para>
+				<section>
+					<title>Request</title>
+					<para>Parameters:</para>
+					<para>
+						<itemizedlist>
+							<listitem>
+								<para>
+									<emphasis>password</emphasis>: Actual user
+                password</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>newPassword</emphasis>: New password to set
+                for the user</para>
+							</listitem>
+						</itemizedlist>
+					</para>
+					<para>Example:</para>
+					<para>
+						<figure id="userpassword_xml_request_example">
+							<title>User update password request example</title>
+							<programlisting>
+								<?db-font-size 75% ?>&lt;request&gt;
+    &lt;password&gt;admin&lt;/password&gt;
+    &lt;newPassword&gt;admin2&lt;/newPassword&gt;
+&lt;/request&gt;</programlisting>
+						</figure>
+					</para>
+				</section>
+				<section>
+					<title>Response</title>
+					<para>If request it's executed succesfully HTTP 200 status code it's
+          returned. If request fails an HTTP status code error it's returned
+          and the response contains the XML document with the
+          exception.</para>
+				</section>
+				<section>
+					<title>Errors</title>
+					<para>
+						<itemizedlist>
+							<listitem>
+								<para><emphasis>Service not allowed (error id: service-not-allowed)</emphasis>, when the
+                user is not authenticated. Returned 401 HTTP code</para>
+							</listitem>
+							<listitem>
+								<para><emphasis>Old password is not correct</emphasis>. Returned 500 HTTP
+                code</para>
+							</listitem>
+							<listitem>
+								<para><emphasis>Bad parameter (newPassword)</emphasis>, when an empty password is
+                provided. Returned 400 HTTP code</para>
+							</listitem>
+						</itemizedlist>
+					</para>
+				</section>
+			</section>
+			<section>
+				<title>Remove a user (user.remove)</title>
+				<para>The <emphasis>user.remove</emphasis> service can be used to
+        remove an existing user. Only users with profiles
+        <emphasis>Administrator</emphasis> or <emphasis>UserAdmin</emphasis>
+        can delete users.</para>
+				<para>Users with profile <emphasis>Administrator</emphasis> can delete
+        any user (except himself), while users with profile
+        <emphasis>UserAdmin</emphasis> can delete users only in the groups
+        where they belong (except himself).</para>
+				<para>Requires authentification: Yes</para>
+				<section>
+					<title>Request</title>
+					<para>Parameters:</para>
+					<para>
+						<itemizedlist>
+							<listitem>
+								<para>
+									<emphasis>id</emphasis>: (mandatory) User identifier to
+                delete</para>
+							</listitem>
+						</itemizedlist>
+					</para>
+					<para>Example:</para>
+					<para>
+						<figure id="userdelete_request_example">
+							<title>User remove request example</title>
+							<programlisting><?db-font-size 75% ?>
+Url: 
+http://localhost:8080/geonetwork/srv/en/user.remove
+
+Mime-type: 
+application/xml
+
+Post request:
+&lt;request&gt;
+    &lt;id&gt;2&lt;/id&gt;
+&lt;/request&gt;</programlisting>
+						</figure>
+					</para>
+				</section>
+				<section>
+					<title>Response</title>
+					<para>If request it's executed succesfully HTTP 200 status code it's
+          returned. If request fails an HTTP status code error it's returned
+          and the response contains the XML document with the
+          exception.</para>
+				</section>
+				<section>
+					<title>Errors</title>
+					<para>
+						<itemizedlist>
+							<listitem>
+								<para><emphasis>Service not allowed (error id: service-not-allowed)</emphasis>, when the
+                user is not authenticated or his profile has no rights to
+                execute the service. Returned 401 HTTP code</para>
+							</listitem>
+							<listitem>
+								<para><emphasis>Missing parameter (error id: missing-parameter)</emphasis>, when the
+                <emphasis>id</emphasis> parameter is not provided. Returned
+                400 HTTP code</para>
+							</listitem>
+							<listitem>
+								<para><emphasis>You cannot delete yourself from the user database (error
+                id: error)</emphasis>, when trying to delete the authenticated user himself.
+                Returned 500 HTTP code</para>
+							</listitem>
+							<listitem>
+								<para><emphasis>You don't have rights to delete this user (error id:
+                error)</emphasis>, when trying to delete using an authenticated user that
+                don't belongs to <emphasis>Administrator</emphasis> or
+                <emphasis>User administrator</emphasis> profiles. Returned 500
+                HTTP code</para>
+							</listitem>
+							<listitem>
+								<para><emphasis>You don't have rights to delete this user because the
+                user is not part of your group (error id: error)</emphasis>, when trying to
+                delete a user that is not in the same group of the
+                authenticated user (belonging the authenticated user to
+                profile <emphasis>User administrator</emphasis>). Returned 500
+                HTTP code</para>
+							</listitem>
+						</itemizedlist>
+					</para>
+				</section>
+			</section>
+		</section>
+	</chapter>
+</book>

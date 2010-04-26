@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+"http://www.docbook.org/xml/4.4/docbookx.dtd">
+<book>
+	<chapter id="login_xml_services">
+		<title>Login and logout services</title>
+		<section>
+			<title>Login services</title>
+			<section>
+				<title id="xml.user.login">GeoNetwork standard login
+        (xml.user.login)</title>
+				<para>The <emphasis>xml.user.login</emphasis> service is used to
+        authenticate the user in GeoNetwork, allowing using the Xml services
+        that require authentication. For example, the services to maintain
+        group or user information.</para>
+				<section>
+					<title>Request</title>
+					<para>Parameters:</para>
+					<para>
+						<itemizedlist>
+							<listitem>
+								<para>
+									<emphasis>username</emphasis> (mandatory): Login for the
+                user to authenticate</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>password</emphasis> (mandatory): Password for
+                the user to authenticate</para>
+							</listitem>
+						</itemizedlist>
+					</para>
+					<para>Example:</para>
+					<para>
+						<figure id="login_xml_request_example">
+							<title>Login request example</title>
+							<programlisting><?db-font-size 75% ?>
+Url: 
+http://localhost:8080/geonetwork/srv/en/xml.user.login
+
+Mime-type: 
+application/xml
+
+Post request:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;request&gt;
+    &lt;username&gt;admin&lt;/username&gt;
+    &lt;password&gt;admin&lt;/password&gt;
+&lt;/request&gt;</programlisting>
+						</figure>
+					</para>
+				</section>
+				<section>
+					<title>Response</title>
+					<para>When user authentication is succesful the next response is
+          received:</para>
+					<para>
+						<figure id="login_xml_response1_example">
+							<title>Login succesful raw response example</title>
+							<programlisting><?db-font-size 75% ?>
+OK
+
+Date: Mon, 01 Feb 2010 09:29:43 GMT
+Expires: Thu, 01 Jan 1970 00:00:00 GMT
+Set-Cookie: JSESSIONID=1xh3kpownhmjh;Path=/geonetwork
+Content-Type: application/xml; charset=UTF-8
+Pragma: no-cache
+Cache-Control: no-cache
+Expires: -1
+Transfer-Encoding: chunked
+Server: Jetty(6.1.14)</programlisting>
+						</figure>
+					</para>
+					<para>The authentication process sets
+          <emphasis>JSESSIONID</emphasis> cookie with the authentication token
+          that should be send in the services that need authentication to be
+          invoqued. Otherwise, a <emphasis>Service not allowed</emphasis>
+          exception will be returned by these services.</para>
+				</section>
+				<section>
+					<title>Errors</title>
+					<para>
+						<itemizedlist>
+							<listitem>
+								<para><emphasis>Missing parameter (error id: missing-parameter)</emphasis>, when
+                mandatory parameters are not send. Returned 400 HTTP
+                code</para>
+							</listitem>
+							<listitem>
+								<para><emphasis>bad-parameter XXXX</emphasis>, when an empty username or password
+                is provided. Returned 400 HTTP code</para>
+							</listitem>
+							<listitem>
+								<para><emphasis>User login failed (error id: user-login)</emphasis>, when login
+                information is not valid. Returned 400 HTTP code</para>
+							</listitem>
+						</itemizedlist>
+					</para>
+					<para>Example returning <emphasis>User login failed</emphasis>
+          exception:</para>
+					<para>
+						<figure id="login_xml_response2_example">
+							<title>Login error response example</title>
+							<programlisting><?db-font-size 75% ?>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;error id="user-login"&gt;
+  &lt;message&gt;User login failed&lt;/message&gt;
+  &lt;class&gt;UserLoginEx&lt;/class&gt;
+  &lt;stack&gt;
+    &lt;at class="org.fao.geonet.services.login.Login" file="Login.java" line="90" method="exec" /&gt;
+    &lt;at class="jeeves.server.dispatchers.ServiceInfo" file="ServiceInfo.java" line="238" 
+method="execService" /&gt;
+    &lt;at class="jeeves.server.dispatchers.ServiceInfo" file="ServiceInfo.java" line="141" 
+method="execServices" /&gt;
+    &lt;at class="jeeves.server.dispatchers.ServiceManager" file="ServiceManager.java" line="377" 
+method="dispatch" /&gt;
+    &lt;at class="jeeves.server.JeevesEngine" file="JeevesEngine.java" line="621" 
+method="dispatch" /&gt;
+    &lt;at class="jeeves.server.sources.http.JeevesServlet" file="JeevesServlet.java" line="174" 
+method="execute" /&gt;
+    &lt;at class="jeeves.server.sources.http.JeevesServlet" file="JeevesServlet.java" line="99" 
+method="doPost" /&gt;
+    &lt;at class="javax.servlet.http.HttpServlet" file="HttpServlet.java" line="727" 
+method="service" /&gt;
+    &lt;at class="javax.servlet.http.HttpServlet" file="HttpServlet.java" line="820" 
+method="service" /&gt;
+    &lt;at class="org.mortbay.jetty.servlet.ServletHolder" file="ServletHolder.java" line="502" 
+method="handle" /&gt;
+  &lt;/stack&gt;
+  &lt;object&gt;admin2&lt;/object&gt;
+  &lt;request&gt;
+    &lt;language&gt;en&lt;/language&gt;
+    &lt;service&gt;user.login&lt;/service&gt;
+  &lt;/request&gt;
+&lt;/error&gt; </programlisting>
+						</figure>
+					</para>
+				</section>
+			</section>
+			<section>
+				<title>Shibboleth login (shib.user.login)</title>
+				<para>The <emphasis>shib.user.login</emphasis> service process the
+        creadentials of a Shibboleth login.</para> 
+		<para>To use this service the user previously should be authenticated to Shibboleth. 
+		If the authentication is succesful, the HTTP headers will contain the user credentials.</para> 
+		<para>When calling <emphasis>shib.user.login</emphasis> service in GeoNetwork, the Shibboleth credentials
+		are then used to find or create (if don't exists) the user account in GeoNetwork.</para>
+				<para>GeoNetwork processes the next HTTP header parameters filled by
+        Shibboleth authentication:</para>
+				<itemizedlist>
+					<listitem>
+						<para>system/shib/attrib/username</para>
+					</listitem>
+					<listitem>
+						<para>system/shib/attrib/surname</para>
+					</listitem>
+					<listitem>
+						<para>system/shib/attrib/firstname</para>
+					</listitem>
+					<listitem>
+						<para>system/shib/attrib/profile: User profile. Values:
+            Administrator, UserAdmin, Reviewer, Editor and Guest</para>
+					</listitem>
+				</itemizedlist>
+				<para>GeoNetwork checks if exists a user with the specified <emphasis>username</emphasis> in the users table, creating
+        it if not found.</para>
+			</section>
+		</section>
+		<section>
+			<title>Logout service</title>
+			<section>
+				<title>Logout (xml.user.logout)</title>
+				<para>The <emphasis>xml.user.logout</emphasis> service clears user
+        authentication session, removing the <emphasis>JSESSIONID</emphasis>
+        cookie.</para>
+				<section>
+					<title>Request</title>
+					<para>Parameters:</para>
+					<para>
+						<itemizedlist>
+							<listitem>
+								<para>
+									<emphasis>None</emphasis>:This request requires no
+                parameters, just it's required sending the
+                <emphasis>JSESSIONID</emphasis> cookie value.</para>
+							</listitem>
+						</itemizedlist>
+					</para>
+					<para>Example:</para>
+					<para>
+						<figure id="logout_xml_request_example">
+							<title>Logout request example</title>
+<programlisting>
+<?db-font-size 75% ?>Url: 
+http://localhost:8080/geonetwork/srv/en/xml.user.logout
+
+Mime-type: 
+application/xml
+
+Post request:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;request/&gt;
+   </programlisting>
+						</figure>
+					</para>
+				</section>
+				<section>
+					<title>Response</title>
+					<para>
+						<figure id="logout_xml_response_example">
+							<title>Logout response example</title>
+							<programlisting>
+								<?db-font-size 75% ?>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;ok /&gt;</programlisting>
+						</figure>
+					</para>
+				</section>
+			</section>
+		</section>
+	</chapter>
+</book>

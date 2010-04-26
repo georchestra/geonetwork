@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+"http://www.docbook.org/xml/4.4/docbookx.dtd">
+<book>
+  <chapter id="csw_services">
+    <title>CSW service</title>
+
+    <section>
+      <title>Introduction</title>
+
+      <para>GeoNetwork opensource catalog publishes metadata using CSW
+      (Catalog Services for the Web) protocol supporting HTTP binding to
+      invoke the operations.</para>
+
+      <para>The protocol operations are described in the document <emphasis
+      role="bold">OpenGIS® Catalogue Services Specification</emphasis>:</para>
+
+      <para><emphasis>http://portal.opengeospatial.org/files/?artifact_id=20555</emphasis></para>
+
+      <para>GeoNetwork it's compliant with 2.0.2 version of specification
+      supporting the next CSW operations:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>GetCapabilities</para>
+        </listitem>
+
+        <listitem>
+          <para>DescribeRecord</para>
+        </listitem>
+
+        <listitem>
+          <para>GetRecordById</para>
+        </listitem>
+
+        <listitem>
+          <para>GetRecords</para>
+        </listitem>
+
+        <listitem>
+          <para>Transaction</para>
+        </listitem>
+	</itemizedlist>
+
+      <para>In this chapter a brief description of the different operations
+      supported in GeoNetwork and some usage examples. To get a complete
+      reference of the operations and parameters of each CSW operation refer
+      to the document <emphasis role="bold">OpenGIS® Catalogue Services
+      Specification</emphasis>.</para>
+
+      <para>The invocation of the operations from a Java client is analogous
+      as described in before chapter for XML services.</para>
+    </section>
+
+    <section>
+      <title>CSW operations</title>
+
+      <para>The GeoNetwork opensource catalog CSW service operations are
+      accesible thought the url:</para>
+
+      <para><emphasis>http://localhost:8080/geonetwork/srv/en/csw</emphasis></para>
+
+      <para>The CSW operations can be accesed using POST, GET methods and SOAP
+      encoding.</para>
+
+      <section>
+        <title>GetCapabilities</title>
+
+        <para><emphasis>GetCapabilities</emphasis> operation allows CSW
+        clients to retrieve service metadata from a server. The response to a
+        <emphasis>GetCapabilities</emphasis> request is an XML document
+        containing service metadata about the server.</para>
+
+        <section>
+          <title>Request examples</title>
+
+          <para>GET request</para>
+
+          <para><programlisting><?db-font-size 75% ?>
+http://localhost:8080/geonetwork/srv/en/csw?request=GetCapabilities
+&amp;service=CSW&amp;acceptVersions=2.0.2&amp;acceptFormats=application%2Fxml</programlisting></para>
+
+          <para>POST request</para>
+
+          <para><programlisting><?db-font-size 75% ?>
+Url:
+http://localhost:8080/geonetwork/srv/en/csw
+
+Mime-type:
+application/xml
+
+Post data:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;csw:GetCapabilities xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" 
+  service="CSW"&gt;
+  &lt;ows:AcceptVersions xmlns:ows="http://www.opengis.net/ows"&gt;
+    &lt;ows:Version&gt;2.0.2&lt;/ows:Version&gt;
+  &lt;/ows:AcceptVersions&gt;
+  &lt;ows:AcceptFormats xmlns:ows="http://www.opengis.net/ows"&gt;
+    &lt;ows:OutputFormat&gt;application/xml&lt;/ows:OutputFormat&gt;
+  &lt;/ows:AcceptFormats&gt;
+&lt;/csw:GetCapabilities&gt;</programlisting></para>
+
+          <para>SOAP request</para>
+
+          <para><programlisting><?db-font-size 75% ?>
+Url:
+http://localhost:8080/geonetwork/srv/en/csw
+
+Mime-type:
+application/soap+xml
+
+Post data:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope"&gt;
+  &lt;env:Body&gt;
+    &lt;csw:GetCapabilities xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" 
+      service="CSW"&gt;
+      &lt;ows:AcceptVersions xmlns:ows="http://www.opengis.net/ows"&gt;
+        &lt;ows:Version&gt;2.0.2&lt;/ows:Version&gt;
+      &lt;/ows:AcceptVersions&gt;
+      &lt;ows:AcceptFormats xmlns:ows="http://www.opengis.net/ows"&gt;
+        &lt;ows:OutputFormat&gt;application/xml&lt;/ows:OutputFormat&gt;
+      &lt;/ows:AcceptFormats&gt;
+    &lt;/csw:GetCapabilities&gt;
+  &lt;/env:Body&gt;
+&lt;/env:Envelope&gt;</programlisting></para>
+        </section>
+      </section>
+
+      <section>
+        <title>DescribeRecord</title>
+
+        <para><emphasis>DescribeRecord</emphasis> operation allows a client to
+        discover elements of the information model supported by the target
+        catalogue service. The operation allows some or all of the information
+        model to be described.</para>
+
+        <section>
+          <title>Request examples</title>
+
+          <para>GET request</para>
+
+          <para><programlisting><?db-font-size 75% ?>
+http://localhost:8080/geonetwork/srv/en/csw?request=DescribeRecord
+&amp;service=CSW&amp;version=2.0.2&amp;outputFormat=application%2Fxml
+&amp;schemaLanguage=http%3A%2F%2Fwww.w3.org%2FXML%2FSchema
+&amp;namespace=csw%3Ahttp%3A%2F%2Fwww.opengis.net%2Fcat%2Fcsw%2F2.0.2</programlisting></para>
+
+          <para>POST request</para>
+
+          <para><programlisting><?db-font-size 75% ?>
+Url:
+http://localhost:8080/geonetwork/srv/en/csw
+
+Mime-type:
+application/xml
+
+Post data:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;csw:DescribeRecord xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" 
+service="CSW" version="2.0.2" outputFormat="application/xml" 
+schemaLanguage="http://www.w3.org/XML/Schema" /&gt;</programlisting></para>
+
+          <para>SOAP request</para>
+
+          <para><programlisting><?db-font-size 75% ?>
+Url:
+http://localhost:8080/geonetwork/srv/en/csw
+
+Mime-type:
+application/soap+xml
+
+Post data:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope"&gt;
+  &lt;env:Body&gt;
+    &lt;csw:DescribeRecord xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" 
+    service="CSW" version="2.0.2" outputFormat="application/xml" 
+    schemaLanguage="http://www.w3.org/XML/Schema" /&gt;
+  &lt;/env:Body&gt;
+&lt;/env:Envelope&gt;</programlisting></para>
+        </section>
+      </section>
+
+      <section>
+        <title>GetRecordById</title>
+
+        <para><emphasis>GetRecordById</emphasis> request retrieves the default
+        representation of catalogue metadata records using their
+        identifier.</para>
+
+        <para>To retrieve non public metadata a previous<emphasis>
+        xml.user.login</emphasis> service invocation is required. See <link
+        linkend="xml.user.login">login service</link>.</para>
+
+        <section>
+          <title>Request examples</title>
+
+          <para>GET request</para>
+
+          <para><programlisting><?db-font-size 75% ?>
+http://localhost:8080/geonetwork/srv/en/csw?request=GetRecordById
+&amp;service=CSW&amp;version=2.0.2&amp;elementSetName=full
+&amp;id=5df54bf0-3a7d-44bf-9abf-84d772da8df1</programlisting></para>
+
+          <para>POST request</para>
+
+          <para><programlisting><?db-font-size 75% ?>
+Url:
+http://localhost:8080/geonetwork/srv/en/csw
+
+Mime-type:
+application/xml
+
+Post data:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;csw:GetRecordById xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" 
+  service="CSW" version="2.0.2"&gt;
+  &lt;csw:Id&gt;5df54bf0-3a7d-44bf-9abf-84d772da8df1&lt;/csw:Id&gt;
+  &lt;csw:ElementSetName&gt;full&lt;/csw:ElementSetName&gt;
+&lt;/csw:GetRecordById&gt;
+</programlisting></para>
+
+          <para>SOAP request</para>
+
+          <para><programlisting><?db-font-size 75% ?>
+Url:
+http://localhost:8080/geonetwork/srv/en/csw
+
+Mime-type:
+application/soap+xml
+
+Post data:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope"&gt;
+  &lt;env:Body&gt;
+    &lt;csw:GetRecordById xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" 
+      service="CSW" version="2.0.2"&gt;
+      &lt;csw:Id&gt;5df54bf0-3a7d-44bf-9abf-84d772da8df1&lt;/csw:Id&gt;
+      &lt;csw:ElementSetName&gt;full&lt;/csw:ElementSetName&gt;
+    &lt;/csw:GetRecordById&gt;
+  &lt;/env:Body&gt;
+&lt;/env:Envelope&gt;
+</programlisting></para>
+        </section>
+      </section>
+
+      <section>
+        <title>GetRecords</title>
+
+        <para>GetRecords request allows to query the catalogue metadata
+        records specifying a query in OCG Filter or CQL languages.</para>
+
+        <para>To retrieve non public metadata a
+        previous<emphasis>xml.user.login</emphasis> service invocation is
+        required. See <link linkend="xml.user.login">login
+        service</link>.</para>
+
+        <section>
+          <title>Request examples</title>
+
+          <para>GET request (using CQL language)</para>
+
+          <para><programlisting><?db-font-size 75% ?>
+http://localhost:8080/geonetwork/srv/en/csw?request=GetRecords
+&amp;service=CSW&amp;version=2.0.2
+&amp;namespace=xmlns%28csw%3Dhttp%3A%2F%2Fwww.opengis.net%2Fcat%2Fcsw
+%2F2.0.2%29%2Cxmlns%28gmd%3Dhttp%3A%2F%2Fwww.isotc211.org%2F2005
+%2Fgmd%29&amp;constraint=AnyText+like+%25africa%25
+&amp;constraintLanguage=CQL_TEXT
+&amp;constraint_language_version=1.1.0&amp;typeNames=csw%3ARecord</programlisting></para>
+
+          <para>POST request</para>
+
+          <para><programlisting><?db-font-size 75% ?>
+Url:
+http://localhost:8080/geonetwork/srv/en/csw
+
+Mime-type:
+application/xml
+
+Post data:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;csw:GetRecords xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" 
+  service="CSW" version="2.0.2"&gt;
+  &lt;csw:Query typeNames="csw:Record"&gt;
+    &lt;csw:Constraint version="1.1.0"&gt;
+      &lt;Filter xmlns="http://www.opengis.net/ogc" 
+        xmlns:gml="http://www.opengis.net/gml"&gt;
+        &lt;PropertyIsLike wildCard="%" singleChar="_" escape="\"&gt;
+          &lt;PropertyName&gt;AnyText&lt;/PropertyName&gt;
+          &lt;Literal&gt;%africa%&lt;/Literal&gt;
+        &lt;/PropertyIsLike&gt;
+      &lt;/Filter&gt;
+    &lt;/csw:Constraint&gt;
+  &lt;/csw:Query&gt;
+&lt;/csw:GetRecords&gt;</programlisting></para>
+
+          <para>SOAP request</para>
+
+          <para><programlisting><?db-font-size 75% ?>
+Url:
+http://localhost:8080/geonetwork/srv/en/csw
+
+Mime-type:
+application/soap+xml
+
+Post data:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope"&gt;
+  &lt;env:Body&gt;
+    &lt;csw:GetRecords xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" 
+      service="CSW" version="2.0.2"&gt;
+      &lt;csw:Query typeNames="csw:Record"&gt;
+        &lt;csw:Constraint version="1.1.0"&gt;
+          &lt;Filter xmlns="http://www.opengis.net/ogc" 
+            xmlns:gml="http://www.opengis.net/gml"&gt;
+            &lt;PropertyIsLike wildCard="%" singleChar="_" escape="\"&gt;
+              &lt;PropertyName&gt;AnyText&lt;/PropertyName&gt;
+              &lt;Literal&gt;%africa%&lt;/Literal&gt;
+            &lt;/PropertyIsLike&gt;
+          &lt;/Filter&gt;
+        &lt;/csw:Constraint&gt;
+      &lt;/csw:Query&gt;
+    &lt;/csw:GetRecords&gt;
+  &lt;/env:Body&gt;
+&lt;/env:Envelope&gt;</programlisting></para>
+        </section>
+      </section>
+
+      <section>
+        <title>Transaction</title>
+
+        <para>The <emphasis>Transaction</emphasis> operation defines an interface
+        for creating, modifying and deleting catalogue records. This operation
+        requires user authentification to be invoqued.</para>
+
+        <section>
+          <title>Insert operation example</title>
+
+          <para>POST request</para>
+
+          <para><programlisting><?db-font-size 75% ?>
+Url:
+http://localhost:8080/geonetwork/srv/en/csw
+
+Mime-type:
+application/xml
+
+Post data:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;csw:Transaction xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" 
+  version="2.0.2" service="CSW"&gt;
+  &lt;csw:Insert&gt;
+    &lt;gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns:gml="http://www.opengis.net/gml"
+                 ....&gt;
+
+      ...
+
+    &lt;/gmd:MD_Metadata&gt;
+  &lt;/csw:Insert&gt;
+&lt;/csw:Transaction&gt;</programlisting></para>
+
+          <para>Response</para>
+
+          <para><programlisting><?db-font-size 75% ?>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;csw:TransactionResponse xmlns:csw="http://www.opengis.net/cat/csw/2.0.2"&gt;
+  &lt;csw:TransactionSummary&gt;
+    &lt;csw:totalInserted&gt;1&lt;/csw:totalInserted&gt;
+    &lt;csw:totalUpdated&gt;0&lt;/csw:totalUpdated&gt;
+    &lt;csw:totalDeleted&gt;0&lt;/csw:totalDeleted&gt;
+  &lt;/csw:TransactionSummary&gt;
+&lt;/csw:TransactionResponse&gt; </programlisting></para>
+        </section>
+
+        <section>
+          <title>Update operation example</title>
+
+          <para><emphasis role="bold">POST request</emphasis></para>
+
+          <programlisting><?db-font-size 75% ?>
+Url:
+http://localhost:8080/geonetwork/srv/en/csw
+
+Mime-type:
+application/xml
+
+Post data:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;csw:Transaction xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" 
+  version="2.0.2" service="CSW"&gt;
+  &lt;csw:Update&gt;
+
+    &lt;gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns:gml="http://www.opengis.net/gml"
+                 ....&gt;
+
+      ...
+
+    &lt;/gmd:MD_Metadata&gt;
+
+    &lt;csw:Constraint version="1.1.0"&gt;
+      &lt;ogc:Filter&gt;
+        &lt;ogc:PropertyIsEqualTo&gt;
+          &lt;ogc:PropertyName&gt;title&lt;/ogc:PropertyName&gt;
+          &lt;ogc:Literal&gt;Eurasia&lt;/ogc:Literal&gt;
+        &lt;/ogc:PropertyIsEqualTo&gt;
+      &lt;/ogc:Filter&gt;
+    &lt;/csw:Constraint&gt;
+  &lt;/csw:Update&gt;
+&lt;/csw:Transaction&gt;</programlisting>
+
+          <para><emphasis role="bold">Response</emphasis></para>
+
+          <para><programlisting><?db-font-size 75% ?>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;csw:TransactionResponse xmlns:csw="http://www.opengis.net/cat/csw/2.0.2"&gt;
+  &lt;csw:TransactionSummary&gt;
+    &lt;csw:totalInserted&gt;0&lt;/csw:totalInserted&gt;
+    &lt;csw:totalUpdated&gt;1&lt;/csw:totalUpdated&gt;
+    &lt;csw:totalDeleted&gt;0&lt;/csw:totalDeleted&gt;
+  &lt;/csw:TransactionSummary&gt;
+&lt;/csw:TransactionResponse&gt; </programlisting></para>
+        </section>
+
+        <section>
+          <title>Delete operation example</title>
+
+          <para><emphasis role="bold">POST request</emphasis></para>
+
+          <programlisting><?db-font-size 75% ?>
+Url:
+http://localhost:8080/geonetwork/srv/en/csw
+
+Mime-type:
+application/xml
+
+Post data:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;csw:Transaction xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" 
+  xmlns:ogc="http://www.opengis.net/ogc"
+  version="2.0.2" service="CSW"&gt;
+  &lt;csw:Delete&gt;
+    &lt;csw:Constraint version="1.1.0"&gt;
+      &lt;ogc:Filter&gt;
+        &lt;ogc:PropertyIsEqualTo&gt;
+          &lt;ogc:PropertyName&gt;title&lt;/ogc:PropertyName&gt;
+          &lt;ogc:Literal&gt;africa&lt;/ogc:Literal&gt;
+        &lt;/ogc:PropertyIsEqualTo&gt;
+      &lt;/ogc:Filter&gt;
+    &lt;/csw:Constraint&gt;
+  &lt;/csw:Delete&gt;
+&lt;/csw:Transaction&gt;</programlisting>
+
+          <para><emphasis role="bold">Response</emphasis></para>
+
+          <programlisting><?db-font-size 75% ?>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;csw:TransactionResponse xmlns:csw="http://www.opengis.net/cat/csw/2.0.2"&gt;
+  &lt;csw:TransactionSummary&gt;
+    &lt;csw:totalInserted&gt;0&lt;/csw:totalInserted&gt;
+    &lt;csw:totalUpdated&gt;0&lt;/csw:totalUpdated&gt;
+    &lt;csw:totalDeleted&gt;1&lt;/csw:totalDeleted&gt;
+  &lt;/csw:TransactionSummary&gt;
+&lt;/csw:TransactionResponse&gt; </programlisting>
+        </section>
+
+        <section>
+          <title>Errors</title>
+
+          <itemizedlist>
+            <listitem>
+              <para>User is not authenticated:</para>
+
+              <para><programlisting><?db-font-size 75% ?>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;ows:ExceptionReport xmlns:ows="http://www.opengis.net/ows" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.0" 
+  xsi:schemaLocation=
+  "http://www.opengis.net/ows http://schemas.opengis.net/ows/1.0.0/owsExceptionReport.xsd"&gt;
+  &lt;ows:Exception exceptionCode="NoApplicableCode"&gt;
+    &lt;ows:ExceptionText&gt;Cannot process transaction: User not authenticated.&lt;/ows:ExceptionText&gt;
+  &lt;/ows:Exception&gt;
+&lt;/ows:ExceptionReport&gt;    </programlisting></para>
+            </listitem>
+          </itemizedlist>
+        </section>
+      </section>   
+	
+	</section>
+  </chapter>
+</book>

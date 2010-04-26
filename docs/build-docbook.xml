@@ -250,6 +250,8 @@
   <target name="all" depends="pdf,html"
           description="--> Generate and copy reference documentation"/>
 
+  <target name="all_dev" depends="pdf,html_dev"
+          description="--> Generate and copy developer reference documentation"/>
   <!-- ======================================================================== -->
   <!-- ==                                                                    == -->
   <!-- == Clean up the target directory                                      == -->
@@ -272,7 +274,8 @@
     <delete quiet="true" dir="${basedir}/html"/>
     <delete quiet="true" file="${basedir}/Manual.pdf"/>
     <delete quiet="true" file="${basedir}/Manual_fra.pdf"/>
-    <delete quiet="true" file="${basedir}/docbook_guidelines.pdf"/>
+    <delete quiet="true" file="${basedir}/Manual_XmlServices.pdf"/>
+	<delete quiet="true" file="${basedir}/docbook_guidelines.pdf"/>
   </target>
 
   <!-- ======================================================================== -->
@@ -314,7 +317,7 @@
 
     <delete file="${html.target.file}.xml"/>
 
-    <copy todir="${basedir}/html">
+    <copy todir="${basedir}/html/usermanual">
       <fileset dir="${target.dir}/${docbook.dir}/html"/>
     </copy>
 
@@ -342,4 +345,31 @@
     <move file="${htmlsingle.target.file}.xml" tofile="${htmlsingle.target.file}.html"/>
 
   </target>
+  
+  <!-- ======================================================================== -->
+  <!-- ==                                                                    == -->
+  <!-- == Create the HTML developer documentation, many pages                          == -->
+  <!-- ==                                                                    == -->
+  <!-- ======================================================================== -->
+  <target name="html_dev"
+          depends="prepare"
+          description="--> Generate HTML developer docs in multiple files">
+
+    <transform type="html" target="html" title="html" xsl="html" dir="${docbook.dir}" file="${docbook.file}" lang="${lang}"/>
+
+    <copy todir="${html.target.dir}/images">
+      <fileset dir="${dbf.xsl.dir}/images/"/>
+    </copy>
+
+    <copy todir="${html.target.dir}/css">
+      <fileset dir="${css.src.dir}/html"/>
+    </copy>
+
+    <delete file="${html.target.file}.xml"/>
+
+    <copy todir="${basedir}/html/devmanual">
+      <fileset dir="${target.dir}/${docbook.dir}/html"/>
+    </copy>
+
+  </target>  
 </project>

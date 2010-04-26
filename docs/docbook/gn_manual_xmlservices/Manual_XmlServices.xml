@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd"> -->
+<!-- This is the main document that pulls together the different chapters into a single book.
+     Please add new content into the existing chapters or into new chapters as separate documents.
+     This keeps the total size of each of the documents manageable. -->
+<book xmlns:xi="http://www.w3.org/2001/XInclude">
+	<title/>
+	<subtitle>GeoNetwork XML services manual</subtitle>
+	<bookinfo>
+		<copyright>
+			<year>2007-2010</year>
+			<holder>The Open Source Geospatial Foundation</holder>
+		</copyright>
+		<releaseinfo>V 2.4</releaseinfo>
+		<productname>GeoNetwork opensource</productname>
+		<authorgroup>
+			<corpauthor>By the developers</corpauthor>
+		</authorgroup>
+		<mediaobject id="geonetwork_logo">
+			<imageobject>
+				<imagedata contentwidth="12cm" fileref="images/GeoNetwork_opensource_logo.jpg" width="12cm"/>
+			</imageobject>
+		</mediaobject>
+	</bookinfo>
+	<toc/>
+	<xi:include href="preface.xml" xpointer="preface">
+		<xi:fallback>
+			<para>
+				<emphasis>FIXME: MISSING XINCLUDE CONTENT - Preface</emphasis>
+			</para>
+		</xi:fallback>
+	</xi:include>
+	<part id="xml_services_reference">
+		<title>XML Services</title>
+		<partintro>
+			<para> This part gives some insights of GeoNetwork opensource XML
+      services avalaible to develop third party applications that use these
+      services. </para>
+		</partintro>
+		<!-- Introduction -->
+		<xi:include href="intro_xml_services.xml" xpointer="intro_xml_services">
+			<xi:fallback>
+				<para>
+					<emphasis>FIXME: MISSING XINCLUDE CONTENT - Server Reference - XML
+          Services</emphasis>
+				</para>
+			</xi:fallback>
+		</xi:include>
+		<!-- XML Services -->
+		<!--xi:include href="server_ref_xml_services.xml" xpointer="xml_services">
+      <xi:fallback>
+        <para>
+          <emphasis>FIXME: MISSING XINCLUDE CONTENT - Server Reference - XML
+          Services</emphasis>
+        </para>
+      </xi:fallback>
+    </xi:include-->
+		<xi:include href="login_xml_services.xml" xpointer="login_xml_services">
+			<xi:fallback>
+				<para>
+					<emphasis>FIXME: MISSING XINCLUDE CONTENT - Server Reference - XML
+          Services</emphasis>
+				</para>
+			</xi:fallback>
+		</xi:include>
+		<xi:include href="group_xml_services.xml" xpointer="group_xml_services">
+			<xi:fallback>
+				<para>
+					<emphasis>FIXME: MISSING XINCLUDE CONTENT - Server Reference - XML
+          Services</emphasis>
+				</para>
+			</xi:fallback>
+		</xi:include>
+		<xi:include href="user_xml_services.xml" xpointer="user_xml_services">
+			<xi:fallback>
+				<para>
+					<emphasis>FIXME: MISSING XINCLUDE CONTENT - Server Reference - XML
+          Services</emphasis>
+				</para>
+			</xi:fallback>
+		</xi:include>
+		<xi:include href="metadata_xml_services.xml" xpointer="metadata_xml_services">
+			<xi:fallback>
+				<para>
+					<emphasis>FIXME: MISSING XINCLUDE CONTENT - Server Reference - XML
+          Services</emphasis>
+				</para>
+			</xi:fallback>
+		</xi:include>
+		<xi:include href="system_xml_services.xml" xpointer="system_xml_services">
+			<xi:fallback>
+				<para>
+					<emphasis>FIXME: MISSING XINCLUDE CONTENT - Server Reference - XML
+          Services</emphasis>
+				</para>
+			</xi:fallback>
+		</xi:include>
+	</part>
+	<part id="java_development">
+		<title>Java development with XML Services</title>
+		<partintro>
+			<para> This part gives some insights on developing Java client
+      applications that use GeoNetwork opensource XML services described in
+      previous section.</para>
+			<para>An example application it's provided to show how develop a client
+      application using login service in GeoNetwork opensource and some of the
+      XML services avalaible that require authentication. </para>
+		</partintro>
+		<!-- Java XML Services -->
+		<xi:include href="java_xml_services.xml" xpointer="java_xml_services">
+			<xi:fallback>
+				<para>
+					<emphasis>FIXME: MISSING XINCLUDE CONTENT - Server Reference - XML
+          Services</emphasis>
+				</para>
+			</xi:fallback>
+		</xi:include>
+	</part>
+	<part id="csw_services_reference">
+		<title>CSW Service</title>
+		<partintro>
+			<para> This part gives some insights of GeoNetwork opensource CSW
+      service implementation. </para>
+		</partintro>
+		<!-- CSW Service-->
+		<xi:include href="csw_services.xml" xpointer="csw_services">
+			<xi:fallback>
+				<para>
+					<emphasis>FIXME: MISSING XINCLUDE CONTENT - Server Reference - XML
+          Services</emphasis>
+				</para>
+			</xi:fallback>
+		</xi:include>
+	</part>
+	<!-- Apendix -->
+	<!--xi:include href="apdx_user_values.xml" xpointer="user_values"
+    xmlns:xi="http://www.w3.org/2001/XInclude">
+    <xi:fallback>
+      <para>
+        <emphasis>FIXME: MISSING XINCLUDE CONTENT - Appendix ISO Topic Categories</emphasis>
+      </para>
+    </xi:fallback>
+  </xi:include-->
+	<!-- Glossary -->
+	<xi:include href="glossary.xml" xpointer="glossary">
+		<xi:fallback>
+			<para>
+				<emphasis>FIXME: MISSING XINCLUDE CONTENT - Glossary</emphasis>
+			</para>
+		</xi:fallback>
+	</xi:include>
+	<!--index /-->
+</book>

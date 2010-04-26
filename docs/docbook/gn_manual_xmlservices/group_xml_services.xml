@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+"http://www.docbook.org/xml/4.4/docbookx.dtd">
+<book>
+	<chapter id="group_xml_services">
+		<title>Group services</title>
+		<section>
+			<title>Groups retrieving</title>
+			<section>
+				<title>Groups list (xml.group.list)</title>
+				<para>The <emphasis>xml.group.list</emphasis> service can be used to
+        retrieve the user groups avalaible in GeoNetwork.</para>
+				<para>Requires authentication: No</para>
+				<section>
+					<title>Request</title>
+					<para>Parameters:</para>
+					<para>
+						<itemizedlist>
+							<listitem>
+								<para>
+									<emphasis>None</emphasis>
+								</para>
+							</listitem>
+						</itemizedlist>
+					</para>
+					<para>Example:</para>
+					<para>
+						<figure id="grouplist_xml_request_example">
+							<title>Group list request example</title>
+							<programlisting><?db-font-size 75% ?>
+Url: 
+http://localhost:8080/geonetwork/srv/en/xml.group.list
+
+Mime-type: 
+application/xml
+
+Post request:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;request /&gt;</programlisting>
+						</figure>
+					</para>
+				</section>
+				<section>
+					<title>Response</title>
+					<para>Here follows the structure of the response:</para>
+					<itemizedlist>
+						<listitem>
+							<para>
+								<emphasis>record</emphasis>: This is the container for
+              each group element returned</para>
+							<itemizedlist>
+								<listitem>
+									<para>
+										<emphasis>id</emphasis>: Group identifier</para>
+								</listitem>
+								<listitem>
+									<para>
+										<emphasis>name</emphasis>: Human readable group
+                  name</para>
+								</listitem>
+								<listitem>
+									<para>
+										<emphasis>description</emphasis>: Group
+                  description</para>
+								</listitem>
+								<listitem>
+									<para>
+										<emphasis>email</emphasis>: Group email address</para>
+								</listitem>
+								<listitem>
+									<para>
+										<emphasis>label</emphasis>: This is just a container
+                  to hold the group names translated in the languages
+                  supported by GeoNetwork. Each translated label it's enclosed
+                  in a tag that identifies the language code</para>
+								</listitem>
+							</itemizedlist>
+						</listitem>
+					</itemizedlist>
+					<para>
+						<figure id="grouplist_xml_response_example">
+							<title>Group list response example</title>
+							<programlisting><?db-font-size 75% ?>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;response&gt;
+  &lt;record&gt;
+    &lt;id&gt;2&lt;/id&gt;
+    &lt;name&gt;sample&lt;/name&gt;
+    &lt;description /&gt;
+    &lt;email /&gt;
+    &lt;referrer /&gt;
+    &lt;label&gt;
+      &lt;en&gt;Sample group&lt;/en&gt;
+      &lt;fr&gt;Sample group&lt;/fr&gt;
+      &lt;es&gt;Sample group&lt;/es&gt;
+      &lt;de&gt;Beispielgruppe&lt;/de&gt;
+      &lt;nl&gt;Voorbeeldgroep&lt;/nl&gt;
+    &lt;/label&gt;
+  &lt;/record&gt;
+  &lt;record&gt;
+    &lt;id&gt;3&lt;/id&gt;
+    &lt;name&gt;RWS&lt;/name&gt;
+    &lt;description /&gt;
+    &lt;email /&gt;
+    &lt;referrer /&gt;
+    &lt;label&gt;
+      &lt;de&gt;RWS&lt;/de&gt;
+      &lt;fr&gt;RWS&lt;/fr&gt;
+      &lt;en&gt;RWS&lt;/en&gt;
+      &lt;es&gt;RWS&lt;/es&gt;
+      &lt;nl&gt;RWS&lt;/nl&gt;
+    &lt;/label&gt;
+  &lt;/record&gt;
+&lt;/response&gt;</programlisting>
+						</figure>
+					</para>
+				</section>
+			</section>
+			<section>
+				<title>Group information (group.get)</title>
+				<para>Retrieves group information. <emphasis role="bold">Non XML
+        response.</emphasis>
+				</para>
+			</section>
+		</section>
+		<section>
+			<title>Groups maintenance</title>
+			<section>
+				<title>Create/update a group (group.update)</title>
+				<para>The <emphasis>group.update</emphasis> service can be used to
+        create new groups and update the information of an existing group.
+        Only users with <emphasis>Administrator</emphasis> profile can
+        create/update groups.</para>
+				<para>Requires authentication: Yes</para>
+				<section>
+					<title>Request</title>
+					<para>Parameters:</para>
+					<para>
+						<itemizedlist>
+							<listitem>
+								<para>
+									<emphasis>id</emphasis>: Group identifier to update. If
+                not provided a new group it's created with name, description
+                and email parameters provided.</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>name</emphasis>: (mandatory) Name of the
+                group</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>description</emphasis>: Group
+                description</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis>email</emphasis>: Mail address for the
+                group</para>
+							</listitem>
+						</itemizedlist>
+					</para>
+					<para>Example:</para>
+					<para>
+						<figure id="groupupdate_request_example">
+							<title>Group update request example</title>
+							<programlisting><?db-font-size 75% ?>
+Url: 
+http://localhost:8080/geonetwork/srv/en/group.update
+
+Mime-type: 
+application/xml
+
+Post request:
+&lt;request&gt;
+    &lt;id&gt;2&lt;/id&gt;
+    &lt;name&gt;sample&lt;/name&gt;
+    &lt;description&gt;Demo group&lt;/description&gt;
+    &lt;email&gt;group@mail.net&lt;/email&gt;
+&lt;/request&gt;</programlisting>
+						</figure>
+					</para>
+				</section>
+				<section>
+					<title>Response</title>
+					<para>If request it's executed succesfully HTTP 200 status code it's
+          returned. If request fails an HTTP status code error it's returned
+          and the response contains the XML document with the
+          exception.</para>
+				</section>
+				<section>
+					<title>Errors</title>
+					<para>
+						<itemizedlist>
+							<listitem>
+								<para><emphasis>Service not allowed (error id: service-not-allowed)</emphasis>, when the
+                user is not authenticated or his profile has no rights to
+                execute the service. Returned 401 HTTP code</para>
+							</listitem>
+							<listitem>
+								<para><emphasis>Missing parameter (error id: missing-parameter)</emphasis>, when mandatory parameters
+                are not provided. Returned 400 HTTP code</para>
+							</listitem>
+							<listitem>
+								<para><emphasis>bad-parameter name</emphasis>, when <emphasis>name</emphasis> it's
+                empty. Returned 400 HTTP code</para>
+							</listitem>
+							<listitem>
+								<para><emphasis>ERROR: duplicate key violates unique constraint
+                "groups_name_key"</emphasis>, when trying to create a new group using an existing
+                group name. Returned 500 HTTP code</para>
+							</listitem>
+						</itemizedlist>
+					</para>
+				</section>
+			</section>
+			<section>
+				<title>Update label translations (xml.group.update)</title>
+				<para>The <emphasis>xml.group.update</emphasis> service can be used to
+        update translations of a group name. Only users with
+        <emphasis>Administrator</emphasis> profile can update groups
+        translations.</para>
+				<para>Requires authentication: Yes</para>
+				<section>
+					<title>Request</title>
+					<para>Parameters:</para>
+					<para>
+						<itemizedlist>
+							<listitem>
+								<para>
+									<emphasis>group</emphasis>: Container for group
+                information</para>
+								<itemizedlist>
+									<listitem>
+										<para>
+											<emphasis>id</emphasis>: (mandatory) Group
+                    identifier to update</para>
+									</listitem>
+									<listitem>
+										<para>
+											<emphasis>label</emphasis>: (mandatory) This is just
+                    a container to hold the group names translated in the
+                    languages supported by GeoNetwork. Each translated label
+                    it's enclosed in a tag that identifies the language
+                    code</para>
+									</listitem>
+								</itemizedlist>
+							</listitem>
+						</itemizedlist>
+					</para>
+					<para>Example:</para>
+					<para>
+						<figure id="groupupdate_xml_request_example">
+							<title>Group label update request example</title>
+							<programlisting><?db-font-size 75% ?>
+Url: 
+http://localhost:8080/geonetwork/srv/en/xml.group.update
+
+Mime-type: 
+application/xml
+
+Post request:
+&lt;request&gt;
+    &lt;group id="2"&gt;
+        &lt;label&gt;
+            &lt;es&gt;Grupo de ejemplo&lt;/es&gt;
+        &lt;/label&gt;
+    &lt;/group&gt;
+&lt;/request&gt;</programlisting>
+						</figure>
+					</para>
+				</section>
+				<section>
+					<title>Response</title>
+					<para>
+						<figure id="groupupdate_xml_response_example">
+							<title>Group label update response example</title>
+							<programlisting><?db-font-size 75% ?>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;ok /&gt;</programlisting>
+						</figure>
+					</para>
+				</section>
+				<section>
+					<title>Errors</title>
+					<para>
+						<itemizedlist>
+							<listitem>
+								<para><emphasis>Service not allowed (error id: service-not-allowed)</emphasis>, when the
+                user is not authenticated or his profile has no rights to
+                execute the service. Returned 401 HTTP code</para>
+							</listitem>
+							<listitem>
+								<para><emphasis>Missing parameter (error id: missing-parameter)</emphasis>, when mandatory parameters
+                are not provided. Returned 400 HTTP code</para>
+							</listitem>
+						</itemizedlist>
+					</para>
+				</section>
+			</section>
+			<section>
+				<title>Remove a group (group.remove)</title>
+				<para>The <emphasis>group.remove</emphasis> service can be used to
+        remove an existing group. Only users with
+        <emphasis>Administrator</emphasis> profile can delete groups.</para>
+				<para>Requires authentification: Yes</para>
+				<section>
+					<title>Request</title>
+					<para>Parameters:</para>
+					<para>
+						<itemizedlist>
+							<listitem>
+								<para>
+									<emphasis>id</emphasis>: (mandatory) Group identifier to
+                delete</para>
+							</listitem>
+						</itemizedlist>
+					</para>
+					<para>Example:</para>
+					<para>
+						<figure id="groupdelete_request_example">
+							<title>Group remove request example</title>
+							<programlisting><?db-font-size 75% ?>
+Url: 
+http://localhost:8080/geonetwork/srv/en/group.remove
+
+Mime-type: 
+application/xml
+
+Post request:
+&lt;request&gt;
+    &lt;id&gt;2&lt;/id&gt;
+&lt;/request&gt;</programlisting>
+						</figure>
+					</para>
+				</section>
+				<section>
+					<title>Response</title>
+					<para>If request it's executed succesfully HTTP 200 status code it's
+          returned. If request fails an HTTP status code error it's returned
+          and the response contains the XML document with the
+          exception.</para>
+				</section>
+				<section>
+					<title>Errors</title>
+					<para>
+						<itemizedlist>
+							<listitem>
+								<para><emphasis>Service not allowed (error id: service-not-allowed)</emphasis>, when the
+                user is not authenticated or his profile has no rights to
+                execute the service. Returned 401 HTTP code</para>
+							</listitem>
+							<listitem>
+								<para><emphasis>Missing parameter (error id: missing-parameter)</emphasis>, when mandatory parameters
+                are not provided. Returned 400 HTTP code</para>
+							</listitem>
+							<listitem>
+								<para><emphasis>bad-parameter id</emphasis>, when <emphasis>id</emphasis> parameter it's
+                empty. Returned 400 HTTP code</para>
+							</listitem>
+						</itemizedlist>
+					</para>
+				</section>
+			</section>
+		</section>
+	</chapter>
+</book>
