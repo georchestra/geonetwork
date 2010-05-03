@@ -30,7 +30,7 @@ CREATE TABLE Settings
     id        int,
     parentId  int,
     name      varchar(32)    not null,
-    value     varchar(250),
+    value     longtext,
 
     primary key(id),
 

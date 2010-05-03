@@ -118,6 +118,9 @@ value,         VARCHAR
 222	220	simple	true
 223	220	withdisclaimer	false
 
+230	1	xlinkResolver	
+231	230	enable	false
+
 600	1	indexoptimizer	
 601	600	enable	true
 602	600	at	
