@@ -30,6 +30,8 @@
 	<property name="jre_url" value="http://java.sun.com/javase/downloads" />
 	<property name="OS" value="Compiled on ${os.name} (${osys})" />
 	<property name="propsdir" value="../.props" />
+	<property name="ant.build.javac.target" value="1.5"/>
+	<property name="debugOn" value="off"/> <!-- on off true false yes no -->
 
 	<!-- =================================================================================== -->
 	
@@ -60,10 +62,13 @@
 			
 			<entry  key="javaVersion" value="${javaVersion}"/>
 			<entry	key="jre_url" value="${jre_url}"/>
+			<entry	key="ant.build.javac.target" value="1.5"/>
+			<entry	key="buildDate" type="date" value="now" pattern="yyyy-MM-dd'T'HH:mm:ssZ"/>
 
 			<entry  key="date" type="date" value="now" pattern="yymmddHHmm"/>
 			<entry  key="day" type="date" value="now" pattern="dd-M-yyyy"/>
 			<entry  key="OS" value="${OS}"/>
+			<entry	key="debugOn" value="${debugOn}"/>
 		  
 		</propertyfile>
 		
