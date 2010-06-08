@@ -1,0 +1,40 @@
+<assembly>
+  <id>war</id>
+  <formats>
+    <format>zip</format>
+  </formats>
+  <includeBaseDirectory>false</includeBaseDirectory>
+  <fileSets>
+   <!-- the war files -->
+   <fileSet>
+      <directory>web/target</directory>
+      <outputDirectory/>
+      <includes>
+        <include>geonetwork.war</include>
+      </includes>
+    </fileSet>
+    <fileSet>     
+      <directory>intermap/target</directory>
+      <outputDirectory/>
+      <includes>
+        <include>intermap.war</include>
+      </includes>
+    </fileSet>
+   <!-- licenses -->
+   <fileSet>
+     <directory>release</directory>
+     <outputDirectory/>
+     <includes>
+       <include>license.html</include>
+     </includes>
+   </fileSet>
+  </fileSets>
+  <moduleSets>
+    <moduleSet>
+      <includes>
+        <include>web</include>
+        <include>intermap</include>
+      </includes>
+    </moduleSet>
+ </moduleSets>
+</assembly>
