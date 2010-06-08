@@ -22,6 +22,14 @@
    </includes>
   </fileSet>
   <fileSet>
+   <!-- the geoserver webapp -->
+   <directory>geoserver/target</directory>
+   <outputDirectory>geonetwork/web</outputDirectory>
+   <includes>
+    <include>*.war</include>
+   </includes>
+  </fileSet>
+  <fileSet>
    <!-- the data directory -->
    <directory>release/data</directory>
    <outputDirectory>geonetwork/data</outputDirectory>
