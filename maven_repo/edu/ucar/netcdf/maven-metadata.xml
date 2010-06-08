@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><metadata>
+  <groupId>edu.ucar</groupId>
+  <artifactId>netcdf</artifactId>
+  <version>4.0.patch</version>
+  <versioning>
+    <versions>
+      <version>4.0.patch</version>
+    </versions>
+    <lastUpdated>20100608095954</lastUpdated>
+  </versioning>
+</metadata>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><metadata>
+  <groupId>jzkit</groupId>
+  <artifactId>jzkit-z3950-server</artifactId>
+  <version>3.r260.patch</version>
+  <versioning>
+    <versions>
+      <version>3.r260.patch</version>
+    </versions>
+    <lastUpdated>20100608102449</lastUpdated>
+  </versioning>
+</metadata>
