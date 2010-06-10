@@ -14,6 +14,13 @@
       </includes>
     </fileSet>
     <fileSet>     
+      <directory>geoserver/target</directory>
+      <outputDirectory/>
+      <includes>
+        <include>geoserver.war</include>
+      </includes>
+    </fileSet>
+    <fileSet>     
       <directory>intermap/target</directory>
       <outputDirectory/>
       <includes>
