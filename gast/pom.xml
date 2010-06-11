@@ -23,7 +23,6 @@
   </description>
 
   
-  
   <build>
     <plugins>
       <plugin>
@@ -40,7 +39,7 @@
               <addClasspath>true</addClasspath>             
               <classpathPrefix>../../web/target/geonetwork/WEB-INF/lib/</classpathPrefix>              
             </manifest>
-            <!--<manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile> --> 
+            <!-- <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile> -->
           </archive>
         </configuration>
       </plugin>
@@ -70,16 +69,16 @@
     <!-- Generated dependency -->
     <dependency>
       <groupId>org.geonetwork-opensource</groupId>
+      <artifactId>geonetwork-main</artifactId>
+      <version>${pom.version}</version>
+      <!-- To map the geonetwork-main-classes.jar -->
+      <classifier>classes</classifier>
+    </dependency>    
+    <dependency>
+      <groupId>org.geonetwork-opensource</groupId>
       <artifactId>jeeves</artifactId>
       <version>${pom.version}</version>
     </dependency>
-
-    <dependency>
-      <groupId>org.geonetwork-opensource</groupId>
-      <artifactId>geonetwork-main</artifactId>
-      <version>${pom.version}</version>
-    </dependency>
-    
   </dependencies>
       
 </project>
