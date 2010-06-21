@@ -1,0 +1,22 @@
+.. _index.rst:
+
+Home
+====
+
+Welcome to the **GeoNetwork User Manual**. The manual is a comprehensive guide to all aspects of using GeoNetwork opensource.
+
+Other documents:
+
+`GeoNetwork Developer Manual <../../../developer/build/html/index.html>`_
+
+.. toctree::
+    :maxdepth: 2
+
+    preface.rst
+    quickstartguide/index.rst
+    admin/index.rst
+    appendix/glossary_of_metadata/index.rst
+    appendix/iso_topic_categories/index.rst
+    appendix/foss4g/index.rst
+    faq.rst
+    glossary.rst   
