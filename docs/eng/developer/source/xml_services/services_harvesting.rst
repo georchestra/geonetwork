@@ -637,10 +637,10 @@ previous request could be::
         <id status="inactive">789</id>
     </request>
 
-:ref:`table_service_status` summarises, for each service, the
+:ref:`table_service_status2` summarises, for each service, the
 possible status values.
 
-.. _table_service_status:
+.. _table_service_status2:
 
 Summary of status values
 ........................

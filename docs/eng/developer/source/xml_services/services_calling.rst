@@ -80,7 +80,7 @@ structure:
 
 - **error**: This is the root element of the document. It has a mandatory
   id attribute that represents an identifier of the error from a common
-  set. See :ref:`error_ids` for a list of all id values.
+  set. See :ref:`error2_ids` for a list of all id values.
   
   - **message**: A message related to the error. It can be a short
     description about the error type or it can contain some other
@@ -108,7 +108,7 @@ structure:
     - **language**: Language used when the service was called.
     - **service**: Name of the called service.
 
-.. _error_ids:
+.. _error2_ids:
 
 **Summary of error ids:**
 
