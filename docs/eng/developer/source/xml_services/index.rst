@@ -14,3 +14,4 @@ XML Services
     schema_information.rst
     relations.rst
     services_mef.rst
+    csw_services.rst
