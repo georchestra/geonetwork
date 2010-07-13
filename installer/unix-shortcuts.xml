@@ -85,7 +85,7 @@
 	<shortcut
 		name="Documentation" 
 		description="GeoNetwork opensource documentation"
-		target="$INSTALL_PATH/web/geonetwork/docs/"
+		target="$INSTALL_PATH/web/geonetwork/docs/eng/users"
 		commandLine="" 
 		workingDirectory="$INSTALL_PATH" 
 		iconFile="$INSTALL_PATH/bin/ico/docs.ico" 
