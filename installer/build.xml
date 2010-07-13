@@ -24,14 +24,14 @@
 		
 	<!-- =================================================================================== -->
 
-	<property name="version" value="2.5.0" />
-	<property name="subVersion" value="Unstable" />
+	<property name="version" value="2.6.0" />
+	<property name="subVersion" value="RC0" />
 	<property name="javaVersion" value="1.5.0" /> <!-- Minimum version required -->
 	<property name="jre_url" value="http://java.sun.com/javase/downloads" />
 	<property name="OS" value="Compiled on ${os.name} (${osys})" />
 	<property name="propsdir" value="../.props" />
 	<property name="ant.build.javac.target" value="1.5"/>
-	<property name="debugOn" value="off"/> <!-- on off true false yes no -->
+	<property name="debugOn" value="on"/> <!-- on off true false yes no -->
 
 	<!-- =================================================================================== -->
 	
@@ -52,7 +52,7 @@
 
 		<!-- Update the properties file -->
 		<propertyfile
-		    file="../web/geonetwork/WEB-INF/server.prop"
+		    file="../web/src/main/webapp/WEB-INF/server.prop"
 		    comment="GeoNetwork opensource properties. These are also used by both gast and geonetwork at runtime">
 			<!-- These are used by both gast and geonetwork at runtime -->
 			<!-- Do not remove !! -->
@@ -80,7 +80,7 @@
 	    		filtering="on" overwrite="yes"/>
 
 		<replace 	file="${propsdir}/installer-config.xml" 
-					propertyFile="../web/geonetwork/WEB-INF/server.prop">
+					propertyFile="../web/src/main/webapp/WEB-INF/server.prop">
 			<replacefilter token="@version@" property="version"/>
 			<replacefilter token="@subVersion@" property="subVersion"/>
 			<replacefilter token="@javaVersion@" property="javaVersion"/>
@@ -92,7 +92,7 @@
 	    		filtering="on" overwrite="yes"/>
 
 		<replace 	file="${propsdir}/installer-config-win-jre.xml"
-					propertyFile="../web/geonetwork/WEB-INF/server.prop">
+			propertyFile="../web/src/main/webapp/WEB-INF/server.prop">
 			<replacefilter token="@version@" property="version"/>
 			<replacefilter token="@subVersion@" property="subVersion"/>
 			<replacefilter token="@javaVersion@" property="javaVersion"/>
@@ -110,7 +110,7 @@
                 filtering="on" overwrite="yes"/>
         
 		<replace 	file="${propsdir}/readme.html"
-					propertyFile="../web/geonetwork/WEB-INF/server.prop">
+			propertyFile="../web/src/main/webapp/WEB-INF/server.prop">
 			<replacefilter token="@version@" property="version"/>
 			<replacefilter token="@subVersion@" property="subVersion"/>
 			<replacefilter token="@day@" property="day"/>
@@ -118,7 +118,7 @@
 			<replacefilter token="@jre_url@" property="jre_url"/>
 		</replace>
 		<replace 	file="${propsdir}/readme_fra.html"
-					propertyFile="../web/geonetwork/WEB-INF/server.prop">
+			propertyFile="../web/src/main/webapp/WEB-INF/server.prop">
 			<replacefilter token="@version@" property="version"/>
 			<replacefilter token="@subVersion@" property="subVersion"/>
 			<replacefilter token="@day@" property="day"/>
@@ -126,7 +126,7 @@
 			<replacefilter token="@jre_url@" property="jre_url"/>
 		</replace>
         <replace 	file="${propsdir}/readme_spa.html"
-                        propertyFile="../web/geonetwork/WEB-INF/server.prop">
+        	propertyFile="../web/src/main/webapp/WEB-INF/server.prop">
                 <replacefilter token="@version@" property="version"/>
                 <replacefilter token="@subVersion@" property="subVersion"/>
                 <replacefilter token="@day@" property="day"/>
@@ -139,13 +139,7 @@
 
 	<target name="installer" depends="setProperties">
 		
-		<property file="../web/geonetwork/WEB-INF/server.prop"/>
-		
-		<ant dir=".." target="all"  />
-
-		<ant dir="../docs" target="all"  />
-		
-		<ant dir="../geoserver" target="all"  />
+		<property file="../web/src/main/webapp/WEB-INF/server.prop"/>
 		
 		<delete dir="../geonetwork-${release}"/>
 		<mkdir  dir="../geonetwork-${release}"/>
@@ -189,7 +183,7 @@
 	<target name="wininstall-jre">
 		<!-- create a Windows installer using launch4j -->
 
-		<property file="../web/geonetwork/WEB-INF/server.prop"/>
+		<property file="../web/src/main/webapp/WEB-INF/server.prop"/>
 
 		<izpack	input="${propsdir}/installer-config-win-jre.xml" 
 			output="../geonetwork-${release}/geonetwork-install-win-jre-${release}-${subVersion}.jar" 

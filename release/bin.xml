@@ -14,14 +14,6 @@
    </includes>
   </fileSet>
   <fileSet>
-   <!-- the intermap webapp -->
-   <directory>intermap/target/intermap</directory>
-   <outputDirectory>geonetwork/web/intermap</outputDirectory>
-   <includes>
-    <include>**/*</include>
-   </includes>
-  </fileSet>
-  <fileSet>
    <!-- the geoserver webapp -->
    <directory>geoserver/target</directory>
    <outputDirectory>geonetwork/web</outputDirectory>

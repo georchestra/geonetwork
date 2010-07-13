@@ -78,135 +78,38 @@
 		<pack id="core" name="Core" required="no" preselected="yes">
 			<description/>
 			
-			<fileset dir="../docs" targetdir="$INSTALL_PATH/web/geonetwork/docs">
-				<exclude name="build/**"/>
-				<exclude name="build.xml"/>
-				<exclude name="build-docbook.xml"/>
-				<exclude name="docbook/**"/>
-				<exclude name="html/**"/>
-			</fileset>						
-
-			<fileset dir="../docs/html" targetdir="$INSTALL_PATH/web/geonetwork/docs">
-				<exclude name="images/**"/>
-			</fileset>
-
-			<singlefile src="../.props/readme.html" target="$INSTALL_PATH/web/geonetwork/docs/readme.html" override="true"/>
-			
-			<fileset dir="../bin"   targetdir="$INSTALL_PATH/bin">
+			<fileset dir="../release/bin"   targetdir="$INSTALL_PATH/bin">
 				<exclude name="jre/**"/>
-<!--				<exclude name="jetty.xml_with_geoserver"/>-->
 			</fileset>
 			
 			<fileset dir="../gast"  targetdir="$INSTALL_PATH/gast">			
 				<exclude name="logs/gast.log*"/>
+				<exclude name="src/**"/>
+				<exclude name="target/**"/>
+				<exclude name="pom.xml"/>
 			</fileset>
+
+			<singlefile target="$INSTALL_PATH/gast/gast.jar" 
+				src="../gast/target/gast.jar" override="true"/>
 			
-			<fileset dir="../jetty" targetdir="$INSTALL_PATH/jetty">
+			<fileset dir="../release/jetty" targetdir="$INSTALL_PATH/jetty">
 				<exclude name="logs/*.log"/>
 				<exclude name="logs/archive/*.log"/>
 			</fileset>
+
+			<singlefile target="$INSTALL_PATH/web/geonetwork.war" 
+			src="../web/target/geonetwork.war" override="true"/>
 			
-			<fileset dir="../web"   targetdir="$INSTALL_PATH/web">
-				<exclude name="geonetwork/images/logos/*"/>
-				<exclude name="geonetwork/WEB-INF/db/account.prop"/>
-				<exclude name="geonetwork/WEB-INF/db/data/*"/>
-				<exclude name="geonetwork/WEB-INF/db/log/*"/>
-				<exclude name="geonetwork/WEB-INF/lucene/*"/>
-				<exclude name="intermap/logs/*"/>
-				<exclude name="intermap/WEB-INF/mapServers.xml_with_geoserver"/>
-				<exclude name="geoserver/**"/>
-			</fileset>
+			<fileset dir="../release/data"   targetdir="$INSTALL_PATH/data" />
 
-			<fileset dir="../data"   targetdir="$INSTALL_PATH/data">
-				<exclude name="00000-00099/**"/>
-				<exclude name="geoserver_data/**"/>
-				<exclude name="removed/**"/>
-			</fileset>
+			<singlefile target="$INSTALL_PATH/web/geoserver.war" 
+				src="../geoserver/target/geoserver.war" override="true"/>
 			
-			<fileset dir="../schematrons"   targetdir="$INSTALL_PATH/schematrons">
-				<exclude name="saxon*"/>
-			</fileset>
-
-			<fileset dir="../jsbuild" targetdir="$INSTALL_PATH/jsbuild">
-			</fileset>
-
 			<executable targetfile="$INSTALL_PATH/bin/start-geonetwork.sh" />
 			<executable targetfile="$INSTALL_PATH/bin/stop-geonetwork.sh" />
 			<executable targetfile="$INSTALL_PATH/bin/gast.sh" />
-			<executable targetfile="$INSTALL_PATH/gast/gast.jar" 
-							type      ="jar" 
-							keep      ="true"
-							stage     ="postinstall">
-				<args>
-					<arg value="-setup"/>
-				</args>
-			</executable>
 		</pack>
-		
-		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-		
-		<pack id="idSampleM" name="Sample metadata" required="no" preselected="yes">
-			<description/>
-			<executable targetfile="$INSTALL_PATH/gast/gast.jar" 
-							type      ="jar" 
-							keep      ="true"
-							stage     ="postinstall">
-				<args>
-					<arg value="-sampleData"/>
-				</args>
-			</executable>
-		</pack>		
 
-		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-		
-		<pack id="geoserver" name="GeoServer web map server" required="no" preselected="yes">
-			<description/>
-			
-			<fileset dir="../web/geoserver" targetdir="$INSTALL_PATH/web/geoserver" />
-
-			<fileset dir="../data/geoserver_data" targetdir="$INSTALL_PATH/data/geoserver_data">
-				<exclude name="catalog.xml_jpg"/>
-				<exclude name="coverages/BlueMarble_world/world-topo-bathy-200407-3x8640x4320.jpg"/>
-				<exclude name="coverages/BlueMarble_world/world-topo-bathy-200407-3x8640x4320.wld"/>
-				<exclude name="coverages/BlueMarble_world/info.xml_jpg"/>
-			</fileset>
-
-			<singlefile target="$INSTALL_PATH/web/intermap/WEB-INF/mapServers.xml" 
-					src="../web/intermap/WEB-INF/mapServers.xml_with_geoserver" override="true"/>
-		</pack>
-		
-		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-		
-		<pack id="csw" name="CSW 2.0.2 test client" required="no" preselected="no">
-			<description/>
-			
-			<fileset dir="../csw" targetdir="$INSTALL_PATH/csw"/>
-			
-			<executable targetfile="$INSTALL_PATH/csw/cswClient.sh" />
-			
-		</pack>
-		
-		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-		
-		<pack id="src" name="Source code" required="no" preselected="no">
-			<description/>
-			
-			<fileset dir="../src"       targetdir="$INSTALL_PATH/src"/>
-			<fileset dir="../jeeves"       targetdir="$INSTALL_PATH/jeeves"/>
-			<fileset dir="../cachingxslt"       targetdir="$INSTALL_PATH/cachingxslt"/>
-			<file    src="../build.xml" targetdir="$INSTALL_PATH"/>
-		</pack>
-		
-		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-		
-		<pack id="ibt" name="Installer building tools" required="no" preselected="no">
-			<description/>
-			
-			<fileset dir="../installer" targetdir="$INSTALL_PATH/installer">
-				<exclude name="**/.build"/>
-			</fileset>
-		</pack>
-						
 	</packs>
 
 	<!-- =================================================================================== -->
