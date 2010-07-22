@@ -105,7 +105,7 @@ public class PostgresPanel extends DbmsPanel
 			server   = st.nextToken();
 			database = st.hasMoreTokens() ? st.nextToken() : "";
 
-			int pos = server.indexOf(":");
+			int pos = server.indexOf(':');
 
 			if (pos != -1)
 			{

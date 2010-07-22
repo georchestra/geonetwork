@@ -84,7 +84,7 @@ public class Util
 		//--- hack for windows : dirs like '/C:/...' must be changed to remove the
 		//--- starting slash
 
-		if (dir.startsWith("/") && dir.indexOf(":") != -1)
+		if (dir.startsWith("/") && dir.indexOf(':') != -1)
 			dir = dir.substring(1);
 
 		return dir;

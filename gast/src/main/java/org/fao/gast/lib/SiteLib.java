@@ -61,7 +61,7 @@ public class SiteLib
 
 		String locService = "/"+ servlet +"/"+ Jeeves.Prefix.SERVICE +"/en";
 
-		return "http://" + host + (port == "80" ? "" : ":" + port) + locService;
+		return "http://" + host + (port.equals("80") ? "" : ":" + port) + locService;
 	}
 
 	//---------------------------------------------------------------------------

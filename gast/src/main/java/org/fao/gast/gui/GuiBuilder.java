@@ -100,7 +100,7 @@ public class GuiBuilder
 				locale.getVariant() };
 		String baseString = guiFile;
 		if (guiFile.indexOf('.') > 0) {
-			baseString = guiFile.substring(0, guiFile.lastIndexOf("."));
+			baseString = guiFile.substring(0, guiFile.lastIndexOf('.'));
 		}
 
 		for (int i = parts.length; i >= 0; i--) {

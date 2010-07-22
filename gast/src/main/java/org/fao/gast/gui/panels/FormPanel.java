@@ -155,8 +155,10 @@ public abstract class FormPanel extends JPanel implements ActionListener {
 		StringTokenizer st = new StringTokenizer(line.trim(), "\n");
 		StringBuffer    sb = new StringBuffer();
 
-		while (st.hasMoreTokens())
-			sb.append(st.nextToken().trim() +" ");
+		while (st.hasMoreTokens()) {
+			sb.append(st.nextToken().trim());
+			sb.append(" ");
+		}
 
 		return sb.toString() +"\n";
 	}

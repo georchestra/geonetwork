@@ -20,7 +20,7 @@ public class ImportField
 
 	ImportField(String line)
 	{
-		int idx = line.indexOf(",");
+		int idx = line.indexOf(',');
 
 		if (idx == -1)
 			throw new IllegalArgumentException("Bad field format");
