@@ -51,15 +51,15 @@ public class Lib
 	//---
 	//---------------------------------------------------------------------------
 
-	public static void init(String appPath) throws Exception
+	public static void init() throws Exception
 	{
-		config     = new ConfigLib    (appPath);
-		embeddedSC = new EmbeddedSCLib(appPath);
-		embeddedDB = new EmbeddedDBLib(appPath);
-		database   = new DatabaseLib  (appPath);
-		metadata   = new MetadataLib  (appPath);
-		server     = new ServerLib    (appPath);
-		log        = new LogLib       (appPath);
+		config     = new ConfigLib    ();
+		embeddedSC = new EmbeddedSCLib();
+		embeddedDB = new EmbeddedDBLib();
+		database   = new DatabaseLib  ();
+		metadata   = new MetadataLib  ();
+		server     = new ServerLib    ();
+		log        = new LogLib       ();
 	}
 }
 

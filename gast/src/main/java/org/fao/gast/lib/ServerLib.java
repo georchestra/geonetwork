@@ -23,6 +23,8 @@
 
 package org.fao.gast.lib;
 
+import org.fao.gast.boot.Config;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
@@ -37,13 +39,9 @@ public class ServerLib
 	//---
 	//---------------------------------------------------------------------------
 
-	public ServerLib(String appPath) throws IOException
+	public ServerLib() throws IOException
 	{
-		this.appPath = appPath;
-
-		serverProps = new Properties();
-
-		FileInputStream is = new FileInputStream(appPath + SERVER_PROPS);
+		FileInputStream is = new FileInputStream(SERVER_PROPS);
 		serverProps.load(is);
 		is.close();
 	}
@@ -54,7 +52,6 @@ public class ServerLib
 	//---
 	//---------------------------------------------------------------------------
 
-	public String getAppPath()    { return appPath; }
 	public String getVersion()    { return serverProps.getProperty("version",    "???"); }
 	public String getSubVersion() { return serverProps.getProperty("subVersion", "???"); }
 
@@ -64,10 +61,9 @@ public class ServerLib
 	//---
 	//---------------------------------------------------------------------------
 
-	private String     appPath;
-	private Properties serverProps;
+	private Properties serverProps = new Properties();
 
-	private static final String SERVER_PROPS = "/web/geonetwork/WEB-INF/server.prop";
+	private static final String SERVER_PROPS = Config.getConfig().getWebapp()+"/WEB-INF/server.prop";
 }
 
 //=============================================================================

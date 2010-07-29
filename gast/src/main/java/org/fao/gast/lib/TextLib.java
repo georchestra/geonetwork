@@ -23,14 +23,7 @@
 
 package org.fao.gast.lib;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -45,10 +38,18 @@ public class TextLib
 	//--- API methods
 	//---
 	//---------------------------------------------------------------------------
+    public List<String> load(String file) throws FileNotFoundException, IOException
+    {
+        FileInputStream is = new FileInputStream(file);
+        try {
+            return load(is);
+        }finally{
+            is.close();
+        }
+    }
 
-	public List<String> load(String file) throws FileNotFoundException, IOException
+	public List<String> load(InputStream is) throws FileNotFoundException, IOException
 	{
-		FileInputStream is = new FileInputStream(file);
 		BufferedReader  ir = new BufferedReader(new InputStreamReader(is, "ISO-8859-1"));
 
 		ArrayList<String> al = new ArrayList<String>();

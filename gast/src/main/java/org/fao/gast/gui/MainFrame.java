@@ -33,6 +33,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JSplitPane;
 import javax.swing.KeyStroke;
 import org.fao.gast.app.App;
+import org.fao.gast.boot.Config;
 import org.fao.gast.boot.Starter;
 import org.fao.gast.gui.dialogs.ConfigDialog;
 import org.fao.gast.lib.Lib;
@@ -79,14 +80,14 @@ public class MainFrame extends JFrame implements Starter, ActionListener
 	//---
 	//---------------------------------------------------------------------------
 
-	public void start(String appPath, String[] args) throws Exception
+	public void start(String[] args) throws Exception
 	{
-		Lib.init(appPath);
+		Lib.init();
 		dlgConfig = new ConfigDialog(this);
-		App.init(appPath, dlgConfig.getConfig());
+		App.init(dlgConfig.getConfig());
 
-		GuiBuilder builder = new GuiBuilder(appPath, panView, panWork);
-		builder.build("/gast/data/gui.xml", getLocale());
+		GuiBuilder builder = new GuiBuilder(panView, panWork);
+		builder.build(Config.getResource("data/gui.xml"), getLocale());
 
 		checkAndCreateDB();
 

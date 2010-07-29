@@ -27,7 +27,7 @@ package org.fao.gast.boot;
 
 public interface Starter
 {
-	public void start(String appPath, String args[]) throws Exception;
+	public void start(String args[]) throws Exception;
 }
 
 //==============================================================================

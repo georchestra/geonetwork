@@ -31,6 +31,8 @@ import jeeves.resources.dbms.Dbms;
 import jeeves.server.resources.ProviderManager;
 import jeeves.utils.Xml;
 
+import org.fao.gast.boot.Config;
+import org.fao.gast.boot.Util;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.constants.Params;
 import org.fao.geonet.csw.common.Csw;
@@ -51,9 +53,8 @@ public class MetadataLib
 	//---
 	//---------------------------------------------------------------------------
 
-	public MetadataLib(String appPath) throws Exception
+	public MetadataLib() throws Exception
 	{
-		this.appPath = appPath;
 	}
 
 	//---------------------------------------------------------------------------
@@ -80,12 +81,12 @@ public class MetadataLib
 	/**
 	 * Check that a schema exist in current GeoNetwork installation.
 	 * 
-	 * @param 	The schema identifier (based on schema directory name). 
+	 * @param 	schema The schema identifier (based on schema directory name). 
 	 * @return	True if schema is registered in current node.
 	 */
 	public boolean schemaExists(String schema)
 	{
-		String path = appPath +"/web/geonetwork/xml/schemas/" + schema;
+		String path = Config.getConfig().getSchemas() + "/" + schema;
 		return new File(path).exists();
 	}
 
@@ -94,7 +95,7 @@ public class MetadataLib
 	public boolean canConvert(String fromSchema, String toSchema)
 	{
 		String format = fromSchema +"-to-"+ toSchema;
-		String path   = appPath +"/web/geonetwork/conversion/"+format+"/main.xsl";
+		String path   = Config.getConfig().getConversions() + format+"/"+format+".xsl";
 
 		return new File(path).exists();
 	}
@@ -107,9 +108,11 @@ public class MetadataLib
 			throw new Exception("Cannot convert to schema :"+ toSchema);
 
 		String format = fromSchema +"-to-"+ toSchema;
-		String path   = appPath +"/web/geonetwork/conversion/"+format;
+		String path   = Config.getConfig().getConversions()+format;
 
-		Element result   = Xml.transform(md, path +"/main.xsl");
+		Element result   = Xml.transform(md, path +"/"+format+".xsl");
+        
+        // TODO not all have a unmapped
 		Element unmapped = Xml.transform(md, path +"/unmapped.xsl");
 
 		Element metadata = new Element("metadata")
@@ -126,7 +129,7 @@ public class MetadataLib
 	public void sync(Dbms dbms) throws Exception
 	{
 		SettingManager sm = new SettingManager(dbms, new ProviderManager());
-		Element settings = Xml.transform(sm.get("system", -1), appPath + "/web/geonetwork/" + Geonet.Path.STYLESHEETS+ "/xml/config.xsl");
+		Element settings = Xml.transform(sm.get("system", -1), Config.getConfig().getWebapp()+ "/" + Geonet.Path.STYLESHEETS+ "/xml/config.xsl");
 		try
 		{
 			List list = dbms.select("SELECT * FROM Metadata WHERE isTemplate='n' and isHarvested='n'").getChildren();
@@ -191,7 +194,7 @@ public class MetadataLib
 
 		//--- do an XSL  transformation
 
-		String styleSheet = appPath +"/web/geonetwork/xml/schemas/"+schema+"/"+ Geonet.File.UPDATE_FIXED_INFO;
+		String styleSheet = Config.getConfig().getSchemas() + "/" + schema + "/" + Geonet.File.UPDATE_FIXED_INFO;
 
 		return Xml.transform(root, styleSheet);
 	}
@@ -207,7 +210,7 @@ public class MetadataLib
 
 	public void clearIndexes() throws Exception
 	{
-		File dir = new File(appPath +"/web/geonetwork/"+ Lib.config.getLuceneDir());
+		File dir = new File(Config.getConfig().getWebapp() + "/"+ Lib.config.getLuceneDir());
 		Lib.io.cleanDir(dir);
 	}
 
@@ -222,7 +225,7 @@ public class MetadataLib
 
 		//--- do an XSL  transformation
 
-		String styleSheet = appPath +"/web/geonetwork/xml/schemas/"+ schema +"/"+ Geonet.File.EXTRACT_THUMBNAILS;
+		String styleSheet = Config.getConfig().getSchemas()+ "/" + schema +"/"+ Geonet.File.EXTRACT_THUMBNAILS;
 
 		return Xml.transform(md, styleSheet);
 	}
@@ -234,7 +237,7 @@ public class MetadataLib
 		String dataDir = Lib.config.getHandlerProp(Geonet.Config.DATA_DIR);
 
 		if (!new File(dataDir).isAbsolute())
-			dataDir = appPath +"/web/geonetwork/"+ dataDir;
+			dataDir = Config.getConfig().getWebapp() + "/"+ dataDir;
 
 		return dataDir;
 	}
@@ -269,7 +272,7 @@ public class MetadataLib
 
 		//--- do an XSL  transformation
 
-		String styleSheet = appPath +"/web/geonetwork/xml/schemas/"+ schema +"/"+ Geonet.File.SET_UUID;
+		String styleSheet = Config.getConfig().getSchemas() + "/" + schema +"/"+ Geonet.File.SET_UUID;
 
 		return Xml.transform(root, styleSheet);
 	}
@@ -396,8 +399,6 @@ public class MetadataLib
 	//--- Variables
 	//---
 	//---------------------------------------------------------------------------
-
-	private String appPath;
 
 	private SearchManager searchMan;
 }

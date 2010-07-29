@@ -32,6 +32,7 @@ import jeeves.utils.XmlRequest;
 import org.dlib.gui.ProgressDialog;
 import org.fao.gast.app.App;
 import org.fao.gast.app.Configuration;
+import org.fao.gast.boot.Config;
 import org.fao.gast.lib.Lib;
 import org.fao.gast.localization.Messages;
 import org.fao.geonet.constants.Geonet;
@@ -100,7 +101,7 @@ public class Worker implements Runnable
 
 		//--- scan for mef files
 
-		File mapsDir = new File(App.path +"/gast/setup/sample-data");
+		File mapsDir = new File(Config.getConfig().getSampleData());
 
 		List<File> files = Lib.io.scanDir(mapsDir, "mef");
 

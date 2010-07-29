@@ -31,6 +31,7 @@ import java.util.List;
 import jeeves.resources.dbms.Dbms;
 import jeeves.utils.Xml;
 import org.dlib.gui.ProgressDialog;
+import org.fao.gast.boot.Config;
 import org.fao.gast.lib.Lib;
 import org.fao.gast.lib.Resource;
 import org.fao.gast.localization.Messages;
@@ -87,7 +88,7 @@ public class Worker implements Runnable
 	{
 		Lib.metadata.init(dbms);
 
-		String      log = Lib.server.getAppPath() +"/gast/logs/unmapped.log";
+		String      log = Config.getConfig().getLogOutputDir()+"/unmapped.log";
 		PrintWriter out = new PrintWriter(new FileOutputStream(log));
 
 		dlg.reset(1);

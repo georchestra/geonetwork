@@ -32,7 +32,7 @@ import org.fao.gast.lib.Resource;
 
 public class Setup
 {
-	public void exec(String appPath, List<String> args) throws Exception
+	public void exec(List<String> args) throws Exception
 	{
 		//--- this line saves the 'gast/data/index.html' file into 'web'
 		//--- substituting the $SERVLET variable

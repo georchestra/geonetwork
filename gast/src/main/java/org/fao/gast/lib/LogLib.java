@@ -25,9 +25,12 @@ package org.fao.gast.lib;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.Properties;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import org.fao.gast.boot.Config;
 
 //=============================================================================
 
@@ -39,15 +42,15 @@ public class LogLib
 	//---
 	//---------------------------------------------------------------------------
 
-	public LogLib(String appPath) throws IOException
+	public LogLib() throws IOException
 	{
 		Properties props = new Properties();
 
-		FileInputStream is = new FileInputStream(appPath + LOG4J_CFG);
+		InputStream is = LOG4J_CFG.openStream();
 		props.load(is);
 		is.close();
 
-		props.setProperty("log4j.appender.gast.file", appPath + LOG4J_FILE);
+		props.setProperty("log4j.appender.gast.file", LOG4J_FILE);
 
 		PropertyConfigurator.configure(props);
 	}
@@ -98,8 +101,8 @@ public class LogLib
 	//---------------------------------------------------------------------------
 
 	private static final String MODULE     = "gast";
-	private static final String LOG4J_CFG  = "/gast/logs/log4j.cfg";
-	private static final String LOG4J_FILE = "/gast/logs/gast.log";
+	private static final URL LOG4J_CFG  = Config.getResource("log4j.cfg");
+	private static final String LOG4J_FILE = Config.getConfig().getLogOutputDir()+"/gast.log";
 }
 
 //=============================================================================

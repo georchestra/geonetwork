@@ -23,11 +23,7 @@
 
 package org.fao.gast.boot;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -38,12 +34,13 @@ import javax.swing.JOptionPane;
 import javax.xml.transform.TransformerFactory;
 
 import org.fao.gast.localization.Messages;
+import org.fao.geonet.Geonetwork;
 
 //==============================================================================
 
 public class Util
 {
-	//---------------------------------------------------------------------------
+    //---------------------------------------------------------------------------
 	//---
 	//--- Boot methods
 	//---
@@ -127,31 +124,34 @@ public class Util
 
 	//---------------------------------------------------------------------------
 
-	public static void boot(String appPath, URL[] jarFiles, String className,
+	public static void boot(String className,
 									String args[]) throws Exception
 	{
+
+        URL[]  jarFiles = {}; // TODO change so there is a config option for DB driver jar
+
 		//-- load jars and make this classloader the context class loader
 		URLClassLoader mcl = new URLClassLoader(jarFiles);
 		Thread.currentThread().setContextClassLoader(mcl);
 
 		//-- because we are using the URLClassLoader we need to take some 
 		//-- additional steps to select an XSLT transformerFactory
-		String tfName = appPath + "/web/geonetwork/WEB-INF/classes/META-INF/services/javax.xml.transform.TransformerFactory";
+        InputStream tfStream = Geonetwork.class.getResourceAsStream("/META-INF/services/javax.xml.transform.TransformerFactory");
 		BufferedReader bReader = null;
 		try {
-			bReader = new BufferedReader(new FileReader(tfName));
+			bReader = new BufferedReader(new InputStreamReader(tfStream));
 			String trans = bReader.readLine();
 			if (trans != null) {
 				System.setProperty("javax.xml.transform.TransformerFactory",trans);
-				System.out.println("INFO: Selected transformerFactory '"+trans+"' from '"+tfName+"'");
+				System.out.println("INFO: Selected transformerFactory '"+trans+"' from '"+tfStream+"'");
 			} else {
-				System.out.println("ERROR: EOF when attempting to read transformerFactory from '"+tfName+"' - JAXP will select the transformerFactory to be used.");
+				System.out.println("ERROR: EOF when attempting to read transformerFactory from '"+tfStream+"' - JAXP will select the transformerFactory to be used.");
 			}
-		} catch (FileNotFoundException e) {
+		} catch (NullPointerException e) {
 			e.printStackTrace();
 			System.out.println("INFO: JAXP will select the transformerFactory to be used.");
 		} catch (Exception e) {
-			System.out.println("ERROR: Problem reading transformerFactory from '"+tfName+"' - JAXP will select the transformerFactory to be used.");
+			System.out.println("ERROR: Problem reading transformerFactory from '"+tfStream+"' - JAXP will select the transformerFactory to be used.");
 			e.printStackTrace();
 		} finally {
 			if (bReader != null) bReader.close();
@@ -163,7 +163,7 @@ public class Util
 		try {
 			Starter starter = (Starter) Class.forName(className, true, mcl).newInstance();
 
-			starter.start(appPath, args);
+			starter.start(args);
 		} catch(Throwable e) {
 			e.printStackTrace();
 			showError(e);

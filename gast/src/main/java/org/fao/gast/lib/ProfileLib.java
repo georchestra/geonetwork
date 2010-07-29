@@ -26,6 +26,8 @@ package org.fao.gast.lib;
 import java.io.IOException;
 import java.util.List;
 import jeeves.utils.Xml;
+import org.fao.gast.boot.Config;
+import org.fao.gast.boot.Util;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 
@@ -39,11 +41,9 @@ public class ProfileLib
 	//---
 	//---------------------------------------------------------------------------
 
-	public ProfileLib(String appPath) throws JDOMException, IOException
+	public ProfileLib() throws JDOMException, IOException
 	{
-		this.appPath = appPath;
-
-		profiles = Xml.loadFile(appPath +"/web/geonetwork/xml/user-profiles.xml");
+		profiles = Xml.loadFile(Config.getConfig().getWebapp() + "/xml/user-profiles.xml");
 	}
 
 	//---------------------------------------------------------------------------
@@ -82,7 +82,6 @@ public class ProfileLib
 	//---
 	//---------------------------------------------------------------------------
 
-	private String  appPath;
 	private Element profiles;
 }
 

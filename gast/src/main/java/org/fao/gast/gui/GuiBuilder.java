@@ -23,10 +23,13 @@
 
 package org.fao.gast.gui;
 
+import java.awt.Image;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Constructor;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -36,6 +39,8 @@ import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -55,10 +60,8 @@ public class GuiBuilder
 	//---
 	//---------------------------------------------------------------------------
 
-	public GuiBuilder(String appPath, ViewPanel view, WorkPanel work)
+	public GuiBuilder(ViewPanel view, WorkPanel work)
 	{
-		this.appPath = appPath;
-
 		viewPanel = view;
 		workPanel = work;
 	}
@@ -69,12 +72,11 @@ public class GuiBuilder
 	//---
 	//---------------------------------------------------------------------------
 
-	public void build(String guiFile, Locale locale) throws Exception 
+	public void build(URL guiSpec, Locale locale) throws Exception
 	{
-		Element root = Xml.loadFile(appPath + File.separator + guiFile);
+		Element root = Xml.loadFile(guiSpec);
 
-		ResourceBundle resourceBundle = lookupResourceBundle(appPath
-				+ File.separator + guiFile, locale);
+		ResourceBundle resourceBundle = lookupResourceBundle(guiSpec, locale);
 
 		localize(root, resourceBundle);
 
@@ -93,14 +95,14 @@ public class GuiBuilder
 	//---
 	//---------------------------------------------------------------------------
 
-	private ResourceBundle lookupResourceBundle(String guiFile, Locale locale) throws IOException 
+	private ResourceBundle lookupResourceBundle(URL guiSpec, Locale locale) throws IOException 
 	{
 
 		String[] parts = { locale.getLanguage(), locale.getCountry(),
 				locale.getVariant() };
-		String baseString = guiFile;
-		if (guiFile.indexOf('.') > 0) {
-			baseString = guiFile.substring(0, guiFile.lastIndexOf('.'));
+		String baseString = guiSpec.toExternalForm();
+		if (baseString.indexOf('.') > 0) {
+			baseString = baseString.substring(0, baseString.lastIndexOf("."));
 		}
 
 		for (int i = parts.length; i >= 0; i--) {
@@ -113,10 +115,10 @@ public class GuiBuilder
 		throw new IllegalStateException("Unable to find gui.xml file");
 	}
 
-	public ResourceBundle locateResourceBundleFile(String appPath,
+	public ResourceBundle locateResourceBundleFile(String baseURL,
 			String[] args, int toUse) throws IOException 
 	{
-		StringBuilder builder = new StringBuilder(appPath);
+		StringBuilder builder = new StringBuilder(baseURL);
 
 		for (int i = 0; i < toUse; i++) {
 			if (args[i] != null) {
@@ -126,26 +128,27 @@ public class GuiBuilder
 		}
 
 		builder.append(".properties");
-		if (new java.io.File(builder.toString()).exists()) {
-			return new PropertyResourceBundle(
-					new FileInputStream(builder.toString()));
+		try {
+			final InputStream inputStream = new URL(builder.toString()).openStream();
+			return new PropertyResourceBundle(inputStream);
+		} catch (IOException e) {
+			return null;
 		}
-		return null;
 	}
 	
 	private void localize(Element elem, ResourceBundle resourceBundle) 
 	{
 		List attributes = elem.getAttributes();
-		for (Iterator iterator = attributes.iterator(); iterator.hasNext();) {
-			Attribute attribute = (Attribute) iterator.next();
+		for (Object attribute1 : attributes) {
+			Attribute attribute = (Attribute) attribute1;
 			attribute.setValue(localize(attribute.getValue(), resourceBundle));
 		}
 		if (elem.getText() != null && elem.getTextTrim().length() > 0)
 			elem.setText(localize(elem.getText(), resourceBundle));
 
 		List children = elem.getChildren();
-		for (Iterator iterator = children.iterator(); iterator.hasNext();) {
-			Content child = (Content) iterator.next();
+		for (Object aChildren : children) {
+			Content child = (Content) aChildren;
 			if (child instanceof Element) {
 				localize((Element) child, resourceBundle);
 			}
@@ -225,7 +228,7 @@ public class GuiBuilder
 	{
 		Class clazz = Class.forName(packag +"."+className);
 		
-		FormPanel fp = null;
+		FormPanel fp;
 		
 		if (param != null)
 			fp = ((Constructor<FormPanel>) clazz.getConstructor(String.class)).newInstance(param);
@@ -274,18 +277,23 @@ public class GuiBuilder
 
 	//---------------------------------------------------------------------------
 
-	private Icon retrieveImage(String image)
+	private Icon retrieveImage(String imagePath)
 	{
-		if (image == null)
+		if (imagePath == null)
 			return null;
 
-		if (hmImages.containsKey(image))
-			return hmImages.get(image);
-
-		ImageIcon icon = new ImageIcon(appPath +"/gast/images/" +image);
-		hmImages.put(image, icon);
-
-		return icon;
+		if (hmImages.containsKey(imagePath))
+			return hmImages.get(imagePath);
+		
+		ClassLoader classLoader = GuiBuilder.class.getClassLoader();
+		try {
+			Image image = ImageIO.read(classLoader.getResource("images/"+imagePath));
+			ImageIcon icon = new ImageIcon(image);
+			hmImages.put(imagePath, icon);
+			return icon;
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	//---------------------------------------------------------------------------
@@ -294,7 +302,6 @@ public class GuiBuilder
 	//---
 	//---------------------------------------------------------------------------
 
-	private String appPath;
 	private String packag;
 
 	private ViewPanel viewPanel;

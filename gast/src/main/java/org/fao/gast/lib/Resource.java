@@ -27,6 +27,7 @@ import jeeves.constants.ConfigFile;
 import jeeves.interfaces.Activator;
 import jeeves.server.resources.ProviderManager;
 import jeeves.server.resources.ResourceManager;
+import org.fao.gast.boot.Config;
 import org.jdom.Element;
 
 //=============================================================================
@@ -39,7 +40,7 @@ public class Resource
 	//---
 	//--------------------------------------------------------------------------
 
-	public Resource(String appPath, Element resource) throws Exception
+	public Resource(Element resource) throws Exception
 	{
 		        name      = resource.getChildText(ConfigFile.Resource.Child.NAME);
 		String  provider  = resource.getChildText(ConfigFile.Resource.Child.PROVIDER);
@@ -51,7 +52,8 @@ public class Resource
 			String clas = activator.getAttributeValue(ConfigFile.Activator.Attr.CLASS);
 
 			activ = (Activator) Class.forName(clas).newInstance();
-			activ.startup(appPath, activator);
+            // Note.  the end slash is required here
+			activ.startup(Config.getConfig().getWebapp() + "/", activator);
 		}
 
 		try

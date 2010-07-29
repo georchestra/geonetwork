@@ -26,6 +26,7 @@ package org.fao.gast.cli.sampledata;
 import java.io.File;
 import java.util.List;
 import jeeves.resources.dbms.Dbms;
+import org.fao.gast.boot.Config;
 import org.fao.gast.lib.Lib;
 import org.fao.gast.lib.Resource;
 
@@ -33,15 +34,15 @@ import org.fao.gast.lib.Resource;
 
 public class SampleData
 {
-	public void exec(String appPath, List<String> args) throws Exception
+	public void exec( List<String> args) throws Exception
 	{
 		//--- install sample data
-	    addSampleData(appPath);			
+	    addSampleData();
 	}
 
 	//---------------------------------------------------------------------------
 
-	private void addSampleData(String appPath) throws Exception
+	private void addSampleData() throws Exception
 	{
 		Lib.log.info("Adding sample metadata");
 
@@ -53,7 +54,7 @@ public class SampleData
 			int serial = Lib.database.getNextSerial(dbms, "Metadata");
 			dbms.commit();
 
-			File   sampleDir = new File(appPath, SAMPLE_PATH);
+			File   sampleDir = new File(Config.getConfig().getSampleData());
 			File[] samples   = sampleDir.listFiles();
 
 			if (samples == null)
@@ -80,14 +81,6 @@ public class SampleData
 			throw e;
 		}
 	}
-
-	//---------------------------------------------------------------------------
-	//---
-	//--- Variables
-	//---
-	//---------------------------------------------------------------------------
-
-	private static final String SAMPLE_PATH = "gast/setup/sample-data";
 }
 
 //==============================================================================

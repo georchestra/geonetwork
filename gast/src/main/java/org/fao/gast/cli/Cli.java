@@ -35,9 +35,9 @@ import org.fao.gast.lib.Lib;
 
 public class Cli implements Starter
 {
-	public void start(String appPath, String args[]) throws Exception
+	public void start(String args[]) throws Exception
 	{
-		Lib.init(appPath);
+		Lib.init();
 
 		//--- convert args into a list
 
@@ -50,13 +50,13 @@ public class Cli implements Starter
 		al.remove(0);
 
 		if (command.equals("-setup"))
-			new Setup().exec(appPath, al);
+			new Setup().exec(al);
 
 		else if (command.equals("-sampleData"))
-            new SampleData().exec(appPath, al);
+            new SampleData().exec(al);
 
         else if (command.equals("-setupdb"))
-			new CreateDB().exec(appPath, al);
+			new CreateDB().exec(al);
 
         else
 		{

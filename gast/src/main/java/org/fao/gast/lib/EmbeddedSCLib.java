@@ -25,18 +25,28 @@ package org.fao.gast.lib;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.fao.gast.boot.Config;
+import org.fao.gast.boot.Util;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
+import org.mortbay.jetty.servlet.Context;
+import org.mortbay.jetty.servlet.ServletHolder;
+import org.mortbay.jetty.webapp.WebAppContext;
 import org.xml.sax.SAXException;
 
 import org.mortbay.jetty.Connector;
 import org.mortbay.jetty.Server;
 import org.mortbay.resource.Resource;
 import org.mortbay.xml.XmlConfiguration;
+
 
 //=============================================================================
 /** Embedded Servlet Container lib */
@@ -49,30 +59,23 @@ public class EmbeddedSCLib
 	//---
 	//---------------------------------------------------------------------------
 
-	public EmbeddedSCLib(String appPath) throws Exception
+	public EmbeddedSCLib() throws Exception
 	{
-		
-		this.appPath = appPath;
+		webXml = Lib.xml.load(WEBXML_FILE);
 
-		String jetty  = appPath + JETTY_FILE;
-		webXml = Lib.xml.load(appPath + WEBXML_FILE);
+		System.out.println("Loading Jetty with "+Config.getConfig().getWebapp());
 
-		//--- retrieve 'host', 'port' and 'servlet' parameters from jetty/web.xml
+        final Server server = new Server(Config.getConfig().getJettyPort());
 
-		System.out.println("Loading "+jetty);
-		XmlConfiguration config = new XmlConfiguration(Resource.newResource(jetty).getURL());
-		Server server = new Server();
-		config.configure(server);
+        server.setHandler(new WebAppContext(Config.getConfig().getWebapp(), "/geonetwork"));
+
 		Connector[] conns = server.getConnectors();
+
 		//--- assume connector we want is the first one?
-		if (conns.length == 1) {
-			host = conns[0].getHost();
-			System.out.println("Jetty on Host: "+host);
-			port = conns[0].getPort()+"";
-			System.out.println("Jetty on Port: "+port);
-		} else {
-			throw new Exception("Confusion: more than one connector in "+jetty);
-		}
+        host = conns[0].getHost();
+        System.out.println("Jetty on Host: "+host);
+        port = conns[0].getPort()+"";
+        System.out.println("Jetty on Port: "+port);
 	}
 
 	//---------------------------------------------------------------------------
@@ -139,16 +142,21 @@ public class EmbeddedSCLib
 
 	public void save() throws FileNotFoundException, IOException
 	{
-		Lib.xml.save(appPath + WEBXML_FILE, webXml);
+		Lib.xml.save(WEBXML_FILE, webXml);
 
 		//--- create proper index.html file to point to correct servlet
 
 		Map<String, String> vars = new HashMap<String, String>();
 		vars.put("$SERVLET", getServlet());
 
-		List<String> lines = Lib.text.load(appPath + INDEX_SRC_FILE);
-		Lib.text.replace(lines, vars);
-		Lib.text.save(appPath + INDEX_DES_FILE, lines);
+        final InputStream inputStream = INDEX_SRC_FILE.openStream();
+        try {
+            List<String> lines = Lib.text.load(inputStream);
+            Lib.text.replace(lines, vars);
+            Lib.text.save(INDEX_DES_FILE, lines);
+        }finally {
+            inputStream.close();
+        }
 	}
 
 	//---------------------------------------------------------------------------
@@ -157,16 +165,14 @@ public class EmbeddedSCLib
 	//---
 	//---------------------------------------------------------------------------
 
-	private String   appPath;
 	private String   host;
 	private String   port;
 	private Document webXml;
 
-	private static final String JETTY_FILE  = "/bin/jetty.xml";
-	private static final String WEBXML_FILE = "/web/geonetwork/WEB-INF/web.xml";
+	private static final String WEBXML_FILE = Config.getConfig().getWebXml();
 
-	private static final String INDEX_SRC_FILE = "/gast/data/index.html";
-	private static final String INDEX_DES_FILE = "/web/geonetwork/index.html";
+	private static final URL INDEX_SRC_FILE = Config.getResource("data/index.html");
+	private static final String INDEX_DES_FILE = Config.getConfig().getWebapp()+"/index.html";
 }
 
 //=============================================================================

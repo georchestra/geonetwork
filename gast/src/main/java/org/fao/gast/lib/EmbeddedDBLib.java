@@ -28,6 +28,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.fao.gast.boot.Config;
+import org.fao.gast.boot.Util;
 import org.fao.geonet.util.McKoiDB;
 
 //=============================================================================
@@ -40,11 +43,9 @@ public class EmbeddedDBLib
 	//---
 	//---------------------------------------------------------------------------
 
-	public EmbeddedDBLib(String appPath) throws IOException
+	public EmbeddedDBLib() throws IOException
 	{
-		this.appPath = appPath;
-
-		lines = Lib.text.load(appPath + MCKOI_CONFIG);
+		lines = Lib.text.load(MCKOI_CONFIG);
 	}
 
 	//---------------------------------------------------------------------------
@@ -64,7 +65,7 @@ public class EmbeddedDBLib
 	{
 		try
 		{
-			List<String> lines = Lib.text.load(appPath + MCKOI_ACCOUNT);
+			List<String> lines = Lib.text.load(MCKOI_ACCOUNT);
 
 			return Lib.text.getProperty(lines, "username");
 		}
@@ -80,7 +81,7 @@ public class EmbeddedDBLib
 	{
 		try
 		{
-			List<String> lines = Lib.text.load(appPath + MCKOI_ACCOUNT);
+			List<String> lines = Lib.text.load(MCKOI_ACCOUNT);
 
 			return Lib.text.getProperty(lines, "password");
 		}
@@ -101,7 +102,7 @@ public class EmbeddedDBLib
 
 	public void save() throws FileNotFoundException, IOException
 	{
-		Lib.text.save(appPath + MCKOI_CONFIG, lines);
+		Lib.text.save(MCKOI_CONFIG, lines);
 	}
 
 	//---------------------------------------------------------------------------
@@ -110,7 +111,7 @@ public class EmbeddedDBLib
 	{
 		//--- first : remove old files
 
-		Lib.io.cleanDir(new File(appPath + MCKOI_DATA));
+		Lib.io.cleanDir(new File(MCKOI_DATA));
 
 		//--- second : generate a new random account
 
@@ -119,10 +120,8 @@ public class EmbeddedDBLib
 
 		//--- third : create database files
 
-		String dbPath = appPath + MCKOI_CONFIG;
-
 		McKoiDB mcKoi = new McKoiDB();
-		mcKoi.setConfigFile(dbPath);
+		mcKoi.setConfigFile(MCKOI_CONFIG);
 
 		mcKoi.create(user, pass);
 
@@ -133,7 +132,7 @@ public class EmbeddedDBLib
 		al.add("username="+ user);
 		al.add("password="+ pass);
 
-		Lib.text.save(appPath + MCKOI_ACCOUNT, al);
+		Lib.text.save(MCKOI_ACCOUNT, al);
 	}
 
 	//---------------------------------------------------------------------------
@@ -142,12 +141,11 @@ public class EmbeddedDBLib
 	//---
 	//---------------------------------------------------------------------------
 
-	private String       appPath;
 	private List<String> lines;
 
-	private static final String MCKOI_CONFIG = "/web/geonetwork/WEB-INF/db/db.conf";
-	private static final String MCKOI_ACCOUNT= "/web/geonetwork/WEB-INF/db/account.prop";
-	private static final String MCKOI_DATA   = "/web/geonetwork/WEB-INF/db/data";
+	private static final String MCKOI_CONFIG = Config.getConfig().getEmbeddedDb()+"/db.conf";
+	private static final String MCKOI_ACCOUNT= Config.getConfig().getEmbeddedDb()+"/account.prop";
+	private static final String MCKOI_DATA   = Config.getConfig().getEmbeddedDb()+"/data";
 }
 
 //=============================================================================

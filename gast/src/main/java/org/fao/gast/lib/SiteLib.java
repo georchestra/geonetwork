@@ -27,6 +27,8 @@ import java.io.File;
 import java.sql.SQLException;
 import jeeves.constants.Jeeves;
 import jeeves.resources.dbms.Dbms;
+import org.fao.gast.boot.Config;
+import org.fao.gast.boot.Util;
 
 //=============================================================================
 
@@ -69,14 +71,13 @@ public class SiteLib
 	public void setSiteId(Dbms dbms, String uuid) throws SQLException
 	{
 		String oldUuid = getSiteId(dbms);
-		String appPath = Lib.server.getAppPath();
 
 		dbms.execute("UPDATE Metadata SET source=? WHERE isHarvested='n'", uuid);
 		dbms.execute("UPDATE Settings SET value=?  WHERE name='siteId'",   uuid);
 		dbms.execute("UPDATE Sources  SET uuid=?   WHERE uuid=?",          uuid, oldUuid);
 
-		File srcImg = new File(appPath +"/web/geonetwork/images/logos/"+ oldUuid +".gif");
-		File desImg = new File(appPath +"/web/geonetwork/images/logos/"+ uuid    +".gif");
+		File srcImg = new File(Config.getConfig().getLogos() + oldUuid +".gif");
+		File desImg = new File(Config.getConfig().getLogos() + uuid    +".gif");
 
 		srcImg.renameTo(desImg);
 	}

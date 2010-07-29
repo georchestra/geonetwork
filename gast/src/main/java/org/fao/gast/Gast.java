@@ -23,32 +23,38 @@
 
 package org.fao.gast;
 
-import java.io.File;
+import java.io.*;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.fao.gast.boot.Config;
 import org.fao.gast.boot.Util;
+import org.fao.gast.localization.Messages;
+
+import javax.swing.*;
 
 //=============================================================================
 
 public class Gast
 {
-	//---------------------------------------------------------------------------
+    //---------------------------------------------------------------------------
 	//---
 	//--- Constructor
 	//---
 	//---------------------------------------------------------------------------
 
-	public static void main(String args[]) throws Exception
+	public static void main(String argStrings[]) throws Exception
 	{
-		String jarFile = Util.getJarFile("org/fao/gast/Gast.class");
-		String appPath = getPath(jarFile);
-		String[] jarUrls = { appPath +"/web/geonetwork/WEB-INF/lib", appPath +"/jetty/lib" };
-		URL[]  jars    = Util.getJarUrls(jarUrls);
+        Args args = Args.parseArgs(argStrings);
 
-		String starter = (args.length == 0)
+		String starter = (args.cliArgs.length == 0)
 									? "org.fao.gast.gui.MainFrame"
 									: "org.fao.gast.cli.Cli";
 
-		Util.boot(appPath, jars, starter, args);
+		Util.boot(starter, args.cliArgs);
+        
 		// Shouldn't need the following - slf4j and log4j cause the cli to
 		// never terminate?
 		if (starter.equals("org.fao.gast.cli.Cli")) System.exit(0);
@@ -56,12 +62,71 @@ public class Gast
 
 	//---------------------------------------------------------------------------
 
-	private static String getPath(String jarFile)
-	{
-		//--- we suppose that the GAST jar file is inside the "gast" folder
+    private static class Args {
+        public final String[] cliArgs;
+        private static final String CONFIG_ARG = "-config=";
 
-		return new File(jarFile).getParentFile().getParentFile().getAbsolutePath();
-	}
+        private Args(String[] cliArgs) {
+            this.cliArgs = cliArgs;
+        }
+
+        public static Args parseArgs(String[] args) throws IOException {
+            String configParam = loadConfig(args);
+            if (configParam != null) {
+                InputStream inputStream = toInputStream(configParam);
+                if(inputStream == null ) {
+                    // a param was declared that was not a valid param so force
+                    // user to configure the config object
+                    Config.queryForWebapp();
+                } else {
+                    Config.load(inputStream);
+                }
+            } else {
+                // use the defaults
+            }
+            return new Args(findCliArgs(args));
+        }
+
+        private static String[] findCliArgs(String[] args) {
+            List<String> cliArgs = new ArrayList<String>();
+            for (String arg : args) {
+                if (isCliArg(arg)) continue;
+
+                cliArgs.add(arg);
+            }
+            return cliArgs.toArray(new String[cliArgs.size()]);
+        }
+
+        private static String loadConfig(String[] args) throws IOException {
+            for (String arg : args) {
+                if(isCliArg(arg)) {
+                    String config = arg.substring(CONFIG_ARG.length());
+
+                    return config;
+                }
+            }
+
+            return null;
+        }
+
+        private static InputStream toInputStream(String config) throws IOException {
+            if(new File(config).exists()) {
+                return new FileInputStream(config);
+            }
+            try {
+                return new URL(config).openStream();
+            } catch (MalformedURLException e) {
+            }
+            return null;
+
+        }
+
+        private static boolean isCliArg(String arg) {
+            return arg.toLowerCase().startsWith(CONFIG_ARG);
+        }
+
+
+    }
 }
 
 //=============================================================================

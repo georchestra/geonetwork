@@ -26,6 +26,8 @@ package org.fao.gast.lib;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import jeeves.constants.ConfigFile;
+import org.fao.gast.boot.Config;
+import org.fao.gast.boot.Util;
 import org.fao.geonet.constants.Geonet;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -41,11 +43,9 @@ public class ConfigLib
 	//---
 	//---------------------------------------------------------------------------
 
-	public ConfigLib(String appPath) throws JDOMException, IOException
+	public ConfigLib() throws JDOMException, IOException
 	{
-		this.appPath = appPath;
-
-		config      = Lib.xml.load(appPath +"/web/geonetwork/WEB-INF/config.xml");
+		config      = Lib.xml.load(Config.getConfig().getConfigXml());
 		dbmsElem    = retrieveDbms(config);
 		appHandElem = config.getRootElement().getChild(ConfigFile.Child.APP_HANDLER);
 	}
@@ -156,14 +156,14 @@ public class ConfigLib
 
 	public void save() throws FileNotFoundException, IOException
 	{
-		Lib.xml.save(appPath +"/web/geonetwork/WEB-INF/config.xml", config);
+		Lib.xml.save(Config.getConfig().getConfigXml(), config);
 	}
 
 	//---------------------------------------------------------------------------
 
 	public Resource createResource() throws Exception
 	{
-		return new Resource(appPath +"/web/geonetwork/", dbmsElem);
+		return new Resource(dbmsElem);
 	}
 
 	//---------------------------------------------------------------------------
@@ -214,7 +214,6 @@ public class ConfigLib
 	//---
 	//---------------------------------------------------------------------------
 
-	private String   appPath;
 	private Document config;
 	private Element  dbmsElem;
 	private Element  appHandElem;

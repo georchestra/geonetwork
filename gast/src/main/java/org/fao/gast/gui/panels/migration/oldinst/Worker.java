@@ -37,6 +37,7 @@ import jeeves.utils.Xml;
 
 import org.dlib.gui.ProgressDialog;
 import org.fao.gast.app.App;
+import org.fao.gast.boot.Config;
 import org.fao.gast.lib.DatabaseLib;
 import org.fao.gast.lib.Lib;
 import org.fao.gast.lib.Resource;
@@ -181,7 +182,7 @@ public class Worker implements Runnable
 		oldGroupId = Integer.parseInt(((Element)oldGroupIds.get(0)).getChildText("id"));
 
 		query = "SELECT groupId FROM UserGroups WHERE groupId = ? AND userId = ?";
-		List userGroups = oldDbms.select(query, new Integer(oldGroupId), new Integer(oldUserId)).getChildren();
+		List userGroups = oldDbms.select(query, oldGroupId, oldUserId).getChildren();
 		oldDbms.commit();
 		
 		if (userGroups.size() == 0)
@@ -463,7 +464,7 @@ public class Worker implements Runnable
 	{
 		List<Owner> owners = new ArrayList<Owner>(); // The candidate owners that should be returned
         List<Owner> ownersPriv = new ArrayList<Owner>(); // Editors and above in groups that have edit or admin privileges on the record 
-		String group = null;
+		String group;
 		
 		/*
 		 * Select the best new owner of the metadata record
@@ -653,7 +654,6 @@ public class Worker implements Runnable
 	{
 		//--- extract metadata author's surname
 		String surname = getSurname(md);
-		List<Owner> owners = new ArrayList<Owner>();
 		Owner owner = new Owner();
 		
 		if (surname == null) {
@@ -677,7 +677,7 @@ public class Worker implements Runnable
 	        List groups = dbms.select(queryGroups, user.getChildText("id")).getChildren();
 	        
 	        dbms.commit();
-	        if (groups.size()!=0 && groups!=null) {
+	        if (groups.size()!=0) {
 	            // Assign to first group
 	            Element group= (Element) groups.get(0);
 	            owner.group = group.getChildText("groupid");
@@ -881,11 +881,11 @@ public class Worker implements Runnable
 
 		LocalizFixer grp = new LocalizFixer();
 		r.setHandler(grp);
-		r.load(App.path + "/gast/setup/db/Groups.ddf");
+		r.load(Config.getConfig().getSetupConfig()+"/db/Groups.ddf");
 
 		LocalizFixer grpDes = new LocalizFixer();
 		r.setHandler(grpDes);
-		r.load(App.path + "/gast/setup/db/GroupsDes.ddf");
+		r.load(Config.getConfig().getSetupConfig()+"/db/GroupsDes.ddf");
 
 		restoreLocalizedRecords(newDbms, "GroupsDes", grp, grpDes);
 
@@ -893,11 +893,11 @@ public class Worker implements Runnable
 
 		LocalizFixer cat = new LocalizFixer();
 		r.setHandler(cat);
-		r.load(App.path + "/gast/setup/db/Categories.ddf");
+		r.load(Config.getConfig().getSetupConfig()+"/db/Categories.ddf");
 
 		LocalizFixer catDes = new LocalizFixer();
 		r.setHandler(catDes);
-		r.load(App.path + "/gast/setup/db/CategoriesDes.ddf");
+		r.load(Config.getConfig().getSetupConfig()+"/db/CategoriesDes.ddf");
 
 		restoreLocalizedRecords(newDbms, "CategoriesDes", cat, catDes);
 	}

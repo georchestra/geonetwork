@@ -31,7 +31,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +41,7 @@ import java.util.UUID;
 import jeeves.resources.dbms.Dbms;
 import jeeves.utils.BinaryFile;
 
-import org.fao.gast.lib.druid.Import;
+import org.fao.gast.boot.Config;
 import org.fao.geonet.kernel.AccessManager;
 import org.fao.geonet.util.ISODate;
 import org.jdom.Document;
@@ -82,9 +81,8 @@ public class DatabaseLib
 	//---
 	//---------------------------------------------------------------------------
 
-	public DatabaseLib(String appPath)
+	public DatabaseLib()
 	{
-		this.appPath = appPath;
 	}
 
 	//---------------------------------------------------------------------------
@@ -462,7 +460,7 @@ public class DatabaseLib
 
 		//--- load the dbms schema
 
-		return Lib.text.load(appPath +SETUP_DIR+ "/sql/"+ file);
+		return Lib.text.load(Config.getConfig().getSetupConfig() + "/sql/create/"+ file);
 	}
 
 	//---------------------------------------------------------------------------
@@ -486,7 +484,7 @@ public class DatabaseLib
 		
         //--- load the sql data
         
-        return Lib.text.load(appPath +SETUP_DIR+ "/sql/"+ file, "UTF-8");
+        return Lib.text.load(Config.getConfig().getSetupConfig() + "/sql/data/"+ file, "UTF-8");
     }
 
 	//---------------------------------------------------------------------------
@@ -520,7 +518,7 @@ public class DatabaseLib
 
 		int serial = 1;
 
-		File schemaDir = new File(appPath, "gast/setup/templates");
+		File schemaDir = new File(Config.getConfig().getTemplates());
 
 		for (File schema : Lib.io.scanDir(schemaDir))
 			//--- skip '.svn' folders and other hidden files
@@ -586,8 +584,8 @@ public class DatabaseLib
 
 		//--- duplicate dummy logo to reflect the uuid
 
-		FileInputStream  is = new FileInputStream (appPath +"/gast/images/dummy.gif");
-		FileOutputStream os = new FileOutputStream(appPath +"/web/geonetwork/images/logos/"+ uuid +".gif");
+		FileInputStream  is = new FileInputStream (Config.getConfig().getLogos()+"/dummy.gif");
+		FileOutputStream os = new FileOutputStream(Config.getConfig().getLogos() + "/"+ uuid +".gif");
 		BinaryFile.copy(is, os, true, true);
 
 		dbms.execute("UPDATE Settings SET value=? WHERE name='siteId'", uuid);
@@ -610,11 +608,8 @@ public class DatabaseLib
 	//---
 	//---------------------------------------------------------------------------
 
-	private String appPath;
-
 	//---------------------------------------------------------------------------
 
-	private static final String SETUP_DIR = "/gast/setup";
 }
 
 //=============================================================================

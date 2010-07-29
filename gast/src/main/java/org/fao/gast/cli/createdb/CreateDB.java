@@ -31,7 +31,7 @@ import org.fao.gast.lib.Resource;
 
 public class CreateDB
 {
-	public void exec(String appPath, List<String> args) throws Exception
+	public void exec(List<String> args) throws Exception
 	{
 		//--- proper setup: open a database connection and setup data
 

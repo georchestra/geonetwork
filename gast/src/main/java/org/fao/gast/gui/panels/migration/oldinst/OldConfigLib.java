@@ -74,7 +74,7 @@ public class OldConfigLib
 
 	public Resource createResource() throws Exception
 	{
-		return new Resource(webPath, dbmsElem);
+		return new Resource(dbmsElem);
 	}
 
 	//---------------------------------------------------------------------------
