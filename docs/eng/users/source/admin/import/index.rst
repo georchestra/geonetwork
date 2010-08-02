@@ -9,7 +9,7 @@ Import facilities
 File import
 -----------
 
-The file import facility allows you to import metadata records in XML format or MEF format or copy/paste XML metadata to insert. In order to use this facility, you have to be logged in as an administrator. After the login step, go to the administration page and select the Metadata insert link.
+The file import facility allows you to import metadata records in XML format or MEF format or copy/paste XML metadata to insert. In order to use this facility, you have to be logged in as an editor. After the login step, go to the administration page and select the Metadata insert link.
 
 Clicking the link, you will open the metadata import page. You have to specify a set of parameters to make the import working. Depending on the insert type you will perform:
 
@@ -56,7 +56,6 @@ XML metadata insert
 
 Choosing the radio button Copy/Paste, you could perform an XML insert, directly copy/pasting
 your metadata record. Please refer to XML import for options you could use.
-Note that it is not possible to perform actions during import with this method.
 
 Batch import
 ------------
@@ -74,15 +73,12 @@ Clicking the link will open the batch import page. You have to specify a set of 
 They are:
 
 Directory This is the full path on the server’s file system of the directory
-to scan. GeoNetwork will look for and try to import all XML files present into
-this directory. It is important to notice that this is the directory on the
-*server* machine and *not* on the
-client of the user that is doing the import. All metadata files present into the
-import directory *must* have the same schema format. Schema
-GeoNetwork supports only some metadata formats so you have to specify the schema
-of the metadata you want to import. If a metadata does not belong to the
-selected schema, the entire operation will be aborted. Validate This is a simple
-validation step that you can choose to perform. The metadata is validated
+to scan. GeoNetwork will look for and try to import all XML or MEF files present 
+into this directory. It is important to notice that this is the directory on the
+*server* machine and *not* on the client of the user that is doing the import.
+Import actions options are also available from bacth import (please refer to
+XML import for options you could use). Validate This is a simple validation 
+step that you can choose to perform. The metadata is validated
 against its schema. Group You have to select a group to associate to the
 imported metadata. Usually the group is the creator of the metadata set.
 Category You can specify one category to associate to your metadata in order to

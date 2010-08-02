@@ -75,7 +75,7 @@ If you use Windows, the following steps will guide you to complete the installat
 2. Follow the instructions on screen. You can choose to install sample data, install the embedded map server (based on `GeoServer <http://www.geoserver.org>`_ and the CSW 2.0.1 test client. Developers may be interested in installing the source code and installer building tools. Full source code can be found in the GeoNetwork SubVersion code repository.
 3. After completion of the installation process, a 'GeoNetwork desktop' menu will be added to your Windows Start menu under 'Programs'
 4. Click Start\>Programs\>GeoNetwork desktop\>Start server to start the Geonetwork opensource Web server. The first time you do this, the system will require about 1 minute to complete startup.
-5. Click Start\>Programs\>Geonetwork desktop\>Open GeoNetwork opensource to start using GeoNetwork opensource, or connect your Web browser to `http://localhost8080/geonetwork/ <http://localhost8080/geonetwork/>`_
+5. Click Start\>Programs\>Geonetwork desktop\>Open GeoNetwork opensource to start using GeoNetwork opensource, or connect your Web browser to `http://localhost:8080/geonetwork/ <http://localhost:8080/geonetwork/>`_
 
 .. figure:: installer.png
 

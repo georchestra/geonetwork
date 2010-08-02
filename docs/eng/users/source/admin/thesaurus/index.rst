@@ -103,21 +103,30 @@ Use the textbox and the type of search in order to search for keywords.
 Metadata editing: adding keywords
 ---------------------------------
 
-When editing metadata in ISO or Dublin core, the keyword fields auto-complete when
-editor fill the fields. Keywords available in all thesaurus know by the current node
-are returned. Editor could select one of the list or could type any other
-keywords.
+When editing metadata in ISO, it allows editors to:
+- do one or more searches in all thesaurus registered in the catalogue.
+- select one or more keywords added to the selected items list (using arrows or drag & drop) on the right.
+- add the selected keywords directly into metadata, grouping keywords by thesaurus.
 
-.. figure:: thesaurus-EditKeywords.png
+The search interface allows editors to choose the maximum number of keywords to returns, 
+and the thesaurus to search into (default is all).
 
-    *Auto-complete in keywords editor*
+.. figure:: thesaurus-KeywordSelection.png
+
+    *Keyword selection interface (editing mode)*
+
+.. figure:: thesaurus-KeywordView.png
+
+    *Keyword selection (view mode)*
 
 Search criteria: keywords
 -------------------------
 
-In the advanced search interface, the keyword field will proposed all keywords
-used in the metadata. These keywords are indexed by Lucene on creation/update of
-metadata. The number of metadata linked to all keywords available in the index are
+In the advanced search interface, search for keyword is available.
+
+By default, the keyword field will proposed all keywords used in the metadata. 
+These keywords are indexed by Lucene on creation/update of metadata. 
+The number of metadata linked to all keywords available in the index are
 display. User could type in the keyword field or click the icon to get the list of
 keywords available.
 
@@ -128,5 +137,14 @@ keywords available.
 .. figure:: thesaurus-SearchKeywordAutocomp.png
 
     *Auto-complete function in thesaurus search interface*
+
+By configuring the *config-gui.xml* file in the WEB-INF directory, search for keyword 
+using the advanced keyword selection panel is available as in the metadata editor::
+  
+ <search>
+  <!-- Display or not keyword selection panel in advanced search panel 
+   <keyword-selection-panel/> 
+  -->
+ </search>
 
 
