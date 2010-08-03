@@ -177,6 +177,34 @@ After completion of this section, you may select the Type of document that you a
 
 When done, you may click ``Save`` or ``Save and Close`` to close the editing session.
 
+
+
+Metadata validation
+-------------------
+In editing mode, editors could validate the current metadata record against standard rules and recommendations.
+
+For all standards, a first level of validation is made for XML metadata validation based on XML Schema (XSD).
+For ISO19139 records, other rules are checked:
+
+- ISO recommandations
+
+- GeoNetwork recommandations
+
+- (Optional and not available by default) INSPIRE recommandations
+
+
+The validation report display the list of rules checked and their status (pass or failed). The top checkbox allows to display only errors or all.
+
+.. figure:: validationreport.png
+
+
+.. TODO : Maybe add more details on how to solve XSD error messages ?
+
+
+
+
+
+
 Creating a Thumbnail
 --------------------
 
@@ -239,6 +267,132 @@ To Upload a Dataset, follow these steps:
 
 	*An online resource*
 
+Linking metadata
+----------------
+
+Metadata records in ISO19139 could be related together based on ISO elements using for example:
+
+- parent identifier
+
+- operates on element for service metadata
+
+
+Using GeoNetwork editor, user could define 3 types of relation:
+
+- dataset metadata / service metadata (including a link to the data based on WMS layer name)
+
+- parent / child relation
+
+- feature catalogue (ISO19110) / dataset metadata (ISO19139)
+
+All relations are described in the top right corner of the metadata. The menu allows navigation from one record to the other. Only metadata records visible to current user are displayed (ie. a metadata could be linked to another one but not displayed because not published for current user).
+
+
+Parent / child relation
+~~~~~~~~~~~~~~~~~~~~~~~
+To create a child record, editors could click on the other actions menu, create child option in the search results.
+
+.. figure:: relationCreateChild.png
+
+
+Using this option, parent identifier will be automatically set up when duplicating the record.
+
+
+Editors could also link an existing metadata record using the parent identifier displayed in the advanced view, metadata section.
+Clicking on the Add or update parent metadata section on the metadata relation list will move to this view.
+Then editors should use the (+) to expand the parent identifier and click on the field to open the metadata selection panel.
+
+Once the parent selected, it will appear in the metadata relation list on the top right corner of the editor.
+
+.. figure:: relationListChild.png
+
+If a metadata record has children attached, the editor suggest the children update mechanism which propagate changes from a parent to all its children.
+The following interface define the configuration of the propagation:
+
+.. figure:: relationUpdateChild.png
+
+
+
+
+
+Metadata on dataset / metadata on service relation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Linking a dataset to a service or a service to a dataset is made using the following panel:
+
+.. figure:: relationCreateService.png
+
+Editor could define a layer name using the combo box (which try to retrieve layers from the WMS GetCapabilities document) or typing the layer name in the text field. This information is required to display the layer using the map viewer.
+
+Relation is stored in :
+
+.. code-block:: xml
+
+  <srv:operatesOn uuidref=""/>
+
+
+
+and (according to ISO CSW profil)
+
+.. code-block:: xml
+
+  <srv:coupledResource>
+    <srv:SV_CoupledResource>
+      <srv:operationName></srv:operationName>
+      <srv:identifier></srv:identifier>
+      <gco:ScopedName></gco:ScopedName>
+    </srv:SV_CoupledResource>
+  </srv:coupledResource>
+
+
+
+Only relation between records in the same catalogue are handle. Use of XLink attributes are not supported to create relation between datasets and services.
+
+
+Feature catalogue relation
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Feature catalogues are records stored in ISO 19110 standard. Relation between the 2 records are created using the link feature catalogue menu.
+
+
+
+Compute bounding box from keywords
+----------------------------------
+
+Editor can add extent information based on keyword analysis.
+
+- For each keywords
+
+- Search for the keyword in thesaurus
+
+- If keyword in the thesaurus has an extent
+
+- Add an extent with a description and a bounding box to the metadata record.
+
+
+The process could be run in 2 modes :
+
+- Add : Keep existing extent elements and add the new one at the end. Editor could clean the section after processing.
+- Replace : Remove all extent having only a bounding box (temporal, vertical and bounding polygon are not removed), and add the new one at the end.
+
+
+Editor need to select keyword from a thesaurus with spatial information. The name is added to the extent description field.
+
+.. figure:: computebbox-selectkeyword.png
+
+
+Then in the other actions menu, the compute boundinx box menus are available:
+
+.. figure:: computebbox-button.png
+
+
+The metadata is saved during the process and one extent is added for each keywords.
+
+.. figure:: computebbox-results.png
+
+
+
+
 Assigning Privileges for a Map
 ------------------------------
 
@@ -284,6 +438,41 @@ As a final step to entering metadata for a map, you should assign categories for
 .. figure:: categoriesManag.png
 
 	*Category management*
+
+
+
+Multilingual metadata in ISO19139
+---------------------------------
+Editors could create multilingual metadata using ISO 19139. A default template is provided but user could add translation to an existing record.
+
+To declare a new language in a metadata record:
+
+- First check, the main language is defined in the metadata section
+
+- then add one or more languages in the other language in the metadata section.
+
+
+
+In editing mode, each multilingual elements are composed of:
+
+- text input
+
+- language selection list (language declared on the other language section are listed here)
+
+
+
+By default, the selected language is the GUI language if language is defined in the metadata.
+
+.. figure:: editor-multilingual.png
+
+
+Optionnaly, Google translation service could be used. Translation could be suggested to the editor using the small icon right to the language selector. The translation convert the default metadata character string in the current selected language. 
+
+
+In view mode, according to GUI language : if GUI language is available in the metadata, the element is displayed in this language else the element is displayed in metadata default language.
+This behaviour is also applied to dublin core output for CSW services.
+
+
 
 Uploading a New Record using the XML Metadata Insert Tool
 =========================================================
