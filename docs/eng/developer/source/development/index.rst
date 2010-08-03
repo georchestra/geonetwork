@@ -39,62 +39,84 @@ but GeoNetwork itself does not speed up on a faster disk. You also need some spa
 for the search index which is located in ``web/WEB-INF/lucene``. Even with a lot of
 metadata the index is small so usually 10-20 Mb of space is enough.
 
-Running the software with a servlet engine
-------------------------------------------
-
 The software is run in different ways depending on the servlet container you are
 using:
 
 - **Tomcat** - You can use the manager web application to start/stop GeoNetwork. You can also use the startup.* and shutdown.* scripts located into Tomcat’s bin folder (.* means .sh or .bat depending on your OS) but this way you restart all applications you are running, not only GeoNetwork. After installation and before running GeoNetwork you must link it to Tomcat. 
 - **Jetty** - If you use the provided container you can use the scripts into GeoNetwork’s bin folder. The scripts are start-geonetwork.* and stop-geonetwork.* and you must be inside the bin folder to run them. You can use these scripts just after installation.
 
-Development
------------
+Tools
+---------------------
 
-Compiling GeoNetwork
---------------------
+The following tools are required to be installed to setup a development environment for GeoNetwork:
 
-To compile GeoNetwork you first need to install the source code during
-installation. If you do so, you get a build.xml script and a src folder with the
-full source.
+- **Java** - Developing with GeoNetwork requires a `Java Development Kit (JDK) <http://java.sun.com/javase/downloads/index_jdk5.jsp>`_ 1.5 or greater. 
 
-You also need the Ant tool to run the build script. You can download Ant from
-http://ant.apache.org. Version 1.6.5 works but any other recent version should
-be OK. Once installed, you should have the ant command in your path (on Windows
-systems, you have to open a shell to check).
+- **Maven** - GeoNetwork uses a `Maven <http://maven.apache.org/>`_ to manage the build process and the dependencies. Once is installed, you should have the mvn command in your path (on Windows systems, you have to open a shell to check).
 
-When all is in place, go inside the GeoNetwork’s root folder (the one where
-the build.xml file is located) and issue the ant command. You should see an
-output like this one::
+- **Subversion** - GeoNetwork source code is stored and versioned in a subversion repository. Depending on your operating system a variety of subversion clients are avalaible. Check in http://subversion.tigris.org/ for some alternatives.
 
-    gemini:/geonetwork/trunk# ant
-    Buildfile: build.xml
-    compile:
-    \[delete] Deleting: /geonetwork/trunk/web/WEB-INF/lib/geonetwork.jar
-    \[delete] Deleting: /geonetwork/trunk/csw/lib/csw-client.jar
-    \[delete] Deleting: /geonetwork/trunk/csw/lib/csw-common.jar
-    \[delete] Deleting: /geonetwork/trunk/gast/gast.jar
-    \[mkdir] Created dir: /geonetwork/trunk/.build
-    \[javac] Compiling 267 source files to /geonetwork/trunk/.build
-    \[javac] Note: Some input files use or override a deprecated API.
-    \[javac] Note: Recompile with -Xlint:deprecation for details.
-    \[javac] Note: Some input files use unchecked or unsafe operations.
-    \[javac] Note: Recompile with -Xlint:unchecked for details.
-    \[copy] Copying 1 file to /geonetwork/trunk/.build
-    \[jar] Building jar: /geonetwork/trunk/web/WEB-INF/lib/geonetwork.jar
-    \[jar] Building jar: /geonetwork/trunk/csw/lib/csw-client.jar
-    \[jar] Building jar: /geonetwork/trunk/csw/lib/csw-common.jar
-    \[jar] Building jar: /geonetwork/trunk/gast/gast.jar
-    \[delete] Deleting directory /geonetwork/trunk/.build
-    BUILD SUCCESSFUL
-    Total time: 9 seconds
+- **Ant** - GeoNetwork uses `Ant <http://ant.apache.org/>`_ to build the installer.  Version 1.6.5 works but any other recent version should be OK. Once installed, you should have the ant command in your path (on Windows systems, you have to open a shell to check).
+
+- **Sphinx** - To create the GeoNetwork documentation in a nice format `Sphinx <http://sphinx.pocoo.org/>`_  is used.
+
+Check out source code
+---------------------
+
+Check out the source code from trunk from the GeoNetwork subversion repository to develop using the latest development code::
+
+     gemini:/geonetwork# svn co https://geonetwork.svn.sourceforge.net/svnroot/geonetwork/trunk trunk
+
+or from a stable branch for versions less likely to change often::
+
+     gemini:/geonetwork# svn co https://geonetwork.svn.sourceforge.net/svnroot/geonetwork/branches/2.4.x branch24
+
+Build GeoNetwork
+----------------
+
+Once you checked out the code from subversion repository, go inside the GeoNetwork’s root folder and execute the maven build command::
+
+    gemini:/geonetwork# cd trunk
+    gemini:/geonetwork/trunk# mvn clean install
+    
+    
+If the build is succesful you'll get an output like::
+
+    [INFO] 
+    [INFO] 
+    [INFO] ------------------------------------------------------------------------
+    [INFO] Reactor Summary:
+    [INFO] ------------------------------------------------------------------------
+    [INFO] GeoNetwork opensource ................................. SUCCESS [1.825s]
+    [INFO] Caching xslt module ................................... SUCCESS [1.579s]
+    [INFO] Jeeves modules ........................................ SUCCESS [1.140s]
+    [INFO] Oaipmh modules ........................................ SUCCESS [0.477s]
+    [INFO] ArcSDE module (dummy-api) ............................. SUCCESS [0.503s]
+    [INFO] GeoNetwork Web module ................................. SUCCESS [31.758s]
+    [INFO] GeoServer module ...................................... SUCCESS [16.510s]
+    [INFO] Gast module ........................................... SUCCESS [24.961s]
+    [INFO] ------------------------------------------------------------------------
+    [INFO] ------------------------------------------------------------------------
+    [INFO] BUILD SUCCESSFUL	
+    [INFO] ------------------------------------------------------------------------
+    [INFO] Total time: 1 minute 19 seconds
+    [INFO] Finished at: Tue Aug 03 16:49:15 CEST 2010
+    [INFO] Final Memory: 79M/123M
+    [INFO] ------------------------------------------------------------------------
     gemini:/geonetwork/trunk#
 
-The compilation phase, if it has success, puts all jars into the proper place
-(most of them will be copied into web/geonetwork/WEB-INF/lib and
-web/intermap/WEB-INF/lib). After this phase, simply restart GeoNetwork to see
-the effects.
+and your local maven repository should contain the GeoNetwork artifacts created (``$HOME/.m2/repository/org/geonetwork-opensource``).
 
+Run embedded jetty server
+`````````````````````````
+
+To run GeoNetwork with embedded jetty server you can issue in web folder the next maven goal::
+
+    gemini:/geonetwork/trunk# cd web
+    gemini:/geonetwork/trunk/web# mvn jetty:run
+    
+After a moment, GeoNetwork should be accessible at: http://localhost:8080/geonetwork    
+    
 Source code documentation
 `````````````````````````
 
@@ -106,11 +128,21 @@ see documentation generated by the Javadoc tool, go to:
   Javadoc <../../../javadoc/geonetwork/index.html>`_
 
 Creating the installer
-``````````````````````
+----------------------
 
-You can generate an installer by running the ant command
-inside the installer directory.
+To run the build script that creates the installer you need the Ant tool. You can generate an installer by running the ant command
+inside the installer directory::
 
+    gemini:/geonetwork/trunk# cd installer
+    gemini:/geonetwork/trunk/installer# ant
+    Buildfile: build.xml
+
+    setProperties:
+    ...
+    BUILD SUCCESSFUL
+    Total time: 31 seconds
+    gemini:/geonetwork/trunk/installer#
+    
 Both platform independent and Windows specific installers are generated by
 default.
 
@@ -125,3 +157,17 @@ Creating an installer with an embedded JRE requires you to first download and
 unzip the JRE in a folder jre1.5.0_12 at the project root
 level. Refer to the installer-config-win-jre.xml file for
 exact configuration.
+
+Eclipse setup
+-------------
+
+Generate Eclipse project files
+``````````````````````````````
+To generate the eclipse .project and .classpath files execute::
+
+    gemini:/geonetwork/trunk# mvn eclipse:eclipse
+    
+Import modules into Eclipse
+```````````````````````````
+
+TODO

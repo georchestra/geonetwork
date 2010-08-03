@@ -47,7 +47,7 @@ harvesting type plus some classes for the main page. These are:
 Java code
 `````````
 
-The harvesting package is located in ``src/org/fao/geonet/kernel/harvest``. Here
+The harvesting package is located in ``web/src/main/java/org/fao/geonet/kernel/harvest``. Here
 too, there is one subfolder for each harvesting type. The most important classes
 for the implementor are:
 
@@ -67,7 +67,7 @@ XSL stylesheets
 ```````````````
 
 Stylesheets are spread in some folders and are used by both the JavaScript code
-and the server. The main folder is located at ``web/geonetwork/xsl/harvesting``.
+and the server. The main folder is located at ``web/src/webapp/xsl/harvesting``.
 Here there are some general stylesheets, plus one subfolder for each harvesting
 type. The general stylesheets are:
 
@@ -111,7 +111,7 @@ In each subfolder, there are usually 4 files:
 As you may have guessed, all client side stylesheets (those used by JavaScript
 code) start with the prefix client-.
 
-Another set of stylesheets are located in ``web/geonetwork/xsl/xml/harvesting``
+Another set of stylesheets are located in ``web/src/webapp/xsl/xml/harvesting``
 and are used by the xml.harvesting.get service. This service is used by the
 JavaScript code to retrieve all the nodes the system is currently harvesting
 from. This implies that a stylesheet (one for each harvesting type) must be
@@ -119,7 +119,7 @@ provided to convert from the internal setting structure to an XML structure
 suitable to clients.
 
 The last file to take into consideration contains all localised strings and is
-located at ``web/geonetwork/loc/XX/xml/harvesting.xml`` (where XX refers to a
+located at ``web/src/webapp/loc/XX/xml/harvesting.xml`` (where XX refers to a
 language code). This file is used by both JavaScript code and the server.
 
 Data storage
@@ -136,23 +136,23 @@ Guidelines
 
 To add a new harvesting type, follow these steps:
 
-#.  Add the proper folder in ``web/scripts/harvesting``, maybe copying an already
+#.  Add the proper folder in ``web/src/webapp/scripts/harvesting``, maybe copying an already
     existing one.
 
 #.  Edit the harvesting.js file to include the new type (edit both constructor
     and init methods).
 
-#.  Add the proper folder in ``web/xsl/harvesting`` (again, it is easy to copy
+#.  Add the proper folder in ``web/src/webapp/xsl/harvesting`` (again, it is easy to copy
     from an already existing one).
 
-#.  Edit the stylesheet ``web/xsl/harvesting/harvesting.xsl`` and add the new type
+#.  Edit the stylesheet ``web/src/webapp/xsl/harvesting/harvesting.xsl`` and add the new type
 
-#.  Add the transformation stylesheet in ``web/xsl/xml/harvesting``. Its name must
+#.  Add the transformation stylesheet in ``web/src/webapp/xsl/xml/harvesting``. Its name must
     match the string used for the harvesting type.
 
 #.  Add the Java code in a package inside ``org.fao.geonet.kernel.harvest.harvester``.
 
-#.  Add proper strings in ``web/geonetwork/loc/XX/xml/harvesting.xml``.
+#.  Add proper strings in ``web/src/webapp/loc/XX/xml/harvesting.xml``.
 
 Here is a list of steps to follow when adding a new harvesting type:
 
