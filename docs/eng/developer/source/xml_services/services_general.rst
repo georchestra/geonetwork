@@ -52,7 +52,7 @@ The result will contain:
 
 - A guest cannot see any user.
 
-**Request example**::
+Request example::
 
     <request>
         <type>site</type>
@@ -63,9 +63,7 @@ Response
 ````````
 
 Each type element produces an XML subtree so the response to the previous
-request is like this:
-
-**Response example**::
+request is like this::
 
     <info>
         <site>...</site>
@@ -89,8 +87,8 @@ Here follows the structure of each subtree:
       format
     - **subVersion**: Additional version notes, like
       ’alpha-1’ or ’beta-2’.
-
-  **Example site information**::
+      
+Example site information::
   
       <site>
           <name>My site</name>
@@ -113,7 +111,7 @@ Here follows the structure of each subtree:
     - **label**: The localised labels used to show the
       category on screen. See :ref:`xml_response_categories`.
 
-  **Example response for categories**::
+Example response for categories::
   
       <categories>
           <category id="1">
@@ -140,7 +138,7 @@ Here follows the structure of each subtree:
     - **label**: The localised labels used to show the
       group on screen. See :ref:`xml_response_groups`.
 
-  **Example response for groups**::
+Example response for groups::
   
       <groups>
           <group id="1">
@@ -165,7 +163,7 @@ Here follows the structure of each subtree:
     - **label**: The localised labels used to show the
       operation on screen. See :ref:`xml_response_operations`.
 
-  **Example response for operations**::
+Example response for operations::
   
       <operations>
           <operation id="0">
@@ -190,7 +188,7 @@ Here follows the structure of each subtree:
     - **label**: The localised labels used to show the
       region on screen. See :ref:`xml_response_regions`.
 
-  **Example response for regions**::
+Example response for regions::
   
       <regions>
           <region id="303">
@@ -212,7 +210,7 @@ Here follows the structure of each subtree:
     - **name**: Source’s name
     - **UUID**: Source’s unique identifier
 
-  **Example response for a source**::
+Example response for a source::
   
       <sources>
           <source>
@@ -232,15 +230,15 @@ Here follows the structure of each subtree:
     - **name**: The user’s name. Used for display purposes.
     - **profile**: User’s profile, like Administrator,
       Editor, UserAdmin etc...
-    - **address**:
-    - **state**:
-    - **zip**:
-    - **country**:
-    - **email**:
-    - **organisation**:
+    - **address**: The user’s address.
+    - **state**: The user’s state.
+    - **zip**: The user’s address zip code.
+    - **country**: The user’s country.
+    - **email**: The user’s email address.
+    - **organisation**: The user’s organisation.
     - **kind**:
 
-  **Example response for a user**::
+Example response for a user::
   
       <users>
           <user>
@@ -259,10 +257,10 @@ Here follows the structure of each subtree:
           </user>
       </users>
 
-localised entities
+Localised entities
 ``````````````````
 
-localised entities have a general label element which contains the
+Localised entities have a general label element which contains the
 localised strings in all supported languages. This element has as many
 children as the supported languages. Each child has a name that reflect the
 language code while its content is the localised text. Here is an example of
@@ -285,7 +283,7 @@ remote host and retrieve the list of site ids.
 Request
 ```````
 
-**The service’s request**::
+The service’s request::
 
     <request>
         <site>
@@ -299,7 +297,7 @@ Request
         <params>...</params>
     </request>
 
-**Where**:
+Where:
 
 #.  **site**: A container for site information where the request will be forwarded.
 
@@ -315,7 +313,7 @@ Request
 
 #.  **params**: This is just a container for the request that must be executed remotely.
 
-**Request for info from a remote server**::
+Request for info from a remote server::
 
     <request>
         <site>

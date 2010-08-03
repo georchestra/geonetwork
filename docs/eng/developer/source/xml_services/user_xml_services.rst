@@ -20,17 +20,15 @@ Parameters:
 
 - **None**
 
-**User list request example**:
+User list request example::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/xml.user.list
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post request::
-
+  Post request:
   <?xml version="1.0" encoding="UTF-8"?>
   <request />
 
@@ -55,7 +53,7 @@ Here follows the structure of the response:
 - **organisation**: User organisation/department
 - **kind**: Kind of organisation
 
-**User list response example**::
+User list response example::
 
   <?xml version="1.0" encoding="UTF-8"?>
   <response>
@@ -114,17 +112,15 @@ Parameters:
 
 - **id:** User identifier (multiple id elements can be espeficied)
 
-**User groups list request example**:
+User groups list request example::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/xml.usergroups.list
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post request::
-
+  Post request:
   <?xml version="1.0" encoding="UTF-8"?>
   <request>
     <id>3</id>
@@ -140,7 +136,7 @@ Here follows the structure of the response:
 - name: Group name
 - description: Group description
 
-**User groups list response example**::
+User groups list response example::
 
   <?xml version="1.0" encoding="UTF-8"?>
   <groups>
@@ -203,17 +199,15 @@ Parameters:
 - **groups**: Group identifier to set for the user, can be multiple **groups** elements
 - **groupid**: Group identifier
 
-**User create request example**:
+User create request example::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/user.update
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post request::
-
+  Post request:
   <request>
     <operation>**newuser**</operation>
     <username>samantha</username>
@@ -309,17 +303,15 @@ Parameters:
 
 **Remarks**: If an optional parameter it's not provided the value it's updated in the database with an empty string.
 
-**Update user information request example**:
+Update user information request example::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/user.update
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post request::
-
+  Post request:
   <?xml version="1.0" encoding="UTF-8"?>
   <request>
     <operation>**editinfo**</operation>
@@ -404,17 +396,15 @@ Parameters:
 - **password**: (mandatory) User new password
 - **profile**: (mandatory) User profile
 
-**Reset user password request example**:
+Reset user password request example::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/user.update
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post request::
-
+  Post request:
   <?xml version="1.0" encoding="UTF-8"?>
   <request>
     <operation>**resetpw**</operation>
@@ -477,17 +467,15 @@ Parameters:
 
 **Remarks**: If an optional parameter is not provided the value is updated in the database with an empty string.
 
-**Current user info update request example**:
+Current user info update request example::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/user.infoupdate
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post request::
-
+  Post request:
   <request>
     <name>admin</name>
     <surname>admin</surname>
@@ -517,7 +505,7 @@ Errors
 Change current authenticated user password (user.pwupdate)
 ``````````````````````````````````````````````````````````
 
-The**user.pwupdate** service can be used to
+The **user.pwupdate** service can be used to
 change the password of the current user authenticated.
 
 Requires authentication: Yes
@@ -531,9 +519,7 @@ Parameters:
 
 - **newPassword**: New password to set for the user
 
-Example:
-
-**User update password request example**::
+Example::
 
   <request>
       <password>admin</password>
@@ -581,17 +567,15 @@ Parameters:
 - **id**: (mandatory) User identifier to
   delete
 
-**User remove request example**:
+User remove request example::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/user.remove
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post request::
-
+  Post request:
   <request>
       <id>2</id>
   </request>

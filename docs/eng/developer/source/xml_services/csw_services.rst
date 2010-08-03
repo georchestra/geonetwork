@@ -55,17 +55,15 @@ GET request::
 
   http://localhost:8080/geonetwork/srv/en/csw?request=GetCapabilities&service=CSW&acceptVersions=2.0.2&acceptFormats=application%2Fxml
 
-POST request
+POST request::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/csw
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post data::
-
+  Post data:
   <?xml version="1.0" encoding="UTF-8"?>
   <csw:GetCapabilities xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" service="CSW">
   <ows:AcceptVersions xmlns:ows="http://www.opengis.net/ows">
@@ -76,17 +74,15 @@ Post data::
   </ows:AcceptFormats>
   </csw:GetCapabilities>
 
-SOAP request
+SOAP request::
 
-Url:: 
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/csw
 
-Mime-type:
-application/soap+xml
+  Mime-type:
+  application/soap+xml
 
-Post data::
-
+  Post data:
   <?xml version="1.0" encoding="UTF-8"?>
   <env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope">
   <env:Body>
@@ -119,31 +115,27 @@ GET request::
 
   http://localhost:8080/geonetwork/srv/en/csw?request=DescribeRecord&service=CSW&version=2.0.2&outputFormat=application%2Fxml&schemaLanguage=http%3A%2F%2Fwww.w3.org%2FXML%2FSchema&namespace=csw%3Ahttp%3A%2F%2Fwww.opengis.net%2Fcat%2Fcsw%2F2.0.2
 
-POST request
+POST request::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/csw
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post data::
-
+  Post data:
   <?xml version="1.0" encoding="UTF-8"?>
   <csw:DescribeRecord xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" service="CSW" version="2.0.2" outputFormat="application/xml" schemaLanguage="http://www.w3.org/XML/Schema" />
 
-SOAP request
+SOAP request::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/csw
 
-Mime-type:
-application/soap+xml
+  Mime-type:
+  application/soap+xml
 
-Post data::
-
+  Post data:
   <?xml version="1.0" encoding="UTF-8"?>
   <env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope">
     <env:Body>
@@ -167,34 +159,30 @@ GET request::
 
   http://localhost:8080/geonetwork/srv/en/csw?request=GetRecordById&service=CSW&version=2.0.2&elementSetName=full&id=5df54bf0-3a7d-44bf-9abf-84d772da8df1
 
-POST request
+POST request::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/csw
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post data::
-
+  Post data:
   <?xml version="1.0" encoding="UTF-8"?>
     <csw:GetRecordById xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" service="CSW" version="2.0.2">
     <csw:Id>5df54bf0-3a7d-44bf-9abf-84d772da8df1</csw:Id>
     <csw:ElementSetName>full</csw:ElementSetName>
   </csw:GetRecordById>
 
-SOAP request
+SOAP request::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/csw
 
-Mime-type:
-application/soap+xml
+  Mime-type:
+  application/soap+xml
 
-Post data::
-
+  Post data:
   <?xml version="1.0" encoding="UTF-8"?>
   <env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope">
     <env:Body>
@@ -217,23 +205,20 @@ To retrieve non public metadata a previous**xml.user.login** service invocation 
 Request examples
 ^^^^^^^^^^^^^^^^
 
-GET request (using CQL language)
+GET request (using CQL language)::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/csw?request=GetRecords&service=CSW&version=2.0.2&namespace=xmlns%28csw%3Dhttp%3A%2F%2Fwww.opengis.net%2Fcat%2Fcsw%2F2.0.2%29%2Cxmlns%28gmd%3Dhttp%3A%2F%2Fwww.isotc211.org%2F2005%2Fgmd%29&constraint=AnyText+like+%25africa%25&constraintLanguage=CQL_TEXT&constraint_language_version=1.1.0&typeNames=csw%3ARecord
 
-POST request
+POST request::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/csw
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post data::
-
+  Post data:
   <?xml version="1.0" encoding="UTF-8"?>
   <csw:GetRecords xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" service="CSW" version="2.0.2">
     <csw:Query typeNames="csw:Record">
@@ -248,17 +233,15 @@ Post data::
     </csw:Query>
   </csw:GetRecords>
 
-SOAP request
+SOAP request::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/csw
 
-Mime-type:
-application/soap+xml
+  Mime-type:
+  application/soap+xml
 
-Post data::
-
+  Post data:
   <?xml version="1.0" encoding="UTF-8"?>
   <env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope">
     <env:Body>
@@ -289,17 +272,15 @@ requires user authentification to be invoqued.
 Insert operation example
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-POST request
+POST request::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/csw
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post data::
-
+  Post data:
   <?xml version="1.0" encoding="UTF-8"?>
   <csw:Transaction xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" version="2.0.2" service="CSW">
     <csw:Insert>
@@ -309,10 +290,9 @@ Post data::
     </csw:Insert>
   </csw:Transaction>
 
-Response
+Response::
 
-Url::
-
+  Url:
   <?xml version="1.0" encoding="UTF-8"?>
   <csw:TransactionResponse xmlns:csw="http://www.opengis.net/cat/csw/2.0.2">
     <csw:TransactionSummary>
@@ -325,17 +305,15 @@ Url::
 Update operation example
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-**POST request**
+POST request::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/csw
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post data::
-
+  Post data:
   <?xml version="1.0" encoding="UTF-8"?>
   <csw:Transaction xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" version="2.0.2" service="CSW">
     <csw:Update>
@@ -353,9 +331,7 @@ Post data::
     </csw:Update>
   </csw:Transaction>
 
-**Response**
-
-::
+Response::
 
   <?xml version="1.0" encoding="UTF-8"?>
   <csw:TransactionResponse xmlns:csw="http://www.opengis.net/cat/csw/2.0.2">
@@ -369,17 +345,15 @@ Post data::
 Delete operation example
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-**POST request**
+POST request::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/csw
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post data::
-
+  Post data:
   <?xml version="1.0" encoding="UTF-8"?>
   <csw:Transaction xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" xmlns:ogc="http://www.opengis.net/ogc" version="2.0.2" service="CSW">
     <csw:Delete>
@@ -394,9 +368,7 @@ Post data::
     </csw:Delete>
   </csw:Transaction>
 
-**Response**
-
-::
+Response::
 
   <?xml version="1.0" encoding="UTF-8"?>
   <csw:TransactionResponse xmlns:csw="http://www.opengis.net/cat/csw/2.0.2">

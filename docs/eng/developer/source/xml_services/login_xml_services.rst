@@ -23,17 +23,15 @@ Parameters:
 
 - **password** (mandatory): Password for the user to authenticate
 
-**Login request example**:
+Login request example::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/xml.user.login
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post request::
-
+  Post request:
   <?xml version="1.0" encoding="UTF-8"?>
   <request>
       <username>admin</username>
@@ -43,9 +41,7 @@ Post request::
 Response
 ^^^^^^^^
 
-When user authentication is succesful the next response is received:
-
-**Login succesful raw response example**::
+When user authentication is succesful the next response is received::
 
   OK
   
@@ -76,9 +72,7 @@ Errors
 - **User login failed (error id: user-login)**, when login
   information is not valid. Returned 400 HTTP code
 
-Example returning **User login failed** exception:
-
-**Login error response example**::
+Example returning **User login failed** exception::
   
   <?xml version="1.0" encoding="UTF-8"?>
   <error id="user-login">
@@ -143,24 +137,22 @@ Parameters:
 
 - **None**:This request requires no parameters, just it's required sending the **JSESSIONID** cookie value.
 
-**Logout request example**:
+Logout request example::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/xml.user.logout
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post request::
-
+  Post request:
   <?xml version="1.0" encoding="UTF-8"?>
   <request/>
 
 Response
 ^^^^^^^^
 
-**Logout response example**::
+Logout response example::
 
   <?xml version="1.0" encoding="UTF-8"?>
   <ok />

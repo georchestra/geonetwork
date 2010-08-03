@@ -20,17 +20,15 @@ Parameters:
 
 - **None**
 
-**Group list request example**:
+Group list request example::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/xml.group.list
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post request::
-
+  Post request::
   <?xml version="1.0" encoding="UTF-8"?>
   <request />
 
@@ -49,7 +47,7 @@ Here follows the structure of the response:
   supported by GeoNetwork. Each translated label it's enclosed
   in a tag that identifies the language code
 
-**Group list response example**::
+Group list response example::
 
   <?xml version="1.0" encoding="UTF-8"?>
   <response>
@@ -119,17 +117,15 @@ Parameters:
 - **email**: Mail address for the
   group
 
-**Group update request example**:
+Group update request example::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/group.update
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post request::
-
+  Post request:
   <request>
       <id>2</id>
       <name>sample</name>
@@ -184,17 +180,15 @@ Parameters:
   languages supported by GeoNetwork. Each translated label
   it's enclosed in a tag that identifies the language code
 
-**Group label update request example**:
+Group label update request example::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/xml.group.update
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post request::
-
+  Post request:  
   <request>
       <group id="2">
           <label>
@@ -206,7 +200,7 @@ Post request::
 Response
 ^^^^^^^^
 
-**Group label update response example**::
+Group label update response example::
 
   <?xml version="1.0" encoding="UTF-8"?>
   <ok />
@@ -237,17 +231,15 @@ Parameters:
 
 - **id**: (mandatory) Group identifier to delete
 
-**Group remove request example**:
+Group remove request example::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/group.remove
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post request::
-
+  Post request:
   <request>
       <id>2</id>
   </request>

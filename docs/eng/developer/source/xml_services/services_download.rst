@@ -34,7 +34,7 @@ Response
 
 The service returns a copy of the request parameters, a copy of the metadata record xml and an HTML version of the license annex generated from the metadata record by the XSL metadata-license-annex.xsl (see web/geonetwork/xsl directory). :ref:`xml_file_disclaimer` shows an example of output.
 
-**Example of an xml.file.disclaimer response for a GeoNetwork node (Note: the <metadata> and <license> elements are not shown in full as they are too big).**::
+Example of an xml.file.disclaimer response for a GeoNetwork node (Note: the <metadata> and <license> elements are not shown in full as they are too big)::
 
     <response>
         <id>22</id>

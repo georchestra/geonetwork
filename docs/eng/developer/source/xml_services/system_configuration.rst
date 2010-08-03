@@ -101,10 +101,7 @@ following elements:
     - **password**:
     - **profile**:
 
-:ref:`xml_response_config_get` shows an example of
-xml.config.get response.
-
-**Example of xml.config.get response**::
+Example of xml.config.get response::
 
     <config>
         <site>
