@@ -32,7 +32,7 @@ Called with a metadata id or uuid, one or more file names (if more than one file
 Response
 ````````
 
-The service returns a copy of the request parameters, a copy of the metadata record xml and an HTML version of the license annex generated from the metadata record by the XSL metadata-license-annex.xsl (see web/geonetwork/xsl directory). :ref:`xml_file_disclaimer` shows an example of output.
+The service returns a copy of the request parameters, a copy of the metadata record xml and an HTML version of the license annex generated from the metadata record by the XSL metadata-license-annex.xsl (see web/geonetwork/xsl directory).
 
 Example of an xml.file.disclaimer response for a GeoNetwork node (Note: the <metadata> and <license> elements are not shown in full as they are too big)::
 
@@ -71,11 +71,11 @@ To signify acceptance of the license and download the resources you should use t
 Errors
 ``````
 
-- IllegalArgumentException: Request must contain a UUID or an ID parameter.
+- **IllegalArgumentException**: Request must contain a UUID or an ID parameter.
 
-- IllegalArgumentException: Metadata not found.
+- **IllegalArgumentException**: Metadata not found.
 
-- OperationNowAllowedException: you don't have download permission over this record.
+- **OperationNowAllowedException**: you don't have download permission over this record.
 
 xml.file.download
 -----------------
@@ -110,7 +110,7 @@ Note: this service is protected against users and/or applications that do not go
 Errors
 ``````
 
-- IllegalArgumentException: Request must contain a UUID or an ID parameter.
+- **IllegalArgumentException**: Request must contain a UUID or an ID parameter.
 
-- OperationNowAllowedException: you don't have download permission over this record.
+- **OperationNowAllowedException**: you don't have download permission over this record.
 

@@ -82,7 +82,7 @@ following:
     always mandatory or is mandatory if another one is
     missing.
 
-- codelist: A container for information about a codelist. It has a
+- **codelist**: A container for information about a codelist. It has a
   name attribute which contains the qualified name of the codelist.
 
   - **entry \[1..n]**: A container for a codelist entry. There can
@@ -131,7 +131,7 @@ Beside the normal exceptions management, the
 service can encounter some errors trying to retrieve an element/codelist
 information. In this case, the object is copied verbatim to the response
 with the addition of an error attribute that describes the encountered
-error. The returned errors are described in :ref:`table_schema_errors`. Here follows an example of such response::
+error. Here follows an example of such response::
 
     <response>
         <element schema="iso19139" name="blablabla" error="not-found"/>
@@ -139,7 +139,7 @@ error. The returned errors are described in :ref:`table_schema_errors`. Here fol
 
 .. _table_schema_errors:
 
-**Possible errors returned by xml.schema.info service:**
+Possible errors returned by xml.schema.info service:
 
 =================   ============================================================
 Error code          Description

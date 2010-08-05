@@ -32,14 +32,11 @@ Request
 This service accepts requests in GET/POST and XML form. The input
 parameters are:
 
-**UUID** the universal unique identifier of the metadata
+- **UUID** the universal unique identifier of the metadata
 
-**format** which format to use. Can be one of: simple, partial, full.
+- **format** which format to use. Can be one of: simple, partial, full.
 
-**skipUuid** If provided, tells
-the exporter to not export the metadata’s UUID. Without the UUID (which is a
-unique key inside the database) the metadata can be imported over and over
-again. Can be one of: true, false. The default value is false.
+- **skipUuid** If provided, tells the exporter to not export the metadata’s UUID. Without the UUID (which is a unique key inside the database) the metadata can be  imported over and over again. Can be one of: true, false. The default value is false.
 
 Response
 ````````

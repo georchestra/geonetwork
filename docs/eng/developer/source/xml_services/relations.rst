@@ -8,11 +8,9 @@ Introduction
 
 This chapter describes general services used to get and set relations between
 metadata records inside GeoNetwork. The association is performed by a Relations
-table which stores a metadata id and a metadata relatedId fields (see :ref:`table_relations`).
+table which stores a metadata id and a metadata relatedId fields.
 
-.. _table_relations:
-
-**Structure of table Relations:**
+Structure of table Relations:
 
 ==========  ============================    ====================================
 Field       Datatype                        Description
@@ -83,7 +81,7 @@ Each metadata element has the following structure:
 - **geonet:info**: A container for GeoNetwork related
   information
 
-**Example of a metadata record**::
+Example of a metadata record::
 
     <metadata>
         <title>Globally threatened species of the world</title>

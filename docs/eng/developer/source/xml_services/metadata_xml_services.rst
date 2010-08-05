@@ -18,7 +18,7 @@ Request
 
 Search configuration parameters (all values are optional)
 
-- **remote**: Search in local catalog or in a remote catalog. Values: off (default), on****
+- **remote**: Search in local catalog or in a remote catalog. Values: off (default), on
 
 - **extended**: Values: on, off (default)
 
@@ -33,7 +33,7 @@ Search configuration parameters (all values are optional)
 Search parameters (all values are optional):
 
 - **eastBL, southBL, northBL, westBL**:
-  Bounding box to restrict the search****
+  Bounding box to restrict the search
 
 - **relation**: Bounding box criteria.
   Values: equal, overlaps (default), encloses, fullyOutsideOf,
@@ -45,7 +45,7 @@ Search parameters (all values are optional):
 
 - **abstract**: Metadata abstract
 
-- themeKey: Metadata keywords. To search for several use a value like "Global" or "watersheds"
+- **themeKey**: Metadata keywords. To search for several use a value like "Global" or "watersheds"
 
 - **template**: Indicates if search for templates or not. Values: n (default), y
 
@@ -61,53 +61,47 @@ Search parameters (all values are optional):
 
 - **attrset**:
 
-- dateFrom: Filter metadata created after specified date
+- **dateFrom**: Filter metadata created after specified date
 
 - **dateTo**: Filter metadata created before specified date
 
 - **category**: Metadata category. If not specified, search all categories
 
-**Request to search for all metadata example**:
+Request to search for all metadata example::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/xml.search
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post request::
-
+  Post request:
   <?xml version="1.0" encoding="UTF-8"?>
   <request />
 
-**Request with free text search example**:
+Request with free text search example::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/xml.search
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post request::
-
+  Post request:s
   <?xml version="1.0" encoding="UTF-8"?>
   <request>
     <any>africa</any>
   </request>
 
-**Request with a geographic search example**:
+Request with a geographic search example::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/xml.search
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post request::
-
+  Post request:
   <?xml version="1.0" encoding="UTF-8"?>
   <request>
     <any>africa</any>
@@ -120,17 +114,15 @@ Post request::
     <attrset>geo</attrset>
   </request>
 
-**Request to search using dates and keywords example**:
+Request to search using dates and keywords example::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/xml.search
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post request::
-
+  Post request:
   <?xml version="1.0" encoding="UTF-8"?>
   <request>
     <title>africa</title>
@@ -146,7 +138,7 @@ The response is the metadata record with additional
 **geonet:info** section. The main fields for
 **geonet:info** are:
 
-- response: Response container.
+- **response**: Response container.
 
   - **summary**: Attribute
     **count** indicates the number of metadata records retrieved
@@ -185,7 +177,7 @@ The response is the metadata record with additional
       - **score**: Value indicating
         the accuracy of search
 
-**Metadata search response example**::
+Metadata search response example::
   
   <?xml version="1.0" encoding="UTF-8"?>
   <response from="1" to="7">
@@ -248,17 +240,15 @@ Parameters (one of them mandatory):
 
 - **id**: Metadata internal identifier
 
-**Get metadata request example**:
+Get metadata request example::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/xml.metadata.get
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post request::
-
+  Post request:
   <?xml version="1.0" encoding="UTF-8"?>
   <request>
     <uuid>aa9bc613-8eef-4859-a9eb-4df35d8b21e4</uuid>
@@ -295,7 +285,7 @@ The response is the metadata record with additional **geonet:info** section. The
 
 - **ownername**: Metadata owner name
 
-**Get metadata response example**::
+Get metadata response example::
 
   <?xml version="1.0" encoding="UTF-8"?>
   <Metadata xmlns:geonet="http://www.fao.org/geonetwork"
@@ -326,12 +316,10 @@ The response is the metadata record with additional **geonet:info** section. The
     </geonet:info>
   </Metadata>
 
-Exceptions:
-
-- **Request must contain a UUID or an ID**, when no uuid or id parameter is provided
-
 Errors
 ^^^^^^
+
+- **Request must contain a UUID or an ID**, when no uuid or id parameter is provided
 
 - **Operation not allowed (error id:
   operation-not-allowed)**, when the user is not allowed
@@ -391,23 +379,21 @@ Parameters:
 
 - **attrset**:
 
-- dateFrom: Filter metadata created after specified date
+- **dateFrom**: Filter metadata created after specified date
 
 - **dateTo**: Filter metadata created before specified date
 
 - **category**: Metadata category. If not specified, search all categories
 
-**RSS search request example**:
+RSS search request example::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/rss.search
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post request::
-
+  Post request:
   <?xml version="1.0" encoding="UTF-8"?>
   <request>
     <georss>simplepoint</georss>
@@ -430,28 +416,27 @@ Here follows the principal fields of the response:
   the RSS response
 
   - **title**: RSS channel title
-  - description: RSS channel description
-  - item: Metadata RSS item (one item for each metadata
+  - **description**: RSS channel description
+  - **item**: Metadata RSS item (one item for each metadata
     retrieved)
 
-    - title: Metadata title
-    - link: Link to show metadata page. Additional link
+    - **title**: Metadata title
+    - **link**: Link to show metadata page. Additional link
       elements (with rel="alternate") to OGC WXS services,
       shapefile/images files, Google KML, etc. can be returned
       depending on metadata
-    - description: Metadata description
-    - pubDate: Metadata publication date
-    - media: Metadata thumbnails
-    - georrs:point: Bounding box in georss simplepoint
+    - **description**: Metadata description
+    - **pubDate**: Metadata publication date
+    - **media**: Metadata thumbnails
+    - **georrs:point**: Bounding box in georss simplepoint
       format
 
-**RSS latest response example**:
+RSS latest response example::
 
-Mimetype:
-application/rss+xml
+  Mimetype:
+  application/rss+xml
 
-Response::
-
+  Response:
   <?xml version="1.0" encoding="UTF-8"?>
   <rss xmlns:media="http://search.yahoo.com/mrss/" xmlns:georss="http://www.georss.org/georss" xmlns:gml="http://www.opengis.net/gml" version="2.0">
     <channel>
@@ -502,17 +487,15 @@ Parameters:
   - **simplepoint**: Bounding box in georss simplepoint format
   - **default**: Bounding box in georss GML format
 
-**RSS latest request example**:
+RSS latest request example::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/rss.latest
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post request::
-
+  Post request:
   <?xml version="1.0" encoding="UTF-8"?>
   <request>
     <georss>default</georss>
@@ -527,28 +510,27 @@ Here follows the principal fields of the response:
 - **channel**: This is the container for the RSS response
 
   - **title**: RSS channel title
-  - description: RSS channel description
-  - item: Metadata RSS item (one item for each metadata
+  - **description**: RSS channel description
+  - **item**: Metadata RSS item (one item for each metadata
     retrieved)
 
-    - title: Metadata title
-    - link: Link to show metadata page. Additional link
+    - **title**: Metadata title
+    - **link**: Link to show metadata page. Additional link
       elements (with rel="alternate") to OGC WXS services,
       shapefile/images files, Google KML, etc. can be returned
       depending on metadata
-    - description: Metadata description
-    - pubDate: Metadata publication date
-    - media: Metadata thumbnails
-    - georrs:where: Bounding box with the metadata
+    - **description**: Metadata description
+    - **pubDate**: Metadata publication date
+    - **media**: Metadata thumbnails
+    - **georrs:where**: Bounding box with the metadata
       extent
 
-**RSS latest response example**:
+RSS latest response example::
 
-Mimetype:
-application/rss+xml
+  Mimetype:
+  application/rss+xml
 
-Response::
-
+  Response:
   <?xml version="1.0" encoding="UTF-8"?>
   <rss xmlns:media="http://search.yahoo.com/mrss/" xmlns:georss="http://www.georss.org/georss"
     xmlns:gml="http://www.opengis.net/gml" version="2.0">
@@ -609,12 +591,12 @@ Request to metadata.admin service
 
 Parameters:
 
-- ****id: Identifier of metadata to update****
+- **id**: Identifier of metadata to update
 
-- **_G_O**: **(can be multiple elements)**
+- **_G_O**: (can be multiple elements)
 
-  - G: Group identifier
-  - O: Operation identifier
+  - **G**: Group identifier
+  - **O**: Operation identifier
 
 Operation identifiers:
 
@@ -625,19 +607,17 @@ Operation identifiers:
 - 4: dynamic
 - 5: featured
 
-**Request metadata update operations allowed example**:
+Request metadata update operations allowed example:
 
-**POST**
+**POST**::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/metadata.admin
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post request::
-
+  Post request:
   <?xml version="1.0" encoding="UTF-8"?>
   <request>
     <id>6</id>
@@ -645,10 +625,9 @@ Post request::
     <_1_1 />
   </request>
 
-**GET**
+**GET**::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/metadata.admin?id=6&_1_2&_1_1
 
 Response to metadata.admin service
@@ -656,7 +635,7 @@ Response to metadata.admin service
 
 The response contains the identifier of the metadata updated.
 
-**Response metadata update operations allowed example**::
+Response metadata update operations allowed example::
 
   <?xml version="1.0" encoding="UTF-8"?>
   <request>
@@ -671,15 +650,15 @@ Errors
   authenticated or his profile has no rights to execute the
   service. Returned 401 HTTP code
 
-- Metadata not found (error id: metadata-not-found) if not
+- **Metadata not found (error id: metadata-not-found)** if not
   exists a metadata record with the identifier provided
 
-- ERROR: insert or update on table "operationallowed"
-  violates foreign key 'operationallowed_operationid_fkey », if an
+- **ERROR: insert or update on table "operationallowed"
+  violates foreign key 'operationallowed_operationid_fkey »**, if an
   operation identifier provided is not valid
 
-- ERROR: insert or update on table "operationallowed"
-  violates foreign key 'operationallowed_groupid_fkey », if a
+- **ERROR: insert or update on table "operationallowed"
+  violates foreign key 'operationallowed_groupid_fkey »**, if a
   group identifier provided is not valid
 
 Massive update privilegies (metadata.massive.update.privileges)
@@ -696,56 +675,48 @@ Request to metadata.select service
 
 Parameters:
 
-- ****id: Identifier of metadata to select****
+- **id**: Identifier of metadata to select
 
 - **selected**: Selection state. Values: add, add-all, remove, remove-all
 
-**Select metadata request examples**
+Select all metadata allowed example::
 
-**Select all metadata allowed**
-
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/metadata.select
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post request::
-
+  Post request:
   <?xml version="1.0" encoding="UTF-8"?>
   <request>
     <selected>add-all</selected>
   </request>
 
-**Select a metadata record**
+Select a metadata record example::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/metadata.select
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post request::
-
+  Post request:
   <?xml version="1.0" encoding="UTF-8"?>
   <request>
     <id>2</id>
     <selected>add</selected>
   </request>
 
-**Clear metadata** selection
+Clear metadata selection example::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/metadata.select
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post request::
-
+  Post request:
   <?xml version="1.0" encoding="UTF-8"?>
   <request>
     <selected>remove-all</selected>
@@ -756,7 +727,7 @@ Response to metadata.select service
 
 The response contains the number of metadata selected.
 
-**Response select metadata example**::
+Response select metadata example::
 
   <?xml version="1.0" encoding="UTF-8"?>
   <request>
@@ -768,10 +739,9 @@ Request to metadata.massive.update.privileges
 
 Parameters:
 
-- **_G_O**: **(can be multiple
-  elements)**
-  - G: Group identifier
-  - O: Operation identifier
+- **_G_O**: (can be multiple elements)
+  - **G**: Group identifier
+  - **O**: Operation identifier
 
 Operation identifiers:
 
@@ -782,29 +752,26 @@ Operation identifiers:
 - 4: dynamic
 - 5: featured
 
-**Request metadata massive update privilegies example**:
+Request metadata massive update privilegies example:
 
-**POST**
+**POST**::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/metadata.massive.update.privileges
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post request::
-
+  Post request:
   <?xml version="1.0" encoding="UTF-8"?>
   <request>
     <_1_2 />
     <_1_1 />
   </request>
 
-**GET**
+**GET**::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/metadata.massive.update.privileges?_1_2&_1_1
 
 Response to metadata.massive.update.privileges
@@ -822,15 +789,15 @@ Errors
   authenticated or his profile has no rights to execute the
   service. Returned 401 HTTP code
 
-- Metadata not found (error id: metadata-not-found) if not
+- **Metadata not found (error id: metadata-not-found)** if not
   exists a metadata record with the identifier provided
 
-- ERROR: insert or update on table "operationallowed"
-  violates foreign key 'operationallowed_operationid_fkey », if an
+- **ERROR: insert or update on table "operationallowed"
+  violates foreign key 'operationallowed_operationid_fkey »**, if an
   operation identifier provided is not valid
 
-- ERROR: insert or update on table "operationallowed"
-  violates foreign key 'operationallowed_groupid_fkey », if a
+- **ERROR: insert or update on table "operationallowed"
+  violates foreign key 'operationallowed_groupid_fkey »**, if a
   group identifier provided is not valid
 
 Metadata ownership services
@@ -858,21 +825,19 @@ Request to metadata.select service
 
 Parameters:
 
-- ****id: Identifier of metadata to select (can be multiple elements)****
+- **id**: Identifier of metadata to select (can be multiple elements)
 
 - **selected**: Selection state. Values: add, add-all, remove, remove-all
 
-**Select metadata request example**:
+Select metadata request example::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/metadata.select
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post request::
-  
+  Post request:
   <?xml version="1.0" encoding="UTF-8"?>
   <request>
     <selected>add-all</selected>
@@ -883,7 +848,7 @@ Response to metadata.select service
 
 The response contains the number of metadata selected.
 
-**Select metadata response example**::
+Select metadata response example::
 
   <?xml version="1.0" encoding="UTF-8"?>
   <request>
@@ -897,20 +862,18 @@ Once the metadata records have been selected can be
 **metadata.massive.newowner** invoked with the next
 parameters:
 
-- **user**: (mandatory) New owner user identifier****
-- **group**: (mandatory) New owner group user identifier****
+- **user**: (mandatory) New owner user identifier
+- **group**: (mandatory) New owner group user identifier
 
-**Transfer ownership request example**:
+Transfer ownership request example::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/metadata.massive.newowner
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post request::
-
+  Post request:
   <?xml version="1.0" encoding="UTF-8"?>
   <request>
     <user>2</user>
@@ -957,17 +920,15 @@ Example: In the next example we are going to transfer the
 ownership and privileges of metadata owned of user John (id=2) in
 group RWS (id=5) to user Samantha(id=7) in group NLR (id=6)
 
-**Transfer ownership request example**:
+Transfer ownership request example::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/xml.ownership.transfer
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post request::
-
+  Post request:
   <?xml version="1.0" encoding="UTF-8"?>
   <request>
     <sourceUser>2</sourceUser>
@@ -987,7 +948,7 @@ Here follows the structure of the response:
   - **privileges**: Transferred privileges
   - **metadata**: Transferred metadata records
 
-**Transfer ownership response example**::
+Transfer ownership response example::
 
   <?xml version="1.0" encoding="UTF-8"?>
   <response>
@@ -1020,17 +981,15 @@ Parameters:
 
 - **None**
 
-**Retrieve metadata owners request example**:
+Retrieve metadata owners request example::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/xml.ownership.editors
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post request::
-
+  Post request:
   <?xml version="1.0" encoding="UTF-8"?>
   <request />
 
@@ -1049,7 +1008,7 @@ Here follows the structure of the response:
     - **surname**: User surname
     - **profile**: User profile
 
-**Retrieve metadata editors response example**::
+Retrieve metadata editors response example::
 
   <?xml version="1.0" encoding="UTF-8"?>
   <root>
@@ -1090,19 +1049,17 @@ Parameters:
 
 - **id**: (mandatory) User identifier of
   the user to check to which groups/users can be transferred the
-  ownership/privilegies of her metadata****
+  ownership/privilegies of her metadata
 
-**Retrieve ownership groups request example**:
+Retrieve ownership groups request example::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/xml.ownership.groups
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post request::
-
+  Post request:
   <?xml version="1.0" encoding="UTF-8"?>
   <request>
     <id>2</id>
@@ -1124,7 +1081,7 @@ Here follows the structure of the response:
 
       - **id,surname, name**: Metadata user owner information
 
-**Retrieve ownership groups response example**::
+Retrieve ownership groups response example::
 
   <?xml version="1.0" encoding="UTF-8"?>
   <response>
@@ -1227,17 +1184,15 @@ Parameters:
   should be validated before inserting in the catalog. Values:
   on, off (default)
 
-**Insert metadata request example**:
+Insert metadata request example::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/metadata.insert
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post request::
-
+  Post request:
   <?xml version="1.0" encoding="UTF-8"?>
   <request>
     <group>2</group>
@@ -1264,7 +1219,7 @@ If validate parameter is set to "on" and the provided metadata
 is not valid confirming the xsd schema an exception report is
 returned.
 
-**Validation metadata report**::
+Validation metadata report::
 
   <?xml version="1.0" encoding="UTF-8"?>
   <error id="xsd-validation-error">
@@ -1351,7 +1306,7 @@ Request
 
 Parameters:
 
-- **id**: (mandatory) Identifier of the metadata to update****
+- **id**: (mandatory) Identifier of the metadata to update
 
 - **version**: (mandatory) This parameter
   is used to check if another user has updated the metadata
@@ -1370,16 +1325,15 @@ Parameters:
 
 - **data** (mandatory) Contains the metadata record
 
-**Update metadata request example**:
+Update metadata request example::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/metadata.update
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post request::
+  Post request:
 
   <?xml version="1.0" encoding="UTF-8"?>
   <request>
@@ -1441,17 +1395,15 @@ Parameters:
 
 - **id**: (mandatory) Identifier of the metadata to delete
 
-**Delete metadata request example**:
+Delete metadata request example::
 
-Url::
-
+  Url:
   http://localhost:8080/geonetwork/srv/en/metadata.delete
 
-Mime-type:
-application/xml
+  Mime-type:
+  application/xml
 
-Post request::
-
+  Post request:
   <?xml version="1.0" encoding="UTF-8"?>
   <request>
     <id>10</id>
@@ -1484,830 +1436,5 @@ Errors
   - The user has edit rights over the metadata
   - The user is a Reviewer and/or UserAdmin and the
     metadata groupOwner is one of his groups
-
-Harvesting services
--------------------
-
-Introduction
-````````````
-
-This chapter provides a detailed explanation of the GeoNetwork’s
-harvesting services. These services allow a complete control over the
-harvesting behaviour. They are used by the web interface and can be
-used by any other client.
-
-xml.harvesting.get
-``````````````````
-
-Retrieves information about one or all configured harvesting nodes.
-
-Request
-^^^^^^^
-
-Called with no parameters returns all nodes. Example::
-
-  <request/>
-
-Otherwise, an id parameter can be specified::
-
-  <request>
-    <id>123</id>
-  </request>
-
-Response
-^^^^^^^^
-
-When called with no parameters the service provide its output
-inside a nodes container. You get as many node elements as are
-configured. :ref:`xml_harvesting_get` shows an example
-of output.
-
-**Example of an xml.harvesting.get response for a GeoNetwork node**::
-
-  <nodes>
-      <node id="125" type="geonetwork">
-          <site>
-              <name>test 1</name>
-              <UUID>0619cc50-708b-11da-8202-000d9335aaae</uuid>
-              <host>localhost</host>
-              <port>8080</port>
-              <servlet>geonetwork</servlet>
-              <account>
-                  <use>false</use>
-                  <username />
-                  <password />
-              </account>
-          </site>
-          <searches>
-              <search>
-                  <freeText />
-                  <title />
-                  <abstract />
-                  <keywords />
-                  <digital>false</digital>
-                  <hardcopy>false</hardcopy>
-                  <source>
-                      <UUID>0619cc50-708b-11da-8202-000d9335906e</uuid>
-                      <name>Food and Agriculture organisation</name>
-                  </source>
-              </search>
-          </searches>
-          <options>
-              <every>90</every>
-              <oneRunOnly>false</oneRunOnly>
-              <status>inactive</status>
-          </options>
-          <info>
-              <lastRun />
-              <running>false</running>
-          </info>
-          <groupsCopyPolicy>
-              <group name="all" policy="copy"/>
-              <group name="mygroup" policy="createAndCopy"/>
-          </groupsCopyPolicy>
-          <categories>
-              <category id="4"/>
-          </categories>
-      </node>
-  </nodes>
-
-If you specify an id, you get a response like that one in
-:ref:`xml_response_webdav` (for a WebDAV node).
-
-**Example of an xml.harvesting.get response for a WebDAV node**::
-
-  <node id="165" type="webdav">
-      <site>
-          <name>test 1</name>
-          <UUID>0619cc50-708b-11da-8202-000d9335aaae</uuid>
-          <url>http://www.mynode.org/metadata</url>
-          <icon>default.gif</icon>
-          <account>
-              <use>true</use>
-              <username>admin</username>
-              <password>admin</password>
-          </account>
-      </site>
-      <options>
-          <every>90</every>
-          <oneRunOnly>false</oneRunOnly>
-          <recurse>false</recurse>
-          <validate>true</validate>
-          <status>inactive</status>
-      </options>
-      <privileges>
-          <group id="0">
-              <operation name="view" />
-          </group>
-          <group id="14">
-              <operation name="download" />
-          </group>
-      </privileges>
-      <categories>
-          <category id="2"/>
-      </categories>
-      <info>
-          <lastRun />
-          <running>false</running>
-      </info>
-  </node>
-
-The node’s structure has a common XML format, plus some
-additional information provided by the harvesting types. In the
-following structure, each element has a cardinality specified using
-the \[x..y] notation, where x and y denote the minimum and the
-maximum values. The cardinality \[1..1] is omitted for clarity.
-
-- **node**: The root element. It has a
-  mandatory **id** attribute that represents the
-  internal identifier and a mandatory type attribute which
-  indicates the harvesting type.
-  
-  - **site**: A container for site
-    information.
-
-    - **name (string)**: The node’s
-      name used to describe the harvesting.
-    - **UUID (string)**: This is a
-      system generated unique identifier associated to the
-      harvesting node. This is used as the source field into
-      the Metadata table to group all metadata from the remote
-      node.
-    - account: A container for account
-      information.
-
-      - **use (boolean)**: true means
-        that the harvester will use the provided username
-        and password to authenticate itself. The
-        authentication mechanism depends on the harvesting
-        type.
-      - **username (string)**:
-        Username on the remote node.
-      - **password (string)**:
-        Password on the remote node.
-
-  - options: A container for generic options.
-
-    - **every (integer):** Harvesting
-      interval in minutes.
-    - **oneRunOnly (boolean)**: After
-      the first run, the entry’s status will be set to
-      inactive.
-    - **status (string)**: Indicates if
-      the harvesting from this node is stopped (inactive) or
-      if the harvester is waiting for the timeout
-      (active).
-
-  - **privileges \[0..1]**: A container
-    for privileges that must be associated to the harvested
-    metadata. This optional element is present only if the
-    harvesting type supports it.
-
-    - **group \[0..n]**: A container for
-      allowed operations associated to this group. It has the
-      id attribute which value is the identifier of a
-      GeoNetwork group.
-
-      - **operation \[0..n]**:
-        Specifies an operation to associate to the
-        containing group. It has a name attribute which
-        value is one of the supported operation names. The
-        only supported operations are:
-        **view**,
-        **dynamic**,
-        **featured**.
-
-  - **categories \[0..1]**: This is a
-    container for categories to assign to each imported
-    metadata. This optional element is present if the harvesting
-    type supports it.
-
-    - **category (integer) \[0..n]**:
-      Represents a local category and the id attribute is its
-      local identifier.
-
-  - **info**: A container for general
-    information.
-
-    - **lastRun (string)**: The lastRun
-      element will be filled as soon as the harvester starts
-      harvesting from this entry. The value is the
-    - **running (boolean)**: True if
-      the harvester is currently running.
-
-  - **error**: This element will be
-    present if the harvester encounters an error during
-    harvesting.
-
-    - **code (string)**: The error
-      code, in string form.
-    - **message (string)**: The
-      description of the error.
-    - **object (string)**: The object
-      that caused the error (if any). This element can be
-      present or not depending on the case.
-
-Errors
-^^^^^^
-
-- ObjectNotFoundEx If the id parameter is provided but the node cannot be found.
-
-xml.harvesting.add
-``````````````````
-
-Create a new harvesting node. The node can be of any type
-supported by GeoNetwork (GeoNetwork node, web folder etc...). When a
-new node is created, its status is set to inactive. A call to the
-xml.harvesting.start service is required to start harvesting.
-
-Request
-^^^^^^^
-
-The service requires an XML tree with all information the
-client wants to add. In the following sections, default values are
-given in parenthesis (after the parameter’s type) and are used when
-the parameter is omitted. If no default is provided, the parameter
-is mandatory. If the type is boolean, only the true and false
-strings are allowed.
-
-All harvesting nodes share a common XML structure that must be
-honoured. Please, refer to the previous section for elements
-explanation. Each node type can add extra information to that
-structure. The common structure is here described:
-
-- node: The root container. The type attribute is mandatory
-  and must be one of the supported harvesting types.
-
-  - site \[0..1]
-
-    - name (**string**, ”)
-    - account \[0..1]
-
-      - use (**boolean**,
-        ’false’)
-      - username (**string**,
-        ”)
-      - password (**string**,
-        ”)
-
-  - options \[0..1]
-
-    - every (**integer**, ’90’)
-    - oneRunOnly (**boolean**,
-      ’false’)
-
-  - **privileges \[0..1]**: Can be omitted
-    but doing so the harvested metadata will not be visible.
-    Please note that privileges are taken into account only if
-    the harvesting type supports them.
-
-    - **group \[0..n]**: It must have
-      the **id** attribute which value should
-      be the identifier of a GeoNetwork group. If the id is
-      not a valid group id, all contained operations will be
-      discarded.
-
-      - **operation \[0..n]**: It must
-        have a **name** attribute which
-        value must be one of the supported operation
-        names.
-
-  - **categories \[0..1]**: Please, note
-    that categories will be assigned to metadata only if the
-    harvesting type supports them.
-
-    - **category (integer) \[0..n]**:
-      The mandatory id attribute is the category’s local
-      identifier.
-
-Please note that even if clients can store empty values (”)
-for many parameters, before starting the harvesting entry those
-parameters should be properly set in order to avoid errors.
-
-In the following sections, the XML structures described
-inherit from this one here so the common elements have been removed
-for clarity reasons (unless they are containers and contain new
-children).
-
-Standard GeoNetwork harvesting
-
-To create a node capable of harvesting from another GeoNetwork
-node, the following XML information should be provided:
-
-- **node**: The type attribute is mandatory
-  and must be GeoNetwork.
-
-  - **site**
-
-    - **host (string, ”)**: The
-      GeoNetwork node’s host name or IP address.
-    - **port (string, ’80’)**: The port
-      to connect to.
-    - **servlet (string,
-      ’geonetwork’)**: The servlet name chosen in the
-      remote site.
-
-  - **searches \[0..1]**: A container for
-    search parameters.
-
-    - **search \[0..n]**: A container
-      for a single search on a siteID. You can specify 0 or
-      more searches. If no search element is provided, an
-      unconstrained search is performed.
-
-      - **freeText (string, ”)** :
-        Free text to search. This and the following
-        parameters are the same used during normal search
-        using the web interface.
-      - **title (string, ”)**: Search
-        the title field.
-      - **abstract (string, ”)** :
-        Search the abstract field.
-      - **keywords (string, ”)** :
-        Search the keywords fields.
-      - **digital (boolean,
-        ’false’)**: Search for metadata in digital
-        form.
-      - **hardcopy (boolean,
-        ’false’)**: Search for metadata in printed
-        form.
-      - **source (string, ”)**: One
-        of the sources present on the remote node.
-
-  - **groupsCopyPolicy \[0..1]**:
-    Container for copy policies of remote groups. This mechanism
-    is used to retain remote metadata privileges.
-
-    - **group**: There is one copy
-      policy for each remote group. This element must have 2
-      mandatory attributes: **name** and
-      **policy**. The name attribute is the
-      remote group’s name. If the remote group is renamed, it
-      is not found anymore and the copy policy is skipped. The
-      policy attribute represents the policy itself and can
-      be: **copy**,
-      **createAndCopy**,
-      **copyToIntranet**. copy means that
-      remote privileges are copied locally if there is locally
-      a group with the same name as the
-      **name** attribute. createAndCopy works
-      like **copy** but the group is created
-      locally if it does not exist. copyToIntranet works only
-      for the remote group named all, which represents the
-      public group. This policy copies privileges of the
-      remote group named **all** to the local
-      Intranet group. This is useful to restrict metadata
-      access.
-
-:ref:`xml_request_harvesting_add` shows an example
-of an XML request to create a GeoNetwork node.
-
-**Example of an xml.harvesting.add request for a GeoNetwork node**::
-
-  <node type="geonetwork">
-      <site>
-          <name>South Africa</name>
-          <host>south.africa.org</host>
-          <port>8080</port>
-          <servlet>geonetwork</servlet>
-          <account>
-              <use>true</use>
-              <username>admin</username>
-              <password>admin</password>
-          </account>
-      </site>
-      <searches>
-          <search>
-              <freeText />
-              <title />
-              <abstract />
-              <keywords />
-              <digital>true</digital>
-              <hardcopy>false</hardcopy>
-              <source>0619cc50-708b-11da-8202-000d9335906e</source>
-          </search>
-      </searches>
-      <options>
-          <every>90</every>
-          <oneRunOnly>false</oneRunOnly>
-      </options>
-      <groupsCopyPolicy>
-          <group name="all" policy="copy"/>
-          <group name="mygroup" policy="createAndCopy"/>
-      </groupsCopyPolicy>
-      <categories>
-          <category id="4"/>
-      </categories>
-  </node>
-
-WebDAV harvesting
-
-To create a web DAV node, the following XML information should
-be provided.
-
-- **node**: The type attribute is mandatory
-  and must be WebDAV.
-
-  - site
-
-    - **url (string, ”)**: The URL to
-      harvest from. If provided, must be a valid URL starting
-      with ’HTTP://’.
-    - **icon (string, ’default.gif’)**
-      : Icon file used to represent this node in the search
-      results. The icon must be present into the
-      images/harvesting folder.
-
-  - options
-
-    - **recurse (boolean, ’false’)**:
-      When true, folders are scanned recursively to find
-      metadata.
-    - **validate (boolean, ’false’)**:
-      When true, GeoNetwork will validate every metadata
-      against its schema. If the metadata is not valid, it
-      will not be imported.
-
-This type supports both privileges and categories assignment.
-
-:ref:`xml_request_harvesting_add_entry` shows an example of an XML request to create a web DAV entry.
-
-**Example of an xml.harvesting.add request for a WebDAV node**::
-
-  <node type="webdav">
-      <site>
-          <name>Asia remote node</name>
-          <url>http://www.mynode.org/metadata</url>
-          <icon>default.gif</icon>
-          <account>
-              <use>true</use>
-              <username>admin</username>
-              <password>admin</password>
-          </account>
-      </site>
-      <options>
-          <every>90</every>
-          <oneRunOnly>false</oneRunOnly>
-          <recurse>false</recurse>
-          <validate>true</validate>
-      </options>
-      <privileges>
-          <group id="0">
-              <operation name="view" />
-          </group>
-          <group id="14">
-              <operation name="features" />
-          </group>
-      </privileges>
-      <categories>
-          <category id="4"/>
-      </categories>
-  </node>
-
-CSW harvesting
-
-To create a node to harvest from a CSW capable server, the
-following XML information should be provided:
-
-- **node**: The type attribute is mandatory
-  and must be csw.
-
-  - **site**
-
-    - **capabilitiesUrl (string)**: URL
-      of the capabilities file that will be used to retrieve
-      the operations address.
-    - **icon (string, ’default.gif’)**
-      : Icon file used to represent this node in the search
-      results. The icon must be present into the
-      images/harvesting folder.
-
-  - **searches \[0..1]**
-
-    - **search \[0..n]**: Contains
-      search parameters. If this element is missing, an
-      unconstrained search will be performed.
-
-      - **freeText (string, ”)** :
-        Search the entire metadata.
-      - **title (string, ”)**: Search
-        the dc:title queryable.
-      - **abstract (string, ”)**:
-        Search the dc:abstract queryable.
-      - **subject (string, ”)**:
-        Search the dc:subject queryable.
-
-This type supports both privileges and categories assignment.
-
-:ref:`xml_request_harvesting_add_csw` shows an example of an XML request to create a CSW entry.
-
-**Example of an xml.harvesting.add request for a CSW node**::
-
-  <node type="csw">
-      <site>
-          <name>Minos CSW server</name>
-          <capabilitiesUrl>http://www.minos.org/csw?request=GetCapabilities
-              &amp;amp;service=CSW&amp;amp;acceptVersions=2.0.1</capabilitiesUrl>
-          <icon>default.gif</icon>
-          <account>
-              <use>true</use>
-              <username>admin</username>
-              <password>admin</password>
-          </account>
-      </site>
-      <options>
-          <every>90</every>
-          <oneRunOnly>false</oneRunOnly>
-          <recurse>false</recurse>
-          <validate>true</validate>
-      </options>
-      <privileges>
-          <group id="0">
-              <operation name="view" />
-          </group>
-          <group id="14">
-              <operation name="features" />
-          </group>
-      </privileges>
-      <categories>
-          <category id="4"/>
-      </categories>
-  </node>
-
-Response
-^^^^^^^^
-
-The service’s response is the output of the xml.harvesting.get service of the newly created node.
-
-Summary
-^^^^^^^
-
-The following table:
-
-Summary of features of the supported harvesting types
-.....................................................
-
-Harvesting type
-
-Authentication
-
-Privileges ?
-
-Categories ?
-
-GeoNetwork
-
-native
-
-through policies
-
-yes
-
-Web DAV
-
-HTTP digest
-
-yes
-
-yes
-
-CSW
-
-HTTP Basic
-
-yes
-
-yes
-
-xml.harvesting.update
-`````````````````````
-
-This service is responsible for changing the node’s parameters.
-A typical request has a node root element and must include the id attribute::
-
-  <node id="24">
-    ...
-  </node>
-
-The body of the node element depends on the node’s type. The
-update policy is this:
-
-- If an element is specified, the associated parameter is updated.
-
-- If an element is not specified, the associated parameter will not be changed.
-
-So, you need to specify only the elements you want to change.
-However, there are some exceptions:
-
-#. **privileges**: If this element is omitted, privileges will not be changed. If specified, new privileges will replace the old ones.
-
-#. **categories**: Like the previous one.
-
-#. **searches**: Some harvesting types support multiple searches on the same remote note. When supported, the updated behaviour should be like the previous ones.
-
-Note that you cannot change the type of an node once it has been created.
-
-Request
-^^^^^^^
-
-The request is the same as that used to add an entry. Only the
-id attribute is mandatory.
-
-Response
-^^^^^^^^
-
-The response is the same as the xml.harvesting.get called on
-the updated entry.
-
-xml.harvesting.remove/start/stop/run
-````````````````````````````````````
-
-These services are put together because they share a common
-request interface. Their purpose is obviously to remove, start, stop
-or run a harvesting node. In detail:
-
-#. **start**: When created, a node is in the inactive state. This operation makes it active, that is the  countdown is started and the harvesting will be performed at the timeout.
-
-#. **stop**: Makes a node inactive. Inactive nodes are never harvested.
-
-#. **run**: Just start the harvester now. Used to test the harvesting.
-
-Request
-^^^^^^^
-
-A set of ids to operate on. Example::
-
-  <request>
-    <id>123</id>
-    <id>456</id>
-    <id>789</id>
-  </request>
-
-If the request is empty, nothing is done.
-
-Response
-^^^^^^^^
-
-The same as the request but every id has a status attribute
-indicating the success or failure of the operation. For example, the
-response to the previous request could be::
-
-  <request>
-    <id status="ok">123</id>
-    <id status="not-found">456</id>
-    <id status="inactive">789</id>
-  </request>
-
-:ref:`table_service_status` summarises, for each service, the possible status values.
-
-.. _table_service_status:
-
-Summary of status values
-........................
-
-Status value
-
-remove
-
-start
-
-stop
-
-run
-
-ok
-
-+
-
-+
-
-+
-
-+
-
-not-found
-
-+
-
-+
-
-+
-
-+
-
-inactive
-
--
-
--
-
--
-
-+
-
-already-inactive
-
--
-
--
-
-+
-
--
-
-already-active
-
--
-
-+
-
--
-
--
-
-already-running
-
--
-
--
-
--
-
-+
-
-MEF services
-------------
-
-Introduction
-````````````
-
-This chapter describes the services related to the Metadata Exchange Format. These services allow to import/export metadata using the MEF format.
-
-mef.export
-``````````
-
-As the name suggests, this service exports a GeoNetwork’s metadata using the MEF file format.
-
-This service is public but metadata access rules apply. For a
-partial export, the view privilege is enough but for a full export the
-download privilege is also required. Without a login step, only
-partial exports on public metadata are allowed.
-
-This service uses the system’s temporary directory to build the
-MEF file. With full exports of big data maybe it is necessary to
-change this directory. In this case, use the Java’s -D command line
-option to set the new directory before running GeoNetwork (if you use
-Jetty, simply change the script into the bin directory).
-
-Request
-^^^^^^^
-
-This service accepts requests in GET/POST and XML form. The input parameters are:
-
-**UUID** the universal unique identifier of the metadata
-
-**format** which format to use. Can be one of: simple, partial, full.
-
-**skipUuid** If provided, tells the exporter
-to not export the metadata’s UUID. Without the UUID (which is a
-unique key inside the database) the metadata can be imported over
-and over again. Can be one of: true, false. The default
-value is false.
-
-Response
-^^^^^^^^
-
-The service’s response is a MEF file with these characteristics:
-
-- the name of the file is the metadata’s UUID
-
-- the extension of the file is mef
-
-mef.import
-``````````
-
-This service is reserved to administrators and is used to import a metadata provided in the MEF format.
-
-Request
-^^^^^^^
-
-The service accepts a multipart/form-data POST request with a single **mefFile** parameter that must contain the MEF information.
-
-Response
-^^^^^^^^
-
-If all goes well, the service returns an OK element containing
-the local id of the created metadata. Example::
-
-  <ok>123</ok>
-
-Metadata ownership
-``````````````````
-
-Version 1.0 of the MEF format does not take into account the
-metadata owner (the creator) and the group owner. This implies that
-this information is not contained into the MEF file. During import,
-the user that is performing this operation will become the metadata
-owner and the group owner will be set to null.
 
 
