@@ -11,6 +11,8 @@ File import
 
 The file import facility allows you to import metadata records in XML format or MEF format or copy/paste XML metadata to insert. In order to use this facility, you have to be logged in as an editor. After the login step, go to the administration page and select the Metadata insert link.
 
+.. figure:: web-xmlimport-where.png
+
 Clicking the link, you will open the metadata import page. You have to specify a set of parameters to make the import working. Depending on the insert type you will perform:
 
 XML file import
