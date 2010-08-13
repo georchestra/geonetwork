@@ -11,6 +11,7 @@ Administration
     import/index.rst
     harvesting/index.rst
     metadata_ownership/index.rst
+    templates/index.rst
     thesaurus/index.rst
     gast/index.rst
     localization/index.rst
