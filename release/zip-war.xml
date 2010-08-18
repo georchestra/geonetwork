@@ -20,13 +20,6 @@
         <include>geoserver.war</include>
       </includes>
     </fileSet>
-    <fileSet>     
-      <directory>intermap/target</directory>
-      <outputDirectory/>
-      <includes>
-        <include>intermap.war</include>
-      </includes>
-    </fileSet>
    <!-- licenses -->
    <fileSet>
      <directory>release</directory>
@@ -40,7 +33,6 @@
     <moduleSet>
       <includes>
         <include>web</include>
-        <include>intermap</include>
       </includes>
     </moduleSet>
  </moduleSets>
