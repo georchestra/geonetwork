@@ -51,7 +51,7 @@
 		<mkdir	dir ="${propsdir}" />
 
 		<exec executable="svn" output="svn.properties">
-		    <arg value="info" />
+		    <arg value="info ../" />
 		</exec>
 		<property prefix="svn" file="svn.properties"/>
 	
