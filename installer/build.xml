@@ -50,6 +50,11 @@
 		<delete	dir ="${propsdir}" />
 		<mkdir	dir ="${propsdir}" />
 
+		<exec executable="svn" output="svn.properties">
+		    <arg value="info" />
+		</exec>
+		<property prefix="svn" file="svn.properties"/>
+	
 		<!-- Update the properties file -->
 		<propertyfile
 		    file="../web/src/main/webapp/WEB-INF/server.prop"
@@ -69,6 +74,9 @@
 			<entry  key="day" type="date" value="now" pattern="dd-M-yyyy"/>
 			<entry  key="OS" value="${OS}"/>
 			<entry	key="debugOn" value="${debugOn}"/>
+
+			<entry key="svn_revision" value="${svn.Revision}"/>
+			<entry key="svn_url" value="${svn.URL}"/>
 		  
 		</propertyfile>
 		
