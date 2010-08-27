@@ -478,6 +478,7 @@ Configuration options:
     - *Metadata language* - Required field that will define the language of the metadata. It should be the language used by the web service administrator.
     - *ISO topic category* - Used to populate the metadata. It is recommended to choose on as the topic is mandatory for the ISO standard if the hierarchical level is "datasets".
     - *Type of import* - Defines if the harvester should only produce one service metadata record or if it should loop over datasets served by the service and produce also metadata for each datasets. For each dataset the second checkbox allow to generate metadata for the dataset using an XML document referenced in the MetadataUrl attribute of the dataset in the GetCapability document. If this document is loaded but it is not valid (ie. unknown schema, bad XML format), the GetCapability document is used.
+
     For WMS, thumbnails could be created during harvesting.
     - *Icon* - The default icon displayed as attribution logo for metadata created by this harvester.
     

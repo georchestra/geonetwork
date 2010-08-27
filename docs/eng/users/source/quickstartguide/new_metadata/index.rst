@@ -391,6 +391,8 @@ The metadata is saved during the process and one extent is added for each keywor
 .. figure:: computebbox-results.png
 
 
+If user manually add keywords just before computing bounding box, then it's recommended to save your metadata record before launching the action in order to have latest keywords taken into account.
+
 
 
 Assigning Privileges for a Map
