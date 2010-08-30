@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?><metadata>
   <groupId>net.sf.saxon</groupId>
   <artifactId>saxon</artifactId>
-  <version>9.0</version>
+  <version>9.1.0.8b-patch</version>
   <versioning>
     <versions>
-      <version>9.0</version>
+      <version>9.1.0.8b-patch</version>
     </versions>
-    <lastUpdated>20091006090052</lastUpdated>
+    <lastUpdated>20100723230000</lastUpdated>
   </versioning>
 </metadata>
