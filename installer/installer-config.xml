@@ -97,9 +97,11 @@
 				<exclude name="logs/archive/*.log"/>
 			</fileset>
 
-			<singlefile target="$INSTALL_PATH/web/geonetwork.war" 
-			src="../web/target/geonetwork.war" override="true"/>
+			<!--singlefile target="$INSTALL_PATH/web/geonetwork.war" 
+			src="../web/target/geonetwork.war" override="true"/-->
 			
+			<fileset dir="../web/target/geonetwork"  targetdir="$INSTALL_PATH/web/geonetwork" />			
+
 			<fileset dir="../release/data"   targetdir="$INSTALL_PATH/data" />
 
 			<singlefile target="$INSTALL_PATH/web/geoserver.war" 
