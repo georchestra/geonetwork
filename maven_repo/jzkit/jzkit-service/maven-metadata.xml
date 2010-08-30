@@ -1,11 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?><metadata>
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
   <groupId>jzkit</groupId>
   <artifactId>jzkit-service</artifactId>
   <version>3.r260.patch</version>
   <versioning>
     <versions>
       <version>3.r260.patch</version>
+      <version>3.r260.geonetwork.patch.1</version>
     </versions>
-    <lastUpdated>20100608102318</lastUpdated>
+    <lastUpdated>20100830030651</lastUpdated>
   </versioning>
 </metadata>
