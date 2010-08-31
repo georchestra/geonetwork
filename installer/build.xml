@@ -170,7 +170,7 @@
 	<target name="wininstall">
 		<!-- create a Windows installer using launch4j -->
 
-		<property file="../web/geonetwork/WEB-INF/server.prop"/>
+		<property file="../web/src/main/webapp/WEB-INF/server.prop"/>
 
 		<echo message="Building Windows installer on ${osys} using launch4j"/>
 
