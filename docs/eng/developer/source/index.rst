@@ -5,7 +5,7 @@ Welcome to the **GeoNetwork Developer Manual**.  The manual is for those who wan
 
 Other documents:
 
-`GeoNetwork User Manual <../../../users/build/html/index.html>`_
+`GeoNetwork User Manual <../users/index.html>`_
 
 .. toctree::
     :maxdepth: 2
