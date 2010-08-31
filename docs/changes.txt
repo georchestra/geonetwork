@@ -19,11 +19,13 @@
 Thanks Sylvain for testing.
 - Fix #279: All maps are using same background layers. Harmonize size of all bbox inputs in edit and view mode.
 - Fix #280: Alignment, highlighted, etc issues in metadata edit
+- Fix #286: After click Metadata button in search results, editing a metadata show advanced edit instead of previously selected.
 - Fix #288: Show number of records to delete in massive delete confirm message
-- Fix #291: Menu "Actions on selection" issues
-- Fix #294: Security hole in GeoNetwork search
-- Fix #292: Don't show the download button if the download link is empty
 - Fix #290: Improvements in export selection to pdf
+- Fix #291: Menu "Actions on selection" issues
+- Fix #292: Don't show the download button if the download link is empty
+- Fix #294: Security hole in GeoNetwork search
+- Fix #295: Calendar << and < buttons are not visible (blue on blue). Thanks Justin Rowles for patch
 - Fix #296: Data rating window position
 - Fix #301: Update saxon to fix JIT bug (also introduce 9.1.0.8b) 
 - Fix #302: Include jdbm jar for JZKit3/Z3950 server
