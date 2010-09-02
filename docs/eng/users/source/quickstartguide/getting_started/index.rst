@@ -168,7 +168,7 @@ maximum of four sections can be consulted, as shown below.
     
         *Available services related to the resource*
 
-#. **Interactive Map**: The map service is also optional. When this button is shown, an interactive map for this layer is available and, by default, it will be displayed on the map screen of the simple search. To better visualise the map through the map viewer, **click** on **Open Map Viewer** on the bottom left of the map screen.
+#. **Interactive Map**: The map service is also optional. When this button is shown, an interactive map for this layer is available and, by default, it will be displayed on the map screen of the simple search. To better visualise the map through the map viewer, **click** on **Show Map** on the top of search results panel.
 
     .. figure:: interactive_map.png
     
