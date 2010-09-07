@@ -425,7 +425,7 @@ public class DatabaseLib
 					if (cb != null)
 						cb.loadingData();
 
-					dbms.execute(row);                   
+					dbms.execute(sql);                   
 					sb = new StringBuffer();	
 				}
             }
