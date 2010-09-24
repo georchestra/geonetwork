@@ -75,7 +75,7 @@
 	<!-- =================================================================================== -->
 	
 	<packs>
-		<pack id="core" name="Core" required="no" preselected="yes">
+		<pack id="core" name="Core" required="yes" preselected="yes">
 			<description/>
 			
 			<fileset dir="../release/bin"   targetdir="$INSTALL_PATH/bin">

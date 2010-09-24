@@ -19,7 +19,7 @@
 		</authorgroup>
 		<mediaobject id="geonetwork_logo">
 			<imageobject>
-				<imagedata contentwidth="12cm" fileref="images/GeoNetwork_opensource_logo.jpg" width="12cm"/>
+				<imagedata contentwidth="12cm" fileref="GeoNetwork_433.png" width="12cm"/>
 			</imageobject>
 		</mediaobject>
 	</bookinfo>
