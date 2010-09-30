@@ -186,11 +186,11 @@ In editing mode, editors could validate the current metadata record against stan
 For all standards, a first level of validation is made for XML metadata validation based on XML Schema (XSD).
 For ISO19139 records, other rules are checked:
 
-- ISO recommandations
+- ISO recommendations
 
-- GeoNetwork recommandations
+- GeoNetwork recommendations
 
-- (Optional and not available by default) INSPIRE recommandations
+- (Optional and not available by default) INSPIRE recommendations
 
 
 The validation report display the list of rules checked and their status (pass or failed). The top checkbox allows to display only errors or all.
