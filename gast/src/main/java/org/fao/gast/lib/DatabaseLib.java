@@ -457,6 +457,8 @@ public class DatabaseLib
 		else if (url.indexOf("postgis") != -1)
 			file = "create-db-postgis.sql";
 
+        else if (url.indexOf("sqlserver") != -1)
+            file = "create-db-sqlserver.sql";
 
 		//--- load the dbms schema
 
@@ -481,7 +483,10 @@ public class DatabaseLib
 
 		else if (url.indexOf("postgis") != -1)
 			file = "data-db-postgres.sql";
-		
+
+        else if (url.indexOf("sqlserver") != -1)
+			file = "data-db-sqlserver.sql";
+        
         //--- load the sql data
         
         return Lib.text.load(Config.getConfig().getSetupConfig() + "/sql/data/"+ file, "UTF-8");
