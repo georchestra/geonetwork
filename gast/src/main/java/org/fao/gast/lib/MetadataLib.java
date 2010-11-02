@@ -23,16 +23,10 @@
 
 package org.fao.gast.lib;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-
 import jeeves.resources.dbms.Dbms;
 import jeeves.server.resources.ProviderManager;
 import jeeves.utils.Xml;
-
 import org.fao.gast.boot.Config;
-import org.fao.gast.boot.Util;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.constants.Params;
 import org.fao.geonet.csw.common.Csw;
@@ -42,6 +36,10 @@ import org.fao.geonet.kernel.search.SearchManager;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.jdom.Element;
 import org.jdom.Namespace;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.List;
 
 //=============================================================================
 
@@ -148,7 +146,7 @@ public class MetadataLib
 				String date   = record.getChildText("createdate");
 
 				Element md = updateFixedInfo(id, Xml.loadString(data, false),
-													  uuid, date, schema, siteURL, settings);
+													  uuid, date, schema, siteURL, settings, sm);
 
 				XmlSerializer.update(dbms, id, md, date);
 				dbms.commit();
@@ -163,9 +161,14 @@ public class MetadataLib
 
 	//--------------------------------------------------------------------------
 
-	private Element updateFixedInfo(String id, Element md, String uuid, String date, String schema, String siteURL, Element settings) throws Exception
+	private Element updateFixedInfo(String id, Element md, String uuid, String date, String schema, String siteURL, Element settings, SettingManager sm) throws Exception
 	{
 		md.detach();
+
+        //--- setup result element
+
+		Element result = new Element("root");
+        result.addContent(md);
 
 		//--- setup environment
 
@@ -184,19 +187,18 @@ public class MetadataLib
 		}
 		env.addContent(new Element("siteURL")   .setText(siteURL));
 		env.addContent(settings.detach());
+		result.addContent(env);
 
-		//--- setup root element
+        boolean autoFixing = sm.getValueAsBool("system/autofixing/enabled", true);
+        if(autoFixing) {
+		    //--- do the XSLT  transformation
+		    String styleSheet = Config.getConfig().getSchemas() + "/" + schema + "/" + Geonet.File.UPDATE_FIXED_INFO;
+		    result = Xml.transform(result, styleSheet);
+        }
+        else {
 
-		Element root = new Element("root");
-
-		root.addContent(md);
-		root.addContent(env);
-
-		//--- do an XSL  transformation
-
-		String styleSheet = Config.getConfig().getSchemas() + "/" + schema + "/" + Geonet.File.UPDATE_FIXED_INFO;
-
-		return Xml.transform(root, styleSheet);
+        }
+        return result;
 	}
 
 	//---------------------------------------------------------------------------
