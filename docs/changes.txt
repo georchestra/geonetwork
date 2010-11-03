@@ -1,5 +1,45 @@
 ================================================================================
 ===
+=== GeoNetwork 2.6.1: List of changes
+===
+================================================================================
+--------------------------------------------------------------------------------
+--- Bug fixes
+--------------------------------------------------------------------------------
+- Exclude some substitutions which prevent the vertical extent element from being fully expanded
+- Fix migration scripts from 2.4.3 to 2.6.0
+- Fix search using INSPIRE annex
+- Typo fix for German language
+- Added support for sqlserver database. Thanks to Mikael Elmquist for provide sql files
+- Add in xslt converters for DIF to ISO and Thredds
+- Missing xslt to convert netcdf CDM coords to ISO keywords
+- Fix harvesting a OAI set whose name contains a "-". Thanks Tim Proescholdt
+- Fix #335: Max number of children displayed in relation panel. Added from and to parameters to allow paging in related records if needed
+- Fix #339: Wildcard search broken
+- Fix #337: Metadata indexing uses old INSPIRE setting
+- Fix #343: CSW / iso19110 / exception when requesting ISO19139 output
+- Fix #344: bad schema error when using XSL on import. Thanks murrayking
+- Fix #345: Changed postgres driver version to be compatible with Java 1.5
+- Fix #346: Javascript error when setting "singleTile: true" for a WMS layers in Map viewer
+- Fix #347: Fix thesaurus directory removed by maven
+- Fix #348: ArcSDE Harvester. Javascript error accessing config panel
+- Fix #354: XSL error message in WMC to Iso19139 transformation
+- Fix #357: Use geometry parameter in GUI search for bounding boxes, instead of lucene bbox fields. Fixed also Disjoint spatial filter
+- Fix #364: CSW queryables, added support for INSPIRE ResponsiblePartyRole and fix for ResourceIdentifier
+- Fix #365: Allow to configure LDAP uid attribute name
+- Fix #366: Add contextual label translation allowing to use full xpath for elements in metadata editor
+- Fix #367: Not possible to search on Subject queryable for a value that includes spaces
+- Fix #371: Tooltips in System Configuration have disappeared
+
+--------------------------------------------------------------------------------
+--- Changes
+--------------------------------------------------------------------------------
+- Added support for OpenLayers Map config options in map viewer
+- Service to retrieve the metadata owned by a user
+- Use redirect for login and logout services to show in browser address bar the url of main page, after login/logout
+
+================================================================================
+===
 === GeoNetwork 2.6.0: List of changes
 ===
 ================================================================================
