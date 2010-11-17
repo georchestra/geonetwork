@@ -2,7 +2,6 @@ cd ..\jetty
 del logs\*request.log*
 del logs\output.log
 move logs\geonetwork.log.* logs\archive
-move logs\intermap.log.*   logs\archive
 move logs\geoserver.log.* logs\archive
 
 rem try changing the Xmx parameter if your machine has little RAM

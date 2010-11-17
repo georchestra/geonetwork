@@ -2,7 +2,6 @@ cd ../jetty
 rm logs/*request.log*
 rm logs/output.log
 mv logs/geonetwork.log.* logs/archive
-mv logs/intermap.log.*   logs/archive
 mv logs/geoserver.log.* logs/archive
 
 # try changing the Xmx parameter if your machine has little RAM
