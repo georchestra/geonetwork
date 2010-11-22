@@ -7,6 +7,8 @@ Other documents:
 
 `GeoNetwork User Manual <../users/index.html>`_
 
+`GeoNetwork Developer Manual (PDF) <GeoNetworkDeveloperManual.pdf>`_
+
 .. toctree::
     :maxdepth: 2
 

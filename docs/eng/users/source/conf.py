@@ -44,9 +44,9 @@ copyright = u'2010 Open Source Geospatial Foundation'
 # other places throughout the built documents.
 #
 # The short X.Y version.
-version = '2.6.0'
+version = '2.6.1'
 # The full version, including alpha/beta/rc tags.
-release = '2.6.0'
+release = '2.6.1'
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
@@ -86,6 +86,8 @@ html_theme_path = ['../../themes']
 
 if os.environ.get('HTML_THEME_PATH'):
   html_theme_path.append(os.environ.get('HTML_THEME_PATH'))
+  
+geonetwork_website_path = 'http://geonetwork-opensource.org'
 
 # The style sheet to use for HTML and HTML Help pages. A file of that name
 # must exist either in Sphinx' static/ path, or in one of the custom paths
@@ -106,7 +108,7 @@ if os.environ.get('HTML_THEME_PATH'):
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
 # pixels large.
-#html_favicon = None
+html_favicon = '../../themes/geonetwork/static/favicon.ico'
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,

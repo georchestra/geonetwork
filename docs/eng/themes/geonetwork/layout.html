@@ -73,9 +73,43 @@
       {{ rendertemplate(customsidebar) }}
       {%- endif %}
       {%- block sidebarsearch %}{%- endblock %}
+      {%- if pagename in ['index', 'community', 'news', 'gallery'] %}
+        <div class="section">
+          <h3>Download</h3>
+          <p>Current release: <a href="{{ pathto('downloads') }}">{{ release }}</a></p>
+          <h3>Latest posts</h3>
+          <script language="JavaScript" src="http://landmark-project.com/feed2js/feed2js.php?src=http%3A%2F%2Fosgeo-org.1803224.n2.nabble.com%2FGeoNetwork-users-f2013074.xml&amp;num=7&amp;targ=y&amp;utf=y"  charset="UTF-8" type="text/javascript"></script>
+          <!-- <script charset="ISO-8859-1" src="http://landmark-project.com/feed2js/feed2js.php?src=http%3A%2F%2Fosgeo-org.1803224.n2.nabble.com%2FGeoNetwork-users-f2013074.xml&num=5&desc=75"></script> -->
+          <span><a href="http://osgeo-org.1803224.n2.nabble.com/GeoNetwork-users-f2013074.html">Join the discussion</a></span>
+        </div>
+      {%- endif %}
+
+        
+      {%- if pagename in ['downloads'] %}
+        <div class="section">
+          <h3>Download</h3>
+          <p>Current release: <a href="{{ pathto('downloads') }}">{{ release }}</a></p>
+          <h3>Latest commits</h3>
+          <script language="JavaScript" src="http://landmark-project.com/feed2js/feed2js.php?src=http%3A%2F%2Fosgeo-org.1803224.n2.nabble.com%2FGeoNetwork-commit-f2020497.xml&num=5&amp;targ=y&amp;utf=y"></script>
+        </div>
+      {%- endif %}
+
       <!-- <div class="section">
         <a href="http://geonetwork-opensource.org/Documentation" title="We're still porting content over to our new documentation. If it's not here, try the legacy GeoNetwork documentation">Legacy Documentation</a>
       </div> -->
+      <div class="section">
+        <a href="http://osgeo.org" title="Open Source Geospatial Foundation project"><img src="{{ pathto('_static/osgeo.png', 1) }}" alt="OSGeo project" /></a>
+      </div>
+      <div class="section">
+      	<a href="{{ pathto('acknowledgements/acknowledgements.html', 1) }}"><h3 style="margin-bottom: 5px;">Acknowledgements</h3></a>
+      	<div class="acklogo">
+		<a href="http://www.jetbrains.com/idea/" style="position: relative;display:block; width:120px; height:30px; border:0; margin:0;padding:0;text-decoration:none;text-indent:0;"><span style="margin: 0;padding: 0;position: absolute;top: -1px;left: 29px;font-size: 9px;cursor:pointer;  background-image:none;border:0;color: #0d3a9e; font-family: trebuchet ms,arial,sans-serif;font-weight: normal;text-align:left;">Can’t code without</span><img src="http://www.jetbrains.com/idea/opensource/img/all/banners/idea120x30_white.gif" alt="The best Java IDE" border="0"/></a>
+	 	</div>
+	 	<div class="acklogo">
+	 	<a href="http://www.yourkit.com"><img src="{{ pathto('_static/YourKit-logo.png', 1) }}" alt="YourKit" /></a>
+	 	</div>
+	 </div>
+	
   </div><!-- /#sidebar -->
   {%- endif %}
 {%- endmacro -%}
@@ -164,12 +198,14 @@
     <div class="wrap selfclear">
       <div id="logo"><a href="{{ pathto('index') }}">{{ shorttitle }}</a></div>
       <ul id="top-nav">
-        <li class="first"><a href="http://geonetwork-opensource.org/About.html">About</a></li>
-<!--        <li><a href="http://blog.geonetwork-opensource.org/">Blog</a></li> -->
-        <li><a href="http://geonetwork-opensource.org/Download">Download</a></li>
-        <li><a href="{{ pathto('index') }}">Documentation</a></li>
+          <li class="first"><a href="http://www.geonetwork-opensource.org/news.html">News</a></li>
+          <li><a href="{{ pathto('index') }}">Documentation</a></li>
+          <li><a href="http://www.geonetwork-opensource.org/downloads.html">Download</a></li>
+          <li><a href="http://www.geonetwork-opensource.org/community.html">Community</a></li>
+          <li><a href="http://geonetwork-opensource.org/gallery/gallery.html">Gallery</a></li>
+          <li><a href="http://trac.osgeo.org/geonetwork">Development</a></li>
       </ul>
-      
+          <br/>  
       {%- block quicksearch %}
         <form id="quick-search" action="{{ pathto('search') }}" method="get">
           <fieldset>
