@@ -84,6 +84,11 @@
 - Fix #330 Improve validation report layout. Thanks Justin Rowles. 
 - Fix #334 Web Map Viewer boudingbox taken from /root/gui/config/mapViewer subtree (Thanks Landry Breuil)
 
+fixes in 2.6.0-1
+
+- Fix migration scripts from 2.4.3 to 2.6.0
+- Exclude some substitutions which prevent the vertical extent element from being fully expanded
+
 ================================================================================
 ===
 === GeoNetwork 2.6.0RC2: List of changes
