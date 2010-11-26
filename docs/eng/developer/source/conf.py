@@ -48,6 +48,8 @@ version = '2.6.2-SNAPSHOT'
 # The full version, including alpha/beta/rc tags.
 release = '2.6.2-SNAPSHOT'
 
+language = 'en'
+
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
 #today = ''
@@ -94,10 +96,10 @@ if os.environ.get('HTML_THEME_PATH'):
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
-#html_title = html_title = project + " " + release + " " + manual
+html_title = project + " v" + release + " " + manual
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
-#html_short_title = None
+html_short_title = manual + " v" + release
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
@@ -129,10 +131,10 @@ html_last_updated_fmt = '%b %d, %Y'
 #html_additional_pages = {}
 
 # If false, no module index is generated.
-#html_use_modindex = True
+html_use_modindex = True
 
 # If false, no index is generated.
-#html_use_index = True
+html_use_index = True
 
 # If true, the index is split into individual pages for each letter.
 #html_split_index = False

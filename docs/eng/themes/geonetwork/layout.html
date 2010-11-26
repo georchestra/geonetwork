@@ -2,9 +2,10 @@
 {%- set reldelim = reldelim is not defined and '|' or reldelim %}
 {%- macro breadcrumbs() %}
 <ul id="breadcrumbs">
+  <li><a href="http://geonetwork-opensource.org">Home</a>{{ breadcrumbdelim }}</li>
   {% if pagename != 'index' %}
   {%- block rootrellink %}
-  <li><a href="{{ pathto('index') }}">{{ project }} {{ release }} Home</a>{{ breadcrumbdelim }}</li>
+  <li><a href="{{ pathto('index') }}">{{ shorttitle }}</a>{{ breadcrumbdelim }}</li>
   {%- endblock %}
 
   {%- for parent in parents %}
@@ -12,7 +13,7 @@
   {%- endfor %}
   <li>{{ title|striptags }}</li>
   {%- else %}
-  <li>{{ project }} {{ release }} Home</li>
+  <li>{{ shorttitle }}</li>
   {%- endif %}
 </ul>
 {%- endmacro %}

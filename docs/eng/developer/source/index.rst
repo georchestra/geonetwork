@@ -1,7 +1,9 @@
-Home
-====
+.. _index.rst:
 
-Welcome to the **GeoNetwork Developer Manual**.  The manual is for those who want to help with the development process, including source code, software releasing, and other administrative work.
+Developer Manual  v\ |release|
+==============================
+
+Welcome to the GeoNetwork Developer Manual  v\ |release|.  The manual is for those who want to help with the development process, including source code, software releasing, and other administrative work.
 
 Other documents:
 
