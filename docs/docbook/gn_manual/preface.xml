@@ -21,36 +21,43 @@
         </formalpara>
         <formalpara>
             <title>License Information</title>
-            <para> Copyright (c) 2007-2009 Open Source Geospatial Foundation (<ulink
+            <para> Copyright (c) 2007-2010 Open Source Geospatial Foundation (<ulink
                     url="http://www.osgeo.org">OSGeo</ulink>). </para>
         </formalpara>
-        <para>You are free to Share — to copy, distribute and transmit the work. Under the following
-            conditions: <itemizedlist>
+        <para>The GeoNetwork opensource Documentation is released under a <glossterm linkend="glos-cc">Creative Commons</glossterm> license with the following conditions.</para>
+        <para>You are free to Share (to copy, distribute and transmit) and to Remix (to adapt) the documentation under the following conditions: <itemizedlist>
                 <listitem>
-                    <para>Attribution. You must attribute the work in the manner specified by the
-                        author or licensor (but not in any way that suggests that they endorse you
-                        or your use of the work).</para>
+                    <para>Attribution. You must attribute GeoNetwork opensource documentation to `GeoNetwork opensource developers <ulink url="http://geonetwork-opensource.org" />.</para>
                 </listitem>
                 <listitem>
-                    <para>No Derivative Works. You may not alter, transform, or build upon this
-                        work.</para>
-                </listitem>
-                <listitem>
-                    <para>For any reuse or distribution, you must make clear to others the license
-                        terms of this work. The best way to do this is with a link to this web
-                        page.</para>
-                </listitem>
-                <listitem>
-                    <para>Any of the above conditions can be waived if you get permission from the
-                        copyright holder.</para>
-                </listitem>
-                <listitem>
-                    <para>Nothing in this license impairs or restricts the author's moral
-                        rights.</para>
+                    <para>Share Alike. If you alter, transform, or build upon this work, you may distribute the resulting work only under the same or similar license to this one.</para>
                 </listitem>
             </itemizedlist></para>
+            
+            <para>With the understanding that: <itemizedlist>
+                <listitem>
+                    <para>Any of the above conditions can be waived if you get permission from the copyright holder.</para>
+                </listitem>
+                <listitem>
+                    <para>Public Domain. Where the work or any of its elements is in the public domain under applicable law, that status is in no way affected by the license.</para>
+                </listitem>
+            </itemizedlist></para>
+            <para>Other Rights. In no way are any of the following rights affected by the license: <itemizedlist>
+                <listitem>
+                    <para>Your fair dealing or fair use rights, or other applicable copyright exceptions and limitations.</para>
+                </listitem>
+                <listitem>
+                    <para>The author's moral rights.</para>
+                </listitem>
+                <listitem>
+                    <para>Rights other persons may have either in the work itself or in how the work is used, such as publicity or privacy rights.</para>
+                </listitem>
+            </itemizedlist></para>
+		<para>
+		Notice: For any reuse or distribution, you must make clear to others the license terms of this work. The best way to do this is with a link to this web page.
+		</para.
         <para>You may obtain a copy of the License at <ulink
-                url="http://creativecommons.org/licenses/by-nd/3.0/">Creative Commons</ulink></para>
+                url="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</ulink></para>
         <para>The document is written in DocBook format for consistency and portability.</para>
         <formalpara>
             <title>Author Information</title>

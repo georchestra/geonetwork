@@ -51,6 +51,13 @@
             <glosssee
                 otherterm="glos-gn" />
         </glossentry>
+        <glossentry id="glos_cc">
+        	<glossterm>CC</glossterm>
+        	<glossdef>
+        		<para>GeoNetwork documentation is released under the Creative Commons Attribution-ShareAlike 3.0 Unported License.
+        Find more information at http://creativecommons.org/licenses/by-sa/3.0/</para>
+        	</glossdef>
+        </glossentry>
         <glossentry
             id="glos-xml">
             <glossterm>XML</glossterm>

@@ -1,5 +1,7 @@
 .. _glossary:
 
+:sorted:
+
 Glossary
 ========
 
@@ -29,6 +31,15 @@ Glossary
         application to manage spatially referenced resources through the web. 
         http://geonetwork-opensource.org
     
+    GPL
+        The GNU General Public License is a free, copyleft license for software and other kinds of works.
+        GeoNetwork opensource is released under the GPL 2 license. 
+        http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+    
+    Creative Commons
+        GeoNetwork documentation is released under the Creative Commons Attribution-ShareAlike 3.0 Unported License.
+        Find more information at http://creativecommons.org/licenses/by-sa/3.0/
+	
     XML
         Extensible Markup Language is a general-purpose specification for
         creating custom markup languages.
