@@ -8,6 +8,7 @@ Administration
 
     configuration/index.rst
     administration/index.rst
+    cswserver/index.rst
     import/index.rst
     harvesting/index.rst
     metadata_ownership/index.rst
