@@ -29,6 +29,7 @@ GeoNetwork is able to harvest from the following sources (for more details see b
 #. A CSW 2.0.1 or 2.0.2 catalogue server.
 #. An OAI-PMH server.
 #. An OGC service using its GetCapabilities document. These include WMS, WFS, WPS and WCS services.
+#. An ArcSDE server.
 
 Mechanism overview
 ------------------
@@ -323,6 +324,9 @@ by the remote server. The supported protocols are:
         This is a good harvesting protocol that is widely used among libraries. 
         GeoNetwork implements version 2.0 of the protocol.
 
+#.  *ArcSDE* 
+        This is a harvesting protocol for metadata stored in an ArcSDE installation.
+        
 The drop down list shows all available protocols. Pressing the Add button you will
 reach an edit page whose content depends on the chosen protocol. The Back button
 will go back to the main page.
@@ -482,6 +486,36 @@ Configuration options:
     For WMS, thumbnails could be created during harvesting.
     - *Icon* - The default icon displayed as attribution logo for metadata created by this harvester.
     
+- **Options** - Please, see WebDAV harvesting. 
+- **Privileges** - Please, see WebDAV harvesting. 
+- **Category for service** - Metadata for the harvested service is linked to the category selected for the service (usually "interactive resources").
+- **Category for datasets** - For each dataset, the "category for datasets" is linked to each metadata for datasets.
+
+Adding an ArcSDE server
+```````````````````````
+
+The ArcSDE harvester allows harvesting metadata from an ArcSDE installation. ArcSDE java API libraries are required to be installed by the user in GeoNetwork (folder ``INSTALL_DIR/web/geonetwork/WEB-INF/lib``), as these are proprietary libraries not distributed with GeoNetwork: 
+	
+	- jpe_sdk.jar
+	- jsde_sdk.jar
+
+The harvester identifies the ESRI metadata format: ESRI ISO, ESRI FGDC to apply the required xslts to transform metadata to ISO19139
+
+.. figure:: web-harvesting-sde.png
+
+    *Adding an ArcSDE harvesting node*
+
+Configuration options:
+
+- **Site** 
+
+	- *Name* - This is a short description of the node. It will be shown in the harvesting main page.  
+	- *Server* - ArcSde server IP or name
+	- *Port* - ArcSde service port (tipically 5151)
+	- *Username* - Username to connect to ArcSDE server
+	- *Password* - Password of the ArcSDE user
+	- *Database name* - ArcSDE instance name (tipically esri_sde)
+
 - **Options** - Please, see WebDAV harvesting. 
 - **Privileges** - Please, see WebDAV harvesting. 
 - **Category for service** - Metadata for the harvested service is linked to the category selected for the service (usually "interactive resources").
