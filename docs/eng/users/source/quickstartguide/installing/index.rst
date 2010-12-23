@@ -121,3 +121,15 @@ You can also run the installation with lots of debug output. To do so run the in
   java -DTRACE=true -jar geonetwork-install-2.6.0-0.jar
 
 .. [#all_os] All = Windows, Linux and Mac OS X
+
+
+XSLT processor configuration
+----------------------------
+
+The file ``INSTALL_DIR/web/geonetwork/WEB-INF/classes/META-INF/javax.xml.transform.TransformerFactory`` defines
+the XSL processor to use in GeoNetwork. The allowed values are:
+
+#. ``de.fzi.dbs.xml.transform.CachingTransformerFactory`` for XSL caching (recommended value for production use). When caching is on, only the main XSL stylesheet last update date is checked and not all included XSL. If you update an included stylesheet, cache is still used. 
+#. ``net.sf.saxon.TransformerFactoryImpl`` to use Saxon 
+
+GeoNetwork sets the XSLT processor configuration on the JVM system properties at startup time for an instant to obtain its TransformerFactory implementation, then resets it to original value, to minimize affect the XSL processor configuration for other applications. 
