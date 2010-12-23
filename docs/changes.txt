@@ -1,5 +1,51 @@
 ================================================================================
 ===
+=== GeoNetwork 2.6.2: List of changes
+===
+================================================================================
+--------------------------------------------------------------------------------
+--- Bug fixes
+--------------------------------------------------------------------------------
+
+- Be sure id is an integer when creating SQL query. Thanks Pierre Mauduit
+- Fix download with special character
+- Protect code in getMetadataFromIndex if createDate or changeDate are null (for example, if created/harvested invalid metadata without this fields)
+- Removed Download link (doesn't work within release documentation unless generic)
+- Use permanent redirect instead of temporal redirect to avoid some issues when running with Apache proxy
+- XSL processor configuration
+- Fix #387 : GN vulnerable to other application's TransformerFactory
+- Fix #397 : Thesaurus name after adding keyword
+- Fix #398 : INSPIRE keywords not multilingual
+- Fix #399 : Map in editor does not work correctly
+- Fix #400 : Security hole in GeoNetwork -- search for owner
+- Fix #413 : Fix typo in SQL scripts
+- Fix #415 : Simple numeric indexing
+
+--------------------------------------------------------------------------------
+--- Changes
+--------------------------------------------------------------------------------
+- 2.6.x documentation updates
+- Added documentation for ArcSDE harvester
+- ArcSDE harvester documentation update
+- GN logo points to http://geonetwork-opensource.org
+- Improved documentation
+- Improved pdf search print layout
+- Removed InterMap log removal
+- Small GUI improvements in search form
+- Update version number in installer
+- Updated Russian language files (thanks Irina Romanova)
+- Updated documentation license
+- Updated navigation for documentation
+- Updated sql files for 2.6.2
+- #376 : Configurable stopwords
+- #391 Metadata Notifications to Remote Targets
+- #407 : Option to discard invalid harvested metadata
+- #410 : My Metadata function
+- #411 : INSPIRE - support for CSW LANGUAGE parameter
+- #412 : Add isPublishedToAll to geonet:info
+
+================================================================================
+===
 === GeoNetwork 2.6.1: List of changes
 ===
 ================================================================================
