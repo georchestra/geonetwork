@@ -499,6 +499,8 @@ The ArcSDE harvester allows harvesting metadata from an ArcSDE installation. Arc
 	- jpe_sdk.jar
 	- jsde_sdk.jar
 
+.. note :: dummy-api-XXX.jar must be removed from ``INSTALL_DIR/web/geonetwork/WEB-INF/lib``
+
 The harvester identifies the ESRI metadata format: ESRI ISO, ESRI FGDC to apply the required xslts to transform metadata to ISO19139
 
 .. figure:: web-harvesting-sde.png
