@@ -1,5 +1,20 @@
 ================================================================================
 ===
+=== GeoNetwork 2.6.2-1: List of changes
+===
+================================================================================
+--------------------------------------------------------------------------------
+--- Bug fixes
+--------------------------------------------------------------------------------
+
+- #422 : 26x numeric fields range query bug
+- #376 : Configurable stopwords fixes
+- Tokenize responsiblePartyRole field to allow case insensitive searches
+- Unification of INSPIRE GEMET thesaurus path for schematron rules and indexing of INSPIRE themes
+- xml.user.metadata service changed to use Lucene instead of SQL
+
+================================================================================
+===
 === GeoNetwork 2.6.2: List of changes
 ===
 ================================================================================
