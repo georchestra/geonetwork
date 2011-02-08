@@ -295,6 +295,10 @@
 		<allow service="resources.getgraphover"/>
 		<allow service="graphover.show"/>
 
+
+        <!--  PMT GeoBretagne add -->
+        <allow service="metadata.service.extract" />
+
 		<!-- Select metadata -->
 		<allow service="metadata.select"/>
 		<allow service="selection.search"/>

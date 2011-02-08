@@ -306,6 +306,14 @@
 
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
+
+        <service name="metadata.service.extract">
+                <class name=".services.metadata.ExtractServicesLayers"/>
+        </service>
+
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+
 		<service name="metadata.massive.admin.form">
 			<class name=".services.metadata.PrepareMassiveUpdatePrivileges"/>
 
