@@ -57,7 +57,7 @@
         params      OpenLayers params hash as expected in new OpenLayers.Layer.WMS(name, url, params, options)
         options     OpenLayers options hash as expected in new OpenLayers.Layer.WMS(name, url, params, options)
  -->
-  <mapSearch options="{projection: 'EPSG:4326', maxExtent: new OpenLayers.Bounds(-5.43, 46.96115, -1, 49.3025), units: 'm', restrictedExtent: new OpenLayers.Bounds(-5.43, 46.96115, -1, 49.3025)}">
+  <mapSearch options="{projection: 'EPSG:4326', maxExtent: new OpenLayers.Bounds(-5.4, 46.8, -0.5, 49.7), units: 'm', restrictedExtent: new OpenLayers.Bounds(-5.4, 46.8, -0.5, 49.7)}">
   <layers>
     <layer server="http://localhost:43080/geoserver/wms" tocName="EPCI Region"  params="{layers: 'geob_loc:EPCI_region', transparent: 'true', format: 'image/png', styles:'line'}"  options="{}" />
     <layer server="http://localhost:43080/geoserver/wms" tocName="Tuiles" params="{layers: 'geob:SC1000_0050_7130_L93', format: 'image/jpeg'}" options="{isBaseLayer: true}" />
@@ -81,7 +81,7 @@
         params      OpenLayers params hash as expected in new OpenLayers.Layer.WMS(name, url, params, options)
         options     OpenLayers options hash as expected in new OpenLayers.Layer.WMS(name, url, params, options)
  -->
-  <mapViewer options="{projection: 'EPSG:4326', maxExtent: new OpenLayers.Bounds(-8, 40, 6, 49.3025), units: 'm', restrictedExtent: new OpenLayers.Bounds(-5.43, 46.96115, -1, 49.3025)}">
+  <mapViewer options="{projection: 'EPSG:4326', maxExtent: new OpenLayers.Bounds(-5.4, 46.8, -0.5, 49.7), units: 'm', restrictedExtent: new OpenLayers.Bounds(-5.4, 46.8, -0.5, 49.7)}">
   <layers>
       <layer server="http://localhost:43080/geoserver/wms" tocName="EPCI Region"  params="{layers: 'geob_loc:EPCI_region', transparent: 'true', format: 'image/png', styles:'line'}"  options="{}" />
       <layer server="http://localhost:43080/geoserver/wms" tocName="Tuiles" params="{layers: 'geob:SC1000_0050_7130_L93', format: 'image/jpeg'}" options="{isBaseLayer: true}" />
