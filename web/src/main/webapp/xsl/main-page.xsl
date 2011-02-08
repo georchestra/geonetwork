@@ -141,14 +141,17 @@
 		
 		<script type="text/javascript" language="JavaScript1.2">
 
+            function initSearch() {
+                var currentSearch = get_cookie('search');
+                if (currentSearch=='advanced') {
+                    showAdvancedSearch();
+                } else {
+                    initSimpleSearch("<xsl:value-of select="$wmc"/>");
+                }
+            }
 			function init()
 			{
-				var currentSearch = get_cookie('search');
-				if (currentSearch=='advanced') {
-					showAdvancedSearch();
-				} else {
-					initSimpleSearch("<xsl:value-of select="$wmc"/>");
-				}
+                initSearch();
 				<!-- If a UUID is passed, it will be opened within the AJAX page -->
 				var uuid="<xsl:value-of select="$uuid"/>";
 				if (uuid!='') {
@@ -332,7 +335,8 @@
                         // Initialize small maps for search
                         initMapsSearch();
                         
-						showSimpleSearch();
+
+                    initSearch();
 			});
 			
             

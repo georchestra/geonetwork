@@ -24,6 +24,7 @@
 package org.fao.geonet.kernel.search;
 
 import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKTReader;
 import jeeves.resources.dbms.Dbms;
 import jeeves.server.ServiceConfig;
@@ -483,7 +484,12 @@ public class LuceneSearcher extends MetaSearcher
         String geomWKT = Util.getParam(request, Geonet.SearchResult.GEOMETRY, null);
         if (geomWKT != null) {
             WKTReader reader = new WKTReader();
-            return reader.read(geomWKT);
+            try {
+                return reader.read(geomWKT);
+            } catch (ParseException e) {
+                // ignore
+                Log.debug(Geonet.SEARCH_ENGINE, "[LuceneSearcher.getGeometry] Cannot parse geometry: "+geomWKT);
+            }
         }
         return null;
     }
