@@ -9,8 +9,9 @@
 	<profile name="Administrator" extends="UserAdmin">
 
 		<!-- Group maintenance services -->
-		<allow service="group.remove"/>
-		<allow service="group.update"/>
+		<allow service="group.synchronize"/>
+<!--		<allow service="group.remove"/>-->
+<!--		<allow service="group.update"/>-->
 
 		<!-- Category maintenance services -->
 		<allow service="category.remove"/>
@@ -23,7 +24,7 @@
 		<!-- Localization -->
 		<allow service="localization"/>
 		<allow service="xml.group.update"/>
-		<allow service="xml.category.update"/>
+<!--		<allow service="xml.category.update"/>-->
 		<allow service="xml.operation.update"/>
 		<allow service="xml.region.update"/>
 
@@ -106,11 +107,11 @@
 
 		<!-- User maintenance services -->
 		<allow service="user.get"/>
-		<allow service="user.resetpw"/>
-		<allow service="user.edit"/>
 		<allow service="user.list"/>
-		<allow service="user.remove"/>
-		<allow service="user.update"/>
+<!--		<allow service="user.resetpw"/>-->
+<!--		<allow service="user.edit"/>-->
+<!--		<allow service="user.remove"/>-->
+<!--		<allow service="user.update"/>-->
 
 		<!-- Transfer ownership services -->
 		<allow service="transfer.ownership"/>
@@ -119,13 +120,13 @@
 		<allow service="xml.ownership.transfer"/>
 
 		<!-- Massive New Owner services -->
-		<allow service="metadata.massive.newowner"/>
-		<allow service="metadata.massive.newowner.form"/>
+<!--		<allow service="metadata.massive.newowner"/>-->
+<!--		<allow service="metadata.massive.newowner.form"/>-->
 		<allow service="xml.usergroups.list"/>
 		
 		<allow service="metadata.massive.processing"/>
 
-
+        <!-- shared objects -->
         <allow service="sharedobject.upload"/>
         <allow service="xml.sharedobject.delete"/>
         <allow service="xml.sharedobject.nextid"/>
@@ -238,10 +239,10 @@
 		<allow service="admin"/>
 
 		<!-- Allow the user to change it's password -->
-		<allow service="user.pwedit"/>
-		<allow service="user.pwupdate"/>
-		<allow service="user.infoedit"/>
-		<allow service="user.infoupdate"/>
+<!--		<allow service="user.pwedit"/>-->
+<!--		<allow service="user.pwupdate"/>-->
+<!--		<allow service="user.infoedit"/>-->
+<!--		<allow service="user.infoupdate"/>-->
 
 	</profile>
 
@@ -295,9 +296,9 @@
 		<allow service="resources.getgraphover"/>
 		<allow service="graphover.show"/>
 
+		<!--  GeoBretagne "send to extractor / mfapp" facility -->
+		<allow service="metadata.service.extract" />
 
-        <!--  PMT GeoBretagne add -->
-        <allow service="metadata.service.extract" />
 
 		<!-- Select metadata -->
 		<allow service="metadata.select"/>
@@ -344,6 +345,9 @@
 		<allow service="iso19115to19139.xml"/>
 		<allow service="iso19139.xml"/>
 		<allow service="iso_arccatalog8.xml"/>
+
+		<allow service="iso19115.pdf" />
+		<allow service="iso19139.pdf" />
 
 		<!-- RSS services -->
 		<allow service="rss.latest"/>
@@ -401,6 +405,12 @@
 
 		<!-- Test CSW ISO server -->
 		<allow service="test.csw"/>
+		
+		<!-- Test GN server for dev -->
+		<allow service="test.info"/>		
+		
+		<!-- Test GN server for dev -->
+		<allow service="test.info"/>	
 
 		<!-- User self registration -->
 		<allow service="user.register.get"/>

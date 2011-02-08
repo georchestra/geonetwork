@@ -128,7 +128,7 @@ public class SecProxyLogin implements Auth
         return sEl;
     }
 
-    private void syncUserRoles(ServiceContext context, UserSession session) throws Exception {
+    private synchronized void syncUserRoles(ServiceContext context, UserSession session) throws Exception {
         final String GROUP_PREFIX = "ROLE_EL_";
         final Integer userId = Integer.valueOf(session.getUserId());
         final String[] roles = lookUpRoles(context);

@@ -107,9 +107,9 @@
 
 		<!-- User maintenance services -->
 		<allow service="user.get"/>
+<!--		<allow service="user.list"/> -->
 <!--		<allow service="user.resetpw"/>-->
 <!--		<allow service="user.edit"/>-->
-<!--		<allow service="user.list"/>-->
 <!--		<allow service="user.remove"/>-->
 <!--		<allow service="user.update"/>-->
 

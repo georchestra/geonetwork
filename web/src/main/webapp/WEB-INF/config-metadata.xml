@@ -313,6 +313,12 @@
 
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
+        <service name="metadata.service.extract">
+                <class name=".services.metadata.ExtractServicesLayers"/>
+        </service>
+
+
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
 		<service name="metadata.massive.admin.form">
 			<class name=".services.metadata.PrepareMassiveUpdatePrivileges"/>
@@ -566,7 +572,17 @@
 		<service name="xml.metadata.rate">
 			<class name=".services.metadata.Rate"/>
 		</service>
-		
+
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <!-- Check dead links                                              -->
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        
+        <service name="metadata.checklinks">
+                <output sheet="deadlinks.xsl">
+                  <call name="deadlinks" class=".services.metadata.CheckLinks" />
+                </output>
+        </service>
+   	
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<!-- Order templates											   -->
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
