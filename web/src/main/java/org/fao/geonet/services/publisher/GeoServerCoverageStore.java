@@ -56,7 +56,7 @@ public class GeoServerCoverageStore {
         m.setRequestHeader("Content-type", "image/tiff");
         m.setDoAuthentication(true);
         int status = c.executeMethod(m);
-        if (status != 201) {
+        if (status > 201) {
             throw new IOException("got status code " + status);
         }
     }

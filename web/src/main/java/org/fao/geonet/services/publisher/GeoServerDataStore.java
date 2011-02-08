@@ -63,10 +63,10 @@ public class GeoServerDataStore {
         m.setDoAuthentication(true);
         int status = c.executeMethod(m);
 
-        if (status != 201) {
+        if (status > 201) {
             // hack to work around occasional problem where the first upload does not correctly rename the file
             status = c.executeMethod(m);
-            if (status != 201) {
+            if (status > 201) {
                 throw new IOException("got status code " + status);
             }
         }

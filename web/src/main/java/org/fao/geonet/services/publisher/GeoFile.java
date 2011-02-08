@@ -364,7 +364,8 @@ public class GeoFile
 
     public void close() {
         try {
-            zipFile.close();
+            if(zipFile != null)
+                zipFile.close();
         } catch (IOException e) {
             Log.error(Log.SERVICE + ".GeoPublish", "Error closing zipfile");
             System.err.println("Error closing zipfile");
@@ -420,7 +421,7 @@ public class GeoFile
 
         @Override
         public String format() {
-            return "zip";
+            return "shp";
         }
     }
 }
