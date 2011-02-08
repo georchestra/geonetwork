@@ -63,6 +63,7 @@ function runPdfSearch(onSelection) {
 		}
 
 		location.replace (serviceUrl);
+		check(false);
 	} else {
 	    if (document.cookie.indexOf("search=advanced")!=-1)
 	        runAdvancedSearch("pdf");
