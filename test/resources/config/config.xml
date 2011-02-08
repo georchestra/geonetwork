@@ -28,7 +28,7 @@
 			<xml name="fgdc-std" base="xml/schemas/fgdc-std/loc" file="labels.xml" />
 			<xml name="dublin-core" base="xml/schemas/dublin-core/loc" file="labels.xml" />
 			<xml name="csw-record" base="xml/schemas/csw-record/loc" file="labels.xml" />
-			<call name="session" class="jeeves.guiservices.session.Get" />
+			<call name="login" class="jeeves.guiservices.services.SecProxyLogin" />
 			<call name="env" class="org.fao.geonet.guiservices.util.Env" />
 			<call name="results" class="org.fao.geonet.guiservices.search.GetResultsInfo" />
 		</gui>

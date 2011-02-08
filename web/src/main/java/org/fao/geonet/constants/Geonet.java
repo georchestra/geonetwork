@@ -415,11 +415,12 @@ public class Geonet
 
 	public class Profile
 	{
-		public static final String ADMINISTRATOR = "Administrator";
-		public static final String USER_ADMIN    = "UserAdmin";
-		public static final String REVIEWER      = "Reviewer";
-		public static final String EDITOR        = "Editor";
-		public static final String GUEST         = "Guest";
+		public static final String ADMINISTRATOR  = "Administrator";
+		public static final String USER_ADMIN     = "UserAdmin";
+		public static final String REVIEWER       = "Reviewer";
+		public static final String EDITOR         = "Editor";
+		public static final String REGISTEREDUSER = "RegisteredUser";
+		public static final String GUEST          = "Guest";
 	}
 
 	//--------------------------------------------------------------------------
@@ -485,7 +486,8 @@ public class Geonet
 	public static final String EDITOR				= GEONETWORK + ".editor";
 	public static final String EDITORADDELEMENT = GEONETWORK + ".editoraddelement";
 	public static final String EDITOREXPANDELEMENT = GEONETWORK + ".editorexpandelement";
-	public static final String SPATIAL      = GEONETWORK + ".spatial";
+    public static final String SPATIAL            = GEONETWORK + ".spatial";
+    public static final String SHARED_OBJECT      = GEONETWORK + ".sharedobject";
 	public static final String CSW_SEARCH   = CSW + ".search";
 	public static final String SRU          = GEONETWORK + ".sru";
 	public static final String SRU_SEARCH   = SRU + ".search";

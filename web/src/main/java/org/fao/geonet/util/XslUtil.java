@@ -68,6 +68,15 @@ public final class XslUtil
         }
         return src2.substring(0,index);
     }
+    /**
+     * Takes the characters until the pattern is matched
+     */
+    public static String toUppercase(Object src)
+    {
+        String src2 = src.toString();
+
+        return src2.toUpperCase();
+    }
 
     /**
      * Converts the seperators of the coords to the WKT from ts and cs

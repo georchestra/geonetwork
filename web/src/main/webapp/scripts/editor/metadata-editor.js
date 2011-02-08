@@ -20,14 +20,14 @@ var Checks = {
   },
 
 	_onbeforeunload : function(e)
- 	{
+    {
 		if (opener) {
 			editRed = opener.$$('.editing');
 			if (editRed && editRed.length > 0) {
 				editRed.invoke('removeClassName','editing');
 			}
-     	e.returnValue = this.message;
- 		}
+            e.returnValue = this.message;
+        }
 	}
 };
 
@@ -41,8 +41,8 @@ var	bfu = Checks._onbeforeunload.bindAsEventListener(Checks);
 
 function setBunload(on)
 {
- 	if (on) {
-		Event.observe(window, 'beforeunload', bfu);
+    if (on) {
+        Event.observe(window, 'beforeunload', bfu);
 		Checks._setMessage(unloadMess());
 	} else {
 		Event.stopObserving(window, 'beforeunload', bfu);
@@ -87,9 +87,9 @@ function doEditorLoadActions()
 	        shift:true,
 	        fn: function(){ $('btnCancel').onclick(); }
 	    },{
-       		key: 112,
-       	    fn: function(){
-	  	    	displayBox(null, 'shortcutHelp', true);
+            key: 112,
+            fn: function(){
+                displayBox(null, 'shortcutHelp', true);
 	        }
 	    }
 	]);
@@ -102,24 +102,24 @@ Event.observe(window,'load',doEditorLoadActions);
 // indicator
 Ajax.Responders.register({
 	onCreate: function() {
- 		if (Ajax.activeRequestCount === 1) {
-			var eBusy = $('editorBusy');
+        if (Ajax.activeRequestCount === 1) {
+            var eBusy = $('editorBusy');
 			if (eBusy) eBusy.show();
- 		}
- 	},
- 	onComplete: function() {
- 		if (Ajax.activeRequestCount === 0) {
+        }
+    },
+    onComplete: function() {
+        if (Ajax.activeRequestCount === 0) {
 			var eBusy = $('editorBusy');
 			if (eBusy) eBusy.hide();
- 		}
- 	}
+        }
+    }
 });
 
-function doAction(action)
+function doAction(action, permitAjax)
 {
 	setBunload(false);
 	document.mainForm.action = action;
-	goSubmit('mainForm');
+	goSubmit('mainForm', permitAjax);
 }
 
 function doTabAction(action, tab)
@@ -156,30 +156,30 @@ function getControlsFromElement(el) {
 
 function topElement(el) 
 {
-	if (el.previous() == undefined) return true;
+	if (el.previous() === undefined) return true;
 	else return (!isSameElement(el.previous(),el));
 }
 
 function bottomElement(el) 
 {
-    if (el.next() == undefined) return true;
+    if (el.next() === undefined) return true;
 	else return (!isSameElement(el.next(),el));
 }
 
 function getIdSplit(el) 
 {
 	var id = el.getAttribute('id');
-	if (id == null) return null;
+	if (id === null) return null;
 	return id.split("_");
 }
 
 function orElement(el) 
 {
-	if (el.next() == undefined) return false;
+	if (el.next() === undefined) return false;
 	else {
 		var nextEl = getIdSplit(el.next());
 		var thisEl = getIdSplit(el);
-		if (nextEl == null || thisEl == null) return false;
+		if (nextEl === null || thisEl === null) return false;
 		if (nextEl[0] == "child" && nextEl[1] == thisEl[0]) return true;
 		else return false;
 	}
@@ -189,7 +189,7 @@ function isSameElement(el1,el2)
 {
     var i1 = getIdSplit(el1);
 	var i2 = getIdSplit(el2);
-	if (i1 == null || i2 == null) return false;
+	if (i1 === null || i2 === null) return false;
 	if (i1[0] == i2[0]) return true;
 	else return false;
 }
@@ -216,7 +216,7 @@ function topControls(el,min)
 
 	// sort out x
 	if (bottomElement(el)) {
-		if (min == 0) elDescs[1+index].show();
+		if (min === 0) elDescs[1+index].show();
 		else elDescs[1+index].hide();
 	} else elDescs[1+index].show();
 
@@ -260,8 +260,8 @@ function doRemoveElementAction(action, ref, parentref, id, min)
 			setBunload(true); // reset warning for window destroy
 		},
 		failure:function (result, request) { 
-			Ext.MessageBox.alert(translate("errorDeleteElement") + name + " " + translate("errorFromDoc") 
-						+ " / status " + result.status + " text: " + result.statusText + " - " + translate("tryAgain"));
+			Ext.MessageBox.alert(translate("errorDeleteElement") + name + " " + translate("errorFromDoc") +
+						" / status " + result.status + " text: " + result.statusText + " - " + translate("tryAgain"));
 			setBunload(true); // reset warning for window destroy
 		}
 	});
@@ -306,8 +306,8 @@ function doMoveElementAction(action, ref, id)
 				setBunload(true); // reset warning for window destroy
 			},
 			onFailure: function(req) { 
-				alert(translate("errorMoveElement") + ref + " / status " + req.status 
-						+ " text: " + req.statusText + " - " + translate("tryAgain"));
+				alert(translate("errorMoveElement") + ref + " / status " + req.status + 
+						 " text: " + req.statusText + " - " + translate("tryAgain"));
 				setBunload(true); // reset warning for window destroy
 			}
 		}
@@ -369,8 +369,7 @@ function doNewElementAjax(action, ref, name, child, id, what, max, orElement)
 {
 	var metadataId = document.mainForm.id.value;
 	var pars = "&id="+metadataId+"&ref="+ref+"&name="+name;
-	if (child != null) 
-		pars += "&child="+child;
+	if (child !== null) pars += "&child="+child;
 	var thisElement = $(id);
 
 	var myAjax = new Ajax.Request(
@@ -404,8 +403,8 @@ function doNewElementAjax(action, ref, name, child, id, what, max, orElement)
 				setBunload(true); // reset warning for window destroy
 			},
 			onFailure: function(req) { 
-				alert(translate("errorAddElement") + name + translate("errorFromDoc") 
-						+ " / status " + req.status + " text: " + req.statusText + " - " + translate("tryAgain"));
+				alert(translate("errorAddElement") + name + translate("errorFromDoc") + 
+						 " / status " + req.status + " text: " + req.statusText + " - " + translate("tryAgain"));
 				setBunload(true); // reset warning for window destroy
 			}
 		}
@@ -535,9 +534,10 @@ function checkForFileUpload(fref, pref)
 	var protoSelect = $('s_'+pref); // the protocol <select>
 	var protoIn = $('_'+pref);        // the protocol input field to be submitted
 
-	var fileUploaded = (fileName != null && fileName.value.length > 0);
+	var fileUploaded = (fileName !== null && fileName.value.length > 0);
 	var protocol = protoSelect.value;
-	var protocolDownload = (protocol.startsWith('WWW:DOWNLOAD') && protocol.indexOf('http')>0);
+	var protocolDownload = ((protocol.startsWith('WWW:DOWNLOAD') && protocol.indexOf('http')>0) ||
+	                       (protocol.startsWith('OGC:WMC')));
 
 	// don't let anyone change the protocol if a file has already been uploaded 
 	// unless its between downloaddata and downloadother
@@ -558,11 +558,11 @@ function checkForFileUpload(fref, pref)
 	finput = $('di_'+fref);
 	fbuttn = $('db_'+fref);
 	if (protocolDownload) {
-		if (finput != null) finput.hide();
-		if (fbuttn != null) fbuttn.show();
+		if (finput !== null) finput.hide();
+		if (fbuttn !== null) fbuttn.show();
 	} else {
-		if (finput != null) finput.show();
-		if (fbuttn != null) fbuttn.hide();
+		if (finput !== null) finput.show();
+		if (fbuttn !== null) fbuttn.hide();
 	}
 
 	// protocol change is ok so set the protocol value to that selected
@@ -580,10 +580,10 @@ function doFileUploadSubmit(form)
 {
 	setBunload(false);
 	var fid = $('fileUploadForm');
-	var ref = fid['ref'];
+	var ref = fid.ref;
 	var fref = fid['f_'+$F(ref)];
 	var fileName = $F(fref);
-	if (fileName == '') {
+	if (fileName === '') {
 		alert(translate("selectOneFile"));
 		return false;
 	}
@@ -594,7 +594,7 @@ function doFileUploadSubmit(form)
 			},
 			'onComplete': function(doc) {
 				Modalbox.activate();
-				if (doc.body == null) { // error - upload failed for some reason
+				if (doc.body === null) { // error - upload failed for some reason
 					alert(translate("uploadFailed") + doc);
 				} else {
 					$('uploadresponse').innerHTML = doc.body.innerHTML;
@@ -602,13 +602,14 @@ function doFileUploadSubmit(form)
 
 				// if response was ok then fname will be in an id attribute
 				var fname = $('filename_uploaded');
-				if (fname != null) { 
+				if (fname !== null) {
 					var name = $('_'+$F(ref));
-					if (name != null) {
+					if (name !== null) {
 						name.value = fname.getAttribute('title');
 						$('di_'+$F(ref)).show();
 						$('db_'+$F(ref)).hide();
 						Modalbox.show(doc.body.innerHTML,{width:600});
+						Ext.get("MB_close").on("click",function(){doSaveAction('metadata.update');});
 					} else {
 						alert(translate("uploadSetFileNameFailed"));
 					}
@@ -639,10 +640,55 @@ function handleCheckboxAsBoolean (input, ref) {
 	}
 }
 
-/**
- * Update bounding box form element.
- * If description id is provided, set description character string.
- */
+
+function editor_initRegionCombo(westField, eastField, southField, northField, eltRef) {
+  var updater = function(typename, region) {
+    return editor_handleRegionChange(typename, region, westField, eastField, southField, northField, eltRef);
+  };
+  extentMap.initRegionCombos(updater, 'region_cat_combo_'+eltRef, 'region_combo_'+eltRef);
+}
+
+function editor_handleRegionChange(typename, region, westField, eastField, southField, northField, eltRef) {
+
+    var pars = "bboxId="+region+"&typename="+typename;
+
+    new Ajax.Request(
+        getGNServiceURL('xml.region.list'),
+        {
+            method: 'get',
+            parameters: pars,
+            onSuccess: function(req) {
+              editor_getRegion_complete(req, westField, eastField, southField, northField, eltRef);
+            },
+            onFailure: function(req){ alert(translate("error"));}
+        }
+    );
+}
+
+function editor_getRegion_complete(req, westField, eastField, southField, northField, eltRef) {
+    //Response received
+    var node = req.responseXML;
+    var northcc = xml.evalXPath(node, 'response/record/north');
+    var southcc = xml.evalXPath(node, 'response/record/south');
+    var eastcc = xml.evalXPath(node, 'response/record/east');
+    var westcc = xml.evalXPath(node, 'response/record/west');
+
+        $("_" + westField).value  = westcc;
+        $("_" + eastField).value  = eastcc;
+        $("_" + southField).value = southcc;
+        $("_" + northField).value = northcc;
+
+    var viewers = Ext.DomQuery.select('.extentViewer');
+    for (var idx = 0; idx < viewers.length; ++idx) {
+         var viewer = viewers[idx];
+         if (eltRef == viewer.getAttribute("elt_ref")) {
+             extentMap.updateBbox(extentMap.maps[eltRef], westField + "," + southField + "," + eastField + "," + northField, eltRef, true); // Region are in WGS84
+         }
+    }
+}
+
+
+/*
 function setRegion(westField, eastField, southField, northField, region, eltRef, descriptionRef)
 {
 	var choice = region.value;
@@ -679,7 +725,7 @@ function setRegion(westField, eastField, southField, northField, region, eltRef,
 	     }
 	}
 }
-
+*/
 function clearRef(ref) 
 {
 	setBunload(false);
@@ -717,28 +763,20 @@ function noDoubleClick()
 * ref - {String} Identifier of a form element (ie. geonet:element/@ref)
 */
 function buildDuration(ref) {
-    if ($('Y' + ref).value == '')
-    $('Y' + ref).value = 0;
-    if ($('M' + ref).value == '')
-    $('M' + ref).value = 0;
-    if ($('D' + ref).value == '')
-    $('D' + ref).value = 0;
-    if ($('H' + ref).value == '')
-    $('H' + ref).value = 0;
-    if ($('MI' + ref).value == '')
-    $('MI' + ref).value = 0;
-    if ($('S' + ref).value == '')
-    $('S' + ref).value = 0;
+    if ($('Y' + ref).value === '') $('Y' + ref).value = 0;
+    if ($('M' + ref).value === '') $('M' + ref).value = 0;
+    if ($('D' + ref).value === '') $('D' + ref).value = 0;
+    if ($('H' + ref).value === '') $('H' + ref).value = 0;
+    if ($('MI' + ref).value === '') $('MI' + ref).value = 0;
+    if ($('S' + ref).value === '')$('S' + ref).value = 0;
     
-    $('_' + ref).value =
-    ($('N' + ref).checked? "-": "") +
-    "P" +
-    $('Y' + ref).value + "Y" +
-    $('M' + ref).value + "M" +
-    $('D' + ref).value + "DT" +
-    $('H' + ref).value + "H" +
-    $('MI' + ref).value + "M" +
-    $('S' + ref).value + "S";
+    $('_' + ref).value = ($('N' + ref).checked? "-": "") + "P" +
+        $('Y' + ref).value + "Y" +
+        $('M' + ref).value + "M" +
+        $('D' + ref).value + "DT" +
+        $('H' + ref).value + "H" +
+        $('MI' + ref).value + "M" +
+        $('S' + ref).value + "S";
 }
 
 
@@ -798,6 +836,7 @@ function validateNonEmpty(input) {
     if (input.value.length < 1) {
         input.addClassName('error');
         return false;
+        
     } else {
         input.removeClassName('error');
         return true;
@@ -972,6 +1011,10 @@ function showSearchKeywordSelectionPanel() {
 						}
 						
 						var keys = doc.getElementsByTagName("gmd:keyword");
+
+                        // some browsers (chrome) don't include namespace in tagname
+                        if(keys.length <= 0) keys = doc.getElementsByTagName("keyword");
+						
 						var kw;
 	
 						// Add values to text box
@@ -1261,6 +1304,65 @@ function showCRSSelectionPanel(ref, name) {
 
 
 /**
+ * Property: geoPublisherWindow
+ * The window in which we can publish dataset to geoserver
+ */
+var geoPublisherWindow;
+
+/**
+ * Display geo publisher panel
+ *
+ * @param id                           metadata identifier
+ * @param name                         file name (usually a zip file which contains ESRI Shapefile)
+ * @param accessStatus         public/private according to privileges
+ * @param nodeName                     node name to insert (ie. gmd:online)
+ * @param insertNodeRef                reference where XML fragement should be inserted.
+ *
+ * @return
+ */
+function showGeoPublisherPanel(id, name, accessStatus, nodeName, insertNodeRef) {
+       Ext.QuickTips.init();
+    if (!geoPublisherWindow) {
+        var geoPublisherPanel = new app.GeoPublisherPanel({
+            autoWidth: true,
+            autoHeight: true,
+            listeners: {
+                addOnLineSource: function(panel, url, layerName, serviceTypes) {
+                   var id = '_X' + insertNodeRef + '_' + nodeName.replace(":","COLON");
+                   var xml = '<gmd:CI_OnlineResource xmlns:gmd=&quot;http://www.isotc211.org/2005/gmd&quot; xmlns:gco=&quot;http://www.isotc211.org/2005/gco&quot;><gmd:linkage><gmd:URL>' +
+                             url + '</gmd:URL></gmd:linkage><gmd:protocol><gco:CharacterString>OGC:WMS-1.1.1-http-get-map</gco:CharacterString></gmd:protocol>' +
+                            '<gmd:name gco:nilReason=&quot;missing&quot;><gco:CharacterString>' + layerName + '</gco:CharacterString></gmd:name><gmd:description><gco:CharacterString>' +
+                            layerName + '</gco:CharacterString></gmd:description></gmd:CI_OnlineResource>';
+
+                   // Add XML fragments into main form.
+                   var input = {tag: 'input', type: 'hidden', id: id, name: id, value: xml};
+                   var dh = Ext.DomHelper;
+                   dh.append(Ext.get("hiddenFormElements"), input);
+
+                   // Save
+                   doAction('metadata.update');
+                }
+            }
+        });
+
+        geoPublisherWindow = new Ext.Window({
+            title: translate('geoPublisherWindowTitle'),
+            layout: 'fit',
+            modal: true,
+            items: geoPublisherPanel,
+            closeAction: 'hide',
+            resizable: true,
+            constrain: true,
+            iconCls: 'repository'
+        });
+    }
+    geoPublisherWindow.items.get(0).setRef(id, name, accessStatus);
+    geoPublisherWindow.setTitle(translate('geoPublisherWindowTitle') + " " + name);
+       geoPublisherWindow.show();
+}
+
+
+/**
  * Trigger validating event of an element.
  * 
  * @return
@@ -1511,3 +1613,147 @@ function computeExtentFromKeywords(mode) {
 	window.location.replace("metadata.processing?id=" + document.mainForm.id.value + 
 			"&process=add-extent-from-geokeywords&url=" + Env.host + Env.locService + "&replace=" + mode);
 };
+
+
+var sharedObjectWindow;
+function findSharedObjects(ref,name) {
+    var type = 'contacts';
+    var parser = new OpenLayers.Format.XML();
+
+    var submitChange = function(id) {
+        Ext.Ajax.request({
+            url: Env.locService+'/xml.sharedobject.get',
+            params: {id:id, type:type},
+            success: function(response) {
+                var newNode = response.responseXML;
+
+                // HACKING
+                var gmdNS = "http://www.isotc211.org/2005/gmd";
+                if(name === 'gmd:distributor') {
+
+                    newNode = parser.createElementNS(gmdNS, 'gmd:MD_Distributor');
+                    var n2 = parser.createElementNS(gmdNS, 'gmd:distributorContact');
+
+                    newNode.appendChild(n2);
+
+                    var n = response.responseXML.firstChild;
+                    var imported = n2.ownerDocument.importNode(n,true);
+                    n2.appendChild(imported);
+                }
+                // DONE HACKING
+                var xml = parser.write(newNode);
+                var id = '_X' + ref + '_' + name.replace(":","COLON");
+
+                // Add XML fragments into main form.
+                var input = {tag: 'input', type: 'hidden', id: id, name: id, value: Ext.util.Format.htmlEncode(xml)};
+                var dh = Ext.DomHelper;
+                dh.append(Ext.get("hiddenFormElements"), input);
+
+                // Save
+                doAction('metadata.update');
+            },
+            failure: function(response) {
+                alert("Internal error. Please try again: "+response.responseText);
+            }
+        });
+    };
+    if (!sharedObjectWindow) {
+        var grid;
+        var filter = function (keyword) {
+            if(grid === undefined) {return;}
+            keyword = keyword.toLowerCase();
+            grid.getStore().filterBy (function(record, id) {
+                var match = false;
+                record.fields.eachKey ( function(n) {
+                    var data = record.get(n);
+                    if(!match && data !== undefined && data !== null && data.toLowerCase().contains(keyword)) {
+                        match = true;
+                    }
+                });
+                return match;
+            });
+        };
+        var searchText = new Ext.form.TextField({
+            width:400,
+            enableKeyEvents: true,
+            listeners: {
+                keyup: function() {
+                    filter(searchText.getValue());
+                }
+            }
+        });
+        var sharedObjectPanel = new Ext.Panel ({
+            layout: 'anchor',
+            defaults : {
+                style: {padding: '10px'},
+                border:false
+            },
+            items: [{
+                    anchor: "100% 15%",
+                    layout:'table',
+                    layoutConfig: {
+                        columns: 3
+                    },
+                    items: [searchText,{
+                        style: {
+                            'padding-left' : '10px',
+                            'padding-right' : '10px'
+                        },
+                        border:false,
+                        items: {
+                            xtype: 'button',
+                            text: translate('clear'),
+                            handler: function() {
+                                searchText.setValue('');
+                                if(grid !== undefined) {
+                                    grid.getStore().clearFilter();
+                                }
+                            }
+                    }
+                },{
+                    xtype: 'button',
+                    text: translate('add'),
+                    handler: function() {
+                        if(grid !== undefined) {
+                            var selected = grid.getSelectionModel().getSelected();
+                            if(selected !== undefined && selected !== null) {
+                                var id = selected.get("id");
+                                submitChange(id);
+                            } else {
+                                alert(translate("select.row"));
+                            }
+                        }
+                    }
+                }]
+            },{
+                anchor: "100% 85%",
+                id: 'parent-grid-container',
+                html: '<div id="grid-container"/>'
+            }]
+        });
+        sharedobject.ObjectGrid.create({
+            type: type,
+            gridConfig: {
+                renderTo: 'grid-container'
+            },
+            success: function(reponse, g) {
+                grid = g;
+                grid.setHeight(Ext.get('parent-grid-container').getHeight());
+                filter(searchText.getValue());
+            }
+        });
+
+        sharedObjectWindow = new Ext.Window({
+            title: translate('sharedObjectWindow'),
+            layout: 'fit',
+            width: 620,
+            height: 400,
+            items: sharedObjectPanel,
+            closeAction: 'hide',
+            constrain: true,
+            iconCls: 'searchIcon'
+        });
+    }
+
+    sharedObjectWindow.show();
+}

@@ -90,6 +90,10 @@ public class Call implements GuiService
 			throw e;
 		}
 	}
+	
+	public Class<? extends Service> getServiceClass() {
+	  return serviceObj.getClass();
+	}
 }
 
 //=============================================================================

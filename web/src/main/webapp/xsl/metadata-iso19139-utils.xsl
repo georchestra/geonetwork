@@ -77,7 +77,7 @@
                         select="$md/gmd:locale/gmd:PT_Locale[gmd:languageCode/gmd:LanguageCode/@codeListValue = $lang]/@id"
                     />
             </xsl:when>
-            <xsl:otherwise>#<xsl:value-of select="upper-case(substring($lang, 1, 2))"/></xsl:otherwise>            
+            <xsl:otherwise>#<xsl:value-of select="java:toUppercase(substring($lang, 1, 2))"/></xsl:otherwise>            
         </xsl:choose>
     </xsl:template>
     

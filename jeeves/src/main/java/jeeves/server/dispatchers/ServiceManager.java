@@ -23,24 +23,18 @@
 
 package jeeves.server.dispatchers;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Vector;
 import jeeves.constants.ConfigFile;
 import jeeves.constants.Jeeves;
 import jeeves.exceptions.JeevesException;
 import jeeves.exceptions.ServiceNotAllowedEx;
 import jeeves.exceptions.ServiceNotFoundEx;
 import jeeves.exceptions.ServiceNotMatchedEx;
+import jeeves.guiservices.services.Auth;
 import jeeves.interfaces.Service;
 import jeeves.server.ProfileManager;
 import jeeves.server.ServiceConfig;
 import jeeves.server.UserSession;
 import jeeves.server.context.ServiceContext;
-import jeeves.server.dispatchers.ErrorPage;
 import jeeves.server.dispatchers.guiservices.Call;
 import jeeves.server.dispatchers.guiservices.GuiService;
 import jeeves.server.dispatchers.guiservices.XmlFile;
@@ -50,15 +44,16 @@ import jeeves.server.sources.http.JeevesServlet;
 import jeeves.server.sources.ServiceRequest;
 import jeeves.server.sources.ServiceRequest.InputMethod;
 import jeeves.server.sources.ServiceRequest.OutputMethod;
-import jeeves.utils.BLOB;
-import jeeves.utils.BinaryFile;
-import jeeves.utils.Log;
-import jeeves.utils.SOAPUtil;
-import jeeves.utils.SerialFactory;
-import jeeves.utils.Util;
-import jeeves.utils.Xml;
+import jeeves.server.sources.http.JeevesServlet;
+import jeeves.utils.*;
 import org.jdom.Element;
-import org.jdom.Namespace;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Vector;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -386,6 +381,16 @@ public class ServiceManager
 				//--- check access
 
 				String profile = ProfileManager.GUEST;
+
+                for (Object object : vDefaultGui) {
+                    if(object instanceof Call) {
+                        Call call = (Call)object;
+                        if(Auth.class.isAssignableFrom(call.getServiceClass())) {
+                            call.exec(new Element("noop"), context);
+                            break;
+                        }
+                    }
+                }
 
 				if (session.isAuthenticated())
 					profile = session.getProfile();

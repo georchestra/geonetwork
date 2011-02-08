@@ -47,6 +47,7 @@ import javax.xml.transform.Source;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.sax.SAXResult;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
@@ -197,10 +198,24 @@ public class Xml
 		Source srcXml   = new JDOMSource(new Document((Element)xml.detach()));
 		Source srcSheet = new StreamSource(styleSheet);
 
+		TransformerFactory transFact;
+		ClassLoader classLoader = Xml.class.getClassLoader();
+		
+		// prioritize preferred factories 
+        try {
+            transFact = TransformerFactory.newInstance("de.fzi.dbs.xml.transform.CachingTransformerFactory", classLoader);
+        } catch (TransformerFactoryConfigurationError e) {
+            try {
+                transFact = TransformerFactory.newInstance("net.sf.saxon.TransformerFactoryImpl", classLoader);
+            } catch (TransformerFactoryConfigurationError e2) {
+                transFact = TransformerFactory.newInstance();
+            }		    
+		}
+
+
 		// Dear old saxon likes to yell loudly about each and every XSLT 1.0
 		// stylesheet so switch it off but trap any exceptions because this
 		// code is run on transformers other than saxon 
-		TransformerFactory transFact = TransformerFactory.newInstance();
 		try {
 			transFact.setAttribute(FeatureKeys.VERSION_WARNING,false);
 			transFact.setAttribute(FeatureKeys.LINE_NUMBERING,true);

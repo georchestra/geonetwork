@@ -1,0 +1,7 @@
+metadata-editor.js
+  editor_getRegion_complete
+  editor_initRegionCombo
+  
+  
+searchform_advanced.xsl
+  check that regions combo show up correctly

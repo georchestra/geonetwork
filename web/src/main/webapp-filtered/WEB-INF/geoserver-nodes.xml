@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nodes>
+	<!-- 
+		Add here all geoserver node which could
+		be configure by GeoNetwork.
+		
+		@param name 		Name of the GeoServer node, display to metadata editor
+		@param namespace	Namespace to use. If not set, GeoServer will link store to another namespace.
+		@param adminurl		GeoServer REST service config URL
+		@param wmsurl		GeoServer WMS service URL use to display map preview
+		@param wfsurl		GeoServer WFS service URL use to display map preview
+		@param user			GeoServer user login
+		@param password		GeoServer user password 
+	-->
+	<node>
+		<id>geoserver2</id>
+		<name>My preferred GeoServer node</name>
+		<namespacePrefix>geob_pub</namespacePrefix>
+		<namespaceUrl>http://geobretagne.fr/geoserver/geob_pub</namespaceUrl>
+		<adminurl>http://${host}/geoserver/rest</adminurl>
+		<wmsurl>http://${host}/geoserver/wms</wmsurl>
+		<wfsurl>http://${host}/geoserver/wfs</wfsurl>
+		<user>${priveleged_admin_name}</user>
+		<password>${priveleged_admin_pass}</password>
+	</node>
+</nodes>

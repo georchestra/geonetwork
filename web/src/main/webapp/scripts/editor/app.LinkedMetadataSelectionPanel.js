@@ -156,13 +156,16 @@ app.LinkedMetadataSelectionPanel = Ext.extend(Ext.FormPanel, {
 	        			// Update store URL according to selected service.
 	        			if (this.mode=='attachService') {
 	            			var selected = Ext.getCmp('linkedMetadataGrid').getSelectionModel().getSelections();
-	        	            if (selected == undefined || selected[0].data.uri == '')
+                                        // no selection
+                                        if (selected.size() == 0)
+                                          return;
+	        	            if (selected[0].data.uri == '')
 	        	            	Ext.MessageBox.alert(translate("NoServiceURLError"));
 	        	            
 	        	            var url;
 //	        	            if(Env.proxy != '')
 //	        	        		url = Env.proxy + encodeURIComponent(selected[0].data.uri);
-	        	            this.capabilitiesStore.baseParams.url = selected[0].data.uri + "?&SERVICE=WMS&REQUEST=GetCapabilities&VERSION=1.1.1";
+	        	            this.capabilitiesStore.baseParams.url = selected[0].data.uri;
 	        			} else if (this.mode=='coupledResource') {
 	        				this.capabilitiesStore.baseParams.url = this.serviceUrl;
 	        			}

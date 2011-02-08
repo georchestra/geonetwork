@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<strings>
+    <!-- String used for HTML report -->
+    <report>Rapport Schematron</report>
+    <report.alt>Schematron contact-information is at the end of this page</report.alt>
+    <title>Validation utilisant Schematron pour le standard ISO 19115(19139)</title>
+    
+    <isorule>Règles ISO</isorule>
+    <M6>Un attribut nilReason est manquant dans la balise XML. Veuillez sauver et valider depuis la vue XML pour l\&apos;ajouter dans l\&apos;ensemble de la métadonnée</M6>
+    <M7>Contraintes sur les attributs CRS</M7>
+    <M8>[ISOFTDS19139:2005-TableA1-Row24] - Au moins une de ces informations est obligatoire : le nom de la personne, le nom de l\&apos;organisation ou la fonction du contact</M8>
+    <M9>[ISOFTDS19139:2005-TableA1-Row07] - Le champ \&apos;autres contraintes\&apos; doit être renseigné si les contraintes d\&apos;accès ou d\&apos;utilisation ont la valeur \&apos;autres restrictions\&apos;</M9>
+    <M10>[ISOFTDS19139:2005-TableA1-Row16] - L\&apos;unité est obligatoire si la valeur min ou la valeur max d\&apos;une longueur d\&apos;onde est renseignée</M10>
+    <M11>[ISOFTDS19139:2005-TableA1-Row13] - La description du référentiel est obligatoire si l\&apos;étendue des données sources n\&apos;est pas renseignée</M11>
+    <M12>[ISOFTDS19139:2005-TableA1-Row14] - Une étendue des données sources est obligatoire si la description du référentiel n\&apos;est pas renseignée</M12>
+    <M13>[ISOFTDS19139:2005-TableA1-Row10] - La généalogie de la donnée est obligatoire pour un jeu de données si le référentiel ou l\&apos;évènement dans le processus ne sont pas renseignés</M13>
+    <M14>[ISOFTDS19139:2005-TableA1-Row11] - La description du référentiel est obligatoire si la généalogie de la donnée ou la description de l\&apos;évènement dans le processus ne sont pas renseignés</M14>
+    <M15>[ISOFTDS19139:2005-TableA1-Row12] - La description de l\&apos;evenement dans le processus est obligatoire si la généalogie de la donnée ou la description du référentiel ne sont pas renseignés</M15>
+    <M16>[ISOFTDS19139:2005-TableA1-Row08] - Au moins une de ces informations est obligatoire : le rapport sur la qualité ou la généalogie de la donnée</M16>
+    <M17>[ISOFTDS19139:2005-TableA1-Row09] - La description du niveau de hiérarchie est obligatoire s\&apos;il ne s\&apos;agit pas d\&apos;un jeu ou d\&apos;une collection de données</M17>
+    <M18>[ISOFTDS19139:2005-TableA1-Row17] - L\&apos;unité de densité d\&apos;enregistrement est obligatoire si la densité est renseignée</M18>
+    <M19>[ISOFTDS19139:2005-TableA1-Row18] - Au moins une de ces informations est obligatoire : le format de distribution ou de diffusion de la ressource</M19>
+    <M20>[ISOFTDS19139:2005-TableA1-Row23] - Au moins une de ces informations est obligatoire : la description de l\&apos;étendue ou l\&apos;élément géographique, temporel ou vertical</M20>
+    <M21>[ISOFTDS19139:2005-TableA1-Row04] - Au moins une de ces informations est obligatoire pour un jeu de données : la description ou l\&apos;étendue spatiale</M21>
+    <M22>[ISOFTDS19139:2005-TableA1-Row05] - La thématique doit être renseignée pour un jeu ou une collection de données</M22>
+    <M23>[ISOFTDS19139:2005-TableA1-Row06] - Au moins une de ces informations est obligatoire : le nom ou l\&apos;identifiant du jeu de données aggregé</M23>
+    <M24>[ISOFTDS19139:2005-TableA1-Row01] - La langue est obligatoire si elle n\&apos;est pas définie par l\&apos;encodage standard</M24>
+    <M25>[ISOFTDS19139:2005-TableA1-Row02] - Le jeu de caractère est obligatoire s\&apos;il n\&apos;est pas défini par l\&apos;encodage standard</M25>
+    <M26>[ISOFTDS19139:2005-TableA1-Row19] - L\&apos;obligation, le maximum d\&apos;occurence et les valeurs valides sont obligatoires si le type valeur n\&apos;est pas \&apos;liste de code\&apos;, \&apos;énumeration\&apos;, \&apos;élément de liste de code\&apos;</M26>
+    <M27>[ISOFTDS19139:2005-TableA1-Row20] - La condition est obligatoire si l\&apos;obligation a la valeur \&apos;conditionnelle\&apos;</M27>
+    <M28>[ISOFTDS19139:2005-TableA1-Row21] - Le code est obligatoire si le type de valeur a la valeur \&apos;liste de code\&apos;</M28>
+    <M29>[ISOFTDS19139:2005-TableA1-Row22] - Si le type de valeur n\&apos;est pas \&apos;liste de code\&apos;, alors le nom court est obligatoire</M29>
+    <M30>[ISOFTDS19139:2005-TableA1-Row15] - La description des points de calage est obligatoire si elle est disponible</M30>
+    
+    <userrule>Règles utilisateurs</userrule>
+    
+    <source>Schematron Report by David Carlisle.
+        <a href="http://www.ascc.net/xml/resource/schematron/schematron.html"
+            title="Link to the home page of the Schematron, a tree-pattern schema language">
+            <font color="#FF0080">The Schematron</font>
+        </a> by
+        <a href="mailto:ricko@gate.sinica.edu.tw"
+            title="Email to Rick Jelliffe (pronounced RIK JELIF)">Rick Jelliffe</a>,
+        <a href="http://www.sinica.edu.tw" title="Link to home page of Academia Sinica">Academia Sinica Computing Centre</a>.
+    </source>
+    
+    
+    <!-- String used for JS alert report on editor. Do not forget to use HTML characters for special character -->
+    <alert.M6>Un attribut nilReason est manquant dans la balise XML. Veuillez sauver et valider depuis la vue XML pour l\&apos;ajouter dans l\&apos;ensemble de la métadonnée</alert.M6>
+    <alert.M6.characterString>Un attribut nilReason est manquant dans la balise XML. Veuillez sauver et valider depuis la vue XML pour l\&apos;ajouter dans l\&apos;ensemble de la métadonnée</alert.M6.characterString>
+    <alert.M6.directPosition>La présence d\&apos;un attribut de dimension implique la présence de l\&apos;attribut srsName</alert.M6.directPosition>
+    <alert.M7.axisAndSrs>La présence d\&apos;un attribut axisLabels implique la présence de l\&apos;attribut srsName</alert.M7.axisAndSrs>
+    <alert.M7.uomAndSrs>La présence d\&apos;un attribut uomLabels implique la présence de l\&apos;attribut srsName</alert.M7.uomAndSrs>
+    <alert.M7.uomAndAxis>La présence d\&apos;un attribut uomLabels implique la présence de l\&apos;attribut axisLabels et inversement</alert.M7.uomAndAxis>
+    <alert.M8>Au moins le nom du contact, le nom de l\&apos;organisation ou la fonction du contact doivent être renseignés</alert.M8>
+    <alert.M9.access>Les autres contraintes sont obligatoires si les contraintes d\&apos;accès ont la valeur \&apos;otherRestrictions\&apos;</alert.M9.access>
+    <alert.M9.use>Les autres contraintes sont obligatoires si les contraintes d\&apos;utilisation ont la valeur \&apos;otherRestrictions\&apos;</alert.M9.use>
+    <alert.M9>L\&apos;unité de la longueur d\&apos;onde est obligatoire si la valeur min ou la valeur max est renseignée</alert.M9>
+    <alert.M11>La description du référentiel est obligatoire si une étendue des données sources n\&apos;est pas renseignée</alert.M11>
+    <alert.M12>Une étendue des données sources est obligatoire si la description du référentiel n\&apos;est pas renseignée</alert.M12>
+    <alert.M13>La généalogie de la donnée est obligatoire pour un jeu ou une collection de données si le référentiel ou l\&apos;évènement dans le processus ne sont pas renseignés</alert.M13>
+    <alert.M14>La description du référentiel est obligatoire si la généalogie de la donnée ou la description de l\&apos;évènement dans le processus ne sont pas renseignés</alert.M14>
+    <alert.M15>La description de l\&apos;evenement dans le processus est obligatoire si la généalogie de la donnée ou la description du référentiel</alert.M15>
+    <alert.M16>Au moins le rapport sur la qualité ou la généalogie de la ressource doit être renseigné</alert.M16>
+    <alert.M17>La description du niveau de hiérarchie est obligatoire s\&apos;il ne s\&apos;agit pas d\&apos;un jeu ou d\&apos;une collection de données</alert.M17>
+    <alert.M18>L\&apos;unité de densité d\&apos;enregistrement est obligatoire si la densité est renseignée</alert.M18>
+    <alert.M19>Au moins le format de distribution ou de diffusion doit être renseignés</alert.M19>
+    <alert.M20>Au moins la description de l\&apos;étendue, l\&apos;élément géographique, temporel ou vertical doit être renseignés</alert.M20>
+    <alert.M21>Au moins la description ou l\&apos;étendue spatiale doit être renseignées s\&apos;il s\&apos;agit d\&apos;un jeu de données</alert.M21>
+    <alert.M22>Le thème doit être renseigné pour un jeu ou une collection de données</alert.M22>
+    <alert.M23>Au moins le nom ou l\&apos;identifiant du jeu de données aggregé doit être renseigné</alert.M23>
+    <alert.M26.obligation>L\&apos;obligation est obligatoire si le type de valeur n\&apos;est pas \&apos;liste de code\&apos;, \&apos;énumeration\&apos;, \&apos;élément d\&apos;une liste de code\&apos;</alert.M26.obligation>
+    <alert.M26.maximumOccurence>Le maximum d\&apos;occurence est obligatoire si le type de valeur n\&apos;est pas \&apos;liste de code\&apos;, \&apos;énumeration\&apos;, \&apos;élément d\&apos;une liste de code\&apos;</alert.M26.maximumOccurence>
+    <alert.M26.domainValue>Les valeurs valides sont obligatoires si le type de valeur n\&apos;est pas \&apos;liste de code\&apos;, \&apos;énumeration\&apos;, \&apos;élément d\&apos;une liste de code\&apos;</alert.M26.domainValue>
+    <alert.M27>La condition est obligatoire si l\&apos;obligation a la valeur \&apos;conditionnelle\&apos;</alert.M27>
+    <alert.M28>Le code est obligatoire si le type de valeur est \&apos;Elément d\&apos;une liste de code\&apos;</alert.M28>
+    <alert.M29>Le nom court est obligatoire si le type de valeur n\&apos;est pas \&apos;Elément d\&apos;une liste de code\&apos;</alert.M29>
+    <alert.M30>La description des points de calage est obligatoire si elle est disponible</alert.M30> 
+    
+    
+    <!-- INSPIRE metadata rules translation / START -->
+    <inspirerule>Règles INSPIRE</inspirerule>
+    <M35>[INSPIRE] - Le titre de la ressource est obligatoire</M35>
+    <M36>[INSPIRE] - Le résumé est obligatoire</M36>
+    <M37>[INSPIRE] - Le type de ressource est obligatoire</M37>
+    <M38>[INSPIRE] - L\&apos;identifiant unique de la ressource est obligatoire</M38>
+    <M39>[INSPIRE] - Une thématique ISO est obligatoire</M39>
+    <M40>[INSPIRE] - Un mot-clé est obligatoire</M40>
+    <M41>[INSPIRE] - L\&apos;étendue géographique de la ressource est obligatoire</M41>
+    <M42>[INSPIRE] - Au moins une de ces informations est obligatoire : une date de référence (création, révision ou publication) ou une étendue temporelle</M42>
+    <M43>[INSPIRE] - La généalogie de la ressource est obligatoire</M43>
+    <M44>[INSPIRE] - La conformité est obligatoire</M44>
+    <M45>[INSPIRE] - Une limite d\&apos;utilisation de la ressource est obligatoire</M45>
+    <M46>[INSPIRE] - Au moins une de ces informations est obligatoire : une contrainte légale ou de sécurité</M46>
+    <M47>[INSPIRE] - Le nom de l\&apos;organisation et l\&apos;email du contact sont obligatoires pour la ressource</M47>
+    <M48>[INSPIRE] - Le nom de l\&apos;organisation et l\&apos;email du contact sont obligatoires pour la métadonnée</M48>
+    <M49>[INSPIRE] - La langue de la métadonnée est obligatoire</M49>
+    <M50>[INSPIRE] - La date de mise à jour de la métadonnée est obligatoire</M50>
+    <M51>[INSPIRE for Services] - L'identifiant du jeu ou de la collection de données cible du service est obligatoire si un lien est disponible</M51>
+    <M52>[INSPIRE] - La localisation de la ressource (URL) est obligatoire si un lien avec le service est disponible</M52>
+    <M53>[INSPIRE] - Une seule limite d\&apos;utilisation est autorisée</M53>
+    <M54>[INSPIRE] - Les contraintes d\&apos;accès prennent la valeur \&apos;autres restrictions\&apos; si et seulement si le champ autres contraintes est rempli</M54>
+    <M55>[INSPIRE] - La langue de la ressource doit être renseignée si celle-ci contient du texte</M55>
+    <M56>[INSPIRE] - La résolution spatiale est obligatoire si une échelle ou une distance est disponible pour la ressource</M56>
+    <M57>[ISO19119 for Services] Le nom de l\&apos;opération est obligatoire</M57>
+    <M58>[ISO19119 for Services] Le type de communication est obligatoire</M58>
+    <M59>[ISO19119 for Services] Une source en ligne est obligatoire</M59>
+    <M60>[ISO19119 for Services] Le type de service est obligatoire</M60>
+    
+    
+    <alert.M35>[INSPIRE] - Le titre de la ressource est obligatoire</alert.M35>
+    <alert.M36>[INSPIRE] - Le résumé est obligatoire</alert.M36>
+    <alert.M37>[INSPIRE] - Le type de la ressource est obligatoire</alert.M37>
+    <alert.M38>[INSPIRE] - L\&apos;identifiant unique de la ressource est obligatoire</alert.M38>
+    <alert.M39>[INSPIRE] - Une thématique ISO est obligatoire</alert.M39>
+    <alert.M40>[INSPIRE] - Un mot-clé est obligatoire</alert.M40>
+    <alert.M41>[INSPIRE] - L\&apos;étendue géographique de la ressource est obligatoire</alert.M41>
+    <alert.M42>[INSPIRE] - Une référence temporelle est obligatoire</alert.M42>
+    <alert.M43>[INSPIRE] - La généalogie de la ressource est obligatoire</alert.M43>
+    <alert.M44>[INSPIRE] - La conformité est obligatoire</alert.M44>
+    <alert.M45>[INSPIRE] - Une limite d\&apos;utilisation de la ressource est obligatoire</alert.M45>
+    <alert.M46>[INSPIRE] - Une de ces informations est obligatoire : une contrainte légale ou de sécurité</alert.M46>
+    <alert.M47>[INSPIRE] - Le nom de l\&apos;organisation et l\&apos;email du contact sont obligatoires pour la ressource</alert.M47>
+    <alert.M48>[INSPIRE] - Le nom de l\&apos;organisation et l\&apos;email du contact sont obligatoires pour la métadonnée</alert.M48>
+    <alert.M49>[INSPIRE] - La langue de la métadonnée est obligatoire</alert.M49>
+    <alert.M50>[INSPIRE] - La date de mise à jour de la métadonnée est obligatoire</alert.M50>
+    <alert.M51>[INSPIRE for Services] - L'identifiant du jeu ou de la collection de données cible du service est obligatoire si un lien est disponible</alert.M51>
+    <alert.M52>[INSPIRE] - La localisation de la ressource (URL) est obligatoire si un lien avec le service est disponible</alert.M52>
+    <alert.M53>[INSPIRE] - Une seule limite d\&apos;utilisation est autorisée</alert.M53>
+    <alert.M54>[INSPIRE] - Les contraintes d\&apos;accès prennent la valeur \&apos;autres restrictions\&apos; si et seulement si le champ \&apos;autres contraintes\&apos; est renseigné</alert.M54>
+    <alert.M55>[INSPIRE] - La langue de la ressource doit être renseignée si celle-ci contient du texte</alert.M55>
+    <alert.M56>[INSPIRE] - La résolution spatiale est obligatoire si une échelle ou une distance est disponible pour la ressource</alert.M56>
+    <alert.M57>[ISO19119 for Services] Le nom de l\&apos;opération est obligatoire</alert.M57>
+    <alert.M58>[ISO19119 for Services] Le type de communication est obligatoire</alert.M58>
+    <alert.M59>[ISO19119 for Services] Au moins une source en ligne est obligatoire</alert.M59>
+    <alert.M60>[ISO19119 for Services] Le type de service est obligatoire</alert.M60>
+    <!-- INSPIRE metadata rules translation / END -->
+    
+    
+    <!-- fra profil metadata rules translation / START -->    
+    <M31>[ISO19115FR] : La langue de la métadonnée est obligatoire</M31>
+    <M32>[ISO19115FR] : Le jeu de caractères de la métadonnée est obligatoire</M32>
+    <M33>[ISO19115FR] : Le niveau de hiérarchie de la métadonnée est obligatoire</M33>
+    <M34>[ISO19115FR] : Le nom du niveau de hiérarchie de la métadonnée est obligatoire</M34>
+    
+    <alert.M31>[ISO19115FR] : La langue de la métadonnée est obligatoire</alert.M31>
+    <alert.M32>[ISO19115FR] - Le jeu de caractères de la métadonnée est obligatoire</alert.M32>
+    <alert.M33>[ISO19115FR] - Le niveau hiérarchique de la métadonnée est obligatoire</alert.M33>
+    <alert.M34>[ISO19115FR] - Le nom du niveau hiérarchique est obligatoire</alert.M34>    
+    <!-- fra profil metadata rules translation / END -->
+    
+</strings>

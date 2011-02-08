@@ -7,6 +7,7 @@ import org.fao.geonet.services.harvesting.HarvestTest;
 import org.fao.geonet.services.io.MEFIOTest;
 import org.fao.geonet.services.io.XMLIOTest;
 import org.fao.geonet.services.main.CswTest;
+import org.fao.geonet.services.publisher.GeoFileTest;
 import org.fao.geonet.test.SuiteRunner;
 
 /**
@@ -29,6 +30,7 @@ public class AllTests extends SuiteRunner {
 		TestSuite suite = new TestSuite("Service Tests");
 		suite.addTestSuite(HarvestTest.class);
 		suite.addTestSuite(CswTest.class);
+//        suite.addTestSuite(GeoFileTest.class);
 //		suite.addTestSuite(XMLIOTest.class);
 //		suite.addTestSuite(MEFIOTest.class);
 		// suite.addTestSuite(MetaDataTest.class);

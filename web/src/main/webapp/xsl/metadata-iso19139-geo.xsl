@@ -186,8 +186,20 @@
                 
                 <xsl:variable name="selection" select="concat(gmd:westBoundLongitude/gco:Decimal,';',gmd:eastBoundLongitude/gco:Decimal,';',gmd:southBoundLatitude/gco:Decimal,';',gmd:northBoundLatitude/gco:Decimal)"/>            
                 <xsl:variable name="lang" select="/root/gui/language"/>
+
+                <input type="text" id="region_cat_combo_{$eltRef}" size="20"/>
+                <input type="text" id="region_combo_{$eltRef}" size="20"/>
                 
-                <select name="place" size="1" onChange="javascript:setRegion('{gmd:westBoundLongitude/gco:Decimal/geonet:element/@ref}', '{gmd:eastBoundLongitude/gco:Decimal/geonet:element/@ref}', '{gmd:southBoundLatitude/gco:Decimal/geonet:element/@ref}', '{gmd:northBoundLatitude/gco:Decimal/geonet:element/@ref}', this.options[this.selectedIndex], {$eltRef}, '{../../gmd:description/gco:CharacterString/geonet:element/@ref}')" class="md">
+                <script type="text/javascript">
+                    var westField = <xsl:value-of select="gmd:westBoundLongitude/gco:Decimal/geonet:element/@ref"/>
+                    var eastField = <xsl:value-of select="gmd:eastBoundLongitude/gco:Decimal/geonet:element/@ref"/>
+                    var southField = <xsl:value-of select="gmd:southBoundLatitude/gco:Decimal/geonet:element/@ref"/>
+                    var northField = <xsl:value-of select="gmd:northBoundLatitude/gco:Decimal/geonet:element/@ref"/>
+                    var eltRef = <xsl:value-of select="$eltRef"/>
+                    
+                    editor_initRegionCombo(westField, eastField, southField, northField, eltRef)
+                </script>
+<!--                <select name="place" size="1" onChange="javascript:setRegion('{gmd:westBoundLongitude/gco:Decimal/geonet:element/@ref}', '{gmd:eastBoundLongitude/gco:Decimal/geonet:element/@ref}', '{gmd:southBoundLatitude/gco:Decimal/geonet:element/@ref}', '{gmd:northBoundLatitude/gco:Decimal/geonet:element/@ref}', this.options[this.selectedIndex], {$eltRef}, '{../../gmd:description/gco:CharacterString/geonet:element/@ref}')" class="md">
                     <option value=""/>
                     <xsl:for-each select="/root/gui/regions/record">
                         <xsl:sort select="label/child::*[name() = $lang]" order="ascending"/>
@@ -200,7 +212,7 @@
                             <xsl:value-of select="label/child::*[name() = $lang]"/>
                         </option>
                     </xsl:for-each>
-                </select>
+                </select> -->
             </xsl:if>
         </xsl:variable>
         

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<geonet>
+	<services package="org.fao.geonet.kernel.sharedobject">
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+		<!-- Shared Object Services -->
+
+		<service name="xml.sharedobject.list" type="xml">
+            <class name=".List"/>
+		</service>
+		<service name="xml.sharedobject.get" type="xml">
+            <class name=".Get"/>
+		</service>
+        <service name="sharedobject.upload" type="xml">
+            <class name=".Upload"/>
+        </service>
+        <service name="xml.sharedobject.types.list" type="xml">
+            <class name=".ListTypes"/>
+        </service>
+        <service name="xml.sharedobject.delete" type="xml">
+            <class name=".Delete"/>
+        </service>
+        <service name="xml.sharedobject.jsgridspec">
+            <class name=".JsGridSpec"/>
+            <output contentType="application/json; charset=UTF-8" sheet="sharedobject/extract-json.xsl"/>
+        </service>
+        <service name="xml.sharedobject.nextid" type="xml">
+            <class name=".NextId"/>
+        </service>
+        <service name="sharedobject.edit">
+            <class name=".Get"/>
+            <output sheet="sharedobject/edit.xsl"/>
+        </service>
+        <service name="sharedobject.admin">
+            <class name=".ListTypes"/>
+            <output sheet="sharedobject/admin.xsl"/>
+        </service>
+	</services>
+
+    <sharedObjectConfig>
+        <connectionParams>
+            <dbtype>postgis</dbtype>
+            <host>${psql.host}</host>
+            <port>${psql.port}</port>
+            <database>${psql.db}</database>
+            <user>${psql.user}</user>
+            <passwd>${psql.pass}</passwd>
+        </connectionParams>
+        
+        <type name="contacts">
+            <template id="default-contacts"/>
+        </type>
+    </sharedObjectConfig>
+</geonet>
+

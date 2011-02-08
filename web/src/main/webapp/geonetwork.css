@@ -129,6 +129,13 @@ td.banner-login {
 	vertical-align: middle
 }
 
+td.banner-login a
+{
+       color: white;
+       font-weight: bold;
+       text-decoration: none;
+}
+
 a.banner {
 	color: #ffffff;
 	text-decoration: none;
@@ -974,6 +981,21 @@ div.toolTipOverlay ul li, div.shortcutHelp ul li {
 
 .addIcon { background-image: url('images/add.png') !important; }
 .searchIcon { background-image: url('images/find.png') !important; }
+
+.addVector { background-image: url('images/vector_add.png') !important; }
+.delVector { background-image: url('images/vector_delete.png') !important; }
+.connect { background-image: url('images/connect.png') !important; }
+.processMetadata { background-image: url('images/table_gear.png') !important; }
+.repository { 
+    background-image: url('images/database_yellow.png') !important; 
+    background-repeat: no-repeat;
+    padding-left: 15px;
+}
+ a.repository {
+    cursor: pointer;
+    cursor: hand;
+}
+
 .validationReportIcon { background-image: url('images/schematron.gif') !important; }
 .shortcutHelpIcon { background-image: url('images/schematron.gif') !important; }
 .linkIcon { background-image: url('images/link.png') !important; }
@@ -1041,6 +1063,11 @@ span.inspireThemeElement {
 .xlinked {
      font-style: italic;
 }
+
+span#nbselectedspan {
+    font-weight: bold;
+}
+
 
 /*******************************
  Search results

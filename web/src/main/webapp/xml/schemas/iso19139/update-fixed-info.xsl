@@ -232,6 +232,14 @@
 		</xsl:copy>
 	</xsl:template>
 
+	<xsl:template match="gmd:linkage[starts-with(following-sibling::gmd:protocol/gco:CharacterString,'OGC:WMC-') and contains(following-sibling::gmd:protocol/gco:CharacterString,'http-get-capabilities') and following-sibling::gmd:name]">
+		<gmd:linkage>
+			<gmd:URL>
+				<xsl:value-of select="concat(/root/env/siteURL,'/resources.get?id=',/root/env/id,'&amp;fname=',following-sibling::gmd:name/gco:CharacterString,'&amp;access=private')"/>
+			</gmd:URL>
+		</gmd:linkage>
+	</xsl:template>
+
 	<!-- ================================================================= -->
 
 	<!-- Do not allow to expand operatesOn sub-elements 

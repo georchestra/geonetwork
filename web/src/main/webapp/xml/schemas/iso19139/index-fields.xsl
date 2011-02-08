@@ -178,6 +178,7 @@
 	
 			<xsl:for-each select="gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString">
 				<Field name="orgName" string="{string(.)}" store="true" index="true" token="true"/>
+				<Field name="_orgName" string="{string(.)}" store="true" index="true" token="false"/>
 			</xsl:for-each>
 
 			<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->		

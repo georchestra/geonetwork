@@ -47,8 +47,12 @@ import org.fao.geonet.kernel.search.SearchManager;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.lib.Lib;
 import org.fao.geonet.lib.ServerLib;
+
+import org.fao.geonet.services.metadata.ComputeDeadLinkTask;
+
 import org.fao.geonet.notifier.MetadataNotifierControl;
 import org.fao.geonet.notifier.MetadataNotifierManager;
+
 import org.fao.geonet.services.util.z3950.Repositories;
 import org.fao.geonet.services.util.z3950.Server;
 import org.geotools.data.DataStore;
@@ -76,6 +80,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.Timer;
 
 //=============================================================================
 
@@ -290,6 +295,14 @@ public class Geonetwork implements ApplicationHandler
 		gnContext.oaipmhDis   = oaipmhDis;
 		gnContext.app_context = app_context;
         gnContext.metadataNotifierMan = metadataNotifierMan;
+
+		//------------------------------------------------------------------------
+		//--- initialize deadlinks computation timer
+
+		logger.info("  - dead links computation timer...");
+
+		Timer t = new Timer("CheckDeadLinks");
+		t.schedule(new ComputeDeadLinkTask(context),10000, 24 * 60 * 60 * 1000);
 
 		logger.info("Site ID is : " + gnContext.getSiteId());
 

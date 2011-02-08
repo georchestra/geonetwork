@@ -34,7 +34,7 @@
 		
 		<!-- Required by keyword selection panel -->
 		<xsl:if test="/root/gui/config/search/keyword-selection-panel">
-			<xsl:call-template name="ext-ux"/>
+			<xsl:call-template name="edit-header"/>
 		</xsl:if>
 		
          <xsl:choose>
@@ -935,30 +935,8 @@
 								<td>
 
 									<!-- regions combobox -->
-
-									<select class="content" name="region" id="region">
-										<option value="">
-											<xsl:if test="/root/gui/searchDefaults/theme='_any_'">
-												<xsl:attribute name="selected"/>
-											</xsl:if>
-											<xsl:value-of select="/root/gui/strings/any"/>
-										</option>
-
-										<xsl:for-each select="/root/gui/regions/record">
-											<xsl:sort select="label/child::*[name() = $lang]"
-												order="ascending"/>
-											<option>
-												<xsl:if test="id=/root/gui/searchDefaults/region">
-												<xsl:attribute name="selected"/>
-												</xsl:if>
-												<xsl:attribute name="value">
-												<xsl:value-of select="id"/>
-												</xsl:attribute>
-												<xsl:value-of
-												select="label/child::*[name() = $lang]"/>
-											</option>
-										</xsl:for-each>
-									</select>
+                                    <input type="text" id="region_cat_combo" size="20"/>
+                                    <input type="text" id="region_combo" size="20"/>
 								</td>
 							</tr>
 						</table>

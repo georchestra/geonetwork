@@ -1,0 +1,20 @@
+{
+    "store": {
+        "fields": [
+            "id",
+            {"name":"name", "mapping":"individualName > CharacterString"},
+            {"name":"email", "mapping":"electronicMailAddress > CharacterString"},
+            {"name":"org", "mapping":"organisationName > CharacterString"},
+            {"name":"pos", "mapping":"positionName > CharacterString"}
+        ]
+    },
+    "colModel": [
+            {"header": "name", "id": "name", "dataIndex": "name", "sortable": true},
+            {"header": "email", "id": "email", "dataIndex": "email", "width":200, "sortable": true},
+            {"header": "organisation", "id": "org", "dataIndex": "org", "width":200, "sortable": true},
+            {"header": "position", "id": "pos", "dataIndex": "pos", "width":200, "sortable": true}
+        ],
+    "grid": {
+        "autoExpandColumn": "name"
+    }
+}

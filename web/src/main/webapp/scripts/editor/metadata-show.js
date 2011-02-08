@@ -97,24 +97,6 @@
 				Modalbox.show(url,{title: title, width: width, height: 400});
 				return true;
 			}
-			
-			function doAction(action)
-			{
-				document.mainForm.action = action;
-				goSubmit('mainForm');
-			}
-			
-			function doTabAction(action, tab)
-			{
-				document.mainForm.currTab.value = tab;
-				doAction(action);
-			}
-
-// stub to stop errors in metadata-show.xsl - real function is in 
-// metadata-editor.js
-			function setBunload(on) 
-			{
-			}
 
 			function runFileDownload(href,title) {
 				if (href.include("resources.get")) { // do the file download direct

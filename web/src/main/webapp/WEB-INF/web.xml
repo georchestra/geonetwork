@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<web-app xmlns="http://java.sun.com/xml/ns/j2ee" 
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-            xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" 
-            version="2.4">
-            
-    <display-name>geonetwork</display-name>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" version="2.4">
+			
+	<display-name>GeoNetwork opensource</display-name>
 
     <!-- shut down java cache used for xlinks and spatial index -->
     <listener>
@@ -19,6 +15,12 @@
         <servlet-class>jeeves.server.sources.http.JeevesServlet</servlet-class>
 
         <load-on-startup>1</load-on-startup>
+        <init-param>
+            <param-name>baseUrl</param-name>
+            <param-value>geonetwork</param-value>
+        </init-param>
+
+        
     </servlet>
 
         <!-- Servlet proxy -->
@@ -45,12 +47,11 @@
       </param-value>
     </init-param>
 
-    <!-- List of host alloed to be accesed by the proxy: If not specified or empty, any hosts is allowed -->
+    <!-- List of host allowed to be accessed by the proxy: If not specified or empty, any hosts is allowed -->
     <init-param>
         <param-name>AllowedHosts</param-name>
         <param-value />
     </init-param>
-
     <!-- Default proxy url if none is provided -->
     <init-param>
         <param-name>DefaultProxyUrl</param-name>

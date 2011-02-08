@@ -34,7 +34,7 @@
 						</xsl:choose>
 						|
 					</xsl:if> -->
-					<xsl:if test="string(/root/gui/session/userId)!=''">
+					<xsl:if test="string(/root/gui/login/userId)!=''">
 						<xsl:choose>
 							<xsl:when test="/root/gui/reqService='admin'">
 								<font class="banner-active"><xsl:value-of select="/root/gui/strings/admin"/></font>
@@ -62,7 +62,7 @@
 							<a class="banner" href="{/root/gui/locService}/links"><xsl:value-of select="/root/gui/strings/links"/></a>
 						</xsl:otherwise>
 					</xsl:choose>
-					<xsl:if test="string(/root/gui/session/userId)='' and
+					<xsl:if test="string(/root/gui/login/userId)='' and
 								     string(/root/gui/env/userSelfRegistration/enable)='true'">
 					|
 						<xsl:choose>
@@ -93,15 +93,7 @@
 						</xsl:otherwise>
 					</xsl:choose> -->
 
-					<!-- Help section to be displayed according to GUI language -->
-					<xsl:choose>
-						<xsl:when test="/root/gui/language='fr'">
-							<a class="banner" href="{/root/gui/url}/docs/fra/users" target="_blank"><xsl:value-of select="/root/gui/strings/help"/></a>
-						</xsl:when>
-						<xsl:otherwise>
-							<a class="banner" href="{/root/gui/url}/docs/eng/users" target="_blank"><xsl:value-of select="/root/gui/strings/help"/></a>
-						</xsl:otherwise>
-					</xsl:choose>
+				<a class="banner" href="/doc/html/documentation.html#catalogue" target="_blank"><xsl:value-of select="/root/gui/strings/help"/></a>
 					|
 				</td>
 				<td align="right" class="banner-menu" width="610px">
@@ -143,36 +135,31 @@
 					-->
 				</td>
 				<xsl:choose>
-					<xsl:when test="string(/root/gui/session/userId)!=''">
+					<xsl:when test="string(/root/gui/login/userId)!=''">
 						<td align="right" class="banner-login">
+							<!--  PMT security proxy modification
+							was :
 							<form name="logout" action="{/root/gui/locService}/user.logout" method="post">
+							-->
+							<!--  end PMT security proxy modification -->
 								<xsl:value-of select="/root/gui/strings/user"/>
 								<xsl:text>: </xsl:text>
-								<xsl:value-of select="/root/gui/session/name"/>
+								<xsl:value-of select="/root/gui/login/name"/>
 								<xsl:text> </xsl:text>
-								<xsl:value-of select="/root/gui/session/surname"/>
+								<xsl:value-of select="/root/gui/login/surname"/>
 								<xsl:text> </xsl:text>
-								<button class="banner" onclick="goSubmit('logout')"><xsl:value-of select="/root/gui/strings/logout"/></button>
-							</form>
+								<!-- PMT security proxy modification : Redirect to the CAS / SP logout -->
+								<button class="banner" onclick="document.location='/j_spring_security_logout';"><xsl:value-of select="/root/gui/strings/logout"/></button>
+							<!-- End PMT security proxy mod -->
 						</td>
+						
 					</xsl:when>
 					<xsl:otherwise>
+						<!-- PMT security proxy modification : Redirect to the CAS / SP login -->
 						<td align="right" class="banner-login">
-							<form name="login" action="{/root/gui/locService}/user.login" method="post">
-								<xsl:if test="string(/root/gui/env/shib/use)='true'">
-									<a class="banner" href="{/root/gui/env/shib/path}">
-										<xsl:value-of select="/root/gui/strings/shibLogin"/>
-									</a>
-									|
-								</xsl:if>
-								<input type="submit" style="display: none;" />
-								<xsl:value-of select="/root/gui/strings/username"/>
-								<input class="banner" type="text" id="username" name="username" size="10" onkeypress="return entSub('login')"/>
-								<xsl:value-of select="/root/gui/strings/password"/>
-								<input class="banner" type="password" id="password" name="password" size="10" onkeypress="return entSub('login')"/>
-								<button class="banner" onclick="goSubmit('login')"><xsl:value-of select="/root/gui/strings/login"/></button>
-							</form>
+						<a class="button" href="/geonetwork/?login">login</a>
 						</td>
+						<!--  END PMT security proxy / CAS modification -->
 					</xsl:otherwise>
 				</xsl:choose>
 			</tr>

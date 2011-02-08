@@ -16,6 +16,11 @@
 	<showRemoteHTML>Show HTML from remote server</showRemoteHTML>
 	<!-- end new strings -->
 
+
+	<deadlinks>Liens morts</deadlinks>
+	<deadchildparentlinks>Lien parent / enfant morts</deadchildparentlinks>
+	<deadlinkscheck>Vérifier les liens morts</deadlinkscheck>
+	<deadlinkscheckDes>Affiche une page recensant les liens morts au sein des métadonnées</deadlinkscheckDes>
 	<createChild>Créer un enfant</createChild>
 	<updateChildren>Mettre à jour les enfants</updateChildren>
 	<updateChildrenOk>Enfants mis à jour</updateChildrenOk>
@@ -234,6 +239,7 @@
 	<confirmNewPassword>Confirmer le nouveau mot de passe</confirmNewPassword>
 	<confirmPassword>Confirmer le mot de passe</confirmPassword>
 	<constraintsTab>Contraintes</constraintsTab>
+	<Contact js="true">Contact</Contact>
 	<contactUs>Contact</contactUs>
 	<contains>Contient</contains>
 	<contentInfoTab>Content Info</contentInfoTab>
@@ -241,6 +247,7 @@
 	<copyright1>Copyright</copyright1>
 	<copyright2><p>Tout droit réservé.</p></copyright2>
 	<country>Pays</country>
+	<create js="true">Ajouter</create>
 	<create>Dupliquer</create>
 	<createTip>Créer des métadonnées à partir de ce template</createTip>
 	<crs code="EPSG:4326">WGS 84</crs>
@@ -260,6 +267,7 @@
 	<decline>Refuser</decline>
 	<definition>Définition</definition>
 	<del>Supprimer</del>
+    <delete js="true">Supprimer</delete>
 	<delete>Supprimer</delete>
 	<deleteCategory>Supprimer la catégorie ?</deleteCategory>
 	<deleteConfirmationTitle>Rapport sur la suppression</deleteConfirmationTitle>
@@ -297,8 +305,10 @@
 	<durationYears>année(s)</durationYears>
 	<dynamic>Interactive</dynamic>
 	<eastbc>Coordonnée est de l'emprise</eastbc>
+	<edit js="true">Editer</edit>
 	<edit>Editer</edit>
 	<Editor>Éditeur</Editor>
+	<email js="true">Email</email>
 	<email>Email</email>
 	<emailAddressInvalid js="true">Adresse email invalide</emailAddressInvalid>
 	<enclosing>Incluant</enclosing>
@@ -335,6 +345,8 @@
 	<group>Groupe</group>
 	<groupManagement>Gestion des groupes</groupManagement>
 	<groupManDes>Ajouter/Modifier/Supprimer et visualiser les groupes</groupManDes>
+	<groupSync>Synchronisation des groupes</groupSync>
+	<groupSyncDes>Synchronise les groupes à partir des informations du LDAP</groupSyncDes>
 	<groups>Groupes</groups>
 	<harvestingManagement>Gestion du moissonnage</harvestingManagement>
 	<harvestingManDes>Ajouter/modifier/supprimer/lancer/arrêter les moissons (récupération de métadonnées depuis un noeud distant)</harvestingManDes>
@@ -371,6 +383,10 @@
 	<interactiveMap>Carte interactive</interactiveMap>
 	<interMapInfo><h1>Information et cartes interactives</h1><p>Vous pouvez trouver des cartes interactives en cherchant dans Geonetwork pour des jeux de données numérique avec une carte interactive, ou bien en vous connectant directement à un serveur cartographique existant</p><p>Les serveurs cartographiques supportés sont les serveurs conformes avec la norme WMS de l'<a href="http://www.opengeospatial.org" class="sm" target="_blank">Open GeoSpatial® Consortium</a> et <a href="http://www.esri.com" class="sm" target="_blank">ESRI® ArcIMS</a>.</p></interMapInfo>
 	<intermapSearch>Recherche géographique</intermapSearch>
+	<invalidSelectionMoreThanOneWMC js="true">Sélection invalide : Votre sélection contient plus d'un WMC</invalidSelectionMoreThanOneWMC>
+	<invalidSelectionOneWMCandOneOrMoreWMS js="true">Sélection invalide : Votre sélection contient un WMC ainsi qu'un ou plusieurs WMS</invalidSelectionOneWMCandOneOrMoreWMS>
+	<invalidSelectionnoWMCnorWMS js="true">Il n'y a ni WMC, ni WMS dans votre sélection en cours. Modifiez le contenu de votre panier puis réessayez</invalidSelectionnoWMCnorWMS>
+
 	<isoAll>ISO Complet</isoAll>
 	<isoCore>ISO Core</isoCore>
 	<isoMinimum>ISO Minimum</isoMinimum>
@@ -464,6 +480,7 @@
 	<missingSeeTab>Manquant - Voir l'onglet correspondant au groupe </missingSeeTab>
 	<more>Plus</more>
 	<moreinfo>Pour plus d'information, contacter : </moreinfo>
+	<name js="true">Nom</name>
 	<name>Nom</name>
 	<newCategory>Ajouter une catégorie</newCategory>
 	<newGroup>Ajouter un groupe</newGroup>
@@ -491,6 +508,7 @@
 	<opensearch>Service de recherche OpenSearch de GeoNetwork permettant la recherche de métadonnées dans le catalogue.</opensearch>
 	<operation>Opération</operation>
 	<options>Options</options>
+	<organisation js="true">Organisation</organisation>
 	<organisation>Organisation / Service</organisation>
 	<output>Type de présentation</output>
 	<outputType id="full">Complet</outputType>
@@ -511,6 +529,8 @@
 	<persInfo>Personal info</persInfo>
 	<placeKeyword>Mot-clé géographique</placeKeyword>
 	<porCatInfoTab>Catalogue</porCatInfoTab>
+	<position js="true">Rôle</position>
+	<postalCode js="true">Code postal</postalCode>
 	<poweredBy>Fonctionne avec </poweredBy>
 	<previous>&lt;&lt;</previous>
 	<privileges>Privilèges</privileges>
@@ -552,6 +572,7 @@
 	<rawMetadata>Insertion de métadonnées par lots</rawMetadata>
 	<rebuild>Regénérer</rebuild>
 	<recentAdditions>Derniers ajouts</recentAdditions>
+	<refresh js="true">Rafraîchir</refresh>
 	<refSysTab>Système de Réf.</refSysTab>
 	<region>Région</region>
 	<register>Créer un compte</register>
@@ -602,6 +623,7 @@
 	<selectedOnly>Afficher la sélection</selectedOnly>
 	<selection>Sélection</selection>
 	<selectNone>Unselect metadata selected</selectNone>
+	<sendToExtractor>Envoyer à l'extrateur</sendToExtractor>
 	<server>Serveur</server>
 	<setAll>Tous</setAll>
 	<setOnSave>Valeur définie lors de la sauvegarde</setOnSave>
@@ -628,6 +650,7 @@
 	<spatialTab>Information Spat.</spatialTab>
 	<startsWith>Commence par</startsWith>
 	<state>Etat</state>
+	<street js="true">Rue</street>
 	<styleSheet>Feuille de style</styleSheet>
 	<submit>Valider</submit>
 	<subtemplate>Sous modèle</subtemplate>
@@ -652,6 +675,7 @@
 	<topic>Sujet</topic>
 	<transferOwnership>Transfert de privilèges</transferOwnership>
 	<transferOwnershipDes>Transfert des privilèges de métadonnées pour un autre utilisateur</transferOwnershipDes>
+	<type js="true">Type</type>
 	<type>Type</type>
 	<up>Monter</up>
 	<update>Mettre à jour</update>
@@ -679,7 +703,10 @@
 	<validityEnds> et fin </validityEnds>
 	<view>Voir</view>
 	<viewInGE>Google Earth</viewInGE>
+	<viewInViewer>Visualisation Mapfish</viewInViewer>
+	<voice js="true">Téléphone</voice>
 	<waitGetCap js="true">Chargement en cours ...</waitGetCap>
+	<website js="true">Site internet</website>
 	<westbc>Coordonnée ouest de l'emprise</westbc>
 	<what>Quoi ?</what>
 	<when>Quand ?</when>
@@ -927,6 +954,10 @@
 		<iso19139>Télécharger les métadonnées au format ISO19115/19139</iso19139>
 		<iso19139fra>Télécharger les métadonnées au format ISO19115/19139 profil France</iso19139fra>
 	</savexml>
+	<savepdf>
+	     <iso11915>Exporter la métadonnée ISO19115 au format PDF</iso11915>
+	     <iso19139>Exporter la métadonnée ISO19139 au format PDF</iso19139>
+    </savepdf>
 	<thesaurus>
 		<addelement>Ajouter un élément</addelement>
 		<admin>Gérer le thésaurus</admin>
@@ -1028,6 +1059,39 @@
     <searchExactPhrase>Cette expression exacte</searchExactPhrase>
     <searchAllWords>Tous les mots suivants</searchAllWords>
     <searchWithoutWords>Aucun des mots suivants</searchWithoutWords>
+	<orgName>Organization</orgName>
+	<topicCat>Topic Category</topicCat>
+    
+    <geopublisher>GeoPublisher</geopublisher>
+    <geoPublisherWindowTitle js="true">Géo-publication pour le fichier:</geoPublisherWindowTitle>
+    <geopublisherHelp>Publier ou retirer de la publication le jeu de données comme un WMS ou un WFS sur le GeoServer distant.</geopublisherHelp>
+    <publish js="true">Publier</publish>
+    <publishTooltip js="true">Publier le jeu de données courant sur le noeud distant. Si le jeu de données est deja publié sur ce noeud, il sera mis à jour.</publishTooltip>
+    <publishError js="true">La publication a échoué. </publishError>
+    <publishErrorCode js="true">Code d'erreur:</publishErrorCode>
+    <publishSuccess js="true">Publication effectuée avec succès.</publishSuccess>
+    <publishLayerAdded js="true">La couche a été ajoutée à l'aperçu de la carte.</publishLayerAdded>
+    <unpublish js="true">Retirer de la publication</unpublish>
+    <unpublishTooltip js="true">Retirer le jeu de données courant du noeud distant.</unpublishTooltip>
+    <unpublishError js="true">L'annulation de la publication a échoué. </unpublishError>
+    <unpublishSuccess js="true">L'annulation de la publication s'est terminée avec succès.</unpublishSuccess>
+    <check js="true">Vérifiez</check>
+    <errorConnectionRefused js="true">Connexion refusée.</errorConnectionRefused>
+    <errorDatasetNotFound js="true">Jeu de données non trouvé.</errorDatasetNotFound>
+    <datasetFound js="true">Jeu de données trouvé.</datasetFound>
+    <checkFailure js="true">Échec lors de la vérification du jeu de données sur le noeud distant.</checkFailure>
+    <addOnlineSource js="true">Ajouter une source en ligne.</addOnlineSource>
+    <statusInformation js="true">Informations de statut.</statusInformation>
+    <mapPreview js="true">Aperçu de la carte</mapPreview>
+    <selectANode js="true">Sélectionnez un noeud ...</selectANode>
+    <publishing js="true">Publication en cours ...</publishing>
+    <sharedobject>
+        <manDes>Gestion des objets partagés du système (contacts)</manDes>
+        <management>Gestion des objets partagés</management>
+    </sharedobject>
+    <wrongName js="true">Le nom fichier ZIP ne correspond pas aux noms de fichier Shapefile</wrongName>
+    <noPrj js="true">Aucun fichier de projection trouvé dans l'archive ZIP</noPrj>
+    <epsgCodeLookupFailure js="true">Impossible d'associer un code EPSG avec le CRS du fichier Shapefile</epsgCodeLookupFailure>
     
     <showMap>Show map</showMap>
     <mapViewer>Map viewer</mapViewer>

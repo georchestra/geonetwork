@@ -90,6 +90,7 @@ var toolTipRequestTemp =
 '         xmlns:srv="http://www.isotc211.org/2005/srv"'+ 
 '         xmlns:gml="http://www.opengis.net/gml"'+
 '         xmlns:gfc="http://www.isotc211.org/2005/gfc"' +
+'         xmlns:fra="http://www.cnig.gouv.fr/2005/fra"'+
 '         xmlns:gco="http://www.isotc211.org/2005/gco"'+
 '         xmlns:dct="http://purl.org/dc/terms/"'+
 '         xmlns:dc ="http://purl.org/dc/elements/1.1/">'+

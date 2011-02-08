@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<codelists xmlns:gmd="http://www.isotc211.org/2005/gmd">
+    <!-- ==================================================== -->
+	<codelist name="gmd:CI_DateTypeCode">
+		<entry>
+			<code>creation</code>
+			<label>Creation</label>
+			<description>Date identifies when the resource was brought into existence</description>
+		</entry>
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
+		<entry>
+			<code>publication</code>
+			<label>Publication</label>
+			<description>Date identifies when the resource was issued</description>
+		</entry>
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
+		<entry>
+			<code>revision</code>
+			<label>Revision</label>
+			<description>Date identifies when the resource was examined or re-examined and improved or
+				amended</description>
+		</entry>
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
+		<entry>
+			<code>validity</code>
+			<label>Validity</label>
+			<description>Date when the resource has been validated</description>
+		</entry>
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
+		<entry>
+			<code>useBy</code>
+			<label>Use by</label>
+			<description></description>
+		</entry>
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
+	</codelist>
+</codelists>

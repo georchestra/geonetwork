@@ -793,34 +793,8 @@
 	
 	<!-- Region -->
 	<div class="row">  <!-- div row-->
-		<span class="labelField"><xsl:value-of select="/root/gui/strings/region"/></span>
-		<select class="content" name="region" id="region" onchange="javascript:doRegionSearchAdvanced();">
-			<option value="">
-				<xsl:if test="/root/gui/searchDefaults/theme='_any_'">
-					<xsl:attribute name="selected">selected</xsl:attribute>
-				</xsl:if>
-				<xsl:value-of select="/root/gui/strings/any"/>
-			</option>
-			<option value="userdefined">
-				<xsl:if test="/root/gui/searchDefaults/theme='_userdefined_'">
-					<xsl:attribute name="selected">selected</xsl:attribute>
-				</xsl:if>
-				<xsl:value-of select="/root/gui/strings/userDefined"/>
-			</option>
-			
-			<xsl:for-each select="/root/gui/regions/record">
-				<xsl:sort select="label/child::*[name() = $lang]" order="ascending"/>
-				<option value="{id}">
-					<xsl:if test="id=/root/gui/searchDefaults/region">
-						<xsl:attribute name="selected">selected</xsl:attribute>
-					</xsl:if>
-					<xsl:attribute name="value">
-							<xsl:value-of select="id"/>
-					</xsl:attribute>
-					<xsl:value-of select="label/child::*[name() = $lang]"/>
-				</option>
-			</xsl:for-each>
-		</select>							
+		<input type="text" id="region_cat_combo_adv" size="20"/>
+		<input type="text" id="region_combo_adv" size="20"/>					
 	</div>
 </xsl:template>
 
@@ -931,6 +905,45 @@
 		</script>
 	</xsl:if>
 </xsl:template>
-	
+
+<xsl:template name="indexFieldFilter">
+    <xsl:param name="fld"/>
+    <xsl:param name="codeName"/>
+    
+	<tr>
+		<th class="padded">
+			<xsl:value-of select="/root/gui/strings/*[name() = $fld]"/>
+		</th>
+		<td class="padded">
+			<select class="content" name="{$fld}" id="{$fld}">
+				<option value="">
+					<xsl:if test="/root/gui/searchDefaults/*[name() = $fld] = ''">
+						<xsl:attribute name="selected"/>
+					</xsl:if>
+					<xsl:value-of select="/root/gui/strings/any"/>
+				</option>
+				
+				<xsl:for-each select="/root/gui/*[name() = $fld]/term">
+					<xsl:sort select="text()" order="ascending"/>
+					
+					<option value="{text()}">
+						<xsl:if test="text() = /root/gui/searchDefaults/*[name() = $fld]">
+							<xsl:attribute name="selected"/>
+						</xsl:if>
+                        <xsl:choose>
+                        <xsl:when test="string-length($codeName)">
+                            <xsl:variable name="termName" select="text()"/>
+    						<xsl:value-of select="/root/gui/iso19139/codelist[@name = $codeName]/entry[code/text() = $termName]/label"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="text()"/>
+                        </xsl:otherwise>
+                        </xsl:choose>
+					</option>
+				</xsl:for-each>
+			</select>
+		</td>
+	</tr>
+</xsl:template>	
 
 </xsl:stylesheet>

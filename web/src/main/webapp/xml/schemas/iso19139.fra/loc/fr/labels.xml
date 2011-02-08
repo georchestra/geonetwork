@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<labels xmlns:fra="http://www.cnig.gouv.fr/2005/fra">
+	<element name="fra:FRA_DataIdentification">
+		<label>Identification</label>
+		<description>description</description>
+	</element>
+	<element name="fra:FRA_Constraints">
+		<label>Contraintes</label>
+		<description>Contraintes sur l’accès et l’utilisation de la donnée</description>
+	</element>
+	<element name="fra:FRA_LegalConstraints">
+		<label>Contraintes légales</label>
+		<description>classe pour les restrictions et conditions préalables légales pour accéder et utiliser les métadonnées ou la ressource</description>
+	</element>
+	<element name="fra:FRA_SecurityConstraints">
+		<label>Contraintes de sécurité</label>
+		<description>classe avec les restrictions de manipulation imposées sur les métadonnées ou la ressource pour la sécurité nationale ou des situations de sécurité similaires</description>
+	</element>
+	<element name="fra:citation">
+		<label>Document(s) associé(s)</label>
+		<description>Citations de documents concernant les contraintes de ressources</description>
+	</element>
+	<element name="fra:relatedCitation">
+		<label>Document(s) associé(s)</label>
+		<description>Citations de documents concernant la ressource</description>
+	</element>
+	<element name="fra:InDirectReferenceSystem">
+		<label>Système de projection indirect (pour les ressources non géographiques)</label>
+		<description>Dérivé de ReferenceSystem / précise qu’il s’agit d’une référence directe</description>
+	</element>
+	<element name="fra:DirectReferenceSystem">
+		<label>Système de projection direct (pour les ressources géographiques)</label>
+		<description>Dérivé de ReferenceSystem / précise qu’il s’agit d’une référence indirecte</description>
+	</element>
+</labels>

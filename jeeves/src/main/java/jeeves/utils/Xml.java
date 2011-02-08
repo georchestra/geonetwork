@@ -214,29 +214,42 @@ public class Xml
 		Source srcXml   = new JDOMSource(new Document((Element)xml.detach()));
 		Source srcSheet = new StreamSource(styleSheet);
 
-		// Dear old saxon likes to yell loudly about each and every XSLT 1.0
-		// stylesheet so switch it off but trap any exceptions because this
-		// code is run on transformers other than saxon 
-        TransformerFactory transFact = TransformerFactoryFactory.getTransformerFactory();
-		try {
-			transFact.setAttribute(FeatureKeys.VERSION_WARNING,false);
-			transFact.setAttribute(FeatureKeys.LINE_NUMBERING,true);
-			transFact.setAttribute(FeatureKeys.PRE_EVALUATE_DOC_FUNCTION,true);
-			transFact.setAttribute(FeatureKeys.RECOVERY_POLICY,Configuration.RECOVER_SILENTLY);
-			// Add the following to get timing info on xslt transformations
-			//transFact.setAttribute(FeatureKeys.TIMING,true);
-		} catch (IllegalArgumentException e) {
-			System.out.println("WARNING: transformerfactory doesnt like saxon attributes!");
-			//e.printStackTrace();
-		} finally {
-			Transformer t = transFact.newTransformer(srcSheet);
-			if (params != null) {
-				for (String param : params.keySet()) {
-					t.setParameter(param,params.get(param));
-				}
-			}
-			t.transform(srcXml, result);
-		}
+        // JE I am adding a hack so that geonetwork will work with geoserver/geotools
+        // Without this hack geoserver will set the xslt processor to a version 1 processor
+        // at least the old version of geoserver will a newer one might be kinder
+        final String TRANSFORMER_KEY = "javax.xml.transform.TransformerFactory";
+        
+        String oldTransformer = System.getProperty(TRANSFORMER_KEY);
+        try {
+            System.setProperty(TRANSFORMER_KEY, "de.fzi.dbs.xml.transform.CachingTransformerFactory");
+
+            // Dear old saxon likes to yell loudly about each and every XSLT 1.0
+            // stylesheet so switch it off but trap any exceptions because this
+            // code is run on transformers other than saxon
+            TransformerFactory transFact = TransformerFactory.newInstance();
+            try {
+                transFact.setAttribute(FeatureKeys.VERSION_WARNING,false);
+                transFact.setAttribute(FeatureKeys.LINE_NUMBERING,true);
+                transFact.setAttribute(FeatureKeys.PRE_EVALUATE_DOC_FUNCTION,true);
+                transFact.setAttribute(FeatureKeys.RECOVERY_POLICY,Configuration.RECOVER_SILENTLY);
+                // Add the following to get timing info on xslt transformations
+                //transFact.setAttribute(FeatureKeys.TIMING,true);
+            } catch (IllegalArgumentException e) {
+                System.out.println("WARNING: transformerfactory doesnt like saxon attributes!");
+                //e.printStackTrace();
+            } finally {
+                Transformer t = transFact.newTransformer(srcSheet);
+                if (params != null) {
+                    for (String param : params.keySet()) {
+                        t.setParameter(param,params.get(param));
+                    }
+                }
+                t.transform(srcXml, result);
+            }
+        } finally {
+            if(oldTransformer == null) System.clearProperty(TRANSFORMER_KEY);
+            else System.setProperty(TRANSFORMER_KEY, oldTransformer);
+        }
 	}
 
    // --------------------------------------------------------------------------

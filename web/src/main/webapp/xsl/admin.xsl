@@ -261,6 +261,20 @@
 								<td class="padded"><xsl:value-of select="/root/gui/strings/groupManDes"/></td>
 							</tr>
 						</xsl:if>
+
+						<xsl:if test="/root/gui/services/service/@name='group.synchronize'">
+							<tr>
+								<td class="padded"><a href="{/root/gui/locService}/group.synchronize"><xsl:value-of select="/root/gui/strings/groupSync"/></a></td>
+								<td class="padded"><xsl:value-of select="/root/gui/strings/groupSyncDes"/></td>
+							</tr>
+						</xsl:if>
+						
+						<xsl:if test="/root/gui/services/service/@name='metadata.checklinks'">
+							<tr>
+								<td class="padded"><a href="{/root/gui/locService}/metadata.checklinks"><xsl:value-of select="/root/gui/strings/deadlinkscheck"/></a></td>
+								<td class="padded"><xsl:value-of select="/root/gui/strings/deadlinkscheckDes"/></td>
+							</tr>
+						</xsl:if>						
 						
 						<xsl:if test="/root/gui/services/service/@name='category.update' and /root/gui/config/category/admin">
 							<tr>
@@ -279,6 +293,17 @@
 								<td class="padded"><xsl:value-of select="/root/gui/strings/thesaurus/manDes"/></td>
 							</tr>
 						</xsl:if>	
+                        
+                        <xsl:if test="/root/gui/services/service/@name='sharedobject.admin'">
+                            <tr>
+                                <td class="padded">
+                                    <a href="{/root/gui/locService}/sharedobject.admin">
+                                    <xsl:value-of select="/root/gui/strings/sharedobject/management"/>
+                                    </a>
+                                </td>
+                                <td class="padded"><xsl:value-of select="/root/gui/strings/sharedobject/manDes"/></td>
+                            </tr>
+                        </xsl:if>   
 						
 						<xsl:if test="/root/gui/services/service/@name='xml.harvesting.update'">
 							<tr>

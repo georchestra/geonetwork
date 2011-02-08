@@ -2394,9 +2394,9 @@
 					<xsl:with-param name="schema" select="$schema"/>
 					<xsl:with-param name="edit"   select="true()"/>
 				</xsl:apply-templates>
-				
+
 				<xsl:choose>
-					<xsl:when test="string(gmd:protocol/gco:CharacterString)='WWW:DOWNLOAD-1.0-http--download' and string(gmd:name/gco:CharacterString|gmd:name/gmx:MimeFileType)!=''">
+					<xsl:when test="(string(gmd:protocol/gco:CharacterString)='WWW:DOWNLOAD-1.0-http--download' and string(gmd:name/gco:CharacterString|gmd:name/gmx:MimeFileType)!='') or (string(gmd:protocol/gco:CharacterString)='OGC:WMC-1.1.0-http-get-capabilities' and string(gmd:name/gco:CharacterString|gmd:name/gmx:MimeFileType)!='')">
 						<xsl:apply-templates mode="iso19139FileRemove" select="gmd:name/gco:CharacterString|gmd:name/gmx:MimeFileType">
 							<xsl:with-param name="access" select="'private'"/>
 							<xsl:with-param name="id" select="$id"/>
@@ -2728,11 +2728,17 @@
 			<xsl:with-param name="text">
 				<table width="100%"><tr>
 					<xsl:variable name="ref" select="geonet:element/@ref"/>
-					<td width="70%"><xsl:value-of select="string(.)"/></td>
-					<td align="right"><button class="content" onclick="javascript:doFileRemoveAction('{/root/gui/locService}/resources.del','{$ref}','{$access}','{$id}')"><xsl:value-of select="/root/gui/strings/remove"/></button></td>
+					<xsl:variable name="value" select="string(.)"/>
+					<td width="70%"><xsl:value-of select="$value"/></td>
+					<td  class="padded-content">
+						<button class="content" type="button" onclick="javascript:doFileRemoveAction('{/root/gui/locService}/resources.del','{$ref}','{$access}',{$id})"><xsl:value-of select="/root/gui/strings/remove"/></button>
+						<xsl:text> </xsl:text>
+						<a class="content repository" onclick="javascript:showGeoPublisherPanel('{/root/*/geonet:info/id}', '{$value}', '{$access}', 'gmd:onLine', '{../../../../geonet:element/@ref}');" alt="{/root/gui/strings/publishHelp}" title="{/root/gui/strings/geopublisherHelp}"><xsl:value-of select="/root/gui/strings/geopublisher"/></a>
+					</td>
 				</tr></table>
 			</xsl:with-param>
 			<xsl:with-param name="schema"/>
+			<xsl:with-param name="edit" select="true()"/>
 		</xsl:call-template>
 	</xsl:template>
 
@@ -3832,6 +3838,13 @@
 				geonet:child[@name='referenceSystemInfo' and @prefix='gmd']">
 		<xsl:text>showCRSSelectionPanel</xsl:text>
 	</xsl:template>
+    <xsl:template mode="addXMLFragment" 
+        match="gmd:pointOfContact|geonet:child[@name='pointOfContact' and @prefix='gmd']
+                |gmd:contact|geonet:child[@name='contact' and @prefix='gmd']
+                |gmd:distributor|geonet:child[@name='distributor' and @prefix='gmd']
+                |gmd:citedResponsibleParty|geonet:child[@name='citedResponsibleParty' and @prefix='gmd']">
+        <xsl:text>findSharedObjects</xsl:text>
+    </xsl:template>
 	<xsl:template mode="addXMLFragment" match="*|@*"></xsl:template>
 	
 </xsl:stylesheet>

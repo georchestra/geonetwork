@@ -69,6 +69,31 @@
 	</helpShortcutsEditor>
 	<validationReport js="true">Validation report</validationReport>
 	<errorsOnly>View errors only</errorsOnly>
+
+	<geopublisher>GeoPublisher</geopublisher>
+	<geoPublisherWindowTitle js="true">Geo-publication for file:</geoPublisherWindowTitle>
+	<geopublisherHelp>Publish or unpublish dataset as WMS or WFS in remote geoserver.</geopublisherHelp>
+	<publish js="true">Publish</publish>
+	<publishTooltip js="true">Publish current dataset to remote node. If dataset is already published on that node, it will be updated.</publishTooltip>
+	<publishError js="true">Publication failed. </publishError>
+	<publishErrorCode js="true">Error code:</publishErrorCode>
+	<publishSuccess js="true">Successful publication.</publishSuccess>
+	<publishLayerAdded js="true"> Layer added to map preview.</publishLayerAdded>
+	<unpublish js="true">Unpublish</unpublish>
+	<unpublishTooltip js="true">Remove current dataset from remote node.</unpublishTooltip>
+	<unpublishError js="true">Unpublication failed. </unpublishError>
+	<unpublishSuccess js="true">Successful unpublication.</unpublishSuccess>
+	<check js="true">Check</check>
+	<errorConnectionRefused js="true">Connection refused.</errorConnectionRefused>
+	<errorDatasetNotFound js="true">Dataset not found.</errorDatasetNotFound>
+	<datasetFound js="true">Dataset found.</datasetFound>
+	<checkFailure js="true">Failed to check dataset in remote node.</checkFailure>
+	<addOnlineSource js="true">Add online source.</addOnlineSource>
+	<statusInformation js="true">Status information.</statusInformation>
+	<mapPreview js="true">Map preview</mapPreview>
+	<selectANode js="true">Select a node ...</selectANode>
+	<publishing js="true">Publishing ...</publishing>
+
 	<schematronReport>Compliance to metadata recommandations (Schematron)</schematronReport>
 	<xsdReport>Compliance to metadata standard (XML Schema)</xsdReport>
 	<rules name="schematron-rules-inspire">INSPIRE implementing rules</rules>
@@ -231,6 +256,7 @@
 	<confirmNewPassword>Confirm new password</confirmNewPassword>
 	<confirmPassword>Confirm password</confirmPassword>
 	<constraintsTab>Constraints</constraintsTab>
+	<Contact js="true">Contact</Contact>
 	<contactUs>Contact us</contactUs>
 	<contains>Contains</contains>
 	<contentInfoTab>Content Info</contentInfoTab>
@@ -238,6 +264,7 @@
 	<copyright1>Copyright</copyright1>
 	<copyright2><p>All rights reserved.<br/> Your generic copyright statement </p></copyright2>
 	<country>Country</country>
+    <create js="true">Add</create>
 	<create>Create</create>
 	<createTip>Create a new metadata from this template</createTip>
 	<crs code="EPSG:4326">WGS 84</crs>
@@ -254,9 +281,14 @@
 	<dateRelChoice value="17">during or after</dateRelChoice>
 	<dateRelChoice value="18">after</dateRelChoice>
 	<dateRelChoice/>
+	<deadlinks>Broken links</deadlinks>
+	<deadlinkscheck>Check dead links</deadlinkscheck>
+	<deadlinkscheckDes>Prints a page which gives every broken links</deadlinkscheckDes>
+	<deadchildparentlinks>Broken child / parent relations</deadchildparentlinks>
 	<decline>Decline</decline>
 	<definition>Definition</definition>
 	<del>del</del>
+    <delete js="true">Delete</delete>
 	<delete>Delete</delete>
 	<deleteCategory>Delete the category?</deleteCategory>
 	<deleteConfirmationTitle>Delete Metadata Confirmation</deleteConfirmationTitle>	
@@ -294,8 +326,10 @@
 	<durationYears>year(s)</durationYears>
 	<dynamic>Interactive</dynamic>
 	<eastbc>East Bounding Coordinate</eastbc>
+	<edit js="true">Edit</edit>
 	<edit>Edit</edit>
 	<Editor>Editor</Editor>
+	<email js="true">Email</email>
 	<email>Email</email>
 	<emailAddressInvalid js="true">Email address is invalid</emailAddressInvalid>
 	<enclosing>Including</enclosing>
@@ -332,6 +366,8 @@
 	<group>Group</group>
 	<groupManagement>Group management</groupManagement>
 	<groupManDes>Add/modify/delete and show groups</groupManDes>
+	<groupSync>Groups Synchronization</groupSync>
+	<groupSyncDes>Synchronize groups against LDAP</groupSyncDes>
 	<groups>Groups</groups>
 	<harvestingManagement>Harvesting management</harvestingManagement>
 	<harvestingManDes>Add/modify/delete/start/stop harvesting tasks</harvestingManDes>
@@ -368,6 +404,9 @@
 	<interactiveMap>Interactive Map</interactiveMap>
 	<interMapInfo><h1>Info in interactive maps</h1><p>You can find interactive maps by searching in GeoNetwork for digital data with an interactive map, or directly connet to a pre-configured map server. </p><p> Supported map servers are <a href="http://www.opengeospatial.org" class="sm" target="_blank">Open GeoSpatial® Consortium</a> compliant WMS Map Servers and <a href="http://www.esri.com" class="sm" target="_blank">ESRI® ArcIMS</a>.</p></interMapInfo>
 	<intermapSearch>Geographic search</intermapSearch>
+	<invalidSelectionMoreThanOneWMC js="true">Invalid selection : Your selection contains more than one WMC</invalidSelectionMoreThanOneWMC>
+	<invalidSelectionOneWMCandOneOrMoreWMS js="true">Invalid selection : Your selection contains a WMC and one or more WMS</invalidSelectionOneWMCandOneOrMoreWMS>
+	<invalidSelectionnoWMCnorWMS js="true">There is no WMC nor WMS information into your current selection</invalidSelectionnoWMCnorWMS>
 	<isoAll>ISO All</isoAll>
 	<isoCore>ISO Core</isoCore>
 	<isoMinimum>ISO Minimum</isoMinimum>
@@ -461,6 +500,7 @@
 	<missingSeeTab>MISSING - See the following group tab in sidebar: </missingSeeTab>
 	<more>more</more>
 	<moreinfo>For more information you can contact us via email at </moreinfo>
+	<name js="true">Name</name>
 	<name>Name</name>
 	<newCategory>Add a new category</newCategory>
 	<newGroup>Add a new group</newGroup>
@@ -488,6 +528,7 @@
 	<opensearch>GeoNetwork opensearch service allow search to be made into the metadata catalog.</opensearch>
 	<operation>Operation</operation>
 	<options>Options</options>
+	<organisation js="true">Organisation</organisation>
 	<organisation>Organisation / department</organisation>
 	<output>Output</output>
 	<outputType id="full">Full</outputType>
@@ -508,6 +549,8 @@
 	<persInfo>Personal info</persInfo>
 	<placeKeyword>Place Keywords</placeKeyword>
 	<porCatInfoTab>Catalog</porCatInfoTab>
+	<position js="true">Position</position>
+	<postalCode js="true">Postal code</postalCode>
 	<poweredBy>Powered by </poweredBy>
 	<previous>Previous</previous>
 	<privileges>Privileges</privileges>
@@ -549,6 +592,7 @@
 	<rawMetadata>Raw Metadata Insert</rawMetadata>
 	<rebuild>Rebuild</rebuild>
 	<recentAdditions>Recent Changes</recentAdditions>
+	<refresh js="true">Refresh</refresh>
 	<refSysTab>Ref. system</refSysTab>
 	<region>Region</region>
 	<register>Register</register>
@@ -599,6 +643,7 @@
 	<selectedOnly>Display selected only</selectedOnly>
 	<selection>Selection</selection>
 	<selectNone>Unselect metadata selected</selectNone>
+	<sendToExtractor>Send selected metadatas to extrator app</sendToExtractor>
 	<server>Server</server>
 	<setAll>Set All</setAll>
 	<setOnSave>Value will be set when record is saved</setOnSave>
@@ -624,6 +669,7 @@
 	<spatialTab>Spat. Info</spatialTab>
 	<startsWith>Start with</startsWith>
 	<state>State</state>
+	<street js="true">Street</street>
 	<styleSheet>StyleSheet</styleSheet>
 	<submit>Submit</submit>
 	<subtemplate>Subtemplate</subtemplate>
@@ -648,6 +694,7 @@
 	<topic>Topic</topic>
 	<transferOwnership>Transfer ownership</transferOwnership>
 	<transferOwnershipDes>Transfer metadata ownership to another user</transferOwnershipDes>
+	<type js="true">Type</type>
 	<type>Type</type>
 	<up>up</up>
 	<update>Update</update>
@@ -675,7 +722,10 @@
 	<validityEnds>and ends</validityEnds>
 	<view>View</view>
 	<viewInGE>View in Google Earth</viewInGE>
+	<viewInViewer>View in Mapfish</viewInViewer>
+	<voice js="true">Voice</voice>
 	<waitGetCap js="true">Loading server layers, please wait...</waitGetCap>
+	<website js="true">website</website>
 	<westbc>West Bounding Coordinate</westbc>
 	<what>What?</what>
 	<when>When?</when>
@@ -912,6 +962,10 @@
 		<iso19139>Save ISO19115/19139 metadata as XML</iso19139>
 		<iso19139fra>Save ISO19115/19139 Fra metadata as XML</iso19139fra>
 	</savexml>
+	<savepdf>
+  	     <iso11915>Export ISO19115 metadata as PDF</iso11915>
+	     <iso19139>Export ISO19139 metadata as PDF</iso19139>
+	</savepdf>
 	<thesaurus>
 		<addelement>Add element</addelement>
 		<admin>Manage thesaurus</admin>
@@ -1013,6 +1067,15 @@
     <searchExactPhrase>Exact phrase</searchExactPhrase>
     <searchAllWords>All of the words</searchAllWords>
     <searchWithoutWords>Without the words</searchWithoutWords>
+	<orgName>Organization</orgName>
+	<topicCat>Topic Category</topicCat>
+    <sharedobject>
+        <manDes>Manage the system's shared objects (contacts)</manDes>
+        <management>Shared Object Management</management>
+    </sharedobject>
+    <wrongName js="true">Zip file does not match shapefile name</wrongName>
+    <noPrj js="true">No projection file contained in zip file</noPrj>
+    <epsgCodeLookupFailure js="true">Cannot associate a EPSG code with the CRS of the shapefile</epsgCodeLookupFailure>
     
     <showMap>Show map</showMap>
     <mapViewer>Map viewer</mapViewer>

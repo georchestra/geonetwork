@@ -1,0 +1,96 @@
+<xml>
+	<mapping key="biota">
+		<keyword value="Régions biogéographiques" />
+		<keyword value="Habitats et biotopes" />
+		<keyword value="Répartition des espèces" />
+	</mapping>
+
+	<mapping key="boundaries">
+		<keyword value="Unités statistiques" />
+		<keyword value="Unités administratives" />
+	</mapping>
+
+	<mapping key="climatologyMeteorologyAtmosphere">
+		<keyword value="Conditions atmosphériques" />
+		<keyword value="Caractéristiques géographiques météorologiques" />
+	</mapping>
+
+	<mapping key="economy">
+		<keyword value="Sources d'énergie" />
+		<keyword value="Ressources minérales" />
+	</mapping>
+
+	<mapping key="elevation">
+		<keyword value="Altitude" />
+	</mapping>
+
+	<mapping key="environment">
+		<keyword value="Sites protégés" />
+	</mapping>
+
+	<mapping key="farming">
+		<keyword value="Installations agricoles et aquacoles" />
+	</mapping>
+
+	<mapping key="geoscientificInformation">
+		<keyword value="Sols" />
+		<keyword value="Géologie" />
+		<keyword value="Zones à risque naturel" />
+	</mapping>
+
+	<mapping key="health">
+		<keyword value="Santé et sécurité des personnes" />
+	</mapping>
+
+	<mapping key="imageryBaseMapsEarthCover">
+		<keyword value="Ortho-imagerie" />
+		<keyword value="Occupation des terres" />
+
+	</mapping>
+
+	<mapping key="inlandWaters">
+		<keyword value="Hydrographie" />
+	</mapping>
+
+	<!--
+		NOT MAPPED !!! (see GeoBretagne specs, p.67) <mapping
+		key="intelligenceMilitary"> </mapping>
+	-->
+
+	<mapping key="location">
+		<keyword value="Dénominations géographiques" />
+		<keyword value="Adresses" />
+	</mapping>
+
+	<mapping key="oceans">
+		<keyword value="Régions maritimes" />
+		<keyword value="Caractéristiques géographiques océanographiques" />
+	</mapping>
+
+	<mapping key="planningCadastre">
+		<keyword value="Parcelles cadastrales" />
+		<keyword value="Usage des sols" />
+		<keyword
+			value="Zones de gestion, de restriction ou de réglementation et unités de déclaration" />
+	</mapping>
+
+	<mapping key="society">
+		<keyword value="Répartition de la population — démographie" />
+	</mapping>
+
+	<mapping key="structure">
+		<keyword value="Bâtiments" />
+		<keyword value="Lieux de production et sites industriels" />
+		<keyword value="Installations de suivi environnemental" />
+	</mapping>
+
+	<mapping key="transportation">
+		<keyword value="Réseaux de transport" />
+	</mapping>
+
+	<mapping key="utilitiesCommunication">
+		<keyword value="Services d'utilité publique et services publics" />
+	</mapping>
+
+
+</xml>

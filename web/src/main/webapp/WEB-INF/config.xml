@@ -4,7 +4,7 @@
 
 	<general>
 		<profiles>user-profiles.xml</profiles>
-		<uploadDir>../../data/tmp</uploadDir>
+		<uploadDir>../../private/data//tmp</uploadDir>
 		<maxUploadSize>100</maxUploadSize> <!-- Size must be in megabyte (integer), 100MB by default -->
 		<debug>true</debug>
 	</general>
@@ -13,7 +13,7 @@
 
 	<default>
 		<service>main.home</service>
-		<language>en</language>
+		<language>fr</language>
 		<localized>true</localized>
 		<contentType>text/html; charset=UTF-8</contentType>
 
@@ -24,12 +24,29 @@
 			<xml name="iso19115" base="xml/schemas/iso19115/loc" file="codelists.xml" />
 			<xml name="iso19139" base="xml/schemas/iso19139/loc" file="labels.xml" />
 			<xml name="iso19139" base="xml/schemas/iso19139/loc" file="codelists.xml" />
+			<xml name="iso19139.fra" base="xml/schemas/iso19139.fra/loc" file="labels.xml" />
+			<xml name="iso19139.fra" base="xml/schemas/iso19139.fra/loc" file="codelists.xml" />
 		    <xml name="iso19110" base="xml/schemas/iso19110/loc" file="labels.xml" />
 		    <xml name="iso19110" base="xml/schemas/iso19110/loc" file="codelists.xml" />
 		    <xml name="fgdc-std" base="xml/schemas/fgdc-std/loc" file="labels.xml" />
 			<xml name="dublin-core" base="xml/schemas/dublin-core/loc" file="labels.xml" />
 			<xml name="csw-record" base="xml/schemas/csw-record/loc" file="labels.xml" />			
-			<call name="session" class="jeeves.guiservices.session.Get" />
+            <xml name="csw-record" base="xml/schemas/csw-record/loc" file="labels.xml" />				
+
+			<!--  PMT GeoBretagne Security mod
+
+    			   This diff aims to bring the mapping between
+    			   GN profiles and sec-roles provided by the
+    			   GeoBretagne's security proxy
+    		 -->
+    		<call name="login" class="jeeves.guiservices.services.SecProxyLogin">
+    			<param name="Administrator"   value="ROLE_SV_ADMIN"     />
+    			<param name="Reviewer"        value="ROLE_SV_REVIEWER"  />
+    			<param name="Editor"          value="ROLE_SV_EDITOR"    />
+    			<param name="RegisteredUser"  value="ROLE_SV_USER"      />
+    			<param name="Guest"           value="ROLE_ANONYMOUS" />
+    		</call>
+
 			<call name="env" class="org.fao.geonet.guiservices.util.Env" />
 			<call name="app" class="org.fao.geonet.guiservices.util.GetAppPath" />
 			<call name="results" class="org.fao.geonet.guiservices.search.GetResultsInfo" />
@@ -64,7 +81,7 @@
 
 	<!-- ====================================================================== -->
 	<!-- 
-		The ressources section defines which database to be used by GeoNetwork.
+		The resources section defines which database to be used by GeoNetwork.
 		
 		Update the enabled attribute to true to use a connection.
 		Only one resource could be enabled at a time.
@@ -93,7 +110,7 @@
 		<!-- mckoi standalone -->
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-		<resource enabled="true">
+		<resource enabled="false">
 			<name>main-db</name>
 			<provider>jeeves.resources.dbms.DbmsPool</provider>
 			<config>
@@ -103,9 +120,7 @@
 				<url>jdbc:mckoi://localhost:9157/</url>
 				<poolSize>10</poolSize>
 			</config>
-
-
-		<activator class="org.fao.geonet.activators.McKoiActivator"><configFile>WEB-INF/db/db.conf</configFile></activator></resource>
+        </resource>
 
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<!-- mysql -->
@@ -145,20 +160,21 @@
 		<!-- postgresql -->
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		
-		<resource enabled="false">
+		<resource enabled="true">
 			<name>main-db</name>
 			<provider>jeeves.resources.dbms.DbmsPool</provider>
 			<config>
-				<user>www-data</user>
-				<password>www-data</password>
-				<driver>org.postgresql.Driver</driver>
+    	        <user>geonetwork</user>
+    	        <password>geonetwork</password>
+    	        <driver>org.postgresql.Driver</driver>
 				<!--					
 					jdbc:postgresql:database
 					jdbc:postgresql://host/database
 					jdbc:postgresql://host:port/database
 				-->
-                <url>jdbc:postgresql:geonetwork</url>
+    	        <url>jdbc:postgresql://localhost:5432/geonetwork.2.6</url>
 				<poolSize>10</poolSize>
+    	        <reconnectTime>3600</reconnectTime>
 			</config>
 		</resource>
 	    
@@ -187,7 +203,8 @@
 		<param name="luceneDir" value="WEB-INF/lucene" />
 		<!-- this must be a directory in web/geonetwork because html is served -->
 		<param name="htmlCacheDir" value="htmlCache" />
-		<param name="dataDir" value="../../data" />
+		<param name="dataDir" value="../../private/data/" />
+		<param name="schemaMappings" value="schema-mappings.xml" />
 		<param name="licenseDir" value="WEB-INF/licenses" />
 		<param name="thesauriDir" value="WEB-INF/gsthesauri" />
 		<param name="codeListDir" value="xml/codelist" />
@@ -203,7 +220,7 @@
 			interested for having metadata in a specific
 			ISO profil.
 		-->
-		<param name="preferredSchema" value="iso19139" />
+		<param name="preferredSchema" value="iso19139.fra" />
 		<param name="jzkitConfig" value="JZkitApplicationContext.xml" />
 
         <param name="metadataNotifierConfig" value="WEB-INF/config-notifier.xml" /> />
@@ -243,6 +260,7 @@
 					<param name="westBL" value="-180" />
 				</call>
 
+<!--				<xml name="repositories" file="xml/repositories.xml" localized="false" /> -->
 				<xml name="searchProfiles" file="xml/search-profiles.xml" localized="false" />
 			</output>
 		</service>
@@ -324,8 +342,14 @@
 				<call name="groups" class=".guiservices.groups.GetMine" />
 				<call name="services" class="jeeves.guiservices.services.Get" />
 				<call name="categories" class=".services.category.List" />
-				<call name="regions" class=".guiservices.regions.Get" />
 				<call name="sources" class=".guiservices.util.Sources" />
+				<call name="orgName" class=".services.index.ListTerms">
+				  <param name="fld" value="_orgName"/>
+				</call>
+				<call name="topicCat" class=".services.index.ListTerms">
+				  <param name="fld" value="topicCat"/>
+				</call>
+				
 				<call name="repositories" class=".services.main.Info">
 					<param name="type" value="z3950repositories" />
 				</call>
@@ -342,14 +366,31 @@
 				<call name="groups" class=".guiservices.groups.GetMine" />
 				<call name="services" class="jeeves.guiservices.services.Get" />
 				<call name="categories" class=".services.category.List" />
-				<call name="regions" class=".guiservices.regions.Get" />
 				<call name="sources" class=".guiservices.util.Sources" />
+				
 				<call name="repositories" class=".services.main.Info">
 					<param name="type" value="z3950repositories" />
 				</call>
 				<xml name="searchProfiles" file="xml/search-profiles.xml" localized="false" />
 			</output>
 		</service>
+
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+		<service name="xml.region.list">
+		  <class name=".services.main.RegionMatches">
+                    <param name="wfsURL" value="http://localhost:43080/geoserver-private/wfs?REQUEST=GetCapabilities&amp;SERVICE=WFS&amp;VERSION=1.0.0" />
+                    <param name="user" value="extractorapp_priveleged_admin" />
+                    <param name="pass" value="gerlsSnFd6SmM" />
+		    <param name="typenames">
+		      <typename name="EPCI" typename="geob_loc:EPCI_region" nameAtt="EPCI" />
+		      <typename name="Commune" typename="geob_loc:COMMUNE" nameAtt="NOM_COMM" />
+		      <typename name="Département" typename="geob_loc:DEPARTEMENT" nameAtt="NOM_DEPT" />
+		      <typename name="Pays" typename="geob_loc:PAYS_region" nameAtt="NOM" />
+		    </param>
+                  </class>
+		</service>
+
 
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
@@ -618,6 +659,23 @@
 		</service>
 
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+        <service name="group.synchronize">
+      		<class name=".services.group.LdapSync">
+          		<param name="LDAPhost" value="c2cpc83.camptocamp.com" />
+		        <param name="LDAPport" value="636" />
+         		<param name="LDAPbase" value="ou=groups,dc=geobretagne,dc=fr" />
+          		<param name="LDAPattributes" value="cn,gidNumber,description" />
+          		<param name="LDAPbindDn" value="cn=admin,dc=geobretagne,dc=fr" />
+          		<param name="LDAPbindPassword" value="gerlsSnFd6SmM" />
+      	    </class>
+			<error id="sync-error" sheet="error.xsl">
+				<xml name="error" file="xml/sync-error.xml" />
+			</error>
+ 			<output forward="group.list" />
+		</service>
+
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<!-- Category services                                             -->
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
@@ -667,7 +725,7 @@
 			<class name=".services.notifications.Save" />
 			<output forward="admin" />
 		</service>
-		
+
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<!--                   Login services                              -->
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -851,6 +909,9 @@
 		</service>
 
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <service name="resources.setcrs">
+			<class name=".services.resources.SetCRS" />
+        </service>
 
 		<service name="resources.upload">
 			<class name=".services.resources.Upload" />
@@ -963,7 +1024,7 @@
         <service name="csw.config.get">
             <class name=".guiservices.csw.Get" />
 
-            
+
             <output sheet="csw/config.xsl">
                 <call name="languages" class=".guiservices.languages.Get" />
 
@@ -1247,6 +1308,9 @@
 	<include>config-test.xml</include>
 	<include>config-csw.xml</include>
 	<include>config-sru.xml</include>
+	
+    <include>config-geoserverpublisher.xml</include>
+    <include>config-sharedobject.xml</include>
 
 	<!-- ====================================================================== -->
 

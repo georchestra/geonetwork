@@ -15,10 +15,19 @@
 ***
 **********************************************************/
 
+var GnSearch = {
+  simpleRegionId: "region_combo_simple",
+  simpleCatRegionId: "region_cat_combo_simple",
+  advRegionId: "region_combo_adv",
+  advCatRegionId: "region_cat_combo_adv",
+  userdefined: "défini(e) par l'utilisateur"
+}
+
 var mainViewport;
 
 function initSimpleSearch(wmc)
 {
+    extentMap.initRegionCombos(doRegionSearch, GnSearch.simpleCatRegionId, GnSearch.simpleRegionId);
 }
 
 function gn_anyKeyObserver(e)
@@ -72,17 +81,8 @@ function runSimpleSearch(type)
 
 	var pars = "any=" + encodeURIComponent($('any') .value);
 
-	var region = $('region_simple').value;
-	if(region!="")
-  {
-		pars += "&"+im_mm_getURLselectedbbox();
-		pars += fetchParam('relation');
-		pars += "&attrset=geo";
-		if(region!="userdefined")
-		{
-		pars += fetchParam('region');
-	}
-	}
+	var region = $(GnSearch.simpleRegionId).value;
+
 	pars += fetchParam('sortBy');
 	pars += fetchParam('sortOrder');
 	pars += fetchParam('hitsPerPage');
@@ -100,18 +100,17 @@ function resetSimpleSearch()
 /* make sure all values are completely reset (instead of just using the default
    form.reset that would only return to the values stored in the session */
     setParam('any','');
-    setParam('relation','overlaps');	
-    setParam('region_simple',null);
-	// Clear also region in advanced search to keep synch
-	setParam('region',null);
-    
-    $('northBL').value='90';
-    $('southBL').value='-90';
-    $('eastBL').value='180';
-    $('westBL').value='-180';
+    setParam('relation','overlaps');
+
+   	var cmp = Ext.getCmp(GnSearch.simpleRegionId+'_cmp')
+   	cmp.reset()
+
+  	$('northBL').value='49.3025';
+  	$('southBL').value='46.96115';
+  	$('eastBL').value='-0.7236500000000001';
+  	$('westBL').value='-5.43';
 
 	resetMinimaps();
-	
     // FIXME: maybe we should zoom back to a fullExtent (not to the whole world)
     //im_mm_redrawAoI();
     //im_mm_zoomToAoI();
@@ -155,6 +154,7 @@ function showAdvancedSearch()
 	initAdvancedSearch();
 }
 
+
 function showSimpleSearch()
 {
 	closeSearch('advanced_search_pnl');
@@ -196,6 +196,8 @@ function closeSearch(s)
 function initAdvancedSearch()
 {
 	//im_mm_init();
+
+	extentMap.initRegionCombos(doRegionSearch, GnSearch.advCatRegionId, GnSearch.advRegionId);
 
 	new Ajax.Autocompleter('themekey', 'keywordList', 'portal.search.keywords?',{paramName: 'keyword', updateElement : addQuote});
 
@@ -254,16 +256,12 @@ function runAdvancedSearch(type)
 	pars += fetchParam('themekey');
 	pars += fetchRadioParam('similarity');
 
-	var region = $('region').value;
+	var region = $(GnSearch.advRegionId).value;
 	if(region!="")
   {
 		pars += "&attrset=geo";
 		pars += "&"+im_mm_getURLselectedbbox();
 		pars += fetchParam('relation');
-		if(region!="userdefined")
-		{
-		pars += fetchParam('region');
-	}
 	}
 
 	if($('radfrom1').checked)
@@ -281,6 +279,9 @@ function runAdvancedSearch(type)
 	pars += fetchParam('group');
 	pars += fetchParam('category');
 	pars += fetchParam('siteId');
+
+	pars += fetchParam('topicCat');
+	pars += fetchParam('orgName');
 
 	pars += fetchBoolParam('digital');
 	pars += fetchBoolParam('paper');
@@ -327,16 +328,17 @@ function resetAdvancedSearch()
 	radioSimil[1].checked=true;
 	setParam('relation','overlaps');
 
-    setParam('region',null);
-	// Clear also region in simple search to keep synch
-	setParam('region_simple',null);
-	
-	$('northBL').value='90';
-	$('southBL').value='-90';
-	$('eastBL').value='180';
-	$('westBL').value='-180';
-	
+ 	var cmp = Ext.getCmp(GnSearch.advRegionId+'_cmp')
+ 	cmp.reset()
+
+	$('northBL').value='49.3025';
+	$('southBL').value='46.96115';
+	$('eastBL').value='-0.7236500000000001';
+	$('westBL').value='-5.43';
+
 	resetMinimaps();
+	//im_mm_redrawAoI();
+    //im_mm_zoomToAoI();
 
 	setParam('dateFrom','');
 	setParam('dateTo','');
@@ -509,9 +511,9 @@ function doRegionSearchAdvanced() {
   $('region_simple').value = $('region').value;
 }
 
-function doRegionSearch(regionlist)
+function doRegionSearch(typename, region)
 {
-    var region = $(regionlist).value;
+
     if(region=="")
     {
         region=null;
@@ -520,26 +522,24 @@ function doRegionSearch(regionlist)
         $('eastBL').value='180';
         $('westBL').value='-180';
 
-		GeoNetwork.minimapSimpleSearch.updateExtentBox();
+        GeoNetwork.minimapSimpleSearch.updateExtentBox();
 		GeoNetwork.minimapAdvancedSearch.updateExtentBox();
-
-        //im_mm_redrawAoI();
+		//im_mm_redrawAoI();
         //im_mm_zoomToAoI();
-    }  else if (region=="userdefined") {
+    }  else if (region==GnSearch.userdefined) {
 		// Do nothing. AoI is set by the user
     } else
     {
-        getRegion(region);
+        getRegion(typename, region);
     }
 }
 
-function getRegion(region)
+function getRegion(typename, region)
 {
-    if(region)
-        var pars = "id="+region;
+    var pars = "bboxId="+region+"&typename="+typename;
 
     var myAjax = new Ajax.Request(
-        getGNServiceURL('xml.region.get'),
+        getGNServiceURL('xml.region.list'), 
         {
             method: 'get',
             parameters: pars,
@@ -594,13 +594,22 @@ function updateAoIFromForm() {
 }
 
 function AoIrefresh() {
-  $('region').value="userdefined";
+  var cmp = Ext.getCmp(GnSearch.simpleRegionId+'_cmp')
+ 	cmp.setValue(GnSearch.userdefined)
+
+  cmp = Ext.getCmp(GnSearch.advRegionId+'_cmp')
+ 	cmp.setValue(GnSearch.userdefined)
+ 	
   $('updateBB').style.visibility="visible";
 }
 
 // Update the dropdown list
 function im_mm_aoiUpdated(bUpdate) {
-	$('region').value="userdefined";
+  var cmp = Ext.getCmp(GnSearch.simpleRegionId+'_cmp')
+ 	cmp.setValue(GnSearch.userdefined)
+
+  cmp = Ext.getCmp(GnSearch.advRegionId+'_cmp')
+ 	cmp.setValue(GnSearch.userdefined)
 }
 
 function runRssSearch()

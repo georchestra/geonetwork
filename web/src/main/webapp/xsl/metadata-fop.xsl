@@ -45,13 +45,13 @@
 		<fo:table-row>
 			<fo:table-cell>
 				<fo:block>
-					<fo:inline font-weight="normal">
+					<fo:inline font-weight="normal" font-size="6pt">
 						<xsl:value-of select="$title" />
 					</fo:inline>
 				</fo:block>
 			</fo:table-cell>
 			<fo:table-cell number-columns-spanned="2">
-				<fo:block>
+				<fo:block font-size="6pt">
 					<xsl:value-of select="$text" />
 				</fo:block>
 			</fo:table-cell>
@@ -107,7 +107,7 @@
 									number-columns-spanned="3">
 									<fo:block
 										border-top="1pt solid black">
-										<fo:inline font-weight="normal">
+										<fo:inline font-weight="normal" font-size="6pt">
 											<xsl:text>::</xsl:text>
 											<xsl:value-of
 												select="$title" />

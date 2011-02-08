@@ -41,6 +41,9 @@
 		<script type="text/javascript" src="{/root/gui/url}/scripts/calendar/calendar-setup.js"></script>
 		<script type="text/javascript" src="{/root/gui/url}/scripts/core/kernel/kernel.js"/>
 		<script type="text/javascript" src="{/root/gui/url}/scripts/webtoolkit.aim.js"/>
+
+        <script type="text/javascript" src="{/root/gui/url}/scripts/sharedobject/ObjectGrid.js"></script>
+
 		<script type="text/javascript">
 			<xsl:if test="/root/gui/position!='-1'">
 				function scrollIt()
@@ -187,7 +190,7 @@
 			
 			<!-- thumbnails -->
 			<xsl:if test="string(geonet:info/schema)='fgdc-std' or string(geonet:info/schema)='iso19115' or starts-with(string(geonet:info/schema),'iso19139')"> <!-- FIXME: should be more general -->
-				<button class="content" id="btnThumbnails" onclick="doAction('{/root/gui/locService}/metadata.thumbnail.form')" type="button">
+				<button class="content" id="btnThumbnails" onclick="doAction('{/root/gui/locService}/metadata.thumbnail.form',false)" type="button">
 					<img class="icon" src="../../images/photo.png"/><xsl:value-of select="/root/gui/strings/thumbnails"/>
 				</button>
 			</xsl:if>

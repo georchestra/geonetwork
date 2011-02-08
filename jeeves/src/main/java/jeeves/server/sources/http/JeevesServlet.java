@@ -24,6 +24,7 @@
 package jeeves.server.sources.http;
 
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.HashSet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -56,15 +57,22 @@ public class JeevesServlet extends HttpServlet
 
 	public void init() throws ServletException
 	{
+
 		String appPath = getServletContext().getRealPath("/");
 
-		String baseUrl    = "";
-		
-    try {
-      baseUrl = getServletContext().getContextPath();
-    } catch (java.lang.NoSuchMethodError ex) {
-      baseUrl = getServletContext().getServletContextName();
-    }
+		String baseUrl    = getServletConfig().getInitParameter("baseUrl");
+
+        if(baseUrl == null) {
+
+            Log.info   (Log.ENGINE, "baseUrl not present in servlet context, using default = "+getServletContext().getInitParameterNames());
+            try {
+              baseUrl = getServletContext().getContextPath();
+            } catch (java.lang.NoSuchMethodError ex) {
+              baseUrl = getServletContext().getServletContextName();
+            }
+        } else {
+	        Log.info   (Log.ENGINE, "baseUrl read from servlet context  (configured in web.xml)");
+        }
 		
 		if (!appPath.endsWith("/"))
 			appPath += "/";

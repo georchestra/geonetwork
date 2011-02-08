@@ -36,36 +36,10 @@
 							
 				<div style="margin-left: 60px; margin-top:5px">
 					<!-- Region -->
-					<select class="content" name="region_simple" id="region_simple" onchange="javascript:doRegionSearchSimple();">
-							<option value="">
-							<xsl:if test="/root/gui/searchDefaults/theme='_any_'">
-								<xsl:attribute name="selected">selected</xsl:attribute>
-							</xsl:if>
-							<xsl:value-of select="/root/gui/strings/any"/>
-						</option>
-						<option value="userdefined">
-							<xsl:if test="/root/gui/searchDefaults/theme='_userdefined_'">
-								<xsl:attribute name="selected">selected</xsl:attribute>
-							</xsl:if>
-							<xsl:value-of select="/root/gui/strings/userDefined"/>
-						</option>
-
-						<xsl:for-each select="/root/gui/regions/record">
-							<xsl:sort select="label/child::*[name() = $lang]" order="ascending"/>
-							<option>
-								<xsl:if test="id=/root/gui/searchDefaults/region">
-									<xsl:attribute name="selected">selected</xsl:attribute>
-								</xsl:if>
-								<xsl:attribute name="value">
-									<xsl:value-of select="id"/>
-								</xsl:attribute>
-								<xsl:value-of select="label/child::*[name() = $lang]"/>
-							</option>
-						</xsl:for-each>
-					</select>			
-				</div>
+                    <input type="text" id="region_cat_combo_simple" size="20"/>
+                    <input type="text" id="region_combo_simple" size="20"/>					
+		    	</div>
 			</div>
-			
 			<!-- Search button -->
 			<div>
 				<table class="advsearchfields" width="100%" border="0" cellspacing="0" cellpadding="0">

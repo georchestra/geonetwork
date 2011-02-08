@@ -38,16 +38,21 @@
 					&#160;
 					(page <xsl:value-of select="$currPage"/>/<xsl:value-of select="$pages"/>),
 					&#160;
-					<span id="nbselected">
-						<xsl:choose>
-							<xsl:when test="/root/response/@selected">
-								<xsl:value-of select="/root/response/@selected"/> 
-							</xsl:when>
-							<xsl:otherwise>
-								<xsl:value-of select="count(//geonet:info[selected='true'])"/>
-							</xsl:otherwise>                            
-						</xsl:choose>
-					</span> <xsl:value-of select="/root/gui/strings/selected"/> 
+			<span id="nbselectedspan">
+				Panier :
+				<span id="nbselected">
+
+					<xsl:choose>
+						<xsl:when test="/root/response/@selected">
+							<xsl:value-of select="/root/response/@selected" />
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:value-of select="count(//geonet:info[selected='true'])" />
+						</xsl:otherwise>
+					</xsl:choose>
+				</span>					
+				<xsl:value-of select="/root/gui/strings/selected" />
+			</span>
 				</xsl:with-param>
 				<xsl:with-param name="indent" select="50"/>
 			</xsl:call-template>
@@ -139,6 +144,8 @@
 									</button>
 								</xsl:if>
 							</xsl:if>
+							<button onclick="redirectToExternalApp('/mapfishapp/')"><xsl:value-of select="/root/gui/strings/viewInViewer"/></button>
+							<button onclick="redirectToExternalApp('/extractorapp/')"><xsl:value-of select="/root/gui/strings/sendToExtractor"/></button>
 							<button onclick="gn_filteredSearch()"><xsl:value-of select="/root/gui/strings/selectedOnly"/></button>
 							<button onclick="runPdfSearch(true);" alt="{/root/gui/strings/savepdf}" title="{/root/gui/strings/savepdf}"><xsl:value-of select="/root/gui/strings/printSelection"/></button>
 							<button onclick="load('{/root/gui/locService}/mef.export?uuid=&amp;format=full&amp;version=2')"><xsl:value-of select="/root/gui/strings/export"/></button>
@@ -338,6 +345,10 @@
 											<a href="{/root/gui/locService}/iso19139.xml?id={$metadata/geonet:info/id}" target="_blank" title="Download ISO19115/19139 metadata in XML">
 												<img src="{/root/gui/url}/images/xml.png" height="20px" width="20px" alt="ISO19115/19139 XML" title="Save ISO19115/19139 metadata as XML" border="0"/>
 											</a>
+											<a href="{/root/gui/locService}/iso19139.pdf?id={$metadata/geonet:info/id}" target="_blank" title="Download ISO19115/19139 metadata in PDF">
+												<img src="{/root/gui/url}/images/pdf.gif" height="20px" width="20px" alt="ISO19115/19139 PDF" title="Save ISO19115/19139 metadata as PDF" border="0"/>
+											</a>
+
 <!-- //FIXME												<a href="{/root/gui/locService}/iso_arccatalog8.xml?id={$metadata/geonet:info/id}" target="_blank" title="Download ISO19115 metadata in XML for ESRI ArcCatalog">
 <img src="{/root/gui/url}/images/ac.png" height="20px" width="20px" alt="ISO19115 XML for ArcCatalog" title="Save ISO19115 metadata in XML for ESRI ArcCatalog" border="0"/>
 											</a> -->
@@ -623,6 +634,9 @@
 													<a href="{/root/gui/locService}/iso19115to19139.xml?id={$metadata/geonet:info/id}" target="_blank" title="{/root/gui/strings/savexml/iso19139}">
 														<img src="{/root/gui/url}/images/xml.png" height="20px" width="20px" alt="{/root/gui/strings/savexml/iso19139}" title="{/root/gui/strings/savexml/iso19139}" border="0"/>
 													</a>
+													<a href="{/root/gui/locService}/iso19115.pdf?id={$metadata/geonet:info/id}" target="_blank" title="Save ISO19115/19139 metadata as PDF">
+													    <img src="{/root/gui/url}/images/pdf.gif" alt="{/root/gui/strings/savepdf/iso19115}" title="{/root/gui/strings/savepdf/iso19115}" border="0"/>
+												    </a>
 													<a href="{/root/gui/locService}/iso_arccatalog8.xml?id={$metadata/geonet:info/id}" target="_blank" title="{/root/gui/strings/savexml/iso19115Esri}">
 														<img src="{/root/gui/url}/images/ac.png" height="20px" width="20px"  alt="{/root/gui/strings/savexml/iso19115Esri}" title="{/root/gui/strings/savexml/iso19115Esri}" border="0"/>
 													</a>
@@ -631,6 +645,9 @@
 													<a href="{/root/gui/locService}/iso19139.xml?id={$metadata/geonet:info/id}" target="_blank" title="{/root/gui/strings/savexml/iso19139}">
 														<img src="{/root/gui/url}/images/xml.png" height="20px" width="20px" alt="{/root/gui/strings/savexml/iso19139}" title="{/root/gui/strings/savexml/iso19139}" border="0"/>
 													</a>
+													<a href="{/root/gui/locService}/iso19139.pdf?id={$metadata/geonet:info/id}" target="_blank" title="Save ISO19115/19139 metadata as PDF">
+													    <img src="{/root/gui/url}/images/pdf.gif" alt="{/root/gui/strings/savepdf/iso19139}" title="{/root/gui/strings/savepdf/iso19139}" border="0"/>
+												    </a>
 	<!-- //FIXME												<a href="{/root/gui/locService}/iso_arccatalog8.xml?id={$metadata/geonet:info/id}" target="_blank" title="Download ISO19115 metadata in XML for ESRI ArcCatalog">
 		<img src="{/root/gui/url}/images/ac.png" height="20px" width="20px" alt="ISO19115 XML for ArcCatalog" title="Save ISO19115 metadata in XML for ESRI ArcCatalog" border="0"/>
 													</a> -->

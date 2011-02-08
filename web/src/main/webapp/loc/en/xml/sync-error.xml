@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<strings>
+	<heading>Synchronization error</heading>
+	<message>There were some issues encountered while trying to synchronize LDAP against PostGreSQL database</message>
+	<button>Back</button>
+</strings>

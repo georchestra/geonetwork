@@ -50,11 +50,13 @@ import org.fao.geonet.kernel.search.SummaryComparator.Type;
 import org.fao.geonet.kernel.search.spatial.Pair;
 import org.jdom.Element;
 
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.SortedSet;
@@ -214,10 +216,17 @@ public class GetDomain extends AbstractOperation implements CatalogService
 					//fields.add("_isTemplate");
 					String fields[] = new String[] { property, "_isTemplate" };
 					MapFieldSelector selector = new MapFieldSelector(fields);
-	
+
 					// parse each document in the index
 					String[] fieldValues;
-					SortedSet<String> sortedValues = new TreeSet<String>();
+
+					// sort accentuated characters
+
+					Collator compareOp = Collator.getInstance (Locale.FRENCH);
+					compareOp.setStrength (Collator.PRIMARY);
+
+					SortedSet<String> sortedValues = new TreeSet<String>(compareOp);
+
 					HashMap<String, Integer> duplicateValues = new HashMap<String, Integer>();
 					for (int j = 0; j < hits.scoreDocs.length; j++) {
 						Document doc = reader.document(hits.scoreDocs[j].doc, selector);

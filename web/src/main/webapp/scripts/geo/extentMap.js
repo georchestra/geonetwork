@@ -753,6 +753,107 @@ var extentMap = {
         } else {
             map.zoomToMaxExtent();
         }
+    },
+    
+    
+    initRegionCombos: function(handleSelection, catComboId, regComboId) {
+
+        catComboId = catComboId === undefined ? "region_cat_combo" : catComboId;
+        regComboId = regComboId === undefined ? "region_combo" : regComboId;
+
+        if(Ext.getCmp(catComboId+"_cmp") !== null && Ext.getCmp(catComboId+"_cmp") !== undefined) {
+            // already initialized
+            return;
+        }
+
+        var categories = new Ext.data.Store({
+            proxy: new Ext.data.HttpProxy({
+                url: '/geonetwork/srv/en/xml.region.list?categories=true',
+				method: 'GET'
+            }),
+            reader: new Ext.data.XmlReader(
+                { record: 'type', id: 'id'},
+                [ { name: 'name', type: 'string' } ]
+            ),
+            listeners: {
+                load: function(records, options) {
+                    catCombo.select(0,true);
+                },
+                scope: this
+            }
+        });
+
+        var catCombo = new Ext.form.ComboBox({
+            id: catComboId+'_cmp',
+            fieldLabel: 'Sélectionnez une catégorie',
+            store: categories,
+            mode: 'remote', //'local',
+            editable: false,
+            displayField: 'name',
+            triggerAction: 'all',
+            forceSelection: true,
+            selectOnFocus: true,
+            emptyText: 'Sélectionnez une catégorie',
+            applyTo: catComboId,
+            listeners: {
+                beforequery: function() {
+                    var width = catCombo.getSize().width + 
+                        catCombo.el.up('.x-form-field-wrap').down('.x-form-trigger').getSize().width;
+                    catCombo.setWidth(width);
+                },
+                select: function(combo) {
+                    regCombo.enable();
+                    var typename = categories.getAt(combo.selectedIndex).id;
+                    regions.baseParams.typename = typename;
+                },
+                scope: this
+            }
+        });
+
+        var regions = new Ext.data.Store({
+            proxy: new Ext.data.HttpProxy({
+                url: '/geonetwork/srv/en/xml.region.list',
+                baseParams: {
+                  pattern: '*',
+                  typename: 'geob_loc:COMMUNE'
+                },
+				method: 'GET'
+            }),
+            reader: new Ext.data.XmlReader(
+                    { record: 'record', id: '@id'},
+                    [ { name: 'name', type: 'string' } ]
+                  ),
+            listeners: {
+              beforeload: function(store) {
+                store.baseParams.pattern = '*'+regCombo.getValue()+'*';
+              },
+              load: function(records, options) {
+                var width = regCombo.getSize().width + 
+                    regCombo.el.up('.x-form-field-wrap').down('.x-form-trigger').getSize().width;
+                regCombo.setWidth(width);
+              }
+            }
+        });
+
+        var regCombo = new Ext.form.ComboBox({
+            fieldLabel: 'Sélectionnez une région',
+            id: regComboId+'_cmp',
+            store: regions,
+            disabled: true,
+            hideTrigger: true,
+            displayField: 'name',
+            triggerAction: 'all',
+            typeAhead: true,
+            selectOnFocus: true,
+            emptyText: 'Sélectionnez une région',
+            applyTo: regComboId,
+            minChars: 2,
+            listeners: {
+                select: function (comb, rec) {
+                    handleSelection(regions.baseParams.typename, rec.id);
+                }
+            }
+        });
     }
 };
 
@@ -768,3 +869,4 @@ OpenLayers.Format.GML.Base.prototype.writers.feature._geometry = function(geomet
         return extentMap.prev_geometry.apply(this, arguments);
     }
 };
+

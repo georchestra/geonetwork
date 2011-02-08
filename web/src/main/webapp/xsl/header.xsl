@@ -49,8 +49,8 @@
              }
              
              if (e.keyCode == 13) {
-                  <xsl:if test="string(/root/gui/session/userId)=''">
-                  if ($('username').value != '') { // login action
+                  <xsl:if test="string(/root/gui/login/userId)=''">
+                  if (($('username') != null) &amp;&amp; ($('username').value != '')) { // login action
                     goSubmit('login')
                     return;
                   }

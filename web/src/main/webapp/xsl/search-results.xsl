@@ -183,6 +183,9 @@
 												<a href="{/root/gui/locService}/iso19115to19139.xml?id={$metadata/geonet:info/id}" target="_blank" title="Save ISO19115/19139 metadata as XML">
 													<img src="{/root/gui/url}/images/xml.png" alt="{/root/gui/strings/savexml/iso19139}" title="{/root/gui/strings/savexml/iso19139}" border="0"/>
 												</a>
+												<a href="{/root/gui/locService}/iso19115.pdf?id={$metadata/geonet:info/id}" target="_blank" title="Save ISO19115/19139 metadata as PDF">
+													<img src="{/root/gui/url}/images/pdf.gif" alt="{/root/gui/strings/savepdf/iso19115}" title="{/root/gui/strings/savepdf/iso19115}" border="0"/>
+												</a>
 												<a href="{/root/gui/locService}/iso_arccatalog8.xml?id={$metadata/geonet:info/id}" target="_blank" title="{/root/gui/strings/savexml/iso19115Esri}">
 													<img src="{/root/gui/url}/images/ac.png" alt="{/root/gui/strings/savexml/iso19115Esri}" title="{/root/gui/strings/savexml/iso19115Esri}" border="0"/>
 												</a>
@@ -190,6 +193,9 @@
 											<xsl:when test="contains($metadata/geonet:info/schema,'iso19139')">
 												<a href="{/root/gui/locService}/iso19139.xml?id={$metadata/geonet:info/id}" target="_blank" title="{/root/gui/strings/savexml/iso19139}">
 													<img src="{/root/gui/url}/images/xml.png" alt="{/root/gui/strings/savexml/iso19139}" title="{/root/gui/strings/savexml/iso19139}" border="0"/>
+												</a>
+												<a href="{/root/gui/locService}/iso19139.pdf?id={$metadata/geonet:info/id}" target="_blank" title="Save ISO19115/19139 metadata as PDF">
+													<img src="{/root/gui/url}/images/pdf.gif" alt="{/root/gui/strings/savepdf/iso19139}" title="{/root/gui/strings/savepdf/iso19139}" border="0"/>
 												</a>
 <!-- //FIXME												<a href="{/root/gui/locService}/iso_arccatalog8.xml?id={$metadata/geonet:info/id}" target="_blank" title="{/root/gui/strings/savexml/iso19115Esri}">
 													<img src="{/root/gui/url}/images/ac.png" alt="{/root/gui/strings/savexml/iso19115Esri}" title="{/root/gui/strings/savexml/iso19115Esri}" border="0"/>

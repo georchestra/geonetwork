@@ -145,7 +145,10 @@
 		        <script type="text/javascript" src="../../scripts/editor/app.SearchField.js"></script>
 		        <script type="text/javascript" src="../../scripts/editor/app.KeywordSelectionPanel.js"></script>
 				<script type="text/javascript" src="../../scripts/editor/app.CRSSelectionPanel.js"></script>
+                <script type="text/javascript" src="../../scripts/editor/app.GeoPublisherPanel.js"></script>
 				<script type="text/javascript" src="../../scripts/editor/app.LinkedMetadataSelectionPanel.js"></script>
+                <script type="text/javascript" src="../../scripts/sharedobject/Admin.js"></script>
+                <script type="text/javascript" src="../../scripts/sharedobject/ObjectGrid.js"></script>
 			</xsl:when>
 			<xsl:otherwise>
 				<!-- 

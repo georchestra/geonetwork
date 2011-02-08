@@ -282,6 +282,12 @@ compiles a request
             <xsl:with-param name="field" select="'topicCat'"/>
         </xsl:call-template>
         
+        <!-- orgName -->
+        <xsl:call-template name="textField">
+            <xsl:with-param name="expr" select="/request/orgName"/>
+            <xsl:with-param name="field" select="'orgName'"/>
+        </xsl:call-template>
+
     
 		<!-- category -->
 		<xsl:if test="string(/request/category) != ''">

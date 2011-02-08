@@ -128,9 +128,13 @@
 			</xsl:for-each>
 
 			<!-- rights -->
+			<xsl:for-each select="$identification/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:useLimitation/gco:CharacterString">
+				<dc:rights><xsl:value-of select="."/></dc:rights>
+			</xsl:for-each>
 
 			<xsl:for-each select="$identification/gmd:resourceConstraints/gmd:MD_LegalConstraints|
-				gmd:resourceConstraints/*[@gco:isoType='gmd:MD_LegalConstraints']">
+				gmd:resourceConstraints/*[@gco:isoType='gmd:MD_LegalConstraints']">				
+				
 				<xsl:for-each select="*/gmd:MD_RestrictionCode/@codeListValue">
 					<dc:rights><xsl:value-of select="."/></dc:rights>
 				</xsl:for-each>

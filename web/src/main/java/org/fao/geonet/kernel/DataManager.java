@@ -54,10 +54,12 @@ import org.fao.geonet.util.ISODate;
 import org.fao.geonet.util.spring.CollectionUtils;
 import org.jdom.Attribute;
 import org.jdom.Element;
+import org.jdom.JDOMException;
 import org.jdom.Namespace;
 import org.jdom.Text;
 import org.jdom.filter.ElementFilter;
 import org.jdom.filter.Filter;
+import org.jdom.xpath.XPath;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -81,11 +83,36 @@ import java.util.Vector;
 
 public class DataManager
 {
+	
+	private  static final String inspireKeywordsSkel = "<gmd:descriptiveKeywords>\n"
++  "  <gmd:MD_Keywords>\n"
++  "%s"
++  "    <gmd:type>\n"
++  "      <gmd:MD_KeywordTypeCode codeList=\"http://www.isotc211.org/2005/resources/codeList.xml#MD_KeywordTypeCode\" codeListValue=\"\"/>\n"
++  "    </gmd:type>\n"
++  "    <gmd:thesaurusName>\n"
++  "      <gmd:CI_Citation>\n"
++  "        <gmd:title>\n"
++  "          <gco:CharacterString>external._none_.inspire</gco:CharacterString>\n"
++  "        </gmd:title>\n"
++  "        <gmd:date gco:nilReason=\"unknown\"/>\n"
++  "      </gmd:CI_Citation>\n"
++  "    </gmd:thesaurusName>\n"
++  "  </gmd:MD_Keywords>\n"
++  "</gmd:descriptiveKeywords>\n";
+
+	private static final String singleKwSkel = "    <gmd:keyword>\n"
++  "      <gco:CharacterString>%s</gco:CharacterString>\n"
++  "    </gmd:keyword>\n";
+	
+	private Element mapping;
+
 	//--------------------------------------------------------------------------
 	//---
 	//--- Constructor
 	//---
 	//--------------------------------------------------------------------------
+
 
 	/** initializes the search manager and index not-indexed metadata
 	  */
@@ -95,8 +122,9 @@ public class DataManager
 		searchMan = sm;
 		accessMan = am;
 		settingMan= ss;
-        servContext=context;
 
+		this.mapping = Xml.loadFile(appPath+"/xml/topicCategoryMapping.xml");
+        servContext=context;
 		this.baseURL = baseURL;
         this.dataDir = dataDir;
 		this.appPath = appPath;
@@ -387,8 +415,8 @@ public class DataManager
             Element category = (Element) category1;
             String categoryName = category.getChildText("name");
 
-            moreFields.add(makeField("_cat", categoryName, true, true, false));
-        }
+			moreFields.add(makeField("_cat", categoryName.toLowerCase(), true, true, false));
+		}
 
 		if (indexGroup) {
 			sm.indexGroup(schema, md, id, moreFields, isTemplate, title);
@@ -1507,6 +1535,8 @@ public class DataManager
 			String lang) throws Exception {
 		String schema = getMetadataSchema(dbms, id);
 
+		String inspireKeywords = null ;
+		
 		// --- check if the metadata has been modified from last time
 		if (currVersion != null && !editLib.getVersion(id).equals(currVersion)) {
 			Log.error(Geonet.DATA_MANAGER, "Version mismatch: had "
@@ -1550,6 +1580,44 @@ public class DataManager
 			if (el == null)
 				Log.error(Geonet.DATA_MANAGER, "Element not found at ref = " + ref);
 
+			// automatically inject keywords
+			else if ((el.getName().equals("MD_TopicCategoryCode")) && (schema.equals("iso19139.fra")))
+			{
+				String kwList = null ;
+				List<String> klst = getInspireKeywords(val);
+				for (int i =0 ; i < klst.size() ; i++)
+				{
+					XPath alreadyAdded = XPath.newInstance("gmd:identificationInfo/fra:FRA_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/gco:CharacterString");
+					List<Element> kws = alreadyAdded.selectNodes(md);
+					boolean alreadyIn = false ;
+					
+					for (int j = 0 ; j < kws.size(); j++)
+					{
+						if (kws.get(j).getText().equals(klst.get(i)))
+						{
+							alreadyIn = true;
+							break;
+						}						
+					}
+					// not already in the MD : consider adding it
+					if (alreadyIn == false)
+					{
+						if (kwList == null)
+							kwList = String.format(singleKwSkel, klst.get(i));
+						else
+							kwList += String.format(singleKwSkel, klst.get(i));
+					}
+				}
+				if (kwList != null)
+				{
+					if (inspireKeywords == null)
+					{
+						inspireKeywords = new String() ;
+					}
+					inspireKeywords += String.format(inspireKeywordsSkel, kwList);
+				}
+			}
+			
 			if (attr != null) {
 				Integer indexColon = attr.indexOf("COLON");
 				if (indexColon != -1) {
@@ -1626,9 +1694,79 @@ public class DataManager
 		// --- remove editing info
 		editLib.removeEditingInfo(md);
 
+		if (inspireKeywords != null)
+		{
+			XPath xpath = XPath.newInstance("gmd:identificationInfo/fra:FRA_DataIdentification");  
+			 Element kw = (Element) xpath.selectSingleNode(md);
+			 
+			 // we have to figure out where into the MD to add our XML fragments
+			 int postoinsert = 1;
+
+
+			 XPath testIfKw = XPath.newInstance("gmd:descriptiveKeywords");
+			 Element curKw = (Element) testIfKw.selectSingleNode(kw);
+
+			 XPath formatPath = XPath.newInstance("gmd:resourceFormat");
+			 List<Element> curFmts = formatPath.selectNodes(kw);
+
+			 // first case : we have a descriptive keyword block, we can insert right before it
+			 if (curKw != null)
+			 {
+				 postoinsert = kw.indexOf(curKw);
+			 }        
+			 // second case : no keywords blocks but we have some formats blocks
+			 // we have to insert right after them
+			 else if (curFmts.size() > 0)
+			 {                
+				 postoinsert = kw.indexOf(curFmts.get(curFmts.size() - 1)) + 1;
+			 }
+			 // third case : no keywords, nor formats 
+			 // inserting right after the <gmd:graphicOverview> which actually seems mandatory
+			 else
+			 {
+				 XPath locGraphicOv = XPath.newInstance("gmd:graphicOverview");
+				 List<Element> grOvElems =  locGraphicOv.selectNodes(kw);
+				 // third case .1 : no graphicOverview ; one level up to gmd:abstract (which actually is mandatory)
+				 if (grOvElems.isEmpty())
+				 {
+					 XPath abstractPath = XPath.newInstance("gmd:abstract");
+					 List<Element> abstractElems =  abstractPath.selectNodes(kw);
+					 postoinsert = kw.indexOf(abstractElems.get(abstractElems.size() - 1)) + 1; 
+				 }
+				 else
+				 {
+					 postoinsert = kw.indexOf(grOvElems.get(grOvElems.size() - 1)) + 1;
+				 }
+			 }
+			 
+			if (kw != null)
+			{
+				Element newEl = Xml.loadString(String.format("<root xmlns:gmd=\"http://www.isotc211.org/2005/gmd\" xmlns:gco=\"http://www.isotc211.org/2005/gco\">%s</root>",inspireKeywords), false);
+				List<Element> nLst = newEl.getChildren();
+				for (int i = 0 ; i < nLst.size(); ++i)
+				{
+				 Element curEl = nLst.get(i);
+				 curEl.detach();
+				 kw = kw.addContent(postoinsert, curEl);
+				}
+			}
+		}
+		
 		md.detach();
 		return updateMetadata(session, dbms, id, md, false, currVersion, lang);
 
+	}
+
+	private List<String> getInspireKeywords(String val) throws JDOMException {
+		ArrayList<String> ret = new ArrayList<String>();
+		XPath pTh     = XPath.newInstance("mapping[@key='"+val+"']/keyword");
+		List<Element> kws = pTh.selectNodes(mapping);
+		
+		for (int i = 0 ; i < kws.size(); i++)
+		{
+			ret.add(kws.get(i).getAttributeValue("value"));
+		}
+		return ret;
 	}
 
 	/**

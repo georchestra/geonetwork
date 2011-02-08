@@ -1,0 +1,42 @@
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = off;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET escape_string_warning = off;
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: sharedobject_templates; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE sharedobject_templates (
+    typename character varying(32) NOT NULL,
+    template text NOT NULL
+);
+
+
+ALTER TABLE public.sharedobject_templates OWNER TO "www-data";
+
+--
+-- Data for Name: sharedobject_templates; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY sharedobject_templates (typename, template) FROM stdin;
+shared_contacts	<gmd:CI_ResponsibleParty xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gco="http://www.isotc211.org/2005/gco" xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.isotc211.org/2005/gmd/gmd.xsd">\r\n  <gmd:individualName xsi:type="gmd:PT_FreeText_PropertyType">\r\n    <gco:CharacterString>Nom</gco:CharacterString>\r\n  </gmd:individualName>\r\n  <gmd:organisationName xsi:type="gmd:PT_FreeText_PropertyType">\r\n    <gco:CharacterString>Organisme</gco:CharacterString>\r\n  </gmd:organisationName>\r\n <gmd:contactInfo>\r\n    <gmd:CI_Contact>\r\n      <gmd:phone>\r\n        <gmd:CI_Telephone>\r\n          <gmd:voice>\r\n            <gco:CharacterString>Voice 1</gco:CharacterString>\r\n          </gmd:voice>\r\n        </gmd:CI_Telephone>\r\n      </gmd:phone>\r\n      <gmd:address>\r\n        <gmd:CI_Address>\r\n          <gmd:deliveryPoint xsi:type="gmd:PT_FreeText_PropertyType">\r\n            <gco:CharacterString>Adresse</gco:CharacterString>\r\n          </gmd:deliveryPoint>\r\n          <gmd:city>\r\n            <gco:CharacterString>Ville</gco:CharacterString>\r\n          </gmd:city>\r\n          <gmd:administrativeArea>\r\n            <gco:CharacterString>Incorporation Administrative</gco:CharacterString>\r\n          </gmd:administrativeArea>\r\n          <gmd:postalCode>\r\n            <gco:CharacterString>Code postal</gco:CharacterString>\r\n          </gmd:postalCode>\r\n          <gmd:country>\r\n            <gco:CharacterString>Pays</gco:CharacterString>\r\n          </gmd:country>\r\n          <gmd:electronicMailAddress>\r\n            <gco:CharacterString>email@address.com</gco:CharacterString>\r\n          </gmd:electronicMailAddress>\r\n        </gmd:CI_Address>\r\n      </gmd:address>\r\n      <gmd:onlineResource>\r\n        <gmd:CI_OnlineResource>\r\n          <gmd:linkage>\r\n            <gmd:URL>http://website.com</gmd:URL>\r\n          </gmd:linkage>\r\n          <gmd:protocol>\r\n            <gco:CharacterString>WWW:LINK-1.0-http--link</gco:CharacterString>\r\n          </gmd:protocol>\r\n                  </gmd:CI_OnlineResource>\r\n      </gmd:onlineResource>\r\n      </gmd:CI_Contact>\r\n  </gmd:contactInfo>\r\n  <gmd:role>\r\n    <gmd:CI_RoleCode codeListValue="originator" codeList="http://www.isotc211.org/2005/resources/codeList.xml#CI_RoleCode" />\r\n  </gmd:role>\r\n</gmd:CI_ResponsibleParty>
+\.
+
+
+--
+-- PostgreSQL database dump complete
+--
+
