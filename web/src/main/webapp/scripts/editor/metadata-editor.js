@@ -1623,6 +1623,7 @@ function findSharedObjects(ref,name) {
     var submitChange = function(id) {
         Ext.Ajax.request({
             url: Env.locService+'/xml.sharedobject.get',
+            method: 'GET',
             params: {id:id, type:type},
             success: function(response) {
                 var newNode = response.responseXML;
