@@ -123,7 +123,14 @@
 		<allow service="metadata.massive.newowner.form"/>
 		<allow service="xml.usergroups.list"/>
 		
-		<allow service="metadata.massive.processing"/>        
+		<allow service="metadata.massive.processing"/>
+
+
+        <allow service="sharedobject.upload"/>
+        <allow service="xml.sharedobject.delete"/>
+        <allow service="xml.sharedobject.nextid"/>
+        <allow service="sharedobject.edit"/>
+        <allow service="sharedobject.admin"/>
 		
 	</profile>
 
@@ -216,6 +223,11 @@
 		<allow service="xml.relation.delete"/>
 		
 		<allow service="geoserver.publisher"/>
+
+        <allow service="xml.sharedobject.list"/>
+        <allow service="xml.sharedobject.get"/>
+        <allow service="xml.sharedobject.jsgridspec"/>
+        <allow service="xml.sharedobject.types.list"/>
 	</profile>
 
 	<!-- ====================================================================== -->
