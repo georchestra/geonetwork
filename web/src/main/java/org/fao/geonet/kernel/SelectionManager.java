@@ -39,6 +39,7 @@ public class SelectionManager {
 	private static final String ADD_SELECTED = "add";
 	private static final String REMOVE_SELECTED = "remove";
 	private static final String CLEAR_ADD_SELECTED = "clear-add";
+	private static final String PANIER_CACHE_ID = "cart-cache-id";
 
 	private SelectionManager(UserSession session) {
 		selections = new Hashtable<String, Set<String>>(0);
@@ -215,12 +216,12 @@ public class SelectionManager {
 		JeevesJCS cachingCart = null ;
 		Set<String> selection = null ;
 		try {
-			cachingCart = JeevesJCS.getInstance(cartUUID);
+			cachingCart = JeevesJCS.getInstance(PANIER_CACHE_ID);
 		} catch (CacheException e) {
 			e.printStackTrace();
 			return -1;
 		}
-		selection = (Set<String>) cachingCart.get(type);
+		selection = (Set<String>) cachingCart.get(cartUUID);
 		
 		if (selection == null) {
 			this.selections.put(type, Collections
@@ -231,8 +232,6 @@ public class SelectionManager {
 		if (selected != null) {
 			if (selected.equals(ADD_ALL_SELECTED))
 			{
-				// PMT : what is the point of passing the type ?
-				// we already have fetched the container ... Oo
 				// was :
 				//this.selectAll(type, context);
 				// kept here for compatibility purposes
@@ -276,7 +275,7 @@ public class SelectionManager {
 
         // saving current selection
         try {
-			cachingCart.put(type, selection);
+			cachingCart.put(cartUUID, selection);
 		} catch (CacheException e) {
 			e.printStackTrace();
 		}
@@ -437,12 +436,19 @@ public class SelectionManager {
 		}
 		JeevesJCS cachingCart;
 		try {
-			cachingCart = JeevesJCS.getInstance(cartToken);
+			cachingCart = JeevesJCS.getInstance(PANIER_CACHE_ID);
 		} catch (CacheException e) {
 			e.printStackTrace();
 			return new HashSet<String>();
 		}
-		return (Set<String>) cachingCart.get(type);
+		Set<String> ret = (Set<String>) cachingCart.get(cartToken);
+		
+		if (ret == null)
+		{
+			return new HashSet<String>();
+		}
+		/* else */
+		return ret;
 	}
 	/**
 	 * <p>
@@ -469,12 +475,13 @@ public class SelectionManager {
 		}
 		JeevesJCS cachingCart;
 		try {
-			cachingCart = JeevesJCS.getInstance(cartToken);
+			cachingCart = JeevesJCS.getInstance(PANIER_CACHE_ID);
 		} catch (CacheException e) {
 			e.printStackTrace();
 			return false;
 		}
-		Set<String> currentCart = (Set<String>)cachingCart.get(type);
+		Set<String> currentCart = getSelection(type, cartToken);
+		
 		ret = currentCart.add(uuid);
 
 		// save back the panier
@@ -516,12 +523,12 @@ public class SelectionManager {
 		}
 		JeevesJCS cachingCart;
 		try {
-			cachingCart = JeevesJCS.getInstance(cartToken);
+			cachingCart = JeevesJCS.getInstance(PANIER_CACHE_ID);
 		} catch (CacheException e) {
 			e.printStackTrace();
 			return false;
 		}
-		Set<String> currentCart = (Set<String>)cachingCart.get(type);
+		Set<String> currentCart = (Set<String>) getSelection(type, cartToken);
 		ret = currentCart.addAll(uuids);
 		
 		// save back the panier
