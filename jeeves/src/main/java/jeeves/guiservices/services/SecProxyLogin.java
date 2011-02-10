@@ -68,71 +68,71 @@ public class SecProxyLogin implements Auth
 	//---
 	//--------------------------------------------------------------------------
 
-    public Element exec(Element params, ServiceContext context) throws Exception
+    public synchronized Element exec(Element params, ServiceContext context) throws Exception
     {
         UserSession session = context.getUserSession();
 
-        authenticationUser(context, session);
-        if(session.getUserId()!=null){
-            syncUserRoles(context, session);
-        }
-
-
-        /* END PMT security-proxy Mod */
-
-        String sUsername = session.getUsername();
-        String sName     = session.getName();
-        String sSurname  = session.getSurname();
-        String sProfile  = session.getProfile();
-
-        if (sUsername == null)
-            sUsername = ProfileManager.GUEST;
-
-        if (sName == null)
-            sName = ProfileManager.GUEST;
-
-        if (sSurname == null)
-            sSurname = "";
-
-        if (sProfile == null)
-            sProfile = ProfileManager.GUEST;
-
-        Element userId   = new Element("userId")  .addContent(session.getUserId());
-        Element username = new Element("username").addContent(sUsername);
-        Element name     = new Element("name")    .addContent(sName);
-        Element surname  = new Element("surname") .addContent(sSurname);
-        Element profile  = new Element("profile") .addContent(sProfile);
-
-        Element sEl = new Element(Jeeves.Elem.SESSION)
-            .addContent(userId)
-            .addContent(username)
-            .addContent(name)
-            .addContent(surname)
-            .addContent(profile);
-
-        if (groupName != null)
-        {
-            Hashtable group = (Hashtable)session.getProperty(groupName);
-            if (group != null)
-            {
-                Element gEl = new Element(groupName);
-                for (Enumeration i = group.elements(); i.hasMoreElements();)
-                {
-                    Element child = (Element)i.nextElement();
-                    if (outFields == null || outFields.contains(child.getName()))
-                         gEl.addContent((Element)child.clone());
-                }
-                sEl.addContent(gEl);
+        final Dbms dbms = (Dbms) context.getResourceManager().open ("main-db");
+        try {
+            if(authenticationUser(context, session, dbms)){
+                syncUserRoles(context, session,dbms);
             }
+
+            String sUsername = session.getUsername();
+            String sName     = session.getName();
+            String sSurname  = session.getSurname();
+            String sProfile  = session.getProfile();
+
+            if (sUsername == null)
+                sUsername = ProfileManager.GUEST;
+
+            if (sName == null)
+                sName = ProfileManager.GUEST;
+
+            if (sSurname == null)
+                sSurname = "";
+
+            if (sProfile == null)
+                sProfile = ProfileManager.GUEST;
+
+            Element userId   = new Element("userId")  .addContent(session.getUserId());
+            Element username = new Element("username").addContent(sUsername);
+            Element name     = new Element("name")    .addContent(sName);
+            Element surname  = new Element("surname") .addContent(sSurname);
+            Element profile  = new Element("profile") .addContent(sProfile);
+
+            Element sEl = new Element(Jeeves.Elem.SESSION)
+                .addContent(userId)
+                .addContent(username)
+                .addContent(name)
+                .addContent(surname)
+                .addContent(profile);
+
+            if (groupName != null)
+            {
+                Hashtable group = (Hashtable)session.getProperty(groupName);
+                if (group != null)
+                {
+                    Element gEl = new Element(groupName);
+                    for (Enumeration i = group.elements(); i.hasMoreElements();)
+                    {
+                        Element child = (Element)i.nextElement();
+                        if (outFields == null || outFields.contains(child.getName()))
+                             gEl.addContent((Element)child.clone());
+                    }
+                    sEl.addContent(gEl);
+                }
+            }
+            return sEl;
+        } finally {
+            dbms.commit();
         }
-        return sEl;
     }
 
-    private synchronized void syncUserRoles(ServiceContext context, UserSession session) throws Exception {
+    private void syncUserRoles(ServiceContext context, UserSession session,Dbms dbms) throws Exception {
         final String GROUP_PREFIX = "ROLE_EL_";
         final Integer userId = Integer.valueOf(session.getUserId());
         final String[] roles = lookUpRoles(context);
-        final Dbms dbms = (Dbms) context.getResourceManager().open ("main-db");
         final String query = "INSERT INTO usergroups VALUES (?,?)";
         final String groupIdQuery = "SELECT id FROM groups WHERE name ILIKE ?";
 
@@ -182,86 +182,87 @@ public class SecProxyLogin implements Auth
     private String lookupParam(ServiceContext context, String key) {
         Map<String, String> spHttpParams =  context.getHeaders();
 
-        return (String) spHttpParams.get(key);
+        return spHttpParams.get(key);
     }
 
 
 
-    private void authenticationUser(ServiceContext context, UserSession session) throws Exception {
-        /* PMT C2C modifications */
-
-		/* This aims to add the security-proxy support
-		 * for special headers and auto-authenticate
-		 * if necessary
-		 */
-
+    private boolean authenticationUser(ServiceContext context, UserSession session, Dbms dbms) throws Exception {
 
 		String spUser = lookUpUsername(context);
-		String[] spRoles = lookUpRoles(context);
+        final boolean needsLdapSync;
+        if(spUser != null && spUser.equals(session.getUsername())) {
+            needsLdapSync = false;
+        } else {
+            String[] spRoles = lookUpRoles(context);
 
-		String curProfile = null;
+            String curProfile = null;
 
 
-		for (int i = 0 ; i < spRoles.length ; i++)
-		{
-			/* admin */
-            final String currentRole = spRoles[i];
-            if (currentRole.equals(rolesMapping.get(Profile.ADMINISTRATOR)))
-			{
-				curProfile = Profile.ADMINISTRATOR;
-				/* stop here since this is the stronger profile */
-				break;
-			}
-			else if (currentRole.equals(rolesMapping.get(Profile.REVIEWER)))
-			{
-				curProfile = Profile.REVIEWER;
-				continue;
-			}
-			else if (currentRole.equals(rolesMapping.get(Profile.EDITOR)))
-			{
-				curProfile = Profile.EDITOR;
-				continue;
-			}
-			else if (currentRole.equals(rolesMapping.get(Profile.REGISTEREDUSER)))
-			{
-				curProfile = Profile.REGISTEREDUSER;
-				continue;
-			}
-			else if (currentRole.equals(rolesMapping.get(Profile.GUEST)))
-			{
-				curProfile = Profile.GUEST;
-				continue;
-			}
-		}
+            for (int i = 0 ; i < spRoles.length ; i++)
+            {
+                /* admin */
+                final String currentRole = spRoles[i];
+                if (currentRole.equals(rolesMapping.get(Profile.ADMINISTRATOR)))
+                {
+                    curProfile = Profile.ADMINISTRATOR;
+                    /* stop here since this is the stronger profile */
+                    break;
+                }
+                else if (currentRole.equals(rolesMapping.get(Profile.REVIEWER)))
+                {
+                    curProfile = Profile.REVIEWER;
+                    continue;
+                }
+                else if (currentRole.equals(rolesMapping.get(Profile.EDITOR)))
+                {
+                    curProfile = Profile.EDITOR;
+                    continue;
+                }
+                else if (currentRole.equals(rolesMapping.get(Profile.REGISTEREDUSER)))
+                {
+                    curProfile = Profile.REGISTEREDUSER;
+                    continue;
+                }
+                else if (currentRole.equals(rolesMapping.get(Profile.GUEST)))
+                {
+                    curProfile = Profile.GUEST;
+                    continue;
+                }
+            }
 
-		/* for loop passed, but no role designated
-		 * we authenticate our user as being a guest
-		 */
-		if (curProfile == null)
-		{
-			curProfile = Profile.GUEST;
-		}
+            /* for loop passed, but no role designated
+             * we authenticate our user as being a guest
+             */
+            if (curProfile == null)
+            {
+                curProfile = Profile.GUEST;
+            }
 
-		if (curProfile.equals(Profile.GUEST) == false)
-		{
-		    String email = lookUpEmail(context);
-		    if(email==null) email = "";
+            if (curProfile.equals(Profile.GUEST) == false)
+            {
+                String email = lookUpEmail(context);
+                if(email==null) email = "";
 
-	        String userId = lookupUserId(session, context, spUser, curProfile, email);
-			session.authenticate(userId, spUser, spUser, " (" +curProfile +")", curProfile);
-		}
-		else // Guest profile : emptying session attributes
-		{
-			session.authenticate(null, null, null, null, null);
-		}
+                String userId = lookupUserId(session, context, spUser, curProfile, email, dbms);
+                session.authenticate(userId, spUser, spUser, " (" +curProfile +")", curProfile);
+                needsLdapSync = true;
+            }
+            else // Guest profile : emptying session attributes
+            {
+                session.authenticate(null, null, null, null, null);
+                needsLdapSync = false;
+            }
+        }
+
+        return needsLdapSync;
     }
 
-	private String lookupUserId(UserSession session, ServiceContext context, String userName, String profile, String email) throws Exception {
-	    if(session.getUsername() == userName && session.getUserId()!=null) {
+	private String lookupUserId(UserSession session, ServiceContext context, String userName, String profile, String email, Dbms dbms) throws Exception {
+	    if(session.getUsername() != null && session.getUsername().equals(userName) && session.getUserId()!=null) {
 	        return session.getUserId();
 	    }
 
-        final Dbms dbms = (Dbms) context.getResourceManager().open ("main-db");
         String userIdQuery = "SELECT id FROM users WHERE username = ?";
         Element userId = dbms.select(userIdQuery, userName);
         Iterator ids = userId.getDescendants(new Filter() {
@@ -339,7 +340,6 @@ public class SecProxyLogin implements Auth
 			dbms.execute(query, id, username, firstname, surname, profile, "Via Shibboleth");
 		}
 
-		dbms.commit();
 	}
 
 }
