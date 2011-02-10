@@ -338,6 +338,9 @@ public class ServiceManager
 		context.setHeaders(req.getHeaders());
 		context.setServlet(servlet);
 
+		
+		context.setHttpServletResponse(req.getHttpServletResponse());
+		context.setHttpServletRequest(req.getHttpServletRequest());
 		//--- invoke service and build result
 
 		Element     response = null;

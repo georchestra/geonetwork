@@ -98,7 +98,8 @@ public class XmlSearch implements Service
 		Element result = searcher.present(context, elData, _config);
 		
 		// Update result elements to present
-		SelectionManager.updateMDResult(context.getUserSession(), result);
+		String cartUUID = context.getCookie("cartUUID");
+		SelectionManager.updateMDResult(context.getUserSession(), result, cartUUID);
 
 		
 		return result;

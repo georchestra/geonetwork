@@ -100,9 +100,9 @@ public class MassiveXslProcessing implements Service {
 
 		context.info("Get selected metadata");
 		SelectionManager sm = SelectionManager.getManager(session);
-		
-		synchronized(sm.getSelection("metadata")) {
-			MassiveXslMetadataReindexer m = new MassiveXslMetadataReindexer(dataMan, dbms, sm.getSelection("metadata").iterator(), process, _appPath, params, context, metadata, notFound, notOwner, notProcessFound);
+		String cartUUID = context.getCookie("cartUUID");
+		synchronized(sm.getSelection("metadata", cartUUID)) {
+			MassiveXslMetadataReindexer m = new MassiveXslMetadataReindexer(dataMan, dbms, sm.getSelection("metadata", cartUUID).iterator(), process, _appPath, params, context, metadata, notFound, notOwner, notProcessFound);
 			m.processWithFastIndexing();
 		}
 

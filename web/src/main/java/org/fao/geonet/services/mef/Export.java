@@ -95,17 +95,20 @@ public class Export implements Service {
 				.getParam(params, "relation", "true");
 
 		UserSession session = context.getUserSession();
-
+		String cartUUID = context.getCookie("cartUUID");
 		// Use current selction if no uuid provided.
 		if (uuid != null) {
 			SelectionManager.getManager(session).addSelection(
-					SelectionManager.SELECTION_METADATA, uuid);
+					SelectionManager.SELECTION_METADATA, uuid, cartUUID);
 		}
 
 		Log.info(Geonet.MEF, "Create export task for selected metadata(s).");
 		SelectionManager selectionManger = SelectionManager.getManager(session);
+		
+
+		
 		Set<String> uuids = selectionManger
-				.getSelection(SelectionManager.SELECTION_METADATA);
+				.getSelection(SelectionManager.SELECTION_METADATA, cartUUID);
 		Set<String> uuidsBeforeExp = Collections
 				.synchronizedSet(new HashSet<String>(0));
 		Log.info(Geonet.MEF, "Current record(s) in selection: " + uuids.size());
@@ -156,13 +159,13 @@ public class Export implements Service {
 				}
 
 				if (selectionManger.addAllSelection(
-						SelectionManager.SELECTION_METADATA, tmpUuid))
+						SelectionManager.SELECTION_METADATA, tmpUuid, cartUUID))
 					Log.info(Geonet.MEF,
 							"Child and services added into the selection");
 			}
 
 			uuids = selectionManger
-					.getSelection(SelectionManager.SELECTION_METADATA);
+					.getSelection(SelectionManager.SELECTION_METADATA, cartUUID);
 			Log.info(Geonet.MEF, "Building MEF2 file with " + uuids.size()
 					+ " records.");
 
@@ -173,7 +176,7 @@ public class Export implements Service {
 		// -- Reset selection manager
 		selectionManger.close();
 		selectionManger.addAllSelection(SelectionManager.SELECTION_METADATA,
-				uuidsBeforeExp);
+				uuidsBeforeExp, cartUUID);
 
 		String fname = String.valueOf(Calendar.getInstance().getTimeInMillis());
 

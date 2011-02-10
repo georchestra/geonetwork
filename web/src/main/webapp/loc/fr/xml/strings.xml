@@ -311,6 +311,7 @@
 	<email js="true">Email</email>
 	<email>Email</email>
 	<emailAddressInvalid js="true">Adresse email invalide</emailAddressInvalid>
+	<emptyCart>Vider le panier</emptyCart>
 	<enclosing>Incluant</enclosing>
 	<enclosingCoordinate>Coordonnées englobant</enclosingCoordinate>
 	<enddate>Date de fin</enddate>
