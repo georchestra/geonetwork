@@ -79,8 +79,9 @@ public class MassiveUpdateCategories implements Service
 		Set<Integer> notFound = new HashSet<Integer>();
 		Set<Integer> notOwner = new HashSet<Integer>();
 
-		synchronized(sm.getSelection("metadata")) {
-		for (Iterator<String> iter = sm.getSelection("metadata").iterator(); iter.hasNext();) {
+		String cartUUID = context.getCookie("cartUUID");
+		synchronized(sm.getSelection("metadata", "cartUUID")) {
+		for (Iterator<String> iter = sm.getSelection("metadata", cartUUID).iterator(); iter.hasNext();) {
 			String uuid = (String) iter.next();
 			String id   = dm.getMetadataId(dbms, uuid);
 								

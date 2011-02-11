@@ -23,8 +23,16 @@
 
 package jeeves.server.context;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import jeeves.interfaces.Logger;
 import jeeves.server.ProfileManager;
@@ -55,7 +63,9 @@ public class ServiceContext extends BasicContext
 	private String uploadDir;
   private int    maxUploadSize;
 	private JeevesServlet servlet;
-
+	
+	private HttpServletResponse  response;
+	private HttpServletRequest   request;
 	//--------------------------------------------------------------------------
 	//---
 	//--- Constructor
@@ -142,6 +152,32 @@ public class ServiceContext extends BasicContext
 	public void setHeaders(Map<String, String> headers)
 	{
 		this.headers = headers;
+	}
+
+	public void setCookie(String key, String value) {
+		if (response != null)
+			response.addCookie(new Cookie(key, value));
+	}
+	public String getCookie(String key)
+	{
+		if (request == null)
+			return null;
+		
+		Cookie[] c = request.getCookies();
+		for (int i = 0 ; i < c.length ; i++)
+		{
+			if (c[i].getName().equals(key))
+				return c[i].getValue();
+		}
+		return null;
+	}
+	public void setHttpServletResponse(HttpServletResponse httpServletResponse) {
+		response = httpServletResponse;	
+	}
+
+	public void setHttpServletRequest(HttpServletRequest httpServletRequest) {
+		request = httpServletRequest;
+		
 	}
 }
 
