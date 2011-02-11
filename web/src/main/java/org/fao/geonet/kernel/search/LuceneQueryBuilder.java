@@ -744,7 +744,12 @@ public class LuceneQueryBuilder {
                         if (token.endsWith("\"")) {
                             token = token.substring(0, token.length() - 1);
                         }
-                        //
+                        String [] special = {"Ôo","Âa","ôo","ée","èe","çc","àa","âa"};
+                        for(String p : special ) {
+                            token = token.replace(p.charAt(0), p.charAt(1));
+                        }
+                        token = token.toLowerCase();
+
                         TermQuery keywordQuery = new TermQuery(new Term(LuceneIndexField.KEYWORD, token));
                         BooleanClause keywordClause = new BooleanClause(keywordQuery, keywordOccur);
                         allkeywordsQuery.add(keywordClause);
