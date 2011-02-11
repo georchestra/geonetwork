@@ -30,6 +30,24 @@ jcs.region.xlink.elementattributes.IdleTime=1800
 jcs.region.xlink.elementattributes.IsSpool=true
 jcs.region.xlink.elementattributes.IsRemote=true
 jcs.region.xlink.elementattributes.IsLateral=true
+
+#Panier cache
+jcs.region.cart-cache-id=DC
+jcs.region.cart-cache-id.cacheattributes=org.apache.jcs.engine.CompositeCacheAttributes
+jcs.region.cart-cache-id.cacheattributes.MaxObjects=1000
+jcs.region.cart-cache-id.cacheattributes.MemoryCacheName=org.apache.jcs.engine.memory.lru.LRUMemoryCache
+jcs.region.cart-cache-id.cacheattributes.userLateral=false
+jcs.region.cart-cache-id.cacheattributes.Remote=false
+jcs.region.cart-cache-id.cacheattributes.useDisk=false
+jcs.region.cart-cache-id.elementattributes=org.apache.jcs.engine.ElementAttributes
+# panier last only 10 minutes
+jcs.region.cart-cache-id.elementattributes.MaxLifeSeconds=600
+jcs.region.cart-cache-id.elementattributes.IsEternal=false
+jcs.region.cart-cache-id.elementattributes.IdleTime=1800
+jcs.region.cart-cache-id.elementattributes.IsSpool=false
+jcs.region.cart-cache-id.elementattributes.IsRemote=false
+jcs.region.cart-cache-id.elementattributes.IsLateral=false
+
         
 # SPATIAL Filter FEATURE CACHING
 jcs.region.SpatialFilterCache=DC
