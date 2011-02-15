@@ -320,7 +320,7 @@
   
   <build>
     <plugins>
-	      <plugin>
+	      <!--<plugin>
 	        <groupId>org.zeroturnaround</groupId>
 	        <artifactId>javarebel-maven-plugin</artifactId>
 
@@ -334,7 +334,7 @@
 	            </goals>
 	          </execution>
 	        </executions>
-	      </plugin>
+	      </plugin>-->
         <plugin>
           <groupId>net.alchim31.maven</groupId>
           <artifactId>yuicompressor-maven-plugin</artifactId>
