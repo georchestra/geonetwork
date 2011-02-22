@@ -144,13 +144,13 @@
 
 			<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->		
 
-            <xsl:variable name="lower">abcdefghijklmnopqrstuvwxyz</xsl:variable>
-            <xsl:variable name="upper">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable>
+            <xsl:variable name="lower">oaoeecaaabcdefghijklmnopqrstuvwxyz</xsl:variable>
+            <xsl:variable name="upper">ÔÂôéèçàâABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable>
 			<xsl:for-each select="//gmd:MD_Keywords">
 				<xsl:for-each select="gmd:keyword/gco:CharacterString|gmd:keyword/gmd:PT_FreeText/gmd:textGroup/gmd:LocalisedCharacterString">
-                    <xsl:variable name="keywordLower" select="translate(string(.),$upper,$lower)"/>
-                    <Field name="keyword" string="{string(.)}" store="true" index="true" token="false"/>
-					<Field name="subject" string="{string(.)}" store="true" index="true" token="false"/>
+                    <xsl:variable name="keywordLower" select="normalize-space(translate(string(.),$upper,$lower))"/>
+                    <Field name="keyword" string="{$keywordLower}" store="true" index="true" token="false"/>
+					<Field name="subject" string="{keywordLower}" store="true" index="true" token="false"/>
 
                     <xsl:if test="$inspire='true'">
                         <xsl:if test="string-length(.) &gt; 0">
