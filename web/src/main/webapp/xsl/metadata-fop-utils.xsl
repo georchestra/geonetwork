@@ -261,21 +261,28 @@
 		<xsl:param name="name" />
 		<xsl:param name="schema" />
 		<xsl:param name="parent" />
-
-		<xsl:variable name="title"
-			select="/root/gui/*[name(.)=$schema]/element[@name=$parent]/label | 
-					/root/gui/*[name(.)=$schema]/element[@name=$name]/label |
-					/root/gui/iso19115/*[name(.)=$name] |
-					/root/gui/iso19139/element[@name=$parent]/label |
-					/root/gui/iso19139.fra/element[@name=$parent]/label |
-					/root/gui/iso19139/element[@name=$name]/label |
-					/root/gui/iso19139.fra/element[@name=$name]/label" />
+		
+		<!-- if parent is null, we are not using it for sure -->
 		<xsl:choose>
-			<xsl:when test="$title">
-				<xsl:value-of select="$title" />
+			<xsl:when test="$parent = ''">
+				<xsl:value-of 
+					select="/root/gui/*[name(.)=$schema][1]/element[@name=$name][1]/label[1] |
+					 		/root/gui/iso19139/element[@name=$name][1]/label[1] |
+                            /root/gui/iso19139.fra/element[@name=$name][1]/label[1]" />
 			</xsl:when>
+			
+			<!--  parent not null, and current node not a gco:*** garbage
+					We select then the parent translated value
+			 -->
+			<xsl:when test="$parent != '' and contains($name, 'gco:')">
+				<xsl:value-of
+					select="/root/gui/*[name(.)=$schema][1]/element[@name=$parent][1]/label[1] |
+					        /root/gui/iso19139/element[@name=$parent][1]/label[1] |
+                            /root/gui/iso19139.fra/element[@name=$parent][1]/label[1]" />
+			</xsl:when>
+			<!-- Fallback on the node title (without prefix) -->
 			<xsl:otherwise>
-				<xsl:text />
+				<xsl:value-of select="$name" />
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
