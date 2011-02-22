@@ -219,11 +219,16 @@
 		<xsl:param name="title" />
 		<xsl:param name="text" />
 		<xsl:param name="helpLink" />
+		<!-- PMT GeoBretagne : don't print out when datas are not available -->
+		<xsl:if test="$title != ''">
+		 <xsl:if test="$text != ''">
 		<xsl:call-template name="simpleElementFop">
 			<xsl:with-param name="title" select="$title" />
 			<xsl:with-param name="text" select="$text" />
 			<xsl:with-param name="helpLink" select="$helpLink" />
 		</xsl:call-template>
+		</xsl:if>
+		</xsl:if>
 	</xsl:template>
 
 	<!--

@@ -196,7 +196,7 @@
 				<fo:table-column column-width="8cm" />
 				<fo:table-body>
 		
-					<fo:table-row>
+					<fo:table-row background-color="#d1b606" border-bottom="1pt solid black">					
 						<fo:table-cell>
 							<fo:block font-size="10pt" font-weight="bold" vertical-align="middle">
 								<xsl:variable name="source" select="string(./geonet:info/source)"/>
@@ -226,6 +226,17 @@
 							</fo:block>
 						</fo:table-cell>
 						-->
+					</fo:table-row>
+					<fo:table-row height="10pt">
+						<fo:table-cell>
+							<fo:block/>
+						</fo:table-cell>
+						<fo:table-cell>
+							<fo:block/>
+						</fo:table-cell>
+						<fo:table-cell>
+							<fo:block/>
+						</fo:table-cell>
 					</fo:table-row>
 				</fo:table-body>
 			</fo:table>
