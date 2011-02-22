@@ -53,6 +53,8 @@
 		<allow service="metadata.searchunused.form"/>
 		<allow service="metadata.searchunused"/>
 
+		<allow service="metadata.checklinks"/>
+
 		<!-- Harvesting facilities -->
 		<allow service="harvesting"/>
 		<allow service="xml.harvesting.get"/>
@@ -348,7 +350,6 @@
 
 		<allow service="iso19115.pdf" />
 		<allow service="iso19139.pdf" />
-
 		<!-- RSS services -->
 		<allow service="rss.latest"/>
 		<allow service="rss.search"/>
