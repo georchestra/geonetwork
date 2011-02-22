@@ -87,10 +87,11 @@ public class ExtractServicesLayers  implements Service {
 
 		Element ret = new Element("response");
 		
+		String cartUUID = context.getCookie("cartUUID");
 		
-		synchronized(sm.getSelection("metadata"))
+		synchronized(sm.getSelection("metadata", cartUUID))
 		{
-			for (Iterator<String> iter = sm.getSelection("metadata").iterator(); iter.hasNext();)
+			for (Iterator<String> iter = sm.getSelection("metadata", cartUUID).iterator(); iter.hasNext();)
 			{
 				String uuid = (String) iter.next();
 				String id   = dm.getMetadataId(dbms, uuid);

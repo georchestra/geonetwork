@@ -88,8 +88,9 @@ public class SelectionSearch implements Service
 		if (sm != null) {
 			String uuids= "";
 			boolean first = true;
-			synchronized(sm.getSelection("metadata")) {
-				for (Iterator<String> iter = sm.getSelection("metadata").iterator(); iter.hasNext();) {
+			String cartUUID = context.getCookie("cartUUID");
+			synchronized(sm.getSelection("metadata", cartUUID)) {
+				for (Iterator<String> iter = sm.getSelection("metadata", cartUUID).iterator(); iter.hasNext();) {
 					String uuid = (String) iter.next();
 					if (first) {
 						uuids = (String) uuid;

@@ -44,16 +44,26 @@
 
 		<fo:table-row>
 			<fo:table-cell>
-				<fo:block>
-					<fo:inline font-weight="normal" font-size="6pt">
+				<fo:block font-weight="bold" font-size="6pt">
 						<xsl:value-of select="$title" />
-					</fo:inline>
 				</fo:block>
 			</fo:table-cell>
 			<fo:table-cell number-columns-spanned="2">
 				<fo:block font-size="6pt">
 					<xsl:value-of select="$text" />
 				</fo:block>
+			</fo:table-cell>
+		</fo:table-row>
+		<!-- PMT little hack to space after each rows -->
+		<fo:table-row height="10pt">
+			<fo:table-cell>
+				<fo:block/>
+			</fo:table-cell>
+			<fo:table-cell>
+				<fo:block/>
+			</fo:table-cell>
+			<fo:table-cell>
+				<fo:block/>
 			</fo:table-cell>
 		</fo:table-row>
 	</xsl:template>
@@ -102,17 +112,30 @@
 						<fo:table-column column-width="12cm" />
 						<fo:table-column column-width="1cm" />
 						<fo:table-body>
-							<fo:table-row>
+							<fo:table-row 
+										border-bottom="1pt solid black"
+										background-color="#d1b606">
 								<fo:table-cell
 									number-columns-spanned="3">
-									<fo:block
-										border-top="1pt solid black">
-										<fo:inline font-weight="normal" font-size="6pt">
-											<xsl:text>::</xsl:text>
+									<fo:block>
+										<fo:inline font-weight="bold" font-size="8pt">
+											<xsl:text>:: </xsl:text>
 											<xsl:value-of
 												select="$title" />
 										</fo:inline>
 									</fo:block>
+								</fo:table-cell>
+							</fo:table-row>
+							<!-- PMT little hack to space after each rows -->
+							<fo:table-row height="10pt">
+								<fo:table-cell>
+									<fo:block/>
+								</fo:table-cell>
+								<fo:table-cell>
+									<fo:block/>
+								</fo:table-cell>
+								<fo:table-cell>
+									<fo:block/>
 								</fo:table-cell>
 							</fo:table-row>
 							<fo:table-row>
@@ -134,6 +157,17 @@
 											</fo:table>
 										</xsl:if>
 									</fo:block>
+								</fo:table-cell>
+							</fo:table-row>
+							<fo:table-row height="10pt">
+								<fo:table-cell>
+									<fo:block />
+								</fo:table-cell>
+								<fo:table-cell>
+									<fo:block />
+								</fo:table-cell>
+								<fo:table-cell>
+									<fo:block />
 								</fo:table-cell>
 							</fo:table-row>
 						</fo:table-body>

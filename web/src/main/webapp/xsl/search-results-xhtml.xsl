@@ -41,7 +41,6 @@
 			<span id="nbselectedspan">
 				Panier :
 				<span id="nbselected">
-
 					<xsl:choose>
 						<xsl:when test="/root/response/@selected">
 							<xsl:value-of select="/root/response/@selected" />
@@ -51,7 +50,8 @@
 						</xsl:otherwise>
 					</xsl:choose>
 				</span>					
-				<xsl:value-of select="/root/gui/strings/selected" />
+				<xsl:value-of select="/root/gui/strings/selected" /> - 
+				<a href="#" id="emptyCart" onclick="javascript:metadataselect(0, 'remove-all')"><xsl:value-of select="/root/gui/strings/emptyCart" /></a>
 			</span>
 				</xsl:with-param>
 				<xsl:with-param name="indent" select="50"/>

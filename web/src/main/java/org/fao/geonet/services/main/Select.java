@@ -1,5 +1,9 @@
 package org.fao.geonet.services.main;
 
+import java.util.Map;
+import java.util.UUID;
+
+import jeeves.JeevesJCS;
 import jeeves.constants.Jeeves;
 import jeeves.interfaces.Service;
 import jeeves.server.ServiceConfig;
@@ -33,10 +37,18 @@ public class Select implements Service {
 			throws Exception {
 		
 		String type = Util.getParam(params, Params.TYPE, init_type );
+
+		String currentPanier = context.getCookie("cartUUID");
 		
+;
+		if (currentPanier == null)
+		{
+			currentPanier = UUID.randomUUID().toString();
+			context.setCookie("cartUUID", currentPanier);
+		}
 		// Get the selection manager
 		UserSession session = context.getUserSession();
-		int nbSelected = SelectionManager.updateSelection(type, session, params, context);
+		int nbSelected = SelectionManager.updateSelection(type, session, params, context, currentPanier);
 		
 		// send ok
 		Element response = new Element(Jeeves.Elem.RESPONSE);

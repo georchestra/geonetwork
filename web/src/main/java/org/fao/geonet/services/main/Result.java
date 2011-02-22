@@ -82,7 +82,8 @@ public class Result implements Service
 		Element result = searcher.present(context, params, _config);
 
 		// Update result elements to present
-		SelectionManager.updateMDResult(context.getUserSession(), result);
+		String cartUUID = context.getCookie("cartUUID");
+		SelectionManager.updateMDResult(context.getUserSession(), result, cartUUID);
 
 		// Restore last search if set
 		String restoreLastSearch = params.getChildText(Geonet.SearchResult.RESTORELASTSEARCH);

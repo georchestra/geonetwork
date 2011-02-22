@@ -332,6 +332,7 @@
 	<email js="true">Email</email>
 	<email>Email</email>
 	<emailAddressInvalid js="true">Email address is invalid</emailAddressInvalid>
+	<emptyCart>Empty the cart</emptyCart>
 	<enclosing>Including</enclosing>
 	<enclosingCoordinate>Enclosing coordinates </enclosingCoordinate>
 	<enddate>Ending Date</enddate>
