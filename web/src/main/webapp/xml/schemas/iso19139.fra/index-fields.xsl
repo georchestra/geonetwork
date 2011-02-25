@@ -236,8 +236,6 @@
 				<Field  name="couplingType" string="{string(.)}" store="true" index="true" token="false"/>
 			</xsl:for-each>
 
-		</xsl:for-each>
-
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->		
 		<!-- === Distribution === -->		
 
