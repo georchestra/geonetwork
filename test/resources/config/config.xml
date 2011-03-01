@@ -145,7 +145,8 @@
 				<call name="services" class="jeeves.guiservices.services.Get" />
 				<call name="categories" class=".services.category.List" />
 				<call name="regions" class=".guiservices.regions.Get" />
-				<call name="sources" class=".guiservices.util.Sources" />
+                <call name="sources" class=".guiservices.util.Sources" />
+                <call name="searchSummary" class=".guiservices.util.Sources" />
 
 				<call name="latestUpdated" class=".guiservices.metadata.GetLatestUpdated">
 					<param name="maxItems" value="10" />

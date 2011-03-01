@@ -915,11 +915,8 @@
     <xsl:param name="fld"/>
     <xsl:param name="codeName"/>
     
-	<tr>
-		<th class="padded">
-			<xsl:value-of select="/root/gui/strings/*[name() = $fld]"/>
-		</th>
-		<td class="padded">
+    <div class="row">
+        <span class="labelField"><xsl:value-of select="/root/gui/strings/*[name() = $fld]"/></span>
 			<select class="content" name="{$fld}" id="{$fld}">
 				<option value="">
 					<xsl:if test="/root/gui/searchDefaults/*[name() = $fld] = ''">
@@ -928,7 +925,7 @@
 					<xsl:value-of select="/root/gui/strings/any"/>
 				</option>
 				
-				<xsl:for-each select="/root/gui/*[name() = $fld]/term">
+				<xsl:for-each select="/root/gui/indexTerms/*[name() = $fld]/term">
 					<xsl:sort select="text()" order="ascending"/>
 					
 					<option value="{text()}">
@@ -947,8 +944,7 @@
 					</option>
 				</xsl:for-each>
 			</select>
-		</td>
-	</tr>
-</xsl:template>	
+		</div>
+</xsl:template>
 
 </xsl:stylesheet>

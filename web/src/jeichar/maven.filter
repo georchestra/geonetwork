@@ -1,3 +1,4 @@
+transformFactory=net.sf.saxon.TransformerFactoryImpl
 debug=true
 dataDir=../../private/data/
 uploadDir=${dataDir}/tmp

@@ -243,6 +243,14 @@
 				<call name="categories" class=".services.category.List" />
 				<call name="regions" class=".guiservices.regions.Get" />
 				<call name="sources" class=".guiservices.util.Sources" />
+                <call name="indexTerms" class=".guiservices.search.GetSearchTerms">
+                    <param name="terms">
+                        <orgName/>
+                        <topicCat/>
+                    </param>
+                    <param name="orgName" value="100"/>
+                    <param name="topicCat" value="100"/>
+                </call>
 
 				<call name="latestUpdated" class=".guiservices.metadata.GetLatestUpdated">
 					<param name="maxItems" value="10" />

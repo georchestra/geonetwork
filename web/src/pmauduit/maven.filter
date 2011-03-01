@@ -1,3 +1,4 @@
+transformFactory=net.sf.saxon.TransformerFactoryImpl
 baseUrl=geonetwork
 host=localhost:43080
 
