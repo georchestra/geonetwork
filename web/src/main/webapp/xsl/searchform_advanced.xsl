@@ -3,9 +3,8 @@
 	xmlns:geonet="http://www.fao.org/geonetwork"
 	exclude-result-prefixes="xsl geonet">
 
-	<!--xsl:variable name="lang" select="/root/gui/language"/-->
 
-	<!--xsl:template match="/"-->
+
 	<xsl:template name="advanced_search_fields">
 	<form name="advsearch" id="advsearch" onsubmit="javascript:runAdvancedSearch();" action="">
 		<div style="border-bottom: 1px solid;">
@@ -236,13 +235,19 @@
 							</xsl:for-each>
 						</select>
 					</div>					
-				</xsl:if>				
+				</xsl:if>
+				<xsl:call-template name="indexFieldFilter">
+					<xsl:with-param name="fld" select="'orgName'" />
+				</xsl:call-template>
+				<xsl:call-template name="indexFieldFilter">
+					<xsl:with-param name="fld" select="'topicCat'" />
+					<xsl:with-param name="codeName" select="'gmd:MD_TopicCategoryCode'" />
+				</xsl:call-template>
 			</div>
 			
 		</div>
 	</form>					
 </xsl:template>
-
     <!-- ============================================================
         INSPIRE
     ======================================= ===================== -->
