@@ -2606,7 +2606,14 @@
 								</xsl:otherwise>
 							</xsl:choose>
 						</xsl:variable>
+						<!-- PMT c2c GeoOrchestra modification
+						the Ext modal box is messed up, and we
+						actually don't need it. skip it.
+
+						was :
 						<a href="{$linkage}" title="{$title}" onclick="runFileDownload(this.href, this.title); return false;"><xsl:value-of select="$title"/></a>
+						 -->
+						<a href="{$linkage}" title="{$title}" target="_blank"><xsl:value-of select="$title"/></a>
 					</xsl:with-param>
 				</xsl:apply-templates>
 			</xsl:when>
