@@ -237,7 +237,7 @@
 					</div>					
 				</xsl:if>
 				<xsl:call-template name="indexFieldFilter">
-					<xsl:with-param name="fld" select="'orgName'" />
+					<xsl:with-param name="fld" select="'_orgName'" />
 				</xsl:call-template>
 				<xsl:call-template name="indexFieldFilter">
 					<xsl:with-param name="fld" select="'topicCat'" />
