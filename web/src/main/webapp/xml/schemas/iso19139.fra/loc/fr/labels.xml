@@ -32,4 +32,150 @@
 		<label>Système de projection direct (pour les ressources géographiques)</label>
 		<description>Dérivé de ReferenceSystem / précise qu’il s’agit d’une référence indirecte</description>
 	</element>
+	<!--
+		PMT geobretagne : redmine issue #1805 : missing fields backported from
+		regular iso19139 schema
+	-->
+	<element name="gmd:language" id="3.0" context="gmd:MD_Metadata">
+		<label>Langue</label>
+		<description>Langue utilisée pour documenter les métadonnées</description>
+		<help>Langue utilisée pour la documentation des métadonnées. La
+			sélection s'opère dans la liste des langues ISO. Exemple : "fr" pour
+			le français, "de" pour l'allemand, "en" pour l'anglais, "it" pour
+			l'italien, "rm" pour le romanche, ...</help>
+		<condition>Obligatoire</condition>
+	</element>
+	<element name="gmd:language" id="39.0" context="gmd:MD_DataIdentification">
+		<label>Langue</label>
+		<description>Langue utilisée pour le jeu de données</description>
+		<help>Langue utilisée pour la documentation des données. La sélection
+			s'opère dans la liste des langues ISO. Exemple : "fr" pour le
+			français, "de" pour l'allemand, "en" pour l'anglais, "it" pour
+			l'italien, "rm" pour le romanche, ...</help>
+		<condition>Obligatoire</condition>
+	</element>
+	<element name="gmd:language" id="235.0"
+		context="gmd:MD_FeatureCatalogueDescription">
+		<label>Langue</label>
+		<description>Langues utilisées dans le catalogue</description>
+		<help>Langue utilisée dans le catalogue d'objets. La sélection
+			s'opère dans la liste des langues ISO. Exemple : "fr" pour le
+			français, "de" pour l'allemand, "en" pour l'anglais, "it" pour
+			l'italien, "rm" pour le romanche, ...</help>
+		<condition />
+	</element>
+	
+	<element name="gmd:date" id="144.0" context="gmd:MD_MaintenanceInformation">
+		<label>Date de la prochaine mise à jour</label>
+		<description>Date de la prochaine mise à jour de la ressource</description>
+		<help>Date de la prochaine mise à jour (jj.mm.aaaa).</help>
+		<condition />
+	</element>
+	<element name="gmd:date" id="362.0" context="gmd:CI_Citation">
+		<label>Date</label>
+		<description>Date de référence pour la ressource en question</description>
+		<help>Date de référence indiquée sous forme de date (jj.mm.aaaa) et de
+			type de date (création, publication, traitement). Ces informations
+			sont du type CI_Date et sont gérées dans la classe du même nom.</help>
+		<condition />
+	</element>
+	<element name="gmd:date" id="394.0" context="gmd:CI_Date">
+		<label>Date</label>
+		<description>Date de référence pour la ressource en question</description>
+		<help>Date de référence (jj.mm.aaaa)</help>
+		<condition />
+	</element>
+	
+	<element name="gmd:characterSet" id="4.0" context="gmd:MD_Metadata">
+		<label>Jeu de caractère</label>
+		<description>Nom complet du standard de code de caractères utilisé
+			pour le jeu de métadonnées</description>
+		<help>Nom complet du code de caractères normalisé utilisé pour le
+			fichier de métadonnées. Le paramètre par défaut est "utf8". Les
+			fichiers de texte contiennent normalement des valeurs d'octets
+			représentant un sous-ensemble de valeurs de caractères via un codage
+			(8859_1, ISO Latin-1), un format de transfert
+			(Unicode-Transfer-Format UTF8) ou tout autre moyen.</help>
+		<condition>Par défaut UTF-8</condition>
+	</element>
+	<element name="gmd:characterSet" id="40.0" context="gmd:MD_DataIdentification">
+		<label>Jeu de caractère</label>
+		<description>Nom entier du standard de code de caractères utilisé pour
+			le jeu de données</description>
+		<help>Nom complet du code de caractères normalisé utilisé pour le
+			fichier de métadonnées. Le paramètre par défaut est "utf8". Les
+			fichiers de texte contiennent normalement des valeurs d'octets
+			représentant un sous-ensemble de valeurs de caractères via un codage
+			(8859_1, ISO Latin-1), un format de transfert
+			(Unicode-Transfer-Format UTF8) ou tout autre moyen.</help>
+		<condition>Par défaut UTF-8</condition>
+	</element>
+	<element name="gmd:characterSet" id="4.0">
+		<label>Jeu de caractère</label>
+		<description>Nom complet du standard de code de caractères utilisé
+			pour le jeu de métadonnées</description>
+		<help>Nom complet du code de caractères normalisé utilisé pour le
+			fichier de métadonnées. Le paramètre par défaut est "utf8". Les
+			fichiers de texte contiennent normalement des valeurs d'octets
+			représentant un sous-ensemble de valeurs de caractères via un codage
+			(8859_1, ISO Latin-1), un format de transfert
+			(Unicode-Transfer-Format UTF8) ou tout autre moyen.</help>
+		<condition>Par défaut UTF-8</condition>
+	</element>
+	
+	<element name="gmd:description" id="87.0" context="LI_ProcessStep">
+		<label>Description de l'événement</label>
+		<description>Description de l'événement, incluant les paramètres ou
+			tolérances y relatifs</description>
+		<help>Description du processus (étape de traitement) pouvant inclure
+			la description de paramètres ou de tolérances.</help>
+		<condition>Obligatoire</condition>
+	</element>
+	<element name="gmd:description" id="93.0" context="LI_Source">
+		<label>Description</label>
+		<description>Description détaillée de l'état des données sources</description>
+		<help>Description des données source.</help>
+	</element>
+	<element name="gmd:description" id="335.0" context="gmd:EX_Extent">
+		<label>Description</label>
+		<description>Etendue spatiale et temporelle pour l'objet en question</description>
+		<help>Description sous forme textuelle de l'extension spatiale et
+			temporelle de l'objet considéré.</help>
+		<condition />
+	</element>
+	<element name="gmd:description" id="401.0" context="gmd:CI_OnlineResource">
+		<label>Description</label>
+		<description>Texte descriptif détaillé sur ce que la ressource en
+			ligne est/fait</description>
+		<help>Description détaillée de ce que propose la source en ligne.</help>
+		<condition />
+	</element>
+
+	<element name="gmd:extent" id="45.0" context="gmd:MD_DataIdentification">
+		<label>Etendue</label>
+		<description>Information complémentaire sur les étendues spatiales et
+			temporelles du jeu de données, incluant le polygone de délimitation
+			et les dimensions verticales et temporelles</description>
+		<help>Informations supplémentaires concernant l'extension spatiale et
+			temporelle des données, incluant le polygone de délimitation, les
+			altitudes et la durée de validité. Ces informations sont du type
+			EX_Extent et sont gérées dans la classe du même nom.</help>
+		<condition>Condition</condition>
+	</element>
+
+	<element name="gmd:version" id="208.2" context="gmd:RS_Identifier">
+		<label>Version</label>
+		<description>Identification de la version pour la domaine de valeurs</description>
+		<help>Numéro de version de l'espace nominal / de l'identifiant
+			(alphanumérique).</help>
+		<condition />
+	</element>
+	<element name="gmd:version" id="286.0">
+		<label>Version</label>
+		<description>Version du format (date,nombre,etc)</description>
+		<help>Version du format de données, par exemple 6.0.</help>
+		<condition>Obligatoire</condition>
+	</element>
+
+
 </labels>
