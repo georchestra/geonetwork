@@ -281,7 +281,7 @@ function runAdvancedSearch(type)
 	pars += fetchParam('siteId');
 
 	pars += fetchParam('topicCat');
-	pars += fetchParam('orgName');
+	pars += fetchParam('_orgName');
 
 	pars += fetchBoolParam('digital');
 	pars += fetchBoolParam('paper');
@@ -364,7 +364,8 @@ function resetAdvancedSearch()
     setParam('output',      'full');
     setParam('output_simple',      'full');
 
-
+    setParam('_orgName',      '');
+    setParam('topicCat',      '');
     // reset INSPIRE options
     resetInspireOptions();
     // End reset INSPIRE options    

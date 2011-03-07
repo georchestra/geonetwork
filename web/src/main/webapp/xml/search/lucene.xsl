@@ -284,8 +284,8 @@ compiles a request
         
         <!-- orgName -->
         <xsl:call-template name="textField">
-            <xsl:with-param name="expr" select="/request/orgName"/>
-            <xsl:with-param name="field" select="'orgName'"/>
+            <xsl:with-param name="expr" select="/request/_orgName"/>
+            <xsl:with-param name="field" select="'_orgName'"/>
         </xsl:call-template>
 
     

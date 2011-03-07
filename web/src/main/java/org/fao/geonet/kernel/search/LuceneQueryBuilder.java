@@ -723,6 +723,20 @@ public class LuceneQueryBuilder {
 			query.add(sourceQuery);
 		}
 
+		// PMT c2c GeoOrchestra
+		// Seriously, I imagined something a bit more flexible than that ... Need to hack around 3+ java classes
+		// in order to add a search constraint on the lucene indexes ...
+		BooleanClause orgNameQuery = requiredTextField(luceneQueryInput.getOrgName(), "_orgName", similarity);
+		if(orgNameQuery != null) {
+		    query.add(orgNameQuery);
+		}
+		BooleanClause topicCatQuery = requiredTextField(luceneQueryInput.getTopicCat(), "topicCat", similarity);
+		if(topicCatQuery != null) {
+		    query.add(topicCatQuery);
+		}
+
+
+
         //
         // themekey
         //

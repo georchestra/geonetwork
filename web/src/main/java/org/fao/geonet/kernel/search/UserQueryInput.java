@@ -81,6 +81,8 @@ public class UserQueryInput {
     private String northBL;
     private String southBL;
     private String relation;
+    private String orgName;
+    private String topicCat;
     private String editable;
     
     /**
@@ -99,12 +101,17 @@ public class UserQueryInput {
 
         @SuppressWarnings("unchecked")
         List<Element> isoTopicCategoriesE = (List<Element>)jdom.getChildren(SearchParameter.TOPICCATEGORY);
+
         Set<String> isoTopicCategories = new HashSet<String>();
         for(Element isoTopicCategoryE : isoTopicCategoriesE) {
             isoTopicCategories.add(isoTopicCategoryE.getText());
         }
         setTopicCategories(isoTopicCategories);
-
+        
+        setTopicCat(jdom.getChildText("topicCat"));
+        
+        setOrgName(jdom.getChildText("_orgName"));
+        
         setDownload(jdom.getChildText(SearchParameter.DOWNLOAD));
         setDynamic(jdom.getChildText(SearchParameter.DYNAMIC));
         setProtocol(jdom.getChildText(SearchParameter.PROTOCOL));
@@ -169,6 +176,8 @@ public class UserQueryInput {
         
     }
 
+
+    
     /**
      *
      * @return a string representation of the object.
@@ -216,7 +225,7 @@ public class UserQueryInput {
                 .append(" extTo: ").append(extTo)
                 .append(" extFrom: ").append(extFrom)
                 .append(" metadataStandardName: ").append(metadataStandardName)
-                .append("_schema: ").append(_schema)
+                .append(" _schema: ").append(_schema)
                 .append(" parentUuid: ").append(parentUuid)
                 .append(" operatesOn: ").append(operatesOn)
                 .append(" serviceType: ").append(serviceType)
@@ -234,7 +243,9 @@ public class UserQueryInput {
                 .append(" westBL: ").append(westBL)
                 .append(" northBL: ").append(northBL)
                 .append(" southBL: ").append(southBL)
-                .append("relation: ").append(relation).toString();
+                .append(" _orgName: ").append(orgName)
+                .append(" topicCat: ").append(topicCat)
+                .append(" relation: ").append(relation).toString();
     }    
 
     public String getAll() {
@@ -312,6 +323,13 @@ public class UserQueryInput {
         this.download = download;
     }
 
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
+    }
+    public String getOrgName() {
+        return this.orgName ;
+    }
+    
     public String getDynamic() {
         return dynamic;
     }
@@ -607,5 +625,12 @@ public class UserQueryInput {
 
     public void setEditable(String editable) {
         this.editable = editable;
+    }
+    
+    private void setTopicCat(String topicCat) {
+        this.topicCat = topicCat ;
+    }
+    public String getTopicCat() {
+        return this.topicCat ;
     }
 }
