@@ -59,8 +59,7 @@
  -->
   <mapSearch options="{projection: 'EPSG:4326', maxExtent: new OpenLayers.Bounds(-5.4, 46.8, -0.5, 49.7), units: 'm', restrictedExtent: new OpenLayers.Bounds(-5.4, 46.8, -0.5, 49.7)}">
   <layers>
-    <layer server="http://${host}/geoserver/wms" tocName="EPCI Region"  params="{layers: 'geob_loc:EPCI_region', transparent: 'true', format: 'image/png', styles:'line'}"  options="{}" />
-    <layer server="http://${host}/geoserver/wms" tocName="Tuiles" params="{layers: 'geob:SC1000_0050_7130_L93', format: 'image/jpeg'}" options="{isBaseLayer: true}" />
+		${config-gui.xml.mapSearchLayers}
   </layers>
  <proj>
    <crs code="EPSG:4326" default="1"/>
@@ -83,8 +82,7 @@
  -->
   <mapViewer options="{projection: 'EPSG:4326', maxExtent: new OpenLayers.Bounds(-5.4, 46.8, -0.5, 49.7), units: 'm', restrictedExtent: new OpenLayers.Bounds(-5.4, 46.8, -0.5, 49.7)}">
   <layers>
-      <layer server="http://${host}/geoserver/wms" tocName="EPCI Region"  params="{layers: 'geob_loc:EPCI_region', transparent: 'true', format: 'image/png', styles:'line'}"  options="{}" />
-      <layer server="http://${host}/geoserver/wms" tocName="Tuiles" params="{layers: 'geob:SC1000_0050_7130_L93', format: 'image/jpeg'}" options="{isBaseLayer: true}" />
+      ${config-gui.xml.mapViewerLayers}
   </layers>
   <!--<scales values="[7500000, 5000000, 2500000,  1000000, 750000, 500000, 250000, 100000, 75000, 50000, 25000, 10000, 7500, 5000, 2500, 1000]" />-->
   <!--scales values="[]" /-->

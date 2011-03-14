@@ -32,3 +32,9 @@ config.xml.typenames=<typename name="EPCI" typename="geob_loc:EPCI_region" nameA
 		<typename name="Commune" typename="geob_loc:COMMUNE" nameAtt="NOM_COMM" /> \
 		<typename name="Département" typename="geob_loc:DEPARTEMENT" nameAtt="NOM_DEPT" /> \
 		<typename name="Pays" typename="geob_loc:PAYS_region" nameAtt="NOM" />
+
+
+config-gui.xml.mapSearchLayers=<layer server="http://${host}/geoserver/wms" tocName="EPCI Region"  params="{layers: 'geob_loc:EPCI_region', transparent: 'true', format: 'image/png', styles:'line'}"  options="{}" /> \
+    <layer server="http://${host}/geoserver/wms" tocName="Tuiles" params="{layers: 'geob:SC1000_0050_7130_L93', format: 'image/jpeg'}" options="{isBaseLayer: true}" />
+
+config-gui.xml.mapViewerLayers=${config-gui.xml.mapSearchLayers}
