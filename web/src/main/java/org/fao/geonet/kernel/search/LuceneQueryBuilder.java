@@ -178,42 +178,55 @@ public class LuceneQueryBuilder {
 	 * Creates a query for all tokens in the search param. 'Required' does not mean that this is
 	 * a required search parameter; rather it means that if this parameter is present, the query
 	 * must select only results where each of the tokens in the search param is present.
-     *
-     * @param searchParam search parameter
-     * @param luceneIndexField index field
-     * @param similarity fuzziness
-     * @return boolean clause
-     */
-	private BooleanClause requiredTextField(String searchParam, String luceneIndexField, String similarity) {
-		BooleanClause booleanClause  = null;
-		BooleanClause.Occur occur = LuceneUtils.convertRequiredAndProhibitedToOccur(true, false);
-		if(searchParam != null) {
-			searchParam = searchParam.trim();
-			if(searchParam.length() > 0) {
-				// tokenize searchParam
-			    StringTokenizer st = new StringTokenizer(searchParam);
-			    if(st.countTokens() == 1) {
-			        String token = st.nextToken();
-			        Query subQuery = textFieldToken(token, luceneIndexField, similarity);
-                    if(subQuery != null) {
-				    booleanClause = new BooleanClause(subQuery, occur);
-			    }
-			    }
-			    else {
-					BooleanQuery booleanQuery = new BooleanQuery();
-				    while (st.hasMoreTokens()) {
-				        String token = st.nextToken();
-				        Query subQuery = textFieldToken(token, luceneIndexField, similarity);
-						if(subQuery != null) {
-						BooleanClause subClause = new BooleanClause(subQuery, occur);
-						booleanQuery.add(subClause);
-				    }
-				    }
-				    booleanClause = new BooleanClause(booleanQuery, occur);
-			    }
-			}
-		}
-		return booleanClause;
+	 *
+	 * @param searchParam search parameter
+	 * @param luceneIndexField index field
+	 * @param similarity fuzziness
+	 * @return boolean clause
+	 */
+	private BooleanClause requiredTextField(String searchParam, String luceneIndexField, String similarity)
+	{
+	    return requiredTextField(searchParam, luceneIndexField, similarity, true);
+	}
+
+	private BooleanClause requiredTextField(String searchParam, String luceneIndexField, String similarity, boolean isTokenized) {
+	    BooleanClause booleanClause  = null;
+	    BooleanClause.Occur occur = LuceneUtils.convertRequiredAndProhibitedToOccur(true, false);
+	    if(searchParam != null) {
+	        searchParam = searchParam.trim();
+	        if(searchParam.length() > 0  && isTokenized) {
+	            // tokenize searchParam
+	            StringTokenizer st = new StringTokenizer(searchParam);
+	            if(st.countTokens() == 1) {
+	                String token = st.nextToken();
+	                Query subQuery = textFieldToken(token, luceneIndexField, similarity);
+	                if(subQuery != null) {
+	                    booleanClause = new BooleanClause(subQuery, occur);
+	                }
+	            }
+	            else {
+	                BooleanQuery booleanQuery = new BooleanQuery();
+	                while (st.hasMoreTokens()) {
+	                    String token = st.nextToken();
+	                    Query subQuery = textFieldToken(token, luceneIndexField, similarity);
+	                    if(subQuery != null) {
+	                        BooleanClause subClause = new BooleanClause(subQuery, occur);
+	                        booleanQuery.add(subClause);
+	                    }
+	                }
+	                booleanClause = new BooleanClause(booleanQuery, occur);
+	            }
+	        }
+	        // not tokenized field
+	        else if (searchParam.length() > 0)
+	        {
+	            Query subQuery = textFieldToken(searchParam, luceneIndexField, similarity);
+	            if(subQuery != null) {
+	                booleanClause = new BooleanClause(subQuery, occur);
+	            }
+	        }
+	    }
+	    return booleanClause;
 	}
 
 	public Query build(LuceneQueryInput luceneQueryInput) {
@@ -724,9 +737,8 @@ public class LuceneQueryBuilder {
 		}
 
 		// PMT c2c GeoOrchestra
-		// Seriously, I imagined something a bit more flexible than that ... Need to hack around 3+ java classes
-		// in order to add a search constraint on the lucene indexes ...
-		BooleanClause orgNameQuery = requiredTextField(luceneQueryInput.getOrgName(), "_orgName", similarity);
+
+		BooleanClause orgNameQuery = requiredTextField(luceneQueryInput.getOrgName(), "_orgName", similarity, false);
 		if(orgNameQuery != null) {
 		    query.add(orgNameQuery);
 		}

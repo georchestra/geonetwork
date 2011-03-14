@@ -274,13 +274,13 @@
 			<!--  parent not null, and current node not a gco:*** garbage
 					We select then the parent translated value
 			 -->
-			<xsl:when test="$parent != '' and contains($name, 'gco:')">
+			<xsl:when test="$parent != ''">
 				<xsl:value-of
 					select="/root/gui/*[name(.)=$schema][1]/element[@name=$parent][1]/label[1] |
 					        /root/gui/iso19139/element[@name=$parent][1]/label[1] |
                             /root/gui/iso19139.fra/element[@name=$parent][1]/label[1]" />
 			</xsl:when>
-			<!-- Fallback on the node title (without prefix) -->
+			<!-- Fallback on the node title -->
 			<xsl:otherwise>
 				<xsl:value-of select="$name" />
 			</xsl:otherwise>
