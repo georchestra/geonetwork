@@ -23,3 +23,8 @@ LdapBindPassword=gerlsSnFd6SmM
 
 priveleged_admin_name=extractorapp_priveleged_admin
 priveleged_admin_pass=gerlsSnFd6SmM
+
+config.xml.typenames=<typename name="EPCI" typename="geob_loc:EPCI_region" nameAtt="EPCI" /> \
+		<typename name="Commune" typename="geob_loc:COMMUNE" nameAtt="NOM_COMM" /> \
+		<typename name="Département" typename="geob_loc:DEPARTEMENT" nameAtt="NOM_DEPT" /> \
+		<typename name="Pays" typename="geob_loc:PAYS_region" nameAtt="NOM" />

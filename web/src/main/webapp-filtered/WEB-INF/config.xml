@@ -391,10 +391,7 @@
                     <param name="user" value="${priveleged_admin_name}" />
                     <param name="pass" value="${priveleged_admin_pass}" />
 		    <param name="typenames">
-		      <typename name="EPCI" typename="geob_loc:EPCI_region" nameAtt="EPCI" />
-		      <typename name="Commune" typename="geob_loc:COMMUNE" nameAtt="NOM_COMM" />
-		      <typename name="Département" typename="geob_loc:DEPARTEMENT" nameAtt="NOM_DEPT" />
-		      <typename name="Pays" typename="geob_loc:PAYS_region" nameAtt="NOM" />
+			${config.xml.typenames}
 		    </param>
                   </class>
 		</service>
