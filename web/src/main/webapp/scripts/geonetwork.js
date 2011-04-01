@@ -518,6 +518,7 @@ function redirectToExternalApp(destUrl)
 				var form = Ext.DomHelper.append(Ext.getBody(), {
 					tag: 'form',
 					action: destUrl,
+					target: "_blank",
 					method: 'post'
 				});
 
