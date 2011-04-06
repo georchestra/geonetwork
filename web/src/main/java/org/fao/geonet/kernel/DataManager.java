@@ -1697,22 +1697,27 @@ public class DataManager
         if (isoThemesInject != null)
         {
           // /gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:language
+          Namespace gmdNs = Namespace.getNamespace("gmd", "http://www.isotc211.org/2005/gmd");
           XPath xpath = XPath.newInstance("gmd:identificationInfo/gmd:MD_DataIdentification");  
-            Element pos = (Element) xpath.selectSingleNode(md);
+          xpath.addNamespace(gmdNs);
+           Element pos = (Element) xpath.selectSingleNode(md);
             
             // we have to figure out where into the MD to add our XML fragments
             int postoinsert = 1;
             
             // test if there is already some ISO themes 
             XPath testIfIso = XPath.newInstance("gmd:topicCategory");
+            testIfIso.addNamespace(gmdNs);
             Element curIso = (Element) testIfIso.selectSingleNode(pos);
             
             // test if there is a gmd:characterSet
             XPath charsetPath = XPath.newInstance("gmd:characterSet");
+            charsetPath.addNamespace(gmdNs);
             List<Element> curCharset = charsetPath.selectNodes(pos);
             
             // test if there is a gmd:language
             XPath languagePath = XPath.newInstance("gmd:language");
+            languagePath.addNamespace(gmdNs);
             List<Element> curLang = languagePath.selectNodes(pos);
             
             

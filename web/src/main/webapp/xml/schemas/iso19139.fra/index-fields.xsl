@@ -114,21 +114,37 @@
 				</xsl:for-each>
 			</xsl:for-each>
 
-			<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->		
+
+			</xsl:for-each>
+			<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+				
+			<!--  PMT C2C GeoBretagne
+				There seems to be a bug with saxon XML parser, instead of doing a logical 'or' using pipes
+				it concatenates the different fields (same problem as the one we faced with xsl:fop
+				export).
+				Doing the same as what is currently done on iso19139/index-fields.xsl stylesheet
+			 -->
 
             <xsl:variable name="lower">oaoeecaaabcdefghijklmnopqrstuvwxyz</xsl:variable>
             <xsl:variable name="upper">ÔÂôéèçàâABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable>
-			<xsl:for-each select="*/gmd:MD_Keywords">
+
+            <xsl:for-each select="gmd:identificationInfo/fra:FRA_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords">
+				<xsl:for-each select="gmd:keyword/gmd:PT_FreeText/gmd:textGroup/gmd:LocalisedCharacterString">
                     <xsl:variable name="keywordLower" select="normalize-space(translate(string(.),$upper,$lower))"/>
                     <Field name="keyword" string="{$keywordLower}" store="true" index="true" token="false"/>
-					<Field name="subject" string="{keywordLower}" store="true" index="true" token="false"/>
-				</xsl:for-each>
+					<Field name="subject" string="{$keywordLower}" store="true" index="true" token="false"/>
+                </xsl:for-each>
+
+				<xsl:for-each select="gmd:keyword/gco:CharacterString">
+                    <xsl:variable name="keywordLower" select="normalize-space(translate(string(.),$upper,$lower))"/>
+                    <Field name="keyword" string="{$keywordLower}" store="true" index="true" token="false"/>
+					<Field name="subject" string="{$keywordLower}" store="true" index="true" token="false"/>
+                </xsl:for-each>
 
 				<xsl:for-each select="gmd:type/gmd:MD_KeywordTypeCode/@codeListValue">
 					<Field name="keywordType" string="{string(.)}" store="true" index="true" token="true"/>
 				</xsl:for-each>
-			</xsl:for-each>
-	
+			</xsl:for-each>	
 			<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->		
 	
 			<xsl:for-each select="gmd:pointOfContact/gmd:CI_ResponsibleParty">
@@ -152,11 +168,17 @@
 
 			<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->		
 			
-			<xsl:for-each select="gmd:topicCategory/gmd:MD_TopicCategoryCode|
-				gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/gco:CharacterString">
+			<!--  PMT C2C GeoBretagne : Same problem with Saxon 
+				  which does not seem to handle "|" correctly. Doing 2 loops instead
+			-->
+			<xsl:for-each select="gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/gco:CharacterString">
 				<Field name="subject" string="{string(.)}" store="true" index="true" token="false"/>
 			</xsl:for-each>
-			
+
+			<xsl:for-each
+				select="gmd:topicCategory/gmd:MD_TopicCategoryCode">
+				<Field name="subject" string="{string(.)}" store="true" index="true" token="false" />
+			</xsl:for-each>
 			<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 	
 			<xsl:for-each select="gmd:topicCategory/gmd:MD_TopicCategoryCode">
@@ -459,4 +481,5 @@
     </xsl:template>
 
 
+	
 </xsl:stylesheet>

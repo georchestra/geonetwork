@@ -4,7 +4,7 @@ host=localhost:43080
 
 psql.host=localhost
 psql.port=5432
-psql.db=import_geonetwork
+psql.db=geoorchestra
 
 psql.user=geonetwork
 psql.pass=geonetwork

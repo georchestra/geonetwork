@@ -146,11 +146,33 @@
 
             <xsl:variable name="lower">oaoeecaaabcdefghijklmnopqrstuvwxyz</xsl:variable>
             <xsl:variable name="upper">ÔÂôéèçàâABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable>
-			<xsl:for-each select="//gmd:MD_Keywords">
-				<xsl:for-each select="gmd:keyword/gco:CharacterString|gmd:keyword/gmd:PT_FreeText/gmd:textGroup/gmd:LocalisedCharacterString">
+			<xsl:for-each select="*/gmd:MD_Keywords">
+				<xsl:for-each select="gmd:keyword/gmd:PT_FreeText/gmd:textGroup/gmd:LocalisedCharacterString">
                     <xsl:variable name="keywordLower" select="normalize-space(translate(string(.),$upper,$lower))"/>
                     <Field name="keyword" string="{$keywordLower}" store="true" index="true" token="false"/>
-					<Field name="subject" string="{keywordLower}" store="true" index="true" token="false"/>
+					<Field name="subject" string="{$keywordLower}" store="true" index="true" token="false"/>
+
+                    <xsl:if test="$inspire='true'">
+                        <xsl:if test="string-length(.) &gt; 0">
+							<xsl:variable name="inspire-thesaurus" select="document('../../codelist/external/thesauri/theme/inspire-theme.rdf')"/>
+							<xsl:variable name="inspire-theme" select="$inspire-thesaurus//skos:Concept"/>
+                            <xsl:variable name="inspireannex">
+								<xsl:call-template name="determineInspireAnnex">
+									<xsl:with-param name="keyword" select="string(.)"/>
+									<xsl:with-param name="inspireThemes" select="$inspire-theme"/>
+								</xsl:call-template>
+                            </xsl:variable>
+                                <Field name="inspiretheme" string="{string(.)}" store="true" index="true" token="false"/>
+							<Field name="inspireannex" string="{$inspireannex}" store="true" index="true" token="false"/>
+                                <Field name="inspirecat" string="true" store="true" index="true" token="false"/>
+                            </xsl:if>
+                        </xsl:if>
+                </xsl:for-each>
+
+				<xsl:for-each select="gmd:keyword/gco:CharacterString">
+                    <xsl:variable name="keywordLower" select="normalize-space(translate(string(.),$upper,$lower))"/>
+                    <Field name="keyword" string="{$keywordLower}" store="true" index="true" token="false"/>
+					<Field name="subject" string="{$keywordLower}" store="true" index="true" token="false"/>
 
                     <xsl:if test="$inspire='true'">
                         <xsl:if test="string-length(.) &gt; 0">
@@ -194,10 +216,14 @@
 
 			<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->		
 			
-			<xsl:for-each select="gmd:topicCategory/gmd:MD_TopicCategoryCode|
-								gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/gco:CharacterString">
+			<xsl:for-each select="gmd:topicCategory/gmd:MD_TopicCategoryCode">
 				<Field name="subject" string="{string(.)}" store="true" index="true" token="false"/>
 			</xsl:for-each>
+			
+			<xsl:for-each select="gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/gco:CharacterString">
+				<Field name="subject" string="{string(.)}" store="true" index="true" token="false"/>
+			</xsl:for-each>
+			
 			
 			<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 	
