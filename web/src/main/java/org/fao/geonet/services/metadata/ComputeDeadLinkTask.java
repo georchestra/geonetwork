@@ -25,6 +25,7 @@ import jeeves.utils.Xml;
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.kernel.DataManager;
+import org.fao.geonet.kernel.XmlSerializer;
 import org.jdom.Element;
 import org.jdom.xpath.XPath;
 
@@ -75,7 +76,7 @@ public class ComputeDeadLinkTask extends TimerTask {
 				Element rec = (Element)iter.next();
 				String  id = rec.getChildText("id");
 
-				Element curMd = gc.getDataManager().getMetadata(context, id, false);
+				Element curMd = XmlSerializer.selectNoXLinkResolver(dbms, "Metadata", id);
 				
 				// check parent / child validity
 				try
