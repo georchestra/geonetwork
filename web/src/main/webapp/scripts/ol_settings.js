@@ -1,6 +1,6 @@
 Ext.BLANK_IMAGE_URL = Env.url + '/scripts/ext/resources/images/default/s.gif';
 OpenLayers.DOTS_PER_INCH = 90.71;
-OpenLayers.ProxyHost = Env.url + '/proxy?url=';
+OpenLayers.ProxyHost = Env.proxy + '/proxy?url=';
 OpenLayers.ImgPath = Env.url + '/scripts/openlayers/img/'
 OpenLayers.IMAGE_RELOAD_ATTEMPTS = 3;
 
