@@ -908,7 +908,7 @@ function setParam(p, val)
   var keyordsSelected = false;
 
   function addQuote (li){
-  $("themekey").value = '"'+li.innerHTML+'"';
+  $("themekey").value = '"'+li.innerHTML.toLowerCase() +'"';
   }
 
   /**
