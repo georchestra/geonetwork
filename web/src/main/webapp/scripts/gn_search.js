@@ -848,6 +848,12 @@ function fetchParam(p)
     return "";
   else {
   	var t = pL.value;
+  	// PMT C2C GeoBretagne
+  	// if themekey then we need to have it lowercased
+  	if (p == "themekey")
+  	{
+  		t = t.toLowerCase();
+  	}
   	if(t)
   		return "&"+p+"="+encodeURIComponent(t);
   	else
@@ -908,7 +914,7 @@ function setParam(p, val)
   var keyordsSelected = false;
 
   function addQuote (li){
-  $("themekey").value = '"'+li.innerHTML.toLowerCase() +'"';
+  $("themekey").value = '"'+li.innerHTML +'"';
   }
 
   /**
