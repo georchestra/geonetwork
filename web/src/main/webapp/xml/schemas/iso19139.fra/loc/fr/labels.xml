@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<labels xmlns:fra="http://www.cnig.gouv.fr/2005/fra">
+<labels xmlns:fra="http://www.cnig.gouv.fr/2005/fra" 
+		xmlns:gmd="http://www.isotc211.org/2005/gmd"
+        xmlns:gts="http://www.isotc211.org/2005/gts"
+        xmlns:gco="http://www.isotc211.org/2005/gco"
+        xmlns:gml="http://www.opengis.net/gml"
+        xmlns:srv="http://www.isotc211.org/2005/srv"
+        xmlns:gmx="http://www.isotc211.org/2005/gmx">
 	<element name="fra:FRA_DataIdentification">
 		<label>Identification</label>
 		<description>description</description>
