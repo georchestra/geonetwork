@@ -916,7 +916,15 @@
     <xsl:param name="codeName"/>
     
     <div class="row">
+    
+    <xsl:choose>
+    <xsl:when test="starts-with($fld, '_')">
+        <span class="labelField"><xsl:value-of select="/root/gui/strings/*[name() = substring($fld, 2)]"/></span>
+	</xsl:when>
+    <xsl:otherwise>
         <span class="labelField"><xsl:value-of select="/root/gui/strings/*[name() = $fld]"/></span>
+</xsl:otherwise>
+	</xsl:choose>
 			<select class="content" name="{$fld}" id="{$fld}">
 				<option value="">
 					<xsl:if test="/root/gui/searchDefaults/*[name() = $fld] = ''">
