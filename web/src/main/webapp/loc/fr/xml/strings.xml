@@ -1060,8 +1060,8 @@
     <searchExactPhrase>Cette expression exacte</searchExactPhrase>
     <searchAllWords>Tous les mots suivants</searchAllWords>
     <searchWithoutWords>Aucun des mots suivants</searchWithoutWords>
-	<orgName>Organization</orgName>
-	<topicCat>Topic Category</topicCat>
+	<orgName>Organisation</orgName>
+	<topicCat>Thème</topicCat>
     
     <geopublisher>GeoPublisher</geopublisher>
     <geoPublisherWindowTitle js="true">Géo-publication pour le fichier:</geoPublisherWindowTitle>
