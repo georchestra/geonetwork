@@ -496,7 +496,9 @@ var extentMap = {
 
             // Always reproject to WGS84
  			if (extentMap.mainProj != extentMap.wgsProj) {
-            	boundsProjected.transform(extentMap.mainProj, wgsProj);
+                // PMT C2C GeoOrchestra : was wgsProj,
+                // should probably be extentMap.wgsProj
+                boundsProjected.transform(extentMap.mainProj, extentMap.wgsProj);
             }	
             
     	} else {
