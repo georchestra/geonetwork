@@ -2738,7 +2738,7 @@
 					<xsl:variable name="value" select="string(.)"/>
 					<td width="70%"><xsl:value-of select="$value"/></td>
 					<td  class="padded-content">
-						<button class="content" type="button" onclick="javascript:doFileRemoveAction('{/root/gui/locService}/resources.del','{$ref}','{$access}',{$id})"><xsl:value-of select="/root/gui/strings/remove"/></button>
+						<button class="content" type="button" onclick="javascript:doFileRemoveAction('{/root/gui/locService}/resources.del','{$ref}','{$access}','{$id}')"><xsl:value-of select="/root/gui/strings/remove"/></button>
 						<xsl:text> </xsl:text>
 						<a class="content repository" onclick="javascript:showGeoPublisherPanel('{/root/*/geonet:info/id}', '{$value}', '{$access}', 'gmd:onLine', '{../../../../geonet:element/@ref}');" alt="{/root/gui/strings/publishHelp}" title="{/root/gui/strings/geopublisherHelp}"><xsl:value-of select="/root/gui/strings/geopublisher"/></a>
 					</td>
