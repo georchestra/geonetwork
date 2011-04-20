@@ -417,6 +417,8 @@
 		<allow service="user.register.get"/>
 		<allow service="user.register.submit"/>
 		<allow service="xml.region.list"/>
+		
+		<allow service="jpegphoto.get"/>
 	</profile>
 
 	<!-- ====================================================================== -->

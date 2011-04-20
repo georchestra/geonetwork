@@ -669,7 +669,7 @@
       		<class name=".services.group.LdapSync">
           		<param name="LDAPhost" value="${LdapHost}" />
 		        <param name="LDAPport" value="${LdapPort}" />
-         		<param name="LDAPbase" value="ou=groups,dc=geobretagne,dc=fr" />
+         		<param name="LDAPbase" value="${groupSyncLdapBase}" />
           		<param name="LDAPattributes" value="cn,gidNumber,description" />
           		<param name="LDAPbindDn" value="${LdapBindDn}" />
           		<param name="LDAPbindPassword" value="${LdapBindPassword}" />
@@ -680,6 +680,15 @@
  			<output forward="group.list" />
 		</service>
 
+		<service name="jpegphoto.get">
+			<class name=".services.user.JpegPhoto">
+          		<param name="LDAPhost" value="${LdapHost}" />
+		        <param name="LDAPport" value="${LdapPort}" />
+         		<param name="LDAPbase" value="${jpegPhotoLdapBase}" />
+          		<param name="LDAPbindDn" value="${LdapBindDn}" />
+          		<param name="LDAPbindPassword" value="${LdapBindPassword}" />
+			</class>
+		</service>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<!-- Category services                                             -->
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -1302,6 +1311,8 @@
 			<class name=".services.crs.GetCRS" />
 			<output sheet="crs.xsl" contentType="text/xml; charset=UTF-8" />
 		</service>
+
+
 	</services>
 
 	<!-- ====================================================================== -->
