@@ -37,7 +37,8 @@ public class JpegPhoto implements Service {
 
     public Element exec(Element params, ServiceContext context) throws Exception {
 
-        Element response = new Element("jpegUrl").setText("/geonetwork/images/jpegphoto-na.jpg");
+        Element response = new Element("img").setAttribute("src", "/geonetwork/images/jpegphoto-na.jpg");
+        response.setAttribute("alt", "jpegPhoto image");
         String uidParam =  params.getChildText("uid");
         
         String filePath = context.getAppPath() + "/images/jpegphoto-" + uidParam + ".jpg";
@@ -45,7 +46,7 @@ public class JpegPhoto implements Service {
         File fJpegPhoto = new File(filePath);
         
         if (fJpegPhoto.exists()) {
-            response.setText("/geonetwork/images/jpegphoto-" + uidParam + ".jpg");
+            response.setAttribute("src", "/geonetwork/images/jpegphoto-" + uidParam + ".jpg");
             return response;   
         }
         
@@ -90,7 +91,7 @@ public class JpegPhoto implements Service {
                                 FileOutputStream fos = new FileOutputStream(filePath);
                                 fos.write(curVal);
                                 fos.close();
-                                response.setText("/geonetwork/images/jpegphoto-" + uidParam + ".jpg");
+                                response.setAttribute("src","/geonetwork/images/jpegphoto-" + uidParam + ".jpg");
                                 break;
                             }
                         }
