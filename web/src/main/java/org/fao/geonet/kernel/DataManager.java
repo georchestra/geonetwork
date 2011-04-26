@@ -1731,6 +1731,7 @@ public class DataManager {
                             "Element not found at ref = " + ref);
                 }
 
+                // PMT GeoBretagne CU-09 implementation
                 // automatically inject topic categories gmd:MD_Keywords
                 else if ((value
                         .startsWith("<gmd:MD_Keywords xmlns:gmd=\"http://www.isotc211.org/2005/gmd\">"))
@@ -1738,8 +1739,7 @@ public class DataManager {
                     Element fragment = Xml.loadString(value, false);
                     // ISO themes already present into the MD
                     // (that we don't want to add twice)
-                    Namespace nsgco = Namespace.getNamespace("gco",
-                    "http://www.isotc211.org/2005/gco");
+                    Namespace nsgco = Namespace.getNamespace("gco", "http://www.isotc211.org/2005/gco");
                     fragment.addNamespaceDeclaration(nsgco);
                     List<String> isoThemesList = new ArrayList<String>();
                     XPath alreadyPresent = XPath
@@ -1750,10 +1750,10 @@ public class DataManager {
                         isoThemesList.add(elem.getText());
                     }
 
-                    // Get the just added INSPIRE keywords
+                    // Get the newly added INSPIRE keywords
+
                     List<String> laddedKw = new ArrayList<String>();
-                    XPath xpAddedKws = XPath
-                    .newInstance("gmd:keyword/gco:CharacterString");
+                    XPath xpAddedKws = XPath.newInstance("gmd:keyword/gco:CharacterString");
                     List<Element> lEKw = xpAddedKws.selectNodes(fragment);
 
                     for (Element elem : lEKw) {
@@ -1766,15 +1766,16 @@ public class DataManager {
                         if (isoThemesList.contains(isoThemeToAdd)) {
                             continue;
                         }
-                        /* else */
-                        if (isoThemesInject == null) {
                             isoThemesInject = String.format(isoThemeSkel,
                                     isoThemeToAdd);
-                        } else {
-                            isoThemesInject += String.format(isoThemeSkel,
-                                    isoThemeToAdd);
-                        }
+                        
+                        // PMT GeoBretagne #1552 (2011-04-26) :
+                        // we break after the first injected ISO theme,
+                        // as requested by the customer
+                        break ;
+                        
                     }
+                    
                     // End C2C GeoBretagne CU-09 mod.
                 }
 
@@ -1809,12 +1810,6 @@ public class DataManager {
             Namespace gmdFra = Namespace.getNamespace("fra",
             "http://www.cnig.gouv.fr/2005/fra");
 
-            // PMT GeoOrchestra - C2C :
-            // was : XPath xpath =
-            // XPath.newInstance("gmd:identificationInfo/gmd:MD_DataIdentification");
-            // But seems to be gmd:identificationInfo/fra:FRA_DataIdentification
-            // in the iso19139.fra schema
-
             XPath xpath = XPath
             .newInstance("gmd:identificationInfo/fra:FRA_DataIdentification");
             xpath.addNamespace(gmdNs);
@@ -1826,12 +1821,12 @@ public class DataManager {
             int postoinsert = 1;
 
             // test if there is already some ISO themes
-            XPath testIfIso = XPath.newInstance("gmd:topicCategory");
-            testIfIso.addNamespace(gmdNs);
-            testIfIso.addNamespace(gmdFra);
-
-            Element curIso = (Element) testIfIso.selectSingleNode(pos);
-
+            
+            // PMT 2011-04-26 (redmine issue #1552) : on client's request,
+            // we have to remove existing ISO themes before injecting one.
+            pos.removeChildren("topicCategory", gmdNs);
+            
+            
             // test if there is a gmd:characterSet
             XPath charsetPath = XPath.newInstance("gmd:characterSet");
             charsetPath.addNamespace(gmdNs);
@@ -1846,18 +1841,14 @@ public class DataManager {
 
             List<Element> curLang = languagePath.selectNodes(pos);
 
-            // first case : we have some ISO themes, we insert near them
-            if (curIso != null) {
-                postoinsert = pos.indexOf(curIso);
-            }
 
-            // second case : no ISO themes, but a (or maybe more)
+            // first case : no ISO themes, but a (or maybe more)
             // gmd:characterSet
-            else if (curCharset.size() > 0) {
+            if (curCharset.size() > 0) {
                 postoinsert = pos
                 .indexOf(curCharset.get(curCharset.size() - 1)) + 1;
             }
-            // third case : no ISO themes, nor Charset
+            // second case : no ISO themes, nor Charset
             // inserting right after the <gmd:language> which actually seems
             // mandatory
             else if (curLang.size() > 0) {
@@ -1886,7 +1877,7 @@ public class DataManager {
                     pos = pos.addContent(postoinsert, curEl);
                 }
             }
-        }
+        } // end ISO theme injection (GeoBretagne CU-09 implementation)
 
         md.detach();
         return updateMetadata(session, dbms, id, md, false, currVersion, lang);
@@ -1908,7 +1899,7 @@ public class DataManager {
      */
     private String getIsoTheme(String val) throws JDOMException {
         String ret = null;
-        XPath pTh = XPath.newInstance("mapping[@key='" + val + "']/keyword");
+        XPath pTh = XPath.newInstance("mapping[@key=\"" + val + "\"]/keyword");
         List<Element> kws = pTh.selectNodes(mapping);
 
         for (int i = 0; i < kws.size(); i++) {
