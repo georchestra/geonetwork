@@ -5,21 +5,16 @@ import java.io.FileOutputStream;
 import java.util.Enumeration;
 import java.util.Iterator;
 
-import jeeves.constants.Jeeves;
 import jeeves.interfaces.Service;
-import jeeves.resources.dbms.Dbms;
 import jeeves.server.ServiceConfig;
-import jeeves.server.UserSession;
 import jeeves.server.context.ServiceContext;
-import org.fao.geonet.constants.Geonet;
-import org.fao.geonet.constants.Params;
+
 import org.jdom.Element;
 
 import com.novell.ldap.LDAPAttribute;
 import com.novell.ldap.LDAPAttributeSet;
 import com.novell.ldap.LDAPConnection;
 import com.novell.ldap.LDAPEntry;
-import com.novell.ldap.LDAPException;
 import com.novell.ldap.LDAPJSSESecureSocketFactory;
 import com.novell.ldap.LDAPSearchResults;
 
