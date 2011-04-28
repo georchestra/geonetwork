@@ -183,5 +183,98 @@
 		<condition>Obligatoire</condition>
 	</element>
 
+  <element name="gmd:name" id="196.0" context="gmd:RS_ReferenceSystem">
+    <label>Nom du système de référence</label>
+    <description>Nom du système de référence utilisé</description>
+    <help>Nom du système de référence utilisé.</help>
+    <condition>Obligatoire</condition>
+  </element>
+  <element name="gmd:name" id="285.0" context="gmd:MD_Format">
+    <label>Nom du format</label>
+    <description>Nom des formats de transfert des données</description>
+    <help>Nom du format de transfert de données, par exemple TIFF, ZIP, etc.</help>
+    <condition>Obligatoire</condition>
+  </element>
+  <element name="gmd:name" id="307.0" context="gmd:MD_ExtendedElementInformation">
+    <label>Nom</label>
+    <description>Nom de l'élément de métadonnée étendu</description>
+    <help>Nom de l'élément de métadonnées étendu.</help>
+    <condition>Obligatoire</condition>
+  </element>
+  <element name="gmd:name" id="321.0" context="gmd:MD_ApplicationSchemaInformation">
+    <label>Nom</label>
+    <description>Nom du schéma d'application utilisé</description>
+    <help>Nom du schéma d'application utilisé.</help>
+    <condition>Obligatoire</condition>  
+  </element>
+  <element name="gmd:name" id="400.0" context="gmd:CI_OnlineResource">
+    <label>Nom</label>
+    <description>Nom de la ressource en ligne</description>
+    <help>Nom de la source en ligne.</help>
+    <condition>Obligatoire</condition>
+  </element>
+  <element name="gmd:name" id="404.0" context="gmd:CI_Series">
+    <label>Nom</label>
+    <description>Nom des séries ou du jeu de données global desquels le jeu de donnée est une partie</description>
+    <help>Nom de la série ou du jeu de données composé dont émane le jeu de données.</help>
+    <condition>Obligatoire</condition>
+  </element>
+  <element name="gmd:name">
+    <label>Nom</label>
+    <description>Nom des séries, ou des jeux de données agrégés, duquel le jeu de données provient</description>
+    <help/>
+    <condition>Obligatoire</condition>    
+  </element>
+
+  <element name="gmd:extent" id="45.0" context="gmd:MD_DataIdentification">
+    <label>Etendue</label>
+    <description>Information complémentaire sur les étendues spatiales et temporelles du jeu de données, incluant le polygone de délimitation et les dimensions verticales et temporelles</description>
+    <help>Informations supplémentaires concernant l'extension spatiale et temporelle des données, incluant le polygone de délimitation, les altitudes et la durée de validité. Ces informations sont du type EX_Extent et sont gérées dans la classe du même nom.</help>
+    <condition>Condition</condition>
+  </element>
+  <element name="gmd:extent" id="140.0" context="gmd:DQ_Scope">
+    <label>Etendue</label>
+    <description>Information sur les domaines horizontaux, verticaux et temporels des données spécifiées par l'attribut scope (79) du domaine d'applicabilité</description>
+    <help>Informations relatives à l'extension horizontale, verticale et temporelle des données conformément au domaine de validité défini. Ces informations sont du type EX_Extent et sont gérées dans la classe du même nom.</help>
+    <condition>Condition</condition>
+  </element>
+  <element name="gmd:extent" id="351.0" context="gmd:EX_TemporalExtent">
+    <label>Etendue</label>
+    <description>Date et temps pour le contenu du jeu de donnée</description>
+    <help>Date et heure du domaine de validité du jeu de données (texte).</help>
+    <condition>Condition</condition> 
+  </element>
+
+  <element name="gmd:metadataConstraints" id="20.0" context="gmd:MD_Metadata">
+    <label>Contraites sur les métadonnées</label>
+    <description>Contraintes sur l'accès et l'utilisation des métadonnées</description>
+    <help>Restrictions d'accès et d'utilisation des métadonnées (exemple : copyright, conditions d'octroi de licence, etc.). Ces informations sont gérées dans la classe MD_Constraints.</help>
+    <condition/>
+  </element>
+  <element name="gmd:metadataConstraints">
+    <label>Contraintes sur les métadonnées</label>
+    <description>Contraintes sur l’accès et l’utilisation des métadonnées</description>
+    <help/>
+    <condition/>
+  </element>
+
+  <element name="gmd:contact" id="8.0" context="gmd:MD_Metadata">
+    <label>Contact</label>
+    <description>Organisme responsable pour les informations que contiennent les métadonnées.</description>
+    <help>Rôle (propriétaire, prestataire, gestionnaire, etc.) de la personne ou du service compétent pouvant être sélectionné dans la liste présentée ici. Cet attribut renvoie à la classe CI_ResponsibleParty dans laquelle les informations relatives au service ou à la personne concernée sont gérées. Cet attribut est du type CI_ResponsibleParty et est géré dans la classe du même nom.</help>
+    <condition>Obligatoire</condition> 
+  </element>
+  <element name="gmd:contact" id="148.1" context="gmd:MD_MaintenanceInformation">
+    <label>Contact pour la mise à jour</label>
+    <description>Indications concernant la personne ou l'organisation qui est responsable de la mis à jour des métadonnées</description>
+    <help>Informations concernant la personne ou l'organisation responsable de la mise à jour des données. Ces informations sont du type CI_ResponsibleParty et sont gérées dans la classe du même nom.</help>
+    <condition/>
+  </element>
+  <element name="gmd:contact" id="8.0">
+    <label>Contact</label>
+    <description>Organisme responsable pour les informations que contiennent les métadonnées.</description>
+    <help>Rôle (propriétaire, prestataire, gestionnaire, etc.) de la personne ou du service compétent pouvant être sélectionné dans la liste présentée ici. Cet attribut renvoie à la classe CI_ResponsibleParty dans laquelle les informations relatives au service ou à la personne concernée sont gérées. Cet attribut est du type CI_ResponsibleParty et est géré dans la classe du même nom.</help>
+    <condition>Obligatoire</condition>
+  </element>
 
 </labels>
