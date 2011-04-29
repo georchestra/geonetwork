@@ -373,28 +373,31 @@ app.GeoPublisherPanel = Ext.extend(Ext.FormPanel, {
 
         OpenLayers.ImgPath = "../../scripts/openlayers/img/";
 
-        var SCALES = [200, 500, 1000, 2000, 5000, 10000, 25000, 50000, 100000, 250000, 500000, 1000000, 2000000];
-        var options = {
-            projection: 'EPSG:2154',
-            units: "m",
-            scales: SCALES,
-            minResolution: OpenLayers.Util.getResolutionFromScale(
-                SCALES[0], "m"
-            ),
-            maxResolution: OpenLayers.Util.getResolutionFromScale(
-                SCALES[SCALES.length -1], "m"
-            ),
-            maxExtent: new OpenLayers.Bounds(
-                83000, 6700000,
-                420000, 6900000
-            ),
-            theme: null
-        };
+		var options = {
+			projection: GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.projection,
+			units: GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.units,
+			scales: GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.scales,
+		
+			minResolution: OpenLayers.Util.getResolutionFromScale(
+					GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.scales[0],
+					GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.units),
+					
+			maxResolution: OpenLayers.Util.getResolutionFromScale(
+					GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.scales[GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.scales.length -1],
+					GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.units),
+			
+			maxExtent: new OpenLayers.Bounds(
+					GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.minLon, GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.minLat,
+					GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.maxLon, GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.maxLat
+			),
+			
+			theme: GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.theme
+		};
 
         var map = extentMap.map = new OpenLayers.Map(options);
 
-        var base = new OpenLayers.Layer.WMS("BASE", Env.host+"/geoserver/wms", {
-            layers: "geob:SC1000_0050_7130_L93"
+        var base = new OpenLayers.Layer.WMS("BASE", GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.wmsUrl, {
+            layers: GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.layers
         });
 
         this.geoPublicationMapPanel = {
