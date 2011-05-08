@@ -644,7 +644,8 @@
                     <param>${basedir}/src/${server}</param>
 	            </sourceDirectories>
 	            <excludes>
-	                <param>maven.filter</param>
+                <param>maven.filter</param>
+                <param>.svn</param>
 	            </excludes>
               <outputDirectory>${geonetwork.webapp.dir}</outputDirectory>
             </configuration>
