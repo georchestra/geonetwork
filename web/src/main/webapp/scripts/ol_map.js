@@ -55,18 +55,10 @@ GeoNetwork.app = function() {
         map = new OpenLayers.Map('ol_map', options);
     };
 
-    /**
-     * Adds a layer to the map 
-     *
-     */
-    var createWmsLayer = function(name, url, params, options) {
-        map.addLayer(new OpenLayers.Layer.WMS(name, url, params, options));
-    };
-
 
     var createDummyBaseLayer = function(extent) {
         var graphic = new OpenLayers.Layer.Image('Dummy', '../../scripts/openlayers/img/blank.gif', extent,
-                map.getSize(), {isBaseLayer: true, displayInLayerSwitcher: false});
+        map.getSize(), {isBaseLayer: true, displayInLayerSwitcher: false});
         map.addLayer(graphic);
     };
 
@@ -1106,7 +1098,7 @@ GeoNetwork.app = function() {
 
     // public space:
     return {
-        init: function(layers, mapOptions) {
+        init: function(layerFactory, mapOptions) {
             Ext.QuickTips.init();
 
             createMap(mapOptions);
@@ -1114,8 +1106,9 @@ GeoNetwork.app = function() {
             //createDummyBaseLayer(mapOptions.maxExtent);
 
            // default layers in the map
-            for (var i=0; i<layers.length; i++) {                
-                createWmsLayer(layers[i][0],layers[i][1],layers[i][2],layers[i][3]);
+           var layers = layerFactory()
+            for (var i=0; i<layers.length; i++) {
+              map.addLayer(layers[i]);
             }       
                        
             // Fix for the toctree to get the correct mappanel (i

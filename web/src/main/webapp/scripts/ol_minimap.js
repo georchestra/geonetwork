@@ -49,14 +49,6 @@ GeoNetwork.miniapp = function() {
     };
 
     /**
-     * Adds a layer to the map 
-     *
-     */
-    var createWmsLayer = function(name, url, params, options) {
-        miniMap.addLayer(new OpenLayers.Layer.WMS(name, url, params, options));
-    };
-
-    /**
      * Configure the map controls
      *
      */
@@ -197,7 +189,7 @@ GeoNetwork.miniapp = function() {
 
     // public space:
     return {
-        init: function(miniMapDiv, regionControl, layers, mapOptions) {
+        init: function(miniMapDiv, regionControl, layerFactory, mapOptions) {
             if (!$(miniMapDiv)) return;
             Ext.QuickTips.init();
 
@@ -205,10 +197,12 @@ GeoNetwork.miniapp = function() {
             
             createMap(mapOptions);
 
-            for (var i=0; i<layers.length; i++) {                
-                createWmsLayer(layers[i][0],layers[i][1],layers[i][2],layers[i][3]);
-            }           
-           
+           // default layers in the map
+           var layers = layerFactory()
+            for (var i=0; i<layers.length; i++) {
+              miniMap.addLayer(layers[i]);
+            }
+
             createViewport(miniMapDiv);
             addMapControls();
             miniMap.zoomToMaxExtent();
@@ -250,7 +244,7 @@ GeoNetwork.miniapp = function() {
         },
         
         addWmsLayer: function(name, url, params, options) {
-            createWmsLayer(name, url, params, options);
+            map.addLayer(new OpenLayers.Layer.WMS(name, url, params, options));
         }
         
     };

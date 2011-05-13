@@ -91,26 +91,12 @@
                 <script type="text/javascript" src="{/root/gui/url}/scripts/geoext/GeoExt.js"></script>			
                 <script type="text/javascript" src="{/root/gui/url}/scripts/mapfish/MapFish.js"></script>            
             </xsl:otherwise>
+						<!--  JS configurations -->
         </xsl:choose>
+				<script type="text/javascript" src="{/root/gui/url}/GeoConfig.js"></script>
         
         <script type="text/javascript" language="JavaScript1.2">
-        // Load layers defined in config file
-        var backgroundLayers = [];
 
-        // Map viewer options to use in main map viewer and in editor map viewer
-        var mapOptions =  <xsl:value-of select='/root/gui/config/mapViewer/@options'/>;
-
-        <xsl:for-each select="/root/gui/config/mapViewer/layers/layer">
-        backgroundLayers.push(["<xsl:value-of select='@tocName'/>","<xsl:value-of select='@server'/>",<xsl:value-of select='@params'/>, <xsl:value-of select='@options'/>]);                           
-        </xsl:for-each>
-
-        var backgroundLayersMapSearch = [];
-        <xsl:for-each select="/root/gui/config/mapSearch/layers/layer">
-        backgroundLayersMapSearch.push(["<xsl:value-of select='@tocName'/>","<xsl:value-of select='@server'/>",<xsl:value-of select='@params'/>, <xsl:value-of select='@options'/>]);
-        </xsl:for-each>
-
-        // If no layers defined for search map, use the layers defined for map viewer
-        if (backgroundLayersMapSearch.length == 0) backgroundLayersMapSearch = backgroundLayers;
         </script>
         
         <script src="../../scripts/geo/extentMap.js" type="text/javascript"/>
