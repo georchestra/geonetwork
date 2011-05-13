@@ -373,39 +373,15 @@ app.GeoPublisherPanel = Ext.extend(Ext.FormPanel, {
 
         OpenLayers.ImgPath = "../../scripts/openlayers/img/";
         var geoPubConfig = Geonetwork.CONFIG.GeoPublisher;
-		var options = {
-			projection: geoPubConfig.baseMapOptions.projection,
-			units: geoPubConfig.baseMapOptions.units,
-			scales: geoPubConfig.baseMapOptions.scales,
-		
-			minResolution: OpenLayers.Util.getResolutionFromScale(
-					geoPubConfig.baseMapOptions.scales[0],
-					geoPubConfig.baseMapOptions.units),
-					
-			maxResolution: OpenLayers.Util.getResolutionFromScale(
-					geoPubConfig.baseMapOptions.scales[geoPubConfig.baseMapOptions.scales.length -1],
-					geoPubConfig.baseMapOptions.units),
-			
-			maxExtent: new OpenLayers.Bounds(
-					geoPubConfig.baseMapOptions.minLon, geoPubConfig.baseMapOptions.minLat,
-					geoPubConfig.baseMapOptions.maxLon, geoPubConfig.baseMapOptions.maxLat
-			),
-			
-			theme: geoPubConfig.baseMapOptions.theme
-		};
-
+		var options = geoPubConfig.mapOptions;
         var map = extentMap.map = new OpenLayers.Map(options);
-
-        var base = new OpenLayers.Layer.WMS("BASE", geoPubConfig.baseMapOptions.wmsUrl, {
-            layers: geoPubConfig.baseMapOptions.layers
-        });
 
         this.geoPublicationMapPanel = {
                 xtype: 'gx_mappanel',
                 id: 'mapPanel',
                 title: translate('mapPreview'),
                 map: map,
-                layers: [base],
+                layers: geoPubConfig.layerFactory(),
                 autoWidth: true,
                 height: 350
             };

@@ -46,30 +46,6 @@ Geonetwork.CONFIG = {};
 // Configuration variables for the GeoPublisher
 Geonetwork.CONFIG.GeoPublisher = {
     // configuration for the base map used in the GeoPublisher interface
-    baseMapOptions : {
-
-        scales:     [200, 500, 1000, 2000, 5000, 10000, 25000, 50000, 100000, 250000, 500000, 1000000, 2000000],
-        projection: 'EPSG:2154',
-        units:      "m",
-        minLon:     83000,
-        minLat:     6700000,
-        maxLon:     420000,
-        maxLat:     6900000,
-        theme:      null,
-        wmsUrl:     Env.host + "/geoserver/wms",
-        layers:     "geob:SC1000_0050_7130_L93"
-    }
-}
-
-// Configuration for the minimap on the main page and the map in the editor
-Geonetwork.CONFIG.SearchMap = {
-    // define layer factory function for creating the layers to be put in the main map.  It is a function rather
-    // than an array of layer instances because this allows one definition to be used multiple times
-    layerFactory: function() {
-      return [
-        new OpenLayers.Layer.WMS('Baselayer','http://c2cpc83.camptocamp.com:8180/geoserver2/gwc/service/wms/', {layers:'base_layers',format: 'image/jpeg' },{tileSize:new OpenLayers.Size(256,256), isBaseLayer: true})
-      ];
-    },
     // Map viewer options to use in main map viewer and in editor map viewer
     mapOptions: {
       projection: 'EPSG:4326',
@@ -77,7 +53,21 @@ Geonetwork.CONFIG.SearchMap = {
       maxExtent: new OpenLayers.Bounds(-180.0,-90.0,180.0,90.0),
       units: 'degrees',
       restrictedExtent: new OpenLayers.Bounds(-10,40,10,50)
-    }
+    },
+    layerFactory: function() {
+      return [
+        new OpenLayers.Layer.WMS('Baselayer','http://c2cpc83.camptocamp.com:8180/geoserver2/gwc/service/wms/', {layers:'base_layers',format: 'image/jpeg' },{tileSize:new OpenLayers.Size(256,256), isBaseLayer: true})
+      ];
+    },
+}
+
+// Configuration for the minimap on the main page and the map in the editor
+Geonetwork.CONFIG.SearchMap = {
+    // define layer factory function for creating the layers to be put in the main map.  It is a function rather
+    // than an array of layer instances because this allows one definition to be used multiple times
+    layerFactory: Geonetwork.CONFIG.GeoPublisher.layerFactory,
+    // Map viewer options to use in main map viewer and in editor map viewer
+    mapOptions: Geonetwork.CONFIG.GeoPublisher.mapOptions
 };
 // Configuration for the main (large) on the main page
 Geonetwork.CONFIG.MainMap = {
