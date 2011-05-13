@@ -376,9 +376,11 @@ var extentMap = {
      */
     createMap: function() {
     	OpenLayers.ImgPath = "../../scripts/openlayers/img/";
-    	
+
+        var options = Ext.apply({},Geonetwork.CONFIG.SearchMap.mapOptions);
+
 		// Set main projection same as map viewer projection
-    	extentMap.mainProj = new OpenLayers.Projection(mapOptions.projection);
+    	extentMap.mainProj = new OpenLayers.Projection(options.projection);
 
     	// TODO : how to define one common map with background in config file.
     	/*var options = {
@@ -387,7 +389,6 @@ var extentMap = {
     		    theme: null
     		}; */
 
-    	var options = mapOptions;
     	options.theme = null;
     	
         var map = extentMap.map = new OpenLayers.Map(
@@ -412,13 +413,10 @@ var extentMap = {
         // configuration parameters should be define in order
         // to define map layers. Currently using the same
         // WMS as Intermap.
-        
-        for (var i=0; i<backgroundLayers.length; i++) {
-            var layer = new OpenLayers.Layer.WMS(backgroundLayers[i][0],
-                    backgroundLayers[i][1],
-                    backgroundLayers[i][2],
-                    backgroundLayers[i][3])
-            map.addLayer(layer);    
+
+        var layers = Geonetwork.CONFIG.SearchMap.layerFactory();
+        for (var i=0; i<layers.length; i++) {
+            map.addLayer(layers[i]);
         }
         
         

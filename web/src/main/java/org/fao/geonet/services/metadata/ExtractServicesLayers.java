@@ -29,6 +29,7 @@
 //
 package org.fao.geonet.services.metadata;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -40,6 +41,7 @@ import jeeves.resources.dbms.Dbms;
 import jeeves.server.ServiceConfig;
 import jeeves.server.UserSession;
 import jeeves.server.context.ServiceContext;
+import jeeves.utils.Util;
 
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Geonet;
@@ -68,8 +70,8 @@ public class ExtractServicesLayers  implements Service {
 	//---
 	//--------------------------------------------------------------------------
 
-	public Element exec(Element params, ServiceContext context) throws Exception
-	{
+	public Element exec(Element params, ServiceContext context) throws Exception {
+	    
 		GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
 
 		DataManager dm = gc.getDataManager();
@@ -88,119 +90,110 @@ public class ExtractServicesLayers  implements Service {
 		Element ret = new Element("response");
 		
 		String cartUUID = context.getCookie("cartUUID");
+
+		String paramId = Util.getParam(params, "id", null) ;
+		ArrayList<String> lst = new ArrayList<String>();
 		
-		synchronized(sm.getSelection("metadata", cartUUID))
-		{
-			for (Iterator<String> iter = sm.getSelection("metadata", cartUUID).iterator(); iter.hasNext();)
-			{
-				String uuid = (String) iter.next();
-				String id   = dm.getMetadataId(dbms, uuid);
-				Element curMd = dm.getMetadata(context, id, false);
+		// case #1 : #id parameter is undefined
+		if (paramId == null) {
+		    synchronized(sm.getSelection("metadata", cartUUID)) {
+		        for (Iterator<String> iter = sm.getSelection("metadata", cartUUID).iterator(); iter.hasNext();) {
+		            String uuid = (String) iter.next();
+		            String id   = dm.getMetadataId(dbms, uuid);
+		            lst.add(id);
+		        }
+		    }
+		} else { // case #2 : id parameter has been passed
+		    lst.add(paramId);
+		}
+		    
 
-                XPath xpath = XPath.newInstance("gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine");
-                
-                List<Element> elems ;
-                
-                try 
-                {
-                	elems = xpath.selectNodes(curMd);
-                }
-                catch (Exception e)
-                {
-                	// warning : your XML raw data seems crappy
-                	continue;
-                }
-                
-				for (Iterator itelem = elems.iterator(); itelem.hasNext();)
-				{
-					Element curnode    = (Element) itelem.next();
-					XPath pLinkage     = XPath.newInstance("gmd:CI_OnlineResource/gmd:linkage/gmd:URL");
-					XPath pProtocol    = XPath.newInstance("gmd:CI_OnlineResource/gmd:protocol/gco:CharacterString");
-					XPath pName        = XPath.newInstance("gmd:CI_OnlineResource/gmd:name/gco:CharacterString");
-					XPath pDescription = XPath.newInstance("gmd:CI_OnlineResource/gmd:description/gco:CharacterString");
-					
-					Element eLinkage     = (Element) pLinkage.selectSingleNode(curnode);
-					Element eProtocol    = (Element) pProtocol.selectSingleNode(curnode);
-					Element eName        = (Element) pName.selectSingleNode(curnode);
-					Element eDescription = (Element) pDescription.selectSingleNode(curnode);
-					
-					if (eLinkage == null)
-					{
-						continue;
-					}
-					if (eProtocol == null)
-					{
-						continue;
-					}
-					if (eName == null)
-					{
-						continue;
-					}
-					
-					String sLinkage     = eLinkage.getValue();
-					String sProtocol    = eProtocol.getValue();
-					String sName        = eName.getValue();
-					String sDescription = eDescription != null ? eDescription.getValue() : "";
-					
-					if ((sLinkage == null) || (sLinkage.equals("")))
-					{
-						continue;
-					}
-					if ((sProtocol == null) || (sProtocol.equals("")))
-					{
-						continue;
-					}
-					
-					String sProto2 = "WMS"; // by default
-					
-					if (sProtocol.contains("OGC:WMS"))
-					{
-							sProto2 = "WMS";
-					}
-					else if (sProtocol.contains("OGC:WFS"))
-					{
-							sProto2 = "WFS";
-					}
-					else if (sProtocol.contains("OGC:WCS"))
-					{
-						sProto2 = "WMS";
-					}
-					else
-					{
-						continue;
-					}
-					
-					// If no name, we are on a service
-					if ((sName == null) || (sName.equals("")))
-					{
-						Element retchildserv = new Element("service");
-						
-						retchildserv.setAttribute("owsurl", sLinkage);
-						retchildserv.setAttribute("owstype", sProto2);
-						retchildserv.setAttribute("text", sDescription);
-						retchildserv.setAttribute("mdid", id);
-					
-						ret.addContent(retchildserv);
-							
-					}
-					// else it is a Layer
-					else
-					{
-						Element retchildlayer = new Element("layer");
-					
-						retchildlayer.setAttribute("owsurl", sLinkage);
-						retchildlayer.setAttribute("owstype", sProto2);
-						retchildlayer.setAttribute("layername", sName);
-						retchildlayer.setAttribute("mdid", id);
-					
-						ret.addContent(retchildlayer);
-					}
-					
-				}
-			} // iterates
+		for (Iterator<String> iter = lst.iterator(); iter.hasNext();) {   
+		    String id = iter.next();
 
+		    Element curMd = dm.getMetadata(context, id, false);
 
-		} // synchronized(...)
+		    XPath xpath = XPath.newInstance("gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine");
+
+		    List<Element> elems ;
+
+		    try {
+		        elems = xpath.selectNodes(curMd);
+		    }  catch (Exception e)  {
+		        // Bad XML input ?
+		        continue;
+		    }
+
+		    for (Iterator itelem = elems.iterator(); itelem.hasNext();) {
+		        Element curnode    = (Element) itelem.next();
+		        XPath pLinkage     = XPath.newInstance("gmd:CI_OnlineResource/gmd:linkage/gmd:URL");
+		        XPath pProtocol    = XPath.newInstance("gmd:CI_OnlineResource/gmd:protocol/gco:CharacterString");
+		        XPath pName        = XPath.newInstance("gmd:CI_OnlineResource/gmd:name/gco:CharacterString");
+		        XPath pDescription = XPath.newInstance("gmd:CI_OnlineResource/gmd:description/gco:CharacterString");
+
+		        Element eLinkage     = (Element) pLinkage.selectSingleNode(curnode);
+		        Element eProtocol    = (Element) pProtocol.selectSingleNode(curnode);
+		        Element eName        = (Element) pName.selectSingleNode(curnode);
+		        Element eDescription = (Element) pDescription.selectSingleNode(curnode);
+
+		        if (eLinkage == null)  {
+		            continue;
+		        }
+		        if (eProtocol == null) {
+		            continue;
+		        }
+		        if (eName == null)  {
+		            continue;
+		        }
+
+		        String sLinkage     = eLinkage.getValue();
+		        String sProtocol    = eProtocol.getValue();
+		        String sName        = eName.getValue();
+		        String sDescription = eDescription != null ? eDescription.getValue() : "";
+
+		        if ((sLinkage == null) || (sLinkage.equals(""))) {
+		            continue;
+		        }
+		        if ((sProtocol == null) || (sProtocol.equals(""))) {
+		            continue;
+		        }
+
+		        String sProto2 = "WMS"; // by default
+
+		        if (sProtocol.contains("OGC:WMS")) {
+		            sProto2 = "WMS";
+		        }
+		        else if (sProtocol.contains("OGC:WFS")) {
+		            sProto2 = "WFS";
+		        }
+		        else if (sProtocol.contains("OGC:WCS")) {
+		            sProto2 = "WMS";
+		        }
+		        else {
+		            continue;
+		        }
+
+		        // If no name, we are on a service
+		        if ((sName == null) || (sName.equals(""))) {
+		            Element retchildserv = new Element("service");
+		            retchildserv.setAttribute("owsurl", sLinkage);
+		            retchildserv.setAttribute("owstype", sProto2);
+		            retchildserv.setAttribute("text", sDescription);
+		            retchildserv.setAttribute("mdid", id);
+
+		            ret.addContent(retchildserv);
+		        }
+		        // else it is a Layer
+		        else {
+		            Element retchildlayer = new Element("layer");
+		            retchildlayer.setAttribute("owsurl", sLinkage);
+		            retchildlayer.setAttribute("owstype", sProto2);
+		            retchildlayer.setAttribute("layername", sName);
+		            retchildlayer.setAttribute("mdid", id);
+		            ret.addContent(retchildlayer);
+		        }
+		    } // for
+		} // iterates
 		
 		return ret;
 	}

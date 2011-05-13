@@ -372,40 +372,16 @@ app.GeoPublisherPanel = Ext.extend(Ext.FormPanel, {
     getGeoPublicationMapPanel: function(){
 
         OpenLayers.ImgPath = "../../scripts/openlayers/img/";
-
-		var options = {
-			projection: GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.projection,
-			units: GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.units,
-			scales: GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.scales,
-		
-			minResolution: OpenLayers.Util.getResolutionFromScale(
-					GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.scales[0],
-					GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.units),
-					
-			maxResolution: OpenLayers.Util.getResolutionFromScale(
-					GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.scales[GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.scales.length -1],
-					GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.units),
-			
-			maxExtent: new OpenLayers.Bounds(
-					GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.minLon, GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.minLat,
-					GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.maxLon, GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.maxLat
-			),
-			
-			theme: GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.theme
-		};
-
+        var geoPubConfig = Geonetwork.CONFIG.GeoPublisher;
+		var options = geoPubConfig.mapOptions;
         var map = extentMap.map = new OpenLayers.Map(options);
-
-        var base = new OpenLayers.Layer.WMS("BASE", GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.wmsUrl, {
-            layers: GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.layers
-        });
 
         this.geoPublicationMapPanel = {
                 xtype: 'gx_mappanel',
                 id: 'mapPanel',
                 title: translate('mapPreview'),
                 map: map,
-                layers: [base],
+                layers: geoPubConfig.layerFactory(),
                 autoWidth: true,
                 height: 350
             };
