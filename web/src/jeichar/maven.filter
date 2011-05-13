@@ -14,7 +14,7 @@ psql.user=geonetwork
 psql.pass=geonetwork
 psql.url=jdbc:postgresql://${psql.host}:${psql.port}/${psql.db}
 
-xhr.proxy-url=http://localhost:43080/proxy/
+xhr.proxy-url=http://localhost:8080/proxy/
 
 LdapHost=c2cpc83.camptocamp.com
 LdapPort=636
@@ -32,7 +32,6 @@ config.xml.typenames=<typename name="EPCI" typename="geob_loc:EPCI_region" nameA
 		<typename name="Département" typename="geob_loc:DEPARTEMENT" nameAtt="NOM_DEPT" /> \
 		<typename name="Pays" typename="geob_loc:PAYS_region" nameAtt="NOM" />
 
-config-gui.xml.mapSearchLayers=<layer server="http://${host}/geoserver/wms" tocName="EPCI Region"  params="{layers: 'geob_loc:EPCI_region', transparent: 'true', format: 'image/png', styles:'line'}"  options="{}" /> \
-    <layer server="http://${host}/geoserver/wms" tocName="Tuiles" params="{layers: 'geob:SC1000_0050_7130_L93', format: 'image/jpeg'}" options="{isBaseLayer: true}" />
+config-gui.xml.mapSearchLayers=<layer server="http://localhost:8080/geoserver/gwc/service/tms" tocName="Tuiles" params="{layer: 'base_layers', format: 'image;jpeg'}" options="{isBaseLayer: true}" type="TMS"/>
 
 config-gui.xml.mapViewerLayers=${config-gui.xml.mapSearchLayers}

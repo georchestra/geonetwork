@@ -372,32 +372,32 @@ app.GeoPublisherPanel = Ext.extend(Ext.FormPanel, {
     getGeoPublicationMapPanel: function(){
 
         OpenLayers.ImgPath = "../../scripts/openlayers/img/";
-
+        var geoPubConfig = Geonetwork.CONFIG.GeoPublisher;
 		var options = {
-			projection: GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.projection,
-			units: GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.units,
-			scales: GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.scales,
+			projection: geoPubConfig.baseMapOptions.projection,
+			units: geoPubConfig.baseMapOptions.units,
+			scales: geoPubConfig.baseMapOptions.scales,
 		
 			minResolution: OpenLayers.Util.getResolutionFromScale(
-					GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.scales[0],
-					GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.units),
+					geoPubConfig.baseMapOptions.scales[0],
+					geoPubConfig.baseMapOptions.units),
 					
 			maxResolution: OpenLayers.Util.getResolutionFromScale(
-					GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.scales[GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.scales.length -1],
-					GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.units),
+					geoPubConfig.baseMapOptions.scales[geoPubConfig.baseMapOptions.scales.length -1],
+					geoPubConfig.baseMapOptions.units),
 			
 			maxExtent: new OpenLayers.Bounds(
-					GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.minLon, GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.minLat,
-					GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.maxLon, GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.maxLat
+					geoPubConfig.baseMapOptions.minLon, geoPubConfig.baseMapOptions.minLat,
+					geoPubConfig.baseMapOptions.maxLon, geoPubConfig.baseMapOptions.maxLat
 			),
 			
-			theme: GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.theme
+			theme: geoPubConfig.baseMapOptions.theme
 		};
 
         var map = extentMap.map = new OpenLayers.Map(options);
 
-        var base = new OpenLayers.Layer.WMS("BASE", GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.wmsUrl, {
-            layers: GeOrchestra.CONFIG.GeoPublisher.baseMapOptions.layers
+        var base = new OpenLayers.Layer.WMS("BASE", geoPubConfig.baseMapOptions.wmsUrl, {
+            layers: geoPubConfig.baseMapOptions.layers
         });
 
         this.geoPublicationMapPanel = {

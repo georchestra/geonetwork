@@ -64,9 +64,6 @@
 			</xsl:if>
 		</script>		
 		
-		<!--  JS configurations -->
-		<script type="text/javascript" src="{/root/gui/url}/config.js"></script>
-		
 		<!-- stylesheet -->
 		<link rel="stylesheet" type="text/css" href="{/root/gui/url}/geonetwork.css"/>
 		<link rel="stylesheet" type="text/css" href="{/root/gui/url}/modalbox.css"/>
