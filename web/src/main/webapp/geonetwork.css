@@ -989,11 +989,11 @@ div.toolTipOverlay ul li, div.shortcutHelp ul li {
 .repository { 
     background-image: url('images/database_yellow.png') !important; 
     background-repeat: no-repeat;
-    padding-left: 15px;
 }
  a.repository {
     cursor: pointer;
     cursor: hand;
+    padding-left: 20px;
 }
 
 .validationReportIcon { background-image: url('images/schematron.gif') !important; }
