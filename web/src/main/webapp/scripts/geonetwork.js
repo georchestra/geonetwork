@@ -427,13 +427,14 @@ function displayBox(content, contentDivId, modal) {
  * PMT GeoBretagne-Specific
  */
 
-function redirectToExternalApp(destUrl)
+function redirectToExternalApp(destUrl, id)
 {
 
 	var myAjax = new Ajax.Request(
 			getGNServiceURL("metadata.service.extract"),
 			{
 				method: 'get',
+				parameters: (typeof id == 'undefined') ? '' : 'id=' + id,
 				onSuccess: function(req)
 				{
 				var xmlResponse = req.responseText;
