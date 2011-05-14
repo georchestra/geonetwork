@@ -77,7 +77,7 @@ var extentMap = {
      *   - watched_bbox: the coma separated 4 ids of the input field (east, south,
      *                   west, north) to listen for modifications
      */
-    initMapDiv: function () {
+    initMapDiv: function (div) {
         
         var viewers, idFunc;
         extentMap.mainProj = new OpenLayers.Projection(extentMap.mainProjCode);
@@ -86,7 +86,7 @@ var extentMap = {
         // some pages have prototype and other have access to ext so do a check
         // and choose the one that is available
         if (Ext) {
-            viewers = Ext.DomQuery.select('.extentViewer');
+            viewers = Ext.DomQuery.select('.extentViewer',div);
             idFunc = Ext.id;
         } else {
             viewers = $$('.extentViewer');
@@ -400,9 +400,11 @@ var extentMap = {
         // Disable mouse wheel and navigation toolbar in view mode.
         // User can still pan the map.
         if(!extentMap.edit) {
-        	var navigationControl = map.getControlsByClass('OpenLayers.Control.Navigation')[0];
-        	navigationControl.disableZoomWheel();
-        	map.removeControl(map.getControlsByClass('OpenLayers.Control.PanZoom')[0]);
+              var navigationControl = map.getControlsByClass('GeoNetwork.Control.ZoomWheel')[0];
+            if(navigationControl) {
+                navigationControl.handler.deactivate();
+            }
+            map.removeControl(map.getControlsByClass('OpenLayers.Control.PanZoom')[0]);
         }
         
         // Add mouse position control to display coordintate.

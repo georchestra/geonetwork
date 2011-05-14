@@ -216,8 +216,8 @@
 					<button onclick="load('{/root/gui/locService}/metadata.duplicate.form?uuid={$metadata/geonet:info/uuid}&amp;child=y')"><xsl:value-of select="/root/gui/strings/createChild"/></button>
 				</xsl:if>
 
-<!--                <button onclick="redirectToExternalApp('/mapfishapp/')"><xsl:value-of select="/root/gui/strings/viewInViewer"/></button>
-                <button onclick="redirectToExternalApp('/extractorapp/')"><xsl:value-of select="/root/gui/strings/sendToExtractor"/></button>-->
+                <button onclick="redirectToExternalApp('/mapfishapp/',id={$metadata/geonet:info/id})"><xsl:value-of select="/root/gui/strings/viewInViewer"/></button>
+                <button onclick="redirectToExternalApp('/extractorapp/',id={$metadata/geonet:info/id})"><xsl:value-of select="/root/gui/strings/sendToExtractor"/></button>
 			</div>
 		</xsl:if>
 	</xsl:template>

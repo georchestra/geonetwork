@@ -13,11 +13,14 @@ import org.fao.geonet.constants.Geonet;
 import org.geotools.data.*;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
+import org.geotools.feature.AttributeTypeBuilder;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureCollections;
 import org.geotools.feature.FeatureIterator;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
+import org.geotools.referencing.CRS;
+import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.opengis.feature.simple.SimpleFeature;
@@ -113,10 +116,25 @@ public class DAO {
 
     private SimpleFeatureType featureType(String name) {
         SimpleFeatureTypeBuilder builder = new SimpleFeatureTypeBuilder();
-        builder.add("the_geom", Geometry.class);
+
+        AttributeTypeBuilder attTypeBuilder = new AttributeTypeBuilder();
+
+        attTypeBuilder.setCRS(DefaultGeographicCRS.WGS84);
+        attTypeBuilder.setBinding(Geometry.class);
+        builder.add(attTypeBuilder.buildDescriptor("the_geom"));
+
         builder.add("id",Integer.class);
-        builder.add("data", String.class);
-        builder.add("search", String.class);
+
+        attTypeBuilder = new AttributeTypeBuilder();
+        attTypeBuilder.setBinding(String.class);
+        attTypeBuilder.setLength(10000);
+        builder.add(attTypeBuilder.buildDescriptor("data"));
+
+        attTypeBuilder = new AttributeTypeBuilder();
+        attTypeBuilder.setBinding(String.class);
+        attTypeBuilder.setLength(10000);
+        builder.add(attTypeBuilder.buildDescriptor("search"));
+
         builder.setName(name);
         return builder.buildFeatureType();
     }

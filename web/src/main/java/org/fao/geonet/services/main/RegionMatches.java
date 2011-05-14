@@ -210,8 +210,10 @@ public class RegionMatches implements Service {
             WFSDataStoreFactory fac = new WFSDataStoreFactory();
             Map<String, Serializable> map = new HashMap<String, Serializable>();
             map.put(WFSDataStoreFactory.URL.key, _url);
-            map.put(WFSDataStoreFactory.USERNAME.key, _user);
-            map.put(WFSDataStoreFactory.PASSWORD.key, _pass);
+            if(_user!=null && _user.trim().length() > 0) {
+                map.put(WFSDataStoreFactory.USERNAME.key, _user);
+                map.put(WFSDataStoreFactory.PASSWORD.key, _pass);
+            }
             map.put(WFSDataStoreFactory.LENIENT.key, true);
             this._ds = fac.createDataStore(map);
         }

@@ -733,7 +733,7 @@ function gn_showSingleMet(pars)
                 ker.loadMan.wait(tipman);
 
                 // Init maps contained in search results
-                extentMap.initMapDiv();
+                extentMap.initMapDiv(div);
             },
             onFailure: gn_search_error// FIXME
         });

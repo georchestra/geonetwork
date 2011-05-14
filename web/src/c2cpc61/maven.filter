@@ -30,9 +30,9 @@ priveleged_admin_name=extractorapp_priveleged_admin
 priveleged_admin_pass=gerlsSnFd6SmM
 
 config.xml.typenames=<typename name="EPCI" typename="geob_loc:EPCI_region" nameAtt="EPCI" /> \
-		<typename name="Commune" typename="geob_loc:COMMUNE" nameAtt="NOM_COMM" /> \
-		<typename name="Département" typename="geob_loc:DEPARTEMENT" nameAtt="NOM_DEPT" /> \
-		<typename name="Pays" typename="geob_loc:PAYS_region" nameAtt="NOM" />
+		<typename name="Commune Bretagne" typename="geob_loc:COMMUNE" nameAtt="NOM_COMM" /> \
+		<typename name="Département" typename="geob_loc:DEPARTEMENT" nameAtt="NOM" /> \
+		<typename name="Region" typename="geob_loc:region" nameAtt="NOM" />
 
 
 config-gui.xml.mapSearchLayers=<layer server="http://${host}/shorelines" tocName="shorelines"  params="{layers: 'land', transparent: 'true', format: 'image/png'}"  options="{isBaseLayer: true}" />

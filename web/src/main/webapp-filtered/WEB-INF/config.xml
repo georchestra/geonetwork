@@ -241,7 +241,6 @@
 				<call name="groups" class=".guiservices.groups.GetMine" />
 				<call name="services" class="jeeves.guiservices.services.Get" />
 				<call name="categories" class=".services.category.List" />
-				<call name="regions" class=".guiservices.regions.Get" />
 				<call name="sources" class=".guiservices.util.Sources" />
                 <call name="indexTerms" class=".guiservices.search.GetSearchTerms">
                     <param name="terms">
@@ -388,8 +387,10 @@
 		<service name="xml.region.list">
 		  <class name=".services.main.RegionMatches">
                     <param name="wfsURL" value="http://${host}/geoserver-private/wfs?REQUEST=GetCapabilities&amp;SERVICE=WFS&amp;VERSION=1.0.0" />
+<!--
+                    Should be public
                     <param name="user" value="${priveleged_admin_name}" />
-                    <param name="pass" value="${priveleged_admin_pass}" />
+                    <param name="pass" value="${priveleged_admin_pass}" /> -->
 		    <param name="typenames">
 			${config.xml.typenames}
 		    </param>
