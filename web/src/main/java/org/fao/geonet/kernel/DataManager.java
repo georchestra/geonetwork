@@ -1696,7 +1696,7 @@ public class DataManager {
                     if (el.getAttribute(attr) != null)
                         el.setAttribute(new Attribute(attr, val));
                 }
-            } else {
+            } else if (el != null) {
                 List content = el.getContent();
 
                 for (int i = 0; i < content.size(); i++) {
