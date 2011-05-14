@@ -4,7 +4,7 @@
 
 	<general>
 		<profiles>user-profiles.xml</profiles>
-		<uploadDir>../../private/data//tmp</uploadDir>
+		<uploadDir>../../private/data/tmp</uploadDir>
 		<maxUploadSize>100</maxUploadSize> <!-- Size must be in megabyte (integer), 100MB by default -->
 		<debug>true</debug>
 	</general>
@@ -203,7 +203,7 @@
 		<param name="luceneDir" value="WEB-INF/lucene" />
 		<!-- this must be a directory in web/geonetwork because html is served -->
 		<param name="htmlCacheDir" value="htmlCache" />
-		<param name="dataDir" value="../../private/data/" />
+		<param name="dataDir" value="../../private/data" />
 		<param name="schemaMappings" value="schema-mappings.xml" />
 		<param name="licenseDir" value="WEB-INF/licenses" />
 		<param name="thesauriDir" value="WEB-INF/gsthesauri" />
@@ -245,10 +245,10 @@
 				<call name="sources" class=".guiservices.util.Sources" />
                 <call name="indexTerms" class=".guiservices.search.GetSearchTerms">
                     <param name="terms">
-                        <orgName/>
+                        <_orgName/>
                         <topicCat/>
                     </param>
-                    <param name="orgName" value="100"/>
+                    <param name="_orgName"  value="100"/>
                     <param name="topicCat" value="100"/>
                 </call>
 
@@ -391,10 +391,7 @@
                     <param name="user" value="extractorapp_priveleged_admin" />
                     <param name="pass" value="gerlsSnFd6SmM" />
 		    <param name="typenames">
-		      <typename name="EPCI" typename="geob_loc:EPCI_region" nameAtt="EPCI" />
-		      <typename name="Commune" typename="geob_loc:COMMUNE" nameAtt="NOM_COMM" />
-		      <typename name="Département" typename="geob_loc:DEPARTEMENT" nameAtt="NOM_DEPT" />
-		      <typename name="Pays" typename="geob_loc:PAYS_region" nameAtt="NOM" />
+			<typename name="EPCI" typename="geob_loc:EPCI_region" nameAtt="EPCI" /> <typename name="Commune" typename="geob_loc:COMMUNE" nameAtt="NOM_COMM" /> <typename name="Département" typename="geob_loc:DEPARTEMENT" nameAtt="NOM_DEPT" /> <typename name="Pays" typename="geob_loc:PAYS_region" nameAtt="NOM" />
 		    </param>
                   </class>
 		</service>
@@ -683,6 +680,15 @@
  			<output forward="group.list" />
 		</service>
 
+		<service name="jpegphoto.get">
+			<class name=".services.user.JpegPhoto">
+          		<param name="LDAPhost" value="c2cpc83.camptocamp.com" />
+		        <param name="LDAPport" value="636" />
+         		<param name="LDAPbase" value="ou=users,dc=geobretagne,dc=fr" />
+          		<param name="LDAPbindDn" value="cn=admin,dc=geobretagne,dc=fr" />
+          		<param name="LDAPbindPassword" value="gerlsSnFd6SmM" />
+			</class>
+		</service>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<!-- Category services                                             -->
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -1305,6 +1311,8 @@
 			<class name=".services.crs.GetCRS" />
 			<output sheet="crs.xsl" contentType="text/xml; charset=UTF-8" />
 		</service>
+
+
 	</services>
 
 	<!-- ====================================================================== -->

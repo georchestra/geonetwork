@@ -427,7 +427,7 @@ function displayBox(content, contentDivId, modal) {
  * PMT GeoBretagne-Specific
  */
 
-function redirectToExternalApp(destUrl)
+function redirectToExternalApp(destUrl,id)
 {
 
 	var myAjax = new Ajax.Request(

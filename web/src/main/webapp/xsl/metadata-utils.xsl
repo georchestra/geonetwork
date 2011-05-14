@@ -214,7 +214,10 @@
 				<!-- Create child option only for iso19139 schema based metadata -->
 				<xsl:if test="contains(geonet:info/schema, 'iso19139')">
 					<button onclick="load('{/root/gui/locService}/metadata.duplicate.form?uuid={$metadata/geonet:info/uuid}&amp;child=y')"><xsl:value-of select="/root/gui/strings/createChild"/></button>
-				</xsl:if>	
+				</xsl:if>
+
+<!--                <button onclick="redirectToExternalApp('/mapfishapp/')"><xsl:value-of select="/root/gui/strings/viewInViewer"/></button>
+                <button onclick="redirectToExternalApp('/extractorapp/')"><xsl:value-of select="/root/gui/strings/sendToExtractor"/></button>-->
 			</div>
 		</xsl:if>
 	</xsl:template>
