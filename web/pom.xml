@@ -656,6 +656,7 @@
         <artifactId>maven-war-plugin</artifactId>
 	    <version>2.1</version>
         <configuration>
+					<classifier>${server}</classifier>
 <!--          <warSourceDirectory>src/main/geonetwork</warSourceDirectory> -->
           
 <!-- Remove comment tag to include documentation in the build. 
