@@ -1,7 +1,9 @@
 transformFactory=de.fzi.dbs.xml.transform.CachingTransformerFactory
 debug=true
 dataDir=/srv/tomcat/tomcat1/private/data
-uploadDir=${dataDir}/tmp
+uploadDir=${dataDir}/uploads
+luceneDir=${dataDir}/lucene
+htmlCacheDir=${dataDir}/htmlCache
 
 baseUrl=geonetwork
 host=drebretagne-geobretagne.int.lsn.camptocamp.com
