@@ -202,7 +202,7 @@ function get_cookie ( cookie_name )
 		}
 
 		var url = Env.locService +'/' + service;
-		Modalbox.show(url,{title: title, width: width, afterHide: function() {
+		Modalbox.show(url,{title: title, width: width, height: 400, afterHide: function() {
                 if ($("simple_search_pnl").visible()) {
                     runSimpleSearch();
 
