@@ -720,6 +720,5 @@ Python and Latex are required to build the documentation. -->
     <geonetwork.build.dir>${project.build.directory}/${project.build.finalName}</geonetwork.build.dir>
     <geonetwork.webapp.css.dir>${geonetwork.webapp.dir}</geonetwork.webapp.css.dir>
     <minify.verbose>false</minify.verbose>
-    <server>testtomcat</server>
   </properties>
 </project>
