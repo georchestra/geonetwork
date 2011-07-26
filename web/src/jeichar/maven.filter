@@ -1,7 +1,10 @@
 transformFactory=net.sf.saxon.TransformerFactoryImpl
 debug=true
+
 dataDir=../../private/data/
-uploadDir=${dataDir}/tmp
+uploadDir=${dataDir}/uploads
+luceneDir=${dataDir}/lucene
+htmlCacheDir=${dataDir}/htmlCache
 
 baseUrl=geonetwork
 host=localhost:43080
