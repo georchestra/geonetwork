@@ -371,7 +371,7 @@
 										</xsl:otherwise>
 									</xsl:choose>
 									<!-- <input id="selId" name="{$metadata/geonet:info/id}" type="checkbox" /> -->
-									<xsl:value-of select="$metadata/title"/>
+									<a href="{/root/gui/locService}/metadata.show?id={$metadata/geonet:info/id}"><xsl:value-of select="$metadata/title"/></a>
 								</div>
 
 							</xsl:otherwise>
