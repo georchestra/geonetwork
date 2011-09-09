@@ -471,7 +471,7 @@
 							<xsl:with-param name="edit" select="$edit"/>
 							<xsl:with-param name="title" select="/root/gui/strings/file"/>
 							<xsl:with-param name="text">
-								<button class="content" onclick="startFileUpload({/root/gmd:MD_Metadata/geonet:info/id}, '{$ref}');" type="button">
+								<button class="content" onclick="startFileUpload({//geonet:info/id}, '{$ref}');" type="button">
 									<xsl:value-of select="/root/gui/strings/insertFileMode"/>
 								</button>
 							</xsl:with-param>
@@ -2430,7 +2430,7 @@
 	<xsl:template mode="iso19139" match="gmd:CI_OnlineResource[starts-with(gmd:protocol/gco:CharacterString,'OGC:WMS-') and contains(gmd:protocol/gco:CharacterString,'-get-map') and gmd:name]" priority="2">
 		<xsl:param name="schema"/>
 		<xsl:param name="edit"/>
-		<xsl:variable name="metadata_id" select="/root/gmd:MD_Metadata/geonet:info/id" />
+		<xsl:variable name="metadata_id" select="//geonet:info/id" />
 		<xsl:variable name="linkage" select="gmd:linkage/gmd:URL" />
 		<xsl:variable name="name" select="normalize-space(gmd:name/gco:CharacterString|gmd:name/gmx:MimeFileType)" />
 		<xsl:variable name="description" select="normalize-space(gmd:description/gco:CharacterString)" />
@@ -2518,7 +2518,7 @@
 					<xsl:with-param name="schema"  select="$schema"/>
 					<xsl:with-param name="title"  select="/root/gui/strings/interactiveMap"/>
 					<xsl:with-param name="text">
-						<a href="javascript:runIM_selectService('{$linkage}',2,{/root/gmd:MD_Metadata/geonet:info/id})" title="{/root/strings/interactiveMap}">
+						<a href="javascript:runIM_selectService('{$linkage}',2,{//geonet:info/id})" title="{/root/strings/interactiveMap}">							
 							<xsl:choose>
 								<xsl:when test="string($description)!=''">
 									<xsl:value-of select="$description"/>
@@ -2691,7 +2691,7 @@
 					<xsl:with-param name="edit" select="$edit"/>
 					<xsl:with-param name="title" select="/root/gui/strings/file"/>
 					<xsl:with-param name="text">
-						<button class="content" onclick="startFileUpload({/root/gmd:MD_Metadata/geonet:info/id}, '{$ref}');" type="button">
+						<button class="content" onclick="startFileUpload({//geonet:info/id}, '{$ref}');" type="button">
 							<xsl:value-of select="/root/gui/strings/insertFileMode"/>
 						</button>
 					</xsl:with-param>
@@ -2740,7 +2740,7 @@
 					<td  class="padded-content">
 						<button class="content" type="button" onclick="javascript:doFileRemoveAction('{/root/gui/locService}/resources.del','{$ref}','{$access}','{$id}')"><xsl:value-of select="/root/gui/strings/remove"/></button>
 						<xsl:text> </xsl:text>
-						<a class="content repository" onclick="javascript:showGeoPublisherPanel('{/root/gmd:MD_Metadata/geonet:info/id}', '{$value}', '{$access}', 'gmd:onLine', '{../../../../geonet:element/@ref}');" alt="{/root/gui/strings/publishHelp}" title="{/root/gui/strings/geopublisherHelp}"><xsl:value-of select="/root/gui/strings/geopublisher"/></a>
+						<a class="content repository" onclick="javascript:showGeoPublisherPanel('{/root/*/geonet:info/id}', '{$value}', '{$access}', 'gmd:onLine', '{../../../../geonet:element/@ref}');" alt="{/root/gui/strings/publishHelp}" title="{/root/gui/strings/geopublisherHelp}"><xsl:value-of select="/root/gui/strings/geopublisher"/></a>
 					</td>
 				</tr></table>
 			</xsl:with-param>
@@ -2756,8 +2756,8 @@
 	<xsl:template name="iso19139Brief">
 		<metadata>
 			<xsl:variable name="download_check"><xsl:text>&amp;fname=&amp;access</xsl:text></xsl:variable>
-			<xsl:variable name="id" select="/root/gmd:MD_Metadata/geonet:info/id"/>
-			<xsl:variable name="uuid" select="/root/gmd:MD_Metadata/geonet:info/uuid"/>
+			<xsl:variable name="id" select="geonet:info/id"/>
+			<xsl:variable name="uuid" select="geonet:info/uuid"/>
 			<xsl:variable name="langId">
 				<xsl:call-template name="getLangId">
 					<xsl:with-param name="langGui" select="/root/gui/language"/>
@@ -3855,4 +3855,3 @@
 	<xsl:template mode="addXMLFragment" match="*|@*"></xsl:template>
 	
 </xsl:stylesheet>
-
