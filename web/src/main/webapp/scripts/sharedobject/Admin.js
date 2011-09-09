@@ -187,6 +187,9 @@ sharedobject.Admin.gridContainer = new Ext.Panel({
             items: sharedobject.Admin.typeGrid
         });
 sharedobject.Admin.init = function() {
+    if (!Ext.getDom('north')) {
+	return;
+    }
     new Ext.Viewport({
         layout: 'border',
         items: [
