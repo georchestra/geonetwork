@@ -18,7 +18,7 @@
 
 
 	<deadlinks>Liens morts</deadlinks>
-	<deadchildparentlinks>Lien parent / enfant morts</deadchildparentlinks>
+	<deadchildparentlinks>Liens parent/enfant morts</deadchildparentlinks>
 	<deadlinkscheck>Vérifier les liens morts</deadlinkscheck>
 	<deadlinkscheckDes>Affiche une page recensant les liens morts au sein des métadonnées</deadlinkscheckDes>
 	<createChild>Créer un enfant</createChild>
@@ -121,8 +121,8 @@
 	<searchText js="true">Text search</searchText>
 	<mdTitle js="true">Titre de la métadonnée</mdTitle>
 	<createRelation js="true">Créer la relation</createRelation>
-	<export>Exporter</export>
-	<exportText>Export (TXT)</exportText>
+	<export>Exporter vers un autre catalogue (XML)</export>
+	<exportText>Exporter vers un tableur</exportText>
 	<addXMLFragment>Ajouter depuis un dictionnaire ...</addXMLFragment>
 	<translateWithGoogle>Utiliser le service de traduction de Google pour proposer une traduction pour la langue sélectionnée.</translateWithGoogle>
 	<translateWithGoogle.maxSize js="true">Le texte à traduire dépasse les 5000 caractères (voir http://code.google.com/apis/ajaxlanguage/terms.html).</translateWithGoogle.maxSize>
@@ -603,7 +603,7 @@
 	<saveAndClose>Sauver et fermer</saveAndClose>
 	<saveAndValidate>Sauver et valider</saveAndValidate>
 	<savepdf>Visualiser les résultats de la recherche au format pdf</savepdf>
-	<printSelection>Imprimer au PDF</printSelection>
+	<printSelection>Imprimer au format PDF</printSelection>
 	<schema>Schéma</schema>
 	<schematronError>Erreur Schematron</schematronError>
 	<search>Rechercher</search>
@@ -621,10 +621,10 @@
 	<selectAll>Tout sélectionner</selectAll>
 	<selectAllNotPossible>Trop d'enregistrement ! Doit être inférieur à </selectAllNotPossible>
 	<selected> selectionné(s)</selected>
-	<selectedOnly>Afficher la sélection</selectedOnly>
+	<selectedOnly>Afficher uniquement la sélection</selectedOnly>
 	<selection>Sélection</selection>
 	<selectNone>Unselect metadata selected</selectNone>
-	<sendToExtractor>Envoyer à l'extrateur</sendToExtractor>
+	<sendToExtractor>Extraire les données</sendToExtractor>
 	<server>Serveur</server>
 	<setAll>Tous</setAll>
 	<setOnSave>Valeur définie lors de la sauvegarde</setOnSave>
@@ -704,7 +704,7 @@
 	<validityEnds> et fin </validityEnds>
 	<view>Voir</view>
 	<viewInGE>Google Earth</viewInGE>
-	<viewInViewer>Visualisation Mapfish</viewInViewer>
+	<viewInViewer>Visualiser les données</viewInViewer>
 	<voice js="true">Téléphone</voice>
 	<waitGetCap js="true">Chargement en cours ...</waitGetCap>
 	<website js="true">Site internet</website>

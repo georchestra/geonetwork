@@ -1,18 +1,20 @@
 Ext.ns("sharedobject.Admin");
 
 
-sharedobject.Admin.typeStore = new Ext.data.XmlStore({
+sharedobject.Admin.typeStore = new Ext.data.Store({
     autoLoad: true,
     autoDestroy: true,
     remoteSort: false,
     storeId: 'typestore',
-    record: 'type',
+    reader: new Ext.data.XmlReader({
+	fields: [{name:'type', mapping:'name'}],
+	record: 'type'
+    }),
     proxy: new Ext.data.HttpProxy({
         url: Env.locService+'/xml.sharedobject.types.list',
-		method: 'GET'
+	method: 'GET'
      }),
-     idPath: 'type',
-    fields: [{name:'type', mapping:'name'}]
+     idPath: 'type'
 });
 sharedobject.Admin.typeCombo = new Ext.form.ComboBox({
     id: 'type-combo',
@@ -185,6 +187,9 @@ sharedobject.Admin.gridContainer = new Ext.Panel({
             items: sharedobject.Admin.typeGrid
         });
 sharedobject.Admin.init = function() {
+    if (!Ext.getDom('north')) {
+	return;
+    }
     new Ext.Viewport({
         layout: 'border',
         items: [
