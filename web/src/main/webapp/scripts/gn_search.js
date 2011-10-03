@@ -344,8 +344,11 @@ function resetAdvancedSearch()
 	radioSimil[1].checked=true;
 	setParam('relation','overlaps');
 
- 	var cmp = Ext.getCmp(GnSearch.advRegionId+'_cmp')
- 	cmp.reset()
+ 	var cmp = Ext.getCmp(GnSearch.advRegionId+'_cmp');
+ 	if (cmp) {
+        cmp.reset();
+    }
+
 
 	$('northBL').value='49.3025';
 	$('southBL').value='46.96115';

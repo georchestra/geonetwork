@@ -619,7 +619,7 @@
 	<searchUnusedTitle>Métadonnées inutilisées</searchUnusedTitle>
 	<select>Sélectionner : </select>
 	<selectAll>Tout sélectionner</selectAll>
-	<selectAllNotPossible>Trop d'enregistrement ! Doit être inférieur à </selectAllNotPossible>
+	<selectAllNotPossible>Trop d&#39;enregistrement ! Doit être inférieur à </selectAllNotPossible>
 	<selected> selectionné(s)</selected>
 	<selectedOnly>Afficher uniquement la sélection</selectedOnly>
 	<selection>Sélection</selection>
