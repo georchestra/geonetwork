@@ -503,7 +503,11 @@ public class LuceneQueryBuilder {
 			BooleanClause categoriesClause = null;
             for (String category : categories) {
                 if (category != null) {
-                    category = category.trim();
+                	category = category.trim();
+                	// PIGMA issue #2034:
+                	// During lucene indexation, categories are lowercased
+                	category = category.toLowerCase();
+                	
                     if (category.length() > 0) {
                         BooleanClause categoryClause = notRequiredTextField(category, LuceneIndexField.CAT, similarity);
                         if (categoryClause != null) {

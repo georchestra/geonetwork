@@ -29,6 +29,9 @@ GeoNetwork.miniapp = function() {
     
     var extentBox;
   
+    // PMT C2C (PIGMA #2030): in georchestra, this field
+    // has been removed (see searchform_simple_template.xsl)
+    // hence this variable is null.
     var regionControl;
     
     /**
@@ -128,10 +131,11 @@ GeoNetwork.miniapp = function() {
 
         
         extentBox.events.register("finishBox", null, function(evt) {
-             regionControl.selectedIndex=1;
-             
+             if (regionControl) {
+                regionControl.selectedIndex=1;
+             }
              if (synchMinimap) {
-                synchMinimap.synch(regionControl.selectedIndex);
+                synchMinimap.synch(1);
              }
         });
         
@@ -235,7 +239,9 @@ GeoNetwork.miniapp = function() {
         },
         
         synch: function(regionIndex) {
-            $(regionControl).selectedIndex = regionIndex;
+	    if (regionControl) {
+                $(regionControl).selectedIndex = regionIndex;
+            }
             updateMap(false);
         },
         

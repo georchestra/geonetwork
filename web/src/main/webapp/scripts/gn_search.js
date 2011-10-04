@@ -32,8 +32,9 @@ function initSimpleSearch(wmc)
 
 function gn_anyKeyObserver(e)
 {
-	if(e.keyCode == Event.KEY_RETURN)
+	if(e.keyCode == Event.KEY_RETURN) {
 		runSimpleSearch();
+	  }
 }
 
 function runCsvSearch() {
@@ -41,8 +42,8 @@ function runCsvSearch() {
     if ($("advanced_search_pnl").visible()) {
         serviceUrl = serviceUrl + "?" + fetchParam('template');
 	}
-    window.open(serviceUrl, 'csv')
-    metadataselect(0, 'remove-all');
+  window.open(serviceUrl, 'csv');
+  metadataselect(0, 'remove-all');
 }
 
 
@@ -65,62 +66,77 @@ function runPdfSearch(onSelection) {
 		location.replace (serviceUrl);
 		check(false);
 	} else {
-	    if (document.cookie.indexOf("search=advanced")!=-1)
+	    if (document.cookie.indexOf("search=advanced")!=-1) {
 	        runAdvancedSearch("pdf");
-	    else
+		}
+	    else {
 	        runSimpleSearch("pdf");
+		}
 	}
 }
 
-function runSimpleSearch(type)
-{
-    if (type != "pdf")
+function runSimpleSearch(type) {
+    if (type != "pdf") {
         preparePresent();
+    }
+    setSort();
+    var pars = "any=" + encodeURIComponent($('any') .value);
+    // useless
+    //var region = $(GnSearch.simpleRegionId).value;
+    // PMT C2C: If a bounding box is drawn,
+    // we need to take it into account while
+    // calling gn_search()
+    var map = GeoNetwork.minimapSimpleSearch.getMap();
+    if (map) {
+        var layers = map.getLayersByName('ExtentBox');
+        if (layers.length > 0) {
+          var simpleSearchLayer = layers[0];
+          if (simpleSearchLayer.features.length == 1) {
+              pars += "&" + im_mm_getURLselectedbbox();
+              pars += fetchParam('relation');
+              pars += "&attrset=geo";
+          }
+        }
+    }
 
-	setSort();
+    pars += fetchParam('sortBy');
+    pars += fetchParam('sortOrder');
+    pars += fetchParam('hitsPerPage');
+    pars += fetchParam('output');
 
-	var pars = "any=" + encodeURIComponent($('any') .value);
-
-	var region = $(GnSearch.simpleRegionId).value;
-
-	pars += fetchParam('sortBy');
-	pars += fetchParam('sortOrder');
-	pars += fetchParam('hitsPerPage');
-	pars += fetchParam('output');
-
-	if (type == "pdf")
-       gn_searchpdf(pars);
-    else
-	   // Load results via AJAX
-	   gn_search(pars);
+    if (type == "pdf") {
+        gn_searchpdf(pars);
+    } else {
+        // Load results via AJAX
+        gn_search(pars);
+    }
 }
 
-function resetSimpleSearch()
-{
-/* make sure all values are completely reset (instead of just using the default
+function resetSimpleSearch() {
+  /* make sure all values are completely reset (instead of just using the default
    form.reset that would only return to the values stored in the session */
-    setParam('any','');
-    setParam('relation','overlaps');
+  setParam('any','');
+  setParam('relation','overlaps');
 
-   	var cmp = Ext.getCmp(GnSearch.simpleRegionId+'_cmp')
-   	cmp.reset()
+  var cmp = Ext.getCmp(GnSearch.simpleRegionId+'_cmp')
+  cmp.reset()
 
-  	$('northBL').value='49.3025';
-  	$('southBL').value='46.96115';
-  	$('eastBL').value='-0.7236500000000001';
-  	$('westBL').value='-5.43';
+  $('northBL').value='49.3025';
+  $('southBL').value='46.96115';
+  $('eastBL').value='-0.7236500000000001';
+  $('westBL').value='-5.43';
 
-	resetMinimaps();
-    // FIXME: maybe we should zoom back to a fullExtent (not to the whole world)
-    //im_mm_redrawAoI();
-    //im_mm_zoomToAoI();
-    setParam('sortBy',      'relevance');
-    setParam('sortBy_simple',      'relevance');
-    setParam('sortOrder',   '');
-    setParam('hitsPerPage', '10');
-    setParam('hitsPerPage_simple', '10');
-    setParam('output',      'full');
-    setParam('output_simple',      'full');
+  resetMinimaps();
+  // FIXME: maybe we should zoom back to a fullExtent (not to the whole world)
+  //im_mm_redrawAoI();
+  //im_mm_zoomToAoI();
+  setParam('sortBy',      'relevance');
+  setParam('sortBy_simple',      'relevance');
+  setParam('sortOrder',   '');
+  setParam('hitsPerPage', '10');
+  setParam('hitsPerPage_simple', '10');
+  setParam('output',      'full');
+  setParam('output_simple',      'full');
 
 }
 
@@ -131,14 +147,14 @@ function resetMinimaps() {
     if (minimap) {
         var pnl = Ext.getCmp('mini_mappanel_ol_minimap1');
         pnl.map.setCenter(pnl.center, pnl.zoom);
-    }	
-	
+    }
+
 	GeoNetwork.minimapAdvancedSearch.clearExtentBox();
     minimap =  GeoNetwork.minimapAdvancedSearch.getMap();
     if (minimap) {
         var pnl = Ext.getCmp('mini_mappanel_ol_minimap2');
         pnl.map.setCenter(pnl.center, pnl.zoom);
-    }	
+    }
 }
 /********************************************************************
 *
@@ -304,7 +320,7 @@ function runAdvancedSearch(type)
         if (inspire.checked) pars += "&inspire=true";
     }
     // Inspire
-    
+
     if (type == "pdf")
        gn_searchpdf(pars);
     else
@@ -328,8 +344,11 @@ function resetAdvancedSearch()
 	radioSimil[1].checked=true;
 	setParam('relation','overlaps');
 
- 	var cmp = Ext.getCmp(GnSearch.advRegionId+'_cmp')
- 	cmp.reset()
+ 	var cmp = Ext.getCmp(GnSearch.advRegionId+'_cmp');
+ 	if (cmp) {
+        cmp.reset();
+    }
+
 
 	$('northBL').value='49.3025';
 	$('southBL').value='46.96115';
@@ -368,7 +387,7 @@ function resetAdvancedSearch()
     setParam('topicCat',      '');
     // reset INSPIRE options
     resetInspireOptions();
-    // End reset INSPIRE options    
+    // End reset INSPIRE options
 
 }
 
@@ -540,7 +559,7 @@ function getRegion(typename, region)
     var pars = "bboxId="+region+"&typename="+typename;
 
     var myAjax = new Ajax.Request(
-        getGNServiceURL('xml.region.list'), 
+        getGNServiceURL('xml.region.list'),
         {
             method: 'get',
             parameters: pars,
@@ -565,7 +584,7 @@ function getRegion_complete(req) {
 
 	GeoNetwork.minimapSimpleSearch.updateExtentBox();
 	GeoNetwork.minimapAdvancedSearch.updateExtentBox();
-	
+
     //im_mm_redrawAoI();
     //im_mm_zoomToAoI();
 }
@@ -600,7 +619,7 @@ function AoIrefresh() {
 
   cmp = Ext.getCmp(GnSearch.advRegionId+'_cmp')
  	cmp.setValue(GnSearch.userdefined)
- 	
+
   $('updateBB').style.visibility="visible";
 }
 
@@ -1089,7 +1108,7 @@ function toggleInspire() {
 
 function toggleWhen() {
   $("whensearchfields").toggle();
- 
+
   var src = $("i_when").getAttribute('src');
   var ndx = src.lastIndexOf('/');
 
@@ -1120,7 +1139,7 @@ function addSelectedWMSLayers(metadataIdForm) {
 }
 
 /********************************************************************
-* 
+*
 *  Show list of addable interactive maps
 *
 ********************************************************************/
@@ -1128,41 +1147,41 @@ function addSelectedWMSLayers(metadataIdForm) {
 /**
  * This method is called by the "Interactive map [+]" button in a displayed metadata.
  * It will display the metadata distribution info in a div .
- *  
+ *
  * @param {int} id   		The Geonetwork metadata id
  */
-function gn_showInterList(id) 
+function gn_showInterList(id)
 {
     var pars = 'id=' + id + "&currTab=distribution";
-    
+
     // Change button appearance
     $('gn_showinterlist_' + id) .hide();
     $('gn_loadinterlist_' + id) .show();
-    
+
     var myAjax = new Ajax.Request(
-        getGNServiceURL('metadata.show.embedded'), 
+        getGNServiceURL('metadata.show.embedded'),
         {
             method: 'get',
             parameters: pars,
             onSuccess: function (req) {
-                // This is a normally invisible DIV below every MD 
+                // This is a normally invisible DIV below every MD
                 var parent = $('ilwhiteboard_' + id);
                 clearNode(parent);
                 parent.show();
-                
+
                 $('gn_loadinterlist_' + id) .hide();
                 $('gn_hideinterlist_' + id) .show();
-                
+
                 // create new element
                 var div = document.createElement('div');
                 div.className = 'metadata_current';
-				div.style.width = '100%'; 
+				div.style.width = '100%';
                 $(div).hide();
                 parent.appendChild(div);
-                
+
                 div.innerHTML = req.responseText;
                 Effect.BlindDown(div);
-                
+
                 var tipman = new TooltipManager();
                 ker.loadMan.wait(tipman);
             },
@@ -1173,10 +1192,10 @@ function gn_showInterList(id)
 /**
  * This method is called by the "Interactive map [-]" button in a displayed metadata.
  * It will hide and delete the div displaying the metadata distribution info.
- *  
+ *
  * @param {int} id   		The Geonetwork metadata id
  */
-function gn_hideInterList(id) 
+function gn_hideInterList(id)
 {
     var parent = $('ilwhiteboard_' + id);
     var div = parent.firstChild;
@@ -1306,10 +1325,10 @@ function resetInspireOptions() {
 function clearNode(node)
 {
 	var enode = $(node);
-	while (enode.firstChild) 
+	while (enode.firstChild)
 	{
 		enode.removeChild(enode.firstChild);
-	}			
+	}
 }
 
 function im_mm_getURLselectedbbox()
