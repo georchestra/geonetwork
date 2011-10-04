@@ -68,6 +68,8 @@
 		<link rel="stylesheet" type="text/css" href="{/root/gui/url}/geonetwork.css"/>
 		<link rel="stylesheet" type="text/css" href="{/root/gui/url}/modalbox.css"/>
 		<xsl:apply-templates mode="css" select="/"/>
+		<!-- ExtJS gray theme -->
+		<link rel="stylesheet" type="text/css" href="{/root/gui/url}/scripts/ext/resources/css/xtheme-gray.css" />
 		
 		<!-- JS -->
 		<xsl:call-template name="jsHeader"/>
