@@ -26,8 +26,8 @@
     
     <field name="gmd:CI_OnlineResource">
 		<suggest name="gmd:protocol"/>
-		<!-- <suggest name="gmd:name"/> comment even if mandatory and useful for WMS
-		<suggest name="gmd:description"/> -->
+		<suggest name="gmd:name"/>
+                <suggest name="gmd:description"/>
 	</field>
 	
   
