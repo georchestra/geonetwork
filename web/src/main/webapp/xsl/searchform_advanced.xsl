@@ -822,7 +822,7 @@
 		</div>
 		
 		<div class="row">
-			<input value="" name="radfrom" id="radfrom1" type="radio" disabled="disabled">
+			<input value="" name="radfrom" id="radfrom1" type="radio">
 					<xsl:if test="string(/root/gui/searchDefaults/dateFrom)!='' and string(/root/gui/searchDefaults/dateTo)!=''">
 						<xsl:attribute name="checked">CHECKED</xsl:attribute>
 					</xsl:if>
@@ -834,25 +834,24 @@
 			<xsl:value-of select="/root/gui/strings/from"/>
 			<input style="width: 90px;" readonly="READONLY" id="dateFrom" value="{/root/gui/searchDefaults/dateFrom}" name="dateFrom" class="inpBnds" type="text"
 				onchange="JavaScript:$('extFrom').value ='';$('extTo').value ='';
-						  $('radfrom1').checked=true;$('radfrom1').disabled='';$('radfromext1').disabled='disabled';"/>
+						  $('radfrom1').checked=true;"/>
 			<img title="{/root/gui/strings/fromDateSelector}" style="cursor: pointer; margin-bottom: 6px; margin-right:10px;" id="from_trigger_c" 
 				src="{/root/gui/url}/scripts/calendar/img.gif" alt="{/root/gui/strings/fromDateSelector}" align="middle" hspace="1"/>
 					
 			<xsl:value-of select="/root/gui/strings/to"/>
 			<input style="width: 90px;" readonly="READONLY" id="dateTo" value="{/root/gui/searchDefaults/dateTo}" name="dateTo" class="inpBnds" type="text"
 				onchange="JavaScript:$('extFrom').value ='';$('extTo').value ='';
-						  $('radfrom1').checked=true;$('radfrom1').disabled='';$('radfromext1').disabled='disabled';" />
+						  $('radfrom1').checked=true;" />
 			<img title="{/root/gui/strings/toDateSelector}" style="cursor: pointer; margin-bottom: 6px;" id="to_trigger_c" 
 				src="{/root/gui/url}/scripts/calendar/img.gif" alt="{/root/gui/strings/toDateSelector}" align="middle" hspace="1"/>
 				
-<!--				<div onclick="JavaScript:$('dateFrom').value ='';$('dateTo').value ='';" style="cursor: pointer;"><xsl:value-of select="/root/gui/strings/clear"/></div> -->
 			<img title="{/root/gui/strings/clear}" style="cursor: pointer; margin-bottom: 6px;" id="clearDates1" 
 				src="{/root/gui/url}/images/clear_left.png" alt="{/root/gui/strings/clear}" align="middle" 
-				hspace="1" onclick="JavaScript:$('dateFrom').value ='';$('dateTo').value ='';"/> <!-- $('radfrom0').checked=true;$('radfrom1').disabled='disabled';$('radfromext1').disabled='disabled';"/> -->
+				hspace="1" onclick="JavaScript:$('dateFrom').value ='';$('dateTo').value ='';"/>
 		</div>
 		
 		<div class="row">
-			<input value="" name="radfrom" id="radfromext1" type="radio" disabled="disabled">
+			<input value="" name="radfrom" id="radfromext1" type="radio">
 					<xsl:if test="string(/root/gui/searchDefaults/extFrom)!='' and string(/root/gui/searchDefaults/extTo)!=''">
 						<xsl:attribute name="checked" />
 					</xsl:if>
@@ -864,20 +863,20 @@
 			<xsl:value-of select="/root/gui/strings/from"/>
 			<input style="width: 90px;" readonly="READONLY" id="extFrom" value="{/root/gui/searchDefaults/extFrom}" name="extFrom" class="inpBnds" type="text"
 				onchange="JavaScript:$('dateFrom').value ='';$('dateTo').value ='';
-						  $('radfromext1').checked=true;$('radfromext1').disabled='';$('radfrom1').disabled='disabled';"/>
+						  $('radfromext1').checked=true;"/>
 			<img title="{/root/gui/strings/fromDateSelector}" style="cursor: pointer; margin-bottom: 6px; margin-right:10px;" id="extfrom_trigger_c" 
 				src="{/root/gui/url}/scripts/calendar/img.gif" alt="{/root/gui/strings/fromDateSelector}" align="middle" hspace="1"/>
 					
 			<xsl:value-of select="/root/gui/strings/to"/>
 			<input  style="width: 90px;" readonly="READONLY" id="extTo" value="{/root/gui/searchDefaults/extTo}" name="extTo" class="inpBnds" type="text"
 				onchange="JavaScript:$('dateFrom').value ='';$('dateTo').value ='';
-						  $('radfromext1').checked=true;$('radfromext1').disabled='';$('radfrom1').disabled='disabled';" />
+						  $('radfromext1').checked=true;" />
 			<img title="{/root/gui/strings/toDateSelector}" style="cursor: pointer; margin-bottom: 6px;" id="extto_trigger_c" 
 				src="{/root/gui/url}/scripts/calendar/img.gif" alt="{/root/gui/strings/toDateSelector}" align="middle" hspace="1"/>
 												
 			<img title="{/root/gui/strings/clear}" style="cursor: pointer; margin-bottom: 6px;" id="clearDates2" 
 				src="{/root/gui/url}/images/clear_left.png" alt="{/root/gui/strings/clear}" align="middle" 
-				hspace="1" onclick="JavaScript:$('extFrom').value ='';$('extTo').value ='';"/> <!-- $('radfrom0').checked=true;$('radfromext1').disabled='disabled';$('radfrom1').disabled='disabled';"/> -->
+				hspace="1" onclick="JavaScript:$('extFrom').value ='';$('extTo').value ='';"/>
 		</div>
 		
 	</div>
