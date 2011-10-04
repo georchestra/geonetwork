@@ -6,18 +6,38 @@
   -->
   <xsl:template name="banner">
 
+    <!-- integrating geOrchestra header -->
+    <!-- TODO: only include this header.css file and block code (<div id="go_head">) if we don't have noheader=true in the GET parameters-->
+    <link href='/static/css/header.css' rel='stylesheet' type='text/css' />
+    <div id="go_head">
+        <a href="/" id="go_home" title="retourner à l’accueil">
+            <img src="/static/img/logo.png" alt="geOrchestra" height="50"/>
+        </a>
+        <ul>
+            <li class="active"><a href="#">catalogue</a></li>
+            <li><a href="/mapfishapp/">visualiseur</a></li>
+            <!-- TODO: check user groups to show/hide editor and phpldapadmin items in this list -->
+            <li><a href="/mapfishapp/edit">éditeur</a></li>
+            <li><a href="/extractorapp/">extracteur</a></li>
+            <li><a href="/geoserver/web/">services</a></li>
+            <li><a href="/phpldapadmin">utilisateurs</a></li>
+          </ul>
+          <xsl:choose>
+          <xsl:when test="string(/root/gui/login/userId)=''">
+            <p class="logged">
+                <a href="?login">connexion</a>
+            </p>
+          </xsl:when>
+          <xsl:otherwise>
+            <p class="logged">
+                <xsl:value-of select="/root/gui/strings/user"/><span> | </span><a href="/j_spring_security_logout">déconnexion</a>
+            </p>
+          </xsl:otherwise>
+        </xsl:choose>
+    </div>
+    <!-- end TODO -->
+
 	<table width="100%">
-
-	  <!-- title -->
-	  <tr class="banner">
-		<td class="banner">
-		  <img src="{/root/gui/url}/images/header-left.jpg" alt="World picture" align="top" />
-		</td>
-		<td align="right" class="banner">
-		  <img src="{/root/gui/url}/images/header-right.gif" alt="GeoNetwork opensource logo" align="top" />
-		</td>
-	  </tr>
-
 	  <!-- buttons -->
 	  <tr class="banner">
 		<td class="banner-menu" width="380px">
@@ -127,12 +147,15 @@
 			<!-- FIXME: should also contain links to last results and metadata -->
 
 			<!-- login -->
+            
+            <!-- TODO: show this <tr class="banner"> if noheader=true is present in the GET parameters -->
+            <!--
 			<tr class="banner">
 				<td class="banner-login" align="right" width="380px">
 					<!-- FIXME
 					<button class="banner" onclick="goSubmit('{/root/gui/service}/es/main.present')">Last search results (11-20 of 73)</button>
 					<a class="banner" href="{/root/gui/service}/es/main.present">Last search results (11-20 of 73)<xsl:value-of select="/root/gui/strings/results"/></a>
-					-->
+					--
 				</td>
 				<xsl:choose>
 					<xsl:when test="string(/root/gui/login/userId)!=''">
@@ -140,7 +163,7 @@
 						<!--  PMT security proxy modification
 						was :
 						<form name="logout" action="{/root/gui/locService}/user.logout" method="post">
-						-->
+						--
 						<div id="jpegPhoto-tip">
 						<script language="JavaScript" type="text/javascript">
 						Ext.onReady(function(){
@@ -156,29 +179,30 @@
 								Ext.QuickTips.init();
 						});
 						</script>
-						<!--  end PMT security proxy modification -->
+						<!--  end PMT security proxy modification --
 						<xsl:value-of select="/root/gui/strings/user"/>
 						<xsl:text>: </xsl:text>
 						<xsl:value-of select="/root/gui/login/name"/>
 						<xsl:text> </xsl:text>
 						<xsl:value-of select="/root/gui/login/surname"/>
 						<xsl:text> </xsl:text>
-						<!-- PMT security proxy modification : Redirect to the CAS / SP logout -->
+						<!-- PMT security proxy modification : Redirect to the CAS / SP logout --
 						</div>
 						<button class="banner" onclick="document.location='/j_spring_security_logout';"><xsl:value-of select="/root/gui/strings/logout"/></button>
-						<!-- End PMT security proxy mod -->
+						<!-- End PMT security proxy mod --
 						</td>
 
 					</xsl:when>
 					<xsl:otherwise>
-						<!-- PMT security proxy modification : Redirect to the CAS / SP login -->
+						<!-- PMT security proxy modification : Redirect to the CAS / SP login --
 						<td align="right" class="banner-login">
 						<a class="button" href="/geonetwork/?login">login</a>
 						</td>
-						<!--  END PMT security proxy / CAS modification -->
+						<!--  END PMT security proxy / CAS modification --
 					</xsl:otherwise>
 				</xsl:choose>
 			</tr>
+            -->
 		</table>
 	</xsl:template>
 
