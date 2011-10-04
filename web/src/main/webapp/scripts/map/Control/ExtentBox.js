@@ -244,7 +244,7 @@ GeoNetwork.Control.ExtentBox = OpenLayers.Class(OpenLayers.Control, {
      */
     getOrCreateLayer: function() {
         if (!this.vectorLayer) {
-            this.vectorLayer = this.vectorLayer || new OpenLayers.Layer.Vector(
+            this.vectorLayer = new OpenLayers.Layer.Vector(
                 "ExtentBox", {
                 style: this.vectorLayerStyle
             });
