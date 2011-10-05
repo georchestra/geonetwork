@@ -30,7 +30,7 @@
           </xsl:when>
           <xsl:otherwise>
             <p class="logged">
-                <xsl:value-of select="/root/gui/strings/user"/><span> | </span><a href="/j_spring_security_logout">déconnexion</a>
+                <xsl:value-of select="/root/gui/login/userId"/><span> | </span><a href="/j_spring_security_logout">déconnexion</a>
             </p>
           </xsl:otherwise>
         </xsl:choose>
