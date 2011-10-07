@@ -606,6 +606,7 @@
               <environmentVariables>
                 <ANT_OPTS>-client</ANT_OPTS>
               </environmentVariables>
+              <commandlineArgs>inspire</commandlineArgs>
               <workingDirectory>${basedir}/../schematrons</workingDirectory>
             </configuration>
           </execution>

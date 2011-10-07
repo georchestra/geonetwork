@@ -643,7 +643,6 @@
     
 <!--    <module>docs</module> -->
     <module>cachingxslt</module>
-    <module>schematrons</module>
     <module>jeeves</module> 
     <module>oaipmh</module>
     <module>sde</module>
