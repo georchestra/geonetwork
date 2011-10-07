@@ -27,7 +27,10 @@
 		<ant target="clean-schema-dir">
 			<property name="schema" value="iso19139" />
 		</ant>
-	</target>
+ 		<ant target="clean-schema-dir">
+			<property name="schema" value="iso19139.fra" />
+		</ant>
+              </target>
 
 	<target name="clean-schema-dir">
 		<property name="schema" value="" />
@@ -83,7 +86,7 @@
 		</ant>
 		<ant target="publish-schematron">
 			<property name="rules" value="geonetwork" />
-			<property name="schema" value="iso19139" />
+			<property name="schema" value="iso19139.fra" />
 		</ant>
 	</target>
 
@@ -95,7 +98,23 @@
 		<ant target="publish-schematron">
 			<property name="rules" value="inspire" />
 			<property name="schema" value="iso19139" />
+                </ant>
+
+                <!-- Adding schematron rules for iso19139.fra -->
+                <ant target="publish-schematron">
+			<property name="rules" value="geonetwork" />
+			<property name="schema" value="iso19139.fra" />
 		</ant>
+		<ant target="publish-schematron">
+			<property name="rules" value="iso" />
+			<property name="schema" value="iso19139.fra" />
+		</ant>
+		<ant target="publish-schematron">
+			<property name="rules" value="inspire" />
+			<property name="schema" value="iso19139.fra" />
+		</ant>
+ 
+
 	</target>
 
 
@@ -117,10 +136,10 @@
 			<property name="rules" value="inspire" />
 			<property name="schema" value="iso19139.fra" />
 		</ant>
-		<ant target="publish-schematron">
+                <ant target="publish-schematron">
 			<property name="rules" value="iso-fra" />
 			<property name="schema" value="iso19139.fra" />
-		</ant>
+                </ant>
 	</target>
 
 	<target name="compile-schematron" description="Produce stylesheets for schematron reporting">
