@@ -402,7 +402,7 @@
 			</div>
 			
 			<!-- Advanced search panel -->
-			<div id="advanced_search_pnl">
+			<div id="advanced_search_pnl" style="display: none;">
 				<xsl:call-template name="advanced_search_content"/>
 			</div>
 			
