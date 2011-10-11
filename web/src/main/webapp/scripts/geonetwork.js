@@ -437,9 +437,9 @@ function redirectToExternalApp(destUrl, id)
 				parameters: (typeof id == 'undefined') ? '' : 'id=' + id,
 				onSuccess: function(req)
 				{
-				var xmlResponse = req.responseText;
-				var jsFromXml = new OpenLayers.Format.XML().read(xmlResponse);
-				var jsonDatas = "{\"services\":[";
+				var jsFromXml = req.responseXML || new OpenLayers.Format.XML().read(req.responseText);
+
+                                var jsonObject = {services: [], layers: []};
 
 				/*
 				 * Implementing rules from the wiki :
@@ -454,64 +454,64 @@ function redirectToExternalApp(destUrl, id)
 				 *  window for the user to select layers
 				 *
 				 */
-				var countWmc = 0;
-				var countWms = 0;
+				var wmcCount = 0;
+				var wmsCount = 0;
 
-				Ext.each(jsFromXml.getElementsByTagName('service'), function(item, index, array)
-						{
-					if (index != 0)
-					{
-						jsonDatas += ",";
-					}
-					jsonDatas += "{\"text\":\""+ item.getAttribute('text')
-					+ "\",\"metadataURL\":\"" + Env.host + Env.locService + "/metadata.show?id=" + item.getAttribute('mdid')
-					+ "\",\"owstype\":\"" + item.getAttribute('owstype')
-					+ "\",\"owsurl\":\"" + item.getAttribute('owsurl')
-					+ "\"}";
-						if (item.getAttribute('owstype') == "WMC")
-							countWmc++;
-						else if(item.getAttribute('owstype') == "WMS")
-							countWms++;
-						});
 
-				jsonDatas += "],\"layers\":[";
+				Ext.each(jsFromXml.getElementsByTagName('service'), function(item, index, array) {
+                                  var owsType = item.getAttribute('owstype');
 
-				Ext.each(jsFromXml.getElementsByTagName('layer'), function(item, index, array)
-						{
-					if (index != 0)
-					{
-						jsonDatas += ",";
-					}
-					jsonDatas += "{\"layername\":\""+ item.getAttribute('layername')
-					+ "\",\"metadataURL\":\"" + Env.host + Env.locService + "/metadata.show?id=" + item.getAttribute('mdid')
-					+ "\",\"owstype\":\"" + item.getAttribute('owstype')
-					+ "\",\"owsurl\":\"" + item.getAttribute('owsurl')
-					+ "\"}";
-						if (item.getAttribute('owstype') == "WMC")
-							countWmc++;
-						else if(item.getAttribute('owstype') == "WMS")
-							countWms++;
-						});
+                                  jsonObject.services.push({
+                                      text: item.getAttribute('text'),
+                                      metadataURL: Env.host + Env.locService + "/metadata.show?id=" + item.getAttribute('mdid'),
+                                      owstype: owsType,
+                                      owsurl: item.getAttribute('owsurl')
+                                  });
 
-				jsonDatas += "]}";
+                                  switch (owsType) {
+                                      case 'WMC':
+                                        wmcCount += 1;
+                                        break;
+                                      case 'WMS':
+                                        wmsCount += 1;
+                                        break;
+                                  }
+                                });
+
+				Ext.each(jsFromXml.getElementsByTagName('layer'), function(item, index, array) {
+                                    var owsType = item.getAttribute('owstype');
+
+                                    jsonObject.layers.push({
+                                        layername: item.getAttribute('layername'),
+                                        metadataURL: Env.host + Env.locService + "/metadata.show?id=" + item.getAttribute('mdid'),
+                                        owstype: owsType,
+                                        owsurl: item.getAttribute('owsurl')
+                                    });
+
+                                    switch (owsType) {
+                                        case 'WMC':
+                                          wmcCount += 1;
+                                          break;
+                                        case 'WMS':
+                                          wmsCount += 1;
+                                          break;
+                                    }
+                                });
 
 				/* Checking inputs - rule #1 */
-				if (countWmc > 1)
-				{
+				if (wmcCount > 1) {
 					alert(translate("invalidSelectionMoreThanOneWMC"));
 					return;
 				}
 				/* rule #2 */
-				if ((countWmc > 0) && (countWms > 0))
-				{
+				if ((wmcCount > 0) && (wmsCount > 0)) {
 					alert(translate("invalidSelectionOneWMCandOneOrMoreWMS"));
 					return;
 				}
 				/* new rule : No data (no WMS nor WMC) available into
 				 * selected MDs. Alerting the user
 				 */
-				if ((countWmc == 0) && (countWms == 0))
-				{
+				if ((wmcCount == 0) && (wmsCount == 0)) {
 					alert(translate("invalidSelectionnoWMCnorWMS"));
 					return;
 				}
@@ -529,7 +529,7 @@ function redirectToExternalApp(destUrl, id)
 				});
 
 
-				input.value = jsonDatas ;
+				input.value = new OpenLayers.Format.JSON().write(jsonObject);
 				form.submit();
 
 				},

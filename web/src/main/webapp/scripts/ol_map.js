@@ -508,7 +508,7 @@ GeoNetwork.app = function() {
         toolbar.push(action);
 
         toolbar.push("-");
-
+/*
         var printItem = new Geonetwork.print.PrintAction({
                 map: map,
                 text: "",
@@ -524,11 +524,9 @@ GeoNetwork.app = function() {
                     //printCommand.spec.mapTitle = "PrintControl";
                 }
             });
-            
         toolbar.push(printItem);
-        
         toolbar.push("-");
-        
+*/
         // create split button for measure controls
 
         var measureSplit = new Ext.SplitButton({
@@ -990,7 +988,7 @@ GeoNetwork.app = function() {
             deferredRender:false, 
             items: [
                 tree,
-                {
+/*                {
                     xtype: 'print-simple',
                     title: OpenLayers.i18n("mf.print.print"),
                     bodyStyle: 'padding: 7px;',
@@ -999,27 +997,13 @@ GeoNetwork.app = function() {
                         defaults: {
                             width: 100,
                             listWidth: 100
-                        }/*,
-                         items: [
-                         {
-                         xtype: 'textfield',
-                         fieldLabel:  OpenLayers.i18n("mf.print.mapTitle"),
-                         name: 'mapTitle',
-                         value: 'Map title'
-                         },
-                         {
-                         xtype: 'textarea',
-                         fieldLabel:  OpenLayers.i18n("mf.print.comment"),
-                         name: 'comment',
-                         height: 100,
-                         value: 'Some comments'
-                         }
-                         ] */
+                        }
                     },
                     border: false,
                     map: map,
                     configUrl: printConfigUrl
                 }
+        */
             ]
         });
        

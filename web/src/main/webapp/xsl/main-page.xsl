@@ -296,23 +296,10 @@
 										layout: 'border',
 										items: [
 											{region:'north',
-											id: 'north-map-panel',
-											title: '<xsl:value-of select="/root/gui/strings/mapViewer"/>',
-											border:false,
-											collapsible: true,
-											collapsed: true,
-											split: true,
-											height: 450,
-											minSize: 300,
-											//maxSize: 500,
-											layout: 'fit',
-											listeners: {
-												  collapse: collapseMap,
-												  expand: expandMap
-											   },
-											items: [mapViewport]
-											
-											},
+                                                                                        id: 'north-map-panel',
+                                                                                        hidden: true,
+                                                                                        html: ''
+                                                                                        },
 											{region:'center', 
 											contentEl :'content',
 											border:false,
