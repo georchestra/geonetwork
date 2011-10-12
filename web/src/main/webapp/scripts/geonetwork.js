@@ -427,115 +427,106 @@ function displayBox(content, contentDivId, modal) {
  * PMT GeoBretagne-Specific
  */
 
-function redirectToExternalApp(destUrl, id)
-{
+function redirectToExternalApp(destUrl, id) {
+  var myAjax = new Ajax.Request(
+      getGNServiceURL("metadata.service.extract"), {
+        method: 'get',
+        parameters: (typeof id == 'undefined') ? '' : 'id=' + id,
+        onSuccess: function(req) {
+          var jsFromXml = req.responseXML || new OpenLayers.Format.XML().read(req.responseText);
+          var jsonObject = {services: [], layers: []};
+          /*
+           * Implementing rules from the wiki :
+           *
+           *  1. if multiple WMC docs are selected in
+           *  GeoNetwork the latter will refuse to open the MapFish app
+           *
+           *  2. if a WMC doc and WMS items (layers or services) are selected
+           *  in GeoNetwork the latter will refuse to open the MapFish app
+           *
+           *  3. if WMS services are selected the MapFish app will open a dialog
+           *  window for the user to select layers
+           *
+           */
+          var wmcCount = 0;
+          var wmsCount = 0;
+          Ext.each(jsFromXml.getElementsByTagName('service'), function(item, index, array) {
+              var owsType = item.getAttribute('owstype');
+              jsonObject.services.push({
+                text: item.getAttribute('text'),
+                metadataURL: Env.host + Env.locService + "/metadata.show?id=" + item.getAttribute('mdid'),
+                owstype: owsType,
+                owsurl: item.getAttribute('owsurl')
+              });
 
-	var myAjax = new Ajax.Request(
-			getGNServiceURL("metadata.service.extract"),
-			{
-				method: 'get',
-				parameters: (typeof id == 'undefined') ? '' : 'id=' + id,
-				onSuccess: function(req)
-				{
-				var jsFromXml = req.responseXML || new OpenLayers.Format.XML().read(req.responseText);
+              switch (owsType) {
+                case 'WMC':
+                  wmcCount += 1;
+                  break;
 
-                                var jsonObject = {services: [], layers: []};
+                case 'WMS':
+                  wmsCount += 1;
+                  break;
+              }
+          });
 
-				/*
-				 * Implementing rules from the wiki :
-				 *
-				 *  1. if multiple WMC docs are selected in
-				 *  GeoNetwork the latter will refuse to open the MapFish app
-				 *
-				 *  2. if a WMC doc and WMS items (layers or services) are selected
-				 *  in GeoNetwork the latter will refuse to open the MapFish app
-				 *
-				 *  3. if WMS services are selected the MapFish app will open a dialog
-				 *  window for the user to select layers
-				 *
-				 */
-				var wmcCount = 0;
-				var wmsCount = 0;
+          Ext.each(jsFromXml.getElementsByTagName('layer'), function(item, index, array) {
+            var owsType = item.getAttribute('owstype');
 
+            jsonObject.layers.push({
+              layername: item.getAttribute('layername'),
+              metadataURL: Env.host + Env.locService + "/metadata.show?id=" + item.getAttribute('mdid'),
+              owstype: owsType,
+              owsurl: item.getAttribute('owsurl')
+            });
 
-				Ext.each(jsFromXml.getElementsByTagName('service'), function(item, index, array) {
-                                  var owsType = item.getAttribute('owstype');
+            switch (owsType) {
+              case 'WMC':
+                wmcCount += 1;
+                break;
+              case 'WMS':
+                wmsCount += 1;
+                break;
+            }
+          });
 
-                                  jsonObject.services.push({
-                                      text: item.getAttribute('text'),
-                                      metadataURL: Env.host + Env.locService + "/metadata.show?id=" + item.getAttribute('mdid'),
-                                      owstype: owsType,
-                                      owsurl: item.getAttribute('owsurl')
-                                  });
+          /* Checking inputs - rule #1 */
+          if (wmcCount > 1) {
+            alert(translate("invalidSelectionMoreThanOneWMC"));
+            return;
+          }
+          /* rule #2 */
+          if ((wmcCount > 0) && (wmsCount > 0)) {
+            alert(translate("invalidSelectionOneWMCandOneOrMoreWMS"));
+           return;
+          }
+          /* new rule : No data (no WMS nor WMC) available into
+           * selected MDs. Alerting the user
+           */
+          if ((wmcCount == 0) && (wmsCount == 0)) {
+            alert(translate("invalidSelectionnoWMCnorWMS"));
+            return;
+          }
 
-                                  switch (owsType) {
-                                      case 'WMC':
-                                        wmcCount += 1;
-                                        break;
-                                      case 'WMS':
-                                        wmsCount += 1;
-                                        break;
-                                  }
-                                });
+          var form = Ext.DomHelper.append(Ext.getBody(), {
+            tag: 'form',
+            action: destUrl,
+            target: "_blank",
+            method: 'post'
+          });
 
-				Ext.each(jsFromXml.getElementsByTagName('layer'), function(item, index, array) {
-                                    var owsType = item.getAttribute('owstype');
+          var input = Ext.DomHelper.append(form, {
+            tag: 'input',
+            name: 'data'
+          });
 
-                                    jsonObject.layers.push({
-                                        layername: item.getAttribute('layername'),
-                                        metadataURL: Env.host + Env.locService + "/metadata.show?id=" + item.getAttribute('mdid'),
-                                        owstype: owsType,
-                                        owsurl: item.getAttribute('owsurl')
-                                    });
-
-                                    switch (owsType) {
-                                        case 'WMC':
-                                          wmcCount += 1;
-                                          break;
-                                        case 'WMS':
-                                          wmsCount += 1;
-                                          break;
-                                    }
-                                });
-
-				/* Checking inputs - rule #1 */
-				if (wmcCount > 1) {
-					alert(translate("invalidSelectionMoreThanOneWMC"));
-					return;
-				}
-				/* rule #2 */
-				if ((wmcCount > 0) && (wmsCount > 0)) {
-					alert(translate("invalidSelectionOneWMCandOneOrMoreWMS"));
-					return;
-				}
-				/* new rule : No data (no WMS nor WMC) available into
-				 * selected MDs. Alerting the user
-				 */
-				if ((wmcCount == 0) && (wmsCount == 0)) {
-					alert(translate("invalidSelectionnoWMCnorWMS"));
-					return;
-				}
-
-				var form = Ext.DomHelper.append(Ext.getBody(), {
-					tag: 'form',
-					action: destUrl,
-					target: "_blank",
-					method: 'post'
-				});
-
-				var input = Ext.DomHelper.append(form, {
-					tag: 'input',
-					name: 'data'
-				});
-
-
-				input.value = new OpenLayers.Format.JSON().write(jsonObject);
-				form.submit();
-
-				},
-				onFailure: function(req) {
-					alert("Erreur lors de la récupération des services WxS des Métadonnées");
-				}
-			} // End object
-	); // End Ajax request
+          input.value = new OpenLayers.Format.JSON().write(jsonObject);
+          form.submit();
+          Ext.removeNode(form);
+        },
+        onFailure: function(req) {
+          alert("Erreur lors de la récupération des services WxS des Métadonnées");
+        }
+      } // End object
+    ); // End Ajax request
 }

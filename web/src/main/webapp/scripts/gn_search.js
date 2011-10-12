@@ -1122,9 +1122,41 @@ function toggleWhen() {
 }
 
 function addWMSLayer(layers) {
+  /*
 	Ext.getCmp("north-map-panel").expand();
 	mainViewport.doLayout();
     GeoNetwork.mapViewer.addWMSLayer(layers);
+*/
+  var jsonObject = {services: [], layers: []};
+  var layer = layers[0];
+  if (layer === undefined) {
+    return;
+  }
+
+  jsonObject.layers.push({
+    layername: layer[2],
+    metadataURL: Env.host + Env.locService + "/metadata.show?id=" + layer[3],
+    owstype: 'WMS',
+    owsurl: layer[1]
+  });
+
+
+  var form = Ext.DomHelper.append(Ext.getBody(), {
+    tag: 'form',
+    action: '/mapfishapp/',
+    target: "_blank",
+    method: 'post'
+  });
+
+  var input = Ext.DomHelper.append(form, {
+    tag: 'input',
+    name: 'data'
+  });
+
+
+  input.value = new OpenLayers.Format.JSON().write(jsonObject);
+  form.submit();
+  Ext.removeNode(form);
 }
 
 function addSelectedWMSLayers(metadataIdForm) {
