@@ -626,7 +626,10 @@
           </execution>
         </executions>      
       </plugin>
-
+      <plugin>
+		  <groupId>org.apache.maven.plugins</groupId>
+		  <artifactId>maven-dependency-plugin</artifactId>
+      </plugin>
       <plugin>
 	<groupId>com.c2c</groupId>
         <artifactId>maven-resources-plugin</artifactId>
@@ -639,10 +642,10 @@
               <goal>copy-config</goal>
             </goals>
             <configuration>
-		        <filter>${basedir}/src/${server}/maven.filter</filter>
+		        <filter>${confdir}/geonetwork/maven.filter</filter>
                 <sourceDirectories>
                     <param>${basedir}/src/main/webapp-filtered</param>
-                    <param>${basedir}/src/${server}</param>
+                    <param>${confdir}/geonetwork</param>
 	            </sourceDirectories>
 	            <excludes>
                 <param>maven.filter</param>
@@ -655,7 +658,6 @@
       </plugin>
       <plugin>
         <artifactId>maven-war-plugin</artifactId>
-	    <version>2.1</version>
         <configuration>
 					<classifier>${server}</classifier>
 <!--          <warSourceDirectory>src/main/geonetwork</warSourceDirectory> -->
