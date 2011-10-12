@@ -156,18 +156,26 @@ function getControlsFromElement(el) {
 
 function topElement(el) 
 {
-	if (el.previous() === undefined) return true;
+	if ((el.previous() === undefined) || (el.previous() == null)) {
+        return true;
+    }
 	else return (!isSameElement(el.previous(),el));
 }
 
 function bottomElement(el) 
 {
-    if (el.next() === undefined) return true;
+    if ((el.next() === undefined) || (el.next() == null)) {
+        return true;
+    }
 	else return (!isSameElement(el.next(),el));
 }
 
 function getIdSplit(el) 
 {
+    if (el == null) {
+        return null;
+    }
+
 	var id = el.getAttribute('id');
 	if (id === null) return null;
 	return id.split("_");
@@ -862,6 +870,7 @@ function validateEmail(input) {
 
 /**
  * Retrieve all page's input and textarea element and check the onkeyup and
+
  * onchange event (Usually used to check user entry.
  * 
  * @see validateNonEmpty and validateNumber).

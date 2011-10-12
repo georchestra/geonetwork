@@ -90,9 +90,18 @@ public class Download implements Service
 
 		context.info("File is : " +file);
 
-		if (!file.exists())
-			throw new ResourceNotFoundEx(fname);
-
+		if (!file.exists()) {
+			// serving "broken-file.png" instead of giving back
+			// an internal server error (500) after proxying by the
+			// security-proxy
+			
+			// TODO : The security-proxy will intercept 404 errors
+			// so we have to pass it as a 200 (ok) status code
+			// which obviously is wrong (broken images won't appear
+			// anymore in the "broken links" admin page)
+			return BinaryFile.encode(200, context.getAppPath() + "/images/file_broken.png");
+			//throw new ResourceNotFoundEx(fname);
+		}
 		GeonetContext  gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
 		SettingManager sm = gc.getSettingManager();
 		DataManager    dm = gc.getDataManager();
