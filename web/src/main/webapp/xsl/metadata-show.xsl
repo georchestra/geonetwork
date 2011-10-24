@@ -41,9 +41,13 @@
 	    		<script type="text/javascript" src="{/root/gui/url}/scripts/editor/metadata-show.js"></script>
 	    		<script type="text/javascript" src="{/root/gui/url}/scripts/editor/metadata-editor.js"></script>
         		<script type="text/javascript" src="{/root/gui/url}/scripts/editor/simpletooltip.js"></script>
+        		<!--  These are necessary in order to have the "addWMSLayer()" method defined -->
+        		<script type="text/javascript" src="{/root/gui/url}/scripts/gn_search.js"></script>    		
 		    </xsl:when>
             <xsl:otherwise>
 				<script type="text/javascript" src="{/root/gui/url}/scripts/lib/gn.editor.js"></script>
+				<!--  same remark as above (addWMSLayer() geOrchestra specific-->
+	    		<script type="text/javascript" src="{/root/gui/url}/scripts/lib/gn.search.js"></script>    					
             </xsl:otherwise>
         </xsl:choose>		
 	</xsl:template>
