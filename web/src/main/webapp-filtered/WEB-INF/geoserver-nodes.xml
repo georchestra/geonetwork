@@ -13,10 +13,10 @@
 		@param password		GeoServer user password 
 	-->
 	<node>
-		<id>geoserver2</id>
-		<name>My preferred GeoServer node</name>
-		<namespacePrefix>geob_pub</namespacePrefix>
-		<namespaceUrl>http://geobretagne.fr/geoserver/geob_pub</namespaceUrl>
+                <id>${geoserver.node.id}</id>
+                <name>${geoserver.node.name}</name>
+                <namespacePrefix>${geoserver.node.namespace.prefix}</namespacePrefix>
+                <namespaceUrl>${geoserver.node.namespace.url}</namespaceUrl>
 		<adminurl>http://${host}/geoserver/rest</adminurl>
 		<wmsurl>http://${host}/geoserver/wms</wmsurl>
 		<wfsurl>http://${host}/geoserver/wfs</wfsurl>
