@@ -724,4 +724,17 @@ Python and Latex are required to build the documentation. -->
     <geonetwork.webapp.css.dir>${geonetwork.webapp.dir}</geonetwork.webapp.css.dir>
     <minify.verbose>false</minify.verbose>
   </properties>
+  <repositories>
+	<repository>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <id>localGeoNetwork</id>
+      <name>GeoNetwork local repository</name>
+      <url>file://maven_repo</url>
+    </repository>
+  </repositories>
 </project>
