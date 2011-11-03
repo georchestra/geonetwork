@@ -114,6 +114,8 @@ public class SearchManager
 	private final Element  _tokenizedFields;
 	private final Element  _numericFields;    
 	private File           _luceneDir;
+	private static String  _lucenePath;
+	
 	private static PerFieldAnalyzerWrapper _analyzer;
 	private String         _htmlCacheDir;
     private Spatial        _spatial;
@@ -131,6 +133,9 @@ public class SearchManager
         this._inspireEnabled = inspireEnabled;
     }
 
+    public static String getLucenePath() {
+    	return _lucenePath;
+    }
 	//-----------------------------------------------------------------------------
 
     /**
@@ -261,7 +266,8 @@ public class SearchManager
 		
 		if (!_luceneDir.isAbsolute()) _luceneDir = new File(appPath + luceneDir+ "/nonspatial");
 
-     _luceneDir.getParentFile().mkdirs();
+		_luceneDir.getParentFile().mkdirs();
+        _lucenePath = _luceneDir.getAbsolutePath();
         
      _spatial = new Spatial(dataStore);
 

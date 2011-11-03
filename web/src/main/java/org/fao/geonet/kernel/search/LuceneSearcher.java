@@ -115,6 +115,8 @@ public class LuceneSearcher extends MetaSearcher
 	private String        _resultType;
   private String        _language;
 
+  private static String	_lucenePath;
+  
 	private HashSet<String>	_tokenizedFieldSet;
     private Set<String> _integerFieldSet;
     private Set<String> _longFieldSet;
@@ -176,6 +178,7 @@ public class LuceneSearcher extends MetaSearcher
                 }
 			}
 		}
+		_lucenePath = _sm.getLucenePath();
 	}
 
 	//--------------------------------------------------------------------------------
@@ -1018,7 +1021,8 @@ public class LuceneSearcher extends MetaSearcher
 
 			MapFieldSelector selector = new MapFieldSelector(fieldnames); 
 
-			File luceneDir = new File(appPath + "WEB-INF/lucene/nonspatial");
+			//File luceneDir = new File(appPath + "WEB-INF/lucene/nonspatial");
+			File luceneDir = new File(_lucenePath);
 			IndexReader reader = IndexReader.open(luceneDir);
       Searcher searcher = new IndexSearcher(reader);
 
