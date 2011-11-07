@@ -81,7 +81,7 @@ Geonetwork.CONFIG.GeoPublisher = {
       return [
         new OpenLayers.Layer.WMS('Baselayer','http://c2cpc61.camptocamp.com/geoserver2/gwc/service/wms/', {layers:'base_layers',format: 'image/jpeg' },{tileSize:new OpenLayers.Size(256,256), isBaseLayer: true})
       ];
-    },
+    }
 }
 
 // Configuration for the minimap on the main page and the map in the editor
