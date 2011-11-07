@@ -14,7 +14,7 @@
             <img src="/static/img/logo.png" alt="geOrchestra" height="50"/>
         </a>
         <ul>
-            <li class="active"><a href="#">catalogue</a></li>
+            <li class="active"><a href="/geonetwork/srv/fr/main.home">catalogue</a></li>
             <li><a href="/mapfishapp/">visualiseur</a></li>
             <!-- TODO: check user groups to show/hide editor and phpldapadmin items in this list -->
             <li><a href="/mapfishapp/edit">éditeur</a></li>
