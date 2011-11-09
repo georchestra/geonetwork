@@ -607,7 +607,7 @@
       </releases>
       <id>localGeoNetwork</id>
       <name>GeoNetwork local repository</name>
-      <url>file://maven_repo</url>
+      <url>file://${basedir}/../maven_repo</url>
     </repository>
 
 	<!-- Mapfish repository -->
