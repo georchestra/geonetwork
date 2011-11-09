@@ -636,8 +636,6 @@
   <!--     Modules for the build in approximate dependency order   -->
   <!-- =========================================================== -->
   <modules>
-	<module>resources</module>
-    
     <!-- Remove comment tag to include documentation in the build. 
       Python and Latex are required to build the documentation. -->
     
