@@ -19,7 +19,7 @@
 				<xsl:apply-templates mode="brief" select="."/>
 			</xsl:variable>
 			<xsl:variable name="metadata" select="exslt:node-set($md)/*[1]"/>
-			<xsl:variable name="mdURL" select="normalize-space(concat($baseURL, '?uuid=', geonet:info/uuid))"/>
+			<xsl:variable name="mdURL" select="normalize-space(concat($siteURL, '/metadata.show?uuid=', geonet:info/uuid))"/>
 			<xsl:variable name="thumbnailLink" select="normalize-space($metadata/image[@type='thumbnail'])"/>
 			<xsl:variable name="bDynamic" select="geonet:info/dynamic" />
 			<xsl:variable name="bDownload" select="geonet:info/download" />
