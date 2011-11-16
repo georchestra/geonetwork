@@ -2682,7 +2682,10 @@
 			<xsl:when test="$edit=true()">
 				<xsl:variable name="protocol" select="../gmd:protocol/gco:CharacterString"/>
 				<xsl:variable name="pref" select="../gmd:protocol/gco:CharacterString/geonet:element/@ref"/>
+				<xsl:variable name="urlref" select="../gmd:linkage/gmd:URL/geonet:element/@ref"/>
 				<xsl:variable name="ref" select="gco:CharacterString/geonet:element/@ref|gmx:MimeFileType/geonet:element/@ref"/>
+
+
 				<xsl:variable name="value" select="gco:CharacterString|gmx:MimeFileType"/>
 				<xsl:variable name="button" select="starts-with($protocol,'WWW:DOWNLOAD') and contains($protocol,'http') and normalize-space($value)=''"/>
 
@@ -2691,7 +2694,7 @@
 					<xsl:with-param name="edit" select="$edit"/>
 					<xsl:with-param name="title" select="/root/gui/strings/file"/>
 					<xsl:with-param name="text">
-						<button class="content" onclick="startFileUpload({//geonet:info/id}, '{$ref}');" type="button">
+						<button class="content" onclick="startFileUpload({//geonet:info/id}, '{$ref}', '{$urlref}');" type="button">
 							<xsl:value-of select="/root/gui/strings/insertFileMode"/>
 						</button>
 					</xsl:with-param>
