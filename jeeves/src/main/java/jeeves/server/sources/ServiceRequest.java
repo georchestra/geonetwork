@@ -32,6 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import jeeves.constants.Jeeves;
+import jeeves.utils.Log;
 import jeeves.utils.Xml;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -165,6 +166,19 @@ public class ServiceRequest
 		request = req;	
 	}
 	public HttpServletRequest getHttpServletRequest() { return request; }
+
+	public void redirectToLogin() {
+		try {
+			if ((request.getHeader("sec-username") == null)
+			    || (request.getHeader("sec-username") != null
+				&& request.getHeader("sec-username").equals("anonymousUser"))) {
+			    response.sendRedirect(request.getContextPath() + "?login");
+			}
+		} catch (Exception e) {
+			Log.error("ServiceRequest", "Something went wrong while trying to redirect");
+			return;
+		}
+	}
 }
 
 //=============================================================================
