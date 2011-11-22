@@ -628,7 +628,7 @@ function doFileUploadSubmit(form)
 						if (Modalbox.options.urlbtn !== null) {
 							var gmdUrlField = $('_' +  Modalbox.options.urlbtn);
 							if ((gmdUrlField !== undefined) && (Modalbox.options.mdid !== undefined)) {
-								gmdUrlField.value = Env.host + getGNServiceURL('resources.get') + "?fname=" + name.value + "&id=" + Modalbox.options.mdid;
+								gmdUrlField.value = Env.host + getGNServiceURL('resources.get') + "?access=private&fname=" + name.value + "&id=" + Modalbox.options.mdid;
 							}
 						}
 						
