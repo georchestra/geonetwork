@@ -130,15 +130,16 @@ public class JpegPhoto implements Service {
             {
                 ildapPort = LDAPConnection.DEFAULT_PORT;
             }
+            // sometimes it seems that the ldap server does not answer in a
+            // reasonable time, that blocks the initialization of other
+            // webapps from tomcat. 10 seconds should be enough to consider
+            // the service as activated or not.
+            lc = new LDAPConnection(10);
+
             if (ildapPort == 636)
             {
-                lc = new LDAPConnection(new LDAPJSSESecureSocketFactory());                         
+                lc.setSocketFactory(new LDAPJSSESecureSocketFactory());
             }
-            else // (ildapPort == 389) or else, assume it's not a SSL connection
-            {
-                lc = new LDAPConnection();
-            }
-
             lc.connect(sldapHost, ildapPort);
 
             lc.bind(LDAPConnection.LDAP_V3, sldapDn, sldapPwd.getBytes());
