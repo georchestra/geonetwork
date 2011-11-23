@@ -583,6 +583,13 @@ function startFileUpload(id, fref)
 	Modalbox.show(getGNServiceURL('resources.prepare.upload') + "?ref=" + fref + "&id=" + id, {title: translate('insertFileMode'), height: 200, width: 600});
 }
 
+function startFileUpload(id, fref, urlref)
+{
+	// PMT PIGMA issue #2138: a bit hacky but we need to hook up the metadata id and the gmd:URL field
+	// in order to update the gmdUrl field.
+	Modalbox.show(getGNServiceURL('resources.prepare.upload') + "?ref=" + fref + "&id=" + id, {title: translate('insertFileMode'), height: 200, width: 600, urlbtn: urlref, mdid: id});
+
+}
 // called by file-upload-list form 
 function doFileUploadSubmit(form)
 {
@@ -616,6 +623,15 @@ function doFileUploadSubmit(form)
 						name.value = fname.getAttribute('title');
 						$('di_'+$F(ref)).show();
 						$('db_'+$F(ref)).hide();
+						
+						// PIGMA issue #2138: we need to update the gmd:URL associated
+						if (Modalbox.options.urlbtn !== null) {
+							var gmdUrlField = $('_' +  Modalbox.options.urlbtn);
+							if ((gmdUrlField !== undefined) && (Modalbox.options.mdid !== undefined)) {
+								gmdUrlField.value = Env.host + getGNServiceURL('resources.get') + "?access=private&fname=" + name.value + "&id=" + Modalbox.options.mdid;
+							}
+						}
+						
 						Modalbox.show(doc.body.innerHTML,{width:600});
 						Ext.get("MB_close").on("click",function(){doSaveAction('metadata.update');});
 					} else {

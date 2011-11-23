@@ -81,7 +81,8 @@ public class Download implements Service
 		if (access.equals(Params.Access.PRIVATE))
 		{
 			Lib.resource.checkPrivilege(context, id, AccessManager.OPER_DOWNLOAD);
-			doNotify = true;
+			// Deactivating the mail notification
+			//doNotify = true;
 		}
 
 		// Build the response

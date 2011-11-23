@@ -767,6 +767,13 @@ public class ServiceManager
 		// Dispatch HTTP status code
 		req.setStatusCode(outPage.getStatusCode());
 
+		if (outPage.getStatusCode() == 403) {
+			try {
+				req.redirectToLogin();
+			} catch (Exception e) {
+				error("Unable to redirect to login (error code was 403)");
+			}
+		}
 		addPrefixes(guiElem, context.getLanguage(), req.getService());
 
 		Element rootElem = new Element(Jeeves.Elem.ROOT)
