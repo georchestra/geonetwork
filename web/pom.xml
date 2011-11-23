@@ -117,6 +117,13 @@
       <groupId>org.geotools</groupId>
       <artifactId>gt-wfs</artifactId>
     </dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>apache-log4j-extras</artifactId>
+			<version>1.1</version>
+			<type>jar</type>
+			<scope>runtime</scope>
+		</dependency>
 
 
     <dependency>
