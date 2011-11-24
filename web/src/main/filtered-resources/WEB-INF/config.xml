@@ -164,15 +164,15 @@
 			<name>main-db</name>
 			<provider>jeeves.resources.dbms.DbmsPool</provider>
 			<config>
-    	        <user>${psql.user}</user>
-    	        <password>${psql.pass}</password>
+    	        <user>www-data</user>
+    	        <password>www-data</password>
     	        <driver>org.postgresql.Driver</driver>
 				<!--					
 					jdbc:postgresql:database
 					jdbc:postgresql://host/database
 					jdbc:postgresql://host:port/database
 				-->
-    	        <url>${psql.url}</url>
+                <url>jdbc:postgresql://localhost:5432/aquitaine</url>
 				<poolSize>10</poolSize>
     	        <reconnectTime>3600</reconnectTime>
 			</config>
@@ -387,7 +387,7 @@
 
 		<service name="xml.region.list">
 		  <class name=".services.main.RegionMatches">
-                    <param name="wfsURL" value="http://${host}/geoserver-private/wfs?REQUEST=GetCapabilities&amp;SERVICE=WFS&amp;VERSION=1.0.0" />
+                    <param name="wfsURL" value="http://${host}/geoserver/wfs?REQUEST=GetCapabilities&amp;SERVICE=WFS&amp;VERSION=1.0.0" />
 <!--
                     Should be public
                     <param name="user" value="${priveleged_admin_name}" />
