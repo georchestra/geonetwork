@@ -112,8 +112,6 @@ public class JeevesEngine
 			long usedMem      = totMem - freeMem;
 			long startFreeMem = maxMem - usedMem;
 
-			PropertyConfigurator.configure(configPath +"log4j.cfg");
-
 			// System.setProperty("javax.xml.transform.TransformerFactory",
 			//						 "net.sf.saxon.TransformerFactoryImpl");
 			// Do this using library meta-inf to avoid affecting other servlets
