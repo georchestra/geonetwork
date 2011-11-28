@@ -172,7 +172,7 @@ public class ServiceRequest
 			if ((request.getHeader("sec-username") == null)
 			    || (request.getHeader("sec-username") != null
 				&& request.getHeader("sec-username").equals("anonymousUser"))) {
-			    response.sendRedirect(request.getContextPath() + "?login");
+			    response.sendRedirect("/geonetwork/srv/fr/main.home?login");
 			}
 		} catch (Exception e) {
 			Log.error("ServiceRequest", "Something went wrong while trying to redirect");
