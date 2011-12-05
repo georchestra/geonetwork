@@ -23,6 +23,8 @@
 
 package org.fao.geonet.guiservices.util;
 
+import java.util.Map;
+
 import jeeves.interfaces.Service;
 import jeeves.server.ServiceConfig;
 import jeeves.server.context.ServiceContext;
@@ -39,7 +41,13 @@ import org.jdom.Element;
 
 public class Env implements Service
 {
-	public void init(String appPath, ServiceConfig params) throws Exception {}
+	private boolean downloadFormEnabled = false;
+	private String  downloadFormPdfUrl = "";
+	
+	public void init(String appPath, ServiceConfig params) throws Exception {
+		downloadFormEnabled = params.getValue("dlform.activated").equalsIgnoreCase("true");
+		downloadFormPdfUrl = params.getValue("dlform.pdf_url");
+	}
 
 	//--------------------------------------------------------------------------
 	//---
@@ -54,6 +62,26 @@ public class Env implements Service
         String  xslPath = context.getAppPath() + Geonet.Path.STYLESHEETS+ "/xml";
 		Element system  = gc.getSettingManager().get("system", -1);
 
+		try {
+			Element spHeaders = new Element("security-proxy");
+			Map<String, String> headers = context.getHeaders();
+			for (String h : headers.keySet()) {
+				if (h.toLowerCase().startsWith("sec-")) {
+					spHeaders.addContent(new Element(h).setText(headers.get(h)));
+				}
+			}
+			
+			system.addContent(spHeaders);
+			
+			Element dlform = new Element("downloadform");
+			dlform.addContent(new Element("activated").setText(downloadFormEnabled == true ? "true" : "false"));
+			dlform.addContent(new Element("pdf_url").setText(downloadFormPdfUrl));
+			
+			system.addContent(dlform);
+			
+			
+		} catch (Exception e) {}
+		
 		return Xml.transform(system, xslPath +"/env.xsl");
 	}
 }

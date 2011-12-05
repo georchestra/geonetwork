@@ -2613,7 +2613,7 @@
 						was :
 						<a href="{$linkage}" title="{$title}" onclick="runFileDownload(this.href, this.title); return false;"><xsl:value-of select="$title"/></a>
 						 -->
-						<a href="{$linkage}" title="{$title}" target="_blank"><xsl:value-of select="$title"/></a>
+						<a href="{$linkage}" title="{$title}" target="_blank" class="dlform"><xsl:value-of select="$title"/></a>
 					</xsl:with-param>
 				</xsl:apply-templates>
 			</xsl:when>

@@ -47,7 +47,10 @@
     			<param name="Guest"           value="ROLE_ANONYMOUS" />
     		</call>
 
-			<call name="env" class="org.fao.geonet.guiservices.util.Env" />
+			<call name="env" class="org.fao.geonet.guiservices.util.Env">
+				<param name="dlform.activated" value="${dlform.activated}" />
+				<param name="dlform.pdf_url" value="${dlform.pdf_url}" />
+			</call>
 			<call name="app" class="org.fao.geonet.guiservices.util.GetAppPath" />
 			<call name="results" class="org.fao.geonet.guiservices.search.GetResultsInfo" />
 		  <xml name="config" file="WEB-INF/config-gui.xml" localized="false" />

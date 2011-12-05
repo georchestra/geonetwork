@@ -47,7 +47,7 @@
     JS files are compressed using jsbuild tool (see jsbuild directory).
     -->
     <xsl:template name="geoHeader">
-        <script src="../../scripts/ext/adapter/ext/ext-base.js" type="text/javascript"/>
+        <script src="../../scripts/ext/adapter/prototype/ext-prototype-adapter.js" type="text/javascript"/>
         <script src="../../scripts/geo/proj4js-compressed.js" type="text/javascript"/>
 		<xsl:if test="count(/root/gui/config/map/proj/crs) &gt; 1">
         </xsl:if>

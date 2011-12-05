@@ -21,6 +21,24 @@
 				<xsl:call-template name="header"/>
 				<xsl:apply-templates mode="script" select="/"/>
 				
+				
+				<!--  adding materials for downloadform -->
+
+				<xsl:if test="string(/root/gui/env/downloadform/activated)='true'">
+					<style type="text/css">
+					/* correction bug visuel sur champ multiselect */
+					.x-window .x-fieldset {
+						margin-bottom: 0px;
+					}
+					</style>
+					<xsl:if test="//service/@name = 'metadata.show'">
+						<script type="text/javascript" src="/geonetwork/scripts/app/external/extjs/ux/MultiSelect.js" />
+						<script type="text/javascript" src="/geonetwork/scripts/ext/locale/ext-lang-fr.js" />
+						<script type="text/javascript" src="/geonetwork/scripts/download_form.js" />				
+					</xsl:if>
+				</xsl:if>
+						
+				
 				<style type="text/css">
 					body {
 /*						background-color: #E4E9F1; */

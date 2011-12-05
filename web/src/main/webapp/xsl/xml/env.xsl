@@ -109,7 +109,9 @@
 					<firstname><xsl:value-of select="$shibAttrib/firstname"/></firstname>
 					<profile><xsl:value-of select="$shibAttrib/profile"/></profile>
 				</attrib>
-			</shib>			
+			</shib>
+		    <xsl:copy-of select="security-proxy"/>
+		    <xsl:copy-of select="downloadform"/> 
 		</env>
 	</xsl:template>
 
