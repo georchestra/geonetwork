@@ -189,37 +189,63 @@
 			<button class="content" onclick="return doConfirmDelete('{/root/gui/locService}/metadata.delete?id={$metadata/geonet:info/id}', '{/root/gui/strings/confirmDelete}','{$ltitle}','{$metadata/geonet:info/id}', '{/root/gui/strings/deleteConfirmationTitle}')"><xsl:value-of select="/root/gui/strings/delete"/></button>
 		</xsl:if>
 						
-		<xsl:if test="geonet:info/edit='true'">
 			&#160;
 			<!-- =========================  -->
 			<!-- Add other actions list     -->
-			<button id="oAc{$metadata/geonet:info/id}" name="oAc{$metadata/geonet:info/id}" class="content" onclick="oActions('oAc',{$metadata/geonet:info/id});" style="width:150px;" title="{/root/gui/strings/otherActions}">
-				<img id="oAcImg{$metadata/geonet:info/id}" name="oAcImg{$metadata/geonet:info/id}" src="{/root/gui/url}/images/plus.gif" style="padding-right:3px;"/>
-				<xsl:value-of select="/root/gui/strings/otherActions"/>
-			</button>
-			<div id="oAcEle{$metadata/geonet:info/id}" class="oAcEle" style="display:none;width:250px" onClick="oActions('oAc',{$metadata/geonet:info/id});">
-				
-				<!-- privileges button -->
-				<xsl:if test="/root/gui/services/service/@name='metadata.admin.form'">
-					<xsl:variable name="privileges" select="concat(/root/gui/strings/setshowprivileges,' ',$ltitle)"/>
-					<button onclick="doOtherButton('{/root/gui/locService}/metadata.admin.form?id={$metadata/geonet:info/id}','{$privileges}',600)"><xsl:value-of select="/root/gui/strings/privileges"/></button>
-				</xsl:if>
-				
-				<!-- categories button -->
-				<xsl:if test="/root/gui/services/service/@name='metadata.category.form' and /root/gui/config/category/admin">
-					<xsl:variable name="categories" select="concat(/root/gui/strings/setshowcategories,' ',$ltitle)"/>
-					<button onclick="doOtherButton('{/root/gui/locService}/metadata.category.form?id={$metadata/geonet:info/id}','{$categories}',300)"><xsl:value-of select="/root/gui/strings/categories"/></button>
-				</xsl:if>
-				
-				<!-- Create child option only for iso19139 schema based metadata -->
-				<xsl:if test="contains(geonet:info/schema, 'iso19139')">
-					<button onclick="load('{/root/gui/locService}/metadata.duplicate.form?uuid={$metadata/geonet:info/uuid}&amp;child=y')"><xsl:value-of select="/root/gui/strings/createChild"/></button>
-				</xsl:if>
+			
+	<button id="oAc{$metadata/geonet:info/id}" name="oAc{$metadata/geonet:info/id}"
+		class="content" onclick="oActions('oAc',{$metadata/geonet:info/id});"
+		style="width:150px;" title="{/root/gui/strings/otherActions}">
+		<img id="oAcImg{$metadata/geonet:info/id}" name="oAcImg{$metadata/geonet:info/id}"
+			src="{/root/gui/url}/images/plus.gif" style="padding-right:3px;" />
+		<xsl:value-of select="/root/gui/strings/otherActions" />
+	</button>
+	<div id="oAcEle{$metadata/geonet:info/id}" class="oAcEle"
+		style="display:none;width:250px" onClick="oActions('oAc',{$metadata/geonet:info/id});">
 
-                <button onclick="redirectToExternalApp('/mapfishapp/',id={$metadata/geonet:info/id})"><xsl:value-of select="/root/gui/strings/viewInViewer"/></button>
-                <button onclick="redirectToExternalApp('/extractorapp/',id={$metadata/geonet:info/id})"><xsl:value-of select="/root/gui/strings/sendToExtractor"/></button>
-			</div>
+		<xsl:if test="geonet:info/edit='true'">
+
+			<!-- privileges button -->
+			<xsl:if test="/root/gui/services/service/@name='metadata.admin.form'">
+				<xsl:variable name="privileges"
+					select="concat(/root/gui/strings/setshowprivileges,' ',$ltitle)" />
+				<button
+					onclick="doOtherButton('{/root/gui/locService}/metadata.admin.form?id={$metadata/geonet:info/id}','{$privileges}',600)">
+					<xsl:value-of select="/root/gui/strings/privileges" />
+				</button>
+			</xsl:if>
+
+			<!-- categories button -->
+			<xsl:if
+				test="/root/gui/services/service/@name='metadata.category.form' and /root/gui/config/category/admin">
+				<xsl:variable name="categories"
+					select="concat(/root/gui/strings/setshowcategories,' ',$ltitle)" />
+				<button
+					onclick="doOtherButton('{/root/gui/locService}/metadata.category.form?id={$metadata/geonet:info/id}','{$categories}',300)">
+					<xsl:value-of select="/root/gui/strings/categories" />
+				</button>
+			</xsl:if>
+
+			<!-- Create child option only for iso19139 schema based metadata -->
+			<xsl:if test="contains(geonet:info/schema, 'iso19139')">
+				<button
+					onclick="load('{/root/gui/locService}/metadata.duplicate.form?uuid={$metadata/geonet:info/uuid}&amp;child=y')">
+					<xsl:value-of select="/root/gui/strings/createChild" />
+				</button>
+			</xsl:if>
 		</xsl:if>
+
+		<button
+			onclick="redirectToExternalApp('/mapfishapp/',id={$metadata/geonet:info/id})">
+			<xsl:value-of select="/root/gui/strings/viewInViewer" />
+		</button>
+		<button
+			onclick="redirectToExternalApp('/extractorapp/',id={$metadata/geonet:info/id})">
+			<xsl:value-of select="/root/gui/strings/sendToExtractor" />
+		</button>
+
+	</div>
+
 	</xsl:template>
 
 	<!--
