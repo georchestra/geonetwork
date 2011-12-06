@@ -187,7 +187,8 @@ public class LdapSync implements Service
 						{
 							String value = (String) allValues.nextElement();
 							// Match only the ElementLevel groups
-							if (value.startsWith("EL_") == true)
+							// PIGMA issue #2438: need to match SP_* too
+							if ((value.startsWith("EL_") == true) || (value.startsWith("SP_") == true))
 							{
 								tempGrName = value.substring(3);
 							}	
