@@ -374,6 +374,15 @@ public class LuceneSearcher extends MetaSearcher
             else {
                 // Construct Lucene query (Java)
                 LuceneQueryInput luceneQueryInput = new LuceneQueryInput(request);
+
+                // PMT PIGMA issue #2457: increase max clause count to 16384
+                // (default: 1024) to avoid "Too many clauses" exception
+                //
+                // Note: This might clearly not be the good way to do,
+                // anyway this is what is done in GeoNetwork trunk.
+
+                BooleanQuery.setMaxClauseCount(16384);
+
                 _query = new LuceneQueryBuilder(_tokenizedFieldSet, SearchManager.getAnalyzer()).build(luceneQueryInput);
                 Log.debug(Geonet.SEARCH_ENGINE,"Lucene query: " + _query);
                  //System.out.println("** query:\n"+ _query);
