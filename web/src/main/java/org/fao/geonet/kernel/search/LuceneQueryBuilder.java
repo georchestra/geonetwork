@@ -742,7 +742,9 @@ public class LuceneQueryBuilder {
 
 		// PMT c2c GeoOrchestra
 
-		BooleanClause orgNameQuery = requiredTextField(luceneQueryInput.getOrgName(), "_orgName", similarity, false);
+		// _orgName is not tokenized, and does not come from user input
+		// we can consider similarity null or == 1.
+		BooleanClause orgNameQuery = requiredTextField(luceneQueryInput.getOrgName(), "_orgName", null, false);
 		if(orgNameQuery != null) {
 		    query.add(orgNameQuery);
 		}
