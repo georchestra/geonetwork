@@ -4,67 +4,10 @@
   xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:srv="http://www.isotc211.org/2005/srv"
   xmlns:gmd="http://www.isotc211.org/2005/gmd" version="2.0" exclude-result-prefixes="exslt">
 
-  <xsl:import href="process-utility.xsl"/>
-
-  <!-- i18n information -->
-  <xsl:variable name="add-extent-loc">
-    <msg id="a" xml:lang="en">Keyword field contains place keywords (ie. </msg>
-    <msg id="b" xml:lang="en">). Try to compute metadata extent using thesaurus.</msg>
-    <msg id="a" xml:lang="fr">Certains mots clés sont de type géographique (ie. </msg>
-    <msg id="b" xml:lang="fr">). Exécuter cette action pour essayer de calculer l'emprise à partir des thésaurus.</msg>
-  </xsl:variable>
-
-  <!-- GeoNetwork base url -->
-  <xsl:param name="gurl" select="'http://localhost:8080/geonetwork'"/>
-
-  <!-- The UI language. Thesaurus search is made according to GUI language -->
-  <xsl:param name="lang" select="'en'"/>
-
-  <!-- Replace or not existing extent -->
-  <xsl:param name="replace" select="'0'"/>
 
 
-  <xsl:variable name="replaceMode"
-    select="geonet:parseBoolean($replace)"/>
-  <xsl:variable name="serviceUrl"
-    select="concat($gurl, '/srv/', $lang, '/xml.search.keywords?pNewSearch=true&amp;pTypeSearch=2&amp;pKeyword=')"/>
-
-
-
-  <xsl:template name="list-add-extent-from-geokeywords">
-    <suggestion process="add-extent-from-geokeywords"/>
-  </xsl:template>
-
-
-
-  <!-- Analyze the metadata record and return available suggestion
-      for that process -->
-  <xsl:template name="analyze-add-extent-from-geokeywords">
-    <xsl:param name="root"/>
-
-    <xsl:variable name="extentDescription"
-      select="string-join($root//gmd:EX_Extent/gmd:description/gco:CharacterString, ' ')"/>
-
-    <xsl:variable name="geoKeywords"
-      select="$root//gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword[
-                      not(gco:CharacterString/@gco:nilReason) 
-                      and not(contains($extentDescription, gco:CharacterString))
-                      and ../gmd:type/gmd:MD_KeywordTypeCode/@codeListValue='place']"/>
-    <xsl:if test="$geoKeywords">
-      <suggestion process="add-extent-from-geokeywords" id="{generate-id()}" category="keyword" target="extent">
-        <name><xsl:value-of select="geonet:i18n($add-extent-loc, 'a', $guiLang)"/><xsl:value-of select="string-join($geoKeywords, ', ')"/>
-          <xsl:value-of select="geonet:i18n($add-extent-loc, 'b', $guiLang)"/></name>
-        <operational>true</operational>
-        <params>{gurl:{type:'string', defaultValue:'<xsl:value-of select="$gurl"/>'},
-          lang:{type:'string', defaultValue:'<xsl:value-of select="$lang"/>'},
-          replace:{type:'boolean', defaultValue:'<xsl:value-of select="$replace"/>'}}</params>
-      </suggestion>
-    </xsl:if>
-
-  </xsl:template>
-
-
-
+  <xsl:param name="url"/>
+  <xsl:param name="replace" select="0"/>
 
   <!-- Do a copy of every nodes and attributes -->
   <xsl:template match="@*|node()">
@@ -136,7 +79,7 @@
             GeographicElement element having BoundingPolygon are preserved.
             -->
       <xsl:choose>
-        <xsl:when test="$replaceMode">
+                <xsl:when test="number($replace) = 1">
           <xsl:for-each select="srv:extent|gmd:extent">
             <xsl:if
               test="gmd:EX_Extent/gmd:temporalElement or gmd:EX_Extent/gmd:verticalElement
@@ -201,7 +144,8 @@
     <xsl:param name="srv" select="false()"/>
 
     <!-- Get keyword information -->
-    <xsl:variable name="keyword" select="document(concat($serviceUrl, gco:CharacterString))"/>
+    <xsl:variable name="keyword" 
+            select="document(concat($url, '/xml.search.keywords?pNewSearch=true&amp;pTypeSearch=2&amp;pKeyword=', gco:CharacterString))"/>
     <xsl:variable name="knode" select="exslt:node-set($keyword)"/>
 
     <!-- It should be one but if one keyword is found in more
@@ -211,12 +155,24 @@
         <xsl:choose>
           <xsl:when test="$srv">
             <srv:extent>
-              <xsl:copy-of select="geonet:make-iso-extent(geo/west, geo/south, geo/east, geo/north, $word)"/>
+                            <xsl:call-template name="make-extent">
+                                <xsl:with-param name="description" select="$word"/>
+                                <xsl:with-param name="e" select="geo/east"/>
+                                <xsl:with-param name="n" select="geo/north"/>
+                                <xsl:with-param name="s" select="geo/south"/>
+                                <xsl:with-param name="w" select="geo/west"/>
+                            </xsl:call-template>            
             </srv:extent>
           </xsl:when>
           <xsl:otherwise>
             <gmd:extent>
-              <xsl:copy-of select="geonet:make-iso-extent(geo/west, geo/south, geo/east, geo/north, $word)"/>
+                            <xsl:call-template name="make-extent">
+                                <xsl:with-param name="description" select="$word"/>
+                                <xsl:with-param name="e" select="geo/east"/>
+                                <xsl:with-param name="n" select="geo/north"/>
+                                <xsl:with-param name="s" select="geo/south"/>
+                                <xsl:with-param name="w" select="geo/west"/>
+                            </xsl:call-template>
             </gmd:extent>
           </xsl:otherwise>
         </xsl:choose>
@@ -224,4 +180,44 @@
     </xsl:for-each>
   </xsl:template>
   
+    <!-- Create an ISO 19139 extent fragment -->
+    <xsl:template name="make-extent">
+        <xsl:param name="description"/>
+        <xsl:param name="n"/>
+        <xsl:param name="e"/>
+        <xsl:param name="s"/>
+        <xsl:param name="w"/>
+
+            <gmd:EX_Extent>
+                <gmd:description>
+                    <gco:CharacterString>
+                        <xsl:value-of select="$description"/>
+                    </gco:CharacterString>
+                </gmd:description>
+                <gmd:geographicElement>
+                    <gmd:EX_GeographicBoundingBox>
+                        <gmd:westBoundLongitude>
+                            <gco:Decimal>
+                                <xsl:value-of select="$w"/>
+                            </gco:Decimal>
+                        </gmd:westBoundLongitude>
+                        <gmd:eastBoundLongitude>
+                            <gco:Decimal>
+                                <xsl:value-of select="$e"/>
+                            </gco:Decimal>
+                        </gmd:eastBoundLongitude>
+                        <gmd:southBoundLatitude>
+                            <gco:Decimal>
+                                <xsl:value-of select="$s"/>
+                            </gco:Decimal>
+                        </gmd:southBoundLatitude>
+                        <gmd:northBoundLatitude>
+                            <gco:Decimal>
+                                <xsl:value-of select="$n"/>
+                            </gco:Decimal>
+                        </gmd:northBoundLatitude>
+                    </gmd:EX_GeographicBoundingBox>
+                </gmd:geographicElement>
+            </gmd:EX_Extent>
+    </xsl:template>
 </xsl:stylesheet>
