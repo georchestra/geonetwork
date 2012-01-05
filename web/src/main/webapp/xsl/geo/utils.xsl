@@ -11,21 +11,23 @@
             var translations = {
 				<xsl:apply-templates select="/root/gui/strings/*[@js='true' and not(*) and not(@id)]" mode="js-translations"/>
 			};
-			/* Hacky solution to implement missing features in IE (used by ExtJS anyway ...)
-			 * (PIGMA issue #2443)
-			 */
-        	if (typeof Range.prototype.createContextualFragment == "undefined") {
-    			Range.prototype.createContextualFragment = function(html) {
-        			var doc = this.startContainer.ownerDocument;
-        			var container = doc.createElement("div");
-        			container.innerHTML = html;
-        			var frag = doc.createDocumentFragment(), n;
-        			while ( (n = container.firstChild) ) {
-            			frag.appendChild(n);
-        			}
-        			return frag;
-    			};
+		/* Hacky solution to implement missing features in IE (used by ExtJS anyway ...)
+		 * (PIGMA issue #2443)
+		 */
+        	if (window.Range) {
+        		if (typeof Range.prototype.createContextualFragment == "undefined") {
+    				Range.prototype.createContextualFragment = function(html) {
+        				var doc = this.startContainer.ownerDocument;
+        				var container = doc.createElement("div");
+        				container.innerHTML = html;
+        				var frag = doc.createDocumentFragment(), n;
+        				while ( (n = container.firstChild) ) {
+            					frag.appendChild(n);
+        				}
+        				return frag;
+    				};
 			}
+		}
 		</script>
 
         <xsl:choose>
