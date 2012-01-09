@@ -893,8 +893,8 @@ public class DataManager {
     public String getSiteURL() {
         String host = settingMan.getValue("system/server/host");
         String port = settingMan.getValue("system/server/port");
-        String locServ = baseURL + "/" + Jeeves.Prefix.SERVICE + "/en";
-
+        // PIGMA issue #2544: set french language
+        String locServ = baseURL + "/" + Jeeves.Prefix.SERVICE + "/fr";
         return "http://" + host + (port.equals("80") ? "" : ":" + port)
         + locServ;
     }

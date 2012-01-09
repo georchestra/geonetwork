@@ -160,7 +160,9 @@ public class ExtractServicesLayers  implements Service {
 
 		        String sProto2 = "WMS"; // by default
 
-		        if (sProtocol.contains("OGC:WMS")) {
+		        // PIGMA issue #2426: GeoNetwork uses WMS1.1.1 as "regular
+		        // WMS version", INSPIRE forces us to use WMS1.3.0.
+		        if (sProtocol.contains("OGC:WMS") && (sProtocol.contains("1.1.1"))) {
 		            sProto2 = "WMS";
 		        }
 		        else if (sProtocol.contains("OGC:WFS")) {
