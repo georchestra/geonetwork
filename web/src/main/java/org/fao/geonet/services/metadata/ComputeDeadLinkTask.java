@@ -1,17 +1,11 @@
 package org.fao.geonet.services.metadata;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.ConnectException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.List;
 import java.util.TimerTask;
@@ -22,9 +16,10 @@ import jeeves.resources.dbms.Dbms;
 import jeeves.server.context.ServiceContext;
 import jeeves.utils.Xml;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Geonet;
-import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.XmlSerializer;
 import org.jdom.Element;
 import org.jdom.xpath.XPath;
@@ -46,123 +41,113 @@ public class ComputeDeadLinkTask extends TimerTask {
 
     public void run() {
    
-    	try {
+        try {
             Dbms dbms = (Dbms) context.getResourceManager().open(Geonet.Res.MAIN_DB);
 
             FileWriter fstream = new FileWriter(outputXmlPath + "failingUrls-temp.xml");
-            fstream.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-            fstream.write("<response>\n");
-            
-            GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
-            DataManager dm = gc.getDataManager();
-            
-            String regex = "(https?|ftps?)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
-            Pattern patt = null ;
-            
-          
-            patt = Pattern.compile(regex);
+            try {
+                fstream.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+                fstream.write("<response>\n");
 
-            String query = "SELECT DISTINCT                " +
-            		       "				 id            " +
-            			   "FROM                           " +
-            			   "                 Metadata      " +
-            			   "WHERE                          " +
-            			   "                 istemplate = 'n'";
-            
-            Element result = dbms.select(query);
+                GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
 
-			for (Iterator iter = result.getChildren().iterator(); iter.hasNext(); )
-			{
-				Element rec = (Element)iter.next();
-				String  id = rec.getChildText("id");
+                String regex = "(https?)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
+                Pattern patt = null;
 
-				Element curMd = XmlSerializer.selectNoXLinkResolver(dbms, "Metadata", id);
-				
-				// check parent / child validity
-				try
-				{
-					XPath pTh    = XPath.newInstance("gmd:parentIdentifier/gco:CharacterString");
-					List<Element> lstChild = pTh.selectNodes(curMd);
+                patt = Pattern.compile(regex);
 
-					for (Iterator<Element> lstChildIt = lstChild.iterator() ; lstChildIt.hasNext() ; )
-					{
-						Element current = lstChildIt.next();
-						String uuidP = current.getText();
-						if ((uuidP == null) || ("".equals(uuidP)))
-						{
-							continue ;
-						}
-						try
-						{
-							boolean parentValid = gc.getDataManager().existsMetadataUuid(dbms, uuidP);
-							if (! parentValid)
-							{
-								fstream.write("\t<badMd mdId=\""+id+"\"><![CDATA[" + uuidP +"]]></badMd>\n"); 
-							}
-						}
-						catch (Exception e)
-						{
-							// error occured, notifying it into the xml file
-							fstream.write("\t<badMd mdId=\""+id+"\"><![CDATA[" + uuidP +"]]></badMd>\n"); 	
-						}
-					}
-				} catch (Exception e)
-				{
-					// metadata is probably invalid (JDOM exception)
-				}
-				curMd = Xml.transform(curMd, context.getAppPath() + "xsl" + File.separator + "alltext.xsl");
-				String texterizedMd = curMd.getText();
+                String query = "SELECT DISTINCT                " +
+                               "                 id            " +
+                               "FROM                           " +
+                               "                 Metadata      " +
+                               "WHERE                          " +
+                               "                 istemplate = 'n'";
+                
+                Element result = dbms.select(query);
 
-				Matcher matcher = patt.matcher(texterizedMd);
-				 	     
-	             while (matcher.find()) 
-	             {
-	                 String text = matcher.group(0);
-	                 try {
-	                	 URL testUrl = new URL(text);
-	                	 try
-	                	 {
-	                		 URLConnection c = testUrl.openConnection();
-	                		 c.getInputStream().close();
-	                	 } catch (IOException e)
-	                	 {
-	                		 // consider printing it into the xml temp file
-	                		 //e.printStackTrace();
-	                		 fstream.write("\t<badUrl mdId=\""+id+"\"><![CDATA[" + text +"]]></badUrl>\n"); 
-	                	 }
-	                 } catch (MalformedURLException e)
-	                 {
-	                	 //e.printStackTrace();
-                		 
-	            		 fstream.write("\t<badUrl mdId=\""+id+"\"><![CDATA[" + text +"]]></badUrl>\n");
-	                 }
-	             } // while()
-			} // for ()
+                for (Iterator iter = result.getChildren().iterator(); iter.hasNext();) {
+                    Element rec = (Element) iter.next();
+                    String id = rec.getChildText("id");
 
-            //-- explicitly close Dbms resource to avoid exhausting Dbms pool
-            context.getResourceManager().close();
-			fstream.write("</response>");
-			fstream.close();
-			
-			// now move the temp file to the official one
-			InputStream in = new FileInputStream(outputXmlPath + "failingUrls-temp.xml");		
-			OutputStream out = new FileOutputStream(outputXmlPath + "failingUrls.xml"); 
-			// Transfer bytes from in to out 
-			byte[] buf = new byte[1024]; 
-			int len; 
-			while ((len = in.read(buf)) > 0) 
-			{ 
-				out.write(buf, 0, len); 
-			} 
-			in.close(); 
-			out.close(); 
-			
-			// and delete the temp file
-			new File(outputXmlPath + "failingUrls-temp.xml").delete(); 
-			
+                    Element curMd = XmlSerializer.selectNoXLinkResolver(dbms, "Metadata", id);
+
+                    // check parent / child validity
+                    checkParentChildValidity(dbms, fstream, gc, id, curMd);
+                    
+                    curMd = Xml.transform(curMd, context.getAppPath() + "xsl" + File.separator + "alltext.xsl");
+                    String texterizedMd = curMd.getText();
+
+                    testTransferOptionURLs(fstream, patt, id, texterizedMd);
+                } // for ()
+
+                // -- explicitly close Dbms resource to avoid exhausting Dbms
+                // pool
+                fstream.write("</response>");
+            } finally {
+                context.getResourceManager().close();
+                IOUtils.closeQuietly(fstream);
+            }
+
+            FileUtils.copyFile(new File(outputXmlPath + "failingUrls-temp.xml"), new File(outputXmlPath + "failingUrls.xml"));
+
+            // and delete the temp file
+            new File(outputXmlPath + "failingUrls-temp.xml").delete();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
         
+    }
+
+    private void testTransferOptionURLs(FileWriter fstream, Pattern patt, String id, String texterizedMd) throws IOException {
+        Matcher matcher = patt.matcher(texterizedMd);
+
+        while (matcher.find()) {
+            String text = matcher.group(0);
+            try {
+                URL testUrl = new URL(text);
+                try {
+                    HttpURLConnection c = (HttpURLConnection) testUrl.openConnection();
+                    try {
+                        if (c.getResponseCode() >= 400) {
+                            fstream.write("\t<badUrl mdId=\"" + id + "\"><![CDATA[" + text + "]]></badUrl>\n");
+                        }
+                    } finally {
+                        c.disconnect();
+                    }
+                } catch (IOException e) {
+                    fstream.write("\t<badUrl mdId=\"" + id + "\"><![CDATA[" + text + "]]></badUrl>\n");
+                }
+            } catch (MalformedURLException e) {
+
+                fstream.write("\t<badUrl mdId=\"" + id + "\"><![CDATA[" + text + "]]></badUrl>\n");
+            }
+        } // while()
+    }
+
+    private void checkParentChildValidity(Dbms dbms, FileWriter fstream, GeonetContext gc, String id, Element curMd) {
+        try {
+            XPath pTh = XPath.newInstance("gmd:parentIdentifier/gco:CharacterString");
+            List<Element> lstChild = pTh.selectNodes(curMd);
+
+            for (Iterator<Element> lstChildIt = lstChild.iterator(); lstChildIt.hasNext();) {
+                Element current = lstChildIt.next();
+                String uuidP = current.getText();
+                if ((uuidP == null) || ("".equals(uuidP))) {
+                    continue;
+                }
+                try {
+                    boolean parentValid = gc.getDataManager().existsMetadataUuid(dbms, uuidP);
+                    if (!parentValid) {
+                        fstream.write("\t<badMd mdId=\"" + id + "\"><![CDATA[" + uuidP + "]]></badMd>\n");
+                    }
+                } catch (Exception e) {
+                    // error occured, notifying it into the xml file
+                    fstream.write("\t<badMd mdId=\"" + id + "\"><![CDATA[" + uuidP + "]]></badMd>\n");
+                }
+            }
+        } catch (Exception e) {
+            // metadata is probably invalid (JDOM exception)
+        }
     }
 }
