@@ -226,7 +226,7 @@
                 
                 GeoNetwork.MapStateManager.loadMapState();
                 
-				initMapViewer();
+				//initMapViewer();
 				var mapViewport =  GeoNetwork.mapViewer.getViewport();
 				
 				var categories = new Ext.Panel({
