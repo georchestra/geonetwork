@@ -272,21 +272,13 @@
             "OpenLayers/Lang/en.js"
         ); // etc.
 
-        var agent = navigator.userAgent;
-        var docWrite = true;
-        if(docWrite) {
-            var allScriptTags = new Array(jsfiles.length);
-        }
+        var allScriptTags = new Array(jsfiles.length);
         var host = OpenLayers._getScriptLocation() + "lib/";    
         for (var i=0, len=jsfiles.length; i<len; i++) {
-            if (docWrite) {
-                allScriptTags[i] = "<script src='" + host + jsfiles[i] +
-                                   "'></script>"; 
-            } 
+            allScriptTags[i] = "<script src='" + host + jsfiles[i] +
+                                "'></script>"; 
         }
-        if (docWrite) {
-            document.write(allScriptTags.join(""));
-        }
+        document.write(allScriptTags.join(""));
     }
 })();
 
