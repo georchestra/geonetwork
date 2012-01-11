@@ -23,24 +23,35 @@
 
 package jeeves.guiservices.services;
 
+import java.sql.SQLException;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 import jeeves.constants.Jeeves;
-import jeeves.interfaces.Service;
+import jeeves.exceptions.JeevesException;
 import jeeves.resources.dbms.Dbms;
 import jeeves.server.ProfileManager;
 import jeeves.server.ServiceConfig;
 import jeeves.server.UserSession;
 import jeeves.server.context.ServiceContext;
+
 import org.jdom.Element;
 import org.jdom.Text;
 import org.jdom.filter.Filter;
-
-import java.sql.SQLException;
-import java.util.*;
 
 //=============================================================================
 
 public class SecProxyLogin implements Auth
 {
+    
+    public static final Lock groupsSyncLock = new ReentrantLock();
 
 	String  groupName;
     private HashMap<String, String> rolesMapping ;
@@ -68,12 +79,17 @@ public class SecProxyLogin implements Auth
 	//---
 	//--------------------------------------------------------------------------
 
-    public synchronized Element exec(Element params, ServiceContext context) throws Exception
+    @SuppressWarnings("serial")
+    public Element exec(Element params, ServiceContext context) throws Exception
     {
+        
         UserSession session = context.getUserSession();
 
         final Dbms dbms = (Dbms) context.getResourceManager().open ("main-db");
         try {
+            if(!groupsSyncLock.tryLock(3, TimeUnit.SECONDS)) {
+                throw new JeevesException("groups sync lock is locked for more than 3 seconds so giving up.  Perhaps a synchronization process is already in progress",null){};             
+            }
             if(authenticationUser(context, session, dbms)){
                 syncUserRoles(context, session,dbms);
             }
@@ -125,6 +141,7 @@ public class SecProxyLogin implements Auth
             }
             return sEl;
         } finally {
+            groupsSyncLock.unlock();
             dbms.commit();
         }
     }

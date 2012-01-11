@@ -14,4 +14,5 @@ public class LdapSyncException extends JeevesException
 		super(message, ex);
 		id = "sync-error";
 	}
+
 }
