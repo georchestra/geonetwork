@@ -390,11 +390,9 @@
 
 		<service name="xml.region.list">
 		  <class name=".services.main.RegionMatches">
-                    <param name="wfsURL" value="http://${host}/geoserver/wfs?REQUEST=GetCapabilities&amp;SERVICE=WFS&amp;VERSION=1.0.0" />
-<!--
-                    Should be public
-                    <param name="user" value="${priveleged_admin_name}" />
-                    <param name="pass" value="${priveleged_admin_pass}" /> -->
+        <param name="wfsURL" value="${wfsRegionsCapabilities}" />
+        ${wfsRegionsCredentials}
+                    
 		    <param name="typenames">
 			${config.xml.typenames}
 		    </param>

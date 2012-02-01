@@ -25,12 +25,18 @@ package org.fao.geonet.services.main;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import jeeves.interfaces.Service;
 import jeeves.server.ServiceConfig;
@@ -47,6 +53,7 @@ import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.jdom.Element;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
+import org.opengis.feature.type.AttributeDescriptor;
 import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.expression.PropertyName;
@@ -110,7 +117,28 @@ public class RegionMatches implements Service {
         FeatureSource<SimpleFeatureType, SimpleFeature> featureSource = getDS().getFeatureSource(typename);
 
         Element type = _typenames.get(typename);
-        String nameAttributeName = type.getAttributeValue("nameAtt");
+        String nameAttributeName = null;
+        if(type == null) {
+            // use some reflection of type to guess the correct query
+
+            SortedSet<String> possibleNameAttributes = new TreeSet<String>(new AttributeMatchComparator());
+            for(AttributeDescriptor desc: featureSource.getSchema().getAttributeDescriptors()) {
+                if(String.class.isAssignableFrom(desc.getType().getBinding())) {
+                    possibleNameAttributes.add(desc.getLocalName());
+                }
+            }
+            
+            if(!possibleNameAttributes.isEmpty()) {
+                nameAttributeName = possibleNameAttributes.first();
+            }
+        } else {
+            nameAttributeName = type.getAttributeValue("nameAtt");
+        }
+        
+        if(nameAttributeName == null) {
+            throw new AssertionError("Unable to find a name attribute for typename: "+typename+".  THis is probably a configuration issue.  Check the configuration of the xml.region.list service in config.xml");
+        }
+        
         PropertyName attExpr = filterFac.property(nameAttributeName);
         Filter filter = filterFac.like(attExpr, pattern.toUpperCase(), "*", "?", "\\", false);
         String[] properties = { nameAttributeName };
@@ -124,18 +152,23 @@ public class RegionMatches implements Service {
         try {
             Element r = new Element("records");
             while (features.hasNext()) {
-                SimpleFeature next = features.next();
-                Element e = new Element("record");
-                Object name = next.getAttribute(nameAttributeName);
-                if (name != null) {
-                    e.setAttribute("id", next.getID());
-
-                    Element nameElem = new Element("name");
-                    nameElem.setText(name.toString());
-
-                    e.addContent(nameElem);
-                    // e.setText(bbox(next));
-                    r.addContent(e);
+                try {
+                    SimpleFeature next = features.next();
+                    Element e = new Element("record");
+                    Object name = next.getAttribute(nameAttributeName);
+                    if (name != null) {
+                        e.setAttribute("id", next.getID());
+    
+                        Element nameElem = new Element("name");
+                        nameElem.setText(name.toString());
+    
+                        e.addContent(nameElem);
+                        // e.setText(bbox(next));
+                        r.addContent(e);
+                    }
+                } catch (NoSuchElementException e) {
+                    // convert a strange geotools bug where if a WFS exception occurred the hasNext says there is a feature but next explodes
+                    break;
                 }
             }
             return r;
@@ -218,6 +251,45 @@ public class RegionMatches implements Service {
             this._ds = fac.createDataStore(map);
         }
         return this._ds;
+    }
+    
+    private static class AttributeMatchComparator implements Comparator<String> {
+        ArrayList<String> namesToLookFor = new ArrayList<String>();
+        {
+            namesToLookFor.add("name");
+            namesToLookFor.add("nom");
+            namesToLookFor.add("title");
+            namesToLookFor.add("titre");
+            namesToLookFor.add("id");
+        }
+        
+        @Override
+        public int compare(String o1, String o2) {
+            int v1 = valueOf(o1);
+            int v2 = valueOf(o2);
+            return v1 - v2;
+        }
+        
+        private int valueOf(String s) {
+            if(isEqualToName(s)) return 2;
+            else if(containsName(s)) return 1;
+            else return 0;
+            
+        }
+
+        private boolean isEqualToName(String s) {
+            for (String name : namesToLookFor) {
+                if(name.equalsIgnoreCase(s)) return true;
+            }
+            return false;
+        }
+        private boolean containsName(String s) {
+            for (String name : namesToLookFor) {
+                if(s.toLowerCase().contains(name.toLowerCase())) return true;
+            }
+            return false;
+        }
+        
     }
 }
 
