@@ -9,6 +9,7 @@ import jeeves.interfaces.Service;
 import jeeves.server.ServiceConfig;
 import jeeves.server.context.ServiceContext;
 
+import org.apache.commons.io.IOUtils;
 import org.jdom.Element;
 
 import com.novell.ldap.LDAPAttribute;
@@ -61,7 +62,7 @@ public class JpegPhoto implements Service {
                 } else {
                     lc = new LDAPConnection();
                 }
-
+                lc.setSocketTimeOut(20000);
                 lc.connect(sldapHost, ildapPort);
 
                 lc.bind(LDAPConnection.LDAP_V3, sldapDn, sldapPwd.getBytes());
@@ -84,8 +85,11 @@ public class JpegPhoto implements Service {
                             while (allValues.hasMoreElements()) {
                                 byte[]  curVal = (byte[]) allValues.nextElement();
                                 FileOutputStream fos = new FileOutputStream(filePath);
-                                fos.write(curVal);
-                                fos.close();
+                                try {
+                                    fos.write(curVal);
+                                } finally {
+                                    IOUtils.closeQuietly(fos);
+                                }
                                 response.setAttribute("src","/geonetwork/images/jpegphoto-" + uidParam + ".jpg");
                                 break;
                             }
@@ -112,7 +116,8 @@ public class JpegPhoto implements Service {
     }
 
     public void init(String appPath, ServiceConfig params) throws Exception {
-        // TODO Auto-generated method stub
+
+        LDAPConnection lc = null;
         try 
         {
             sldapHost = params.getValue("LDAPhost");
@@ -121,7 +126,6 @@ public class JpegPhoto implements Service {
             sldapDn   = params.getValue("LDAPbindDn");
             sldapPwd  = params.getValue("LDAPbindPassword"); 
 
-            LDAPConnection lc ;
 
             try 
             {
@@ -140,19 +144,19 @@ public class JpegPhoto implements Service {
             {
                 lc.setSocketFactory(new LDAPJSSESecureSocketFactory());
             }
+            lc.setSocketTimeOut(20000);
             lc.connect(sldapHost, ildapPort);
 
             lc.bind(LDAPConnection.LDAP_V3, sldapDn, sldapPwd.getBytes());
 
-            lc.disconnect();
-
             isDisabled = false;
-
-
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             isDisabled = true;
+        } finally {
+            if(lc != null && lc.isConnected()) {
+                lc.disconnect();
+            }
         }
 
     }

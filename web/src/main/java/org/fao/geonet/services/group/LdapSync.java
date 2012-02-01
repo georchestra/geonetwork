@@ -75,6 +75,7 @@ public class LdapSync implements Service
 	
 	public void init(String appPath, ServiceConfig params) throws Exception
 	{
+	    LDAPConnection lc = null;
 		try
 		{
 			sldapHost = params.getValue("LDAPhost");                   // drebretagne-geobretagne.int.lsn.camptocamp.com
@@ -84,7 +85,6 @@ public class LdapSync implements Service
 			sldapDn   = params.getValue("LDAPbindDn");                 // cn=admin,dc=geobretagne,dc=fr
 			sldapPwd  = params.getValue("LDAPbindPassword");           // blahblah :-)
 			
-			LDAPConnection lc ;
 						
 			try 
 			{
@@ -101,12 +101,10 @@ public class LdapSync implements Service
 			{
 				lc = new LDAPConnection();
 			}
-			
+			lc.setSocketTimeOut(20000);
 			lc.connect(sldapHost, ildapPort);
 
 			lc.bind(LDAPConnection.LDAP_V3, sldapDn, sldapPwd.getBytes());
-			
-			lc.disconnect();
 			
 			isDisabled = null;
 			
@@ -115,6 +113,10 @@ public class LdapSync implements Service
 		catch (Exception e)
 		{
 			isDisabled = e;
+		} finally {
+		    if(lc != null && lc.isConnected()) {
+		        lc.disconnect();
+		    }
 		}
 		
 	}
@@ -142,9 +144,8 @@ public class LdapSync implements Service
     		ArrayList<ElementLevelGroup> gEnum = new ArrayList<ElementLevelGroup>();
     		
     		// Step 1 : LDAP connection / bind
-    		try 
-    		{
-    			LDAPConnection lc ;		
+    		LDAPConnection lc = null;		
+    		try {
     			
     			if (ildapPort == 636)
     			{
@@ -154,9 +155,9 @@ public class LdapSync implements Service
     			{
     				lc = new LDAPConnection();
     			}
-    			
+    			lc.setSocketTimeOut(20000);
     			lc.connect(sldapHost, ildapPort);
-    
+    			
     			lc.bind(LDAPConnection.LDAP_V3, sldapDn, sldapPwd.getBytes());
     
     			LDAPSearchResults searchResults = lc.search(sldapBase,
@@ -219,12 +220,12 @@ public class LdapSync implements Service
     					}
     				}
     			} // end search result
-    			lc.disconnect();
     			
-    		} catch (LDAPException e)
-    		{
+    		} catch (LDAPException e) {
     			throw new LdapSyncException("Error while fetching datas from LDAP: "+e.getMessage(), e);
     			
+    		}finally {
+    		    if(lc!=null && lc.isConnected()) lc.disconnect();
     		} // we now have our groups ; end of LDAP connection
     		
     				
