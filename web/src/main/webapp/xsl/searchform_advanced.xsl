@@ -183,7 +183,7 @@
 				</xsl:if>
 					
 				<!-- Template -->
-				<xsl:if test="string(/root/gui/session/userId)!='' and /root/gui/services/service[@name='metadata.edit']">
+				<xsl:if test="/root/gui/services/service[@name='metadata.edit']">
 					<div class="row">
 						<span class="labelField"><xsl:value-of select="/root/gui/strings/kind"/></span>
 						
