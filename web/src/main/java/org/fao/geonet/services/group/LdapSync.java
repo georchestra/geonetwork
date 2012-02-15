@@ -117,8 +117,9 @@ public class LdapSync implements Service
     			{
     				lc = new LDAPConnection();
     			}
-    			lc.setSocketTimeOut(20000);
     			lc.connect(sldapHost, ildapPort);
+
+    			lc.setSocketTimeOut(20000);
     			
     			lc.bind(LDAPConnection.LDAP_V3, sldapDn, sldapPwd.getBytes());
     
