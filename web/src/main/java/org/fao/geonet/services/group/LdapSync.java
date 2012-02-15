@@ -35,7 +35,6 @@ import com.novell.ldap.LDAPJSSESecureSocketFactory;
 public class LdapSync implements Service
 {
 	private String sldapHost;
-	private String sldapPort;
 	private String sldapBase;
 	private String[] sldapAtt;
 	private String sldapDn;
@@ -75,50 +74,19 @@ public class LdapSync implements Service
 	
 	public void init(String appPath, ServiceConfig params) throws Exception
 	{
-	    LDAPConnection lc = null;
-		try
-		{
-			sldapHost = params.getValue("LDAPhost");                   // drebretagne-geobretagne.int.lsn.camptocamp.com
-			sldapPort = params.getValue("LDAPport");                   // 389 / 636
-			sldapBase = params.getValue("LDAPbase");                   // dc=geobretagne,dc=fr
-			sldapAtt  = params.getValue("LDAPattributes").split(",");  // {cn,gidNumbers}
-			sldapDn   = params.getValue("LDAPbindDn");                 // cn=admin,dc=geobretagne,dc=fr
-			sldapPwd  = params.getValue("LDAPbindPassword");           // blahblah :-)
-			
-						
-			try 
-			{
-				ildapPort = Integer.parseInt(sldapPort);
-			} catch (NumberFormatException nfe)
-			{
-				ildapPort = LDAPConnection.DEFAULT_PORT;
-			}
-			if (ildapPort == 636)
-			{
-				lc = new LDAPConnection(new LDAPJSSESecureSocketFactory());							
-			}
-			else // (ildapPort == 389) or else, assume it's not a SSL connection
-			{
-				lc = new LDAPConnection();
-			}
-			lc.setSocketTimeOut(20000);
-			lc.connect(sldapHost, ildapPort);
 
-			lc.bind(LDAPConnection.LDAP_V3, sldapDn, sldapPwd.getBytes());
-			
-			isDisabled = null;
-			
-
-		}
-		catch (Exception e)
-		{
-			isDisabled = e;
-		} finally {
-		    if(lc != null && lc.isConnected()) {
-		        lc.disconnect();
-		    }
-		}
-		
+        sldapHost = params.getValue("LDAPhost");                   // drebretagne-geobretagne.int.lsn.camptocamp.com
+        String sldapPort = params.getValue("LDAPport");                   // 389 / 636
+        sldapBase = params.getValue("LDAPbase");                   // dc=geobretagne,dc=fr
+        sldapAtt  = params.getValue("LDAPattributes").split(",");  // {cn,gidNumbers}
+        sldapDn   = params.getValue("LDAPbindDn");                 // cn=admin,dc=geobretagne,dc=fr
+        sldapPwd  = params.getValue("LDAPbindPassword");           // blahblah :-)
+        try 
+        {
+            ildapPort = Integer.parseInt(sldapPort);
+        } catch (NumberFormatException nfe) {
+            throw new IllegalArgumentException("LDAPport is not a number. Typical values are 389 and 636");
+        }
 	}
 	
 
@@ -131,12 +99,6 @@ public class LdapSync implements Service
 
 	public Element exec(Element params, ServiceContext context) throws Exception
 	{
-		
-		if (isDisabled != null)
-		{
-			throw new LdapSyncException("Error while initializing synchronization service. Service disabled", isDisabled);
-		}
-		
 		try {
 		    if(!SecProxyLogin.groupsSyncLock.tryLock(3, TimeUnit.SECONDS)) {
 	            throw new LdapSyncException("groups sync lock is locked for more than 3 seconds so giving up.  Perhaps a synchronization process is already in progress",null);		        
