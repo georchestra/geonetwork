@@ -1,6 +1,6 @@
 
 Ext.onReady(function() {
-    Ext.QuickTips.init();
+    //Ext.QuickTips.init();
     
     // Ext.Window
     var win;
