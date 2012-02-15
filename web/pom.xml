@@ -381,6 +381,7 @@
                 <includes>
                   <include>${geonetwork.build.dir}/scripts/sarissa.js</include>
                   <include>${geonetwork.build.dir}/scripts/prototype.js</include>
+                  <include>${geonetwork.build.dir}/scripts/cleanFn.js</include>
                 </includes>
               </aggregation>
          <aggregation>
