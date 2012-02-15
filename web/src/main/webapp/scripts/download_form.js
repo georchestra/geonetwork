@@ -153,6 +153,17 @@ Ext.onReady(function() {
                             }
                         }
                         
+                        var df = Function.prototype.defer;
+                        // before form submission, restore Ext's Function.prototype.defer:
+                        Function.prototype.defer = function(millis, obj, args, appendArgs){
+                            var fn = this.createDelegate(obj, args, appendArgs);
+                            if(millis){
+                                return setTimeout(fn, millis);
+                            }
+                            fn();
+                            return 0;
+                        };
+                        
                         form.submit({
                             // requires dlform webapp to be deployed:
                             url: '/downloadform/geonetwork',
@@ -172,6 +183,9 @@ Ext.onReady(function() {
                                 }
                             }
                         });
+                        
+                        // after form submission, restore prototype's Function.prototype.defer:
+                        Function.prototype.defer = df;
                     }
                 }
             }]
