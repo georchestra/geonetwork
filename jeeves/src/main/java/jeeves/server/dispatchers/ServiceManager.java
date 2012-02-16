@@ -464,7 +464,7 @@ public class ServiceManager
 		int     code  = getErrorCode(e);
 		boolean cache = (srvInfo == null) ? false : srvInfo.isCacheSet();
 
-		debug("Raised exception while executing service\n"+ Xml.getString(error));
+		error("Raised exception while executing service\n"+ Xml.getString(error));
 
 		try
 		{
