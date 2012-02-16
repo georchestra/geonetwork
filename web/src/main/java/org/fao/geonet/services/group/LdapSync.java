@@ -246,22 +246,27 @@ public class LdapSync implements Service
     
     			for (int i = 0; i < gEnum.size(); i++)
     			{
-    				int iGid = gEnum.get(i).getGid();
-    				String grName = gEnum.get(i).getName();
-    				String grDesc = gEnum.get(i).getDescription();
+    				ElementLevelGroup elementLevelGroup = gEnum.get(i);
+                    int iGid = elementLevelGroup.getGid();
+    				String grName = elementLevelGroup.getName();
+    				grName = grName==null? ("Group "+iGid) : grName;
+    				String grDesc = elementLevelGroup.getDescription();
+    				grDesc = grDesc==null ? grName : grDesc;
+                    
     				// Some minor verification, but this
     				// *should* not happen
     				if (iGid >= 2)
     				{
-    					dbms.execute("INSERT INTO groups VALUES (?, ?,  ?, null, null)",iGid,grName,grDesc);
+    					dbms.execute("INSERT INTO groups VALUES (?, ?,  ?, null, null)",iGid,grName.substring(0,32),grDesc);
+    					String translatedDes = grDesc.substring(0,96);
     					dbms.execute("DELETE FROM groupsdes WHERE iddes = ?", iGid);
-    					dbms.execute("INSERT INTO groupsdes VALUES(?, 'cn', ?)", iGid, grName);
-    					dbms.execute("INSERT INTO groupsdes VALUES(?, 'de', ?)", iGid, grName);
-    					dbms.execute("INSERT INTO groupsdes VALUES(?, 'en', ?)", iGid, grName);
-    					dbms.execute("INSERT INTO groupsdes VALUES(?, 'fr', ?)", iGid, grName);
-    					dbms.execute("INSERT INTO groupsdes VALUES(?, 'es', ?)", iGid, grName);
-    					dbms.execute("INSERT INTO groupsdes VALUES(?, 'nl', ?)", iGid, grName);
-    					dbms.execute("INSERT INTO groupsdes VALUES(?, 'ru', ?)", iGid, grName);
+    					dbms.execute("INSERT INTO groupsdes VALUES(?, 'cn', ?)", iGid, translatedDes);
+    					dbms.execute("INSERT INTO groupsdes VALUES(?, 'de', ?)", iGid, translatedDes);
+    					dbms.execute("INSERT INTO groupsdes VALUES(?, 'en', ?)", iGid, translatedDes);
+    					dbms.execute("INSERT INTO groupsdes VALUES(?, 'fr', ?)", iGid, translatedDes);
+    					dbms.execute("INSERT INTO groupsdes VALUES(?, 'es', ?)", iGid, translatedDes);
+    					dbms.execute("INSERT INTO groupsdes VALUES(?, 'nl', ?)", iGid, translatedDes);
+    					dbms.execute("INSERT INTO groupsdes VALUES(?, 'ru', ?)", iGid, translatedDes);
     				}
     			}
     		
