@@ -167,6 +167,7 @@ Ext.onReady(function() {
                         form.submit({
                             // requires dlform webapp to be deployed:
                             url: '/downloadform/geonetwork',
+                            headers: { "Content-Type": "application/x-www-form-urlencoded;" },
                             success: options.callback,
                             failure: function(form, action) {
                                 var msg = "Erreur";
