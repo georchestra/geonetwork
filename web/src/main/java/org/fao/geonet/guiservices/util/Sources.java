@@ -63,7 +63,7 @@ public class Sources implements Service
 
 		//--- retrieve known nodes
 
-		Element nodes = dbms.select("SELECT uuid as siteId, name FROM Sources");
+		Element nodes = dbms.select("SELECT uuid as siteId, name FROM Sources ORDER BY name ASC");
 		nodes.addContent(local);
 
 

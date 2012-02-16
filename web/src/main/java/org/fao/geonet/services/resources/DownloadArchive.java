@@ -194,8 +194,9 @@ public class DownloadArchive implements Service
 			if (fname.contains("..")) {
 				continue;
 			}
-
-			Lib.resource.downloadFormFilled(context, id, fname);
+			if (access.equals(Params.Access.PRIVATE)) { 
+			    Lib.resource.downloadFormFilled(context, id, fname);
+			}
 			
 			File file = new File(dir, fname);
 			if (!file.exists()) throw new ResourceNotFoundEx(file.getAbsolutePath());

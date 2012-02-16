@@ -138,9 +138,6 @@
 							<xsl:value-of select="/root/gui/strings/any"/>
 						</option>
 						<xsl:for-each select="/root/gui/sources/record">
-							<!--
-								<xsl:sort order="ascending" select="name"/>
-							-->
 							<xsl:variable name="source" select="siteid/text()"/>
 							<xsl:variable name="sourceName" select="name/text()"/>
 							<option value="{$source}">

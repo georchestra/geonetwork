@@ -83,9 +83,9 @@ public class Download implements Service
 			Lib.resource.checkPrivilege(context, id, AccessManager.OPER_DOWNLOAD);
 			// Deactivating the mail notification
 			//doNotify = true;
+			
+			Lib.resource.downloadFormFilled(context, id, fname);
 		}
-
-		Lib.resource.downloadFormFilled(context, id, fname);
 		// Build the response
 		File dir = new File(Lib.resource.getDir(context, access, id));
 		File file= new File(dir, fname);
