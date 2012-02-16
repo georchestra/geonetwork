@@ -251,14 +251,15 @@ public class LdapSync implements Service
     				String grName = elementLevelGroup.getName();
     				grName = grName==null? ("Group "+iGid) : grName;
     				String grDesc = elementLevelGroup.getDescription();
-    				grDesc = grDesc==null ? grName : grDesc;
+    				grDesc = grDesc==null || grDesc.trim().isEmpty() ? grName : grDesc;
                     
     				// Some minor verification, but this
     				// *should* not happen
     				if (iGid >= 2)
     				{
-    					dbms.execute("INSERT INTO groups VALUES (?, ?,  ?, null, null)",iGid,grName.substring(0,32),grDesc);
-    					String translatedDes = grDesc.substring(0,96);
+    				    
+    					dbms.execute("INSERT INTO groups VALUES (?, ?,  ?, null, null)",iGid,grName.substring(0,Math.min(grName.length(), 32)),grDesc);
+    					String translatedDes = grDesc.substring(0,Math.min(grName.length(), 96));
     					dbms.execute("DELETE FROM groupsdes WHERE iddes = ?", iGid);
     					dbms.execute("INSERT INTO groupsdes VALUES(?, 'cn', ?)", iGid, translatedDes);
     					dbms.execute("INSERT INTO groupsdes VALUES(?, 'de', ?)", iGid, translatedDes);
