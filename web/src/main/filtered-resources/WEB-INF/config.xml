@@ -180,6 +180,24 @@
     	        <reconnectTime>3600</reconnectTime>
 			</config>
 		</resource>
+		
+		<resource enabled="true">
+			<name>download-form-db</name>
+			<provider>jeeves.resources.dbms.DbmsPool</provider>
+			<config>
+                          <user>${psql.user}</user>
+                          <password>${psql.pass}</password>
+    	        <driver>org.postgresql.Driver</driver>
+				<!--					
+					jdbc:postgresql:database
+					jdbc:postgresql://host/database
+					jdbc:postgresql://host:port/database
+				-->
+                <url>${downloadform.psql.url}</url>
+				<poolSize>10</poolSize>
+    	        <reconnectTime>3600</reconnectTime>
+			</config>
+		</resource>
 	    
 	    
 	    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

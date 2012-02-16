@@ -23,12 +23,15 @@
 
 package org.fao.geonet.lib;
 
+import jeeves.constants.Jeeves;
 import jeeves.exceptions.OperationNotAllowedEx;
+import jeeves.resources.dbms.Dbms;
 import jeeves.server.context.ServiceContext;
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.constants.Params;
 import org.fao.geonet.kernel.AccessManager;
+import org.jdom.Element;
 
 import java.io.File;
 import java.util.HashSet;
@@ -149,6 +152,16 @@ public class ResourceLib
 
 		return text;
 	}
+
+    public void downloadFormFilled(ServiceContext context, String id, String fname) throws Exception {
+        Dbms dbms = (Dbms) context.getResourceManager().open(Geonet.Res.DOWNLOAD_FORM_DB);
+        String query = "SELECT count(id) FROM download.geonetwork_log where (sessionid=? OR username=?) AND filename=? AND metadata_id=?";
+        String sessionid = context.getCookie("JSESSIONID");
+        String username = context.getUserSession().getUsername();
+        Element response = dbms.select(query, sessionid, username, fname, id);
+        int numResults = Integer.parseInt(response.getChild(Jeeves.Elem.RECORD).getTextTrim());
+        if(numResults < 1) throw new OperationNotAllowedEx("Download form has not been filled out.  The user needs to fill out the form before requesting the file: "+fname+" of metadata "+id); 
+    }
 }
 
 //=============================================================================

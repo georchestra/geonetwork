@@ -147,6 +147,7 @@ public class DownloadArchive implements Service
 		//--- check whether notify is required
 		boolean doNotify = false;
 		Lib.resource.checkPrivilege(context, id, AccessManager.OPER_DOWNLOAD);
+		
 		doNotify = true;
 
 		//--- set username for emails and logs
@@ -194,6 +195,8 @@ public class DownloadArchive implements Service
 				continue;
 			}
 
+			Lib.resource.downloadFormFilled(context, id, fname);
+			
 			File file = new File(dir, fname);
 			if (!file.exists()) throw new ResourceNotFoundEx(file.getAbsolutePath());
 

@@ -147,6 +147,7 @@ public class Geonet
 	public class Res
 	{
 		public static final String MAIN_DB = "main-db";
+		public static final String DOWNLOAD_FORM_DB = "download-form-db";
 	}
 
 	/**

@@ -85,6 +85,7 @@ public class Download implements Service
 			//doNotify = true;
 		}
 
+		Lib.resource.downloadFormFilled(context, id, fname);
 		// Build the response
 		File dir = new File(Lib.resource.getDir(context, access, id));
 		File file= new File(dir, fname);
