@@ -30,7 +30,7 @@ Ext.onReady(function() {
             labelWidth: 100,
             region: 'center',
             standardSubmit: false,
-            //monitorValid: true,
+            monitorValid: true,
             frame: true,
             bodyStyle:'padding:5px 5px 0',
             defaults: {
@@ -131,7 +131,7 @@ Ext.onReady(function() {
             ],
             buttons: [{
                 text: 'OK',
-                //formBind: true,
+                formBind: true,
                 handler: function() {
                     var fp = this.ownerCt;
                     var form = fp.getForm();
@@ -169,18 +169,11 @@ Ext.onReady(function() {
                             url: '/downloadform/geonetwork',
                             success: options.callback,
                             failure: function(form, action) {
-                                switch (action.failureType) {
-                                    case Ext.form.Action.CLIENT_INVALID:
-                                        // should not happen, since we have formBind
-                                        alert('Formulaire invalide');
-                                        break;
-                                    case Ext.form.Action.CONNECT_FAILURE:
-                                        alert("Impossible de sauver le formulaire. "+
-                                            "Merci de contacter l'administrateur de la plateforme");
-                                        break;
-                                    case Ext.form.Action.SERVER_INVALID:
-                                        alert("Erreur : "+ action.result.msg);
+                                var msg = "Erreur";
+                                if (action.result && action.result.msg) {
+                                    msg += " : "+action.result.msg;
                                 }
+                                alert(msg);
                             }
                         });
                         
