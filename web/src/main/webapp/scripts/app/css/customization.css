@@ -25,11 +25,11 @@
 }
 
 .md-delete {
-    background-image: url(./icons/delete.gif) !important;
+    background-image: url(./icons/delete.png) !important;
 }
 
 .md-dup {
-    background-image: url(./icons/dup.png) !important;
+    background-image: url(./icons/duplicate.png) !important;
 }
 .md-add-contact {
     background-image: url(./icons/user_add.png) !important;
@@ -40,7 +40,7 @@
 }
 
 .md-dup-contact {
-    background-image: url(./icons/user_dup.png) !important;
+    background-image: url(./icons/user_duplicate.png) !important;
 }
 
 .md-multi-field {
