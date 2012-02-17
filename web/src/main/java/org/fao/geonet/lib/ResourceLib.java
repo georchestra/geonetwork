@@ -158,7 +158,7 @@ public class ResourceLib
         String query = "SELECT count(id) FROM download.geonetwork_log where (sessionid=? OR username=?) AND filename=? AND metadata_id=?";
         String sessionid = context.getCookie("JSESSIONID");
         String username = context.getUserSession().getUsername();
-        Element response = dbms.select(query, sessionid, username, fname, id);
+        Element response = dbms.select(query, sessionid, username, fname, Integer.parseInt(id));
         int numResults = Integer.parseInt(response.getChild(Jeeves.Elem.RECORD).getTextTrim());
         if(numResults < 1) throw new OperationNotAllowedEx("Download form has not been filled out.  The user needs to fill out the form before requesting the file: "+fname+" of metadata "+id); 
     }
