@@ -110,10 +110,10 @@
                 <script type="text/javascript" src="{/root/gui/url}/scripts/ol_settings.js"></script>		
                 <script type="text/javascript" src="{/root/gui/url}/scripts/ol_minimap.js"></script>
                 <script type="text/javascript" src="{/root/gui/url}/scripts/ol_map.js"></script>
-                
+
                 <script type="text/javascript" src="{/root/gui/url}/scripts/ext-ux/MultiselectItemSelector-3.0/Multiselect.js"></script>
                 <script type="text/javascript" src="{/root/gui/url}/scripts/ext-ux/MultiselectItemSelector-3.0/DDView.js"></script>
-                
+
                 <script type="text/javascript" src="{/root/gui/url}/scripts/editor/tooltip.js"></script>
                 <script type="text/javascript" src="{/root/gui/url}/scripts/editor/app.SearchField.js"></script>
                 <script type="text/javascript" src="{/root/gui/url}/scripts/editor/app.KeywordSelectionPanel.js"></script>
