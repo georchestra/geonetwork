@@ -537,9 +537,18 @@ public class ServiceManager
 	{
 		info("   -> dispatching to output for : "+ req.getService());
 
+		String strStatusCode = err.getAttributeValue(ConfigFile.Error.Attr.STATUS_CODE);
+                int statusCode;
+                try {
+                      if (strStatusCode) {
+                        statusCode = Integer.parseInt(strStatusCode);
+                      } catch (Exception e)
+                      statusCode = 200;
+                }
+                req.setStatusCode(statusCode);
+
 		//------------------------------------------------------------------------
 		//--- check if the output page is a foward
-
 		if (outPage != null)
 		{
 			String sForward = outPage.getForward();
