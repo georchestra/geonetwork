@@ -537,12 +537,13 @@ public class ServiceManager
 	{
 		info("   -> dispatching to output for : "+ req.getService());
 
-		String strStatusCode = err.getAttributeValue(ConfigFile.Error.Attr.STATUS_CODE);
-                int statusCode;
+                String strStatusCode = response.getAttributeValue("responseCode");
+                int statusCode = 200;
                 try {
-                      if (strStatusCode) {
+                      if (strStatusCode != null) {
                         statusCode = Integer.parseInt(strStatusCode);
-                      } catch (Exception e)
+                      }
+                } catch (Exception e) {
                       statusCode = 200;
                 }
                 req.setStatusCode(statusCode);
