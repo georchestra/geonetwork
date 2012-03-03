@@ -1,3 +1,3 @@
 #!/bin/sh
 
-./runserver.sh jeichar
+./runserver.sh localhost

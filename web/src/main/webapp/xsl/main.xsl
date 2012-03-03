@@ -32,7 +32,6 @@
 					}
 					</style>
 					<xsl:if test="//service/@name = 'metadata.show'">
-						<script type="text/javascript" src="/geonetwork/scripts/app/external/extjs/ux/MultiSelect.js" />
 						<script type="text/javascript" src="/geonetwork/scripts/ext/locale/ext-lang-fr.js" />
 						<script type="text/javascript" src="/geonetwork/scripts/download_form.js" />				
 					</xsl:if>
