@@ -987,7 +987,7 @@ function showKeywordSelectionPanel(ref, name) {
 
         keywordSelectionWindow = new Ext.Window({
             title: translate('keywordSelectionWindowTitle'),
-            width: 920,
+            width: 620,
             height: 300,
             layout: 'fit',
             items: keywordSelectionPanel,

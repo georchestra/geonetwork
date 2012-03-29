@@ -125,8 +125,6 @@ app.KeywordSelectionPanel = Ext.extend(Ext.FormPanel, {
             store: app.keyword.keywordStore,
             paramName: 'pKeyword',
             afterRender:function(){
-            	alert(this.width);
-            	//Ext.form.SearchField.superclass.afterRender.call(this);
             	if(Ext.isIE8)this.el.setTop(1);
             	}
         });
