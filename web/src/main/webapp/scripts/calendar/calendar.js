@@ -349,7 +349,7 @@ Calendar.tableMouseUp = function(ev) {
 	var mon = Calendar.findMonth(target);
 	var date = null;
 	if (mon) {
-		date = new Date(cal.date);
+		date = cal.date.clone();
 		if (mon.month != date.getMonth()) {
 			date.setMonth(mon.month);
 			cal.setDate(date);
@@ -359,7 +359,7 @@ Calendar.tableMouseUp = function(ev) {
 	} else {
 		var year = Calendar.findYear(target);
 		if (year) {
-			date = new Date(cal.date);
+			date = cal.date.clone();
 			if (year.year != date.getFullYear()) {
 				date.setFullYear(year.year);
 				cal.setDate(date);
@@ -593,7 +593,7 @@ Calendar.cellClick = function(el, ev) {
 		date = cal.date;
 		var other_month = !(cal.dateClicked = !el.otherMonth);
 		if (!other_month && !cal.currentDateEl)
-			cal._toggleMultipleDate(new Date(date));
+			cal._toggleMultipleDate(date.clone());
 		else
 			newdate = !el.disabled;
 		// a date was clicked
@@ -605,7 +605,7 @@ Calendar.cellClick = function(el, ev) {
 			cal.callCloseHandler();
 			return;
 		}
-		date = new Date(cal.date);
+		date = cal.date.clone();
 		if (el.navtype == 0)
 			date.setDateOnly(new Date()); // TODAY
 		// unless "today" was clicked, we assume no date was clicked so
@@ -728,8 +728,8 @@ Calendar.prototype.create = function (_par) {
 		parent = _par;
 		this.isPopup = false;
 	}
-	this.date = this.dateStr ? new Date(this.dateStr) : new Date();
-
+	this.date = this.dateStr ? this.dateStr.clone() : new Date();
+	//alert(this.date.getDate() + " " + Date.getShortMonthName(this.date.getMonth()));
 	var table = Calendar.createElement("table");
 	this.table = table;
 	table.cellSpacing = 0;
@@ -1007,12 +1007,12 @@ Calendar._keyEvent = function(ev) {
 				ne = cal.ar_days[y][x];
 			};setVars();
 			function prevMonth() {
-				var date = new Date(cal.date);
+				var date = cal.date.clone();
 				date.setDate(date.getDate() - step);
 				cal.setDate(date);
 			};
 			function nextMonth() {
-				var date = new Date(cal.date);
+				var date = cal.date.clone();
 				date.setDate(date.getDate() + step);
 				cal.setDate(date);
 			};
@@ -1093,7 +1093,7 @@ Calendar.prototype._init = function (firstDayOfWeek, date) {
 		date.setFullYear(year);
 	}
 	this.firstDayOfWeek = firstDayOfWeek;
-	this.date = new Date(date);
+	this.date = date.clone();
 	var month = date.getMonth();
 	var mday = date.getDate();
 	var no_days = date.getMonthDays();
@@ -1164,7 +1164,7 @@ Calendar.prototype._init = function (firstDayOfWeek, date) {
 				}
 			}
 			if (!cell.disabled) {
-				cell.caldate = new Date(date);
+				cell.caldate = date.clone();
 				cell.ttip = "_";
 				if (!this.multiple && current_month
 				    && iday == mday && this.hiliteToday) {
@@ -1716,7 +1716,7 @@ Date.prototype.equalsTo = function(date) {
 
 /** Set only the year, month, date parts (keep existing time) */
 Date.prototype.setDateOnly = function(date) {
-	var tmp = new Date(date);
+	var tmp = date.clone();
 	this.setDate(1);
 	this.setFullYear(tmp.getFullYear());
 	this.setMonth(tmp.getMonth());
@@ -1792,7 +1792,7 @@ Date.prototype.print = function (str) {
 
 Date.prototype.__msh_oldSetFullYear = Date.prototype.setFullYear;
 Date.prototype.setFullYear = function(y) {
-	var d = new Date(this);
+	var d = this.clone();
 	d.__msh_oldSetFullYear(y);
 	if (d.getMonth() != this.getMonth())
 		this.setDate(28);

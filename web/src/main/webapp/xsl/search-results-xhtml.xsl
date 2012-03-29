@@ -112,7 +112,7 @@
 						</a>
 						&#160;
 						<!-- Add other actions list on selected metadata     -->
-						<button id="oAcOs" name="oAcOs" class="content" onclick="actionOnSelect('{/root/gui/strings/noSelectedMd}')" style="width:220px;" title="{/root/gui/strings/otherActions}">
+						<button id="oAcOs" name="oAcOs" class="content" onkeypress="blockKeyPress(event)" onclick="actionOnSelect('{/root/gui/strings/noSelectedMd}')" style="width:220px;" title="{/root/gui/strings/otherActions}">
 							<img id="oAcOsImg" name="oAcOsImg" src="{/root/gui/url}/images/plus.gif" style="padding-right:3px;"/>
 							<xsl:value-of select="/root/gui/strings/actionOnSelect"/>
 						</button>

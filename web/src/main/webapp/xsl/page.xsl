@@ -10,7 +10,7 @@
 		<xsl:call-template name="formLayout">
 			<xsl:with-param name="title" select="/root/gui/page/title"/>
 			<xsl:with-param name="content">
-				<table><tr><td>
+				<table class="text-aligned-left"><tr align="left"><td align="left">
 					<xsl:copy-of select="/root/gui/page/content/*"/>
 					<p align="right">siteID: <kbd><xsl:value-of select="/root/gui/env/site/siteId"/></kbd></p>
 				</td></tr></table>

@@ -126,13 +126,13 @@ ExtGeoNet.widget.Keywords = Ext.extend(Ext.ux.form.SuperBoxSelect, {
 
            this.keywordSelectionWindow = new Ext.Window({
                title: translate('keywordSelectionWindowTitle'),
-               width: 620,
+               width: 920,
                height: 300,
                layout: 'fit',
                items: keywordSelectionPanel,
                closeAction: 'hide',
-               constrain: true,
-               iconCls: 'searchIcon'
+               constrain: true
+               //iconCls: 'searchIcon'
            });
        }
 

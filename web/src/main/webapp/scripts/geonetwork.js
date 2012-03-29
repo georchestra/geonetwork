@@ -258,6 +258,15 @@ function get_cookie ( cookie_name )
 			oActions('oAcOs');
 		}
 	}
+	
+	function blockKeyPress(e) {
+		// deny enter button when not pressed on search
+		if (e.keyCode == 13) {
+			if(e.preventDefault) e.preventDefault();
+			else event.returnValue = false;
+	        return false;
+	    }
+	}
 
 /**********************************************************************
  * Massive Ownership Transfer stuff
