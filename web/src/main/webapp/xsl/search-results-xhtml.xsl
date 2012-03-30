@@ -478,7 +478,7 @@
 								</xsl:choose>
 							</xsl:when>
 							<xsl:when test="count($metadata/link[@type='download'])=1 and $metadata/link[@type='download'] != ''">
-								<button class="content" onclick="load('{$metadata/link[@type='download']}')" title="{/root/gui/strings/download}">
+								<button class="content dlform" title="{/root/gui/strings/download}" onclick="dl_openDLForm(event, '{$metadata/link[@type='download']}')">
 									<xsl:value-of select="/root/gui/strings/download"/>
 								</button>
 							</xsl:when>
