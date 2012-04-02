@@ -1,6 +1,7 @@
 var dl_openDLForm = function(e,t) {
     	
-    e.preventDefault();
+	if(e.preventDefault) e.preventDefault();
+	else e.returnValue = false;
     
     if(t.href != null) t = t.href;
     var p = t.split('?');
