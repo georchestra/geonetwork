@@ -407,7 +407,7 @@
 	<intermapSearch>Geographic search</intermapSearch>
 	<invalidSelectionMoreThanOneWMC js="true">Invalid selection : Your selection contains more than one WMC</invalidSelectionMoreThanOneWMC>
 	<invalidSelectionOneWMCandOneOrMoreWMS js="true">Invalid selection : Your selection contains a WMC and one or more WMS</invalidSelectionOneWMCandOneOrMoreWMS>
-	<invalidSelectionnoWMCnorWMS js="true">There is no WMC nor WMS information into your current selection</invalidSelectionnoWMCnorWMS>
+	<invalidSelectionnoWMCnorWMS js="true">There is no data linked to this metadata</invalidSelectionnoWMCnorWMS>
 	<isoAll>ISO All</isoAll>
 	<isoCore>ISO Core</isoCore>
 	<isoMinimum>ISO Minimum</isoMinimum>
