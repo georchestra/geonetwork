@@ -386,7 +386,7 @@
 	<intermapSearch>Recherche géographique</intermapSearch>
 	<invalidSelectionMoreThanOneWMC js="true">Sélection invalide : Votre sélection contient plus d'un WMC</invalidSelectionMoreThanOneWMC>
 	<invalidSelectionOneWMCandOneOrMoreWMS js="true">Sélection invalide : Votre sélection contient un WMC ainsi qu'un ou plusieurs WMS</invalidSelectionOneWMCandOneOrMoreWMS>
-	<invalidSelectionnoWMCnorWMS js="true">Il n'y a ni WMC, ni WMS dans votre sélection en cours. Modifiez le contenu de votre panier puis réessayez</invalidSelectionnoWMCnorWMS>
+	<invalidSelectionnoWMCnorWMS js="true">Il n'y a pas de données associées à cette fiche</invalidSelectionnoWMCnorWMS>
 
 	<isoAll>ISO Complet</isoAll>
 	<isoCore>ISO Core</isoCore>

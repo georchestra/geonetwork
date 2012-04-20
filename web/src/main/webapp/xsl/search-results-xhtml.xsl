@@ -112,7 +112,7 @@
 						</a>
 						&#160;
 						<!-- Add other actions list on selected metadata     -->
-						<button id="oAcOs" name="oAcOs" class="content" onkeypress="blockKeyPress(event)" onclick="actionOnSelect('{/root/gui/strings/noSelectedMd}')" style="width:220px;" title="{/root/gui/strings/otherActions}">
+						<button id="oAcOs" name="oAcOs" class="content" onkeypress="blockKeyPress(event)" onmouseup="actionOnSelect('{/root/gui/strings/noSelectedMd}')" style="width:220px;" title="{/root/gui/strings/otherActions}">
 							<img id="oAcOsImg" name="oAcOsImg" src="{/root/gui/url}/images/plus.gif" style="padding-right:3px;"/>
 							<xsl:value-of select="/root/gui/strings/actionOnSelect"/>
 						</button>
@@ -478,7 +478,7 @@
 								</xsl:choose>
 							</xsl:when>
 							<xsl:when test="count($metadata/link[@type='download'])=1 and $metadata/link[@type='download'] != ''">
-								<button class="content" onclick="load('{$metadata/link[@type='download']}')" title="{/root/gui/strings/download}">
+								<button class="content dlform" title="{/root/gui/strings/download}" onclick="javascript:dl_openDLForm(event, '{$metadata/link[@type='download']}')" >
 									<xsl:value-of select="/root/gui/strings/download"/>
 								</button>
 							</xsl:when>
