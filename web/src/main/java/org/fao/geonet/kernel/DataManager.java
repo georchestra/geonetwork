@@ -1742,8 +1742,10 @@ public class DataManager {
                     Namespace nsgco = Namespace.getNamespace("gco", "http://www.isotc211.org/2005/gco");
                     fragment.addNamespaceDeclaration(nsgco);
                     List<String> isoThemesList = new ArrayList<String>();
+                    
+                    String path = "gmd:identificationInfo/*/gmd:topicCategory/gmd:MD_TopicCategoryCode";
                     XPath alreadyPresent = XPath
-                    .newInstance("gmd:identificationInfo/gmd:MD_DataIdentification/gmd:topicCategory/gmd:MD_TopicCategoryCode");
+                    .newInstance(path);
                     List<Element> lElem = alreadyPresent.selectNodes(md);
 
                     for (Element elem : lElem) {
@@ -1763,7 +1765,7 @@ public class DataManager {
                     for (String currentKeyword : laddedKw) {
                         String isoThemeToAdd = getIsoTheme(currentKeyword);
                         // we don't inject the same ISO theme twice
-                        if (isoThemesList.contains(isoThemeToAdd)) {
+                        if (isoThemesList.contains(isoThemeToAdd) || isoThemeToAdd == null) {
                             continue;
                         }
                             isoThemesInject = String.format(isoThemeSkel,
