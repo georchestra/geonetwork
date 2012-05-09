@@ -215,17 +215,12 @@
 							</fo:block>
 						</fo:table-cell>
 						<fo:table-cell>
-							<fo:block/>
-						</fo:table-cell>
-						<!-- 
-						<fo:table-cell>
 							<fo:block text-align="right">
 								<xsl:call-template name="thumbnail">
 									<xsl:with-param name="server" select="$server"/>
 								</xsl:call-template>
 							</fo:block>
 						</fo:table-cell>
-						-->
 					</fo:table-row>
 					<fo:table-row height="10pt">
 						<fo:table-cell>

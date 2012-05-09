@@ -4,6 +4,7 @@
 	xmlns:xalan="http://xml.apache.org/xalan"
 	exclude-result-prefixes="xalan"
 	xmlns:gco="http://www.isotc211.org/2005/gco"
+	xmlns:gmd="http://www.isotc211.org/2005/gmd"
 	xmlns:geonet="http://www.fao.org/geonetwork"
 	xmlns:fo="http://www.w3.org/1999/XSL/Format">
 
@@ -16,27 +17,35 @@
 		
         <xsl:variable name="info" select="geonet:info"/>
         <xsl:variable name="id" select="geonet:info/id"/>
-        <xsl:variable name="size">6</xsl:variable>
+        <xsl:variable name="size">4</xsl:variable>
         
+		<xsl:variable name="graphicOverviews"
+			select="./gmd:identificationInfo/*/gmd:graphicOverview/gmd:MD_BrowseGraphic" />				
+						
         <!-- TODO : handle different standard  -->
-		<xsl:for-each select="./dataIdInfo/graphOver">
-            <xsl:if test="bgFileName != ''">
+		<xsl:for-each select="$graphicOverviews">
+
+			<xsl:variable name="bgFileName" select="./gmd:fileName/gco:CharacterString" />
+			<xsl:variable name="bgFileDesc"
+				select="./gmd:fileDescription/gco:CharacterString" />
+							
+            <xsl:if test="$bgFileName != ''">
 				<xsl:choose>
 
 					<!-- the thumbnail is an url -->
 
-					<xsl:when test="contains(bgFileName ,'://')">
+					<xsl:when test="contains($bgFileName ,'://')">
 						<fo:external-graphic 
 							content-width="{$size}cm">
 							<xsl:attribute name="src">
-                                <xsl:text>url('</xsl:text><xsl:value-of select="bgFileName" /><xsl:text>')"</xsl:text>
+                                <xsl:text>url('</xsl:text><xsl:value-of select="$bgFileName" /><xsl:text>')"</xsl:text>
                             </xsl:attribute>
 						</fo:external-graphic>
 					</xsl:when>
 
 					<!-- small thumbnail -->
 
-					<xsl:when test="string(bgFileDesc)='thumbnail'">
+					<xsl:when test="string($bgFileDesc)='thumbnail'">
 						<xsl:choose>
 							<xsl:when test="$info/isHarvested = 'y'">
 								<xsl:if
@@ -44,7 +53,7 @@
 									<fo:external-graphic
 										content-width="{$size}cm">
 										<xsl:attribute name="src"><xsl:text>url('</xsl:text><xsl:value-of
-												select="concat($server, $info/harvestInfo/smallThumbnail, bgFileName)" /><xsl:text>')"</xsl:text></xsl:attribute>
+												select="concat($server, $info/harvestInfo/smallThumbnail, $bgFileName)" /><xsl:text>')"</xsl:text></xsl:attribute>
 									</fo:external-graphic>
 								</xsl:if>
 							</xsl:when>
@@ -52,7 +61,7 @@
 								<fo:external-graphic
 									content-width="{$size}cm">
 									<xsl:attribute name="src"><xsl:text>url('</xsl:text><xsl:value-of
-											select="concat($server, /root/gui/locService,'/resources.get?id=',$id,'&amp;fname=', bgFileName,'&amp;access=public')" /><xsl:text>')"</xsl:text></xsl:attribute>
+											select="concat($server, /root/gui/locService,'/resources.get?id=',$id,'&amp;fname=', $bgFileName,'&amp;access=public')" /><xsl:text>')"</xsl:text></xsl:attribute>
 								</fo:external-graphic>
 							</xsl:otherwise>
 						</xsl:choose>
