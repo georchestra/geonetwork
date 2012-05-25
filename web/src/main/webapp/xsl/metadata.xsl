@@ -1609,7 +1609,11 @@
 				<xsl:value-of select="name(.)"/>
 				<xsl:text>=</xsl:text>
 					<xsl:text>"</xsl:text>
-					<xsl:value-of select="string()"/>
+					<xsl:call-template name="replaceString">
+						<xsl:with-param name="expr"        select="string()"/>
+						<xsl:with-param name="pattern"     select="'&amp;'"/>
+						<xsl:with-param name="replacement" select="'&amp;amp;'"/><!-- FIXME : this is only english -->
+					</xsl:call-template>
 					<xsl:text>"</xsl:text>
 			</xsl:if>
 		</xsl:for-each>
