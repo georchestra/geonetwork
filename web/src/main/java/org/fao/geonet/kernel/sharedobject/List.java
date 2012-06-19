@@ -73,6 +73,7 @@ public class List extends AbstractSharedObjectService {
             public Element toElem(SimpleFeature feature) throws JDOMException, IOException {
                 final String data = (String) feature.getAttribute(Constants.DATA_ATTRIBUTE_NAME);
                 Element dataXml = Xml.loadString(data, false);
+                dataXml.removeAttribute("id");
                 final String id = feature.getAttribute(Constants.ID_ATTRIBUTE_NAME).toString();
                 return new Element("object")
                             .addContent(new Element("id").setText(id))

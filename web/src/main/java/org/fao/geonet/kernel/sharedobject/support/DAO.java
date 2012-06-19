@@ -261,7 +261,9 @@ public class DAO {
             if(iter.hasNext()) {
                 SimpleFeature feature = iter.next();
                 final String data = (String) feature.getAttribute(Constants.DATA_ATTRIBUTE_NAME);
-                return Xml.loadString(data, false);
+                Element elt = Xml.loadString(data, false);
+                elt.removeAttribute("id");
+                return elt;
             }
         } finally {
             iter.close();
