@@ -1045,25 +1045,7 @@ public class SearchManager
                 }
 
                 if(bNumberic) {
-                	
-                	NumericField nf = new NumericField(name, store, bIndex);
-                	
-                	string = string.replaceAll("\\s","");
-                	if(string.contains("/")) {
-                		String[] numbers = string.split("/");
-                		if(numbers.length != 2) {
-                			nf.setIntValue(0);
-                			sNumeric = "";
-                		}
-                		else {
-                			float num = Float.parseFloat(numbers[0]);
-                			float den = Float.parseFloat(numbers[1]);
-                			float res = num/den;
-                			nf.setFloatValue(res);
-                			sNumeric = "";
-                		}
-                	}
-					
+					NumericField nf = new NumericField(name, store, bIndex);
 
 					if (sNumeric.equals("int")) {
 						nf.setIntValue(new Integer(string).intValue());
