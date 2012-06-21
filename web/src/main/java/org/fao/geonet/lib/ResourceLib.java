@@ -158,6 +158,10 @@ public class ResourceLib
         String query = "SELECT count(id) FROM download.geonetwork_log where (sessionid=? OR username=?) AND filename=? AND metadata_id=?";
         String sessionid = context.getCookie("JSESSIONID");
         String username = context.getUserSession().getUsername();
+        
+        if(username == null || "".equals(username)) {
+        	return;
+        }
         Element response = dbms.select(query, sessionid, username, fname, Integer.parseInt(id)).getChild(Jeeves.Elem.RECORD);
         int numResults;
         if(response !=null) {
