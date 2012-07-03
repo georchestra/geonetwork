@@ -45,6 +45,7 @@
     			<param name="Editor"          value="ROLE_SV_EDITOR"    />
     			<param name="RegisteredUser"  value="ROLE_SV_USER"      />
     			<param name="Guest"           value="ROLE_ANONYMOUS" />
+    			<param name="GroupPrefix"      value="${LdapGroupPrefix}" />
     		</call>
 
 			<call name="env" class="org.fao.geonet.guiservices.util.Env">
