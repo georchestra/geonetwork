@@ -302,7 +302,7 @@ public class Geonetwork implements ApplicationHandler
 		logger.info("  - dead links computation timer...");
 
 		Timer t = new Timer("CheckDeadLinks");
-		t.schedule(new ComputeDeadLinkTask(context),10000, 24 * 60 * 60 * 1000);
+//		t.schedule(new ComputeDeadLinkTask(context),10000, 24 * 60 * 60 * 1000);
 
 		logger.info("Site ID is : " + gnContext.getSiteId());
 
