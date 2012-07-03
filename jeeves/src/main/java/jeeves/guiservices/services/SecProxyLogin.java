@@ -54,6 +54,7 @@ public class SecProxyLogin implements Auth
     public static final Lock groupsSyncLock = new ReentrantLock();
 
 	String  groupName;
+	String groupPrefix;
     private HashMap<String, String> rolesMapping ;
 	HashSet outFields;
 
@@ -71,6 +72,8 @@ public class SecProxyLogin implements Auth
         rolesMapping.put(Profile.EDITOR, params.getValue(Profile.EDITOR));
         rolesMapping.put(Profile.REGISTEREDUSER, params.getValue(Profile.REGISTEREDUSER));
         rolesMapping.put(Profile.GUEST, params.getValue(Profile.GUEST));
+        
+        this.groupPrefix = params.getValue("GroupPrefix") != null ? params.getValue("GroupPrefix") : "ROLE_EL_";
     }
 
 	//--------------------------------------------------------------------------
@@ -92,6 +95,7 @@ public class SecProxyLogin implements Auth
             }
             if(authenticationUser(context, session, dbms)){
                 syncUserRoles(context, session,dbms);
+                syncUserProfile(context, session, dbms);
             }
 
             String sUsername = session.getUsername();
@@ -145,9 +149,52 @@ public class SecProxyLogin implements Auth
             dbms.commit();
         }
     }
+    
+    private void syncUserProfile(ServiceContext context, UserSession session,Dbms dbms) throws Exception {
+    	final String profileQuery = "select profile from users where id=?";
+    	String sProfile = session.getProfile();
+    	String id = session.getUserId();
+    	
+    	Element profile = dbms.select(profileQuery, Integer.valueOf(id));
+    	Iterator profiles = profile.getDescendants(new Filter() {
 
+            public boolean matches(Object arg0) {
+                if (arg0 instanceof Text) {
+                    Text text = (Text) arg0;
+                    return "profile".equals(text.getParentElement().getName()) && text.getTextTrim().length()>0;
+                }
+                return false;
+            }
+        });
+
+        if(profiles.hasNext()){
+            Text profileText = (Text) profiles.next();
+            if(!profileText.getTextTrim().toLowerCase().equals(sProfile.toLowerCase())) {
+            	updateUserProfile(dbms, id, sProfile);
+            	
+            }
+        }
+    	
+    }
+    
+    /**
+     * Check if the role is prefixed by a prefix contained in the this.groupPrefix properties
+     * what will mean this is a userGroup and we have to updates those groups.
+     * If the role is a userGroup, we return its prefix.
+     * @param role
+     * @return prefix or ""
+     */
+    private String getPrefixUserGroup(String role) {
+    	String[] roles = this.groupPrefix.split(";");
+    	for(int i=0;i<roles.length;++i) {
+    		if(role.startsWith(roles[i])) {
+    			return roles[i];
+    		}
+    	}
+    	return "";
+    }
+    
     private void syncUserRoles(ServiceContext context, UserSession session,Dbms dbms) throws Exception {
-        final String GROUP_PREFIX = "ROLE_EL_";
         final Integer userId = Integer.valueOf(session.getUserId());
         final String[] roles = lookUpRoles(context);
         final String query = "INSERT INTO usergroups VALUES (?,?)";
@@ -155,8 +202,9 @@ public class SecProxyLogin implements Auth
 
         dbms.execute("DELETE FROM usergroups WHERE userid = ?", userId);
         for (String role : roles) {
-            if(role.startsWith(GROUP_PREFIX)){
-                String group = role.substring(GROUP_PREFIX.length());
+        	String prefix = this.getPrefixUserGroup(role);
+            if(!prefix.equals("")){
+                String group = role.substring(prefix.length());
                 Element groupId = dbms.select(groupIdQuery, group);
                 Iterator ids = groupId.getDescendants(new Filter() {
 
@@ -358,5 +406,15 @@ public class SecProxyLogin implements Auth
 		}
 
 	}
+	
+	private void updateUserProfile(Dbms dbms, String id, String profile) throws SQLException
+	{
+		//--- update user information into the database
+
+		String query = "UPDATE Users SET profile=? WHERE id=?";
+
+		int res = dbms.execute(query, profile, Integer.valueOf(id));
+	}
+
 
 }
