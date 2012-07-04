@@ -54,6 +54,7 @@
 			</call>
 			<call name="app" class="org.fao.geonet.guiservices.util.GetAppPath" />
 			<call name="results" class="org.fao.geonet.guiservices.search.GetResultsInfo" />
+			<call name="session" class="jeeves.guiservices.session.Get" />
 		  <xml name="config" file="WEB-INF/config-gui.xml" localized="false" />
 		</gui>
 
