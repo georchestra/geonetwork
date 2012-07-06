@@ -89,10 +89,12 @@ public class SecProxyLogin implements Auth
         UserSession session = context.getUserSession();
 
         final Dbms dbms = (Dbms) context.getResourceManager().open ("main-db");
+        
+        if(!groupsSyncLock.tryLock(3, TimeUnit.SECONDS)) {
+            throw new JeevesException("groups sync lock is locked for more than 3 seconds so giving up.  Perhaps a synchronization process is already in progress",null){};             
+        }
+        
         try {
-            if(!groupsSyncLock.tryLock(3, TimeUnit.SECONDS)) {
-                throw new JeevesException("groups sync lock is locked for more than 3 seconds so giving up.  Perhaps a synchronization process is already in progress",null){};             
-            }
             if(authenticationUser(context, session, dbms)){
                 syncUserRoles(context, session,dbms);
                 syncUserProfile(context, session, dbms);
