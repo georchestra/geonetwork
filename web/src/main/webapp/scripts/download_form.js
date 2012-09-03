@@ -75,6 +75,103 @@ var dl_createForm = function(options) {
         {name: 'id'},
         {name: 'name'}
     ]);
+
+    var formPanelItems = [
+        // hidden fields:
+        {
+            xtype: 'hidden',
+            name: 'id',
+            value: options.id
+        }, {
+            xtype: 'hidden',
+            name: 'fname',
+            value: options.fname
+        },
+        {
+            xtype: 'hidden',
+            name: 'sessionid',
+            value: dl_getCookie('JSESSIONID')
+        },
+        // regular fields:
+        {
+            fieldLabel: 'Prénom',
+            labelStyle: 'font-weight:bold;',
+            name: 'first_name',
+            value: Geonetwork.user.first_name || (ls && ls.getItem('first_name')) || '', 
+            allowBlank: false
+        },{
+            fieldLabel: 'Nom',
+            labelStyle: 'font-weight:bold;',
+            name: 'last_name',
+            value:  Geonetwork.user.last_name || (ls && ls.getItem('last_name')) || '',
+            allowBlank: false
+        },{
+            fieldLabel: 'Organisme',
+            labelStyle: 'font-weight:bold;',
+            value: Geonetwork.user.company  ||  (ls && ls.getItem('company')) || '',
+            name: 'company',
+            allowBlank: false
+        }, {
+            fieldLabel: 'Email',
+            labelStyle: 'font-weight:bold;',
+            name: 'email',
+            vtype: 'email',
+            value: Geonetwork.user.email ||  (ls && ls.getItem('email')) || '',
+            allowBlank: false
+        }, {
+            fieldLabel: 'Téléphone',
+            value: Geonetwork.user.tel || (ls && ls.getItem('tel')) || '',
+            name: 'tel'
+        },
+        // data use
+        {
+            xtype: 'combo',
+            fieldLabel: 'Application',
+            name: 'datause',
+            labelStyle: 'font-weight:bold;',
+            allowBlank: false,
+            forceSelection: true,
+            triggerAction: "all",
+            mode: "remote",
+            typeAhead: false,
+            editable: false,
+            displayField: 'name',
+            valueField: 'id',
+            hiddenName: 'datause', 
+            store: new Ext.data.Store({
+                // requires dlform webapp to be deployed:
+                url: '/downloadform/data_usage', 
+                //autoLoad: true,
+                reader: new Ext.data.JsonReader({
+                    root: 'rows',
+                    id: 'id'
+                }, dr)
+            })
+        },
+        // comment
+        {
+            xtype:'htmleditor',
+            fieldLabel:'Commentaires',
+            name: 'comment',
+            height: 150
+        }
+    ];
+
+    if (Geonetwork.dlform.pdf_url) {
+        formPanelItems.push({
+            xtype:'checkboxgroup',
+            allowBlank: false,
+            blankText: "Cochez la case pour accepter les conditions d'utilisation",
+            columns: 1,
+            labelSeparator: ' ',
+            items: [{
+                boxLabel: ["<span style='font-weight:bold;'>J'accepte sans réserve les <a href='",
+                    Geonetwork.dlform.pdf_url,
+                    "' target='_blank'>conditions d'utilisation</a> des données.</span>"].join(''),
+                name: 'ok'
+            }]
+        });
+    }
     
     return new Ext.FormPanel({
         labelWidth: 100,
@@ -88,97 +185,7 @@ var dl_createForm = function(options) {
         },
         defaultType: 'textfield',
         labelSeparator: ' : ',
-        items: [{
-                fieldLabel: 'Prénom',
-                labelStyle: 'font-weight:bold;',
-                name: 'first_name',
-                value: Geonetwork.user.first_name || (ls && ls.getItem('first_name')) || '', 
-                allowBlank: false
-            },{
-                fieldLabel: 'Nom',
-                labelStyle: 'font-weight:bold;',
-                name: 'last_name',
-                value:  Geonetwork.user.last_name || (ls && ls.getItem('last_name')) || '',
-                allowBlank: false
-            },{
-                fieldLabel: 'Organisme',
-                labelStyle: 'font-weight:bold;',
-                value: Geonetwork.user.company  ||  (ls && ls.getItem('company')) || '',
-                name: 'company',
-                allowBlank: false
-            }, {
-                fieldLabel: 'Email',
-                labelStyle: 'font-weight:bold;',
-                name: 'email',
-                vtype: 'email',
-                value: Geonetwork.user.email ||  (ls && ls.getItem('email')) || '',
-                allowBlank: false
-            }, {
-                fieldLabel: 'Téléphone',
-                value: Geonetwork.user.tel || (ls && ls.getItem('tel')) || '',
-                name: 'tel'
-            },
-            // data use
-            {
-                xtype: 'combo',
-                fieldLabel: 'Application',
-                name: 'datause',
-                labelStyle: 'font-weight:bold;',
-                allowBlank: false,
-                forceSelection: true,
-                triggerAction: "all",
-                mode: "remote",
-                typeAhead: false,
-                editable: false,
-                displayField: 'name',
-                valueField: 'id',
-                hiddenName: 'datause', 
-                store: new Ext.data.Store({
-                    // requires dlform webapp to be deployed:
-                    url: '/downloadform/data_usage', 
-                    //autoLoad: true,
-                    reader: new Ext.data.JsonReader({
-                        root: 'rows',
-                        id: 'id'
-                    }, dr)
-                })
-            },
-            // comment
-            {
-                xtype:'htmleditor',
-                fieldLabel:'Commentaires',
-                name: 'comment',
-                height: 150
-            },
-            // checkbox
-            {
-                xtype:'checkboxgroup',
-                allowBlank: false,
-                columns: 1,
-                labelSeparator: ' ',
-                items: [{
-                    boxLabel: ["<span style='font-weight:bold;'>J'accepte sans réserve les <a href='",
-                        Geonetwork.dlform.pdf_url,
-                        "' target='_blank'>conditions d'utilisation</a> des données.</span>"].join(''),
-                    name: 'ok'
-                }]
-            }, 
-            // hidden fields:
-            {
-                xtype: 'hidden',
-                name: 'id',
-                value: options.id
-            }, {
-                xtype: 'hidden',
-                name: 'fname',
-                value: options.fname
-            },
-            {
-                xtype: 'hidden',
-                name: 'sessionid',
-                value: dl_getCookie('JSESSIONID')
-            }
-        ],
+        items: formPanelItems,
         buttons: [{
             text: 'OK',
             formBind: true,
