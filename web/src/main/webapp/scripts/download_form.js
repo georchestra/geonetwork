@@ -168,7 +168,15 @@ var dl_createForm = function(options) {
                 boxLabel: ["<span style='font-weight:bold;'>J'accepte sans réserve les <a href='",
                     Geonetwork.dlform.pdf_url,
                     "' target='_blank'>conditions d'utilisation</a> des données.</span>"].join(''),
-                name: 'ok'
+                name: 'ok',
+                // hack:
+                onClick: function(e){
+                    if (!this.disabled && !this.readOnly) {
+                        this.toggleValue();
+                    }
+                    // we're removing the call to stopEvent in order to be able to click on the link
+                    //e.stopEvent();
+                }
             }]
         });
     }
