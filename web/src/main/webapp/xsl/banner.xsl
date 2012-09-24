@@ -16,7 +16,6 @@
         <ul>
             <li class="active"><a href="/geonetwork/srv/fr/main.home">catalogue</a></li>
             <li><a href="/mapfishapp/">visualiseur</a></li>
-            <!-- TODO: check user groups to show/hide editor and phpldapadmin items in this list -->
             <li><a href="/extractorapp/">extracteur</a></li>
             <li><a href="/geoserver/web/">services</a></li>
           </ul>
