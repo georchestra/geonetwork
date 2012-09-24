@@ -17,10 +17,8 @@
             <li class="active"><a href="/geonetwork/srv/fr/main.home">catalogue</a></li>
             <li><a href="/mapfishapp/">visualiseur</a></li>
             <!-- TODO: check user groups to show/hide editor and phpldapadmin items in this list -->
-            <li><a href="/mapfishapp/edit">éditeur</a></li>
             <li><a href="/extractorapp/">extracteur</a></li>
             <li><a href="/geoserver/web/">services</a></li>
-            <li><a href="/phpldapadmin">utilisateurs</a></li>
           </ul>
           <xsl:choose>
           <xsl:when test="string(/root/gui/login/userId)=''">
