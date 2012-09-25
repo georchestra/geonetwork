@@ -111,7 +111,7 @@
 			  </xsl:otherwise>
 			  </xsl:choose> -->
 
-		  <a class="banner" href="/doc/html/documentation.html#catalogue" target="_blank"><xsl:value-of select="/root/gui/strings/help"/></a>
+		  <a class="banner" href="http://www.geobretagne.fr/web/guest/assistance" target="_blank"><xsl:value-of select="/root/gui/strings/help"/></a>
 		  |
 		</td>
 		<td align="right" class="banner-menu" width="610px">
