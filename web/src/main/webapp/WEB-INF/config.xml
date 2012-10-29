@@ -388,7 +388,7 @@
 		<service name="xml.region.list">
 		  <class name=".services.main.RegionMatches">
                     <param name="wfsURL" value="http://localhost:43080/geoserver-private/wfs?REQUEST=GetCapabilities&amp;SERVICE=WFS&amp;VERSION=1.0.0" />
-                    <param name="user" value="extractorapp_priveleged_admin" />
+                    <param name="user" value="extractorapp_privileged_admin" />
                     <param name="pass" value="gerlsSnFd6SmM" />
 		    <param name="typenames">
 			<typename name="EPCI" typename="geob_loc:EPCI_region" nameAtt="EPCI" /> <typename name="Commune" typename="geob_loc:COMMUNE" nameAtt="NOM_COMM" /> <typename name="Département" typename="geob_loc:DEPARTEMENT" nameAtt="NOM_DEPT" /> <typename name="Pays" typename="geob_loc:PAYS_region" nameAtt="NOM" />
