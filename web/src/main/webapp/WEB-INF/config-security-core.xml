@@ -58,8 +58,8 @@
 			<list>
 				<ref bean="securityContextPersistenceFilter" />
 				<ref bean="logoutFilter" />
-				<ref bean="requestHeaderAuthenticationFilter" />
-				<!--<ref bean="basicAuthenticationFilter" />-->
+				<!--<ref bean="requestHeaderAuthenticationFilter" />-->
+				<ref bean="basicAuthenticationFilter" />
 				<ref bean="formLoginFilter" />
 				<ref bean="requestCacheFilter" />
 				<ref bean="anonymousFilter" />
@@ -70,10 +70,10 @@
 			</list>
 		</constructor-arg>
 	</bean>
-	<bean id="requestHeaderAuthenticationFilter" class="org.fao.geonet.kernel.security.GeorchestraSecurityHeaderAuthFilter">
+	<!--<bean id="requestHeaderAuthenticationFilter" class="org.fao.geonet.kernel.security.GeorchestraSecurityHeaderAuthFilter">
 		<property name="credentialsRequestHeader" value="sec-user"></property>
 		<property name="credentialsRequestHeader" value="sec-roles"></property>
-	</bean>
+	</bean>-->
 	<bean id="securityContextPersistenceFilter" class="org.springframework.security.web.context.SecurityContextPersistenceFilter">
 		<property name="securityContextRepository" ref="securityContextRepository" />
 	</bean>
