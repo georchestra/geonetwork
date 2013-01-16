@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<labels xmlns:fra="http://www.cnig.gouv.fr/2005/fra">
+	<element name="fra:FRA_DataIdentification">
+		<label>Identification</label>
+		<description>description</description>
+	</element>
+	<element name="fra:FRA_Constraints">
+		<label>Contraintes</label>
+		<description>Contraintes sur l’accès et l’utilisation de la donnée</description>
+	</element>
+	<element name="fra:FRA_LegalConstraints">
+		<label>Contraintes légales</label>
+		<description>classe pour les restrictions et conditions préalables légales pour accéder et utiliser les métadonnées ou la ressource</description>
+	</element>
+	<element name="fra:FRA_SecurityConstraints">
+		<label>Contraintes de sécurité</label>
+		<description>classe avec les restrictions de manipulation imposées sur les métadonnées ou la ressource pour la sécurité nationale ou des situations de sécurité similaires</description>
+	</element>
+	<element name="fra:citation">
+		<label>Document(s) associé(s)</label>
+		<description>Citations de documents concernant les contraintes de ressources</description>
+	</element>
+	<element name="fra:relatedCitation">
+		<label>Document(s) associé(s)</label>
+		<description>Citations de documents concernant la ressource</description>
+	</element>
+	<element name="fra:FRA_InDirectReferenceSystem">
+		<label>Système de projection indirect (pour les ressources non géographiques)</label>
+		<description>Dérivé de ReferenceSystem / précise qu’il s’agit d’une référence directe</description>
+	</element>
+	<element name="fra:FRA_DirectReferenceSystem">
+		<label>Système de projection direct (pour les ressources géographiques)</label>
+		<description>Dérivé de ReferenceSystem / précise qu’il s’agit d’une référence indirecte</description>
+	</element>
+  <element name="gmd:date" id="362.0" context="gmd:MD_Metadata/gmd:identificationInfo/fra:FRA_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date">
+    <label>Date</label>
+    <description>Date de référence pour la ressource en question</description>
+    <help>Date de référence indiquée sous forme de date (jj.mm.aaaa) et de type de date (création, publication, traitement). Ces informations sont du type CI_Date et sont gérées dans la classe du même nom.</help>
+    
+    <help><![CDATA[<b>Référence temporelle</b>]]></help>
+    
+    <help for="inspire"><![CDATA[<b>Exigence INSPIRE :</b>
+    INSPIRE impose la fourniture d’au moins une référence temporelle qui peut être une date de création, de dernière révision, de publication ou une étendue temporelle.
+    <ul>
+    <li>Le système de référence par défaut est le calendrier grégorien.</li>
+    <li>Les dates sont exprimées conformément à la norme ISO 8601 (c’est-à-dire aaaa-mm-jj).</li>
+    <li>Il est possible de définir plusieurs références temporelles mais :
+      <ul>
+        <li>Il peut y avoir plus d’une date de publication (C’est la date de publication de la ressource lorsqu’elle est disponible ou la date d’entrée en vigueur).</li>
+        <li>II ne doit pas y avoir plus d’une date de dernière révision (C’est la date de dernière modification de la ressource).</li>
+        <li>Il ne doit pas y avoir plus d’une date de création (C’est la date de création de la ressource).</li>
+      </ul>
+    </li>
+    </ul>
+    ]]>
+    </help>
+    <help for="france">
+    <![CDATA[
+    <b>Recommandations nationales :</b>
+    <ul>
+    <li>Il est recommandé de fournir au moins une date de référence (date de création, de dernière révision, ou de publication). (cf. Dates de référence)</li>
+    <li>L’étendue temporelle est un élément optionnel.</li>
+    </ul>
+    <b>Commentaire :</b>
+    Une date de référence de la ressource est une information représentative de la vie de la ressource (création, publication, révision), tandis que l’étendue temporelle fournit une indication de la  période de temps couverte par la ressource, ce qui est un indicateur de l’actualité de la ressource.
+    La date de dernière révision n’a de sens que si elle se distingue de la date de création. Cet élément de métadonnées n'est obligatoire actuellement que pour les 
+    données INSPIRE de l’Annexe 1. Toutefois, il est de bonne pratique 
+    de le noter autant que possible.
+    ]]></help>
+    <help><![CDATA[Exemple :
+    <ul>
+    <li>Exemple 1, donnée mise à jour en continu : par exemple une donnée de la Banque du sous-sol qui est actualisée au fil de l’eau – techniquement tous les jours – verra ce champ sous la forme : “1956 à maintenant”.</li>
+    <li>Exemple 2, exemple de date de création : comment remplir la date d’un jeu de données créé à partir d’une numérisation d’une photo aérienne d’une date donnée? Il faudra saisir la date de numérisation comme date de création. Le champ généalogie fournira la date de la donnée de référence, ie. la photo-aérienne, et les explications de gestion de la mise à jour.</li>
+    <li>Il est également possible de fournir un couple date/heure à la place d’une date. Dans ce cas, ce couple s’exprime sous la forme aaaa-mm-jjThh:mi:ss+hh:mi, où les quatre derniers chiffres correspondent au décalage avec l’heure UTC. En France métropolitaine, ces derniers chiffres sont donc +01:00 pendant l’heure d’hiver, et +02:00 pendant l’heure d’été.</li>
+    <li>Exemple : 2011-08-24T12:12:00+02:00 (c'est-à-dire, midi douze minutes, 0 secondes, le 24 août 2011, zone UTC+2)</li>
+    </ul>
+    ]]>
+    </help>
+    
+    <condition/>
+    
+  </element>
+</labels>

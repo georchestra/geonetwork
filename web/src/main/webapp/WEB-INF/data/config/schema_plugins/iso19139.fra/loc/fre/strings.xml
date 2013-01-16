@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<strings>
+  <fraTab>Vue essentielle</fraTab>
+  <fraTabDesc>Description</fraTabDesc>
+  <fraTabTech>Compléments techniques</fraTabTech>
+  <fraTabQua>Qualité</fraTabQua>
+  <fraTabAcc>Conditions d'accès</fraTabAcc>
+  <fraTabMd>Info métadonnées</fraTabMd>
+</strings>

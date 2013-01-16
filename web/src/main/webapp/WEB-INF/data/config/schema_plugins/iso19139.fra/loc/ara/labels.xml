@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<labels xmlns:fra="http://www.cnig.gouv.fr/2005/fra">
+	<element name="fra:FRA_DataIdentification">
+		<label>Identification</label>
+		<description>description</description>
+	</element>
+	<element name="fra:FRA_Constraints">
+		<label>Constraints</label>
+		<description></description>
+	</element>
+	<element name="fra:FRA_LegalConstraints">
+		<label>Legal constraints</label>
+		<description></description>
+	</element>
+	<element name="fra:FRA_SecurityConstraints">
+		<label>Security constraints</label>
+		<description></description>
+	</element>
+	<element name="fra:citation">
+		<label>Citation</label>
+		<description></description>
+	</element>
+	<element name="fra:relatedCitation">
+		<label>Related citation</label>
+		<description></description>
+	</element>
+	<element name="fra:FRA_IndirectReferenceSystem">
+		<label>Indirect reference system</label>
+		<description></description>
+	</element>
+	<element name="fra:FRA_DirectReferenceSystem">
+		<label>Direct reference system</label>
+		<description></description>
+	</element>
+</labels>

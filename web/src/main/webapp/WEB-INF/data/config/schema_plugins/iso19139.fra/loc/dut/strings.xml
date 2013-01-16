@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<strings>
+  <fraTab>Core view</fraTab>
+  <fraTabDesc>Description</fraTabDesc>
+  <fraTabTech>Technical info.</fraTabTech>
+  <fraTabQua>Quality</fraTabQua>
+  <fraTabAcc>Access constraints</fraTabAcc>
+  <fraTabMd>Metadata</fraTabMd>
+</strings>

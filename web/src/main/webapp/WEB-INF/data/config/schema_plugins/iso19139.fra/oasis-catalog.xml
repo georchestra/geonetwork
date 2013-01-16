@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="public">
+
+<!-- OASIS CATALOG FOR GEONETWORK TO REMAP VARIOUS XML IDs -->
+
+<!-- This used to be done in Java code, but with the use of these 
+	   maps you can customise this to suit yourself. -->
+
+<!-- =============== ISO19139 FRA maps -->
+
+	<!-- These are to map schemaLocation hints to local schemas to make sure that
+			 GeoNetwork edits and validates against a schema it knows about -->
+
+  <system systemId="http://eden.ign.fr/xsd/fra/20060922/fra/fra.xsd" 
+	        uri="schema/fra/fra.xsd"/>
+
+</catalog>
