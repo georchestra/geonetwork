@@ -32,7 +32,6 @@ CREATE TABLE StatusValues
     reserved  char(1)       default 'n' not null,
     primary key(id)
   );
-ALTER TABLE public.statusvalues OWNER TO "www-data";
 
 
 CREATE TABLE StatusValuesDes
@@ -42,7 +41,6 @@ CREATE TABLE StatusValuesDes
     label   varchar(96)   not null,
     primary key(idDes,langId)
   );
-ALTER TABLE public.statusvaluesdes OWNER TO "www-data";
 
 
 CREATE TABLE MetadataStatus
@@ -471,10 +469,10 @@ ALTER TABLE Metadata ALTER COLUMN createDate TYPE varchar(30);
 ALTER TABLE Metadata ALTER COLUMN changeDate TYPE varchar(30);
 
 DROP TABLE IndexLanguages;
-UPDATE settings SET value='0 0 0/2 * * ?' where name = 'every';
 
 ALTER TABLE Categories ALTER COLUMN  name TYPE varchar(255);
 ALTER TABLE CategoriesDes ALTER COLUMN label TYPE varchar(255);
 ALTER TABLE Settings ALTER COLUMN name TYPE varchar(64);
 
+UPDATE settings SET value='0 0 0/2 * * ?' where name = 'every';
 
