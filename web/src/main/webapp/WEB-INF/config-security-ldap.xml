@@ -136,8 +136,16 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
         <property name="jobDataAsMap">
             <map>
                 <entry key="contextSource" value-ref="contextSource" />
-                <entry key="ldapSearchBase" value="${ldap.sync.user.search.base}" />
-                <entry key="ldapSearchFilter" value="${ldap.sync.user.search.filter}" />
+                <entry key="ldapUserSearchBase" value="${ldap.sync.user.search.base}" />
+                <entry key="ldapUserSearchFilter" value="${ldap.sync.user.search.filter}" />
+                <entry key="ldapUserSearchAttribute" value="${ldap.sync.user.search.attribute}" />
+                
+                <entry key="createNonExistingLdapGroup" value="${ldap.privilege.create.nonexisting.groups}"/>
+                <entry key="ldapGroupSearchBase" value="${ldap.sync.group.search.base}" />
+                <entry key="ldapGroupSearchFilter" value="${ldap.sync.group.search.filter}" />
+                <entry key="ldapGroupSearchAttribute" value="${ldap.sync.group.search.attribute}" />
+                <entry key="ldapGroupSearchPattern" value="${ldap.sync.group.search.pattern}" />
+                
             </map>
         </property>
     </bean>
