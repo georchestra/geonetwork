@@ -430,29 +430,72 @@ GeoNetwork.app = function () {
     }
     
     /**
+     * Send metadata.service.extract request
+     */
+    function extractMetadata(id) {
+    	var url = catalogue.services.mdExtract;
+    	if(id && typeof(id) == 'string') {
+    		url += '?id='+id
+    	}
+    	Ext.Ajax.request({
+    		   url: url
+    		});
+    }
+    /**
      * Results panel layout with top, bottom bar and DataView
      *
      * @return
      */
     function createResultsPanel(permalinkProvider) {
-        metadataResultsView = new GeoNetwork.MetadataResultsView({
+
+    	metadataResultsView = new GeoNetwork.MetadataResultsView({
             catalogue: catalogue,
             displaySerieMembers: true,
             autoScroll: true,
             tpl: GeoNetwork.Templates.FULL,
             featurecolor: GeoNetwork.Settings.results.featurecolor,
             colormap: GeoNetwork.Settings.results.colormap,
-            featurecolorCSS: GeoNetwork.Settings.results.featurecolorCSS
+            featurecolorCSS: GeoNetwork.Settings.results.featurecolorCSS,
+            addCustomAction: function() {
+            	var id = this.record.get('id');
+            	
+            	var extractAction = new Ext.Action({
+                    text: 'Extract Data',
+                    handler: function() {
+                    	extractMetadata(id);
+                    }
+                });
+                var visuAction = new Ext.Action({
+                    text: 'Visualize data',
+                    handler: function() {
+                    	extractMetadata(id);
+                    }
+                });
+            	this.insert(0,visuAction);
+            	this.insert(0,extractAction);
+            }
         });
         
         catalogue.resultsView = metadataResultsView;
+
+        // Extract and Visualize action
+        var extractAction = new Ext.Action({
+            text: 'Extract Data',
+            handler: extractMetadata
+        });
+        
+        var visuAction = new Ext.Action({
+            text: 'Visualize data',
+            handler: extractMetadata
+        });
         
         tBar = new GeoNetwork.MetadataResultsToolbar({
             catalogue: catalogue,
             searchFormCmp: Ext.getCmp('searchForm'),
             sortByCmp: Ext.getCmp('E_sortBy'),
             metadataResultsView: metadataResultsView,
-            permalinkProvider: permalinkProvider
+            permalinkProvider: permalinkProvider,
+            customOtherActions: [extractAction,visuAction]
         });
         
         bBar = createBBar();
