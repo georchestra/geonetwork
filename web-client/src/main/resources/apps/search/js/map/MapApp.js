@@ -64,9 +64,35 @@ GeoNetwork.mapApp = function() {
             controls: []
         };
         
-        map = new OpenLayers.Map('ol_map', options);
-        
-        fixedScales = scales;
+        if (GeoNetwork.map.CONTEXT) {
+            // Load map context
+            var request = OpenLayers.Request.GET({
+                url: GeoNetwork.map.CONTEXT,
+                async: false
+            });
+            if (request.responseText) {
+            	
+            	var text = request.responseText;
+                var format = new OpenLayers.Format.WMC();
+                map = format.read(text, {map:options});
+            }
+        } 
+        else if (GeoNetwork.map.OWS) {
+            // Load map context
+            var request = OpenLayers.Request.GET({
+                url: GeoNetwork.map.OWS,
+                async: false
+            });
+            if (request.responseText) {
+                var parser = new OpenLayers.Format.OWSContext();
+                var text = request.responseText;
+                map = parser.read(text, {map: options});
+            }
+        }
+        else {
+        	map = new OpenLayers.Map('ol_map', options);
+        	fixedScales = scales;
+        }
     };
 
     /**
@@ -1133,7 +1159,6 @@ GeoNetwork.mapApp = function() {
                         map: map,
                         tbar: toolbar,
                         border: false,
-                        extent: GeoNetwork.map.EXTENT,
                         items: [mapOverlay]
                     }]
                 }

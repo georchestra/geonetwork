@@ -50,17 +50,21 @@ GeoNetwork.map.BACKGROUND_LAYERS = [
 //    //new OpenLayers.Layer.Google("Google Streets");
 //    ];
 
-GeoNetwork.map.MAP_OPTIONS = {
-    projection: GeoNetwork.map.PROJECTION,
-    maxExtent: GeoNetwork.map.EXTENT,
-    restrictedExtent: GeoNetwork.map.EXTENT,
+GeoNetwork.map.SHARED_MAP_OPTIONS = {
     controls: [],
     theme:null
 };
-GeoNetwork.map.MAIN_MAP_OPTIONS = {
+
+GeoNetwork.map.MAP_OPTIONS = Ext.apply({
     projection: GeoNetwork.map.PROJECTION,
     maxExtent: GeoNetwork.map.EXTENT,
     restrictedExtent: GeoNetwork.map.EXTENT,
-    controls: [],
-    theme:null
-};
+    resolutions: GeoNetwork.map.RESOLUTIONS
+}, GeoNetwork.map.SHARED_MAP_OPTIONS);
+
+GeoNetwork.map.MAIN_MAP_OPTIONS = Ext.apply({
+    projection: GeoNetwork.map.PROJECTION,
+    maxExtent: GeoNetwork.map.EXTENT,
+    restrictedExtent: GeoNetwork.map.EXTENT,
+    resolutions: GeoNetwork.map.RESOLUTIONS
+}, GeoNetwork.map.SHARED_MAP_OPTIONS);

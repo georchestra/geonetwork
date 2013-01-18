@@ -80,7 +80,14 @@ GeoNetwork.app = function () {
     
     function initMap() {
         iMap = new GeoNetwork.mapApp();
-        iMap.init(GeoNetwork.map.BACKGROUND_LAYERS, GeoNetwork.map.MAIN_MAP_OPTIONS);
+        var layers={}, options={};
+        if(GeoNetwork.map.CONTEXT || GeoNetwork.map.OWS) {
+        	options=GeoNetwork.map.SHARED_MAP_OPTIONS;
+        } else {
+        	options = GeoNetwork.map.MAIN_MAP_OPTIONS;
+        	layers  = GeoNetwork.map.BACKGROUND_LAYERS;
+        }
+        iMap.init(layers, options);
         metadataResultsView.addMap(iMap.getMap());
         visualizationModeInitialized = true;
     }
@@ -309,8 +316,17 @@ GeoNetwork.app = function () {
             items: advancedCriteria
         });
         var formItems = [];
+        
+        // Check good map options if we load map config from WMC or OWS
+        var mapOptions;
+        if(GeoNetwork.map.CONTEXT || GeoNetwork.map.OWS) {
+        	mapOptions=GeoNetwork.map.SHARED_MAP_OPTIONS;
+        } else {
+        	mapOptions = GeoNetwork.map.MAP_OPTIONS;
+        }
+        
         formItems.push(GeoNetwork.util.SearchFormTools.getSimpleFormFields(catalogue.services, 
-                    GeoNetwork.map.BACKGROUND_LAYERS, GeoNetwork.map.MAP_OPTIONS, true, 
+                    GeoNetwork.map.BACKGROUND_LAYERS, mapOptions, true, 
                     GeoNetwork.searchDefault.activeMapControlExtent, undefined, {width: 290}),
                     adv, GeoNetwork.util.SearchFormTools.getOptions(catalogue.services, undefined));
         // Add advanced mode criteria to simple form - end
