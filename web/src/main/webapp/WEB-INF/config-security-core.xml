@@ -58,8 +58,10 @@
 			<list>
 				<ref bean="securityContextPersistenceFilter" />
 				<ref bean="logoutFilter" />
-				<!--<ref bean="requestHeaderAuthenticationFilter" />-->
-				<ref bean="basicAuthenticationFilter" />
+				<!-- A filter that check if an external service already authenticated user
+					 (default implementation does nothing but can be overridden) -->
+				<ref bean="preAuthenticationFilter" />
+				<!--<ref bean="basicAuthenticationFilter" />-->
 				<ref bean="formLoginFilter" />
 				<ref bean="requestCacheFilter" />
 				<ref bean="anonymousFilter" />
@@ -70,10 +72,9 @@
 			</list>
 		</constructor-arg>
 	</bean>
-	<!--<bean id="requestHeaderAuthenticationFilter" class="org.fao.geonet.kernel.security.GeorchestraSecurityHeaderAuthFilter">
-		<property name="credentialsRequestHeader" value="sec-user"></property>
-		<property name="credentialsRequestHeader" value="sec-roles"></property>
-	</bean>-->
+	<!-- A filter that check if an external service already authenticated user
+					 (default implementation does nothing but can be overridden) -->
+	<bean id="preAuthenticationFilter" class="org.fao.geonet.kernel.security.PassthroughFilter"/>
 	<bean id="securityContextPersistenceFilter" class="org.springframework.security.web.context.SecurityContextPersistenceFilter">
 		<property name="securityContextRepository" ref="securityContextRepository" />
 	</bean>
@@ -82,6 +83,8 @@
 		class="org.springframework.security.authentication.ProviderManager">
 		<property name="providers">
 			<list>
+				<!-- Check if the preAuthenticationFilter has already authenticated user -->
+				<ref bean="preFilterAuthenticationProvider" />
 				<ref bean="geonetworkAuthenticationProvider" />
 			</list>
 		</property>
@@ -188,6 +191,15 @@
     </bean>
 
     <bean class="org.fao.geonet.kernel.security.GeonetworkAuthenticationProvider" id="geonetworkAuthenticationProvider"/>
+    
+    <!-- Check if the preAuthenticationFilter has already authenticated user -->
+    <bean class="org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider" id="preFilterAuthenticationProvider">
+    	<property name="preAuthenticatedUserDetailsService">
+			<bean id="preAuthenticatedUserDetailsService" class="org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper">
+				<property name="userDetailsService" ref="geonetworkAuthenticationProvider"/>
+		    </bean>
+    	</property>
+    </bean>
 
     <bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
 	    <property name="decisionVoters">
