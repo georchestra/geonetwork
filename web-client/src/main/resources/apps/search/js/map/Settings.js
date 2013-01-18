@@ -52,7 +52,7 @@ GeoNetwork.map.BACKGROUND_LAYERS = [
 
 //GeoNetwork.map.RESOLUTIONS = [];
 
-//GeoNetwork.map.CONTEXT = "map/default.wmc";
+GeoNetwork.map.CONTEXT = "map/default.wmc";
 //GeoNetwork.map.OWS = "map/default.xml";
 
 GeoNetwork.map.SHARED_MAP_OPTIONS = {
