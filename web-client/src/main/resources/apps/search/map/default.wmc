@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<ViewContext xmlns="http://www.opengis.net/context" version="1.1.0" id="default" xsi:schemaLocation="http://www.opengis.net/context http://schemas.opengis.net/context/1.1.0/context.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<General>
+		<Window width="973" height="741"/>
+		<BoundingBox minx="166089.953917990002" miny="6150145.90039379988" maxx="710969.659682950005" maxy="6565105.67631560005" SRS="EPSG:2154"/>
+		<Title/>
+		<Extension>
+			<ol:maxExtent xmlns:ol="http://openlayers.org/context" minx="-357823.2365" miny="6037008.6939" maxx="1313632.3628" maxy="7230727.3772"/>
+		</Extension>
+	</General>
+	<LayerList>
+		<Layer queryable="0" hidden="0">
+			<Server service="OGC:WMS" version="1.1.1">
+				<OnlineResource xlink:type="simple" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://ids.pigma.org/geoserver/wms"/>
+			</Server>
+			<Name>Fond_GIP</Name>
+			<Title>Fond GIP</Title>
+			<MetadataURL>
+				<OnlineResource xlink:type="simple" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://ids.pigma.org/geonetwork/srv/fr/metadata.show?uuid=d870e518-3992-42c8-855e-9d49c1c764f9"/>
+			</MetadataURL>
+			<FormatList>
+				<Format>image/jpeg</Format>
+				<Format current="1">image/png</Format>
+			</FormatList>
+			<StyleList>
+				<Style>
+					<Name/>
+					<Title>Default</Title>
+				</Style>
+			</StyleList>
+			<Extension>
+				<ol:maxExtent xmlns:ol="http://openlayers.org/context" minx="-357823.236499999999" miny="6037008.69390000030" maxx="1313632.36280000000" maxy="7230727.37719999999"/>
+				<ol:tileSize xmlns:ol="http://openlayers.org/context" width="256" height="256"/>
+				<ol:transparent xmlns:ol="http://openlayers.org/context">true</ol:transparent>
+				<ol:numZoomLevels xmlns:ol="http://openlayers.org/context">15</ol:numZoomLevels>
+				<ol:units xmlns:ol="http://openlayers.org/context">m</ol:units>
+				<ol:isBaseLayer xmlns:ol="http://openlayers.org/context">true</ol:isBaseLayer>
+				<ol:displayInLayerSwitcher xmlns:ol="http://openlayers.org/context">true</ol:displayInLayerSwitcher>
+				<ol:singleTile xmlns:ol="http://openlayers.org/context">false</ol:singleTile>
+			</Extension>
+		</Layer>
+	</LayerList>
+</ViewContext>
