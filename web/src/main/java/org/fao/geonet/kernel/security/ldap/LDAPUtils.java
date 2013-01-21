@@ -69,11 +69,12 @@ public class LDAPUtils {
 			id = serialFactory.getSerial(dbms, "Users") + "";
 			
 			String query = "INSERT INTO Users (id, username, password, surname, name, profile, "+
-						"address, city, state, zip, country, email, organisation, kind, authtype) "+
-						"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+						"address, city, state, zip, country, email, organisation, kind, phone, authtype ) "+
+						"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			dbms.execute(query, new Integer(id), user.getUsername(), "", user.getSurname(), user.getName(), 
 					user.getProfile(), user.getAddress(), user.getCity(), user.getState(), user.getZip(), 
-					user.getCountry(), user.getEmail(), user.getOrganisation(), user.getKind(), LDAPConstants.LDAP_FLAG);
+					user.getCountry(), user.getEmail(), user.getOrganisation(), user.getKind(), 
+					user.getPhone(), LDAPConstants.LDAP_FLAG);
 		} else {
 			// Update existing LDAP user
 			
@@ -87,10 +88,10 @@ public class LDAPUtils {
 			
 			// User update
 			String query = "UPDATE Users SET username=?, password=?, surname=?, name=?, profile=?, address=?,"+
-						" city=?, state=?, zip=?, country=?, email=?, organisation=?, kind=? WHERE id=?";
+						" city=?, state=?, zip=?, country=?, email=?, organisation=?, kind=?, phone=? WHERE id=?";
 			dbms.execute (query, user.getUsername(), "", user.getSurname(), user.getName(), 
 					user.getProfile(), user.getAddress(), user.getCity(), user.getState(), user.getZip(), 
-					user.getCountry(), user.getEmail(), user.getOrganisation(), user.getKind(), new Integer(id));
+					user.getCountry(), user.getEmail(), user.getOrganisation(), user.getKind(), user.getPhone(), new Integer(id));
 			
 			// Delete user groups
 			if (importPrivilegesFromLdap) {

@@ -99,7 +99,8 @@ public abstract class AbstractLDAPUserDetailsContextMapper implements
                 .setState(getUserInfo(userInfo, "state"))
                 .setZip(getUserInfo(userInfo, "zip"))
                 .setCity(getUserInfo(userInfo, "city"))
-                .setCountry(getUserInfo(userInfo, "country"));
+                .setCountry(getUserInfo(userInfo, "country"))
+                .setPhone(getUserInfo(userInfo, "phone"));
 
         // Set privileges for the user. If not, privileges are handled
         // in local database

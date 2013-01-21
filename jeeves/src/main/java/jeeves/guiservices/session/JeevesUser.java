@@ -25,6 +25,8 @@ public class JeevesUser implements UserDetails {
 	private String password;
 	private String kind;
 	private String id;
+	private String phone;
+
 	private ProfileManager profileManager;
 
 	public JeevesUser(ProfileManager profileManager){
@@ -202,5 +204,13 @@ public class JeevesUser implements UserDetails {
 		if (id==null) id = "-1";
 		this.id = id;
 		return this;
+	}
+	
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 }
