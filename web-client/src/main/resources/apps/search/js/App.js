@@ -768,6 +768,13 @@ GeoNetwork.app = function () {
                 urlParameters.bounds = new OpenLayers.Bounds(urlParameters.extent[0], urlParameters.extent[1], urlParameters.extent[2], urlParameters.extent[3]);
             }
             
+            if (urlParameters.wmc) {
+               GeoNetwork.map.CONTEXT = urlParameters.wmc;
+            }
+            if (urlParameters.ows) {
+               GeoNetwork.map.OWS = urlParameters.ows;
+            }
+            
             // Init cookie
             cookie = new Ext.state.CookieProvider({
                 expires: new Date(new Date().getTime() + (1000 * 60 * 60 * 24 * 365))

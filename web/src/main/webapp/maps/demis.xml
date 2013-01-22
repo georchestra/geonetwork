@@ -15,19 +15,9 @@
     </General>
     <ResourceList>
         <Layer group="background" 
-            name="ne2:ne2" 
-            queryable="true" hidden="0">
-            <ows:Title xml:lang="en">Natural earth</ows:Title>
-            <ows:OutputFormat>image/jpeg</ows:OutputFormat>
-            <Server service="urn:ogc:serviceType:WMS" version="1.1.1">
-                <OnlineResource xlink:type="simple" 
-                    xlink:href="http://www.catais.org/geoserver/wms?SERVICE=WMS" />
-            </Server>
-        </Layer>
-        <Layer group="background" 
             name="Countries" 
             queryable="true" hidden="0">
-            <ows:Title xml:lang="en">Demis</ows:Title>
+            <ows:Title xml:lang="en">Countries</ows:Title>
             <ows:OutputFormat>image/jpeg</ows:OutputFormat>
             <Server service="urn:ogc:serviceType:WMS" version="1.1.1">
                 <OnlineResource xlink:type="simple" 
