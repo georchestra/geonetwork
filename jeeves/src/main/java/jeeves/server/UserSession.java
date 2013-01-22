@@ -176,6 +176,22 @@ public class UserSession
 			return userDetails.getEmail();
 		}
 	}
+	public String getPhone() {
+		JeevesUser userDetails = getPrincipal();
+		if (userDetails == null) {
+			return null;   
+		} else {
+			return userDetails.getPhone();
+		}
+	}
+	public String getOrganisation() {
+		JeevesUser userDetails = getPrincipal();
+		if (userDetails == null) {
+			return null;   
+		} else {
+			return userDetails.getOrganisation();
+		}
+	}
 
 	public int getUserIdAsInt()  { 
 		String id = getUserId();
