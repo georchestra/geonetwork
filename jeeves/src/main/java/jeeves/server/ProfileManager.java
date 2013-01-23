@@ -336,7 +336,7 @@ public class ProfileManager
 	}
 
 	public static boolean isCasEnabled() {
-		return existsBean("casEntryPoint");
+		return true;
 	}
 }
 

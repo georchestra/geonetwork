@@ -15,7 +15,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 		<property name="authenticationManager" ref="authenticationManager"/>
 		<property name="checkForPrincipalChanges" value="true"/>
 		<property name="exceptionIfHeaderMissing" value="false"/>
-		<property name="principalRequestHeader" value="sec-user"></property>
+		<property name="principalRequestHeader" value="sec-username"></property>
 	</bean>
 	<bean class="org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider" id="preFilterAuthenticationProvider">
     	<property name="preAuthenticatedUserDetailsService">
