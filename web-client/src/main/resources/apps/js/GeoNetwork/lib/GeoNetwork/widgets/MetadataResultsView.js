@@ -611,10 +611,28 @@ GeoNetwork.MetadataResultsView = Ext.extend(Ext.DataView, {
                                     displayLink = allowDynamic;
                                 }
                                 if (displayLink) {
-                                    linkButton.push({
-                                        text: (record.get('title') || record.get('name')),
-                                        href: record.get('href')
-                                    });
+                                	var itemMenu = {
+                                        text: (record.get('title') || record.get('name'))
+                                    }
+                                		
+                            		//activate downloadform
+                                	if (currentType == 'application/pdf' || 
+                                			currentType == 'application/zip' ||
+                                			currentType == 'WWW:DOWNLOAD-1.0-http--download' ||
+                                			currentType == 'application/x-compressed' ||
+                                			currentType == 'image/png') {
+
+                                		itemMenu.handler = function() {
+                                			GeoNetwork.dlForm.show({
+                                                	id: id,
+                                                	fname: record.get('name')
+                                                }, view.catalogue.identifiedUser,record.get('href'));
+                                		};
+                                	} 
+                                	else {
+                                		itemMenu.href = record.get('href');
+                                	}
+                                    linkButton.push(itemMenu);
                                 }
                             }
                             
@@ -640,12 +658,14 @@ GeoNetwork.MetadataResultsView = Ext.extend(Ext.DataView, {
             }
         }, this);
     },
+    
     /** private: method[addLinkMenu]
      *  Display a menu with links for a metadata record for a protocol.
      *  If there is only one element in the linkButton array, display a menu
      *  and display a dropdown menu if not.
      */
     addLinkMenu: function (linkButton, label, currentType, el) {
+    	
         if (linkButton.length === 1) {
             var handler = linkButton[0].handler || function () {
                 window.open(linkButton[0].href);
