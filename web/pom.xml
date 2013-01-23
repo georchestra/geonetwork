@@ -480,7 +480,7 @@
                <filters>
                  <filter>${basedir}/src/main/filters/${env}.properties</filter>
                  <!-- Start GEORCHESTRA change -->
-                 <filter>${confdir}/${project.artifactId}/maven.filter</filter>                 
+                 <filter>${basedir}/src/main/filters/maven.filter</filter>                 
                  <!-- End GEORCHESTRA change -->
                </filters>
                <overwrite>true</overwrite>
@@ -872,6 +872,7 @@
     Profiles configuration is defined in src/main/filters.
     -->
   <profiles>
+				<!-- Start GEORCHESTRA change -->
 	<profile>
 		<id>useConfig</id>
 		<activation>
@@ -879,16 +880,11 @@
 		</activation>
 		<build>
 			<plugins>
-				<!-- Start GEORCHESTRA change -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-dependency-plugin</artifactId>
 				</plugin>
 				<plugin>
-					<!-- Copy du fichier default.wmc.example si il n'existe -->
-					<!-- pas de fichier default.wmc dans le repertoire src/main/webapp. -->
-					<!-- Ce fichier n'est pas écrasé si le packageur de l'application -->
-					<!-- a placé son propre fichier default.wmc -->
 					<artifactId>maven-antrun-plugin</artifactId>
 					<executions>
 						<execution>
@@ -902,6 +898,12 @@
 											<exclude name="**/maven.filter" />
 										</fileset>
 									</copy>
+									<copy todir="${basedir}/src/main/filters" overwrite="true"
+										verbose="true" failonerror="false">
+										<fileset dir="${confdir}/${project.artifactId}">
+											<include name="maven.filter" />
+										</fileset>
+									</copy>
 								</tasks>
 							</configuration>
 							<goals>
@@ -910,10 +912,13 @@
 						</execution>
 					</executions>
 				</plugin>
-				<!-- End GEORCHESTRA change -->
 			</plugins>
 		</build>
+		<properties>
+	    	<system.specific.overrides>/WEB-INF/config-override-georchestra.xml</system.specific.overrides>
+	    </properties>
 	</profile>
+<!-- End GEORCHESTRA change -->
     <profile>
       <id>env-prod</id>
       <activation>
@@ -989,6 +994,6 @@
     <web.xml.main.config.overrides>/WEB-INF/config-overrides-${env}.xml</web.xml.main.config.overrides>
     <web.xml.widget.config.overrides></web.xml.widget.config.overrides>
     <widgets.webapp.resources></widgets.webapp.resources>
-    <system.specific.overrides>/WEB-INF/override-georchestra.xml</system.specific.overrides>
+    <system.specific.overrides></system.specific.overrides>
   </properties>
 </project>

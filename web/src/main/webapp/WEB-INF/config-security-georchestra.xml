@@ -9,7 +9,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
           xmlns:ctx="http://www.springframework.org/schema/context"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns="http://www.springframework.org/schema/beans">
-
+    
 	<!-- Override passthrough filter -->
 	<bean id="preAuthenticationFilter" class="org.springframework.security.web.authentication.preauth.RequestHeaderAuthenticationFilter">
 		<property name="authenticationManager" ref="authenticationManager"/>
@@ -30,8 +30,8 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
     </bean>
 
     <bean id="ldapUserSearch" class="org.springframework.security.ldap.search.FilterBasedLdapUserSearch">
-        <constructor-arg index="0" value="${ldap.sync.user.search.base}"/>
-        <constructor-arg index="1" value="${ldap.sync.user.search.filter}"/>
+        <constructor-arg index="0" value="${ldap.base.search.base}"/>
+        <constructor-arg index="1" value="${ldap.base.dn.pattern}"/>
         <constructor-arg index="2" ref="contextSource" />
     </bean>
     

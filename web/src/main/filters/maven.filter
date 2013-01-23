@@ -1,0 +1,60 @@
+language=fr
+
+transformFactory=de.fzi.dbs.xml.transform.CachingTransformerFactory
+debug=false
+
+dataDir=/var/lib/tomcat6/work/gn_data
+uploadDir=/var/lib/tomcat6/work/gn_data/uploads
+luceneDir=/var/lib/tomcat6/work/gn_data/lucene
+htmlCacheDir=htmlCache
+
+baseUrl=geonetwork
+host=vm-georchestra
+wfsRegionsCapabilities=http://vm-georchestra/geoserver/wfs?REQUEST=GetCapabilities&amp;SERVICE=WFS&amp;VERSION=1.0.0
+
+# example of credentials: 
+#wfsRegionsCredentials=<param name="user" value="extractorapp_privileged_admin" /><param name="pass" value="gerlsSnFd6SmM" />
+wfsRegionsCredentials=
+
+psql.host=localhost
+psql.port=5432
+psql.db=geonetwork
+
+psql.user=www-data
+psql.pass=www-data
+psql.url=jdbc:postgresql://localhost:5432/geonetwork
+
+downloadform.psql.url=jdbc:postgresql://localhost:5432/downloadform
+dlform.activated=true
+dlform.pdf_url=/static/cgu.pdf
+
+xhr.proxy-url=http://vm-georchestra/proxy/
+
+groupSyncLdapBase=ou=groups,dc=georchestra,dc=org
+jpegPhotoLdapBase=ou=users,dc=georchestra,dc=org
+
+LdapHost=localhost
+LdapPort=389
+LdapBindDn=cn=admin,dc=georchestra,dc=org
+LdapBindPassword=secret
+
+LdapGroupPrefix=ROLE_EL_
+
+geoserver.node.id=geoserver2
+geoserver.node.name=My preferred GeoServer node
+geoserver.node.namespace.prefix=geor_pub
+geoserver.node.namespace.url=http://vm-georchestra/geoserver/geor_pub
+
+
+priveleged_admin_name=extractorapp_privileged_admin
+priveleged_admin_pass=gerlsSnFd6SmM
+
+config.xml.typenames=<typename name="EPCI" typename="geor_loc:epci" nameAtt="NOM" /> \
+		<typename name="Commune" typename="geor_loc:commune" nameAtt="NOM" /> \
+		<typename name="Département" typename="geor_loc:departement" nameAtt="NOM" /> \
+		<typename name="Région" typename="geor_loc:region" nameAtt="NOM" />
+
+
+config-gui.xml.mapSearchLayers=<layer server="${geoserverURL}/shorelines" tocName="shorelines"  params="{layers: 'land', transparent: 'true', format: 'image/png'}"  options="{isBaseLayer: true}" />
+
+config-gui.xml.mapViewerLayers=${config-gui.xml.mapSearchLayers}
