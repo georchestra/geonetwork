@@ -292,6 +292,7 @@ GeoNetwork.editor.SubTemplateSelectionPanel = Ext.extend(Ext.FormPanel, {
             name: "itemselector",
             fieldLabel: "ItemSelector",
             dataFields: ["uuid", "title"],
+            displayField: 'title',
             toData: [],
             msWidth: 320,
             msHeight: 230,
