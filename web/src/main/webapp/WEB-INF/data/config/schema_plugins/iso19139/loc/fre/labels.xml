@@ -16,14 +16,15 @@
         xmlns:gco="http://www.isotc211.org/2005/gco"
         xmlns:gml="http://www.opengis.net/gml"
         xmlns:srv="http://www.isotc211.org/2005/srv"
-        xmlns:gmx="http://www.isotc211.org/2005/gmx">
+        xmlns:gmx="http://www.isotc211.org/2005/gmx"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../labels.xsd" >
         
   <element name="gmd:MD_ScopeCode">
     <label>Code du sujet</label>
     <description></description>
     <help/>
     <condition/>
-    
   </element>
   <element name="code" id="207.0" context="gmd:MD_Identifier">
     <label>Code</label>
@@ -1559,9 +1560,9 @@
     <help>Résolution au sol</help>
     <condition>Saisir une distance si pas d'échelle</condition>
     <helper relAtt="uom">
-      <option value="0.10" title="cm">10 cm</option>
-      <option value="0.25" title="cm">25 cm</option>
-      <option value="0.50" title="cm">50 cm</option>
+      <option value="0.10" title="m">10 cm</option>
+      <option value="0.25" title="m">25 cm</option>
+      <option value="0.50" title="m">50 cm</option>
       <option value="1" title="m">1 m</option>
       <option value="30" title="m">30 m</option>
       <option value="100" title="m">100 m</option>
@@ -2631,7 +2632,7 @@
     <description>Autres restrictions et prérequis légaux pour accéder et utiliser les ressources où de métadonnées</description>
     <help>Autres restrictions et conditions préalables de nature juridique concernant l'accès et l'utilisation de la ressource ou des métadonnées. Ce champ doit être complété dès lors que l'un des deux champs précédents (accessConstraints, useConstraints) porte la mention "Autres restrictions".</help>
     <condition>Condition</condition>
-    <helper>
+    <helper editorMode="radio_withdesc">
       <option value="Pas de restriction d’accès public selon INSPIRE" title="Aucun des articles de la loi ne peut être invoqué pour justifier d’une restriction d’accès public.">Pas de restriction d’accès public selon INSPIRE</option>
       <option value="L124-4-I-1 du code de l’environnement (Directive 2007/2/CE (INSPIRE), Article 13.1.a)" 
         title="La confidentialité des travaux des autorités publiques, lorsque cette confidentialité est prévue par la loi.">L124-4-I-1 du code de l’environnement (Directive 2007/2/CE (INSPIRE), Article 13.1.a)</option>
@@ -2827,7 +2828,49 @@
     <description>Protocole de la connexion à utiliser</description>
     <help>Protocole de connexion utilisé, par exemple FTP.</help>
     <condition/>
-    
+    <helper>
+      <option show="-" value="OGC:CSW">OGC-CSW Catalogue Service for the Web
+      </option>
+      <option show="-" value="OGC:KML">OGC-KML Keyhole Markup Language
+      </option>
+      <option show="-" value="OGC:GML">OGC-GML Geography Markup Language
+      </option>
+      <option show="-" value="OGC:ODS">OGC-ODS OpenLS Directory Service
+      </option>
+      <option show="-" value="OGC:OGS">OGC-ODS OpenLS Gateway Service</option>
+      <option show="-" value="OGC:OUS">OGC-ODS OpenLS Utility Service</option>
+      <option show="-" value="OGC:OPS">OGC-ODS OpenLS Presentation Service
+      </option>
+      <option show="-" value="OGC:ORS">OGC-ODS OpenLS Route Service</option>
+      <option show="-" value="OGC:SOS">OGC-SOS Sensor Observation Service
+      </option>
+      <option show="-" value="OGC:SPS">OGC-SPS Sensor Planning Service
+      </option>
+      <option show="-" value="OGC:SAS">OGC-SAS Sensor Alert Service</option>
+      <option show="-" value="OGC:WCS">OGC-WCS Web Coverage Service</option>
+      <option show="-" value="OGC:WCTS">OGC-WCTS Web Coordinate Transformation
+        Service
+      </option>
+      <option show="-" value="OGC:WFS">OGC-WFS Web Feature Service</option>
+      <option show="-" value="OGC:WFS-G">OGC-WFS-G Gazzetteer Service</option>
+      <option show="y" value="OGC:WMC">OGC-WMC Web Map Context</option>
+      <option show="-" value="OGC:WMS">OGC-WMS Web Map Service</option>
+      <option show="-" value="OGC:WNS">OGC-WNS Web Notification Service
+      </option>
+      <option show="-" value="OGC:WPS">OGC-WPS Web Processing Service</option>
+      <option show="-" value="WWW:DOWNLOAD-1.0-ftp--download">Fichier à télécharger (FTP)</option>
+      <option show="-" value="WWW:DOWNLOAD-1.0-http--download">Fichier à télécharger</option>
+      <option show="-" value="FILE:GEO">Fichier SIG</option>
+      <option show="-" value="FILE:RASTER">Fichier SIG RASTER</option>
+      <option show="y" value="WWW:LINK-1.0-http--ical">iCalendar (URL)</option>
+      <option show="y" value="WWW:LINK-1.0-http--link">Adresse Internet (URL)</option>
+      <option show="y" value="WWW:LINK-1.0-http--rss">Fil RSS (URL)</option>
+      <option show="-" value="DB:POSTGIS">Base de données / Table PostGIS</option>
+      <option show="-" value="DB:ORACLE">Base de données / ORACLE</option>
+      <option show="y" value="WWW:LINK-1.0-http--opendap">OPeNDAP URL</option>
+      <option show="y" value="RBNB:DATATURBINE">Data Turbine</option>
+      <option show="-" value="UKST">Unknown Service Type</option>
+    </helper>
   </element>
   <element name="gmd:purpose" id="26.0">
     <label>But</label>
@@ -3234,7 +3277,7 @@
       Nom caractéristique et souvent unique sous lequel la ressource est connue.
       
       Titre/nom. Ces informations sont du type PT_FreeText et sont gérées dans la classe du même nom.</help>
-    <helper>
+    <helper editorMode="radio_linebreak">
       <option>-- Pour les données --</option>
       <option value="COMMISSION REGULATION (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards interoperability of spatial data sets and services">COMMISSION REGULATION (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards interoperability of spatial data sets and services</option>
       <option value="INSPIRE Data Specification on Administrative Units - Guidelines v3.0.1">Guide INSPIRE sur les unités administratives</option>
