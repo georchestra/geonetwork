@@ -82,10 +82,10 @@ GeoNetwork.app = function () {
         iMap = new GeoNetwork.mapApp();
         var layers={}, options={};
         if(GeoNetwork.map.CONTEXT || GeoNetwork.map.OWS) {
-        	options=GeoNetwork.map.SHARED_MAP_OPTIONS;
+            options = GeoNetwork.map.CONTEXT_MAIN_MAP_OPTIONS;
         } else {
-        	options = GeoNetwork.map.MAIN_MAP_OPTIONS;
-        	layers  = GeoNetwork.map.BACKGROUND_LAYERS;
+            options = GeoNetwork.map.MAIN_MAP_OPTIONS;
+            layers  = GeoNetwork.map.BACKGROUND_LAYERS;
         }
         iMap.init(layers, options);
         metadataResultsView.addMap(iMap.getMap());
@@ -320,9 +320,9 @@ GeoNetwork.app = function () {
         // Check good map options if we load map config from WMC or OWS
         var mapOptions;
         if(GeoNetwork.map.CONTEXT || GeoNetwork.map.OWS) {
-        	mapOptions=GeoNetwork.map.SHARED_MAP_OPTIONS;
+            mapOptions = GeoNetwork.map.CONTEXT_MAP_OPTIONS;
         } else {
-        	mapOptions = GeoNetwork.map.MAP_OPTIONS;
+            mapOptions = GeoNetwork.map.MAP_OPTIONS;
         }
         
         formItems.push(GeoNetwork.util.SearchFormTools.getSimpleFormFields(catalogue.services, 
@@ -974,7 +974,14 @@ GeoNetwork.app = function () {
                     hidden: !GeoNetwork.MapModule,
                     margins: margins,
                     minWidth: 300,
-                    width: 500
+                    width: 500,
+                    listeners: {
+                        beforeexpand: function () {
+                            app.getIMap();
+                            this.add(iMap.getViewport());
+                            this.doLayout();
+                        }
+                    }
                 }]
             });
             

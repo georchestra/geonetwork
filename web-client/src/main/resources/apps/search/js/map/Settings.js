@@ -61,21 +61,30 @@ GeoNetwork.map.CONTEXT = "../../maps/pigma.wmc";
 //GeoNetwork.map.OWS = "../../maps/geoserver_localhost.xml";
 //GeoNetwork.map.CONTEXT = "../../maps/geoserver_localhost.wmc";
 
-GeoNetwork.map.SHARED_MAP_OPTIONS = {
+GeoNetwork.map.CONTEXT_MAP_OPTIONS = {
     controls: [],
     theme:null
 };
 
-GeoNetwork.map.MAP_OPTIONS = Ext.apply({
-    projection: GeoNetwork.map.PROJECTION,
-    maxExtent: GeoNetwork.map.EXTENT,
-    restrictedExtent: GeoNetwork.map.EXTENT,
-    resolutions: GeoNetwork.map.RESOLUTIONS
-}, GeoNetwork.map.SHARED_MAP_OPTIONS);
+GeoNetwork.map.CONTEXT_MAIN_MAP_OPTIONS = {
+    controls: [],
+    theme:null
+};
 
-GeoNetwork.map.MAIN_MAP_OPTIONS = Ext.apply({
+GeoNetwork.map.MAP_OPTIONS = {
     projection: GeoNetwork.map.PROJECTION,
     maxExtent: GeoNetwork.map.EXTENT,
     restrictedExtent: GeoNetwork.map.EXTENT,
-    resolutions: GeoNetwork.map.RESOLUTIONS
-}, GeoNetwork.map.SHARED_MAP_OPTIONS);
+    resolutions: GeoNetwork.map.RESOLUTIONS,
+    controls: [],
+    theme:null
+};
+
+GeoNetwork.map.MAIN_MAP_OPTIONS = {
+    projection: GeoNetwork.map.PROJECTION,
+    maxExtent: GeoNetwork.map.EXTENT,
+    restrictedExtent: GeoNetwork.map.EXTENT,
+    resolutions: GeoNetwork.map.RESOLUTIONS,
+    controls: [],
+    theme:null
+};
