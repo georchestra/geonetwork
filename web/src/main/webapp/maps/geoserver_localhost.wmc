@@ -12,7 +12,7 @@
 		<Layer queryable="0" hidden="0">
 			<Server service="OGC:WMS" version="1.1.1">
 				<OnlineResource xlink:type="simple"
-					xlink:href="http://localhost:8081/geoserver/wms?SERVICE=WMS"/>
+					xlink:href="http://localhost:8080/geoserver/wms?SERVICE=WMS"/>
 			</Server>
 			<Name>gn:world</Name>
 			<Title>World</Title>
@@ -37,7 +37,7 @@
 		<Layer queryable="0" hidden="0">
 			<Server service="OGC:WMS" version="1.1.1">
 				<OnlineResource xlink:type="simple"
-					xlink:href="http://localhost:8081/geoserver/wms?SERVICE=WMS"/>
+					xlink:href="http://localhost:8080/geoserver/wms?SERVICE=WMS"/>
 			</Server>
 			<Name>gn:ne_50m_boundary_da,gn:ne_50m_boundary_lines_land,gn:ne_50m_coastline</Name>
 			<Title>Country boundaries</Title>

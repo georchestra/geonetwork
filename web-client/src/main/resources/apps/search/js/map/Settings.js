@@ -72,19 +72,19 @@ GeoNetwork.map.CONTEXT_MAIN_MAP_OPTIONS = {
 };
 
 GeoNetwork.map.MAP_OPTIONS = {
-    projection: GeoNetwork.map.PROJECTION,
-    maxExtent: GeoNetwork.map.EXTENT,
-    restrictedExtent: GeoNetwork.map.EXTENT,
-    resolutions: GeoNetwork.map.RESOLUTIONS,
-    controls: [],
-    theme:null
+ projection: GeoNetwork.map.PROJECTION,
+ maxExtent: GeoNetwork.map.EXTENT,
+ restrictedExtent: GeoNetwork.map.EXTENT,
+ resolutions: GeoNetwork.map.RESOLUTIONS,
+ controls: [],
+ theme:null
 };
 
 GeoNetwork.map.MAIN_MAP_OPTIONS = {
-    projection: GeoNetwork.map.PROJECTION,
-    maxExtent: GeoNetwork.map.EXTENT,
-    restrictedExtent: GeoNetwork.map.EXTENT,
-    resolutions: GeoNetwork.map.RESOLUTIONS,
-    controls: [],
-    theme:null
+ projection: GeoNetwork.map.PROJECTION,
+ maxExtent: GeoNetwork.map.EXTENT,
+ restrictedExtent: GeoNetwork.map.EXTENT,
+ resolutions: GeoNetwork.map.RESOLUTIONS,
+ controls: [],
+ theme:null
 };

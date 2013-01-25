@@ -71,8 +71,8 @@ GeoNetwork.mapApp = function() {
                 async: false
             });
             if (request.responseText) {
-            	
-            	var text = request.responseText;
+                
+                var text = request.responseText;
                 var format = new OpenLayers.Format.WMC();
                 map = format.read(text, {map:options});
             }
@@ -90,8 +90,8 @@ GeoNetwork.mapApp = function() {
             }
         }
         else {
-        	map = new OpenLayers.Map('ol_map', options);
-        	fixedScales = scales;
+            map = new OpenLayers.Map('ol_map', options);
+            fixedScales = scales;
         }
     };
 
@@ -266,9 +266,12 @@ GeoNetwork.mapApp = function() {
     };
 	var createPrintPanel = function() {
         // The printProvider that connects us to the print service
-        printProvider = new GeoExt.data.PrintProvider({
+	    printProvider = new GeoExt.data.PrintProvider({
             method: "POST",
             url: GeoNetwork.map.printCapabilities,
+            baseParams: {
+                url: GeoNetwork.map.printCapabilities
+            },
             autoLoad: true
         });
         
@@ -281,11 +284,6 @@ GeoNetwork.mapApp = function() {
         
         map.addLayer(pageLayer);
         
-        map.events.register('moveend', map, function(){
-            printPage.fit(this, {
-                mode: "screen"
-            });
-        });
         // The form with fields controlling the print output
         printPanel = new Ext.form.FormPanel({
             title: OpenLayers.i18n("mf.print.print"),
@@ -362,6 +360,12 @@ GeoNetwork.mapApp = function() {
                 },
                 scope: pageLayer
             }
+        });
+        
+        map.events.register('moveend', map, function () {
+            printPage.fit(this, {
+                mode: "screen"
+            });
         });
     };
     /**

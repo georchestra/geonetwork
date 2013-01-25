@@ -19,7 +19,7 @@
             <ows:OutputFormat>image/jpeg</ows:OutputFormat>
             <Server service="urn:ogc:serviceType:WMS" version="1.1.1">
                 <OnlineResource xlink:type="simple"
-                    xlink:href="http://localhost:8081/geoserver/wms?SERVICE=WMS"/>
+                    xlink:href="http://localhost:8080/geoserver/wms?SERVICE=WMS"/>
             </Server>
         </Layer>
         <!-- FIXME: All layers added as baselayer -->
@@ -30,7 +30,7 @@
             <ows:OutputFormat>image/png</ows:OutputFormat>
             <Server service="urn:ogc:serviceType:WMS" version="1.1.1">
                 <OnlineResource xlink:type="simple"
-                    xlink:href="http://localhost:8081/geoserver/wms?SERVICE=WMS"/>
+                    xlink:href="http://localhost:8080/geoserver/wms?SERVICE=WMS"/>
             </Server>
         </Layer>
     </ResourceList>

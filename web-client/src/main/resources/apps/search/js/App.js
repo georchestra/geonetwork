@@ -315,6 +315,15 @@ GeoNetwork.app = function () {
             },
             items: advancedCriteria
         });
+        
+        // Check good map options if we load map config from WMC or OWS
+        var mapOptions;
+        if(GeoNetwork.map.CONTEXT || GeoNetwork.map.OWS) {
+            mapOptions = GeoNetwork.map.CONTEXT_MAP_OPTIONS;
+        } else {
+            mapOptions = GeoNetwork.map.MAP_OPTIONS;
+        }
+        
         var formItems = [];
         
         // Check good map options if we load map config from WMC or OWS
@@ -342,13 +351,13 @@ GeoNetwork.app = function () {
             Ext.each(adminFields, function (item) {
                 item.setVisible(true);
             });
-            GeoNetwork.util.SearchFormTools.refreshGroupFieldValues();
+            groupField.getStore().reload();
         });
         catalogue.on('afterLogout', function () {
             Ext.each(adminFields, function (item) {
                 item.setVisible(false);
             });
-            GeoNetwork.util.SearchFormTools.refreshGroupFieldValues();
+            groupField.getStore().reload();
         });
         
         

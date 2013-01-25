@@ -97,7 +97,7 @@ public class ResourceFilter implements Filter {
 
 	private void initFields() throws IOException {
         servletContext = config.getServletContext();
-        appPath = servletContext.getRealPath(".");
+        appPath = new java.io.File(servletContext.getRealPath(".")).getParent();
         resourcesDir = Resources.locateResourcesDir(config.getServletContext());
 
         defaultImage = Resources.loadResource(resourcesDir, config.getServletContext(), appPath, "images/logos/dummy.gif", new byte[0], -1);
