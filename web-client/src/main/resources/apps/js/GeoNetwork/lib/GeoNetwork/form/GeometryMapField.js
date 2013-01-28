@@ -306,7 +306,7 @@ GeoNetwork.form.GeometryMapField = Ext.extend(GeoExt.MapPanel, {
                 async: false
             });
             if (request.responseText) {
-            	var text = request.responseText;
+                var text = request.responseText;
                 var format = new OpenLayers.Format.WMC();
                 this.map = format.read(text, {map:options});
                 this.layers = undefined;
