@@ -82,7 +82,10 @@ public class Download implements Service
 		if (access.equals(Params.Access.PRIVATE))
 		{
 			Lib.resource.checkPrivilege(context, id, AccessManager.OPER_DOWNLOAD);
-			doNotify = true;
+			// Begin Specific Georchestra 
+			//doNotify = true;
+			Lib.resource.downloadFormFilled(context, id, fname);
+			// End Specific Georchestra
 		}
 
 		// Build the response

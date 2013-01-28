@@ -172,7 +172,6 @@ GeoNetwork.dlForm = (function() {
                         // requires dlform webapp to be deployed:
                         url: '/downloadform/geonetwork',
                         success: function() {
-                            win.close();
                             options.callback.call();
                         }
                     };
