@@ -445,14 +445,14 @@ GeoNetwork.MetadataResultsToolbar = Ext.extend(Ext.Toolbar, {
             scope: this
         });
         
-        this.selectionActions.push(mefExportAction, csvExportAction, printAction, this.addLayerAction);
+        // georchestra specific do not add addLayerAction (overriden by visualize action)
+        this.selectionActions.push(mefExportAction, csvExportAction, printAction);
         
         this.actionMenu.add(
             '<b class="menu-title">' + OpenLayers.i18n('onSelection') + '</b>',
             mefExportAction, 
             csvExportAction, 
-            printAction,
-            this.addLayerAction// ,{
+            printAction
         // text : 'Display selection only'
         // }
         );
