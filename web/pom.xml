@@ -914,9 +914,6 @@
 				</plugin>
 			</plugins>
 		</build>
-		<properties>
-	    	<system.specific.overrides>/WEB-INF/config-override-georchestra.xml</system.specific.overrides>
-	    </properties>
 	</profile>
 <!-- End GEORCHESTRA change -->
     <profile>
