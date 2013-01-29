@@ -133,6 +133,7 @@ CREATE TABLE Users
     address       varchar(128),
     city          varchar(128),
     state         varchar(32),
+    phone         varchar(32),
     zip           varchar(16),
     country       varchar(128),
     email         varchar(128),
