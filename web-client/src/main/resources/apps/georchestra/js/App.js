@@ -36,48 +36,6 @@ GeoNetwork.app = function () {
         visualizationModeInitialized = false;
     
     // private function:
-    /**
-     * Create a radio button switch in order to change perspective from a search
-     * mode to a map visualization mode.
-     */
-    function createModeSwitcher() {
-        var ms = {
-            xtype: 'radiogroup',
-            id: 'ms',
-            hidden: !GeoNetwork.MapModule,
-            items: [{
-                name: 'mode',
-                ctCls: 'mn-main',
-                boxLabel: OpenLayers.i18n('discovery'),
-                id: 'discoveryMode',
-                width: 110,
-                inputValue: 0,
-                checked: true
-            }, {
-                name: 'mode',
-                ctCls: 'mn-main',
-                width: 140,
-                boxLabel: OpenLayers.i18n('visualization'),
-                id: 'visualizationMode',
-                inputValue: 1
-            }],
-            listeners: {
-                change: function (rg, checked) {
-                    app.switchMode(checked.getGroupValue(), false);
-                    /* TODO : update viewport */
-                }
-            }
-        };
-        
-        return new Ext.form.FormPanel({
-            renderTo: 'mode-form',
-            border: false,
-            layout: 'hbox',
-            items: ms
-        });
-    }
-    
-    
     function initMap() {
         iMap = new GeoNetwork.mapApp();
         var layers={}, options={};
@@ -364,7 +322,6 @@ GeoNetwork.app = function () {
         return new GeoNetwork.SearchFormPanel({
             id: 'searchForm',
             stateId: 's',
-            border: false,
             searchCb: function () {
                 if (metadataResultsView && Ext.getCmp('geometryMap')) {
                     metadataResultsView.addMap(Ext.getCmp('geometryMap').map, true);
@@ -864,7 +821,7 @@ GeoNetwork.app = function () {
     // public space:
     return {
         init: function () {
-            geonetworkUrl = GeoNetwork.URL || window.location.href.match(/(http.*\/.*)\/apps\/search.*/, '')[1];
+            geonetworkUrl = GeoNetwork.URL || window.location.href.match(/(http.*\/.*)\/apps\/georchestra.*/, '')[1];
 
             urlParameters = GeoNetwork.Util.getParameters(location.href);
             var lang = urlParameters.hl || GeoNetwork.Util.defaultLocale;
@@ -918,7 +875,6 @@ GeoNetwork.app = function () {
             resultsPanel = createResultsPanel(permalinkProvider);
             
             // Top navigation widgets
-            createModeSwitcher();
             createLanguageSwitcher(lang);
             createLoginForm();
             edit();
@@ -994,12 +950,6 @@ GeoNetwork.app = function () {
                 }]
             });
             
-            /* Trigger visualization mode if mode parameter is 1 
-             TODO : Add visualization only mode with legend panel on
-             */
-            if (urlParameters.mode) {
-                app.switchMode(urlParameters.mode, false);
-            }
             if (urlParameters.edit !== undefined && urlParameters.edit !== '') {
                 catalogue.metadataEdit(urlParameters.edit);
             }
@@ -1100,63 +1050,6 @@ GeoNetwork.app = function () {
             GeoNetwork.Util.updateHeadInfo({
                 title: catalogue.getInfo().name + ' | ' + title
             });
-        },
-        /**
-         * Switch from one mode to another
-         *
-         * @param mode
-         * @param force
-         * @return
-         */
-        switchMode: function (mode, force) {
-            var ms = Ext.getCmp('ms'),
-                e = Ext.getCmp('east'),
-                c = Ext.getCmp('center'),
-                w = Ext.getCmp('west'),
-                currentMode;
-            
-            // Set discovery mode as default if undefined
-            if (mode === null) {
-                currentMode = ms.getValue().getGroupValue();
-                if (currentMode === '0') {
-                    ms.onSetValue(Ext.getCmp('visualizationMode'), true);
-                } else {
-                    ms.onSetValue(Ext.getCmp('discoveryMode'), true);
-                }
-                mode = currentMode = ms.getValue().getGroupValue();
-            }
-            
-            if (force) {
-                if (mode === '1') {
-                    ms.onSetValue(Ext.getCmp('visualizationMode'), true);
-                } else {
-                    ms.onSetValue(Ext.getCmp('discoveryMode'), true);
-                }
-            }
-            
-            if (mode === '1' && !visualizationModeInitialized) {
-                initMap();
-            }
-            
-            if (mode === '1' && iMap) {
-                e.add(iMap.getViewport());
-                e.doLayout();
-                if (e.collapsed) {
-                    e.toggleCollapse();
-                }
-                if (!w.collapsed) {
-                    w.toggleCollapse();
-                }
-                
-                Ext.getCmp('vp').syncSize();
-            } else {
-                if (!e.collapsed) {
-                    e.toggleCollapse();
-                }
-                if (w.collapsed) {
-                    w.toggleCollapse();
-                }
-            }
         }
     };
 };
