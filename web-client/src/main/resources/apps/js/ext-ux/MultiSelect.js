@@ -329,8 +329,6 @@ Ext.ux.form.MultiSelect = Ext.extend(Ext.form.Field,  {
 
 Ext.reg('multiselect2', Ext.ux.form.MultiSelect);
 
-//backwards compat
-Ext.ux.Multiselect = Ext.ux.form.MultiSelect;
 
 
 Ext.ux.form.MultiSelect.DragZone = function(ms, config){
