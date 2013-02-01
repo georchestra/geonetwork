@@ -1015,3 +1015,31 @@ function updateChildren(div, url, onFailureMsg) {
     });
 }
 
+function doRemoveElementActionSimple(action, ref, parentref, htmlElementToRemoveId){
+    var metadataId = document.mainForm.id.value;
+    var thisElement = Ext.get(htmlElementToRemoveId);
+    Ext.Ajax.request({
+        url: catalogue.services.rootUrl + action, // TODO : catalogue.url
+        method: 'GET',
+        params: {
+            id: metadataId,
+            ref: ref,
+            parent: parentref
+        },
+        success: function(result, request){
+            thisElement && thisElement.remove();
+        },
+        failure: function(result, request){
+            Ext.MessageBox.alert(translate("errorDeleteElement") + name + " " +
+            translate("errorFromDoc") +
+            " / status " +
+            result.status +
+            " text: " +
+            result.statusText +
+            " - " +
+            translate("tryAgain"));
+            setBunload(true); // reset warning for window destroy
+        }
+    });
+}
+
