@@ -271,3 +271,14 @@ GeoNetwork.Templates.Relation = {
                 '<tpl if="subType!=\'\'"><span class="badge relation-type">{subType}</span></tpl>',
                  '</li>']
 };
+
+
+
+
+//Overrides default template for keyword selection
+//Display keyword definition if available.
+GeoNetwork.Templates.KEYWORD_ITEM = new Ext.XTemplate(
+    '<tpl for=".">',
+        '<div class="ux-mselect-item">{value}<tpl if="values.definition">&nbsp;<span class="definition">{definition}</span></tpl></div>',
+    '</tpl>'
+);
