@@ -33,7 +33,7 @@ GeoNetwork.map.printCapabilities = "../../pdf";
 
 // Config for WGS84 based maps
 GeoNetwork.map.PROJECTION = "EPSG:4326";
-GeoNetwork.map.EXTENT = new OpenLayers.Bounds(-180, -90, 180, 90);
+GeoNetwork.map.EXTENT = new OpenLayers.Bounds(-2.2, 42.6, 1.9, 46)
 //GeoNetwork.map.EXTENT = new OpenLayers.Bounds(-5.1,41,9.7,51);
 
 GeoNetwork.map.BACKGROUND_LAYERS = [
@@ -54,7 +54,7 @@ GeoNetwork.map.BACKGROUND_LAYERS = [
 
 // Define background map layer from an OGC Context
 // * PIGMA Default background
-GeoNetwork.map.CONTEXT = "../../maps/pigma.wmc";
+//GeoNetwork.map.CONTEXT = "../../maps/pigma.wmc";
 // * DEMIS country layer
 //GeoNetwork.map.OWS = "../../maps/demis.xml";
 // * Default GeoServer layers
