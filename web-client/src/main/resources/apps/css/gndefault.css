@@ -602,3 +602,22 @@ div.facets * .facet-less-bt {
 .debug {
     display: none;
 }
+.filter-text-icon {
+   background-image: url(../images/default/find.png) !important;
+   width: 16px;
+   height: 16px;
+   border-color: transparent !important;
+   margin: 4px;
+}
+.privileges-grid-disable {
+	color: gray;
+}
+
+.privileges-grid-disable .x-grid3-check-col,
+.privileges-grid-disable .x-grid3-check-col-on {
+	opacity:0.4;
+}
+
+.privileges-panel .x-grid3-dirty-cell {
+	background-image: none;
+}
