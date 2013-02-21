@@ -118,7 +118,7 @@ GeoNetwork.Util = {
         return parameters;
     },
     getBaseUrl: function(url){
-        return url.substring(0, url.indexOf('?') || url.indexOf('#') || url.length);
+        return url.substring(0, url.indexOf('?')>0?url.indexOf('?'):url.indexOf('#')>0?url.indexOf('#'):url.length);
     },
     /** api: property[protocolToCSS] 
      *  

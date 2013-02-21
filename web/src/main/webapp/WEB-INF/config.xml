@@ -1403,7 +1403,7 @@
 			<class name=".services.main.Result">
 				<param name="range" value="all" />
 			</class>
-			<output sheet="csv-search.xsl" contentType="text/plain; charset=UTF-8" />
+			<output sheet="csv-search.xsl" file="true"  contentType="text/csv" />
 		</service>
 
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
