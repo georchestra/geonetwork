@@ -801,7 +801,7 @@ GeoNetwork.Catalogue = Ext.extend(Ext.util.Observable, {
      *	Export current selection in CSV format.
      */
     csvExport: function(){
-        window.open(this.services.csv, this.windowName, this.windowOption);
+        location.replace(this.services.csv);
     },
     /**	api: method[mefExport]
      *
