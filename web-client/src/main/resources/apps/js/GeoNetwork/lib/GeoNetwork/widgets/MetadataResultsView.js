@@ -601,7 +601,7 @@ GeoNetwork.MetadataResultsView = Ext.extend(Ext.DataView, {
                                             jsonObject.layers.push({
                                                 layername: record.get('name'),
                                                 metadataURL: app.getCatalogue().services.mdShow + '?id=' + id,
-                                                owstype: record.get('type'),
+                                                owstype: 'WMS',
                                                 owsurl: record.get('href'),
                                                 title: record.get('title')
                                             });
