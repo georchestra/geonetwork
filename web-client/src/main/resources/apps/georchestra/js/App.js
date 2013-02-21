@@ -364,13 +364,6 @@ GeoNetwork.app = function () {
         if (!resultsPanel.isVisible()) {
             resultsPanel.show();
         }
-        
-        // Init map on first search to prevent error
-        // when user add WMS layer without initializing
-        // Visualization mode
-        if (GeoNetwork.MapModule && !visualizationModeInitialized) {
-            initMap();
-        }
     }
     /**
      * Bottom bar
