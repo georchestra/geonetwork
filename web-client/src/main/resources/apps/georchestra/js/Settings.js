@@ -89,3 +89,5 @@ GeoNetwork.WMSList = [['Geoserver', 'http://localhost/geoserver/wms?']];
 GeoNetwork.defaultViewMode = 'view-simple';
 
 Ext.BLANK_IMAGE_URL = '../js/ext/resources/images/default/s.gif';
+
+GeoNetwork.util.SearchTools.similarity='.8';

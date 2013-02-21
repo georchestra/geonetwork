@@ -55,6 +55,7 @@ GeoNetwork.util.SearchTools = {
     output: 'full',
     sortBy: 'relevance',
     hitsPerPage: '50',
+    similarity: '1',
     
     
     /** api:method[doQuery]
@@ -135,7 +136,8 @@ GeoNetwork.util.SearchTools = {
      *
      */
     doQueryFromForm: function(formId, cat, startRecord, onSuccess, onFailure, updateStore, metadataStore, summaryStore, async){
-        var query = GeoNetwork.util.SearchTools.buildQueryFromForm(Ext.getCmp(formId), startRecord, GeoNetwork.util.SearchTools.sortBy, metadataStore.fast);
+        var query = GeoNetwork.util.SearchTools.buildQueryFromForm(Ext.getCmp(formId), startRecord, 
+                GeoNetwork.util.SearchTools.sortBy, metadataStore.fast, GeoNetwork.util.SearchTools.similarity);
         GeoNetwork.util.SearchTools.doQuery(query, cat, startRecord, onSuccess, onFailure, updateStore, metadataStore, summaryStore, async);
     },
     doQueryFromParams: function(params, cat, startRecord, onSuccess, onFailure, updateStore, metadataStore, summaryStore, async){
@@ -164,13 +166,13 @@ GeoNetwork.util.SearchTools = {
      *  with the default similarity to be used in Lucene search.
      *
      */
-    buildQueryFromForm: function(form, startRecord, sortBy, fast){
+    buildQueryFromForm: function(form, startRecord, sortBy, fast, similarity){
         var values = GeoNetwork.util.SearchTools.getFormValues(form);
         var filters = [];
         GeoNetwork.util.SearchTools.addFiltersFromPropertyMap(values, filters, startRecord);
         
         
-        return GeoNetwork.util.SearchTools.buildQueryGET(filters, startRecord, sortBy, fast);
+        return GeoNetwork.util.SearchTools.buildQueryGET(filters, startRecord, sortBy, fast, similarity);
     },
     /** api:method[populateFormFromParams]
      *
@@ -355,7 +357,7 @@ GeoNetwork.util.SearchTools = {
     /** private: method[buildQueryGET]
      *  Build a GET query based on an OGC filter.
      */
-    buildQueryGET: function(filter, startRecord, sortBy, fast){
+    buildQueryGET: function(filter, startRecord, sortBy, fast, similarity){
     	var query = "fast=" + (fast ? fast : GeoNetwork.util.SearchTools.fast) + "&";
         
 //        if (sortBy) {
@@ -365,6 +367,10 @@ GeoNetwork.util.SearchTools = {
         
         if (filter) {
             query += filter.join("&");
+        }
+        if (similarity && similarity != '1') {
+            query += '&similarity=' + similarity;
+
         }
         
         return query;
