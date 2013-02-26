@@ -649,7 +649,7 @@ GeoNetwork.MetadataResultsView = Ext.extend(Ext.DataView, {
                                 		itemMenu.handler = function() {
                                 			GeoNetwork.dlForm.show({
                                                 	id: id,
-                                                	fname: record.get('name')
+                                                	fname: Ext.urlDecode(record.get('href'))
                                                 }, view.catalogue.identifiedUser,record.get('href'));
                                 		};
                                 	} 
