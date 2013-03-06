@@ -479,7 +479,7 @@ UPDATE settings SET value='0 0 0/2 * * ?' where name = 'every';
 
 ALTER TABLE Users ADD phone varchar(16);
 
-create or replace function migrateSharedObjects() returns VOID as 'DECLARE
+create or replace function migrateSharedObjects() returns VOID as E'DECLARE
     sharedobjects record; \
     currenttime timestamp without time zone; \
     newid integer; \
