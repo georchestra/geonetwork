@@ -479,38 +479,34 @@ UPDATE settings SET value='0 0 0/2 * * ?' where name = 'every';
 
 ALTER TABLE Users ADD phone varchar(16);
 
-create or replace function migrateSharedObjects() returns VOID as 
-$BODY$
-DECLARE
-    sharedobjects record;
-    currenttime timestamp without time zone;
-    newid integer;
-    allgroupId integer;
+create or replace function migrateSharedObjects() returns VOID as 'DECLARE
+    sharedobjects record; \
+    currenttime timestamp without time zone; \
+    newid integer; \
+    allgroupId integer; \
 BEGIN
-    newid = (select max(id) from metadata);
-    allgroupId = (select id from groups where name='all');
-    currenttime = NOW();
-    
+    newid = (select max(id) from metadata); \
+    allgroupId = (select id from groups where name=''all''); \
+    currenttime = NOW(); \
+
     FOR sharedobjects IN SELECT * FROM shared_contacts LOOP
-    
-        newid = newid+1;
-        
-        INSERT INTO metadata(id,uuid,schemaid, istemplate, 
-            isharvested, createdate, changedate, 
+
+        newid = newid+1; \
+
+        INSERT INTO metadata(id,uuid,schemaid, istemplate,
+            isharvested, createdate, changedate,
             data, source, root, owner, groupowner)
-        VALUES ( newid, 'migrated-sharedobject-' || newid,'iso19139', 
-             's','n', currenttime, currenttime, sharedobjects.data,'04bc362e-4e8b-48f8-888b-451a19af3a98', 'gmd:CI_ResponsibleParty',1,allgroupId);
+        VALUES ( newid, ''migrated-sharedobject-'' || newid,''iso19139'',
+             ''s'',''n'', currenttime, currenttime, sharedobjects.data,''04bc362e-4e8b-48f8-888b-451a19af3a98'', ''gmd:CI_ResponsibleParty'',1,allgroupId); \
 
         INSERT INTO operationallowed(groupid, metadataid, operationid)
-        VALUES (allgroupId,newid,0);
+        VALUES (allgroupId,newid,0); \
 
         INSERT INTO operationallowed(groupid, metadataid, operationid)
-        VALUES (allgroupId,newid,3);
+        VALUES (allgroupId,newid,3); \
 
-    END LOOP;
-END
-$BODY$
-LANGUAGE 'plpgsql';
+    END LOOP; \
+END' LANGUAGE 'plpgsql';
 
 select migrateSharedObjects();
 
