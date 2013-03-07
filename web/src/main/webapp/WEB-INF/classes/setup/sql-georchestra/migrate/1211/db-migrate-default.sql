@@ -5,7 +5,7 @@ CREATE TABLE customelementset (
 
 ALTER TABLE public.customelementset OWNER TO "www-data";
 
-UPDATE Settings SET value='11.12' WHERE name='version';
+UPDATE Settings SET value='12.11' WHERE name='version';
 
 CREATE TABLE HarvestHistory
   (
