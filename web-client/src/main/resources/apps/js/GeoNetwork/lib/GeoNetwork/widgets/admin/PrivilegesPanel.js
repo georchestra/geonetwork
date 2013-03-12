@@ -12,6 +12,11 @@ GeoNetwork.admin.PrivilegesPanel = Ext.extend(Ext.grid.GridPanel, {
     url : undefined,
 
     /**
+     * id of the metadata for which privileges are loaded
+     */
+    id : undefined,
+    
+    /**
      * Return true is the <on/> element exists in the n element where <id> 
      * match with the field name.
      * this is a reference to the Ext.data.Field.
@@ -97,12 +102,14 @@ GeoNetwork.admin.PrivilegesPanel = Ext.extend(Ext.grid.GridPanel, {
         this.bbar = this.bbar || [{
             text: 'submit',
             handler: function() {
-                
+                var args={};
                 var submitFn = function(group) {
+                    
+                    
                     for (var i=0;i<this.colModel.config.length-1;i++) {
                         var di = this.colModel.config[i].dataIndex;
                         if(di.indexOf('oper') == 0 && group.get(di)) {
-                            console.log('_' + group.id + '_' + di.charAt(di.length-1 ));
+                            args['_' + group.id + '_' + di.charAt(di.length-1 )] ='on';
                         }
                     }
                 };
@@ -113,6 +120,20 @@ GeoNetwork.admin.PrivilegesPanel = Ext.extend(Ext.grid.GridPanel, {
                 }
                 else {
                     this.store.each(submitFn,this);
+                }
+                
+                // update privileges
+                args.id = this.id;
+                args.timeType = 'on';
+                
+                Ext.Ajax.request({
+                    url : app.getCatalogue().services.mdAdminSave,
+                    disableCaching: false,
+                    params: args
+                });
+                
+                if(this.ownerCt.getXType() == 'window') {
+                    this.ownerCt.close();
                 }
             },
             scope: this
@@ -206,7 +227,7 @@ GeoNetwork.admin.PrivilegesPanel = Ext.extend(Ext.grid.GridPanel, {
                     if(record.id == 0 || record.id == -1 || record.id == 1) {
                         return '';
                     }
-                    else if(isOwner == 'true') {
+                    else if(isOwner == 'false') {
                         return 'privileges-grid-disable';
                     }
                 };

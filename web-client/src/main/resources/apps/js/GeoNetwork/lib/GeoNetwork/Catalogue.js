@@ -294,6 +294,7 @@ GeoNetwork.Catalogue = Ext.extend(Ext.util.Observable, {
             mdProcessingXml: serviceUrl + 'xml.metadata.processing',
             mdProcessing: serviceUrl + 'metadata.processing.new',
             mdMassiveChildrenForm: serviceUrl + 'metadata.batch.children.form',
+            mdAdminSave: serviceUrl + 'metadata.admin',
             mdAdmin: serviceUrl + 'metadata.admin.form',
             mdAdminXml: serviceUrl + 'xml.metadata.admin.form',
             mdValidate: serviceUrl + 'xml.metadata.validate',
@@ -1305,6 +1306,7 @@ GeoNetwork.Catalogue = Ext.extend(Ext.util.Observable, {
     metadataAdmin: function(id){
         var url = this.services.mdAdminXml + "?id=" + id;
         var privilegesPanel = new GeoNetwork.admin.PrivilegesPanel({
+            id: id,
             url: url
         });
         this.modalAction(OpenLayers.i18n('setPrivileges'), privilegesPanel);
