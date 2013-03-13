@@ -72,7 +72,7 @@ GeoNetwork.admin.PrivilegesPanel = Ext.extend(Ext.grid.GridPanel, {
             fields: ['id','name', 'reserved', 
                  {
                     name: 'label',
-                    mapping : 'label > ' + GeoNetwork.Util.defaultLocale
+                    mapping : 'label > ' + app.getCatalogue().lang
                  }
             ]
         });
@@ -100,7 +100,7 @@ GeoNetwork.admin.PrivilegesPanel = Ext.extend(Ext.grid.GridPanel, {
         
         // bottom bar with submit button
         this.bbar = this.bbar || [{
-            text: 'submit',
+            text: OpenLayers.i18n('save'),
             handler: function() {
                 var args={};
                 var submitFn = function(group) {
@@ -159,7 +159,7 @@ GeoNetwork.admin.PrivilegesPanel = Ext.extend(Ext.grid.GridPanel, {
                  'description', {
                      name: 'label',
                      convert: function(v,n) {
-                         var label = Ext.DomQuery.selectNode('label/'+GeoNetwork.Util.defaultLocale,n);
+                         var label = Ext.DomQuery.selectNode('label/'+app.getCatalogue().lang,n);
                          return label ? label.textContent : n.getElementsByTagName('name')[0].textContent ;
                      }
                  },
@@ -207,7 +207,7 @@ GeoNetwork.admin.PrivilegesPanel = Ext.extend(Ext.grid.GridPanel, {
                 
                 columns.push({
                     xtype: 'checkcolumn',
-                    header: 'all',
+                    header: OpenLayers.i18n('all'),
                     dataIndex: 'all',
                     width: 80,
                     align: 'center'
@@ -225,10 +225,19 @@ GeoNetwork.admin.PrivilegesPanel = Ext.extend(Ext.grid.GridPanel, {
                 // grid view to disable rows depending on rights
                 this.getView().getRowClass = function(record, index) {
                     if(record.id == 0 || record.id == -1 || record.id == 1) {
-                        return '';
+                        if(app.getCatalogue().isAdmin()) {
+                            return '';
+                        }
+                        else {
+                            return 'privileges-grid-disable';
+                        }
+                        
                     }
                     else if(isOwner == 'false') {
                         return 'privileges-grid-disable';
+                    }
+                    else {
+                        return '';
                     }
                 };
                 
