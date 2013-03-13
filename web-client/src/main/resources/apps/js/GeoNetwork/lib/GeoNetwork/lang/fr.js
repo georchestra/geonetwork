@@ -555,6 +555,8 @@ GeoNetwork.Lang.fr = {
     'linklabel-text/html': 'Liens',
     'linklabel-text/plain': 'Liens',
     'linklabel-image/png': 'Images',
-    'linklabel-': 'Liens'
+    'linklabel-': 'Liens',
+    'extractData': 'Extraire les données',
+    'visualizeData': 'Visualiser les données'
 };
 OpenLayers.Util.extend(OpenLayers.Lang.fr, GeoNetwork.Lang.fr);

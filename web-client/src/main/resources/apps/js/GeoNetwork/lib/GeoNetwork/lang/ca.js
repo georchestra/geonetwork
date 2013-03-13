@@ -536,7 +536,9 @@ GeoNetwork.Lang.ca={
     'Advanced': "Avançat",
     'newWindow': "Nova finestra",
     'mdEditor': "Editor de metadades",
-    'List': "Llista"
+    'List': "Llista",
+    'extractData': 'Extract data',
+    'visualizeData': 'View data'
 };
 
 OpenLayers.Util.extend(OpenLayers.Lang.ca,GeoNetwork.Lang.ca);

@@ -530,13 +530,13 @@ GeoNetwork.app = function () {
             	var id = this.record.get('id');
             	
             	var extractAction = new Ext.Action({
-                    text: 'Extract Data',
+                    text: OpenLayers.i18n('extractData'),
                     handler: function() {
                     	extractMetadata(urlExtract, id);
                     }
                 });
                 var visuAction = new Ext.Action({
-                    text: 'Visualize data',
+                    text: OpenLayers.i18n('visualizeData'),
                     handler: function() {
                     	extractMetadata(urlVisu, id);
                     }

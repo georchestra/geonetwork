@@ -540,7 +540,9 @@ GeoNetwork.Lang.de = {
 'linklabel-text/html': 'Web link',
 'linklabel-text/plain': 'Web link',
 'linklabel-image/png': 'Image link',
-'linklabel-': 'Link'
+'linklabel-': 'Link',
+'extractData': 'Extract data',
+'visualizeData': 'View data'
 };
 
 OpenLayers.Util.extend(OpenLayers.Lang.de, GeoNetwork.Lang.de);
