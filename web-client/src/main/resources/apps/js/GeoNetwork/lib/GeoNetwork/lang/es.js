@@ -504,7 +504,9 @@ GeoNetwork.Lang.es = {
     'mdEditor':'El Editor de Metadatos',
     'facetMore': '+ Show more',
     'facetLess': '- Show less',
-    
+    'metadataRecordPublishedTitle': 'Metadata publication',
+    'metadataRecordPublished': '${title} is now visible to everyone.',
+    'metadataRecordUnPublished': '${title} is not published to everyone anymore.',
     'extractorTitle': 'Download data from ',
     'defineExtractionArea': 'Define extraction area',
     'chooseALayer': 'Choose a layer',

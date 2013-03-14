@@ -468,7 +468,10 @@ GeoNetwork.Lang.ca={
     'selected': 'Seleccionat',
 
     'create': 'Crear',
-    
+
+    'metadataRecordPublishedTitle': 'Metadata publication',
+    'metadataRecordPublished': '${title} is now visible to everyone.',
+    'metadataRecordUnPublished': '${title} is not published to everyone anymore.',
     // Suggestion processing
     'add-extent-from-geokeywordsreplace': 'Reemplaçar l\'extensió existent',
     'add-info-from-wmssetExtent': 'Definir l\'extensió',

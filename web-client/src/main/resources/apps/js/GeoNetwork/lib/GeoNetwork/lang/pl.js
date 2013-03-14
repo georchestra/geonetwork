@@ -511,7 +511,11 @@ GeoNetwork.Lang.pl = {
     'serviceTypes': 'Service types',
     'facetMore': '+ Show more filters',
     'facetLess': '- Show less filters',
-    
+
+    'metadataRecordPublishedTitle': 'Metadata publication',
+    'metadataRecordPublished': '${title} is now visible to everyone.',
+    'metadataRecordUnPublished': '${title} is not published to everyone anymore.',
+
     'extractorTitle': 'Download data from ',
     'defineExtractionArea': 'Define extraction area',
     'chooseALayer': 'Choose a layer',

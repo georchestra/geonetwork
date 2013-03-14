@@ -67,6 +67,7 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.Namespace;
 import org.jdom.filter.ElementFilter;
+import org.jdom.xpath.XPath;
 
 import java.io.File;
 import java.sql.SQLException;
@@ -3076,6 +3077,13 @@ public class DataManager {
 		addElement(info, Edit.Info.Elem.DOWNLOAD, 			String.valueOf(hsOper.contains(AccessManager.OPER_DOWNLOAD)));
 		addElement(info, Edit.Info.Elem.DYNAMIC,  			String.valueOf(hsOper.contains(AccessManager.OPER_DYNAMIC)));
 		addElement(info, Edit.Info.Elem.FEATURED, 			String.valueOf(hsOper.contains(AccessManager.OPER_FEATURED)));
+
+		// It could be nice to define internal group as constant
+		String INTERNET_GROUP = "1";
+		String VIEW_OPERATION = "0";
+		XPath xp = XPath.newInstance ("record[operationid='" + VIEW_OPERATION + "' and groupid='" + INTERNET_GROUP + "']");
+		boolean published = xp.selectNodes(operations).size() != 0;
+		addElement(info, Edit.Info.Elem.PUBLISHED, published + "");
 
 		if (!hsOper.contains(AccessManager.OPER_DOWNLOAD)) {
 			boolean gDownload = Xml.selectNodes(operations, "guestoperations/record[operationid="+AccessManager.OPER_DOWNLOAD+" and groupid='-1']").size() == 1;
