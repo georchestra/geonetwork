@@ -300,7 +300,7 @@ GeoNetwork.util.SearchFormTools = {
             mode: 'local',
             triggerAction: 'all',
             fieldLabel: OpenLayers.i18n('hitsPerPage'),
-            value: hitsPerPage[1], // Set arbitrarily the second value of the
+            value: hitsPerPage[2], // Set arbitrarily the second value of the
             // array as the default one.
             store: new Ext.data.ArrayStore({
                 id: 0,
