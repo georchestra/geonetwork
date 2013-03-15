@@ -1409,3 +1409,58 @@ div#privileges {
 div#editPanel * div table tr > td {
     max-width: 350px;
 }
+
+
+
+/* added for the widget layout */
+.md-info {
+  position : absolute;
+  top : 8%;
+  left : 8%;
+  width : 84%;
+  height : 84%;
+}
+#mode-form {
+  width : 260px;
+}
+
+
+#header div {
+  float : left;
+  width : auto;
+  display : inline;
+}
+#mn-top {
+  position : absolute;
+  top : 0px;
+  right : 5px;
+  height : 30px;
+}
+#mn-top div a,
+.mn-main {
+  color : #0076A1;
+  font-family : "Lucida Sans", "Lucida Sans Unicode", "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
+  font-size : 1.2em;
+  font-weight : bold;
+  text-decoration : none;
+  position : relative;
+  top : 2px;
+}
+#mn-top div a:hover,
+.mn-main:hover {
+  color : #959532;
+}
+.pipe {
+  float : right;
+  width : auto;
+  height : inherit;
+  border-left : 1px solid #C6E09B;
+  display : inline;
+  margin : 0;
+  padding : 0 8px;
+}
+.pipe div {
+}
+.first {
+  border-left : 0;
+}
