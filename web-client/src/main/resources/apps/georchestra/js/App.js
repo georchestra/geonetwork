@@ -31,25 +31,9 @@ GeoNetwork.app = function () {
     /**
      * An interactive map panel for data visualization
      */
-    var iMap, searchForm, facetsPanel, resultsPanel, metadataResultsView, tBar, bBar,
+    var searchForm, facetsPanel, resultsPanel, metadataResultsView, tBar, bBar,
         mainTagCloudViewPanel, infoPanel,
         visualizationModeInitialized = false;
-    
-    // private function:
-    function initMap() {
-        iMap = new GeoNetwork.mapApp();
-        var layers={}, options={};
-        if(GeoNetwork.map.CONTEXT || GeoNetwork.map.OWS) {
-            options = GeoNetwork.map.CONTEXT_MAIN_MAP_OPTIONS;
-        } else {
-            options = GeoNetwork.map.MAIN_MAP_OPTIONS;
-            layers  = GeoNetwork.map.BACKGROUND_LAYERS;
-        }
-        iMap.init(layers, options);
-        metadataResultsView.addMap(iMap.getMap());
-        visualizationModeInitialized = true;
-    }
-    
     
     /**
      * Create a language switcher mode
@@ -920,26 +904,6 @@ GeoNetwork.app = function () {
                     split: true,
                     margins: margins,
                     items: [infoPanel, resultsPanel]
-                }, {
-                    region: 'east',
-                    id: 'east',
-                    layout: 'fit',
-                    split: true,
-                    collapsible: true,
-                    hideCollapseTool: true,
-                    collapseMode: 'mini',
-                    collapsed: true,
-                    hidden: !GeoNetwork.MapModule,
-                    margins: margins,
-                    minWidth: 300,
-                    width: 500,
-                    listeners: {
-                        beforeexpand: function () {
-                            app.getIMap();
-                            this.add(iMap.getViewport());
-                            this.doLayout();
-                        }
-                    }
                 }]
             });
             
@@ -982,15 +946,6 @@ GeoNetwork.app = function () {
                     searchForm.fireEvent('search');
                 }, 500);
             }
-        },
-        getIMap: function () {
-            // init map if not yet initialized
-            if (!iMap) {
-                initMap();
-            }
-            
-            // TODO : maybe we should switch to visualization mode also ?
-            return iMap;
         },
         getCatalogue: function () {
             return catalogue;
