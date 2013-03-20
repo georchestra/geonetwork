@@ -32,9 +32,7 @@
 			<body onload="init();">
 				<!-- banner -->
 				<xsl:if test="not(/root/request/modal)">
-					<div id="header">
-						<xsl:call-template name="banner"/>
-					</div>
+					<xsl:call-template name="banner"/>
 				</xsl:if>
 			
 				<div id="content_container" style="display:none">
@@ -111,13 +109,13 @@
 				</xsl:choose>
 			</xsl:if>
 			
-			<!-- footer -->
+			<!-- footer 
 			<xsl:if test="not(/root/request/modal)">
 				<xsl:call-template name="formFiller">
 					<xsl:with-param name="indent" select="$indent"/>
 				</xsl:call-template>
 				<tr><td class="blue-content" colspan="3"/></tr>
-			</xsl:if>
+			</xsl:if>-->
 		</table>
 	</xsl:template>
 

@@ -269,6 +269,13 @@ GeoNetwork.data.MetadataResultsFastStore = function(){
             return 'false';
         }
     }
+    function getPublished(v, record){
+        if (record.geonet_info && record.geonet_info.published) {
+            return record.geonet_info.published[0].value;
+        } else {
+            return 'false';
+        }
+    }
     function getDisplayOrder(v, record){
         if (record.geonet_info && record.geonet_info.displayOrder) {
             return record.geonet_info.displayOrder[0].value;
@@ -366,6 +373,9 @@ GeoNetwork.data.MetadataResultsFastStore = function(){
         }, {
             name: 'edit',
             convert: getEdit
+        }, {
+            name: 'published',
+            convert: getPublished
         }, {
             name: 'bbox',
             mapping: 'BoundingBox',

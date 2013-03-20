@@ -511,7 +511,11 @@ GeoNetwork.Lang.pl = {
     'serviceTypes': 'Service types',
     'facetMore': '+ Show more filters',
     'facetLess': '- Show less filters',
-    
+
+    'metadataRecordPublishedTitle': 'Metadata publication',
+    'metadataRecordPublished': '${title} is now visible to everyone.',
+    'metadataRecordUnPublished': '${title} is not published to everyone anymore.',
+
     'extractorTitle': 'Download data from ',
     'defineExtractionArea': 'Define extraction area',
     'chooseALayer': 'Choose a layer',
@@ -556,7 +560,9 @@ GeoNetwork.Lang.pl = {
     'linklabel-text/html': 'Web link',
     'linklabel-text/plain': 'Web link',
     'linklabel-image/png': 'Image link',
-    'linklabel-': 'Link'
+    'linklabel-': 'Link',
+    'extractData': 'Extract data',
+    'visualizeData': 'View data'
 };
 
 OpenLayers.Util.extend(OpenLayers.Lang.pl, GeoNetwork.Lang.pl);

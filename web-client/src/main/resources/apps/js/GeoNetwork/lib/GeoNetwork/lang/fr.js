@@ -539,6 +539,9 @@ GeoNetwork.Lang.fr = {
     'xsd': 'Modèle ISO',
     'rules': 'règles',
     'rule': 'règle',
+    'metadataRecordPublishedTitle': 'Publication',
+    'metadataRecordPublished': '${title} est maintenant visible par tous.',
+    'metadataRecordUnPublished': '${title} n\'est plus visible par tous.',
     'schematron-rules-geonetwork': 'Validation GeoNetwork',
     'schematron-rules-iso': 'Validation ISO',
     'schematron-rules-inspire': 'Validation INSPIRE',
@@ -555,6 +558,8 @@ GeoNetwork.Lang.fr = {
     'linklabel-text/html': 'Liens',
     'linklabel-text/plain': 'Liens',
     'linklabel-image/png': 'Images',
-    'linklabel-': 'Liens'
+    'linklabel-': 'Liens',
+    'extractData': 'Extraire les données',
+    'visualizeData': 'Visualiser les données'
 };
 OpenLayers.Util.extend(OpenLayers.Lang.fr, GeoNetwork.Lang.fr);

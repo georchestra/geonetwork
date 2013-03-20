@@ -7,7 +7,7 @@
   <parent>
 		<groupId>org.georchestra</groupId>
     <artifactId>geonetwork</artifactId>
-		<version>13.02</version>
+		<version>12.11</version>
   </parent>
 
   <groupId>org.geonetwork-opensource</groupId>
@@ -124,6 +124,7 @@
                 <include>${project.build.directory}/classes/apps/js/ext-ux/SuperBoxSelect/SuperBoxSelect.js</include>
                 <include>${project.build.directory}/classes/apps/js/ext-ux/SuperBoxSelect/SuperBoxSelect.js</include>
                 <include>${project.build.directory}/classes/apps/js/ext-ux/MultiSelect.js</include>
+                <include>${project.build.directory}/classes/apps/js/ext-ux/CheckColumn.js</include>
 
                 <include>${project.build.directory}/classes/apps/js/proj4js-compressed.js</include>
 
@@ -399,6 +400,7 @@
                 <include>${project.build.directory}/classes/apps/js/GeoNetwork/lib/GeoNetwork/widgets/admin/MetadataInsertPanel.js</include>
                 <include>${project.build.directory}/classes/apps/js/GeoNetwork/lib/GeoNetwork/widgets/admin/SubTemplateManagerPanel.js</include>
                 <include>${project.build.directory}/classes/apps/js/GeoNetwork/lib/GeoNetwork/widgets/admin/ThesaurusManagerPanel.js</include>
+                <include>${project.build.directory}/classes/apps/js/GeoNetwork/lib/GeoNetwork/widgets/admin/PrivilegesPanel.js</include>
 
                 <include>${project.build.directory}/classes/apps/js/GeoNetwork/lib/GeoNetwork/widgets/OGCServiceQuickRegister.js</include>
 

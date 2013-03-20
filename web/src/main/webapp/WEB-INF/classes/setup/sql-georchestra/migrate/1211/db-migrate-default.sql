@@ -5,6 +5,7 @@ CREATE TABLE customelementset (
 
 ALTER TABLE public.customelementset OWNER TO "www-data";
 
+UPDATE Settings SET value='12.11' WHERE name='version';
 
 CREATE TABLE HarvestHistory
   (
@@ -83,12 +84,12 @@ ALTER TABLE requests
 CREATE INDEX requestsndx1
   ON requests
   USING btree
-  (requestdate COLLATE pg_catalog."default" );
+  (requestdate);
 
 CREATE INDEX requestsndx2
   ON requests
   USING btree
-  (ip COLLATE pg_catalog."default" );
+  (ip);
 
 CREATE INDEX requestsndx3
   ON requests
@@ -98,7 +99,7 @@ CREATE INDEX requestsndx3
 CREATE INDEX requestsndx4
   ON requests
   USING btree
-  (lang COLLATE pg_catalog."default" );
+  (lang);
 
 CREATE TABLE params
 (
@@ -129,17 +130,17 @@ CREATE INDEX paramsndx1
 CREATE INDEX paramsndx2
   ON params
   USING btree
-  (querytype COLLATE pg_catalog."default" );
+  (querytype);
 
 CREATE INDEX paramsndx3
   ON params
   USING btree
-  (termfield COLLATE pg_catalog."default" );
+  (termfield);
 
 CREATE INDEX paramsndx4
   ON params
   USING btree
-  (termtext COLLATE pg_catalog."default" );
+  (termtext);
 
 
 
@@ -478,39 +479,34 @@ UPDATE settings SET value='0 0 0/2 * * ?' where name = 'every';
 
 ALTER TABLE Users ADD phone varchar(16);
 
-create or replace function migrateSharedObjects() returns VOID as 
-$BODY$
-DECLARE
-	
-	sharedobjects record;
-	currenttime timestamp without time zone;
-	newid integer;
-	allgroupId integer;
+create or replace function migrateSharedObjects() returns VOID as E'DECLARE
+    sharedobjects record; \
+    currenttime timestamp without time zone; \
+    newid integer; \
+    allgroupId integer; \
 BEGIN
-	newid = (select max(id) from metadata);
-	allgroupId = (select id from groups where name='all');
-	currenttime = NOW();
-	
-	FOR sharedobjects IN SELECT * FROM shared_contacts LOOP
-	
-		newid = newid+1;
-		
-		INSERT INTO metadata(id,uuid,schemaid, istemplate, 
-			isharvested, createdate, changedate, 
-			data, source, root, owner, groupowner)
-		VALUES ( newid, concat('migrated-sharedobject-', newid),'iso19139', 
-			 's','n', currenttime, currenttime, sharedobjects.data,'04bc362e-4e8b-48f8-888b-451a19af3a98', 'gmd:CI_ResponsibleParty',1,allgroupId);
+    newid = (select max(id) from metadata); \
+    allgroupId = (select id from groups where name=''all''); \
+    currenttime = NOW(); \
 
-		INSERT INTO operationallowed(groupid, metadataid, operationid)
-		VALUES (allgroupId,newid,0);
+    FOR sharedobjects IN SELECT * FROM shared_contacts LOOP
 
-		INSERT INTO operationallowed(groupid, metadataid, operationid)
-		VALUES (allgroupId,newid,3);
+        newid = newid+1; \
 
-	END LOOP;
-END
-$BODY$
-LANGUAGE 'plpgsql';
+        INSERT INTO metadata(id,uuid,schemaid, istemplate,
+            isharvested, createdate, changedate,
+            data, source, root, owner, groupowner)
+        VALUES ( newid, ''migrated-sharedobject-'' || newid,''iso19139'',
+             ''s'',''n'', currenttime, currenttime, sharedobjects.data,''04bc362e-4e8b-48f8-888b-451a19af3a98'', ''gmd:CI_ResponsibleParty'',1,allgroupId); \
 
-select migrateSharedObjects()
+        INSERT INTO operationallowed(groupid, metadataid, operationid)
+        VALUES (allgroupId,newid,0); \
+
+        INSERT INTO operationallowed(groupid, metadataid, operationid)
+        VALUES (allgroupId,newid,3); \
+
+    END LOOP; \
+END' LANGUAGE 'plpgsql';
+
+select migrateSharedObjects();
 

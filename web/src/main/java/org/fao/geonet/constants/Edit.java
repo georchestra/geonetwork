@@ -99,6 +99,7 @@ public class Edit{
 			public static final String GUEST_DOWNLOAD	= "guestdownload";
 			public static final String OWNER    	= "owner";
             public static final String VALID = "valid";
+			public static final String PUBLISHED = "published";
 		}
 	}
 

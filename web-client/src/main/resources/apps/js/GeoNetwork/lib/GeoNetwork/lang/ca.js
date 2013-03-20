@@ -468,7 +468,10 @@ GeoNetwork.Lang.ca={
     'selected': 'Seleccionat',
 
     'create': 'Crear',
-    
+
+    'metadataRecordPublishedTitle': 'Metadata publication',
+    'metadataRecordPublished': '${title} is now visible to everyone.',
+    'metadataRecordUnPublished': '${title} is not published to everyone anymore.',
     // Suggestion processing
     'add-extent-from-geokeywordsreplace': 'Reemplaçar l\'extensió existent',
     'add-info-from-wmssetExtent': 'Definir l\'extensió',
@@ -536,7 +539,9 @@ GeoNetwork.Lang.ca={
     'Advanced': "Avançat",
     'newWindow': "Nova finestra",
     'mdEditor': "Editor de metadades",
-    'List': "Llista"
+    'List': "Llista",
+    'extractData': 'Extract data',
+    'visualizeData': 'View data'
 };
 
 OpenLayers.Util.extend(OpenLayers.Lang.ca,GeoNetwork.Lang.ca);

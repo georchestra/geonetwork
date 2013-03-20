@@ -294,7 +294,9 @@ GeoNetwork.Catalogue = Ext.extend(Ext.util.Observable, {
             mdProcessingXml: serviceUrl + 'xml.metadata.processing',
             mdProcessing: serviceUrl + 'metadata.processing.new',
             mdMassiveChildrenForm: serviceUrl + 'metadata.batch.children.form',
+            mdAdminSave: serviceUrl + 'metadata.admin',
             mdAdmin: serviceUrl + 'metadata.admin.form',
+            mdAdminXml: serviceUrl + 'xml.metadata.admin.form',
             mdValidate: serviceUrl + 'xml.metadata.validate',
             mdSuggestion: serviceUrl + 'metadata.suggestion',
             mdCategory: serviceUrl + 'metadata.category.form',
@@ -410,7 +412,14 @@ GeoNetwork.Catalogue = Ext.extend(Ext.util.Observable, {
      *  Return true if current user is an admin
      */
     isAdmin: function(){
-        return this.adminUser;
+        if(this.isIdentified()) {
+            var role = this.identifiedUser.role;
+            return (role.indexOf('Admin') >= 0 || role.indexOf('Editor') >= 0);
+        }
+        else {
+            return false;
+        }
+        
     },
     /** api: method[onAfterLogin]
      *  :param e: ``Object``
@@ -1264,17 +1273,10 @@ GeoNetwork.Catalogue = Ext.extend(Ext.util.Observable, {
                     win.close();
                 }
             };
-            win = new Ext.Window({
-                id: 'modalWindow',
-                layout: 'fit',
-                width: 700,
-                height: 400,
-                closeAction: 'destroy',
-                plain: true,
-                modal: true,
-                draggable: false,
-                title: title,
-                items: new Ext.Panel({
+            
+            var item;
+            if(typeof(url) == 'string') {
+                item = new Ext.Panel({
                     autoLoad: {
                         url: url,
                         callback: cb || defaultCb,
@@ -1284,6 +1286,21 @@ GeoNetwork.Catalogue = Ext.extend(Ext.util.Observable, {
                     frame: false,
                     autoScroll: true
                 })
+            }
+            else {
+                item =url;
+            }
+            win = new Ext.Window({
+                id: 'modalWindow',
+                layout: 'fit',
+                width: 900,
+                height: 500,
+                closeAction: 'destroy',
+                plain: true,
+                modal: true,
+                draggable: false,
+                title: title,
+                items: item
             });
             win.show(this);
             win.alignTo(Ext.getBody(), 't-t');
@@ -1294,8 +1311,45 @@ GeoNetwork.Catalogue = Ext.extend(Ext.util.Observable, {
      *  Metadata admin form for privileges
      */
     metadataAdmin: function(id){
-        var url = this.services.mdAdmin + "?id=" + id;
-        this.modalAction(OpenLayers.i18n('setPrivileges'), url);
+        var url = this.services.mdAdminXml + "?id=" + id;
+        var privilegesPanel = new GeoNetwork.admin.PrivilegesPanel({
+            id: id,
+            url: url
+        });
+        this.modalAction(OpenLayers.i18n('setPrivileges'), privilegesPanel);
+    },
+    /** api: method[metadataAdmin]
+     *  Metadata publication. If record is published, action will unpublished it.
+     */
+    metadataPublish: function(record, messageTarget){
+        var published = record.get('published') === 'true',
+            flag = published? 'off' : 'on',
+            pivileges = ['_1_0=' + flag, '_1_1=' + flag, '_1_5=' + flag, '_1_6=' + flag], // View, Interactive Map, Download, Featured
+            service = this.services.mdAdminSave + '?update=true&id=' + record.get('id') + '&',
+            url = service + pivileges.join('&'),
+            app = this; 
+        
+        OpenLayers.Request.GET({
+            url: url,
+            success: function(response){
+                if (messageTarget) {
+                    GeoNetwork.Message().msg({
+                        title: OpenLayers.i18n('metadataRecordPublishedTitle'), 
+                        msg: published ? 
+                                OpenLayers.i18n('metadataRecordUnPublished') : 
+                                OpenLayers.i18n('metadataRecordPublished'), 
+                        tokens: {
+                            title: record.get('title')
+                        },
+                        status: 'info',
+                        target: messageTarget
+                    });
+                }
+            },
+            failure: function(response){
+                app.showError(OpenLayers.i18n('metadataRecordPublishedTitle'), response.status);
+            }
+        });
     },
     /** api: method[metadataStatus]
      *  Change status for this metadata

@@ -29,8 +29,11 @@ import jeeves.resources.dbms.Dbms;
 import jeeves.server.ServiceConfig;
 import jeeves.server.UserSession;
 import jeeves.server.context.ServiceContext;
+import jeeves.utils.Util;
+
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Geonet;
+import org.fao.geonet.constants.Params;
 import org.fao.geonet.exceptions.MetadataNotFoundEx;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.MdInfo;
@@ -40,11 +43,20 @@ import org.jdom.Element;
 import java.util.List;
 import java.util.StringTokenizer;
 
-//=============================================================================
-
-/** Stores all operations allowed for a metadata. Called by the metadata.admin service
-  */
-
+/** 
+ * Stores all operations allowed for a metadata for each groups. 
+ * 
+ * In order to set a value for a group use _<groupId>_<operationId>.
+ * 
+ * By default, all operations are removed and then added according to the parameter.
+ * In order to set or unset existing operations, add the update parameter
+ * with value true and set the off/on status for each operations (eg. _<groupId>_<operationId>=<off|on>.
+ * 
+ * Called by the metadata.admin service (ie. privileges panel).
+ * 
+ * Sample URL: http://localhost:8080/geonetwork/srv/eng/metadata.admin?update=true&id=13962&_1_0=off&_1_1=off&_1_5=off&_1_6=off
+ * 
+ */
 public class UpdateAdminOper implements Service
 {
 	//--------------------------------------------------------------------------
@@ -70,6 +82,7 @@ public class UpdateAdminOper implements Service
 		Dbms dbms = (Dbms) context.getResourceManager().open(Geonet.Res.MAIN_DB);
 
 		String id = Utils.getIdentifierFromParameters(params, context);
+		boolean update = Util.getParam(params, Params.UPDATEONLY, "false").equals("true");
 
 		//-----------------------------------------------------------------------
 		//--- check access
@@ -94,8 +107,10 @@ public class UpdateAdminOper implements Service
 		if (us.getUserId().equals(info.owner) && !isAdmin && !isReviewer)
 			skip = true;
 
-		dm.deleteMetadataOper(dbms, id, skip);
-
+		if (!update) {
+			dm.deleteMetadataOper(dbms, id, skip);
+		}
+		
 		//-----------------------------------------------------------------------
 		//--- set new ones
 
@@ -114,7 +129,16 @@ public class UpdateAdminOper implements Service
 				String groupId = st.nextToken();
 				String operId  = st.nextToken();
 
-				dm.setOperation(context, dbms, id, groupId, operId);
+				if (!update) {
+					dm.setOperation(context, dbms, id, groupId, operId);
+				} else {
+					boolean publish = "on".equals(el.getTextTrim());
+					if (publish) {
+						dm.setOperation(context, dbms, id, groupId, operId);
+					} else {
+						dm.unsetOperation(context, dbms, id, groupId, operId);
+					}
+				}
 			}
 		}
 

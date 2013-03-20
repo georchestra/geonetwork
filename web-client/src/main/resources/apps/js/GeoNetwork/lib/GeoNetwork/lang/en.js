@@ -537,6 +537,9 @@ GeoNetwork.Lang.en = {
     'xsd': 'ISO schema',
     'rules': 'rules',
     'rule': 'rule',
+    'metadataRecordPublishedTitle': 'Metadata publication',
+    'metadataRecordPublished': '${title} is now visible to everyone.',
+    'metadataRecordUnPublished': '${title} is not published to everyone anymore.',
     'schematron-rules-geonetwork': 'GeoNetwork validation',
     'schematron-rules-iso': 'ISO validation',
     'schematron-rules-inspire': 'INSPIRE validation',
@@ -555,7 +558,9 @@ GeoNetwork.Lang.en = {
     'linklabel-text/plain': 'Web link',
     'linklabel-image/png': 'Image link',
     'linklabel-website': 'Web link',
-    'linklabel-': 'Link'
+    'linklabel-': 'Link',
+    'extractData': 'Extract data',
+    'visualizeData': 'View data'
 };
 
 OpenLayers.Util.extend(OpenLayers.Lang.en, GeoNetwork.Lang.en);

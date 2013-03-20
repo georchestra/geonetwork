@@ -504,7 +504,9 @@ GeoNetwork.Lang.es = {
     'mdEditor':'El Editor de Metadatos',
     'facetMore': '+ Show more',
     'facetLess': '- Show less',
-    
+    'metadataRecordPublishedTitle': 'Metadata publication',
+    'metadataRecordPublished': '${title} is now visible to everyone.',
+    'metadataRecordUnPublished': '${title} is not published to everyone anymore.',
     'extractorTitle': 'Download data from ',
     'defineExtractionArea': 'Define extraction area',
     'chooseALayer': 'Choose a layer',
@@ -531,7 +533,9 @@ GeoNetwork.Lang.es = {
     'linklabel-text/html': 'Web link',
     'linklabel-text/plain': 'Web link',
     'linklabel-image/png': 'Image link',
-    'linklabel-': 'Link'
+    'linklabel-': 'Link',
+    'extractData': 'Extract data',
+    'visualizeData': 'View data'
 };
 
 OpenLayers.Util.extend(OpenLayers.Lang.es, GeoNetwork.Lang.es);

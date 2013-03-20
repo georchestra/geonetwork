@@ -6,10 +6,24 @@
 
 	<xsl:variable name="modal" select="count(/root/gui/config/search/use-modal-box-for-banner-functions)"/>
 
+	<xsl:template name="banner">
+	  <div id="header" style="border-bottom: 2px solid #99BBE8; width:100%; height: 32px; clear: both">
+			<div>
+				<img src="../../images/logos/{/root/gui/env/site/siteId}.gif" style="max-height:31px"/>
+				
+				<div id="mn-top" style="float: right;">
+					<div class="pipe first"><a href="{/root/gui/locService}/home"><xsl:value-of select="/root/gui/strings/home"/></a></div>
+					<div class="pipe"><a href="feedback"><xsl:value-of select="/root/gui/strings/contactUs"/></a></div>
+					<div class="pipe"><a href="#" onclick="Ext.getDom('shortcut').style.display='block';">?</a></div>
+				</div>
+			</div>
+		</div>
+	</xsl:template>
+
 	<!--
 	main html banner
 	-->
-	<xsl:template name="banner">
+	<xsl:template name="banner-gn-default">
 
 		<table width="100%">
 
