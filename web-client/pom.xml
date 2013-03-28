@@ -36,6 +36,17 @@
       </resource>
     </resources>
     <plugins>
+		<plugin>
+			<groupId>org.codehaus.groovy.maven</groupId>
+			<artifactId>gmaven-plugin</artifactId>
+			<dependencies>
+				<dependency>
+						<groupId>org.georchestra</groupId>
+						<artifactId>config</artifactId>
+						<version>${project.version}</version>
+				</dependency>
+			</dependencies>
+		</plugin>      
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
