@@ -968,7 +968,6 @@ GeoNetwork.editor.EditorPanel = Ext.extend(Ext.Panel, {
             this.setDisabled(false);
         }
         
-        this.onMetadataUpdated();
         
         //console.log("metadata schema: " + this.metadataSchema.value + " type:" + this.metadataType.value + " tab:" + this.metadataCurrTab.value);
         
@@ -1022,6 +1021,9 @@ GeoNetwork.editor.EditorPanel = Ext.extend(Ext.Panel, {
         }, this);
         
         this.updateViewMenu();
+        
+        this.onMetadataUpdated();
+        
     },
     /** private: method[validateMetadataField]
      * 
