@@ -36,6 +36,17 @@
       </resource>
     </resources>
     <plugins>
+		<plugin>
+			<groupId>org.codehaus.groovy.maven</groupId>
+			<artifactId>gmaven-plugin</artifactId>
+			<dependencies>
+				<dependency>
+						<groupId>org.georchestra</groupId>
+						<artifactId>config</artifactId>
+						<version>${project.version}</version>
+				</dependency>
+			</dependencies>
+		</plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
@@ -467,7 +478,7 @@
               </includes>
             </aggregation>
             
-            <aggregation>
+<!--             <aggregation>
               <output>src/main/resources/apps/georchestra/js/App-mini.js</output>
               <includes>
                 <include>../../js/GeoNetwork-mini.js</include>
@@ -479,7 +490,7 @@
                 <include>${project.build.directory}/classes/apps/georchestra/js/App.js</include>
               </includes>
             </aggregation>
-
+ -->
            <!-- <aggregation>
               <output>${geonetwork.webapp.dir}/apps/search/css/style.css</output>
               <includes>

@@ -33,11 +33,11 @@ GeoNetwork.map.printCapabilities = "../../pdf";
 
 // Config for WGS84 based maps
 GeoNetwork.map.PROJECTION = "EPSG:4326";
-GeoNetwork.map.EXTENT = new OpenLayers.Bounds(-2.2, 42.6, 1.9, 46)
+GeoNetwork.map.EXTENT = new OpenLayers.Bounds(-180, -90, 180, 90);
 //GeoNetwork.map.EXTENT = new OpenLayers.Bounds(-5.1,41,9.7,51);
 
 GeoNetwork.map.BACKGROUND_LAYERS = [
-    new OpenLayers.Layer.WMS("Background layer", "http://ids.pigma.org/geoserver/wms", {layers: 'Fond_GIP', format: 'image/jpeg'}, {isBaseLayer: true})
+    new OpenLayers.Layer.WMS("Background layer", "/geoserver/wms", {layers: 'gn:world,gn:ne_50m_boundary_da,gn:ne_50m_boundary_lines_land,gn:ne_50m_coastline', format: 'image/jpeg'}, {isBaseLayer: true})
     //new OpenLayers.Layer.WMS("Background layer", "http://www2.demis.nl/mapserver/wms.asp?", {layers: 'Countries', format: 'image/jpeg'}, {isBaseLayer: true})
 ];
 
@@ -52,23 +52,22 @@ GeoNetwork.map.BACKGROUND_LAYERS = [
 
 //GeoNetwork.map.RESOLUTIONS = [];
 
-// Define background map layer from an OGC Context
-// * PIGMA Default background
-//GeoNetwork.map.CONTEXT = "../../maps/pigma.wmc";
-// * DEMIS country layer
+// Define background map layer from an OGC Context. 
+// If a context is defined then GeoNetwork.map.BACKGROUND_LAYERS is ignored.
+//* DEMIS country layer
 //GeoNetwork.map.OWS = "../../maps/demis.xml";
-// * Default GeoServer layers
+//* Default GeoServer layers
 //GeoNetwork.map.OWS = "../../maps/geoserver_localhost.xml";
-//GeoNetwork.map.CONTEXT = "../../maps/geoserver_localhost.wmc";
+GeoNetwork.map.CONTEXT = "../../maps/geoserver_localhost.wmc";
 
 GeoNetwork.map.CONTEXT_MAP_OPTIONS = {
-    controls: [],
-    theme:null
+ controls: [],
+ theme:null
 };
 
 GeoNetwork.map.CONTEXT_MAIN_MAP_OPTIONS = {
-    controls: [],
-    theme:null
+ controls: [],
+ theme:null
 };
 
 GeoNetwork.map.MAP_OPTIONS = {

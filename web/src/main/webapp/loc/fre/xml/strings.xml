@@ -538,7 +538,7 @@
 	<hitsPerPageChoice value="100">100</hitsPerPageChoice>
 	<hitsPerPageChoice value="20">20</hitsPerPageChoice>
 	<hitsPerPageChoice value="50">50</hitsPerPageChoice>
-	<home>Accueil</home>
+	<home>Retour au catalogue</home>
 	<i18n>Test i18n</i18n>
 	<i18nDesc>Permet de lister les chaînes de traduction manquantes pour l'interface.</i18nDesc>
 	<identificationTab>Identification</identificationTab>
