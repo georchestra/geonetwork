@@ -560,12 +560,14 @@ GeoNetwork.MetadataResultsView = Ext.extend(Ext.DataView, {
                         ],
                         data: links
                     });
-                    store.sort('type');
+                    store.singleSort('type');
                     
                     
                     var linkButton = [], label = null, currentType = null, bt,
                          allowDynamic = r.get('dynamic'), allowDownload = r.get('download'),
                          hasDownloadAction = false;
+                    
+                    var allButtons = [];
                     
                     store.each(function (record) {
                         
@@ -576,7 +578,13 @@ GeoNetwork.MetadataResultsView = Ext.extend(Ext.DataView, {
                             // or create a new button to be added later
                             if (currentType === null || currentType !== record.get('type')) {
                                 if (linkButton.length !== 0) {
-                                    view.addLinkMenu(linkButton, label, currentType, el);
+                                    allButtons.push ({
+                                        linkButton: linkButton,
+                                        label: label,
+                                        currentType: currentType,
+                                        el: el
+                                    });
+//                                    view.addLinkMenu(linkButton, label, currentType, el);
                                 }
                                 linkButton = [];
                                 currentType = record.get('type');
@@ -655,6 +663,7 @@ GeoNetwork.MetadataResultsView = Ext.extend(Ext.DataView, {
                                 	} 
                                 	else {
                                 		itemMenu.href = record.get('href');
+                                		itemMenu.hrefTarget = '_blank';
                                 	}
                                     linkButton.push(itemMenu);
                                 }
@@ -664,9 +673,30 @@ GeoNetwork.MetadataResultsView = Ext.extend(Ext.DataView, {
                         
                     });
                     // Add the latest button
-                    if (linkButton !== null) {
-                        view.addLinkMenu(linkButton, label, currentType, el);
+                    allButtons.push ({
+                        linkButton: linkButton,
+                        label: label,
+                        currentType: currentType,
+                        el: el
+                    });
+                    
+                    //Sort all buttons
+                    var allButtonsSorted = [];
+                    for(var i=0;i<allButtons.length;i++) {
+                        if(allButtons[i].currentType.indexOf('wms') >= 0) {
+                            allButtonsSorted.push(allButtons[i]);
+                        }
                     }
+                    for(var i=0;i<allButtons.length;i++) {
+                        if(allButtons[i].currentType.indexOf('wms') < 0  ) {
+                            allButtonsSorted.push(allButtons[i]);
+                        }
+                    }
+                    
+                    for(var i=0;i<allButtonsSorted.length;i++) {
+                        view.addLinkMenu(allButtonsSorted[i].linkButton, allButtonsSorted[i].label, allButtonsSorted[i].currentType, allButtonsSorted[i].el);
+                    }
+                   
                     
                     // Add the download all button
                     if (hasDownloadAction) {
@@ -704,6 +734,7 @@ GeoNetwork.MetadataResultsView = Ext.extend(Ext.DataView, {
         } else {
             bt = new Ext.Button({
                 text: label,
+                cls: 'btn-'+currentType,
                 menu: new Ext.menu.Menu({cls: 'links-mn', items: linkButton}),
                 iconCls: GeoNetwork.Util.protocolToCSS[currentType] || currentType,
                 renderTo: el

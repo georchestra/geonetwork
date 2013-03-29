@@ -199,13 +199,18 @@ GeoNetwork.view.ViewPanel = Ext.extend(Ext.Panel, {
             }
         });
     },
+    
+    addCustomAction: function() {
+    },
+    
     createActionMenu: function(){
         if (!this.actionMenu) {
         
             this.actionMenu = new GeoNetwork.MetadataMenu({
                 catalogue: this.catalogue,
                 record: this.record,
-                resultsView: this.resultsView
+                resultsView: this.resultsView,
+                addCustomAction: this.addCustomAction
             });
         }
         
