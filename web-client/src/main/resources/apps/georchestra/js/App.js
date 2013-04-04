@@ -493,6 +493,8 @@ GeoNetwork.app = function () {
 		});
     }
     
+    // Custom function to add extract and visualize actions in MDmenu and ViewPanel menu
+    // OtherActions menu is managed differently
     function addExtractActions() {
         
         var urlVisu = '/mapfishapp/';
@@ -523,9 +525,6 @@ GeoNetwork.app = function () {
      * @return
      */
     function createResultsPanel(permalinkProvider) {
-
-    	var urlVisu = '/mapfishapp/';
-    	var urlExtract = '/extractorapp/';
     	
     	metadataResultsView = new GeoNetwork.MetadataResultsView({
             catalogue: catalogue,
@@ -542,13 +541,17 @@ GeoNetwork.app = function () {
 
         // Extract and Visualize action
         var extractAction = new Ext.Action({
-            text: 'Extract Data',
-            handler: extractMetadata
+            text: OpenLayers.i18n('extractData'),
+            handler: function() {
+                extractMetadata('/mapfishapp/');
+            }
         });
         
         var visuAction = new Ext.Action({
-            text: 'Visualize data',
-            handler: extractMetadata
+            text: OpenLayers.i18n('visualizeData'),
+            handler: function() {
+                extractMetadata('/extractorapp/');
+            }
         });
         
         tBar = new GeoNetwork.MetadataResultsToolbar({
