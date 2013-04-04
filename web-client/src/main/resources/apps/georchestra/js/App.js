@@ -492,15 +492,39 @@ GeoNetwork.app = function () {
 		        }
 		});
     }
+    
+    // Custom function to add extract and visualize actions in MDmenu and ViewPanel menu
+    // OtherActions menu is managed differently
+    function addExtractActions() {
+        
+        var urlVisu = '/mapfishapp/';
+        var urlExtract = '/extractorapp/';
+        
+        // this is the MetadataMenu
+        var extractAction = new Ext.Action({
+            text: OpenLayers.i18n('extractData'),
+            handler: function() {
+                extractMetadata(urlExtract, this.record.get('id'));
+            },
+            scope: this
+        });
+        var visuAction = new Ext.Action({
+            text: OpenLayers.i18n('visualizeData'),
+            handler: function() {
+                extractMetadata(urlVisu, this.record.get('id'));
+            },
+            scope: this
+        });
+        this.insert(0,visuAction);
+        this.insert(0,extractAction);
+    }
+    
     /**
      * Results panel layout with top, bottom bar and DataView
      *
      * @return
      */
     function createResultsPanel(permalinkProvider) {
-
-    	var urlVisu = '/mapfishapp/';
-    	var urlExtract = '/extractorapp/';
     	
     	metadataResultsView = new GeoNetwork.MetadataResultsView({
             catalogue: catalogue,
@@ -510,37 +534,24 @@ GeoNetwork.app = function () {
             featurecolor: GeoNetwork.Settings.results.featurecolor,
             colormap: GeoNetwork.Settings.results.colormap,
             featurecolorCSS: GeoNetwork.Settings.results.featurecolorCSS,
-            addCustomAction: function() {
-            	var id = this.record.get('id');
-            	
-            	var extractAction = new Ext.Action({
-                    text: OpenLayers.i18n('extractData'),
-                    handler: function() {
-                    	extractMetadata(urlExtract, id);
-                    }
-                });
-                var visuAction = new Ext.Action({
-                    text: OpenLayers.i18n('visualizeData'),
-                    handler: function() {
-                    	extractMetadata(urlVisu, id);
-                    }
-                });
-            	this.insert(0,visuAction);
-            	this.insert(0,extractAction);
-            }
+            addCustomAction: addExtractActions
         });
         
         catalogue.resultsView = metadataResultsView;
 
         // Extract and Visualize action
         var extractAction = new Ext.Action({
-            text: 'Extract Data',
-            handler: extractMetadata
+            text: OpenLayers.i18n('extractData'),
+            handler: function() {
+                extractMetadata('/mapfishapp/');
+            }
         });
         
         var visuAction = new Ext.Action({
-            text: 'Visualize data',
-            handler: extractMetadata
+            text: OpenLayers.i18n('visualizeData'),
+            handler: function() {
+                extractMetadata('/extractorapp/');
+            }
         });
         
         tBar = new GeoNetwork.MetadataResultsToolbar({
@@ -704,7 +715,8 @@ GeoNetwork.app = function () {
             maximized: maximized || false,
             metadataUuid: uuid,
             record: record,
-            resultsView: this.resultsView
+            resultsView: this.resultsView,
+            addCustomAction: addExtractActions
             });
         win.show(this.resultsView);
         win.alignTo(Ext.getBody(), 'tr-tr');

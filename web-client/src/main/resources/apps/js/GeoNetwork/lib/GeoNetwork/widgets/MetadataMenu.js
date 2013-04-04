@@ -71,6 +71,7 @@ GeoNetwork.MetadataMenu = Ext.extend(Ext.menu.Menu, {
     printAction: undefined,
     viewXMLAction: undefined,
     getMEFAction: undefined,
+    csvExportAction: undefined,
     ratingWidget: undefined,
     defaultConfig: {},
     /** private: method[setRecord] 
@@ -237,6 +238,13 @@ GeoNetwork.MetadataMenu = Ext.extend(Ext.menu.Menu, {
             },
             scope: this
         });
+        this.csvExportAction = new Ext.Action({
+            text: OpenLayers.i18n('exportCsv'),
+            handler: function(){
+                this.catalogue.csvExport();
+            },
+            scope: this
+        });
         
         
         
@@ -287,7 +295,8 @@ GeoNetwork.MetadataMenu = Ext.extend(Ext.menu.Menu, {
         this.add(this.viewRDFAction);
         this.add(this.printAction);
         this.add(this.getMEFAction);
-        
+        this.add(this.csvExportAction);
+
         /* Rating menu */
         if (Ext.ux.RatingItem) { // Check required widget are loaded before displaying context menu
             this.add(this.ratingWidget);

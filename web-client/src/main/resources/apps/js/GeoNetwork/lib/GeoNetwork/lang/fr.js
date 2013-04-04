@@ -505,7 +505,7 @@ GeoNetwork.Lang.fr = {
 	'Poweredby': "Propulsé par",
 	'About': "Sur",
 	'When': "Quand",
-	'Where': "Ou",
+	'Where': "Où",
 	'What': "Que",
 	'Searchforspatialdataon': "Rechercher des données spatiales sur les",
 	'Advanced': "Avancées",

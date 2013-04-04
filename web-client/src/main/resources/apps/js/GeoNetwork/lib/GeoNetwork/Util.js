@@ -132,7 +132,8 @@ GeoNetwork.Util = {
         'WWW:DOWNLOAD-1.0-http--download': 'md-mn-zip',
         'application/x-compressed': 'md-mn-zip',
         'text/html': 'md-mn-www',
-        'text/plain': 'md-mn-www'
+        'text/plain': 'md-mn-www',
+        'application/pdf': 'md-mn-pdf'
     },
     // TODO : add function to compute color map
     defaultColorMap: [

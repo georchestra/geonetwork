@@ -128,7 +128,8 @@ GeoNetwork.view.ViewWindow = Ext.extend(Ext.Window, {
             border: false,
             frame: false,
             autoScroll: true,
-            permalink: this.permalink
+            permalink: this.permalink,
+            addCustomAction: this.addCustomAction
         });
         this.add(this.panel);
         

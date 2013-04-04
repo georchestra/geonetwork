@@ -187,7 +187,7 @@ GeoNetwork.Templates.THUMBNAIL = new Ext.XTemplate(
  *   An instance of a pre-configured GeoNetwork.Templates with full view
  */
 GeoNetwork.Templates.FULL = new Ext.XTemplate(
-        '<ul>',
+        '<ul class="result-list">',
           '<tpl for=".">',
             '<li class="md md-full" style="{featurecolorCSS}">',
                 '<table><tr>',

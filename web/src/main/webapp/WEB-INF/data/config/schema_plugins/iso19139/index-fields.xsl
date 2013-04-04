@@ -35,7 +35,7 @@
     should be indexed as a temporal extent information (eg. in INSPIRE 
     metadata implementing rules, those elements are defined as part
     of the description of the temporal extent). -->
-	<xsl:variable name="useDateAsTemporalExtent" select="false()"/>
+	<xsl:variable name="useDateAsTemporalExtent" select="true()"/>
 
         <!-- ========================================================================================= -->
 
