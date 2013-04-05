@@ -672,13 +672,16 @@ GeoNetwork.MetadataResultsView = Ext.extend(Ext.DataView, {
                         }
                         
                     });
+                    
                     // Add the latest button
-                    allButtons.push ({
-                        linkButton: linkButton,
-                        label: label,
-                        currentType: currentType,
-                        el: el
-                    });
+                    if(linkButton && linkButton.length > 0) {
+                        allButtons.push ({
+                            linkButton: linkButton,
+                            label: label,
+                            currentType: currentType,
+                            el: el
+                        });
+                    }
                     
                     //Sort all buttons
                     var allButtonsSorted = [];
