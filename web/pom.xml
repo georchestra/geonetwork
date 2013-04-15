@@ -136,6 +136,10 @@
     </dependency>
 
     <dependency>
+      <groupId>com.vividsolutions</groupId>
+      <artifactId>jts</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.apache.lucene</groupId>
       <artifactId>lucene-core</artifactId>
     </dependency>
@@ -286,13 +290,7 @@
 	  <dependency>
       <groupId>org.mapfish.print</groupId>
       <artifactId>print-lib</artifactId>
-      <version>1.2-SNAPSHOT</version>
-    </dependency>
-  
-	  <dependency>
-      <groupId>ch.thus</groupId>
-      <artifactId>pvalsecc</artifactId>
-      <version>0.9.2</version>
+      <version>1.2.0</version>
     </dependency>
   
     <!-- ====================== -->

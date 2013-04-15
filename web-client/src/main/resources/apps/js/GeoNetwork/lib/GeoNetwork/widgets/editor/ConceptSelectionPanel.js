@@ -770,11 +770,11 @@ GeoNetwork.editor.ConceptSelectionPanel.initThesaurusSelector = function (ref, t
         listeners: {
             load: function (store, records, options) {
                 
-                store.sort('title');
+                store.sort('title', 'ASC');
                 
                 var items = [{
                     xtype: 'menutextitem',
-                    text: 'Add from thesaurus ...'
+                    text: OpenLayers.i18n('addFromThesaurus')
                 }];
                 store.each(function (thesaurus) {
                     items.push({

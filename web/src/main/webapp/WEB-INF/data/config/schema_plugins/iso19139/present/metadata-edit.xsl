@@ -99,13 +99,16 @@
   <!-- these elements should be boxed -->
   <!-- ===================================================================== -->
 
-  <xsl:template mode="iso19139" match="gmd:identificationInfo|gmd:distributionInfo|gmd:descriptiveKeywords|gmd:thesaurusName|
+  <xsl:template mode="iso19139" match="gmd:identificationInfo|gmd:distributionInfo|
+              gmd:portrayalCatalogueInfo|gmd:portrayalCatalogueCitation|
+              gmd:descriptiveKeywords|gmd:thesaurusName|
               *[name(..)='gmd:resourceConstraints']|gmd:spatialRepresentationInfo|gmd:pointOfContact|
               gmd:dataQualityInfo|gmd:contentInfo|gmd:distributionFormat|
               gmd:referenceSystemInfo|gmd:spatialResolution|gmd:offLine|gmd:projection|gmd:ellipsoid|gmd:extent[name(..)!='gmd:EX_TemporalExtent']|gmd:attributes|gmd:verticalCRS|
               gmd:geographicBox|gmd:EX_TemporalExtent|gmd:MD_Distributor|
               srv:containsOperations|srv:SV_CoupledResource|
-              gmd:metadataConstraints|gmd:aggregationInfo|gmd:report/*|gmd:result/*">
+              gmd:metadataConstraints|gmd:aggregationInfo|gmd:report/*|gmd:result/*|
+              gmd:processStep|gmd:lineage">
     <xsl:param name="schema"/>
     <xsl:param name="edit"/>
     
@@ -1462,10 +1465,11 @@
 									</xsl:choose>
 
               </xsl:for-each>
-              <xsl:if test="gmd:MD_Keywords/gmd:type/gmd:MD_KeywordTypeCode/@codeListValue!=''">
-                <xsl:text> (</xsl:text>
-                <xsl:value-of select="gmd:MD_Keywords/gmd:type/gmd:MD_KeywordTypeCode/@codeListValue"/>
-                <xsl:text>)</xsl:text>
+              <xsl:variable name="type" select="gmd:MD_Keywords/gmd:type/gmd:MD_KeywordTypeCode/@codeListValue"/>
+              <xsl:if test="$type">
+                (<xsl:value-of
+                  select="/root/gui/schemas/*[name(.)='iso19139']/codelists/codelist[@name = 'gmd:MD_KeywordTypeCode']/
+                  entry[code = $type]/label"/>)
               </xsl:if>
               <xsl:text>.</xsl:text>
             </xsl:variable>
@@ -1863,17 +1867,14 @@
 
     <!-- dataset or resource info in its own box -->
   
-    <xsl:for-each select="gmd:identificationInfo/gmd:MD_DataIdentification|
-            gmd:identificationInfo/srv:SV_ServiceIdentification|
-            gmd:identificationInfo/*[@gco:isoType='gmd:MD_DataIdentification']|
-            gmd:identificationInfo/*[@gco:isoType='srv:SV_ServiceIdentification']">
+    <xsl:for-each select="gmd:identificationInfo/*">
       <xsl:call-template name="complexElementGuiWrapper">
         <xsl:with-param name="title">
         <xsl:choose>
           <xsl:when test="$dataset=true()">
             <xsl:value-of select="/root/gui/schemas/iso19139/labels/element[@name='gmd:MD_DataIdentification']/label"/>
           </xsl:when>
-          <xsl:when test="local-name(.)='SV_ServiceIdentification' or @gco:isoType='srv:SV_ServiceIdentification'">
+          <xsl:when test="local-name(.)='SV_ServiceIdentification' or contains(@gco:isoType, 'SV_ServiceIdentification')">
             <xsl:value-of select="/root/gui/schemas/iso19139/labels/element[@name='srv:SV_ServiceIdentification']/label"/>
           </xsl:when>
           <xsl:otherwise>
@@ -2968,10 +2969,15 @@
         <xsl:apply-templates mode="escapeXMLEntities" select="/root/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString"/>
       </xsl:variable>
     
+      <xsl:variable name="abstract">
+        <xsl:apply-templates mode="escapeXMLEntities" select="/root/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:abstract/gco:CharacterString"/>
+      </xsl:variable>
+    
       <button type="button" class="content repository" 
         onclick="javascript:Ext.getCmp('editorPanel').showGeoPublisherPanel('{/root/*/geonet:info/id}',
         '{/root/*/geonet:info/uuid}', 
         '{$title}',
+        '{$abstract}',
         '{$layer}', 
         '{$access}', 'gmd:onLine', '{ancestor::gmd:MD_DigitalTransferOptions/geonet:element/@ref}', [{$bbox}]);" 
         alt="{/root/gui/strings/publishHelp}" 
@@ -3028,7 +3034,7 @@
         </xsl:call-template>
       </xsl:variable>
       
-      <xsl:apply-templates mode="briefster" select="gmd:identificationInfo/gmd:MD_DataIdentification|gmd:identificationInfo/*[@gco:isoType='gmd:MD_DataIdentification']|gmd:identificationInfo/srv:SV_ServiceIdentification">
+      <xsl:apply-templates mode="briefster" select="gmd:identificationInfo/*">
         <xsl:with-param name="id" select="$id"/>
         <xsl:with-param name="langId" select="$langId"/>
         <xsl:with-param name="info" select="$info"/>
@@ -3713,6 +3719,7 @@
         <xsl:when test="name(.)='gmd:abstract'">large</xsl:when>
         <xsl:when test="name(.)='gmd:supplementalInformation'
           or name(.)='gmd:purpose'
+          or name(.)='gmd:orderingInstructions'
           or name(.)='gmd:statement'">medium</xsl:when>
         <xsl:when test="name(.)='gmd:description'
           or name(.)='gmd:specificUsage'

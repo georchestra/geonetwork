@@ -193,19 +193,10 @@ GeoNetwork.form.GeometryMapField = Ext.extend(GeoExt.MapPanel, {
                     if (pressed) {
                         if (navigator.geolocation) {
                             navigator.geolocation.getCurrentPosition(function(position) {
-                                
-                                var newPosition = new OpenLayers.LonLat(
-                                        position.coords.longitude, 
-                                        position.coords.latitude
-                                    ).transform(
-                                        new OpenLayers.Projection("EPSG:4326"),
-                                        o.map.getProjection()
-                                    );
-                                
-                                o.map.panTo(newPosition);
-                                o.geometryField.setValue('POINT(' + newPosition.lat + ' ' + 
-                                        newPosition.lon + ')');
-                            }); 
+                                o.map.panTo(new OpenLayers.LonLat(position.coords.longitude, position.coords.latitude));
+                                o.geometryField.setValue('POINT(' + position.coords.latitude + ' ' + 
+                                                                    position.coords.longitude + ')');
+                            }); //, function(error){console.log(error);});
                         }
                     } else {
                         o.geometryField.setValue('');

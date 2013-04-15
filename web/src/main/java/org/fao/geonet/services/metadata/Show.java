@@ -101,14 +101,14 @@ public class Show implements Service
 		SchemaManager sm = gc.getSchemamanager();
 
 		String id = Utils.getIdentifierFromParameters(params, context);
-
+		boolean skipPopularity = this.skipPopularity;
 		if (!skipPopularity) { // skipPopularity could be a URL param as well
 			String skip = Util.getParam(params, "skipPopularity", "n");
 			skipPopularity = skip.equals("y");
 		}
 		
 		boolean witholdWithheldElements = Util.getParam(params, "hide_withheld", false);
-		if (witholdWithheldElements) {
+		if (XmlSerializer.getThreadLocal(false) != null || witholdWithheldElements) {
 		   XmlSerializer.getThreadLocal(true).setForceHideWithheld(witholdWithheldElements);
 		}
 		if (id == null)

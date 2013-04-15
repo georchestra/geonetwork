@@ -34,16 +34,17 @@ import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.constants.Params;
 import org.fao.geonet.exceptions.ConcurrentUpdateEx;
 import org.fao.geonet.kernel.DataManager;
+import org.fao.geonet.services.NotInReadOnlyModeService;
 import org.jdom.Element;
 
-//=============================================================================
 
-/** For editing : adds an attribute to a metadata. Access is restricted
-  */
-
-public class AddAttribute implements Service
-{
-	public void init(String appPath, ServiceConfig params) throws Exception {}
+/**
+ * For editing : adds an attribute to a metadata. Access is restricted.
+ */
+public class AddAttribute extends NotInReadOnlyModeService {
+	public void init(String appPath, ServiceConfig params) throws Exception {
+        super.init(appPath, params);
+    }
 
 	//--------------------------------------------------------------------------
 	//---
@@ -51,14 +52,10 @@ public class AddAttribute implements Service
 	//---
 	//--------------------------------------------------------------------------
 
-	public Element exec(Element params, ServiceContext context) throws Exception
-	{
+	public Element serviceSpecificExec(Element params, ServiceContext context) throws Exception {
 		AjaxEditUtils ajaxEditUtils = new AjaxEditUtils(context);
 
         ajaxEditUtils.preprocessUpdate(params, context);
-
-		GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
-		DataManager   dataMan   = gc.getDataManager();
 
 		Dbms dbms   = (Dbms) context.getResourceManager().open(Geonet.Res.MAIN_DB);
 

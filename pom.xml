@@ -242,6 +242,11 @@
         <artifactId>saxon-dom</artifactId>
         <version>9.1.0.8b</version>
       </dependency>
+      <dependency>
+        <groupId>com.vividsolutions</groupId>
+        <artifactId>jts</artifactId>
+        <version>1.13</version>
+      </dependency>
 
 			<!-- universal character set detector -->
 			<dependency>
@@ -634,7 +639,7 @@
       <dependency>
         <groupId>org.tmatesoft.svnkit</groupId>
         <artifactId>svnkit</artifactId>
-        <version>1.3.8</version>
+        <version>1.7.8</version>
       </dependency>
 
       <!-- Databased stuff -->
@@ -857,41 +862,18 @@
       <url>file://maven_repo</url>
     </repository>
 
-		<repository>
-			<id>mvnrepository.com</id>
-			<name>Repository that has juniversalchardet</name>
-			<url>http://mvnrepository.com/artifact</url>
-		</repository>
+	<repository>
+		<id>mvnrepository.com</id>
+		<name>Repository that has juniversalchardet</name>
+		<url>http://mvnrepository.com/artifact</url>
+	</repository>
 
-
-	<!-- Mapfish repository -->
+    <!-- seasar repo, has jsonic - used by langdetect -->
     <repository>
-      <id>org.mapfish</id>
-      <url>http://dev.mapfish.org/maven/repository</url>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
+        <id>maven.seasar.org</id>
+        <name>The Seasar Foundation Maven2 Repository</name>
+        <url>http://maven.seasar.org/maven2</url>
     </repository>
-
-     <repository>
-        <id>thus.ch</id>
-        <name>Patrick Valsecchi's repository</name>
-        <url>http://www.thus.ch/~patrick/maven</url>
-    </repository>
-
-		<!-- tmatesoft repo for svnkit -->
-     <repository>
-        <id>org.tmatesoft.svnkit</id>
-        <name>svnkit repository</name>
-        <url>http://maven.tmatesoft.com/content/repositories/releases/</url>
-    </repository>
-
-      <!-- seasar repo, has jsonic - used by langdetect -->
-      <repository>
-          <id>maven.seasar.org</id>
-          <name>The Seasar Foundation Maven2 Repository</name>
-          <url>http://maven.seasar.org/maven2</url>
-      </repository>
 
   </repositories>
 
@@ -958,7 +940,7 @@
   <properties>
     <jetty.version>7.3.1.v20110307</jetty.version>
     <geotools.version>8.6</geotools.version>
-    <lucene.version>4.1-SNAPSHOT</lucene.version>
+    <lucene.version>4.1.0</lucene.version>
     <spring.version>3.1.1.RELEASE</spring.version>
     <maven.build.timestamp.format>yyyy-MM-dd'T'HH'\:'mm'\:'ssZ</maven.build.timestamp.format>
     <build.timestamp>${maven.build.timestamp}</build.timestamp>
