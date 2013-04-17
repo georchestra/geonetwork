@@ -138,6 +138,7 @@ public class Params {
 	
 	
     public static final String FILENAME = "filename";
+    public static final String UPDATEONLY = "update";
 
     /**
      * TODO javadoc.

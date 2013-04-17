@@ -44,7 +44,8 @@ import org.jdom.Element;
 import java.util.List;
 import java.util.StringTokenizer;
 
-/** 
+
+/**
  * Stores all operations allowed for a metadata for each groups. 
  * 
  * In order to set a value for a group use _<groupId>_<operationId>.
@@ -101,7 +102,7 @@ public class UpdateAdminOper extends NotInReadOnlyModeService {
 		//--- and are not sent to the server. So we cannot remove them
 
 		boolean isAdmin   = Geonet.Profile.ADMINISTRATOR.equals(us.getProfile());
-		boolean isReviewer= Geonet.Profile.REVIEWER     .equals(us.getProfile());
+		boolean isReviewer= Geonet.Profile.REVIEWER	 .equals(us.getProfile());
 
 
 		if (us.getUserId().equals(info.owner) && !isAdmin && !isReviewer)
@@ -143,7 +144,7 @@ public class UpdateAdminOper extends NotInReadOnlyModeService {
 		}
 
 		//--- index metadata
-        dm.indexInThreadPool(context,id, dbms);
+		dm.indexInThreadPool(context,id, dbms);
 
 		//--- return id for showing
 		return new Element(Jeeves.Elem.RESPONSE).addContent(new Element(Geonet.Elem.ID).setText(id));
