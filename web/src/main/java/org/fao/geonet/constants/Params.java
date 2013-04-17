@@ -119,7 +119,6 @@ public class Params {
     public static final String DOCHANGES = "doChanges";
     
     public static final String FULL_PRIVILEGES = "fullPrivileges";
-	public static final String UPDATEONLY = "update";
     
 	public static final String SERVICENAME     = "servicename";
 	public static final String SERVICEDESCRIPTION     = "servicedescription";
