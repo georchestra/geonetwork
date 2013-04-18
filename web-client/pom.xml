@@ -479,7 +479,7 @@
               </includes>
             </aggregation>
             
-<!--             <aggregation>
+            <aggregation>
               <output>src/main/resources/apps/georchestra/js/App-mini.js</output>
               <includes>
                 <include>../../js/GeoNetwork-mini.js</include>
@@ -491,7 +491,7 @@
                 <include>${project.build.directory}/classes/apps/georchestra/js/App.js</include>
               </includes>
             </aggregation>
- -->
+
            <!-- <aggregation>
               <output>${geonetwork.webapp.dir}/apps/search/css/style.css</output>
               <includes>
