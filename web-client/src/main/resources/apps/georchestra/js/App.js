@@ -420,7 +420,7 @@ GeoNetwork.app = function () {
 		              var owsType = item.getAttribute('owstype');
 		              jsonObject.services.push({
 		                text: item.getAttribute('text'),
-		                metadataURL: app.getCatalogue().services.mdShow + '?id=' + item.getAttribute('mdid'),
+		                metadataURL: app.getCatalogue().URL + '?id=' + item.getAttribute('mdid'),
 		                owstype: owsType,
 		                owsurl: item.getAttribute('owsurl')
 		              });
@@ -441,7 +441,7 @@ GeoNetwork.app = function () {
 
 		            jsonObject.layers.push({
 		              layername: item.getAttribute('layername'),
-		              metadataURL: app.getCatalogue().services.mdShow + '?id=' + item.getAttribute('mdid'),
+		              metadataURL: app.getCatalogue().URL + '?id=' + item.getAttribute('mdid'),
 		              owstype: owsType,
 		              owsurl: item.getAttribute('owsurl')
 		            });
@@ -541,16 +541,16 @@ GeoNetwork.app = function () {
 
         // Extract and Visualize action
         var extractAction = new Ext.Action({
-            text: OpenLayers.i18n('extractData'),
+            text:  OpenLayers.i18n('extractData'),
             handler: function() {
-                extractMetadata('/mapfishapp/');
+                extractMetadata('/extractorapp/');
             }
         });
         
         var visuAction = new Ext.Action({
             text: OpenLayers.i18n('visualizeData'),
             handler: function() {
-                extractMetadata('/extractorapp/');
+                extractMetadata('/mapfishapp/');
             }
         });
         
