@@ -193,7 +193,7 @@
             <descriptor>release/zip-war.xml</descriptor>
             <descriptor>release/bin.xml</descriptor>
           </descriptors>
-          <finalName>geonetwork-${version}</finalName>
+          <finalName>geonetwork-private-${version}</finalName>
           <outputDirectory>${project.build.directory}/release</outputDirectory>
         </configuration>
       </plugin>
