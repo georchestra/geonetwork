@@ -7,6 +7,8 @@ web/src/main/webapp/images/logos/*
 web/logs/
 web/jcs_caching/
 geonetwork*.db
+geonetwork-*
+changes-*
 web/coverage.ec
 */target/
 web/src/main/webapp/data/
@@ -30,3 +32,4 @@ web-client/src/main/resources/apps/georchestra/js/App-mini.js
 eclipse/
 web/src/main/webapp/WEB-INF/data/data
 web/src/main/webapp/WEB-INF/data/index
+web-itest/jcs_caching

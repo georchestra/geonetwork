@@ -185,15 +185,15 @@ public class Geonetwork implements ApplicationHandler {
 		JeevesJCS.setConfigFilename(path + "WEB-INF/classes/cache.ccf");
 
 		// force caches to be config'd so shutdown hook works correctly
-		JeevesJCS jcsDummy = JeevesJCS.getInstance(Processor.XLINK_JCS);
-		jcsDummy = JeevesJCS.getInstance(XmlResolver.XMLRESOLVER_JCS);
+		JeevesJCS.getInstance(Processor.XLINK_JCS);
+		JeevesJCS.getInstance(XmlResolver.XMLRESOLVER_JCS);
 
 		
 
 		// --- Check current database and create database if an emty one is found
 		String dbConfigurationFilePath = path + "/WEB-INF/config-db.xml";
 		dbConfiguration = Xml.loadFile(dbConfigurationFilePath);
-        ConfigurationOverrides.updateWithOverrides(dbConfigurationFilePath, servletContext, path, dbConfiguration);
+        ConfigurationOverrides.DEFAULT.updateWithOverrides(dbConfigurationFilePath, servletContext, path, dbConfiguration);
 
 		Pair<Dbms,Boolean> pair = initDatabase(context);
 		Dbms dbms = pair.one();
@@ -228,7 +228,6 @@ public class Geonetwork implements ApplicationHandler {
 
 		boolean z3950Enable    = settingMan.getValueAsBool("system/z3950/enable", false);
 		String  z3950port      = settingMan.getValue("system/z3950/port");
-		String  host           = settingMan.getValue(Geonet.Settings.SERVER_HOST);
 
 		// null means not initialized
 		ApplicationContext app_context = null;
@@ -463,7 +462,7 @@ public class Geonetwork implements ApplicationHandler {
 			String  proxyPort      = settingMan.getValue("system/proxy/port");
 			String  username       = settingMan.getValue("system/proxy/username");
 			String  password       = settingMan.getValue("system/proxy/password");
-			pi.setProxyInfo(proxyHost, new Integer(proxyPort), username, password);
+			pi.setProxyInfo(proxyHost, Integer.valueOf(proxyPort), username, password);
 		}
 
         //
@@ -534,9 +533,9 @@ public class Geonetwork implements ApplicationHandler {
             private boolean checkDBWrite() {
                 Dbms dbms = null;
                 try {
-                    Integer testId = new Integer("100000");
+                    Integer testId = Integer.valueOf("100000");
                     dbms = (Dbms) rm.openDirect(Geonet.Res.MAIN_DB);
-                    dbms.execute(INSERT, testId, new Integer("1"), "DBHeartBeat", "Yeah !");
+                    dbms.execute(INSERT, testId, Integer.valueOf("1"), "DBHeartBeat", "Yeah !");
                     dbms.execute(REMOVE, testId);
                     return true;
                 }
@@ -636,7 +635,7 @@ public class Geonetwork implements ApplicationHandler {
 				//&& subVersion.equals(dbSubVersion) Check only on version number
 		) {
 			logger.info("      Webapp version = Database version, no migration task to apply.");
-		} else {
+		} else if (to > from) {
 			boolean anyMigrationAction = false;
 			boolean anyMigrationError = false;
 			
@@ -730,6 +729,8 @@ public class Geonetwork implements ApplicationHandler {
                 logger.warning("      Error occurs during migration. Check the log file for more details.");
             }
 			// TODO : Maybe some migration stuff has to be done in Java ?
+		} else {
+	          logger.info("      Running on a newer database version.");
 		}
 	}
 
@@ -934,7 +935,9 @@ public class Geonetwork implements ApplicationHandler {
 	private DataStore createShapefileDatastore(String indexDir) throws Exception {
 
 		File file = new File(indexDir + "/" + SPATIAL_INDEX_FILENAME + ".shp");
-		file.getParentFile().mkdirs();
+		if(!file.getParentFile().mkdirs() && !file.getParentFile().exists()) {
+		    throw new RuntimeException("Unable to create the spatial index (shapefile) directory: "+file.getParentFile());
+		}
 		if (!file.exists()) {
 			logger.info("Creating shapefile "+file.getAbsolutePath());
 		} else {

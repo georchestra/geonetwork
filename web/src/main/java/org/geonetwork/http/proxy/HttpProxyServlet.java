@@ -25,15 +25,15 @@ import java.util.Enumeration;
  */
 public class HttpProxyServlet extends HttpServlet {
     // Url to proxy
-    private final String PARAM_URL = "url";
+    private static final String PARAM_URL = "url";
 
     // Content type parameter name in header
-    private final String HEADER_CONTENT_TYPE = "Content-Type";
+    private static final String HEADER_CONTENT_TYPE = "Content-Type";
 
     // Servlet init parameters set in servlet definition in web.xml
-    private final String INIT_PARAM_ALLOWED_HOSTS = "AllowedHosts";
-    private final String INIT_PARAM_ALLOWED_CONTENT_TYPES = "AllowedContentTypes";
-    private final String INIT_PARAM_DEFAULT_PROXY_URL = "DefaultProxyUrl";
+    private static final String INIT_PARAM_ALLOWED_HOSTS = "AllowedHosts";
+    private static final String INIT_PARAM_ALLOWED_CONTENT_TYPES = "AllowedContentTypes";
+    private static final String INIT_PARAM_DEFAULT_PROXY_URL = "DefaultProxyUrl";
 
     // Default URL for proxy
     private String defaultProxyUrl;
@@ -107,7 +107,7 @@ public class HttpProxyServlet extends HttpServlet {
 
                 // Added support for proxy
                 if (proxyHost != null && proxyPort != null) {
-                    client.getHostConfiguration().setProxy(proxyHost, new Integer(proxyPort));
+                    client.getHostConfiguration().setProxy(proxyHost, Integer.valueOf(proxyPort));
                 }
 
                 httpGet = new GetMethod(url);
@@ -198,7 +198,7 @@ public class HttpProxyServlet extends HttpServlet {
 
                 // Added support for proxy
                 if (proxyHost != null && proxyPort != null){
-                    client.getHostConfiguration().setProxy(proxyHost, new Integer(proxyPort));
+                    client.getHostConfiguration().setProxy(proxyHost, Integer.valueOf(proxyPort));
                 }
 
                 httpPost.setRequestBody(body);

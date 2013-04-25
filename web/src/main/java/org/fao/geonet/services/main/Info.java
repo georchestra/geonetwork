@@ -47,6 +47,7 @@ import org.fao.geonet.kernel.search.MetaSearcher;
 import org.fao.geonet.kernel.search.SearchManager;
 import org.fao.geonet.kernel.security.GeonetworkUser;
 import org.fao.geonet.kernel.setting.SettingManager;
+import org.fao.geonet.kernel.SchemaManager;
 import org.fao.geonet.lib.Lib;
 import org.fao.geonet.services.region.RegionsDAO;
 import org.fao.geonet.services.util.z3950.RepositoryInfo;
@@ -54,7 +55,8 @@ import org.jdom.Element;
 
 public class Info implements Service {
     private static final String READ_ONLY = "readonly";
-
+    private static final String INDEX = "index";
+    
     private String xslPath;
 	private String xmlPath;
 	private String otherSheets;
@@ -152,6 +154,14 @@ public class Info implements Service {
 
             else if(type.equals(READ_ONLY))
                 result.addContent(getReadOnly(gc));
+            else if(type.equals(INDEX)) 
+                result.addContent(getIndex(gc));
+			else if (type.equals("schemas"))
+				result.addContent(getSchemas(gc.getSchemamanager()));
+
+			else if (type.equals("status"))
+				result.addContent(Lib.local.retrieve(dbms, "StatusValues"));
+
 			else
 				throw new BadParameterEx("Unknown type parameter value.", type);
 		}
@@ -163,6 +173,17 @@ public class Info implements Service {
         return response;
 	}
 
+   /**
+    * Returns whether GN is in indexing (true or false). 
+    * @param gc 
+    * @return 
+    */ 
+    private Element getIndex(GeonetContext gc) { 
+        Element isIndexing = new Element(INDEX); 
+        isIndexing.setText(Boolean.toString(gc.getDataManager().isIndexing())); 
+        return isIndexing; 
+    }
+    
     /**
      * Returns whether GN is in read-only mode (true or false).
      * @param gc
@@ -209,6 +230,40 @@ public class Info implements Service {
 		}
 		return data;
 	}
+
+	private Element getSchemas(SchemaManager schemaMan) throws Exception {
+
+    Element response = new Element("schemas");
+
+    for (String schema : schemaMan.getSchemas()) {
+      Element elem = new Element("schema")
+       .addContent(new Element("name")            .setText(schema))
+       .addContent(new Element("id")              .setText(schemaMan.getIdVersion(schema).one()))
+       .addContent(new Element("version")         .setText(schemaMan.getIdVersion(schema).two()))
+       .addContent(new Element("description")     .setText(schema))
+       .addContent(new Element("namespaces")      .setText(schemaMan.getNamespaceString(schema)));
+
+      // is it editable?
+      if (schemaMan.getSchema(schema).canEdit()) {
+        elem.addContent(new Element("edit").setText("true"));
+      } else {
+        elem.addContent(new Element("edit").setText("false"));
+      }
+
+      // get the conversion information and add it too
+      List<Element> convElems = schemaMan.getConversionElements(schema);
+      if (convElems.size() > 0) {
+        Element conv = new Element("conversions");
+        conv.addContent(convElems);
+        elem.addContent(conv);
+      }
+      response.addContent(elem);
+    }
+
+    return response;	
+	}
+
+	//--------------------------------------------------------------------------
 
 	private Element getGroups(ServiceContext context, Dbms dbms, String profile) throws SQLException
 	{

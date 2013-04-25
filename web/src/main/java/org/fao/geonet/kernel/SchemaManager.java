@@ -211,6 +211,27 @@ public class SchemaManager {
 		}
 	}
 
+	   /**
+     * Return the Id and Version of the schema
+     *
+     * @param name the metadata schema we want the MetadataSchema for
+     * @return Pair with schema Id and Version
+     */
+    public Pair<String,String> getIdVersion(String name) {
+        
+        beforeRead();
+        try {
+            Schema schema = hmSchemas.get(name);
+
+            if (schema == null)
+                throw new IllegalArgumentException("Schema not registered : " + name);
+
+            return Pair.read(schema.getId(),schema.getVersion());
+        } finally {
+            afterRead();
+        }
+    }
+
 	/**
      * Adds a plugin schema to the list of schemas registered here.
 	 *
@@ -990,7 +1011,7 @@ public class SchemaManager {
      * @return
      */
     private String buildSchemaFolderPath(String name) {
-        return "" + schemaPluginsDir.replace('\\', '/') + "/" + name.replace('\\', '/');
+        return schemaPluginsDir.replace('\\', '/') + "/" + name.replace('\\', '/');
     }
 	/**
      * Deletes the presentation xslt from the schemaplugin oasis catalog.
@@ -1414,7 +1435,7 @@ public class SchemaManager {
                 Log.debug(Geonet.SCHEMA_MANAGER, "Schema conversions file not present");
 		} else {
 			Element root = Xml.loadFile(xmlConvFile);
-			ConfigurationOverrides.updateWithOverrides(xmlConvFile, null, basePath, root);
+			ConfigurationOverrides.DEFAULT.updateWithOverrides(xmlConvFile, null, basePath, root);
 			
 			if (root.getName() != "conversions") throw new IllegalArgumentException("Schema conversions file "+xmlConvFile+" is invalid, no <conversions> root element");
 			result = root.getChildren();

@@ -113,6 +113,7 @@ public class SvnManager {
     } catch (SVNException e) {
 
       if (subFile.exists()) { // set the repoUrl and try and open it
+          subFile = subFile.getCanonicalFile();
         repoUrl = SVNURL.fromFile(subFile);
 
       } else {
@@ -573,7 +574,7 @@ public class SvnManager {
 	private void commitMetadataStatus(ISVNEditor editor, String id, Dbms dbms, DataManager dataMan) throws Exception {
 
 		// get current status from the database
-		Element status = dataMan.getStatus(dbms, new Integer(id));
+		Element status = dataMan.getStatus(dbms, Integer.valueOf(id));
 		if (status == null) return;
 		List<Element> statusKids = status.getChildren();
 		if (statusKids.size() == 0) return;
@@ -651,7 +652,7 @@ public class SvnManager {
 
 		// get owner from the database
 		Set<Integer> ids = new HashSet<Integer>();
-		ids.add(new Integer(id));
+		ids.add(Integer.valueOf(id));
 		Element owner = accessMan.getOwners(dbms, ids);
 		String now = Xml.getString(owner);
 
@@ -698,7 +699,7 @@ public class SvnManager {
     query.append("WHERE oa.metadataId = ?                                 ");
     query.append("ORDER BY o.id                                           ");
 
-    Element privs = dbms.select(query.toString(), new Integer(id));	
+    Element privs = dbms.select(query.toString(), Integer.valueOf(id));	
 		String now = Xml.getString(privs);
 
 		if (exists(id+"/privileges.xml")) {

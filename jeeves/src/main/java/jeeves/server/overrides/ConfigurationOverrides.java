@@ -1,5 +1,28 @@
 package jeeves.server.overrides;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.servlet.ServletContext;
+
 import jeeves.config.springutil.JeevesApplicationContext;
 import jeeves.utils.Log;
 import jeeves.utils.XPath;
@@ -9,24 +32,18 @@ import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.apache.log4j.spi.LoggerRepository;
-import org.jdom.*;
+import org.jdom.Attribute;
+import org.jdom.Content;
+import org.jdom.Element;
+import org.jdom.JDOMException;
+import org.jdom.Namespace;
+import org.jdom.Text;
 import org.jdom.filter.Filter;
-import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
-
-import javax.servlet.ServletContext;
-import java.io.*;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * This class assists JeevesEngine by allowing certain configurations to be overridden.
@@ -146,15 +163,15 @@ public class ConfigurationOverrides {
         REPLACETEXT;
     }
 
-    static String LOGFILE_XPATH = "logging/logFile";
-    public static String OVERRIDES_KEY = "jeeves.configuration.overrides.file";
-    private static String ATTNAME_ATTR_NAME = "attName";
-    private static String VALUE_ATTR_NAME = "value";
-    private static String XPATH_ATTR_NAME = "xpath";
-    private static String FILE_NODE_NAME = "file";
-    private static String TEXT_FILE_NODE_NAME = "textFile";
-    private static String FILE_NAME_ATT_NAME = "name";
-    private static Pattern PROP_PATTERN = Pattern.compile("\\$\\{(.+?)\\}");
+    static final String LOGFILE_XPATH = "logging/logFile";
+    public static final String OVERRIDES_KEY = "jeeves.configuration.overrides.file";
+    private static final String ATTNAME_ATTR_NAME = "attName";
+    private static final String VALUE_ATTR_NAME = "value";
+    private static final String XPATH_ATTR_NAME = "xpath";
+    private static final String FILE_NODE_NAME = "file";
+    private static final String TEXT_FILE_NODE_NAME = "textFile";
+    private static final String FILE_NAME_ATT_NAME = "name";
+    private static final Pattern PROP_PATTERN = Pattern.compile("\\$\\{(.+?)\\}");
     private static final Filter ELEMENTS_FILTER = new Filter() {
         public boolean matches(Object obj) {
             return obj instanceof Element;
@@ -169,13 +186,21 @@ public class ConfigurationOverrides {
     static {
         WEB_XML_NS.add(Namespace.getNamespace("http://java.sun.com/xml/ns/j2ee"));
     }
+    
+    public static final ConfigurationOverrides DEFAULT = new ConfigurationOverrides(null);
+    private String _overrides;
+
+    public ConfigurationOverrides(String overrides) {
+        this._overrides = overrides;
+    }
+
     /**
      * Update the logging configuration so that it uses the configuration defined in the overrides rather than the defaults
      * 
      * @param context the servlet context that is loaded (maybe null.  If null appPath is used to resolve configuration files like: /WEB-INF/configuration-overrides.xml
      * @param appPath The path to the webapplication root.  If servlet is null (and therefore getResource cannot be used, this path is used to file files)
      */
-    public static void updateLoggingAsAccordingToOverrides(ServletContext context, String appPath) throws JDOMException, IOException {
+    public void updateLoggingAsAccordingToOverrides(ServletContext context, String appPath) throws JDOMException, IOException {
         String resource = lookupOverrideParameter(context, appPath);
 
         ServletResourceLoader loader = new ServletResourceLoader(context,appPath);
@@ -188,7 +213,7 @@ public class ConfigurationOverrides {
     /**
      * This method is default visibility for testing
      */
-    static void doUpdateLogging(Element overrides, ResourceLoader loader) throws JDOMException, IOException {
+    void doUpdateLogging(Element overrides, ResourceLoader loader) throws JDOMException, IOException {
         List<?> logOverides = Xml.selectNodes(overrides, LOGFILE_XPATH);
         Properties p = new Properties();
         for (Object logOveride : logOverides) {
@@ -221,14 +246,14 @@ public class ConfigurationOverrides {
      * @param configElement the root element of the configuration (obtained by loading configFile)    @throws JDOMException
      * @throws IOException
      */
-    public static void updateWithOverrides(String configFile, ServletContext context, String appPath, Element configElement) throws JDOMException, IOException {
+    public void updateWithOverrides(String configFile, ServletContext context, String appPath, Element configElement) throws JDOMException, IOException {
         String resource = lookupOverrideParameter(context,appPath);
 
         ServletResourceLoader loader = new ServletResourceLoader(context,appPath);
         updateConfig(loader,resource,configFile, configElement);
     }
 
-    private static void updateConfig(ResourceLoader loader, String overridesResource, String configFilePath, Element configRoot) throws JDOMException, IOException {
+    private void updateConfig(ResourceLoader loader, String overridesResource, String configFilePath, Element configRoot) throws JDOMException, IOException {
         Element overrides = loader.loadXmlResource(overridesResource);
         if (overrides == null) {
             return;
@@ -267,7 +292,7 @@ public class ConfigurationOverrides {
         }
     }
 
-    private static void removeXml(Properties properties, Element elem, Element configRoot) throws JDOMException {
+    private void removeXml(Properties properties, Element elem, Element configRoot) throws JDOMException {
         String xpath = getXPath(elem);
         List<Content> matches = xpathLookup(configRoot, xpath);
         info("Removing xml elements: " + xpath);
@@ -277,7 +302,7 @@ public class ConfigurationOverrides {
         }
     }
 
-    private static void addXml(Properties properties, Element elem, Element configRoot) throws JDOMException {
+    private void addXml(Properties properties, Element elem, Element configRoot) throws JDOMException {
 
         List<Content> newXml = updateProperties(properties, elem);
         String xpath = getXPath(elem);
@@ -304,7 +329,7 @@ public class ConfigurationOverrides {
         }
     }
 
-    private static void replaceXml(Properties properties, Element elem, Element configRoot) throws JDOMException {
+    private void replaceXml(Properties properties, Element elem, Element configRoot) throws JDOMException {
         String xpath = getXPath(elem);
         List<Content> matches = xpathLookup(configRoot, xpath);
         List<Content> newXml = updateProperties(properties, elem);
@@ -325,7 +350,7 @@ public class ConfigurationOverrides {
         }
     }
 
-    private static void replaceText(Properties properties, Element elem, Element configRoot) throws JDOMException {
+    private void replaceText(Properties properties, Element elem, Element configRoot) throws JDOMException {
         String xpath = getXPath(elem);
         String text = updatePropertiesInText(properties, elem.getText());
         info("Replacing text of " + xpath);
@@ -357,7 +382,7 @@ public class ConfigurationOverrides {
         }
     }
 
-    private static void replaceAtts(Properties properties, Element elem, Element configRoot) throws JDOMException {
+    private void replaceAtts(Properties properties, Element elem, Element configRoot) throws JDOMException {
         String xpath = getXPath(elem);
         List<Content> matches = xpathLookup(configRoot, xpath);
         String attName = getCaseInsensitiveAttValue(elem, ATTNAME_ATTR_NAME, true);
@@ -382,7 +407,7 @@ public class ConfigurationOverrides {
         }
     }
 
-    private static List<Content> xpathLookup(Element configRoot, String xpath) throws JDOMException {
+    private List<Content> xpathLookup(Element configRoot, String xpath) throws JDOMException {
         // Register all namespaces which may be required to solve xpath
         ArrayList<Namespace> namespaces = new ArrayList<Namespace>();
         for (Iterator iterator = configRoot.getAdditionalNamespaces().iterator(); iterator.hasNext();) {
@@ -403,7 +428,7 @@ public class ConfigurationOverrides {
         return elements;
     }
 
-    private static Properties loadProperties(Element overrides) {
+    private Properties loadProperties(Element overrides) {
         Properties properties = new Properties();
         List<Element> pElem = overrides.getChildren("properties");
         for (Element element : pElem) {
@@ -419,11 +444,11 @@ public class ConfigurationOverrides {
         return properties;
     }
 
-    private static String getXPath(Element elem) {
+    private String getXPath(Element elem) {
         return getCaseInsensitiveAttValue(elem, XPATH_ATTR_NAME, true);
     }
 
-    private static String getCaseInsensitiveAttValue(Element elem, String name, boolean exceptionOnFailure) {
+    private String getCaseInsensitiveAttValue(Element elem, String name, boolean exceptionOnFailure) {
         List<Attribute> atts = elem.getAttributes();
         for (Attribute att : atts) {
             if (att.getName().equalsIgnoreCase(name)) {
@@ -436,7 +461,7 @@ public class ConfigurationOverrides {
             return null;
     }
 
-    private static List<Content> updateProperties(Properties properties, Element elem) {
+    private List<Content> updateProperties(Properties properties, Element elem) {
         Element clone = (Element) elem.clone();
         Iterator<Element> iter = clone.getDescendants(ELEMENTS_FILTER);
 
@@ -468,7 +493,7 @@ public class ConfigurationOverrides {
         return newXml;
     }
 
-    private static List toList(Iterator iter) {
+    private List toList(Iterator iter) {
         ArrayList elems = new ArrayList();
         while (iter.hasNext()) {
             elems.add(iter.next());
@@ -476,7 +501,7 @@ public class ConfigurationOverrides {
         return elems;
     }
 
-    static String updatePropertiesInText(Properties properties, String value) {
+    String updatePropertiesInText(Properties properties, String value) {
         if (value == null) {
             return null;
         }
@@ -495,7 +520,7 @@ public class ConfigurationOverrides {
         return updatedValue;
     }
 
-    private static boolean resolve(Properties properties) {
+    private boolean resolve(Properties properties) {
         boolean finishedResolving = true;
         Set<Map.Entry<Object, Object>> entries = properties.entrySet();
         for (Map.Entry<Object, Object> entry : entries) {
@@ -512,15 +537,18 @@ public class ConfigurationOverrides {
         return finishedResolving;
     }
 
-    private static void info(String msg) {
+    private void info(String msg) {
         Log.info(Log.JEEVES, msg);
     }
 
-    private static void debug(String msg) {
+    private void debug(String msg) {
         Log.debug(Log.JEEVES, msg);
     }
 
-    private static String lookupOverrideParameter(ServletContext context,String appPath) throws JDOMException, IOException {
+    private String lookupOverrideParameter(ServletContext context,String appPath) throws JDOMException, IOException {
+        if (_overrides != null) {
+            return _overrides;
+        }
         String resource;
         if(context == null) {
             resource = lookupOverrideParamFromAppPath(appPath);
@@ -530,7 +558,7 @@ public class ConfigurationOverrides {
         return resource;
     }
 
-    private static String lookupOverrideParamFromAppPath(String appPath) throws JDOMException, IOException {
+    private String lookupOverrideParamFromAppPath(String appPath) throws JDOMException, IOException {
         File webInf = new File(appPath,"WEB-INF");
 		File webxmlFile = new File(webInf,"web.xml");
         String resource = null;
@@ -555,7 +583,7 @@ public class ConfigurationOverrides {
     }
 
     @SuppressWarnings("unchecked")
-	private static String lookupOverrideParamFromConfigFile(URL url) throws IOException, JDOMException {
+	private String lookupOverrideParamFromConfigFile(URL url) throws IOException, JDOMException {
     	try {
 			Element config = Xml.loadFile(url);
 			StringBuilder builder = new StringBuilder();
@@ -571,7 +599,7 @@ public class ConfigurationOverrides {
     	}
 	}
 
-	private static String lookupOverrideParamFromServlet(ServletContext context) throws IOException, JDOMException {
+	private String lookupOverrideParamFromServlet(ServletContext context) throws IOException, JDOMException {
         String resource;
         resource = System.getProperty(context.getServletContextName()+"."+OVERRIDES_KEY);
         if (resource == null || resource.trim().isEmpty()) {
@@ -624,9 +652,10 @@ public class ConfigurationOverrides {
 
         public final String loadStringResource(String resource) throws JDOMException, IOException {
             InputStream in = loadInputStream(resource);
+            BufferedReader reader = null;
             if (in != null) {
                 try {
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+                    reader = new BufferedReader(new InputStreamReader(in, Charset.forName("UTF-8")));
                     StringBuilder data = new StringBuilder();
                     String line;
                     while ((line = reader.readLine()) != null) {
@@ -634,7 +663,10 @@ public class ConfigurationOverrides {
                     }
                     return data.toString();
                 } finally {
-                    in.close();
+                    IOUtils.closeQuietly(in);
+                    if(reader != null) {
+                        IOUtils.closeQuietly(reader);
+                    }
                 }
             } else {
                 return null;
@@ -830,7 +862,7 @@ public class ConfigurationOverrides {
                         	if(file.exists()) {
                         		in = new FileInputStream(file);
                         	} else {
-                        		throw new IllegalArgumentException("The resource file " + resource + " is not a file and not a web resource: " + url + ".  Perhaps a leading / was forgotten?");
+                        		throw new IllegalArgumentException("The resource file " + resource + " is not a file and not a web resource.  Perhaps a leading / was forgotten?");
                         	}
                         }
                     } else {
@@ -851,7 +883,7 @@ public class ConfigurationOverrides {
      * @param context the ServletContext to use for locating the file
      * @return
      */
-    public static Element loadXmlFileAndUpdate(String servletRelativePath, ServletContext context) {
+    public Element loadXmlFileAndUpdate(String servletRelativePath, ServletContext context) {
         String appPath = context.getContextPath();
         Element elem = null;
         try {
@@ -883,7 +915,7 @@ public class ConfigurationOverrides {
      * @return the array of lines in the file.
      * @throws JDOMException 
      */
-	public static List<String> loadTextFileAndUpdate(String configFilePath, ServletContext context, String appPath, BufferedReader reader) throws IOException {
+	public List<String> loadTextFileAndUpdate(String configFilePath, ServletContext context, String appPath, BufferedReader reader) throws IOException {
 	    ServletResourceLoader loader = new ServletResourceLoader(context, appPath);
 	    
         try {
@@ -895,7 +927,7 @@ public class ConfigurationOverrides {
 
 	}
 
-    private static List<String> loadFileAndUpdate(ResourceLoader loader, String overridesResource, String configFilePath,
+    private List<String> loadFileAndUpdate(ResourceLoader loader, String overridesResource, String configFilePath,
             BufferedReader reader) throws IOException {
         Element overrides = loader.loadXmlResource(overridesResource);
 		HashMap<Pattern, String> matches = new HashMap<Pattern, String>();
@@ -944,7 +976,7 @@ public class ConfigurationOverrides {
 	}
 
     @SuppressWarnings("unchecked")
-    public static void importSpringConfigurations(XmlBeanDefinitionReader reader, ConfigurableBeanFactory beanFactory, ServletContext servletContext, String appPath) throws JDOMException, IOException {
+    public void importSpringConfigurations(XmlBeanDefinitionReader reader, ConfigurableBeanFactory beanFactory, ServletContext servletContext, String appPath) throws JDOMException, IOException {
         String overridesResource = lookupOverrideParameter(servletContext, appPath);
 
         ResourceLoader loader = new ServletResourceLoader(servletContext, appPath);
@@ -983,7 +1015,7 @@ public class ConfigurationOverrides {
     }
 
     @SuppressWarnings("unchecked")
-    public static void applyNonImportSpringOverides(JeevesApplicationContext jeevesApplicationContext, ServletContext servletContext,
+    public void applyNonImportSpringOverides(JeevesApplicationContext jeevesApplicationContext, ServletContext servletContext,
             String appPath) throws JDOMException, IOException {
 
         String overridesResource = lookupOverrideParameter(servletContext, appPath);

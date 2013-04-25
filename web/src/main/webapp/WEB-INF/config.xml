@@ -465,7 +465,7 @@
 		<service name="main.search.suggest">
 			<class name=".services.main.SearchSuggestion">
 				<!-- Minimum frequency for a term value to be proposed in suggestion. -->
-				<param name="threshold" value="2" />
+				<param name="threshold" value="1" />
 				<!--
 					Max number of term's values to look in the index. For large catalogue
 					this value should be increased in order to get better results. If this
@@ -1350,18 +1350,6 @@
 
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<!-- RSS services -->
-
-		<service name="rss.latest">
-			<output sheet="rss-latest.xsl" contentType="application/rss+xml; charset=UTF-8">
-				<call name="latestUpdated" class=".guiservices.metadata.GetLatestUpdated">
-					<param name="maxItems" value="20" />
-					<param name="timeBetweenUpdates" value="10" />
-				</call>
-				<call name="siteURL" class=".guiservices.util.GetSiteURL" />
-			</output>
-		</service>
-
-		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
 		<service name="rss.search">
 			<class name=".services.main.Search">

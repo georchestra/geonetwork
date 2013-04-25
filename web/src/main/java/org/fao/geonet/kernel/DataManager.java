@@ -327,7 +327,15 @@ public class DataManager {
             // TODO why swallow
         }
     }
-
+    
+    Set<IndexMetadataTask> indexing = Collections.synchronizedSet(new HashSet<IndexMetadataTask>());
+    
+    public boolean isIndexing() {
+        synchronized (indexing) {
+            return !indexing.isEmpty();
+        }
+    }
+    
     /**
      * TODO javadoc.
      */
@@ -340,6 +348,10 @@ public class DataManager {
         private JeevesUser user;
 
         IndexMetadataTask(ServiceContext context, List<String> ids) {
+            synchronized (indexing) {
+                indexing.add(this);
+            }
+            
             this.context = context;
             this.ids = ids;
             this.beginIndex = 0;
@@ -349,6 +361,10 @@ public class DataManager {
             }
         }
         IndexMetadataTask(ServiceContext context, List<String> ids, int beginIndex, int count) {
+            synchronized (indexing) {
+                indexing.add(this);
+            }
+            
             this.context = context;
             this.ids = ids;
             this.beginIndex = beginIndex;
@@ -404,6 +420,10 @@ public class DataManager {
             catch (Exception e) {
                 Log.error(Geonet.DATA_MANAGER, "Reindexing thread threw exception");
                 e.printStackTrace();
+            } finally {
+                synchronized (indexing) {
+                    indexing.remove(this);
+                }
             }
         }
     }
@@ -418,7 +438,7 @@ public class DataManager {
     public void indexMetadata(Dbms dbms, String id) throws Exception {
         try {
             Vector<Element> moreFields = new Vector<Element>();
-            int id$ = new Integer(id);
+            int id$ = Integer.valueOf(id);
 
             // get metadata, extracting and indexing any xlinks
             Element md   = xmlSerializer.selectNoXLinkResolver(dbms, "Metadata", id, true);
@@ -483,7 +503,7 @@ public class DataManager {
             if (owner != null) {
                 String userQuery = "SELECT username, surname, name, profile FROM Users WHERE id = ?";
 
-                Element user = dbms.select(userQuery,  new Integer(owner)).getChild("record");
+                Element user = dbms.select(userQuery,  Integer.valueOf(owner)).getChild("record");
 
                 if (user != null) {
                     moreFields.add(SearchManager.makeField("_userinfo",
@@ -730,7 +750,7 @@ public class DataManager {
      * @throws Exception
      */
     public String getMetadataSchema(Dbms dbms, String id) throws Exception {
-        List list = dbms.select("SELECT schemaId FROM Metadata WHERE id = ?", new Integer(id)).getChildren();
+        List list = dbms.select("SELECT schemaId FROM Metadata WHERE id = ?", Integer.valueOf(id)).getChildren();
 
         if (list.size() == 0)
             throw new IllegalArgumentException("Metadata not found for id : " +id);
@@ -1118,7 +1138,7 @@ public class DataManager {
     public String getMetadataUuid(Dbms dbms, String id) throws Exception {
         String query = "SELECT uuid FROM Metadata WHERE id=?";
 
-        List list = dbms.select(query, new Integer(id)).getChildren();
+        List list = dbms.select(query, Integer.valueOf(id)).getChildren();
 
         if (list.size() == 0)
             return null;
@@ -1138,7 +1158,7 @@ public class DataManager {
     public String getMetadataTemplate(Dbms dbms, String id) throws Exception {
         String query = "SELECT istemplate FROM Metadata WHERE id=?";
 
-        List list = dbms.select(query, new Integer(id)).getChildren();
+        List list = dbms.select(query, Integer.valueOf(id)).getChildren();
 
         if (list.size() == 0)
             return null;
@@ -1161,7 +1181,7 @@ public class DataManager {
                 "FROM   Metadata "+
                 "WHERE id=?";
 
-        List list = dbms.select(query, new Integer(id)).getChildren();
+        List list = dbms.select(query, Integer.valueOf(id)).getChildren();
 
         if (list.size() == 0)
             return null;
@@ -1349,7 +1369,7 @@ public class DataManager {
      */
     public void updateDisplayOrder(Dbms dbms, String id, String displayOrder) throws Exception {
         String query = "UPDATE Metadata SET displayOrder = ? WHERE id = ?";
-        dbms.execute(query, new Integer(displayOrder), new  Integer(id));
+        dbms.execute(query, Integer.valueOf(displayOrder), new  Integer(id));
     }
 
     /**
@@ -1441,7 +1461,7 @@ public class DataManager {
     public String createMetadata(ServiceContext context, Dbms dbms, String templateId, String groupOwner,
                                  SerialFactory sf, String source, int owner,
                                  String parentUuid, String isTemplate, boolean fullRightsForGroup) throws Exception {
-        int iTemplateId = new Integer(templateId);
+        int iTemplateId = Integer.valueOf(templateId);
         String query = "SELECT schemaId, data FROM Metadata WHERE id=?";
         List listTempl = dbms.select(query, iTemplateId).getChildren();
 
@@ -1650,7 +1670,7 @@ public class DataManager {
      */
     public boolean existsMetadata(Dbms dbms, int id) throws Exception {
         //FIXME : should use lucene
-        List list = dbms.select("SELECT id FROM Metadata WHERE id=?", new Integer(id)).getChildren();
+        List list = dbms.select("SELECT id FROM Metadata WHERE id=?", Integer.valueOf(id)).getChildren();
         return list.size() != 0;
     }
 
@@ -1700,7 +1720,7 @@ public class DataManager {
      * @throws Exception
      */
     public synchronized void updateMetadataOwner(Dbms dbms, int id, String owner, String groupOwner) throws Exception {
-        dbms.execute("UPDATE Metadata SET owner=?, groupOwner=? WHERE id=?", new Integer(owner), new Integer(groupOwner), id);
+        dbms.execute("UPDATE Metadata SET owner=?, groupOwner=? WHERE id=?", Integer.valueOf(owner), Integer.valueOf(groupOwner), id);
     }
 
     /**
@@ -1970,7 +1990,7 @@ public class DataManager {
         for (String type : i) {
             String query = "INSERT INTO Validation (metadataId, valType, status, tested, failed, valDate) VALUES (?,?,?,?,?,?)";
             Integer[] results = valTypeAndStatus.get(type);
-            dbms.execute(query, new Integer(id), type, results[0], results[1], results[2], date);
+            dbms.execute(query, Integer.valueOf(id), type, results[0], results[1], results[2], date);
         }
         dbms.commit();
     }
@@ -1982,7 +2002,7 @@ public class DataManager {
      * @param id   the metadata record internal identifier
      */
     private void clearValidationStatus (Dbms dbms, String id) throws Exception {
-        dbms.execute("DELETE FROM Validation WHERE metadataId=?", new Integer(id));
+        dbms.execute("DELETE FROM Validation WHERE metadataId=?", Integer.valueOf(id));
         dbms.commit();
     }
 
@@ -1994,7 +2014,7 @@ public class DataManager {
      * @return
      */
     private List<Element> getValidationStatus (Dbms dbms, String id) throws Exception {
-        return dbms.select("SELECT valType, status, tested, failed FROM Validation WHERE metadataId=?", new Integer(id)).getChildren();
+        return dbms.select("SELECT valType, status, tested, failed FROM Validation WHERE metadataId=?", Integer.valueOf(id)).getChildren();
     }
 
     //--------------------------------------------------------------------------
@@ -2021,10 +2041,10 @@ public class DataManager {
         //--- remove categories
         deleteAllMetadataCateg(dbms, id);
 
-        dbms.execute("DELETE FROM MetadataRating WHERE metadataId=?", new Integer(id));
-        dbms.execute("DELETE FROM Validation WHERE metadataId=?", new Integer(id));
+        dbms.execute("DELETE FROM MetadataRating WHERE metadataId=?", Integer.valueOf(id));
+        dbms.execute("DELETE FROM Validation WHERE metadataId=?", Integer.valueOf(id));
 
-        dbms.execute("DELETE FROM MetadataStatus WHERE metadataId=?", new Integer(id));
+        dbms.execute("DELETE FROM MetadataStatus WHERE metadataId=?", Integer.valueOf(id));
 
         //--- remove metadata
         xmlSerializer.delete(dbms, "Metadata", id, context);
@@ -2052,9 +2072,9 @@ public class DataManager {
         //--- remove categories
         deleteAllMetadataCateg(dbms, id);
 
-        dbms.execute("DELETE FROM MetadataRating WHERE metadataId=?", new Integer(id));
-        dbms.execute("DELETE FROM Validation WHERE metadataId=?", new Integer(id));
-        dbms.execute("DELETE FROM MetadataStatus WHERE metadataId=?", new Integer(id));
+        dbms.execute("DELETE FROM MetadataRating WHERE metadataId=?", Integer.valueOf(id));
+        dbms.execute("DELETE FROM Validation WHERE metadataId=?", Integer.valueOf(id));
+        dbms.execute("DELETE FROM MetadataStatus WHERE metadataId=?", Integer.valueOf(id));
 
         //--- remove metadata
         xmlSerializer.delete(dbms, "Metadata", id, context);
@@ -2076,7 +2096,7 @@ public class DataManager {
         if (skipAllIntranet)
             query += " AND groupId>1";
 
-        dbms.execute(query, new Integer(id));
+        dbms.execute(query, Integer.valueOf(id));
     }
 
     /**
@@ -2089,7 +2109,7 @@ public class DataManager {
     public void deleteAllMetadataCateg(Dbms dbms, String id) throws Exception {
         String query = "DELETE FROM MetadataCateg WHERE metadataId=?";
 
-        dbms.execute(query, new Integer(id));
+        dbms.execute(query, Integer.valueOf(id));
     }
 
     //--------------------------------------------------------------------------
@@ -2324,7 +2344,7 @@ public class DataManager {
      * @throws Exception
      */
     public void setOperation(ServiceContext context, Dbms dbms, String mdId, String grpId, String opId) throws Exception {
-        setOperation(context,dbms,new Integer(mdId),new Integer(grpId),new Integer(opId));
+        setOperation(context,dbms,Integer.valueOf(mdId),Integer.valueOf(grpId),Integer.valueOf(opId));
     }
 
     /**
@@ -2408,7 +2428,7 @@ public class DataManager {
      * @throws Exception
      */
     public void unsetOperation(ServiceContext context, Dbms dbms, String mdId, String grpId, String opId) throws Exception {
-        unsetOperation(context,dbms,new Integer(mdId),new Integer(grpId),new Integer(opId));
+        unsetOperation(context,dbms,Integer.valueOf(mdId),Integer.valueOf(grpId),Integer.valueOf(opId));
     }
 
     /**
@@ -2565,7 +2585,7 @@ public class DataManager {
      * @throws Exception
      */
     public void setCategory(ServiceContext context, Dbms dbms, String mdId, String categId) throws Exception {
-        Object args[] = { new Integer(mdId), new Integer(categId) };
+        Object args[] = { Integer.valueOf(mdId), Integer.valueOf(categId) };
 
         if (!isCategorySet(dbms, mdId, categId)) {
             dbms.execute("INSERT INTO MetadataCateg(metadataId, categoryId) VALUES(?,?)", args);
@@ -2585,7 +2605,7 @@ public class DataManager {
      */
     public boolean isCategorySet(Dbms dbms, String mdId, String categId) throws Exception {
         String query = "SELECT metadataId FROM MetadataCateg " +"WHERE metadataId=? AND categoryId=?";
-        Element elRes = dbms.select(query, new Integer(mdId), new Integer(categId));
+        Element elRes = dbms.select(query, Integer.valueOf(mdId), Integer.valueOf(categId));
         return (elRes.getChildren().size() != 0);
     }
 
@@ -2598,7 +2618,7 @@ public class DataManager {
      */
     public void unsetCategory(ServiceContext context, Dbms dbms, String mdId, String categId) throws Exception {
         String query = "DELETE FROM MetadataCateg WHERE metadataId=? AND categoryId=?";
-        dbms.execute(query, new Integer(mdId), new Integer(categId));
+        dbms.execute(query, Integer.valueOf(mdId), Integer.valueOf(categId));
         if (svnManager != null) {
             svnManager.setHistory(dbms, mdId+"", context);
         }
@@ -2613,7 +2633,7 @@ public class DataManager {
      */
     public Element getCategories(Dbms dbms, String mdId) throws Exception {
         String query = "SELECT id, name FROM Categories, MetadataCateg WHERE id=categoryId AND metadataId=?";
-        return dbms.select(query, new Integer(mdId));
+        return dbms.select(query, Integer.valueOf(mdId));
     }
 
     /**
@@ -2637,7 +2657,7 @@ public class DataManager {
                 Log.debug(Geonet.DATA_MANAGER, "Autofixing is enabled, trying update-fixed-info (updateDatestamp: " + updateDatestamp.name() + ")");
 
             String query = "SELECT uuid, isTemplate FROM Metadata WHERE id = ?";
-            Element rec = dbms.select(query, new Integer(id)).getChild("record");
+            Element rec = dbms.select(query, Integer.valueOf(id)).getChild("record");
             Boolean isTemplate = rec != null && !rec.getChildText("istemplate").equals("n");
 
             // don't process templates
@@ -2701,7 +2721,7 @@ public class DataManager {
 
         String query = "select m.id, m.uuid, m.data, mn.notifierId, mn.action from metadata m left join metadatanotifications mn on m.id = mn.metadataId\n" +
                 "where (mn.notified is null or mn.notified = 'n') and (mn.action <> 'd') and (mn.notifierId is null or mn.notifierId = ?)";
-        List<Element> results = dbms.select(query, new Integer(notifierId)).getChildren();
+        List<Element> results = dbms.select(query, Integer.valueOf(notifierId)).getChildren();
         if(Log.isDebugEnabled(Geonet.DATA_MANAGER))
             Log.debug(Geonet.DATA_MANAGER, "getUnnotifiedMetadata after select: " + (results != null));
 
@@ -2736,7 +2756,7 @@ public class DataManager {
 
         String query = "select metadataId as id, metadataUuid as uuid, notifierId, action from metadatanotifications " +
                 "where (notified = 'n') and (action = 'd') and (notifierId = ?)";
-        List<Element> results = dbms.select(query, new Integer(notifierId)).getChildren();
+        List<Element> results = dbms.select(query, Integer.valueOf(notifierId)).getChildren();
         if(Log.isDebugEnabled(Geonet.DATA_MANAGER))
             Log.debug(Geonet.DATA_MANAGER, "getUnnotifiedMetadataToDelete after select: " + (results != null));
 
@@ -2766,12 +2786,12 @@ public class DataManager {
      */
     public void setMetadataNotified(String metadataId, String metadataUuid, String notifierId, boolean deleteNotification, Dbms dbms) throws Exception {
         String query = "DELETE FROM MetadataNotifications WHERE metadataId=? AND notifierId=?";
-        dbms.execute(query, new Integer(metadataId), new Integer(notifierId));
+        dbms.execute(query, Integer.valueOf(metadataId), Integer.valueOf(notifierId));
         dbms.commit();
 
         if (!deleteNotification) {
             query = "INSERT INTO MetadataNotifications (metadataId, notifierId, metadataUuid, notified, action) VALUES (?,?,?,?,?)";
-            dbms.execute(query, new Integer(metadataId), new Integer(notifierId), metadataUuid, "y", "u");
+            dbms.execute(query, Integer.valueOf(metadataId), Integer.valueOf(notifierId), metadataUuid, "y", "u");
             dbms.commit();
         }
 
@@ -2792,11 +2812,11 @@ public class DataManager {
             Log.debug(Geonet.DATA_MANAGER, "setMetadataNotifiedError");
         try {
             String query = "DELETE FROM MetadataNotifications WHERE metadataId=? AND notifierId=?";
-            dbms.execute(query, new Integer(metadataId), new Integer(notifierId));
+            dbms.execute(query, Integer.valueOf(metadataId), Integer.valueOf(notifierId));
 
             String action = (deleteNotification == true)?"d":"u";
             query = "INSERT INTO MetadataNotifications (metadataId, notifierId, metadataUuid, notified, action, errormsg) VALUES (?,?,?,?,?,?)";
-            dbms.execute(query, new Integer(metadataId), new Integer(notifierId), metadataUuid, "n", action, error);
+            dbms.execute(query, Integer.valueOf(metadataId), Integer.valueOf(notifierId), metadataUuid, "n", action, error);
             dbms.commit();
 
             if(Log.isDebugEnabled(Geonet.DATA_MANAGER))
@@ -2930,7 +2950,7 @@ public class DataManager {
                 "uuid, isHarvested, harvestUuid, popularity, rating, owner, displayOrder FROM Metadata WHERE id = ?";
 
         // add Metadata table infos: schemaId, createDate, changeDate, source,
-        Element rec = dbms.select(query, new Integer(id)).getChild("record");
+        Element rec = dbms.select(query, Integer.valueOf(id)).getChild("record");
 
         String  schema     = rec.getChildText("schemaid");
         String  createDate = rec.getChildText("createdate");
@@ -2978,7 +2998,7 @@ public class DataManager {
 
         // add owner name
         query = "SELECT username FROM Users WHERE id = ?";
-        Element record = dbms.select(query, new Integer(owner)).getChild("record");
+        Element record = dbms.select(query, Integer.valueOf(owner)).getChild("record");
         if (record != null) {
             String ownerName = record.getChildText("username");
             addElement(info, Edit.Info.Elem.OWNERNAME, ownerName);
@@ -2986,7 +3006,7 @@ public class DataManager {
 
         // add categories
         List categories = dbms.select("SELECT id, name FROM MetadataCateg, Categories "+
-                "WHERE metadataId = ? AND categoryId = id ORDER BY id", new Integer(id)).getChildren();
+                "WHERE metadataId = ? AND categoryId = id ORDER BY id", Integer.valueOf(id)).getChildren();
 
         for (Object category1 : categories) {
             Element category = (Element) category1;
@@ -3381,7 +3401,7 @@ public class DataManager {
             try {
                 dbms  = (Dbms) srvContext.getResourceManager().openDirect(Geonet.Res.MAIN_DB);
                 String updateQuery = "UPDATE Metadata SET popularity = popularity +1 WHERE id = ?";
-                Integer iId = new Integer(id);
+                Integer iId = Integer.valueOf(id);
                 dbms.execute(updateQuery, iId);
                 indexMetadata(dbms, id);
             }
