@@ -401,110 +401,7 @@ GeoNetwork.app = function () {
         
     }
     
-    /**
-     * Send metadata.service.extract request
-     */
-    function extractMetadata(destUrl, id) {
-    	var urlService = catalogue.services.mdExtract;
-    	if(id && typeof(id) == 'string') {
-    		urlService += '?id='+id
-    	}
-    	Ext.Ajax.request({
-		   url: urlService,
-		   success: function(req) {
-		          var jsFromXml = req.responseXML || new OpenLayers.Format.XML().read(req.responseText);
-		          var jsonObject = {services: [], layers: []};
-		          /*
-		           * Implementing rules from the wiki :
-		           *
-		           *  1. if multiple WMC docs are selected in
-		           *  GeoNetwork the latter will refuse to open the MapFish app
-		           *
-		           *  2. if a WMC doc and WMS items (layers or services) are selected
-		           *  in GeoNetwork the latter will refuse to open the MapFish app
-		           *
-		           *  3. if WMS services are selected the MapFish app will open a dialog
-		           *  window for the user to select layers
-		           *
-		           */
-		          var wmcCount = 0;
-		          var wmsCount = 0;
-		          Ext.each(jsFromXml.getElementsByTagName('service'), function(item, index, array) {
-		              var owsType = item.getAttribute('owstype');
-		              jsonObject.services.push({
-		                text: item.getAttribute('text'),
-		                metadataURL: app.getCatalogue().services.mdShow + '?id=' + item.getAttribute('mdid'),
-		                owstype: owsType,
-		                owsurl: item.getAttribute('owsurl')
-		              });
-
-		              switch (owsType) {
-		                case 'WMC':
-		                  wmcCount += 1;
-		                  break;
-
-		                case 'WMS':
-		                  wmsCount += 1;
-		                  break;
-		              }
-		          });
-
-		          Ext.each(jsFromXml.getElementsByTagName('layer'), function(item, index, array) {
-		            var owsType = item.getAttribute('owstype');
-
-		            jsonObject.layers.push({
-		              layername: item.getAttribute('layername'),
-		              metadataURL: app.getCatalogue().services.mdShow + '?id=' + item.getAttribute('mdid'),
-		              owstype: owsType,
-		              owsurl: item.getAttribute('owsurl')
-		            });
-
-		            switch (owsType) {
-		              case 'WMC':
-		                wmcCount += 1;
-		                break;
-		              case 'WMS':
-		                wmsCount += 1;
-		                break;
-		            }
-		          });
-
-		          /* Checking inputs - rule #1 */
-		          if (wmcCount > 1) {
-		            alert(translate("invalidSelectionMoreThanOneWMC"));
-		            return;
-		          }
-		          /* rule #2 */
-		          if ((wmcCount > 0) && (wmsCount > 0)) {
-		            alert(translate("invalidSelectionOneWMCandOneOrMoreWMS"));
-		           return;
-		          }
-		          /* new rule : No data (no WMS nor WMC) available into
-		           * selected MDs. Alerting the user
-		           */
-		          if ((wmcCount == 0) && (wmsCount == 0)) {
-		            alert(translate("invalidSelectionnoWMCnorWMS"));
-		            return;
-		          }
-
-		          var form = Ext.DomHelper.append(Ext.getBody(), {
-		            tag: 'form',
-		            action: destUrl,
-		            target: "_blank",
-		            method: 'post'
-		          });
-
-		          var input = Ext.DomHelper.append(form, {
-		            tag: 'input',
-		            name: 'data'
-		          });
-
-		          input.value = new OpenLayers.Format.JSON().write(jsonObject);
-		          form.submit();
-		          Ext.removeNode(form);
-		        }
-		});
-    }
+    
     
     // Custom function to add extract and visualize actions in MDmenu and ViewPanel menu
     // OtherActions menu is managed differently
@@ -517,20 +414,21 @@ GeoNetwork.app = function () {
         var extractAction = new Ext.Action({
             text: OpenLayers.i18n('extractData'),
             handler: function() {
-                extractMetadata(urlExtract, this.record.get('id'));
+                app.extractMetadata(urlExtract, this.record.get('id'));
             },
             scope: this
         });
         var visuAction = new Ext.Action({
             text: OpenLayers.i18n('visualizeData'),
             handler: function() {
-                extractMetadata(urlVisu, this.record.get('id'));
+                app.extractMetadata(urlVisu, this.record.get('id'));
             },
             scope: this
         });
         this.insert(0,visuAction);
         this.insert(0,extractAction);
     }
+    
     
     /**
      * Results panel layout with top, bottom bar and DataView
@@ -556,14 +454,14 @@ GeoNetwork.app = function () {
         var extractAction = new Ext.Action({
             text: OpenLayers.i18n('extractData'),
             handler: function() {
-                extractMetadata('/mapfishapp/');
+                app.extractMetadata('/mapfishapp/');
             }
         });
         
         var visuAction = new Ext.Action({
             text: OpenLayers.i18n('visualizeData'),
             handler: function() {
-                extractMetadata('/extractorapp/');
+                app.extractMetadata('/extractorapp/');
             }
         });
         
@@ -974,6 +872,110 @@ GeoNetwork.app = function () {
         },
         getCatalogue: function () {
             return catalogue;
+        },
+        /**
+         * Send metadata.service.extract request
+         */
+        extractMetadata: function(destUrl, id) {
+            var urlService = catalogue.services.mdExtract;
+            if(id && typeof(id) == 'string') {
+                urlService += '?id='+id
+            }
+            Ext.Ajax.request({
+               url: urlService,
+               success: function(req) {
+                      var jsFromXml = req.responseXML || new OpenLayers.Format.XML().read(req.responseText);
+                      var jsonObject = {services: [], layers: []};
+                      /*
+                       * Implementing rules from the wiki :
+                       *
+                       *  1. if multiple WMC docs are selected in
+                       *  GeoNetwork the latter will refuse to open the MapFish app
+                       *
+                       *  2. if a WMC doc and WMS items (layers or services) are selected
+                       *  in GeoNetwork the latter will refuse to open the MapFish app
+                       *
+                       *  3. if WMS services are selected the MapFish app will open a dialog
+                       *  window for the user to select layers
+                       *
+                       */
+                      var wmcCount = 0;
+                      var wmsCount = 0;
+                      Ext.each(jsFromXml.getElementsByTagName('service'), function(item, index, array) {
+                          var owsType = item.getAttribute('owstype');
+                          jsonObject.services.push({
+                            text: item.getAttribute('text'),
+                            metadataURL: app.getCatalogue().services.mdShow + '?id=' + item.getAttribute('mdid'),
+                            owstype: owsType,
+                            owsurl: item.getAttribute('owsurl')
+                          });
+
+                          switch (owsType) {
+                            case 'WMC':
+                              wmcCount += 1;
+                              break;
+
+                            case 'WMS':
+                              wmsCount += 1;
+                              break;
+                          }
+                      });
+
+                      Ext.each(jsFromXml.getElementsByTagName('layer'), function(item, index, array) {
+                        var owsType = item.getAttribute('owstype');
+
+                        jsonObject.layers.push({
+                          layername: item.getAttribute('layername'),
+                          metadataURL: app.getCatalogue().services.mdShow + '?id=' + item.getAttribute('mdid'),
+                          owstype: owsType,
+                          owsurl: item.getAttribute('owsurl')
+                        });
+
+                        switch (owsType) {
+                          case 'WMC':
+                            wmcCount += 1;
+                            break;
+                          case 'WMS':
+                            wmsCount += 1;
+                            break;
+                        }
+                      });
+
+                      /* Checking inputs - rule #1 */
+                      if (wmcCount > 1) {
+                        alert(translate("invalidSelectionMoreThanOneWMC"));
+                        return;
+                      }
+                      /* rule #2 */
+                      if ((wmcCount > 0) && (wmsCount > 0)) {
+                        alert(translate("invalidSelectionOneWMCandOneOrMoreWMS"));
+                       return;
+                      }
+                      /* new rule : No data (no WMS nor WMC) available into
+                       * selected MDs. Alerting the user
+                       */
+                      if ((wmcCount == 0) && (wmsCount == 0)) {
+                        alert(translate("invalidSelectionnoWMCnorWMS"));
+                        return;
+                      }
+
+                      var form = Ext.DomHelper.append(Ext.getBody(), {
+                        tag: 'form',
+                        action: destUrl,
+                        target: "_blank",
+                        method: 'post'
+                      });
+
+                      var input = Ext.DomHelper.append(form, {
+                        tag: 'input',
+                        name: 'data'
+                      });
+
+                      input.value = new OpenLayers.Format.JSON().write(jsonObject);
+                      form.submit();
+                      Ext.removeNode(form);
+                    }
+            });
         },
         /**
          * Do layout
