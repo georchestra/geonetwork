@@ -5,7 +5,7 @@
   <parent>
 		<groupId>org.georchestra</groupId>
     <artifactId>geonetwork</artifactId>
-		<version>13.02</version>
+		<version>13.02-SNAPSHOT</version>
   </parent>
 
   <!-- =========================================================== -->
@@ -877,7 +877,9 @@
 	<profile>
 		<id>useConfig</id>
 		<activation>
-			<activeByDefault>true</activeByDefault>
+			<!-- the activation is always true so that this profile is enabled unless 
+				 intentionally disabled -->
+			<file><exists>${project.build.directory}/pom.xml</exists></file>
 		</activation>
 		<build>
 			<plugins>
