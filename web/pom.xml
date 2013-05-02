@@ -873,13 +873,13 @@
     Profiles configuration is defined in src/main/filters.
     -->
   <profiles>
-				<!-- Start GEORCHESTRA change -->
+    <!-- Start GEORCHESTRA change -->
 	<profile>
 		<id>useConfig</id>
 		<activation>
 			<!-- the activation is always true so that this profile is enabled unless 
 				 intentionally disabled -->
-			<file><exists>${project.build.directory}/pom.xml</exists></file>
+			<file><missing>${project.build.directory}/this-file-does-not-exist</missing></file>
 		</activation>
 		<build>
 			<plugins>
