@@ -401,8 +401,6 @@ GeoNetwork.app = function () {
         
     }
     
-    
-    
     // Custom function to add extract and visualize actions in MDmenu and ViewPanel menu
     // OtherActions menu is managed differently
     function addExtractActions() {
@@ -452,16 +450,16 @@ GeoNetwork.app = function () {
 
         // Extract and Visualize action
         var extractAction = new Ext.Action({
-            text: OpenLayers.i18n('extractData'),
+            text:  OpenLayers.i18n('extractData'),
             handler: function() {
-                app.extractMetadata('/mapfishapp/');
+                app.extractMetadata('/extractorapp/');
             }
         });
         
         var visuAction = new Ext.Action({
             text: OpenLayers.i18n('visualizeData'),
             handler: function() {
-                app.extractMetadata('/extractorapp/');
+                app.extractMetadata('/mapfishapp/');
             }
         });
         
