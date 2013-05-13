@@ -22,41 +22,18 @@
 
 package org.fao.geonet.kernel.search;
 
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.TreeSet;
-import java.util.Vector;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
-import javax.servlet.ServletContext;
-
+import com.vividsolutions.jts.geom.Envelope;
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.index.SpatialIndex;
 import jeeves.exceptions.JeevesException;
 import jeeves.resources.dbms.Dbms;
 import jeeves.server.context.ServiceContext;
+import jeeves.utils.IO;
 import jeeves.utils.Log;
 import jeeves.utils.Util;
 import jeeves.utils.Xml;
-
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.builder.CompareToBuilder;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.core.KeywordAnalyzer;
 import org.apache.lucene.analysis.miscellaneous.PerFieldAnalyzerWrapper;
@@ -77,11 +54,6 @@ import org.apache.lucene.index.Term;
 import org.apache.lucene.index.Terms;
 import org.apache.lucene.index.TermsEnum;
 import org.apache.lucene.search.Filter;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Sort;
-import org.apache.lucene.search.TermQuery;
-import org.apache.lucene.search.TopDocs;
-import org.apache.lucene.search.TopFieldCollector;
 import org.apache.lucene.util.BytesRef;
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Geonet;
@@ -122,10 +94,28 @@ import org.jdom.Element;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 
-import com.google.common.collect.ComparisonChain;
-import com.vividsolutions.jts.geom.Envelope;
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.index.SpatialIndex;
+import javax.servlet.ServletContext;
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.TreeSet;
+import java.util.Vector;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Indexes metadata using Lucene.
@@ -432,7 +422,7 @@ public class SearchManager {
 	/**
 	 * Create, configure and optionnaly register in a list a per field analyzer wrapper.
 	 * 
-	 * @param defaultAnalyzer The default analyzer to use
+	 * @param defaultAnalyzerClass The default analyzer to use
 	 * @param fieldAnalyzers	The list of extra analyzer per field
 	 * @param referenceMap	A map where to reference the per field analyzer
 	 * @param referenceKey	The reference key
@@ -518,9 +508,7 @@ public class SearchManager {
         }
 
 		File htmlCacheDirTest   = new File(htmlCacheDir);
-		if (!htmlCacheDirTest.isDirectory() && !htmlCacheDirTest.mkdirs()) {
-            throw new IllegalArgumentException("directory " + htmlCacheDir + " not found");
-        }
+		IO.mkdirs(htmlCacheDirTest, "Html cache directory");
 		_htmlCacheDir = htmlCacheDir;
 
 
@@ -528,12 +516,13 @@ public class SearchManager {
 		if (!_luceneDir.isAbsolute()) {
             _luceneDir = new File(luceneDir+ NON_SPATIAL_DIR);
         }
-        _luceneDir.getParentFile().mkdirs();
+        IO.mkdirs(_luceneDir.getParentFile(), "Lucene Index container directory");
+
         _spatial = new Spatial(dataStore, maxWritesInTransaction);
 
 		_luceneTaxonomyDir = new File(luceneDir + TAXONOMY_DIR);
 		if (!_luceneTaxonomyDir.isAbsolute()) _luceneTaxonomyDir = new File(luceneDir+ TAXONOMY_DIR);
-		_luceneTaxonomyDir.getParentFile().mkdirs();
+		IO.mkdirs(_luceneTaxonomyDir.getParentFile(), "Unable to make luceneTaxony parent dir: {dir} because: {cause}");
 
      	 _logAsynch = logAsynch;
 		 _logSpatialObject = logSpatialObject;
@@ -740,21 +729,6 @@ public class SearchManager {
 		_spatial.writer().delete(txt);
 	}
 	
-	private void deleteIndexDocument(String id, boolean group) throws Exception {
-	    if(Log.isDebugEnabled(Geonet.INDEX_ENGINE)) {
-            Log.debug(Geonet.INDEX_ENGINE, "Deleting "+id+" from index");
-	    }
-        if (group) {
-            deleteGroup("_id", id);
-        } else {
-            delete("_id", id);
-        }
-        if(Log.isDebugEnabled(Geonet.INDEX_ENGINE)) {
-            Log.debug(Geonet.INDEX_ENGINE, "Finished Delete");
-        }
-
-	}
-	
     /**
      * TODO javadoc.
      *
@@ -930,12 +904,11 @@ public class SearchManager {
 				sb.append(" ");
 			sb.append(text);
 		}
-		List children = metadata.getChildren();
-		if (children.size() > 0) {
-            for (Object aChildren : children) {
-                allText((Element) aChildren, sb);
-            }
-		}
+		@SuppressWarnings("unchecked")
+        List<Element> children = metadata.getChildren();
+        for (Element aChildren : children) {
+            allText(aChildren, sb);
+        }
 	}
 
     /**
@@ -1141,6 +1114,29 @@ public class SearchManager {
 				return 0;
 			}
 		}
+
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + frequency;
+            result = prime * result + ((term == null) ? 0 : term.hashCode());
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            TermFrequency other = (TermFrequency) obj;
+            return compareTo(other) == 0;
+        }
+		
+		
 	}
 	// utilities
 
@@ -1149,7 +1145,6 @@ public class SearchManager {
      *
      * @param schemaDir
      * @param xml
-     * @param translationForSorting 
      * @return
      * @throws Exception
      */
@@ -1504,12 +1499,10 @@ public class SearchManager {
 	/**
 	 * Creates Lucene numeric field.
 	 * 
-	 * @param doc	The document to add the field
 	 * @param name	The field name
 	 * @param string	The value to be indexed. It is parsed to its numeric type. If exception occurs
 	 * field is not added to the index. 
-	 * @param store
-	 * @param index
+	 * @param fieldType
 	 * @return
 	 * @throws Exception 
 	 */

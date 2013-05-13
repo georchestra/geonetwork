@@ -23,28 +23,22 @@
 
 package org.fao.geonet.kernel.harvest.harvester.geoPREST;
 
-import jeeves.exceptions.BadParameterEx;
+import jeeves.constants.Jeeves;
 import jeeves.exceptions.OperationAbortedEx;
 import jeeves.interfaces.Logger;
 import jeeves.resources.dbms.Dbms;
 import jeeves.server.context.ServiceContext;
 import jeeves.utils.Xml;
 import jeeves.utils.XmlRequest;
-
 import org.apache.commons.lang.StringUtils;
-
-import org.fao.geonet.GeonetContext;
-import org.fao.geonet.constants.Geonet;
-import org.fao.geonet.kernel.DataManager;
+import org.fao.geonet.kernel.harvest.harvester.HarvestResult;
 import org.fao.geonet.kernel.harvest.harvester.RecordInfo;
-import org.fao.geonet.lib.Lib;
 import org.fao.geonet.util.ISODate;
 import org.jdom.Element;
 
 import java.net.URL;
 import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -76,7 +70,7 @@ class Harvester
 	//---
 	//---------------------------------------------------------------------------
 
-	public GeoPRESTResult harvest() throws Exception
+	public HarvestResult harvest() throws Exception
 	{
 
 		//--- perform all searches
@@ -128,10 +122,10 @@ class Harvester
 			throw new OperationAbortedEx("Missing 'channel' element in \n", Xml.getString(response));
 		}
 
-		List list = channel.getChildren();
+		@SuppressWarnings("unchecked")
+        List<Element> list = channel.getChildren();
 
-		for (Object e :list) {
-			Element    record = (Element) e;
+		for (Element record :list) {
 			if (!record.getName().equals("item")) continue; // skip all the other crap
 			RecordInfo recInfo = getRecordInfo((Element)record.clone());
 			if (recInfo != null) records.add(recInfo);
@@ -174,7 +168,7 @@ class Harvester
 			// uuid is in <guid> child
 			String guidLink = record.getChildText("guid");
 			if (guidLink != null) {
-				guidLink = URLDecoder.decode(guidLink, "UTF-8");
+				guidLink = URLDecoder.decode(guidLink, Jeeves.ENCODING);
 				identif = StringUtils.substringAfter(guidLink, "id=");
 			}
 			if (identif.length() == 0) {

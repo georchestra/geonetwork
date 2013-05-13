@@ -24,7 +24,6 @@
 package org.fao.geonet.services.metadata;
 
 import jeeves.constants.Jeeves;
-import jeeves.interfaces.Service;
 import jeeves.resources.dbms.Dbms;
 import jeeves.server.ServiceConfig;
 import jeeves.server.UserSession;
@@ -47,10 +46,7 @@ import org.jdom.Comment;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.Namespace;
-import org.jdom.Parent;
 import org.jdom.Text;
-import org.jdom.filter.ContentFilter;
-import org.jdom.filter.Filter;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -60,13 +56,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.UUID;
 
 /**
  * Extracts subtemplates from a set of selected metadata records.
  */
 public class BatchExtractSubtemplates extends NotInReadOnlyModeService {
-	private Map<String,List> namespaceList = new HashMap<String,List>();
+	private Map<String,List<Namespace>> namespaceList = new HashMap<String,List<Namespace>>();
 
 	public void init(String appPath, ServiceConfig params) throws Exception {}
 
@@ -80,7 +75,6 @@ public class BatchExtractSubtemplates extends NotInReadOnlyModeService {
 	{
 		GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
 		DataManager   dataMan   = gc.getDataManager();
-		AccessManager accessMan = gc.getAccessManager();
 		UserSession   session   = context.getUserSession();
 
 		Dbms dbms = (Dbms) context.getResourceManager().open(Geonet.Res.MAIN_DB);
@@ -192,7 +186,8 @@ public class BatchExtractSubtemplates extends NotInReadOnlyModeService {
 		}
 	}
 
-	private void extractSubtemplates(ServiceContext context, DataManager dataMan, Dbms dbms, String id, String category, String xpath, String getTit, String xpathTit, boolean doChanges, Set<Integer> metadata, Set<Integer> subtemplates, Element response) throws Exception {
+	@SuppressWarnings("unchecked")
+    private void extractSubtemplates(ServiceContext context, DataManager dataMan, Dbms dbms, String id, String category, String xpath, String getTit, String xpathTit, boolean doChanges, Set<Integer> metadata, Set<Integer> subtemplates, Element response) throws Exception {
 
 		GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
 
@@ -201,9 +196,9 @@ public class BatchExtractSubtemplates extends NotInReadOnlyModeService {
 		MdInfo mdInfo = dataMan.getMetadataInfo(dbms, id);
 
 		// Build a list of all Namespaces in the metadata document
-		List metadataNamespaces = namespaceList.get(mdInfo.schemaId);
+		List<Namespace> metadataNamespaces = namespaceList.get(mdInfo.schemaId);
 		if (metadataNamespaces == null) {
-			metadataNamespaces = new ArrayList();
+			metadataNamespaces = new ArrayList<Namespace>();
 			Namespace ns = md.getNamespace();
 			if (ns != null) {
 				metadataNamespaces.add(ns);
@@ -214,7 +209,7 @@ public class BatchExtractSubtemplates extends NotInReadOnlyModeService {
 
 		new Document(md);
 		// select all nodes that come back from the xpath selectNodes
-		List nodes = Xml.selectNodes(md, xpath, metadataNamespaces);
+		List<?> nodes = Xml.selectNodes(md, xpath, metadataNamespaces);
 		if (context.isDebug() || !doChanges) {
 			context.debug("xpath \n"+xpath+"\n returned "+nodes.size()+" results");
 			if (!doChanges) {
@@ -225,7 +220,7 @@ public class BatchExtractSubtemplates extends NotInReadOnlyModeService {
 
 
 		// for each node
-		for (Iterator iter = nodes.iterator(); iter.hasNext();) {
+		for (Iterator<?> iter = nodes.iterator(); iter.hasNext();) {
 			Object o = iter.next();
 			if (o instanceof Element) {
 				Element elem = (Element)o;
@@ -245,9 +240,9 @@ public class BatchExtractSubtemplates extends NotInReadOnlyModeService {
 					}
 					title = xmlTitle.getText();
 				} else { // use xpathTit
-					List titNodes = Xml.selectNodes(elem, xpathTit, metadataNamespaces);
+					List<?> titNodes = Xml.selectNodes(elem, xpathTit, metadataNamespaces);
 					StringBuilder sb = new StringBuilder();
-					for (Iterator iterTit = titNodes.iterator(); iterTit.hasNext();) {
+					for (Iterator<?> iterTit = titNodes.iterator(); iterTit.hasNext();) {
 						Object oTit = iterTit.next();
 						if (oTit instanceof Element) { // getText
 							Element eTit = (Element)oTit;

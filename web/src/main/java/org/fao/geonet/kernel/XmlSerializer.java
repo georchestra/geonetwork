@@ -43,7 +43,6 @@ import jeeves.xlink.Processor;
 import org.apache.log4j.Priority;
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Geonet;
-import org.fao.geonet.kernel.schema.MetadataSchema;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.util.ISODate;
 import org.jdom.Attribute;
@@ -158,8 +157,8 @@ public abstract class XmlSerializer {
 		
 		if (!isIndexingTask) { 
 			boolean hideWithheldElements = sm.getValueAsBool("system/"+Geonet.Config.HIDE_WITHHELD_ELEMENTS+"/enable", false);
-    		if(ServiceContext.get() != null) {
-    			ServiceContext context = ServiceContext.get();
+			ServiceContext context = ServiceContext.get();
+    		if(context != null) {
     			GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
     			boolean canEdit = gc.getAccessManager().canEdit(context, id);
     			if(canEdit) {

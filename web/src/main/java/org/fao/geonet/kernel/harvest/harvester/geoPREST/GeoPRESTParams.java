@@ -23,6 +23,7 @@
 
 package org.fao.geonet.kernel.harvest.harvester.geoPREST;
 
+import jeeves.constants.Jeeves;
 import jeeves.exceptions.BadInputEx;
 import jeeves.utils.Util;
 import org.fao.geonet.kernel.DataManager;
@@ -32,7 +33,6 @@ import org.jdom.Element;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 //=============================================================================
@@ -68,7 +68,7 @@ public class GeoPRESTParams extends AbstractParams
 		maxResults = MAX_HARVEST_RESULTS;
 
         try {
-            baseUrl = URLDecoder.decode(baseUrl, "UTF-8");
+            baseUrl = URLDecoder.decode(baseUrl, Jeeves.ENCODING);
         }
         catch (UnsupportedEncodingException x) {
             System.out.println(x.getMessage());
@@ -97,7 +97,7 @@ public class GeoPRESTParams extends AbstractParams
 		maxResults = MAX_HARVEST_RESULTS;
 
         try {
-            baseUrl = URLDecoder.decode(baseUrl, "UTF-8");
+            baseUrl = URLDecoder.decode(baseUrl, Jeeves.ENCODING);
         }
         catch (UnsupportedEncodingException x) {
             System.out.println(x.getMessage());

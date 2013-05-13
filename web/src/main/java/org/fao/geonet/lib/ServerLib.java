@@ -33,10 +33,10 @@ import java.io.StringReader;
 import java.util.List;
 import java.util.Properties;
 
-import javax.annotation.CheckForNull;
 import javax.annotation.Nullable;
 import javax.servlet.ServletContext;
 
+import jeeves.constants.Jeeves;
 import jeeves.server.overrides.ConfigurationOverrides;
 
 //=============================================================================
@@ -67,7 +67,7 @@ public class ServerLib
 		    stream = new FileInputStream(appPath + (SERVER_PROPS.replace("/",File.separator)));
 		}
 
-		BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(stream, Jeeves.ENCODING));
 		
 		try {
 			List<String> lines = ConfigurationOverrides.DEFAULT.loadTextFileAndUpdate(

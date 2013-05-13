@@ -19,8 +19,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import jeeves.constants.Jeeves;
+
 
 public class WmcServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
     public static final Logger LOGGER = Logger.getLogger(WmcServlet.class);
 
     private final String WMC_CONTENT_TYPE = "application/vnd.ogc.context+xml";
@@ -117,14 +121,12 @@ public class WmcServlet extends HttpServlet {
                 ServletFileUpload upload = new ServletFileUpload(factory);
 
                 // Parse the request
+                @SuppressWarnings("unchecked")
                 List<FileItem> items = upload.parseRequest(request);
 
 
                 // Process the uploaded items
-                Iterator iter = items.iterator();
-                while (iter.hasNext()) {
-                    FileItem item = (FileItem) iter.next();
-
+                for (FileItem item : items) {
                     if (!item.isFormField()) {
                         byte[] data = item.get();
 
@@ -132,8 +134,8 @@ public class WmcServlet extends HttpServlet {
                         TempFile tempFile = new TempFile(File.createTempFile(TEMP_FILE_PREFIX, TEMP_FILE_SUFFIX, getTempDir()));
                         final String id = generateId(tempFile);
                         try {
-                            Writer fw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(tempFile), "UTF-8"));
-                            fw.write(new String(data, "UTF-8"));
+                            Writer fw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(tempFile), Jeeves.ENCODING));
+                            fw.write(new String(data, Jeeves.ENCODING));
                             fw.close();
                             out.write("{success: true, url: '" + getBaseUrl(request) + "/" + id + TEMP_FILE_SUFFIX + "'}");
 
@@ -213,7 +215,7 @@ public class WmcServlet extends HttpServlet {
             String wmcContent = RequestUtil.inputStreamAsString(httpServletRequest);
             wmcContent = XML_HEADER + "\n" + wmcContent;
 
-            Writer fw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(tempFile), "UTF-8"));
+            Writer fw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(tempFile), Jeeves.ENCODING));
             fw.write(wmcContent);
             fw.close();
 
@@ -306,6 +308,7 @@ public class WmcServlet extends HttpServlet {
     }
 
     protected static class TempFile extends File {
+        private static final long serialVersionUID = 1L;
         private final long creationTime;
 
         public TempFile(File tempFile) {

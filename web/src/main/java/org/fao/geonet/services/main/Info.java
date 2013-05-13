@@ -23,13 +23,6 @@
 
 package org.fao.geonet.services.main;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-
 import jeeves.constants.Jeeves;
 import jeeves.exceptions.BadParameterEx;
 import jeeves.interfaces.Service;
@@ -39,26 +32,30 @@ import jeeves.server.ServiceConfig;
 import jeeves.server.UserSession;
 import jeeves.server.context.ServiceContext;
 import jeeves.utils.Xml;
-
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Edit;
 import org.fao.geonet.constants.Geonet;
+import org.fao.geonet.kernel.SchemaManager;
 import org.fao.geonet.kernel.search.MetaSearcher;
 import org.fao.geonet.kernel.search.SearchManager;
 import org.fao.geonet.kernel.security.GeonetworkUser;
 import org.fao.geonet.kernel.setting.SettingManager;
-import org.fao.geonet.kernel.SchemaManager;
 import org.fao.geonet.lib.Lib;
 import org.fao.geonet.services.region.RegionsDAO;
 import org.fao.geonet.services.util.z3950.RepositoryInfo;
 import org.jdom.Element;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class Info implements Service {
     private static final String READ_ONLY = "readonly";
     private static final String INDEX = "index";
     
     private String xslPath;
-	private String xmlPath;
 	private String otherSheets;
 	private ServiceConfig _config;
 
@@ -68,11 +65,16 @@ public class Info implements Service {
 	//---
 	//--------------------------------------------------------------------------
 
+    /**
+     *
+     * @param appPath
+     * @param config
+     * @throws Exception
+     */
 	public void init(String appPath, ServiceConfig config) throws Exception
 	{
 		xslPath = appPath + Geonet.Path.STYLESHEETS+ "/xml";
 		otherSheets = appPath + Geonet.Path.STYLESHEETS;
-		xmlPath = appPath + Geonet.Path.XML;
 		_config = config;
 	}
 
@@ -82,6 +84,13 @@ public class Info implements Service {
 	//---
 	//--------------------------------------------------------------------------
 
+    /**
+     *
+     * @param inParams
+     * @param context
+     * @return
+     * @throws Exception
+     */
 	public Element exec(Element inParams, ServiceContext context) throws Exception
 	{
 		GeonetContext  gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
@@ -101,13 +110,10 @@ public class Info implements Service {
 
 		Element result = new Element("root");
 
-		for (Iterator i=params.getChildren("type").iterator(); i.hasNext();)
-		{
-			Element el = (Element) i.next();
-
-			String name = el.getName();
+		@SuppressWarnings("unchecked")
+        List<Element> types = params.getChildren("type");
+		for (Element el : types) {
 			String type = el.getText();
-
 
 			if (type.equals("site")) {
 				result.addContent(gc.getSettingManager().get("system", -1));
@@ -119,8 +125,15 @@ public class Info implements Service {
 			else if (type.equals("categories"))
 				result.addContent(Lib.local.retrieve(dbms, "Categories"));
 
-			else if (type.equals("groups"))
-				result.addContent(getGroups(context, dbms, params.getChildText("profile")));
+			else if (type.equals("groups"))   {
+                Element r = getGroups(context, dbms, params.getChildText("profile"), false);
+				result.addContent(r);
+            }
+
+            else if (type.equals("groupsIncludingSystemGroups")) {
+                Element r = getGroups(context, dbms, null, true);
+                result.addContent(r);
+            }
 
 			else if (type.equals("operations"))
 				result.addContent(Lib.local.retrieve(dbms, "Operations"));
@@ -195,6 +208,11 @@ public class Info implements Service {
         return readOnly;
     }
 
+    /**
+     *
+     * @param context
+     * @return
+     */
 	private Element getAuth(ServiceContext context) {
 		Element auth = new Element("auth");
 		Element cas = new Element("casEnabled").setText(Boolean.toString(ProfileManager.isCasEnabled()));
@@ -211,7 +229,11 @@ public class Info implements Service {
 	//---
 	//--------------------------------------------------------------------------
 
-
+    /**
+     *
+     * @param context
+     * @return
+     */
 	private Element getMyInfo(ServiceContext context) {
 		Element data = new Element("me");
 		UserSession userSession = context.getUserSession();
@@ -263,40 +285,68 @@ public class Info implements Service {
     return response;	
 	}
 
-	//--------------------------------------------------------------------------
-
-	private Element getGroups(ServiceContext context, Dbms dbms, String profile) throws SQLException
-	{
+    /**
+     * Retrieves a user's groups.
+     *
+     * @param context
+     * @param dbms
+     * @param profile
+     * @param includingSystemGroups if true, also returns the system groups ('GUEST', 'intranet', 'all')
+     * @return
+     * @throws SQLException
+     */
+    private Element getGroups(ServiceContext context, Dbms dbms, String profile, boolean includingSystemGroups) throws SQLException {
 		UserSession session = context.getUserSession();
-
 		if (!session.isAuthenticated()) {
 			return Lib.local.retrieveWhereOrderBy(dbms, "Groups", "id < ?", "id", 2);
 		}
 
-		//--- retrieve user groups
+        Element result;
+        // you're Administrator
+		if (Geonet.Profile.ADMINISTRATOR.equals(session.getProfile())) {
 
-		if (Geonet.Profile.ADMINISTRATOR.equals(session.getProfile()))
-			return Lib.local.retrieveWhereOrderBy(dbms, "Groups", null, "id");
-		else
-		{
-			Element list = null;
+        // return all groups
+			result = Lib.local.retrieveWhereOrderBy(dbms, "Groups", null, "id");
+        }
+            // you're no Administrator
+		else {
+            // retrieve your groups
+            Element list;
 			if (profile == null) {
 				String query = "SELECT groupId AS id FROM UserGroups WHERE userId=?";
 				list = dbms.select(query, session.getUserIdAsInt());
-			} else {
+			}
+            else {
 				String query = "SELECT groupId AS id FROM UserGroups WHERE userId=? and profile=?";
 				list = dbms.select(query, session.getUserIdAsInt(), profile);
 			}
 
 			Set<String> ids = Lib.element.getIds(list);
-			Element groups = Lib.local.retrieveWhereOrderBy(dbms, "Groups", null, "id");
 
-			return Lib.element.pruneChildren(groups, ids);
+            // include system groups if requested (used in harvesters)
+            if(includingSystemGroups) {
+                // these DB keys of system groups are hardcoded !
+                ids.add("-1");
+                ids.add("0");
+                ids.add("1");
+            }
+
+            // retrieve all groups
+            Element groups = Lib.local.retrieveWhereOrderBy(dbms, "Groups", null, "id");
+
+            // filter all groups so only your groups (+ maybe system groups) are retained
+            result = Lib.element.pruneChildren(groups, ids);
 		}
+        return result;
 	}
 
-	//--------------------------------------------------------------------------
-
+    /**
+     *
+     * @param dbms
+     * @param sm
+     * @return
+     * @throws SQLException
+     */
 	private Element getSources(Dbms dbms, SettingManager sm) throws SQLException
 	{
 		String  query   = "SELECT * FROM Sources ORDER BY name";
@@ -355,13 +405,12 @@ public class Info implements Service {
 
 		root.addContent(result);
 
-		List list = Xml.transform(root, styleSheet).getChildren();
+		@SuppressWarnings("unchecked")
+        List<Element> list = Xml.transform(root, styleSheet).getChildren();
 
 		Element response = new Element("templates");
 
-		for(int i=0; i<list.size(); i++)
-		{
-			Element elem = (Element) list.get(i);
+		for (Element elem : list) {
 			Element info = elem.getChild(Edit.RootChild.INFO, Edit.NAMESPACE);
 
 			if (!elem.getName().equals("metadata"))
@@ -425,13 +474,6 @@ public class Info implements Service {
 
 	//--------------------------------------------------------------------------
 
-	private Element buildRecord(String id, String name)
-	{
-		return buildRecord(id, name, null, null);
-	}
-
-	//--------------------------------------------------------------------------
-
 	private Element buildTemplateRecord(String id, String title, String schema)
 	{
 		return buildRecord(id, title, schema, null);
@@ -460,14 +502,11 @@ public class Info implements Service {
 	private Element getUsers(ServiceContext context, Dbms dbms) throws SQLException
 	{
 		UserSession us   = context.getUserSession();
-		List        list = getUsers(context, us, dbms);
+		List<Element> list = getUsers(context, us, dbms);
 
 		Element users = new Element("users");
 
-		for (Object o : list)
-		{
-			Element user = (Element) o;
-
+		for (Element user : list) {
 			user = (Element) user.clone();
 			user.removeChild("password");
 			user.setName("user");
@@ -480,24 +519,30 @@ public class Info implements Service {
 
 	//--------------------------------------------------------------------------
 
-	private List getUsers(ServiceContext context, UserSession us, Dbms dbms) throws SQLException
+	private List<Element> getUsers(ServiceContext context, UserSession us, Dbms dbms) throws SQLException
 	{
 		if (!us.isAuthenticated())
 			return new ArrayList<Element>();
 
 		int id = Integer.parseInt(us.getUserId());
 
-		if (us.getProfile().equals(Geonet.Profile.ADMINISTRATOR))
-			return dbms.select("SELECT * FROM Users").getChildren();
+		if (us.getProfile().equals(Geonet.Profile.ADMINISTRATOR)) {
+			@SuppressWarnings("unchecked")
+            List<Element> allUsers = dbms.select("SELECT * FROM Users").getChildren();
+            return allUsers;
+		}
 
-		if (!us.getProfile().equals(Geonet.Profile.USER_ADMIN))
-			return dbms.select("SELECT * FROM Users WHERE id=?", id).getChildren();
+		if (!us.getProfile().equals(Geonet.Profile.USER_ADMIN)) {
+            @SuppressWarnings("unchecked")
+            List<Element> identifiedUsers = dbms.select("SELECT * FROM Users WHERE id=?", id).getChildren();
+            return identifiedUsers;
+        }
 
 		//--- we have a user admin
 
 		Set<String> hsMyGroups = getUserGroups(dbms, id);
 
-		Set profileSet = context.getProfileManager().getProfilesSet(us.getProfile());
+		Set<String> profileSet = context.getProfileManager().getProfilesSet(us.getProfile());
 
 		//--- retrieve all users
 
@@ -528,7 +573,9 @@ public class Info implements Service {
 
 		//--- return result
 
-		return elUsers.getChildren();
+		@SuppressWarnings("unchecked")
+        List<Element> usersEls = elUsers.getChildren();
+        return usersEls;
 	}
 
 	//--------------------------------------------------------------------------
@@ -537,13 +584,12 @@ public class Info implements Service {
 	{
 		String query = "SELECT groupId AS id FROM UserGroups WHERE userId=?";
 
-		List list = dbms.select(query, id).getChildren();
+		@SuppressWarnings("unchecked")
+        List<Element> list = dbms.select(query, id).getChildren();
 
 		HashSet<String> hs = new HashSet<String>();
 
-		for(int i=0; i<list.size(); i++)
-		{
-			Element el = (Element) list.get(i);
+		for (Element el : list) {
 			hs.add(el.getChildText("id"));
 		}
 
