@@ -722,6 +722,14 @@ ul.gn-relation-thumbnail {
    border-color: transparent !important;
    margin: 4px;
 }
+
+.privilges-not-user-groups .x-grid3-cell-inner {
+    color: gray;
+}
+.privileges-internal .x-grid3-cell-inner {
+    font-weight: bold;
+}
+
 .privileges-grid-disable {
 	color: gray;
 }

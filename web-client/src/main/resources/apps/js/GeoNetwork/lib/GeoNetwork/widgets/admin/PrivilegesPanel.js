@@ -4,7 +4,9 @@ GeoNetwork.admin.PrivilegesPanel = Ext.extend(Ext.grid.GridPanel, {
     
     defaultConfig: {
         autoScroll: true,
-        cls: 'privileges-panel'
+        cls: 'privileges-panel',
+        // TODO : retrieve settings from server side
+        onlyUserGroup: false
     },
     
     /** admin service url
@@ -51,19 +53,6 @@ GeoNetwork.admin.PrivilegesPanel = Ext.extend(Ext.grid.GridPanel, {
         
         Ext.applyIf(this, this.defaultConfig);
         
-        // Read <groups> elements
-        var groupReader = new Ext.data.XmlReader({
-            record: 'group',
-            idPath: 'id',
-            totalRecords: '@TotalResults',
-            fields: ['name','description',
-                { 
-                    name: 'oper', 
-                    convert: this.convertOper
-                 }
-            ]
-        });
-        
         // Read <operations> element to get columns definition
         var operationsStore = new Ext.data.XmlStore({
             record: 'record',
@@ -101,6 +90,8 @@ GeoNetwork.admin.PrivilegesPanel = Ext.extend(Ext.grid.GridPanel, {
         // bottom bar with submit button
         this.bbar = this.bbar || [{
             text: OpenLayers.i18n('save'),
+            iconCls: 'saveMetadata',
+            ctCls: 'gn-bt-main',
             handler: function() {
                 var args={};
                 var submitFn = function(group) {
@@ -109,7 +100,14 @@ GeoNetwork.admin.PrivilegesPanel = Ext.extend(Ext.grid.GridPanel, {
                     for (var i=0;i<this.colModel.config.length-1;i++) {
                         var di = this.colModel.config[i].dataIndex;
                         if(di.indexOf('oper') == 0 && group.get(di)) {
-                            args['_' + group.id + '_' + di.charAt(di.length-1 )] ='on';
+                            // Internal groups only managed by admin and reviewer
+                            if(group.id == 0 || group.id == -1 || group.id == 1) {
+                                if(app.getCatalogue().canSetInternalPrivileges()) {
+                                    args['_' + group.id + '_' + di.charAt(di.length-1 )] ='on';
+                                }
+                            } else {
+                                args['_' + group.id + '_' + di.charAt(di.length-1 )] ='on';
+                            }
                         }
                     }
                 };
@@ -156,7 +154,10 @@ GeoNetwork.admin.PrivilegesPanel = Ext.extend(Ext.grid.GridPanel, {
             totalRecords: '@TotalResults',
             fields: [
                  'name',
-                 'description', {
+                 'description',  {
+                     name: 'userGroup',
+                     mapping: '@userGroup'
+                 }, {
                      name: 'label',
                      convert: function(v,n) {
                          var label = Ext.DomQuery.selectNode('label/'+app.getCatalogue().lang,n);
@@ -177,7 +178,18 @@ GeoNetwork.admin.PrivilegesPanel = Ext.extend(Ext.grid.GridPanel, {
                  
              ]
         });
-
+        
+        if (this.onlyUserGroup) {
+            store.on('load', function () {
+                this.filterBy(function (record, id) {
+                    if (record.get('userGroup') === "true" || record.get('id') <= 1) {
+                        return true;
+                    }
+                    return false;
+                })
+            });
+        }
+        
         // Load the store to get the Ext.grid.ColumnModel, the view and the datas
         store.load({
             callback: function(recs,opt,suc) {
@@ -189,7 +201,7 @@ GeoNetwork.admin.PrivilegesPanel = Ext.extend(Ext.grid.GridPanel, {
                 
                 var columns = [{
                     id: 'group',
-                    header: 'Group',
+                    header: OpenLayers.i18n('group'),
                     dataIndex: 'label',
                     width: 220
                 }];
@@ -224,20 +236,21 @@ GeoNetwork.admin.PrivilegesPanel = Ext.extend(Ext.grid.GridPanel, {
                 
                 // grid view to disable rows depending on rights
                 this.getView().getRowClass = function(record, index) {
+                    var css = record.get('userGroup') == "true" ? '' : 'privilges-not-user-groups ';
                     if(record.id == 0 || record.id == -1 || record.id == 1) {
-                        if(app.getCatalogue().isAdmin()) {
-                            return '';
+                        if(app.getCatalogue().canSetInternalPrivileges()) {
+                            return css + 'privileges-internal';
                         }
                         else {
-                            return 'privileges-grid-disable';
+                            return css + 'privileges-grid-disable privileges-internal';
                         }
                         
                     }
                     else if(isOwner == 'false') {
-                        return 'privileges-grid-disable';
+                        return css + 'privileges-grid-disable';
                     }
                     else {
-                        return '';
+                        return css + '';
                     }
                 };
                 

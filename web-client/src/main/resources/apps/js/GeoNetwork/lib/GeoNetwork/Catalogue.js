@@ -416,14 +416,13 @@ GeoNetwork.Catalogue = Ext.extend(Ext.util.Observable, {
      *  Return true if current user is an admin
      */
     isAdmin: function(){
-        if(this.isIdentified()) {
-            var role = this.identifiedUser.role;
-            return (role.indexOf('Admin') >= 0 || role.indexOf('Editor') >= 0);
-        }
-        else {
-            return false;
-        }
-        
+        return this.identifiedUser.role === "Administrator";
+    },
+    /** api: method[canSetInternalPrivileges]
+     *  Return true if current user can set privileges to internal groups (ie. internet, intranet)
+     */
+    canSetInternalPrivileges: function(){
+        return this.identifiedUser.role === "Administrator" || this.identifiedUser.role === "Reviewer";
     },
     /** api: method[isReadOnly]
      *  Return true if GN is is read-only mode
