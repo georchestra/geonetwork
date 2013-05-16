@@ -246,7 +246,8 @@ public class Info implements Service {
 				.addContent(new Element(Geonet.Elem.SURNAME).setText(userSession.getSurname()))
 				.addContent(new Element(Geonet.Elem.PHONE).setText(userSession.getPhone()))
 				.addContent(new Element(Geonet.Elem.ORGANISATION).setText(userSession.getOrganisation()))
-				.addContent(new Element(Geonet.Elem.EMAIL).setText(userSession.getEmailAddr()));
+				.addContent(new Element(Geonet.Elem.EMAIL).setText(userSession.getEmailAddr()))
+				.addContent(new Element(Geonet.Elem.HASH).setText(org.apache.commons.codec.digest.DigestUtils.md5Hex(userSession.getEmailAddr())));
 		} else {
 			data.setAttribute("authenticated","false");
 		}

@@ -124,6 +124,7 @@ public final class Geonet {
         public static final String ORGANISATION    = "organisation";
         public static final String VALUE       = "value";
         public static final String VIRTUAL_CSW     = "virtualcsw";
+        public static final String HASH = "hash";
 	}
 
     /**
@@ -170,6 +171,10 @@ public final class Geonet {
 		public static final String METADATA_ISO19110		= "metadata.iso19110";
 		public static final String FC_ISO19110		        = "fc.iso19110";
 		public static final String FILE_DISCLAIMER    = "file.disclaimer";
+        /**
+         * Contains the uuids of metadatas that have to be shown
+         */
+        public static final String METADATA_UUIDS    = "metadata.uuids";
 
 	}
     
