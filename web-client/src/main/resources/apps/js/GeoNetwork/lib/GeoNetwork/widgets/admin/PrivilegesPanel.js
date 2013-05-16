@@ -81,7 +81,7 @@ GeoNetwork.admin.PrivilegesPanel = Ext.extend(Ext.grid.GridPanel, {
                 'keyup' : {
                     // Filter the grid store
                     fn: function(txtF, event) {
-                        store.filter('name', txtF.getValue());
+                        store.filter('label', txtF.getValue());
                     }
                 }
             }
