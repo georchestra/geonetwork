@@ -356,9 +356,8 @@ GeoNetwork.MetadataMenu = Ext.extend(Ext.menu.Menu, {
         /* Actions status depend on records */
         
         // Publish/Unpublish action is only enable for admin
-        // It's not easy to know if a reviewer may have the privilege to publish to all 
-        // (depends on if the user is reviewer for the metadata's groups)
-        this.publicationToggleAction.setDisabled(!isEditable && !isHarvested && !isAdmin);
+        // and reviewer who can edit the record
+        this.publicationToggleAction.setDisabled(!(isEditable && this.catalogue.canSetInternalPrivileges()));
         if (isPublished) {
             // Update label and handler to unpublish
             this.publicationToggleAction.setText(OpenLayers.i18n('unpublish'));
