@@ -75,7 +75,8 @@ GeoNetwork.admin.PrivilegesPanel = Ext.extend(Ext.grid.GridPanel, {
             }
         },{
             xtype: 'textfield',
-            width: 150,
+            width: 190,
+            emptyText: OpenLayers.i18n('filterGroup'),
             enableKeyEvents: true,
             listeners: {
                 'keyup' : {

@@ -19,6 +19,7 @@
 Ext.namespace('GeoNetwork', 'GeoNetwork.Lang');
 
 GeoNetwork.Lang.fr = {
+    'filterGroup': 'Filtrer les groupes ...',
     'harvestingAdmin': 'Gestion du moissonnage',
     'updateUserInfo': 'Afficher mon profil',
     'updatePassword': 'Changer de mot de passe',
