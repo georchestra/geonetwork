@@ -24,7 +24,6 @@
 package org.fao.geonet.services.metadata;
 
 import jeeves.constants.Jeeves;
-import jeeves.interfaces.Service;
 import jeeves.resources.dbms.Dbms;
 import jeeves.server.ServiceConfig;
 import jeeves.server.UserSession;
@@ -43,7 +42,6 @@ import org.jdom.Element;
 
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -92,11 +90,11 @@ public class BatchUpdateStatus extends NotInReadOnlyModeService {
 			MdInfo info = dm.getMetadataInfo(dbms, id);
 
 			if (info == null) {
-				notFound.add(new Integer(id));
+				notFound.add(Integer.valueOf(id));
 			} else if (!accessMan.isOwner(context, id)) {
-				notOwner.add(new Integer(id));
+				notOwner.add(Integer.valueOf(id));
 			} else {
-				metadata.add(new Integer(id));
+				metadata.add(Integer.valueOf(id));
 			}
 		}
 		}

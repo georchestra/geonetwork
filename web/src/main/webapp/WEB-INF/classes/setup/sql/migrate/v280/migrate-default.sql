@@ -252,7 +252,6 @@ INSERT INTO Settings VALUES (953,952,'only','false');
 INSERT INTO Settings VALUES (954,952,'sorted','true');
 INSERT INTO Settings VALUES (955,952,'ignored','false');
 
-
 ALTER TABLE Users ALTER COLUMN username TYPE varchar(256);
 
 ALTER TABLE Metadata ALTER COLUMN createDate TYPE varchar(30);
@@ -391,6 +390,10 @@ DELETE FROM Languages WHERE id='ru';
 ALTER TABLE Languages DROP COLUMN isocode;
 
 ALTER TABLE IsoLanguages ADD shortcode varchar(2);
+-- add enable statistics
+INSERT INTO Settings VALUES (250,1,'searchStats',NULL);
+INSERT INTO Settings VALUES (251,250,'enable','false');
+
 
 UPDATE IsoLanguages SET shortcode='ar' WHERE code='ara';
 UPDATE IsoLanguages SET shortcode='ca' WHERE code='cat';

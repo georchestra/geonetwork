@@ -24,7 +24,6 @@
 package org.fao.geonet.services.group;
 
 import jeeves.constants.Jeeves;
-import jeeves.interfaces.Service;
 import jeeves.resources.dbms.Dbms;
 import jeeves.server.ServiceConfig;
 import jeeves.server.context.ServiceContext;
@@ -59,10 +58,11 @@ public class Remove extends NotInReadOnlyModeService {
 
 		Dbms dbms = (Dbms) context.getResourceManager().open (Geonet.Res.MAIN_DB);
 
-		Integer iId = new Integer(id);
+		Integer iId = Integer.valueOf(id);
 		String query = "SELECT DISTINCT metadataId FROM OperationAllowed WHERE groupId=?";
 
-		List<Element> reindex = dbms.select(query, iId).getChildren();
+		@SuppressWarnings("unchecked")
+        List<Element> reindex = dbms.select(query, iId).getChildren();
 
 		dbms.execute("DELETE FROM OperationAllowed WHERE groupId=?",iId);
 		dbms.execute("DELETE FROM UserGroups       WHERE groupId=?",iId);

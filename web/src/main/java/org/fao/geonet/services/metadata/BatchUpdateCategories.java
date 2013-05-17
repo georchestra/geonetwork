@@ -24,7 +24,6 @@
 package org.fao.geonet.services.metadata;
 
 import jeeves.constants.Jeeves;
-import jeeves.interfaces.Service;
 import jeeves.resources.dbms.Dbms;
 import jeeves.server.ServiceConfig;
 import jeeves.server.UserSession;
@@ -90,25 +89,25 @@ public class BatchUpdateCategories extends NotInReadOnlyModeService {
 
 			MdInfo info = dm.getMetadataInfo(dbms, id);
 			if (info == null) {
-				notFound.add(new Integer(id));
+				notFound.add(Integer.valueOf(id));
 			} else if (!accessMan.isOwner(context, id)) {
-				notOwner.add(new Integer(id));
+				notOwner.add(Integer.valueOf(id));
 			} else {
 
 				//--- remove old operations
 				dm.deleteAllMetadataCateg(dbms, id);
 
 				//--- set new ones
-				List list = params.getChildren();
+				@SuppressWarnings("unchecked")
+                List<Element> list = params.getChildren();
 
-				for(int i=0; i<list.size(); i++) {
-					Element el = (Element) list.get(i);
+				for (Element el : list) {
 					String name = el.getName();
 
 					if (name.startsWith("_"))
 						dm.setCategory(context, dbms, id, name.substring(1));
 				}
-				metadata.add(new Integer(id));
+				metadata.add(Integer.valueOf(id));
 			}
 		}
 		}

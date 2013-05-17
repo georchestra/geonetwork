@@ -24,7 +24,6 @@
 package org.fao.geonet.services.user;
 
 import jeeves.constants.Jeeves;
-import jeeves.interfaces.Service;
 import jeeves.resources.dbms.Dbms;
 import jeeves.server.ServiceConfig;
 import jeeves.server.UserSession;
@@ -36,7 +35,6 @@ import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.constants.Params;
 import org.fao.geonet.services.NotInReadOnlyModeService;
 import org.jdom.Element;
-import java.util.List;
 
 /**
  * Removes a user from the system. It removes the relationship to a group too.
@@ -78,7 +76,7 @@ public class Remove extends NotInReadOnlyModeService {
 			Dbms dbms = (Dbms) context.getResourceManager().open (Geonet.Res.MAIN_DB);
 
 			if (myProfile.equals("UserAdmin")) {
-				Element admin = dbms.select("SELECT groupId FROM UserGroups WHERE userId=? or userId=? group by groupId having count(*) > 1", new Integer(myUserId), iId);
+				Element admin = dbms.select("SELECT groupId FROM UserGroups WHERE userId=? or userId=? group by groupId having count(*) > 1", Integer.valueOf(myUserId), iId);
 				if (admin.getChildren().size() == 0) {
 				  throw new IllegalArgumentException("You don't have rights to delete this user because the user is not part of your group");
 				}

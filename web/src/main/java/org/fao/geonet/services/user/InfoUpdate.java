@@ -25,7 +25,6 @@ package org.fao.geonet.services.user;
 
 import jeeves.constants.Jeeves;
 import jeeves.exceptions.UserNotFoundEx;
-import jeeves.interfaces.Service;
 import jeeves.resources.dbms.Dbms;
 import jeeves.server.ServiceConfig;
 import jeeves.server.UserSession;
@@ -83,7 +82,7 @@ public class InfoUpdate extends NotInReadOnlyModeService {
 
 		dbms.execute (query, surname, name,
 									address, city, state, zip, country, email,
-									organ, kind, new Integer(userId));
+									organ, kind, Integer.valueOf(userId));
 
 		return new Element(Jeeves.Elem.RESPONSE);
 	}

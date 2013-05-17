@@ -25,10 +25,8 @@ package org.fao.geonet.services.metadata;
 
 import jeeves.constants.Jeeves;
 import jeeves.exceptions.BadParameterEx;
-import jeeves.interfaces.Service;
 import jeeves.resources.dbms.Dbms;
 import jeeves.server.ServiceConfig;
-import jeeves.server.UserSession;
 import jeeves.server.context.ServiceContext;
 import jeeves.utils.Util;
 import jeeves.utils.Xml;
@@ -164,7 +162,6 @@ public class XslProcessing extends NotInReadOnlyModeService {
                                   Set<Integer> metadata, Set<Integer> notFound, Set<Integer> notEditable,
                                   Set<Integer> notProcessFound, boolean useIndexGroup, String siteUrl) throws Exception {
         GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
-        UserSession session = context.getUserSession();
         DataManager dataMan = gc.getDataManager();
         SchemaManager schemaMan = gc.getSchemamanager();
         AccessManager accessMan = gc.getAccessManager();
@@ -174,9 +171,9 @@ public class XslProcessing extends NotInReadOnlyModeService {
         MdInfo info = dataMan.getMetadataInfo(dbms, id);
 
         if (info == null) {
-            notFound.add(new Integer(id));
+            notFound.add(Integer.valueOf(id));
         } else if (!accessMan.canEdit(context, id)) {
-            notEditable.add(new Integer(id));
+            notEditable.add(Integer.valueOf(id));
         } else {
 
             // -----------------------------------------------------------------------
@@ -187,7 +184,7 @@ public class XslProcessing extends NotInReadOnlyModeService {
             File xslProcessing = new File(filePath);
             if (!xslProcessing.exists()) {
                 context.info("  Processing instruction not found for " + schema + " schema. Looking for "+filePath);
-                notProcessFound.add(new Integer(id));
+                notProcessFound.add(Integer.valueOf(id));
                 return null;
             }
             // --- Process metadata
@@ -195,6 +192,7 @@ public class XslProcessing extends NotInReadOnlyModeService {
             Element md = dataMan.getMetadata(context, id, forEditing, withValidationErrors, keepXlinkAttributes);
 
             // -- here we send parameters set by user from URL if needed.
+            @SuppressWarnings("unchecked")
             List<Element> children = params.getChildren();
             Map<String, String> xslParameter = new HashMap<String, String>();
             xslParameter.put("guiLang", context.getLanguage());
@@ -226,7 +224,7 @@ public class XslProcessing extends NotInReadOnlyModeService {
                 }
             }
 
-            metadata.add(new Integer(id));
+            metadata.add(Integer.valueOf(id));
 
             return processedMetadata;
         }

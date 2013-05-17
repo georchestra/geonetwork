@@ -529,7 +529,9 @@
             <!-- Usually, protocole format is OGC:WMS-version-blahblah, remove ':' and get
             prefix of the protocol to set the CSS icon class-->
             <span class="{translate(substring-before(current-grouping-key(), '-'), ':', '')} icon">
-                <xsl:value-of select="/root/gui/schemas/iso19139/labels/element[@name = 'gmd:protocol']/helper/option[@value=normalize-space(current-grouping-key())]"/>
+                <xsl:variable name="labelBasedOnProtocol" select="/root/gui/schemas/iso19139/labels/element[@name = 'gmd:protocol']/helper/option[@value=normalize-space(current-grouping-key())]"/>
+                <xsl:variable name="labelBasedOnProtocolPrefix" select="/root/gui/schemas/iso19139/labels/element[@name = 'gmd:protocol']/helper/option[@value=normalize-space(substring-before(current-grouping-key(), '-'))]"/>
+                <xsl:value-of select="if ($labelBasedOnProtocol != '') then $labelBasedOnProtocol else $labelBasedOnProtocolPrefix"/>
             </span>
           </td>
           <td>
@@ -582,12 +584,18 @@
                   <!-- Display add to map action for WMS -->
                   <xsl:if test="contains(current-grouping-key(), 'WMS')">
                   &#160;
-                  <a href="#" class="md-mn addLayer"
+                    <!--  Add WMS layer to geOrchestra mapfish app -->
+                    <a href="#" class="md-mn addLayer"
+                      onclick="app.extractMetadata('/mapfishapp/', 
+                      '{ancestor::*[name() = 'gmd:MD_Metadata']/geonet:info/id}');">&#160;</a>
+
+                    <!-- Add a WMS layer to GeoNetwork mapviewer
+                      <a href="#" class="md-mn addLayer"
                     onclick="app.switchMode('1', true);app.getIMap().addWMSLayer([[
                               '{gmd:CI_OnlineResource/gmd:description/gco:CharacterString}', 
                               '{gmd:CI_OnlineResource/gmd:linkage/gmd:URL}', 
                               '{gmd:CI_OnlineResource/gmd:name/gco:CharacterString}', '{generate-id()}']]);">&#160;</a>
-                  </xsl:if>
+-->                  </xsl:if>
                 </li>
               </xsl:for-each>
             </ul>

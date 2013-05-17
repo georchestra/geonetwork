@@ -38,6 +38,7 @@ import java.io.FileOutputStream;
 import java.util.Set;
 import java.util.zip.ZipOutputStream;
 
+import jeeves.constants.Jeeves;
 import jeeves.resources.dbms.Dbms;
 import jeeves.server.context.ServiceContext;
 import jeeves.utils.Xml;
@@ -162,7 +163,7 @@ class MEF2Exporter {
 
 		// --- save info file
 		byte[] binData = MEFLib.buildInfoFile(context, record, format, pubDir,
-				priDir, skipUUID).getBytes("UTF-8");
+				priDir, skipUUID).getBytes(Jeeves.ENCODING);
 
 		MEFLib.addFile(zos, uuid + FS + FILE_INFO, new ByteArrayInputStream(
 				binData));
@@ -221,7 +222,7 @@ class MEF2Exporter {
 		if (!data.startsWith("<?xml"))
 			data = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n" + data;
 
-		byte[] binData = data.getBytes("UTF-8");
+		byte[] binData = data.getBytes(Jeeves.ENCODING);
 
 		return new ByteArrayInputStream(binData);
 	}
@@ -246,7 +247,7 @@ class MEF2Exporter {
 		if (id == null)
 			throw new MetadataNotFoundEx("uuid=" + uuid);
 
-		Set<String> relatedIds = Get.getRelationIds(new Integer(id), "normal", context);
+		Set<String> relatedIds = Get.getRelationIds(Integer.valueOf(id), "normal", context);
 		if (relatedIds.size() == 0)
 			return "";
 

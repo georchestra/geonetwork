@@ -387,7 +387,9 @@
 				<call name="keywords" class=".guiservices.keywords.Get" />
 				<call name="groups" class=".guiservices.groups.GetMine" />
 				<call name="categories" class=".services.category.List" />
-				<call name="status" class=".services.status.List" />
+				<call name="status" class=".services.main.Info">
+					<param name="type" value="status" />
+				</call>
 				<call name="regions" class=".guiservices.regions.Get" />
 				<call name="sources" class=".guiservices.util.Sources" />
 				<call name="repositories" class=".services.main.Info">
@@ -465,7 +467,7 @@
 		<service name="main.search.suggest">
 			<class name=".services.main.SearchSuggestion">
 				<!-- Minimum frequency for a term value to be proposed in suggestion. -->
-				<param name="threshold" value="2" />
+				<param name="threshold" value="1" />
 				<!--
 					Max number of term's values to look in the index. For large catalogue
 					this value should be increased in order to get better results. If this
@@ -594,10 +596,16 @@
 
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
+        <!-- classic GUI -->
 		<service name="feedback">
 			<output sheet="feedback.xsl" />
 		</service>
 
+        <!-- Ext GUIs -->
+        <service name="feedback.send">
+            <class name=".services.feedback.Receptor" />
+            <output sheet="extjs-feedback-response.xsl" contentType="application/json; charset=UTF-8" />
+        </service>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
 		<service name="links">
@@ -1351,18 +1359,6 @@
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<!-- RSS services -->
 
-		<service name="rss.latest">
-			<output sheet="rss-latest.xsl" contentType="application/rss+xml; charset=UTF-8">
-				<call name="latestUpdated" class=".guiservices.metadata.GetLatestUpdated">
-					<param name="maxItems" value="20" />
-					<param name="timeBetweenUpdates" value="10" />
-				</call>
-				<call name="siteURL" class=".guiservices.util.GetSiteURL" />
-			</output>
-		</service>
-
-		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-
 		<service name="rss.search">
 			<class name=".services.main.Search">
 				<param name="maxSummaryKeys" value="10" />
@@ -1481,6 +1477,17 @@
 		<service name="isolanguages">
 			<class name="org.fao.geonet.guiservices.isolanguages.Get" />
 		</service>
+		
+		
+        <!-- HTML5UI -->
+        <service name="search">
+            <class name=".services.main.Home" />
+            <output sheet="search.xsl">
+                <call name="currTab" class=".guiservices.util.GetCurrentMDTab" />
+                <call name="isoLang" class=".guiservices.isolanguages.Get" />
+            </output>
+        </service>
+
 	</services>
 
 	<!-- ====================================================================== -->

@@ -23,25 +23,8 @@
 
 package org.fao.geonet.kernel.search;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.lang.reflect.Constructor;
-import java.text.CharacterIterator;
-import java.text.DecimalFormat;
-import java.text.StringCharacterIterator;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.io.WKTReader;
 import jeeves.constants.Jeeves;
 import jeeves.resources.dbms.Dbms;
 import jeeves.server.ServiceConfig;
@@ -50,7 +33,6 @@ import jeeves.server.context.ServiceContext;
 import jeeves.utils.Log;
 import jeeves.utils.Util;
 import jeeves.utils.Xml;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.analysis.TokenStream;
@@ -61,9 +43,9 @@ import org.apache.lucene.document.DocumentStoredFieldVisitor;
 import org.apache.lucene.facet.search.FacetsCollector;
 import org.apache.lucene.facet.search.params.CountFacetRequest;
 import org.apache.lucene.facet.search.params.FacetRequest;
+import org.apache.lucene.facet.search.params.FacetRequest.SortBy;
 import org.apache.lucene.facet.search.params.FacetRequest.SortOrder;
 import org.apache.lucene.facet.search.params.FacetSearchParams;
-import org.apache.lucene.facet.search.params.FacetRequest.SortBy;
 import org.apache.lucene.facet.search.results.FacetResult;
 import org.apache.lucene.facet.search.results.FacetResultNode;
 import org.apache.lucene.facet.taxonomy.CategoryPath;
@@ -98,6 +80,7 @@ import org.fao.geonet.kernel.MdInfo;
 import org.fao.geonet.kernel.search.LuceneConfig.Facet;
 import org.fao.geonet.kernel.search.LuceneConfig.FacetConfig;
 import org.fao.geonet.kernel.search.LuceneConfig.LuceneConfigNumericField;
+import org.fao.geonet.kernel.search.SearchManager.TermFrequency;
 import org.fao.geonet.kernel.search.index.GeonetworkMultiReader;
 import org.fao.geonet.kernel.search.log.SearcherLogger;
 import org.fao.geonet.kernel.search.lucenequeries.DateRangeQuery;
@@ -110,13 +93,25 @@ import org.fao.geonet.services.region.RegionsDAO;
 import org.fao.geonet.util.JODAISODate;
 import org.jdom.Element;
 
+import java.io.IOException;
+import java.io.StringReader;
+import java.lang.reflect.Constructor;
+import java.text.CharacterIterator;
+import java.text.DecimalFormat;
+import java.text.StringCharacterIterator;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
-
-import com.google.common.collect.Maps;
-import com.google.common.collect.Ranges;
-
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.io.WKTReader;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * search metadata locally using lucene.
@@ -130,7 +125,6 @@ public class LuceneSearcher extends MetaSearcher {
 	private Sort          _sort;
 	private Element       _elSummary;
 	
-	private int           _maxHitsInSummary;
 	private int           _numHits;
 	private String        _resultType;
     private String        _language;
@@ -152,7 +146,6 @@ public class LuceneSearcher extends MetaSearcher {
      *
      * @param sm
      * @param styleSheetName
-     * @param summaryConfig
      * @param luceneConfig
      */
 	public LuceneSearcher (SearchManager sm, String styleSheetName, LuceneConfig luceneConfig) {
@@ -340,7 +333,7 @@ public class LuceneSearcher extends MetaSearcher {
 	 * @return
 	 * @throws Exception
 	 */
-	public Collection<String> getSuggestionForFields(ServiceContext srvContext, 
+	public Collection<SearchManager.TermFrequency> getSuggestionForFields(ServiceContext srvContext, 
 								final String searchField, final String searchValue, 
 								ServiceConfig config,
 								int maxNumberOfTerms, int threshold) throws Exception {
@@ -353,26 +346,19 @@ public class LuceneSearcher extends MetaSearcher {
 		
 		// To count the number of values added and stop if maxNumberOfTerms reach
 		int counter = 0;
+		String searchValueWithoutWildcard = searchValue.replaceAll("[*?]", "");
 		
-		// A collection or a map if threshold is set
-		Collection <String> finalValues = new HashSet<String>();
-		Map <String, Integer> finalValuesMap = new HashMap<String, Integer>();
-		
-		GeonetContext gc = null;
-		if (srvContext != null) {
-			gc = (GeonetContext) srvContext.getHandlerContext(Geonet.CONTEXT_NAME);
-		}
+		Map <String, SearchManager.TermFrequency> finalValuesMap = new HashMap<String, SearchManager.TermFrequency>();
 		
 		// Search for all current session could search for
 		// Do a like query to limit the size of the results
 		Element elData = new Element(Jeeves.Elem.REQUEST); // SearchDefaults.getDefaultSearch(srvContext, null);
 		elData.addContent(new Element("fast").addContent("index")).
 		    addContent(new Element(Geonet.SearchResult.BUILD_SUMMARY).addContent(Boolean.toString(false)));
-		// FIXME : need more work on LQB
-//		if (!searchValue.equals("")) {
-//			elData.addContent(new Element(searchField).setText("*" + searchValue + "*"));
-//		// TODO : filter template ?
-//		}
+		
+		if (!searchValue.equals("")) {
+			elData.addContent(new Element(searchField).setText(searchValue));
+		}
 		search(srvContext, elData, config);
 
 		elData.addContent(new Element("from").setText("1"));
@@ -397,16 +383,18 @@ public class LuceneSearcher extends MetaSearcher {
                     String[] values = doc.getValues(searchField);
 
                     for (int j = 0; j < values.length; ++j) {
-                        if (searchValue.equals("") || StringUtils.containsIgnoreCase(values[j], searchValue)) {
-                            if (threshold > 1) {
-                                // Use a map to save values frequency
-                                Integer valueFrequency = finalValuesMap.get(values[j]);
+                        if (searchValue.equals("") || StringUtils.containsIgnoreCase(values[j], searchValueWithoutWildcard)) {
+                            // Use a map to save values frequency
+                            String termName = values[j];
+                            TermFrequency valueFrequency = finalValuesMap.get(termName);
+                            if (valueFrequency != null) {
                                 // Log.debug(Geonet.SEARCH_ENGINE, "  " +
                                 // values[j] + ":" + valueFrequency);
-                                finalValuesMap.put(values[j], (valueFrequency != null ? ++valueFrequency : 1));
+                                valueFrequency.setFrequency(valueFrequency.getFrequency() + 1);
                             } else {
-                                finalValues.add(values[j]);
+                                finalValuesMap.put(termName, new TermFrequency(termName, 1));
                             }
+                            
                             counter++;
                         }
                     }
@@ -418,21 +406,26 @@ public class LuceneSearcher extends MetaSearcher {
 		
 		// Filter values which does not reach the threshold
 		if (threshold > 1) {
-			Map<String, Integer> filteredMap = Maps.filterValues(finalValuesMap, Ranges.atLeast(threshold));
-			// Push map content to collection
-			finalValues.addAll(filteredMap.keySet());
-			
+			int size = finalValuesMap.size();
+			Iterator<?> it = finalValuesMap.entrySet().iterator();
+			while (it.hasNext()) {
+			   Entry<?, ?> item = (Entry<?, ?>) it.next();
+			   TermFrequency term = (TermFrequency) item.getValue();
+				if (term.getFrequency() < threshold) {
+					it.remove();
+				}
+			}
 			if (Log.isDebugEnabled(Geonet.SEARCH_ENGINE)) {
 				Log.debug(Geonet.SEARCH_ENGINE, "  "
-						+ filteredMap.size() + "/" + finalValuesMap.size() + " above threshold: " + threshold);
+						+ finalValuesMap.size() + "/" + size + " above threshold: " + threshold);
 			}
 		}
 
 		if (Log.isDebugEnabled(Geonet.SEARCH_ENGINE)) {
 			Log.debug(Geonet.SEARCH_ENGINE, "  "
-					+ finalValues.size() + " returned.");
+					+ finalValuesMap.size() + " returned.");
 		}
-		return finalValues;
+		return finalValuesMap.values();
 	}
 	public int getSize() {
 		return _numHits;
@@ -449,8 +442,6 @@ public class LuceneSearcher extends MetaSearcher {
 		response.addContent((Element)_elSummary.clone());
 		return response;
 	}
-
-    private boolean closed = false;
 
     /**
      * TODO javadoc.
@@ -608,6 +599,10 @@ public class LuceneSearcher extends MetaSearcher {
 
 			processTimeRange(request.getChild(SearchParameter.DATEFROM), "0000-01-01", request.getChild(SearchParameter.DATETO), "9999-01-01");
 
+            processTimeRange(request.getChild(SearchParameter.CREATIONDATEFROM), "0000-01-01", request.getChild(SearchParameter.CREATIONDATETO), "9999-01-01");
+            processTimeRange(request.getChild(SearchParameter.REVISIONDATEFROM), "0000-01-01", request.getChild(SearchParameter.REVISIONDATETO), "9999-01-01");
+            processTimeRange(request.getChild(SearchParameter.PUBLICATIONDATEFROM), "0000-01-01", request.getChild(SearchParameter.PUBLICATIONDATETO), "9999-01-01");
+
 			//--- some other stuff
 
             if(Log.isDebugEnabled(Geonet.LUCENE))
@@ -651,13 +646,16 @@ public class LuceneSearcher extends MetaSearcher {
 			// Boosting query
 			if (_boostQueryClass != null) {
 				try {
-                    if(Log.isDebugEnabled(Geonet.SEARCH_ENGINE))
+                    if(Log.isDebugEnabled(Geonet.SEARCH_ENGINE)) {
                         Log.debug(Geonet.SEARCH_ENGINE, "Create boosting query:" + _boostQueryClass);
-					Class boostClass = Class.forName(_boostQueryClass);
-					Class[] clTypesArray = _luceneConfig.getBoostQueryParameterClass();				
+                    }
+                    
+					@SuppressWarnings("unchecked")
+                    Class<Query> boostClass = (Class<Query>) Class.forName(_boostQueryClass);
+					Class<?>[] clTypesArray = _luceneConfig.getBoostQueryParameterClass();				
 					Object[] inParamsArray = _luceneConfig.getBoostQueryParameter(); 
 
-					Class[] clTypesArrayAll = new Class[clTypesArray.length + 1];
+					Class<?>[] clTypesArrayAll = new Class[clTypesArray.length + 1];
 					clTypesArrayAll[0] = Class.forName("org.apache.lucene.search.Query");
 
                     System.arraycopy(clTypesArray, 0, clTypesArrayAll, 1, clTypesArray.length);
@@ -667,8 +665,8 @@ public class LuceneSearcher extends MetaSearcher {
 					try {
                         if(Log.isDebugEnabled(Geonet.SEARCH_ENGINE))
                             Log.debug(Geonet.SEARCH_ENGINE, "Creating boost query with parameters:" + Arrays.toString(inParamsArrayAll));
-						Constructor c = boostClass.getConstructor(clTypesArrayAll);
-						_query = (Query) c.newInstance(inParamsArrayAll);
+						Constructor<Query> c = boostClass.getConstructor(clTypesArrayAll);
+						_query = c.newInstance(inParamsArrayAll);
 					} catch (Exception e) {
 						Log.warning(Geonet.SEARCH_ENGINE, " Failed to create boosting query: " + e.getMessage() 
 								+ ". Check Lucene configuration");
@@ -784,21 +782,6 @@ public class LuceneSearcher extends MetaSearcher {
      * @throws Exception hmm
      */
 	private TopDocs performQuery(int startHit, int endHit, boolean buildSummary) throws Exception {
-
-		int numHits;
-		
-		boolean computeSummary = false;
-		if (buildSummary) {
-			computeSummary = _elSummary == null;
-			if (computeSummary) {
-				// get as many results as instructed or enough for search summary
-				numHits = Math.max(_maxHitsInSummary,endHit);
-			} else {
-				numHits = endHit;
-			}	
-		} else {
-			numHits = endHit;
-		}
 		IndexAndTaxonomy indexAndTaxonomy = _sm.getIndexReader(_language, _versionToken);
         _versionToken = indexAndTaxonomy.version;
         Pair<TopDocs,Element> results;
@@ -942,8 +925,7 @@ public class LuceneSearcher extends MetaSearcher {
      *
      * @param xmlQuery
      * @param analyzer
-     * @param tokenizedFieldSet
-     * @param numericFieldSet
+     * @param luceneConfig
      * @param langCode
      * @param requestedLanguageOnly
      * @return
@@ -970,12 +952,10 @@ public class LuceneSearcher extends MetaSearcher {
      *
      * @param xmlQuery
      * @param analyzer
-     * @param tokenizedFieldSet
-     * @param numericFieldSet
+     * @param luceneConfig
      * @return
      * @throws Exception
      */
-	@SuppressWarnings({"deprecation"})
     private static Query makeQuery(Element xmlQuery, PerFieldAnalyzerWrapper analyzer, LuceneConfig luceneConfig) throws Exception {
         if(Log.isDebugEnabled(Geonet.SEARCH_ENGINE))
             Log.debug(Geonet.SEARCH_ENGINE, "MakeQuery input XML:\n" + Xml.getString(xmlQuery));
@@ -1104,39 +1084,8 @@ public class LuceneSearcher extends MetaSearcher {
             // wildcards - preserve them by analyzing the parts of the search string around them separately
             // (this is because Lucene's StandardTokenizer would remove wildcards, but that's not what we want)
             if(string.indexOf('*') >= 0 || string.indexOf('?') >= 0) {
-                String starsPreserved = "";
-                String[] starSeparatedList = string.split("\\*");
-                for(String starSeparatedPart : starSeparatedList) {
-                    String qPreserved = "";
-                    // ? present
-                    if(starSeparatedPart.indexOf('?') >= 0) {
-                        String[] qSeparatedList = starSeparatedPart.split("\\?");
-                        for(String qSeparatedPart : qSeparatedList) {
-                            String analyzedPart = LuceneSearcher.analyzeQueryText(luceneIndexField, qSeparatedPart, analyzer, tokenizedFieldSet);
-                            qPreserved += '?' + analyzedPart;
-                        }
-                        // remove leading ?
-                        qPreserved = qPreserved.substring(1);
-                        starsPreserved += '*' + qPreserved;
-                    }
-                    // no ? present
-                    else {
-                        starsPreserved += '*' + LuceneSearcher.analyzeQueryText(luceneIndexField, starSeparatedPart, analyzer, tokenizedFieldSet);
-                    }
-                }
-                // remove leading *
-                if (!org.apache.commons.lang.StringUtils.isEmpty(starsPreserved)) {
-                    starsPreserved = starsPreserved.substring(1);
-                }
-
-                // restore ending wildcard
-                if (string.endsWith("*")) {
-                    starsPreserved += "*";
-                } else if (string.endsWith("?")) {
-                    starsPreserved += "?";
-                }
-
-                analyzedString = starsPreserved;
+                WildCardStringAnalyzer wildCardStringAnalyzer = new WildCardStringAnalyzer();
+                analyzedString = wildCardStringAnalyzer.analyze(string, luceneIndexField, analyzer, tokenizedFieldSet);
             }
             // no wildcards
             else {
@@ -1265,7 +1214,7 @@ public class LuceneSearcher extends MetaSearcher {
                     Map<String, Double> facetValues = new LinkedHashMap<String, Double>();
 
                     // facetValues = new TreeMap<String, Double>(comparator)
-                    for (Iterator subresults = frn.getSubResults().iterator(); subresults
+                    for (Iterator<? extends FacetResultNode> subresults = frn.getSubResults().iterator(); subresults
                             .hasNext();) {
                         FacetResultNode node = (FacetResultNode) subresults
                                 .next();
@@ -1284,7 +1233,7 @@ public class LuceneSearcher extends MetaSearcher {
                     // No need for a custom comparator Lucene facet request is
                     // made by count descending order
                     if (Facet.SortBy.COUNT != config.getSortBy()) {
-                        Comparator c = null;
+                        Comparator<Entry<String, Double>> c = null;
                         if (Facet.SortBy.NUMVALUE == config.getSortBy()) {
                             // Create a numeric comparator
                             c = new Comparator<Entry<String, Double>>() {
@@ -1371,9 +1320,10 @@ public class LuceneSearcher extends MetaSearcher {
 			Map<String, FacetConfig> summaryConfigValues) {
             List<FacetRequest> requests = new ArrayList<FacetRequest>(summaryConfigValues.size());
 		
-		for (String key : summaryConfigValues.keySet()) {
-			FacetConfig config = summaryConfigValues.get(key);
-			
+		for (Map.Entry<String, FacetConfig> entry : summaryConfigValues.entrySet()) {
+			FacetConfig config = entry.getValue();
+			String key = entry.getKey();
+
 			int max = config.getMax();
 			
 			FacetRequest facetRequest = new CountFacetRequest(
@@ -1396,7 +1346,6 @@ public class LuceneSearcher extends MetaSearcher {
 	 */
 	private static Element getMetadataFromIndex(Document doc, String id, boolean dumpAllField, String searchLang, Set<String> multiLangSearchTerm, Map<String, String> dumpFields){
         // Retrieve the info element
-        String root       = doc.get("_root");
         String schema     = doc.get("_schema");
         String source     = doc.get("_source");
         String uuid       = doc.get("_uuid");
@@ -1439,12 +1388,13 @@ public class LuceneSearcher extends MetaSearcher {
             addedTranslation = null;
         }
         if (dumpFields != null) {
-            for (String fieldName : dumpFields.keySet()) {
+            for (Map.Entry<String, String> entry : dumpFields.entrySet()) {
+                String fieldName = entry.getKey();
                 IndexableField[] values = doc.getFields(fieldName);
                 for (IndexableField f : values) {
                     if (f != null) {
                         if(addedTranslation == null || !addedTranslation.contains(fieldName)) {
-                            md.addContent(new Element(dumpFields.get(fieldName)).setText(f.stringValue()));
+                            md.addContent(new Element(entry.getValue()).setText(f.stringValue()));
                         }
                     }
                 }
@@ -1520,35 +1470,8 @@ public class LuceneSearcher extends MetaSearcher {
               indexAndTaxonomy.indexReader.document(sdoc.doc, docVisitor);
               Document doc = docVisitor.getDocument();
     
-              MdInfo mdInfo = new MdInfo();
-              mdInfo.id           = doc.get("_id");
-              mdInfo.uuid         = doc.get("_uuid");
-              mdInfo.schemaId     = doc.get("_schema");
-              String isTemplate   = doc.get("_isTemplate");
-              if (isTemplate.equals("y")) {
-                  mdInfo.template = MdInfo.Template.TEMPLATE;
-              }
-              else if (isTemplate.equals("s")) {
-                  mdInfo.template = MdInfo.Template.SUBTEMPLATE;
-              }
-              else {
-                  mdInfo.template = MdInfo.Template.METADATA;
-              }
-              String isHarvested  = doc.get("_isHarvested");
-              if (isHarvested != null) {
-                  mdInfo.isHarvested  = doc.get("_isHarvested").equals("y");
-              }
-              else {
-                  mdInfo.isHarvested  = false;
-              }
-              mdInfo.createDate   = doc.get("_createDate");
-              mdInfo.changeDate   = doc.get("_changeDate");
-              mdInfo.source       = doc.get("_source");
-              mdInfo.title        = doc.get("_title");
-              mdInfo.root         = doc.get("_root");
-              mdInfo.owner        = doc.get("_owner");
-              mdInfo.groupOwner   = doc.get("_groupOwner");
-    
+              MdInfo mdInfo = new MdInfo(doc);
+
               response.put(Integer.parseInt(mdInfo.id), mdInfo);
           }
       } finally {
@@ -1573,7 +1496,7 @@ public class LuceneSearcher extends MetaSearcher {
     /**
      * TODO javadoc.
      *
-     * @param webappNameg
+     * @param priorityLang
      * @param id
      * @param fieldname
      * @return
@@ -1599,7 +1522,7 @@ public class LuceneSearcher extends MetaSearcher {
     public static Map<String,String> getMetadataFromIndex(String priorityLang, String idField, String id, Set<String> fieldnames) throws Exception {
         Map<String,Map<String,String>> results = LuceneSearcher.getAllMetadataFromIndexFor(priorityLang, idField, id, fieldnames, false);
         if (results.size() == 1) {
-            return (Map<String, String>) results.values().toArray()[0];
+            return results.values().iterator().next();
         } else {
             return new HashMap<String, String>();
         }
@@ -1802,7 +1725,7 @@ public class LuceneSearcher extends MetaSearcher {
      * 
      * @author francois
      */
-    class SearchLoggerTask implements Runnable {
+    static class SearchLoggerTask implements Runnable {
         private ServiceContext srvContext;
         boolean logSpatialObject;
         String luceneTermsToExclude;

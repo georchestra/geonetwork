@@ -24,7 +24,6 @@
 package org.fao.geonet.services.metadata;
 
 import jeeves.constants.Jeeves;
-import jeeves.interfaces.Service;
 import jeeves.resources.dbms.Dbms;
 import jeeves.server.ServiceConfig;
 import jeeves.server.UserSession;
@@ -37,7 +36,7 @@ import org.fao.geonet.constants.Params;
 import org.fao.geonet.exceptions.ConcurrentUpdateEx;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.services.NotInReadOnlyModeService;
-import org.fao.geonet.util.ISODate;
+import org.fao.geonet.services.Utils;
 import org.jdom.Element;
 
 /**
@@ -74,8 +73,7 @@ public class Update extends NotInReadOnlyModeService {
 
 		Dbms dbms = (Dbms) context.getResourceManager().open(Geonet.Res.MAIN_DB);
 
-		String id         = Util.getParam(params, Params.ID);
-		String version    = Util.getParam(params, Params.VERSION);
+		String id         = Utils.getIdentifierFromParameters(params, context);
 		String isTemplate = Util.getParam(params, Params.TEMPLATE, "n");
 		String showValidationErrors = Util.getParam(params, Params.SHOWVALIDATIONERRORS, "false");
 		String title      = params.getChildText(Params.TITLE);

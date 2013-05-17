@@ -5,7 +5,7 @@
   <parent>
 		<groupId>org.georchestra</groupId>
     <artifactId>geonetwork</artifactId>
-		<version>13.02</version>
+		<version>13.02-SNAPSHOT</version>
   </parent>
 
   <!-- =========================================================== -->
@@ -873,11 +873,13 @@
     Profiles configuration is defined in src/main/filters.
     -->
   <profiles>
-				<!-- Start GEORCHESTRA change -->
+    <!-- Start GEORCHESTRA change -->
 	<profile>
 		<id>useConfig</id>
 		<activation>
-			<activeByDefault>true</activeByDefault>
+			<!-- the activation is always true so that this profile is enabled unless 
+				 intentionally disabled -->
+			<file><missing>${project.build.directory}/this-file-does-not-exist</missing></file>
 		</activation>
 		<build>
 			<plugins>
@@ -928,10 +930,38 @@
 		</build>
 	</profile>
 <!-- End GEORCHESTRA change -->
+	<profile>
+		<id>run-static-analysis</id>
+		<activation>
+			<property><name>!skipTests</name></property>
+		</activation>
+		<build>
+		<plugins>
+		  <plugin>
+			<groupId>org.codehaus.mojo</groupId>
+			<artifactId>findbugs-maven-plugin</artifactId>
+		  </plugin>
+		  <plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-checkstyle-plugin</artifactId>
+		  </plugin>
+		</plugins>
+		</build>
+	</profile>
+    <profile>
+      <id>no-env-specified</id>
+      <activation>
+        <property>
+          <name>!env</name>
+        </property>
+      </activation>
+      <properties>
+        <env>prod</env>
+      </properties>
+    </profile>
     <profile>
       <id>env-prod</id>
       <activation>
-        <activeByDefault>true</activeByDefault>
         <property>
           <name>env</name>
           <value>prod</value>
@@ -979,6 +1009,14 @@
           <widgets.webapp.resources>,../web-client/src/main/resources/</widgets.webapp.resources>
       </properties>
     </profile>
+    <profile>
+		<id>html5ui</id>
+		<properties>
+			<web.xml.widget.config.overrides>/WEB-INF/config-overrides-html5ui.xml</web.xml.widget.config.overrides>
+			<widgets.webapp.resources>,../web-client/src/main/resources/</widgets.webapp.resources>
+		</properties>
+    </profile>
+    
   </profiles>
   
   <reporting>
@@ -1004,5 +1042,6 @@
     <web.xml.widget.config.overrides></web.xml.widget.config.overrides>
     <widgets.webapp.resources></widgets.webapp.resources>
     <system.specific.overrides></system.specific.overrides>
+    <rootProjectDir>${basedir}/..</rootProjectDir>
   </properties>
 </project>

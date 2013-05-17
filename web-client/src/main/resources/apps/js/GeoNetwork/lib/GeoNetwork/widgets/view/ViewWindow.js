@@ -99,6 +99,8 @@ GeoNetwork.view.ViewWindow = Ext.extend(Ext.Window, {
     getPanel: function() {
         return this.panel;
     },
+    addCustomAction: function() {
+    },
     initComponent: function(){
         Ext.applyIf(this, this.defaultConfig);
         

@@ -24,7 +24,6 @@
 package org.fao.geonet.services.category;
 
 import jeeves.constants.Jeeves;
-import jeeves.interfaces.Service;
 import jeeves.resources.dbms.Dbms;
 import jeeves.server.ServiceConfig;
 import jeeves.server.context.ServiceContext;
@@ -58,10 +57,11 @@ public class Remove extends NotInReadOnlyModeService {
 
 		Dbms dbms = (Dbms) context.getResourceManager().open (Geonet.Res.MAIN_DB);
 
-		int iId = new Integer(id);
+		int iId = Integer.valueOf(id);
 		String query = "SELECT metadataId FROM MetadataCateg WHERE categoryId=?";
 
-		List<Element> reindex = dbms.select(query, iId).getChildren();
+		@SuppressWarnings("unchecked")
+        List<Element> reindex = dbms.select(query, iId).getChildren();
 
 		dbms.execute ("DELETE FROM MetadataCateg WHERE categoryId=?",iId);
 		dbms.execute ("DELETE FROM CategoriesDes WHERE idDes=?",iId);

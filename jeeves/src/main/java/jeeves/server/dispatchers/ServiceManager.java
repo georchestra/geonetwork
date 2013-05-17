@@ -30,6 +30,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
+import java.util.Map.Entry;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
@@ -422,8 +423,6 @@ public class ServiceManager
 				//---------------------------------------------------------------------
 				//--- check access
 
-				String profile = ProfileManager.GUEST;
-
                 TimerContext timerContext = monitorManager.getTimer(ServiceManagerServicesTimer.class).time();
                 try{
 				    response = srvInfo.execServices(req.getParams(), context);
@@ -431,6 +430,17 @@ public class ServiceManager
                     timerContext.stop();
                 }
 
+                // Did we change some header on the service?
+                for (Entry<String, String> entry : context.getResponseHeaders()
+                        .entrySet()) {
+                    ((HttpServiceRequest) req).getHttpServletResponse()
+                            .setHeader(entry.getKey(), entry.getValue());
+                }
+
+                if (context.getStatusCode() != null) {
+                    ((ServiceRequest) req).setStatusCode(context
+                            .getStatusCode());
+                }
 				//---------------------------------------------------------------------
 				//--- handle forward
 
@@ -514,7 +524,7 @@ public class ServiceManager
 				req.write(SOAPUtil.embedExc(error, sender, id, message));
 			}
 
-			else if (input == InputMethod.XML || output == OutputMethod.XML || srvInfo == null)
+			else if (input == InputMethod.XML || output == OutputMethod.XML)
 			{
 				req.setStatusCode(code);
 				req.beginStream("application/xml; charset=UTF-8", cache);
@@ -525,7 +535,7 @@ public class ServiceManager
 			{
 				//--- try to dispatch to the error output
 
-				ErrorPage errPage = (srvInfo != null) ? srvInfo.findErrorPage(id) : null;
+				ErrorPage errPage = srvInfo.findErrorPage(id);
 
 				if (errPage == null)
 					errPage = findErrorPage(id);
@@ -598,6 +608,13 @@ public class ServiceManager
 
 				if (in == InputMethod.SOAP || out == OutputMethod.SOAP)
 				{
+
+                    // Did we set up a status code for the response?
+                    if (context.getStatusCode() != null) {
+                        ((ServiceRequest) req).setStatusCode(context
+                                .getStatusCode());
+                    }
+
 					req.beginStream("application/soap+xml; charset=UTF-8", cache);
 
 					if (!SOAPUtil.isEnvelope(response))
@@ -685,6 +702,10 @@ public class ServiceManager
 
 			int cl = (contentLength == null) ? -1 : Integer.parseInt(contentLength);
 
+            // Did we set up a status code for the response?
+            if (context.getStatusCode() != null) {
+                ((ServiceRequest) req).setStatusCode(context.getStatusCode());
+            }
 			req.beginStream(contentType, cl, contentDisposition, cache);
 			BinaryFile.write(response, req.getOutputStream());
 			req.endStream();

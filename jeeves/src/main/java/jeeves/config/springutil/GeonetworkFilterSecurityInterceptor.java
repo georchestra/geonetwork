@@ -23,10 +23,10 @@ import org.springframework.security.web.access.intercept.FilterSecurityIntercept
  */
 public class GeonetworkFilterSecurityInterceptor extends FilterSecurityInterceptor {
     private static final String GN_SECURITY_ACCEPTED = "__geonetwork_spring_security_filterSecurityInterceptor_permission_granted";
-	private final String appliedToken; 
-	public GeonetworkFilterSecurityInterceptor(String appliedToken) {
-		this.appliedToken = appliedToken;
-	}
+    private final String appliedToken; 
+    public GeonetworkFilterSecurityInterceptor(String appliedToken) {
+        this.appliedToken = appliedToken;
+    }
     public void invoke(FilterInvocation fi) throws IOException, ServletException {
         if ((fi.getRequest() != null) && (fi.getRequest().getAttribute(appliedToken) != null || fi.getRequest().getAttribute(GN_SECURITY_ACCEPTED) != null)) {
             // filter already applied to this request and user wants us to observe
@@ -40,7 +40,7 @@ public class GeonetworkFilterSecurityInterceptor extends FilterSecurityIntercept
 
             InterceptorStatusToken token = super.beforeInvocation(fi);
             if (fi.getRequest() != null && token != null) {
-            	fi.getRequest().setAttribute(GN_SECURITY_ACCEPTED, Boolean.TRUE);
+                fi.getRequest().setAttribute(GN_SECURITY_ACCEPTED, Boolean.TRUE);
             }
 
             fi.getChain().doFilter(fi.getRequest(), fi.getResponse());

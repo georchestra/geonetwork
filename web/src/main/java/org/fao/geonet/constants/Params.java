@@ -26,7 +26,7 @@ package org.fao.geonet.constants;
 /**
  * Constants for service parameters (elements and attributes).
  */
-public class Params {
+public final class Params {
 	public static final String ACCESS       = "access";
 	public static final String BTN          = "btn";
 	public static final String CATEGORY     = "category";
@@ -117,7 +117,20 @@ public class Params {
     public static final String XPATH_TITLE = "xpathTitle";
 		public static final String EXTRACT_TITLE = "extractTitle";
     public static final String DOCHANGES = "doChanges";
-    
+
+    public static final String IS_UPLOAD    = "isUpload";
+    public static final String TEMPLATEID    = "templateId";
+    public static final String USE_SESSION  = "use_session";
+    public static final String ORGANIZATION  = "organization";
+    public static final String PHONE  = "phone";
+    public static final String SEX  = "sex";
+    public static final String CAPTCHARESPONSE  = "captcharesponse";
+    public static final String REMARKS  = "remarks";
+    public static final String FUNCTION  = "function";
+    public static final String FEEDBACK_FUNCTION  = "feedback-function";
+    public static final String METADATA_ORGANIZATION  = "metadataorganisation";
+    public static final String METADATA_EMAIL  = "metadataemail";
+    public static final String DATE  = "date";
     public static final String FULL_PRIVILEGES = "fullPrivileges";
     
 	public static final String SERVICENAME     = "servicename";
@@ -142,7 +155,7 @@ public class Params {
     /**
      * TODO javadoc.
      */
-	public class Access {
+	public static final class Access {
 		public static final String PUBLIC  = "public";
 		public static final String PRIVATE = "private";
 	}
@@ -150,7 +163,7 @@ public class Params {
     /**
      * TODO javadoc.
      */
-	public class Operation {
+	public static final class Operation {
 		public static final String NEWUSER  = "newuser";
 		public static final String EDITINFO = "editinfo";
 		public static final String FULLUPDATE = "fullupdate";
@@ -163,7 +176,7 @@ public class Params {
     /**
      * TODO javadoc.
      */
-	public class Status { 
+	public static final class Status { 
         public static final String UNKNOWN   = "0";
         public static final String DRAFT     = "1";
         public static final String APPROVED  = "2";
@@ -175,7 +188,7 @@ public class Params {
     /**
      * TODO javadoc.
      */
-	public class Svn {
+	public static final class Svn {
 		public static final String DBURLPROP = "geonet:dburl";
 		public static final String OPERATOR  = "geonet:operator";
 		public static final String USERNAME  = "geonet:username";

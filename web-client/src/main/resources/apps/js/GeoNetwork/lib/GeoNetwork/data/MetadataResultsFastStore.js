@@ -134,7 +134,34 @@ GeoNetwork.data.MetadataResultsFastStore = function(){
         }
         return contact;
     }
-    
+    function getOrganization(v, record) {
+        var orgName, el;
+        if (record.responsibleParty) {
+                for (i = 0; i < record.responsibleParty.length; i++) {
+                    var tokens = record.responsibleParty[i].value.split(separator);
+                    if(tokens[2]) {
+                        orgName = tokens[2];
+                        break;
+                    }
+                }
+            }
+        return orgName;
+    }   
+
+    function getEmail(v, record) {
+        var email, el;
+        if (record.responsibleParty) {
+            for (i = 0; i < record.responsibleParty.length; i++) {
+                var tokens = record.responsibleParty[i].value.split(separator);
+                if(tokens[4]) {
+                    email = tokens[4];
+                    break;
+                }
+            }
+        }
+        return email;
+   }
+ 
     function getLinks(v, record){
     	var links = [];
         if (record.link) {
@@ -296,8 +323,8 @@ GeoNetwork.data.MetadataResultsFastStore = function(){
         }
     }
     function getDisplayOrder(v, record){
-        if (record.geonet_info && record.geonet_info.displayOrder) {
-            return record.geonet_info.displayOrder[0].value;
+        if (record.displayOrder) {
+            return record.displayOrder[0].value;
         } else {
             return 0;
         }
@@ -340,6 +367,12 @@ GeoNetwork.data.MetadataResultsFastStore = function(){
         }, {
             name: 'contact',
             convert: getContact
+        }, {
+            name: 'email',
+            convert: getEmail
+        }, {
+            name: 'organization',
+            convert: getOrganization
         }, {
             name: 'credit',
             convert: getCredit
