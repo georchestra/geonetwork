@@ -285,8 +285,6 @@ GeoNetwork.app = function () {
         var denominatorField = GeoNetwork.util.SearchFormTools.getScaleDenominatorField(true);
         var statusField = GeoNetwork.util.SearchFormTools.getStatusField(services.getStatus, true);
         
-
-
         advancedCriteria.push(themekeyField, orgNameField, categoryField, 
                                 when, spatialTypes, denominatorField, 
                                 catalogueField, groupField, 
