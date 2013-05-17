@@ -4,7 +4,7 @@ GeoNetwork.dlForm = (function() {
 	
 	var win;
 	
-	var GN_PDF_URL = '/static/CGU_donnees_PIGMA.pdf';
+	var GN_PDF_URL = '/static/CGU_donnees_PIGMA.pdf';	// TODO : PIGMA related only ?
 	
 	var createForm = function(options,user,url) {
 		
@@ -43,7 +43,7 @@ GeoNetwork.dlForm = (function() {
             };
         } else {
             // use the dedicated dlform webservice.
-            storeOptions.url = 'http://dev.pigma.org/downloadform/data_usage';
+            storeOptions.url = '/downloadform/data_usage';
         }
 
 	    var formPanelItems = [
