@@ -643,8 +643,9 @@ GeoNetwork.MetadataResultsView = Ext.extend(Ext.DataView, {
                                     text: record.get('title') || record.get('name'),
                                     handler: function (b, e) {
                                         // FIXME : ref to app
-                                        app.switchMode('1', true);
-                                        app.getIMap().addWMC(record.get('href'));
+//                                        app.switchMode('1', true);
+//                                        app.getIMap().addWMC(record.get('href'));
+                                        window.open('/mapfishapp/?wmc=' + record.get('href'));
                                     }
                                 });
                             } else {
