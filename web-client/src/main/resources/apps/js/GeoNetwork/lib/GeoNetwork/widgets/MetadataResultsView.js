@@ -608,33 +608,9 @@ GeoNetwork.MetadataResultsView = Ext.extend(Ext.DataView, {
                                     linkButton.push({
                                         text: record.get('title') || record.get('name'),
                                         handler: function (b, e) {
-                                        
-                                            // Send layers (no service) to mapfishapp
-                                            var jsonObject = {services: [], layers: []};
-                                            
-                                            jsonObject.layers.push({
-                                                layername: record.get('name'),
-                                                metadataURL: app.getCatalogue().URL + '?id=' + id,
-                                                owstype: 'WMS',
-                                                owsurl: record.get('href'),
-                                                title: record.get('title')
-                                            });
-
-                                            var form = Ext.DomHelper.append(Ext.getBody(), {
-                                              tag: 'form',
-                                              action: '/mapfishapp/',
-                                              target: "_blank",
-                                              method: 'post'
-                                            });
-
-                                            var input = Ext.DomHelper.append(form, {
-                                              tag: 'input',
-                                              name: 'data'
-                                            });
-
-                                            input.value = new OpenLayers.Format.JSON().write(jsonObject);
-                                            form.submit();
-                                            Ext.removeNode(form);
+                                            // FIXME : ref to app
+                                            app.switchMode('1', true);
+                                            app.getIMap().addWMSLayer([[record.get('title'), record.get('href'), record.get('name'), uuid]]);
                                         }
                                     });
                                 }

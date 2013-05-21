@@ -718,6 +718,42 @@ GeoNetwork.app = function () {
     
     // public space:
     return {
+        // Default widgets function overriden
+        switchMode: function () {},
+        getIMap: function () {return this;},
+        addWMC: function(url) {
+            window.open('/mapfishapp/?wmc=' + url);
+        },
+        addWMSLayer: function (args) {
+            var layer = args[0];
+            
+            // Send layers (no service) to mapfishapp
+            var jsonObject = {services: [], layers: []};
+            
+            jsonObject.layers.push({
+                layername: layer[2],
+                metadataURL: app.getCatalogue().URL + '?uuid=' + layer[3],
+                owstype: 'WMS',
+                owsurl: layer[1],
+                title: layer[0]
+            });
+
+            var form = Ext.DomHelper.append(Ext.getBody(), {
+              tag: 'form',
+              action: '/mapfishapp/',
+              target: "_blank",
+              method: 'post'
+            });
+
+            var input = Ext.DomHelper.append(form, {
+              tag: 'input',
+              name: 'data'
+            });
+
+            input.value = new OpenLayers.Format.JSON().write(jsonObject);
+            form.submit();
+            Ext.removeNode(form);
+        },
         init: function () {
             geonetworkUrl = GeoNetwork.URL || window.location.href.match(/(http.*\/.*)\/apps\/georchestra.*/, '')[1];
 
