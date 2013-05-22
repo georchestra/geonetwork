@@ -95,17 +95,7 @@ function initShortcut() {
         stopEvent: true,
         label: OpenLayers.i18n('switchMode'),
         fn: function () {
-            app.switchMode(null, true);
-        }
-    }, {
-        key: "m",
-        ctrl: true,
-        shift: true,
-        stopEvent: true,
-        label: OpenLayers.i18n('toggleLayerManager'),
-        fn: function () {
-            var r = Ext.getCmp('layerManager');
-            r.toggleCollapse();
+            location = "/mapfishapp"
         }
     }, {
         key: "l",
