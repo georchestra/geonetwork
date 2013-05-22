@@ -495,7 +495,6 @@
                 <include>../../js/GeoNetwork-mini.js</include>
                 <include>${project.build.directory}/classes/apps/georchestra/js/Settings.js</include>
                 <include>${project.build.directory}/classes/apps/georchestra/js/map/Settings.js</include>
-                <include>${project.build.directory}/classes/apps/georchestra/js/map/MapApp.js</include>
                 <include>${project.build.directory}/classes/apps/georchestra/js/Shortcuts.js</include>
                 <include>${project.build.directory}/classes/apps/georchestra/js/downloadForm.js</include>
                 <include>${project.build.directory}/classes/apps/georchestra/js/App.js</include>
