@@ -662,6 +662,7 @@ GeoNetwork.Lang.en = {
     'linklabel-website': 'Web link',
     'linklabel-application/octet-stream': 'Link',
     'linklabel-': 'Link',
+    'cookies.warning': 'This webpage uses cookies, which will save on your computer information about your usage and statistics.',
     'extractData': 'Extract data',
     'visualizeData': 'View data'
 };
