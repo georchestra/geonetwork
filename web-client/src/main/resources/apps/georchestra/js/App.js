@@ -733,13 +733,22 @@ GeoNetwork.app = function () {
             // Send layers (no service) to mapfishapp
             var jsonObject = {services: [], layers: []};
             
-            jsonObject.layers.push({
-                layername: layer[2],
-                metadataURL: app.getCatalogue().URL + '?uuid=' + layer[3],
-                owstype: 'WMS',
-                owsurl: layer[1],
-                title: layer[0]
-            });
+            if (layer[2]) {
+                jsonObject.layers.push({
+                    layername: layer[2],
+                    metadataURL: app.getCatalogue().URL + '?uuid=' + layer[3],
+                    owstype: 'WMS',
+                    owsurl: layer[1],
+                    title: layer[0]
+                });
+            } else {
+                jsonObject.services.push({
+                    metadataURL: app.getCatalogue().URL + '?uuid=' + layer[3],
+                    owstype: 'WMS',
+                    owsurl: layer[1],
+                    title: layer[0]
+               });
+            }
 
             var form = Ext.DomHelper.append(Ext.getBody(), {
               tag: 'form',
