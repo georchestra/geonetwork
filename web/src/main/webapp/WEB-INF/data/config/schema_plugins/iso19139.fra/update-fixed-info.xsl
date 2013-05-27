@@ -393,7 +393,12 @@
 			<xsl:value-of select="."/>
 		</gco:CharacterString>
 	</xsl:template>
-
+	
+	<!-- Remove https protocol from Xlinks -->
+	<xsl:template match="@xlink:href[starts-with(., 'https')]">
+		<xsl:attribute name="xlink:href" select="concat('http', substring-after(., 'https'))"/>
+	</xsl:template>
+	
 	<!-- ================================================================= -->
 	<!-- copy everything else as is -->
 	
