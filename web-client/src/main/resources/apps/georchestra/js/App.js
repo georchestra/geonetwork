@@ -810,7 +810,11 @@ GeoNetwork.app = function () {
             
             // Extra stuffs
             infoPanel = createInfoPanel();
-            helpPanel = createHelpPanel();
+            try {
+                helpPanel = createHelpPanel();
+            } catch (e) {
+                // TODO: IE7 does not support help panel
+            }
             
             createHeader();
             
