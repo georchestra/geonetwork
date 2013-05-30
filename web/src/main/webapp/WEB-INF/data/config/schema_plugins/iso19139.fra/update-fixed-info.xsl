@@ -5,6 +5,7 @@
 						xmlns:gmx="http://www.isotc211.org/2005/gmx"						
 						xmlns:gco="http://www.isotc211.org/2005/gco"
 						xmlns:gmd="http://www.isotc211.org/2005/gmd"
+						xmlns:xlink="http://www.w3.org/1999/xlink"
                         exclude-result-prefixes="gmd srv">
 	<xsl:include href="../iso19139/convert/functions.xsl"/>
 	
@@ -393,7 +394,12 @@
 			<xsl:value-of select="."/>
 		</gco:CharacterString>
 	</xsl:template>
-
+	
+	<!-- Remove https protocol from Xlinks -->
+	<xsl:template match="@xlink:href[starts-with(., 'https')]">
+		<xsl:attribute name="xlink:href" select="concat('http', substring-after(., 'https'))"/>
+	</xsl:template>
+	
 	<!-- ================================================================= -->
 	<!-- copy everything else as is -->
 	
