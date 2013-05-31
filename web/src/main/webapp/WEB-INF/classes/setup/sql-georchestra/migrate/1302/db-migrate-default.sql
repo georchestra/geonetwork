@@ -1,4 +1,3 @@
-
 CREATE TABLE Services
   (
   
@@ -26,3 +25,6 @@ CREATE TABLE ServiceParameters
 -- Version update
 UPDATE Settings SET value='13.02' WHERE name='version';
 UPDATE Settings SET value='0' WHERE name='subVersion';
+
+grant ALL ON TABLE ServiceParameters to "www-data";
+grant ALL ON TABLE Services to "www-data";
