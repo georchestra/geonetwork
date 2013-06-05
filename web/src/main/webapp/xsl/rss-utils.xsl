@@ -118,7 +118,6 @@
 				<media:content url="{$thumbnailLink}" type="image/gif" width="100"/>
 			</xsl:if>
 			
-			
 			<xsl:apply-templates select="$metadata/geoBox" mode="geobox">
 				<xsl:with-param name="rssFormat" select="/root/request/georss" />
 			</xsl:apply-templates>
