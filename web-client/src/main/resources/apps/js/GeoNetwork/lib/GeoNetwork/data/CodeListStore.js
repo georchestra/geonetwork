@@ -48,7 +48,10 @@ GeoNetwork.data.CodeListStore = function(config){
         
     var DataRecord = Ext.data.Record.create(model);
     var store = new Ext.data.Store({
-        fields: model
+        fields: model,
+        // To avoid crash on form reset
+        // TODO : implement sort functions
+        singleSort: function(fieldName, dir) {return true;}
     });
     
     // Improve ? Here we use OL to load the response (how to POST body using Ext)
