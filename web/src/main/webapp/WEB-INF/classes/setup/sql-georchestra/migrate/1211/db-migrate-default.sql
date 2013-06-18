@@ -477,7 +477,7 @@ ALTER TABLE Settings ALTER COLUMN name TYPE varchar(64);
 
 UPDATE settings SET value='0 0 0/2 * * ?' where name = 'every';
 
-ALTER TABLE Users ADD phone varchar(16);
+ALTER TABLE Users ADD phone varchar(32);
 
 create or replace function migrateSharedObjects() returns VOID as E'DECLARE
     sharedobjects record; \
