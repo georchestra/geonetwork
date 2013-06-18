@@ -100,7 +100,7 @@ public class LDAPUserDetailsContextMapperWithProfileSearch extends
                             .matcher(profileName);
                     boolean b = m.matches();
                     if (b) {
-                        addProfile(profileManager, userDetails, m.group(1));
+                    	profileList.add(m.group(1));
                     } else {
                         Log.error(Geonet.LDAP, "LDAP profile '" + profileName
                                 + "' does not match search pattern '"
