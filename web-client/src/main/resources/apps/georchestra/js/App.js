@@ -832,7 +832,8 @@ GeoNetwork.app = function () {
             
             // Register events on the catalogue
             
-            var margins = '35 0 0 0';
+            var margins = GeoNetwork.Settings.HeaderHeight+' 0 0 0';
+
             var breadcrumb = new Ext.Panel({
                 layout:'table',
                 cls: 'breadcrumb',
