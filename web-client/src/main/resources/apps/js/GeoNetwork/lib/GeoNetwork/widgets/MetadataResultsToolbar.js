@@ -510,6 +510,7 @@ GeoNetwork.MetadataResultsToolbar = Ext.extend(Ext.Toolbar, {
         
         if(this.customOtherActions) {
         	this.actionMenu.add(this.customOtherActions);
+        	this.selectionActions = this.selectionActions.concat(this.customOtherActions);
         }
         this.createMassiveActionMenu(!this.catalogue.isIdentified());
         this.createAdminMenu(!this.catalogue.isIdentified());
