@@ -638,13 +638,13 @@ GeoNetwork.MetadataResultsView = Ext.extend(Ext.DataView, {
                                 	var itemMenu = {
                                         text: (record.get('title') || record.get('name'))
                                     }
-                                		
-                            		//activate downloadform
-                                	if (currentType == 'application/pdf' || 
+
+                            		//activate downloadform (geOrchestra specifics)
+                                	if (GeoNetwork.Settings.DownloadFormActivated && (currentType == 'application/pdf' || 
                                 			currentType == 'application/zip' ||
                                 			currentType == 'WWW:DOWNLOAD-1.0-http--download' ||
                                 			currentType == 'application/x-compressed' ||
-                                			currentType == 'image/png') {
+                                			currentType == 'image/png')) {
 
                                 		itemMenu.handler = function() {
                                 			GeoNetwork.dlForm.show({
@@ -652,8 +652,7 @@ GeoNetwork.MetadataResultsView = Ext.extend(Ext.DataView, {
                                                 	fname: Ext.urlDecode(record.get('href')).fname
                                                 }, view.catalogue.identifiedUser,record.get('href'));
                                 		};
-                                	} 
-                                	else {
+                                	} else {
                                 		itemMenu.href = record.get('href');
                                 		itemMenu.hrefTarget = '_blank';
                                 	}
