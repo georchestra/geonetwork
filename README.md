@@ -43,6 +43,7 @@ Here's a short procedure to follow if you wish to upgrade your existing geOrches
 * upgrade your geonetwork_data_dir:
   * unzip your new geonetwork.war in /tmp
   * then:
+ 
     rm -rf geonetwork_data_dir/config
     cp -r /tmp/geonetwork_war_unzipped/WEB-INF/data/config geonetwork_data_dir
     mkdir /tmp/mydata
