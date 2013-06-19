@@ -40,23 +40,21 @@ Here's a short procedure to follow if you wish to upgrade your existing geOrches
   * apply the following [SQL patch](https://github.com/georchestra/geonetwork/blob/georchestra-29/web/src/main/webapp/WEB-INF/classes/setup/sql-georchestra/migrate/1211/db-migrate-default.sql) 
   * apply this other [SQL patch](https://github.com/georchestra/geonetwork/blob/georchestra-29/web/src/main/webapp/WEB-INF/classes/setup/sql-georchestra/migrate/1302/db-migrate-default.sql)
 
-* upgrade your geonetwork_data_dir:
+* upgrade your \<geonetwork_data_dir\>:
   * unzip your new geonetwork.war in /tmp
-  * then:
- 
-    rm -rf geonetwork_data_dir/config
-    cp -r /tmp/geonetwork_war_unzipped/WEB-INF/data/config geonetwork_data_dir
-    mkdir /tmp/mydata
-    mv geonetwork_data_dir/data/* /tmp/mydata
-    mkdir geonetwork_data_dir/data/metadata_data
-    mv /tmp/mydata/* geonetwork_data_dir/data/metadata_data
-    rm -f geonetwork_data_dir/config/schemaplugin-uri-catalog.xml
+  * rm -rf \<geonetwork_data_dir\>/config
+  * cp -r /tmp/\<geonetwork_war_unzipped\>/WEB-INF/data/config \<geonetwork_data_dir\>
+  * mkdir /tmp/mydata
+  * mv \<geonetwork_data_dir\>/data/* /tmp/mydata
+  * mkdir \<geonetwork_data_dir\>/data/metadata_data
+  * mv /tmp/mydata/* \<geonetwork_data_dir\>/data/metadata_data
+  * rm -f \<geonetwork_data_dir\>/config/schemaplugin-uri-catalog.xml
 
-* check rights on your geonetwork data dir files (must be RW by tomcat user)
+Don't forget to check rights on your geonetwork data dir files (must be RW by tomcat user).
 
-* edit your apache config and add the following proxypass :
+Edit your apache config and add the following proxypass:
 
     ProxyPass /geonetwork-private/ ajp://localhost:8009/geonetwork/
     ProxyPassReverse /geonetwork-private/ ajp://localhost.com:8009/geonetwork/
 
-* restart apache + tomcat and you're done.
+Restart apache + tomcat and you're done.
