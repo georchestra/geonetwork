@@ -664,7 +664,10 @@ GeoNetwork.Lang.en = {
     'linklabel-': 'Link',
     'cookies.warning': 'This webpage uses cookies, which will save on your computer information about your usage and statistics.',
     'extractData': 'Extract data',
-    'visualizeData': 'View data'
+    'visualizeData': 'View data',
+    "invalidSelectionMoreThanOneWMC": "Invalid Selection : More than one WMC",
+    "invalidSelectionOneWMCandOneOrMoreWMS": "Invalid Selection : One WMC and one or more WMS",
+    "invalidSelectionnoWMCnorWMS": "Invalid Selection : no WMC nor WMS"
 };
 
 OpenLayers.Util.extend(OpenLayers.Lang.en, GeoNetwork.Lang.en);
