@@ -59,7 +59,11 @@ public class Download implements Service
 	//---
 	//-----------------------------------------------------------------------------
 
-	public void init(String appPath, ServiceConfig params) throws Exception {}
+	boolean downloadFormActivated = false;
+	
+	public void init(String appPath, ServiceConfig params) throws Exception {
+		downloadFormActivated = params.getValue("download_form", "false").equals("true");	
+	}
 
 	//-----------------------------------------------------------------------------
 	//---
@@ -84,7 +88,10 @@ public class Download implements Service
 			Lib.resource.checkPrivilege(context, id, AccessManager.OPER_DOWNLOAD);
 			// Begin Specific Georchestra 
 			//doNotify = true;
-			Lib.resource.downloadFormFilled(context, id, fname);
+			context.debug("Download form is activated: " + downloadFormActivated);
+			if (downloadFormActivated) {
+				Lib.resource.downloadFormFilled(context, id, fname);
+			}
 			// End Specific Georchestra
 		}
 
