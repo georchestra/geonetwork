@@ -220,6 +220,12 @@ GeoNetwork.MapTools = function() {
                 },
                 scope: this
             });
+            
+            this.on('changeRecord', function(record) {
+                extractAction.setDisabled(hasWMS(record));
+                visuAction.setDisabled(hasWMS(record));
+            }, this);
+            
             this.insert(0,visuAction);
             this.insert(0,extractAction);
         }

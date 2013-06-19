@@ -52,6 +52,8 @@ GeoNetwork.MetadataMenu = Ext.extend(Ext.menu.Menu, {
     setRecord: function(record) {
         this.record = record;
         this.updateMenu();
+        this.fireEvent('changeRecord', record);
+        
     },
     resultsView: undefined,
     catalogue: undefined,
@@ -388,6 +390,11 @@ GeoNetwork.MetadataMenu = Ext.extend(Ext.menu.Menu, {
      */
     initComponent: function(){
         Ext.applyIf(this, this.defaultConfig);
+        
+        // trigger when the menu changes its record reference
+        this.addEvents({
+            "changeRecord" : true
+        });
         
         GeoNetwork.MetadataMenu.superclass.initComponent.call(this);
         
