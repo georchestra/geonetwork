@@ -606,7 +606,7 @@ GeoNetwork.MetadataResultsView = Ext.extend(Ext.DataView, {
                             if ((currentType === 'application/vnd.ogc.wms_xml' || currentType === 'OGC:WMS')) {
                                 if (allowDynamic) {
                                     linkButton.push({
-                                        text: record.get('title') || record.get('name'),
+                                        text: record.get('title') || record.get('name') || record.get('href'),
                                         handler: function (b, e) {
                                             // FIXME : ref to app
                                             app.switchMode('1', true);
@@ -616,7 +616,7 @@ GeoNetwork.MetadataResultsView = Ext.extend(Ext.DataView, {
                                 }
                             } else if (currentType === 'application/vnd.ogc.wmc') {
                                 linkButton.push({
-                                    text: record.get('title') || record.get('name'),
+                                    text: record.get('title') || record.get('name') || record.get('href'),
                                     handler: function (b, e) {
                                         // FIXME : ref to app
 //                                        app.switchMode('1', true);

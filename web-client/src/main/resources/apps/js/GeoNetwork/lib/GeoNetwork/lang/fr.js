@@ -677,6 +677,9 @@ GeoNetwork.Lang.fr = {
     'linklabel-image/jpeg': 'Images',
     'linklabel-': 'Liens',
     'extractData': 'Extraire les données',
-    'visualizeData': 'Visualiser les données'
+    'visualizeData': 'Visualiser les données',
+    "invalidSelectionMoreThanOneWMC": "Sélection non valide : plusieurs WMC",
+    "invalidSelectionOneWMCandOneOrMoreWMS": "Sélection non valide : un WMC et un ou plusieurs WMS",
+    "invalidSelectionnoWMCnorWMS": "Sélection non valide : aucun WMC ou WMS"
 };
 OpenLayers.Util.extend(OpenLayers.Lang.fr, GeoNetwork.Lang.fr);
