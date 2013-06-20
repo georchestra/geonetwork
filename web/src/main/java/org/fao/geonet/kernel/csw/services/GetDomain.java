@@ -288,8 +288,8 @@ public class GetDomain extends AbstractOperation implements CatalogService
                     ObjectKeyIntMapIterator entries = duplicateValues.entries();
                     
                     while(entries.hasNext()) {
+                    	entries.next();
                         sortedValuesFrequency.add(new SummaryComparator.SummaryElement(entries));
-                        entries.next();
                     }
 					
 					if (freq)
