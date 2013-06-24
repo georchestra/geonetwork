@@ -1,3 +1,5 @@
+BEGIN;
+
 CREATE TABLE customelementset (
     xpath character varying(1000) NOT NULL
 );
@@ -510,3 +512,4 @@ END' LANGUAGE 'plpgsql';
 
 select migrateSharedObjects();
 
+COMMIT;
