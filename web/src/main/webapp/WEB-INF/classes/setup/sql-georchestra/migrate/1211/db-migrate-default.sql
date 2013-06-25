@@ -35,6 +35,7 @@ CREATE TABLE StatusValues
     reserved  char(1)       default 'n' not null,
     primary key(id)
   );
+ALTER TABLE public.StatusValues OWNER TO "www-data";
 
 
 CREATE TABLE StatusValuesDes
@@ -44,6 +45,7 @@ CREATE TABLE StatusValuesDes
     label   varchar(96)   not null,
     primary key(idDes,langId)
   );
+ALTER TABLE public.StatusValuesDes OWNER TO "www-data";
 
 
 CREATE TABLE MetadataStatus

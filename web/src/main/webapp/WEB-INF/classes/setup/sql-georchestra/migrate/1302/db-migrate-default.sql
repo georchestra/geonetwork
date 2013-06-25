@@ -28,7 +28,7 @@ CREATE TABLE ServiceParameters
 UPDATE Settings SET value='13.02' WHERE name='version';
 UPDATE Settings SET value='0' WHERE name='subVersion';
 
-GRANT ALL ON TABLE ServiceParameters to "www-data";
-GRANT ALL ON TABLE Services to "www-data";
+ALTER TABLE ServiceParameters OWNER TO "www-data";
+ALTER TABLE Services OWNER TO "www-data";
 
 COMMIT;
