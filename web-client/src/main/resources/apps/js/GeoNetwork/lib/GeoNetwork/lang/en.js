@@ -19,7 +19,8 @@
 Ext.namespace('GeoNetwork', 'GeoNetwork.Lang');
 
 GeoNetwork.Lang.en = {
-    'filterGroup': 'Filter group list ...',
+	'metadata-not-found': 'Metadata with UUID ${uuid} not found or not shared with you.',
+	'filterGroup': 'Filter group list ...',
     'harvestingAdmin': 'Harvesting',
     'updateUserInfo': 'Edit my profile',
     'updatePassword': 'Change my password',
