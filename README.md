@@ -37,8 +37,10 @@ Here's a short procedure to follow if you wish to upgrade your existing geOrches
 * update your geonetwork tomcat options according to the above setup
 
 * upgrade your geonetwork database:
+  * check the tables owner. The following patches assume www-data. If not, edit them.
   * from 2.6 to 2.9: apply the following [SQL patch](https://github.com/georchestra/geonetwork/blob/georchestra-29/web/src/main/webapp/WEB-INF/classes/setup/sql-georchestra/migrate/1211/db-migrate-default.sql) 
   * from 2.9 to 2.10: apply this other [SQL patch](https://github.com/georchestra/geonetwork/blob/georchestra-29/web/src/main/webapp/WEB-INF/classes/setup/sql-georchestra/migrate/1302/db-migrate-default.sql)
+  * In case of errors during the upgrade, you have to fix them. Usually, this is because of conflicting settings. Please refer to https://github.com/georchestra/georchestra/issues/166 for more information and possible solutions.
 
 * upgrade your \<geonetwork_data_dir\> from 2.6 to 2.10:
   * cd \<geonetwork_data_dir\>
