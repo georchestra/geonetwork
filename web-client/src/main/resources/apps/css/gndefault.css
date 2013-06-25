@@ -430,20 +430,21 @@ table.related * a:hover,
 
 #loading {
   position : absolute;
-  left : 5px;
-  top : 5px;
-  padding : 2px;
+  background : url(../images/default/spinner.gif) no-repeat left center; 
+  left : 50%;
+  top : 40%;
   z-index : 20001;
-  height : auto;
+  height : 50px;
+  width : 110px;
 }
 
 #loading .loading-indicator {
-  background : url(../images/default/spinner.gif) no-repeat;
+  background : none;
   color : #555;
-  text-align : center;
-  height : 40px;
-  width : 100px;
+  margin-top : 17px;
+  margin-left: 25px;
 }
+
 span.madeBy {
   color : #555;
   font-size : 85%;
