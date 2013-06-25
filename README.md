@@ -26,7 +26,7 @@ Be sure to include those options in your tomcat setup:
 Migrating
 ---------
 
-Here's a short procedure to follow if you wish to upgrade your existing geOrchestra GeoNetwork from 2.6.3 (geOrchestra < 12.11) or from 2.9 (geOrchestra 12.11) or 2.10 (geOrchestra 13.02)
+Here's a short procedure to follow if you wish to upgrade your existing geOrchestra GeoNetwork from 2.6.3 (geOrchestra < 12.11) or from 2.9 (geOrchestra 12.11) to 2.10 (geOrchestra 13.02)
 
 * upgrade the security proxy
 
