@@ -131,7 +131,7 @@ GeoNetwork.map.ExtentMap = function(){
         if (!edit) {
             var navigationControl = map.getControlsByClass('OpenLayers.Control.Navigation')[0];
             navigationControl.disableZoomWheel();
-            map.removeControl(map.getControlsByClass('OpenLayers.Control.PanZoom')[0]);
+//            map.removeControl(map.getControlsByClass('OpenLayers.Control.PanZoom')[0]);
         }
         
         // Add mouse position control to display coordintate.
