@@ -158,7 +158,10 @@ public class ProfileManager
 		
 		for (String p : profiles) {
 			Set<String> currentProfileSet = getProfilesSet(p);
-			if (currentProfileSet.size() < numberOfProfilesExtended) {
+			if(currentProfileSet == null && lowestProfile == null) {
+				lowestProfile = p;
+			}
+			else if (currentProfileSet.size() < numberOfProfilesExtended) {
 				lowestProfile = p;
 				numberOfProfilesExtended = currentProfileSet.size();
 			}
@@ -179,7 +182,10 @@ public class ProfileManager
 		
 		for (String p : profiles) {
 			Set<String> currentProfileSet = getProfilesSet(p);
-			if (currentProfileSet.size() > numberOfProfilesExtended) {
+			if(currentProfileSet == null && highestProfile == null) {
+				highestProfile = p;
+			}
+			else if (currentProfileSet.size() > numberOfProfilesExtended) {
 				highestProfile = p;
 				numberOfProfilesExtended = currentProfileSet.size();
 			}
