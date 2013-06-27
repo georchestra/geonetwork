@@ -161,7 +161,7 @@ public class ProfileManager
 			if(currentProfileSet == null && lowestProfile == null) {
 				lowestProfile = p;
 			}
-			else if (currentProfileSet.size() < numberOfProfilesExtended) {
+			else if (currentProfileSet != null && currentProfileSet.size() < numberOfProfilesExtended) {
 				lowestProfile = p;
 				numberOfProfilesExtended = currentProfileSet.size();
 			}
@@ -185,7 +185,7 @@ public class ProfileManager
 			if(currentProfileSet == null && highestProfile == null) {
 				highestProfile = p;
 			}
-			else if (currentProfileSet.size() > numberOfProfilesExtended) {
+			else if (currentProfileSet != null && currentProfileSet.size() > numberOfProfilesExtended) {
 				highestProfile = p;
 				numberOfProfilesExtended = currentProfileSet.size();
 			}
