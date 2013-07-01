@@ -693,7 +693,7 @@ GeoNetwork.MetadataResultsView = Ext.extend(Ext.DataView, {
                    
                     
                     // Add the download all button
-                    if (hasDownloadAction) {
+                    if (hasDownloadAction && !GeoNetwork.Settings.DownloadFormActivated) {
                         view.addLinkMenu([{
                             text: 'download',
                             handler: function () {
