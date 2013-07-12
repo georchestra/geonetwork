@@ -126,7 +126,6 @@
                 </xsl:when>
               </xsl:choose>
             </xsl:variable>
-            
             <xsl:value-of select="$response"/>
           </xsl:matching-substring>
           <xsl:non-matching-substring>
@@ -146,9 +145,8 @@
     <xsl:param name="error" as="xs:string"/>
     <xsl:param name="schema" as="xs:string"/>
     <xsl:param name="labels" as="node()"/>
-    
     <!-- Extract XSD error type and message-->
-    <xsl:analyze-string select="$error" regex="cvc-([\w\-0-9\.]+): (.*)">
+    <xsl:analyze-string select="$error" regex=".*cvc-([\w\-0-9\.]+): (.*)">
       <xsl:matching-substring>
         <xsl:value-of select="geonet:parse-xsd-error-msg(regex-group(1), regex-group(2), $schema, $labels)"/>
       </xsl:matching-substring>
