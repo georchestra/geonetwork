@@ -49,7 +49,7 @@
       </relation>
     </xsl:for-each>
     
-    <xsl:for-each select="gmd:MD_Metadata/descendant::*[name(.) = 'gmd:onLine']/*">
+    <xsl:for-each select="gmd:MD_Metadata/descendant::*[name(.) = 'gmd:onLine']/*[gmd:linkage/gmd:URL!='']">
       <relation type="onlinesrc">
         
         <!-- Compute title based on online source info-->
@@ -60,7 +60,9 @@
                                   then gmd:name/gco:CharacterString 
                                   else if (gmd:name/gmx:MimeFileType != '')
                                   then gmd:name/gmx:MimeFileType
-                                  else gmd:description/gco:CharacterString"/>
+                                  else if (gmd:description/gco:CharacterString != '')
+                                  then gmd:description/gco:CharacterString
+                                  else gmd:linkage/gmd:URL"/>
           <xsl:value-of select="if (gmd:protocol/*) then concat(' (', gmd:protocol/*, ')') else ''"/>
         </xsl:variable>
         
