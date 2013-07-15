@@ -93,6 +93,7 @@ GeoNetwork.MetadataResultsToolbar = Ext.extend(Ext.Toolbar, {
      * Array of additionnal other Actions
      */
     customOtherActions: undefined,
+    customAdminActions: undefined,
     
     mdSelectionInfo: 'md-selection-info',
     
@@ -371,6 +372,10 @@ GeoNetwork.MetadataResultsToolbar = Ext.extend(Ext.Toolbar, {
         if(!this.catalogue.isReadOnly()) {
             this.actionMenu.addItem(this.createMetadataAction);
         }
+        
+        if(this.customAdminActions) {
+            this.actionMenu.add(this.customAdminActions);
+        }
 
         this.mdImportAction = new Ext.menu.Item({
             text: OpenLayers.i18n('importMetadata'),
@@ -391,7 +396,8 @@ GeoNetwork.MetadataResultsToolbar = Ext.extend(Ext.Toolbar, {
             },
             scope: this,
             hidden: hide
-            });
+        });
+        
         this.actionMenu.addItem(this.adminAction);
 
     },
@@ -615,6 +621,8 @@ GeoNetwork.MetadataResultsToolbar = Ext.extend(Ext.Toolbar, {
             adminActions = [this.ownerAction],
             actions = [this.adminAction, this.otherItem];
         
+        editingActions = editingActions.concat(this.customAdminActions);
+
         Ext.each(actions, function(){
             this.setVisible(user);
         });
