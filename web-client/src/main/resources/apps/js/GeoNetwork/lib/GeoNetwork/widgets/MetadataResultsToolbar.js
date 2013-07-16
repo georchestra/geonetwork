@@ -621,7 +621,9 @@ GeoNetwork.MetadataResultsToolbar = Ext.extend(Ext.Toolbar, {
             adminActions = [this.ownerAction],
             actions = [this.adminAction, this.otherItem];
         
-        editingActions = editingActions.concat(this.customAdminActions);
+        if(this.customAdminActions) {
+            editingActions = editingActions.concat(this.customAdminActions);
+        }
 
         Ext.each(actions, function(){
             this.setVisible(user);
