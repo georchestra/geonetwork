@@ -232,6 +232,7 @@ GeoNetwork.MetadataResultsToolbar = Ext.extend(Ext.Toolbar, {
         });
         this.ownerAction = new Ext.menu.Item({
             text: OpenLayers.i18n('newOwner'),
+            iconCls: 'newOwnerIcon',
             id: 'ownerAction',
             handler: function(){
                 this.catalogue.massiveOp('NewOwner');
@@ -243,6 +244,7 @@ GeoNetwork.MetadataResultsToolbar = Ext.extend(Ext.Toolbar, {
         this.updateCategoriesAction = new Ext.menu.Item({
             text: OpenLayers.i18n('updateCategories'),
             id: 'updateCategoriesAction',
+            iconCls: 'categoryIcon',
             handler: function(){
                 this.catalogue.massiveOp('Categories');
             },
@@ -379,6 +381,7 @@ GeoNetwork.MetadataResultsToolbar = Ext.extend(Ext.Toolbar, {
 
         this.mdImportAction = new Ext.menu.Item({
             text: OpenLayers.i18n('importMetadata'),
+            iconCls: 'importIcon',
             handler: function(){
                 this.catalogue.metadataImport();
             },
@@ -391,6 +394,7 @@ GeoNetwork.MetadataResultsToolbar = Ext.extend(Ext.Toolbar, {
 
         this.adminAction = new Ext.menu.Item({
             text: OpenLayers.i18n('administration'),
+            iconCls: 'adminIcon',
             handler: function(){
                 this.catalogue.admin();
             },
@@ -438,6 +442,7 @@ GeoNetwork.MetadataResultsToolbar = Ext.extend(Ext.Toolbar, {
          */
         var csvExportAction = new Ext.Action({
             text: OpenLayers.i18n('exportCsv'),
+            iconCls: 'csvIcon',
             handler: function(){
                 this.catalogue.csvExport();
             },
