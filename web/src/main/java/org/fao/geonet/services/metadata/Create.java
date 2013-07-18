@@ -62,6 +62,13 @@ public class Create extends NotInReadOnlyModeService {
 		String uuid = "";
 		boolean haveAllRights = Boolean.valueOf(Util.getParam(params, Params.FULL_PRIVILEGES, "false"));
 		
+		// Set current tab for new editing session if defined.
+		Element elCurrTab = params.getChild(Params.CURRTAB);
+		if (elCurrTab != null) {
+			context.getUserSession().setProperty(Geonet.Session.METADATA_SHOW,
+					elCurrTab.getText());
+		}
+
 		// does the request contain a UUID ?
 		try {
 			uuid = Util.getParam(params, Params.UUID);
