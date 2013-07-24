@@ -40,7 +40,7 @@ GeoNetwork.editor.LinkResourcesWindow = Ext.extend(Ext.Window, {
     defaultConfig: {
         layout: 'fit',
         width: 700,
-        height: 740,
+        height: 740, // height is redefined in initComponent to fit body height
         border: false,
         modal: true,
         defaults: {
@@ -1111,7 +1111,7 @@ GeoNetwork.editor.LinkResourcesWindow = Ext.extend(Ext.Window, {
     },
     initComponent: function () {
         Ext.applyIf(this, this.defaultConfig);
-        
+        this.height = Ext.getBody().getHeight()-40;
         GeoNetwork.editor.LinkResourcesWindow.superclass.initComponent.call(this);
         
         this.setTitle(OpenLayers.i18n('linkAResource-' + this.type));
