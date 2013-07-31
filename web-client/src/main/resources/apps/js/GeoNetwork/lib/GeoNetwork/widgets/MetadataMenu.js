@@ -170,7 +170,7 @@ GeoNetwork.MetadataMenu = Ext.extend(Ext.menu.Menu, {
          });
          this.categoryAction = new Ext.Action({
              text: OpenLayers.i18n('categories'),
-             //iconCls : 'md-mn-copy',
+             iconCls: 'categoryIcon',
              handler: function(){
                  var id = this.record.get('id');
                  this.catalogue.metadataCategory(id);
@@ -243,6 +243,7 @@ GeoNetwork.MetadataMenu = Ext.extend(Ext.menu.Menu, {
         });
         this.csvExportAction = new Ext.Action({
             text: OpenLayers.i18n('exportCsv'),
+            iconCls: 'csvIcon',
             handler: function(){
                 this.catalogue.csvExport();
             },
@@ -363,8 +364,10 @@ GeoNetwork.MetadataMenu = Ext.extend(Ext.menu.Menu, {
         if (isPublished) {
             // Update label and handler to unpublish
             this.publicationToggleAction.setText(OpenLayers.i18n('unpublish'));
+            this.publicationToggleAction.setIconClass('unpublishIcon');
         } else {
             this.publicationToggleAction.setText(OpenLayers.i18n('publish'));
+            this.publicationToggleAction.setIconClass('publishIcon');
         }
         
         this.editAction.setDisabled(!isEditable || isReadOnly);

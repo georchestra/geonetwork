@@ -206,6 +206,7 @@ GeoNetwork.MapTools = function() {
             // 'this' reference the MetadataMenu
             var extractAction = new Ext.Action({
                 text: OpenLayers.i18n('extractData'),
+                iconCls: 'extractIcon',
                 disabled: hasWMS(this.record),
                 handler: function() {
                     app.extractMetadata(urlExtract, this.record.get('id'));
@@ -214,6 +215,7 @@ GeoNetwork.MapTools = function() {
             });
             var visuAction = new Ext.Action({
                 text: OpenLayers.i18n('visualizeData'),
+                iconCls: 'viewIcon',
                 disabled: hasWMS(this.record),
                 handler: function() {
                     app.extractMetadata(urlVisu, this.record.get('id'));

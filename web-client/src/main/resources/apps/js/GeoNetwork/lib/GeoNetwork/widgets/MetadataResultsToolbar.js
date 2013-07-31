@@ -93,6 +93,7 @@ GeoNetwork.MetadataResultsToolbar = Ext.extend(Ext.Toolbar, {
      * Array of additionnal other Actions
      */
     customOtherActions: undefined,
+    customAdminActions: undefined,
     
     mdSelectionInfo: 'md-selection-info',
     
@@ -231,6 +232,7 @@ GeoNetwork.MetadataResultsToolbar = Ext.extend(Ext.Toolbar, {
         });
         this.ownerAction = new Ext.menu.Item({
             text: OpenLayers.i18n('newOwner'),
+            iconCls: 'newOwnerIcon',
             id: 'ownerAction',
             handler: function(){
                 this.catalogue.massiveOp('NewOwner');
@@ -242,6 +244,7 @@ GeoNetwork.MetadataResultsToolbar = Ext.extend(Ext.Toolbar, {
         this.updateCategoriesAction = new Ext.menu.Item({
             text: OpenLayers.i18n('updateCategories'),
             id: 'updateCategoriesAction',
+            iconCls: 'categoryIcon',
             handler: function(){
                 this.catalogue.massiveOp('Categories');
             },
@@ -371,9 +374,14 @@ GeoNetwork.MetadataResultsToolbar = Ext.extend(Ext.Toolbar, {
         if(!this.catalogue.isReadOnly()) {
             this.actionMenu.addItem(this.createMetadataAction);
         }
+        
+        if(this.customAdminActions) {
+            this.actionMenu.add(this.customAdminActions);
+        }
 
         this.mdImportAction = new Ext.menu.Item({
             text: OpenLayers.i18n('importMetadata'),
+            iconCls: 'importIcon',
             handler: function(){
                 this.catalogue.metadataImport();
             },
@@ -386,12 +394,14 @@ GeoNetwork.MetadataResultsToolbar = Ext.extend(Ext.Toolbar, {
 
         this.adminAction = new Ext.menu.Item({
             text: OpenLayers.i18n('administration'),
+            iconCls: 'adminIcon',
             handler: function(){
                 this.catalogue.admin();
             },
             scope: this,
             hidden: hide
-            });
+        });
+        
         this.actionMenu.addItem(this.adminAction);
 
     },
@@ -432,6 +442,7 @@ GeoNetwork.MetadataResultsToolbar = Ext.extend(Ext.Toolbar, {
          */
         var csvExportAction = new Ext.Action({
             text: OpenLayers.i18n('exportCsv'),
+            iconCls: 'csvIcon',
             handler: function(){
                 this.catalogue.csvExport();
             },
@@ -615,6 +626,10 @@ GeoNetwork.MetadataResultsToolbar = Ext.extend(Ext.Toolbar, {
             adminActions = [this.ownerAction],
             actions = [this.adminAction, this.otherItem];
         
+        if(this.customAdminActions) {
+            editingActions = editingActions.concat(this.customAdminActions);
+        }
+
         Ext.each(actions, function(){
             this.setVisible(user);
         });
