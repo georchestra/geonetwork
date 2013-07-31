@@ -847,6 +847,7 @@ GeoNetwork.editor.LinkResourcesWindow = Ext.extend(Ext.Window, {
         
         this.formPanel = new Ext.form.FormPanel({
             items: cmp,
+            labelWidth: 200,
             buttons: [{
                 text: OpenLayers.i18n('createLink'),
                 iconCls: 'linkIcon',
@@ -1126,6 +1127,7 @@ GeoNetwork.editor.LinkResourcesWindow = Ext.extend(Ext.Window, {
     },
     initComponent: function () {
         Ext.applyIf(this, this.defaultConfig);
+        this.height = Ext.getBody().getHeight()-40;
         
         GeoNetwork.editor.LinkResourcesWindow.superclass.initComponent.call(this);
         
