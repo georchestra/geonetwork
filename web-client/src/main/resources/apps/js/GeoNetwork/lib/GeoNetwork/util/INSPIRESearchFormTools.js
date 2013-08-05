@@ -50,6 +50,7 @@ GeoNetwork.util.INSPIRESearchFormTools = {
                 name : 'E_serviceType',
                 mode : 'local',
                 triggerAction : 'all',
+                listWidth: 'width:auto',
                 fieldLabel : OpenLayers.i18n('serviceType'),
                 // value: annexes[1], // Set arbitrarily the second value of the
                 // array as the default one.
@@ -83,6 +84,7 @@ GeoNetwork.util.INSPIRESearchFormTools = {
                     id : 'inspireannex',
                     name : 'E_inspireannex',
                     mode : 'local',
+                    listWidth: 'width:auto',
                     triggerAction : 'all',
                     fieldLabel : OpenLayers.i18n('inspireannex'),
                     // value: annexes[1], // Set arbitrarily the second value of the
@@ -129,6 +131,7 @@ GeoNetwork.util.INSPIRESearchFormTools = {
             hideLabel : false,
             minChars : 1,
             hideTrigger : false,
+            listWidth: 'width:auto',
             url : services.opensearchSuggest,
             field : 'inspiretheme',
             name : 'E_inspiretheme',
@@ -189,6 +192,7 @@ GeoNetwork.util.INSPIRESearchFormTools = {
                 id : 'inspiretheme',
                 name : 'E_inspiretheme',
                 mode : 'local',
+                listWidth: 'width:auto',
                 triggerAction : 'all',
                 fieldLabel : OpenLayers.i18n('inspiretheme'),
                 store : themesStore,
@@ -257,6 +261,7 @@ GeoNetwork.util.INSPIRESearchFormTools = {
             id : 'keyword',
             name : 'E_keyword',
             mode : 'local',
+            listWidth: 'width:auto',
             triggerAction : 'all',
             fieldLabel : OpenLayers.i18n('inspireClassificationDataServices'),
             store : classificationDataServicesStore,
