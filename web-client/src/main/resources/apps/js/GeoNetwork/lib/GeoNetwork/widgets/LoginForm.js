@@ -234,6 +234,7 @@ GeoNetwork.LoginForm = Ext.extend(Ext.FormPanel, {
             text: OpenLayers.i18n('logout'),
             renderTo: Ext.get('admin-menu'),
             iconCls: 'md-mn mn-logout',
+            hidden: GeoNetwork.hideSignOut || false,
             listeners: {
                 click: function () {
                     this.catalogue.logout();

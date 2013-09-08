@@ -42,6 +42,9 @@ GeoNetwork.printDefaultForTabs = false;
 // Define if label needs to be displayed for login form next to username/password fields
 GeoNetwork.hideLoginLabels = true;
 
+// Hide sign out label from user menu. This may be relevant if CAS is used
+// and the decorator window contains its own signout action.
+GeoNetwork.hideSignOut = true;
 
 // Define which type of search to use
 // Old mode (xml.search with lucene, db access and XSL formatting)
