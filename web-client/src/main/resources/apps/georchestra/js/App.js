@@ -78,7 +78,8 @@ GeoNetwork.app = function () {
         var loginForm = new GeoNetwork.LoginForm({
             renderTo: 'login-form',
             catalogue: catalogue,
-            layout: 'hbox',
+            layout: 'hbox',            
+            hidden: GeoNetwork.hideSignOut || false,
             searchForm: Ext.getCmp('searchForm'),
             withUserMenu: true,
             hideLoginLabels: GeoNetwork.hideLoginLabels
