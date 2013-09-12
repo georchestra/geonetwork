@@ -145,7 +145,7 @@ GeoNetwork.LoginForm = Ext.extend(Ext.FormPanel, {
         'RegisteredUser': [{
                 label : OpenLayers.i18n("lastUpdates"),
                 criteria : {"E_sortBy" : "changeDate"}
-        }],
+            }],
         'Administrator': [{
                 label : OpenLayers.i18n('myMetadata'),
                 criteria : {"E__owner" : this.catalogue.identifiedUser.id, "E__isHarvested" : "n"}
@@ -176,7 +176,7 @@ GeoNetwork.LoginForm = Ext.extend(Ext.FormPanel, {
             searchForm.search();
         };
         
-        for ( var i = 0; i < userLinks.length; i++) {
+        for (var i = 0; i < userLinks.length; i++) {
             var criteria = userLinks[i].criteria, label = userLinks[i].label;
             
             this.linksPanel.add(new Ext.Button({
@@ -234,6 +234,7 @@ GeoNetwork.LoginForm = Ext.extend(Ext.FormPanel, {
             text: OpenLayers.i18n('logout'),
             renderTo: Ext.get('admin-menu'),
             iconCls: 'md-mn mn-logout',
+            hidden: GeoNetwork.hideSignOut || false,
             listeners: {
                 click: function () {
                     this.catalogue.logout();
@@ -259,7 +260,7 @@ GeoNetwork.LoginForm = Ext.extend(Ext.FormPanel, {
             text: OpenLayers.i18n('harvestingAdmin'),
             listeners: {
                 click: function () {
-                    this.catalogue.moveToURL(this.catalogue.services.harvestingAdmin)
+                    this.catalogue.moveToURL(this.catalogue.services.harvestingAdmin);
                 },
                 scope: this
             }
@@ -311,7 +312,6 @@ GeoNetwork.LoginForm = Ext.extend(Ext.FormPanel, {
             autoHide: false,
             bodyBorder: false,
             border: false,
-            frame: false,
             defaults: {
                 border: false
             },
@@ -446,10 +446,15 @@ GeoNetwork.LoginForm = Ext.extend(Ext.FormPanel, {
     login: function (cat, user) {
         var status = user ? true : false;
         var loginForm = this; 
-        Ext.each(this.toggledFields, function(item) {
-        	var visible = !status;
-        	if (item == loginForm.password || item == loginForm.username) {
-        		visible = visible && !cat.casEnabled
+
+        if (GeoNetwork.hideSignOut) {
+            loginForm.setVisible(status);
+        }
+        
+        Ext.each(this.toggledFields, function (item) {
+            var visible = !status;
+            if (item == loginForm.password || item == loginForm.username) {
+                visible = visible && !cat.casEnabled
         	}
         	item.setVisible(visible);
         });

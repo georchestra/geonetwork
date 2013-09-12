@@ -452,6 +452,7 @@ GeoNetwork.Lang.fr = {
     'metadata.update.forget.new': 'Ré-initialisation en cours ...',
     'ownerName': 'Rédacteur de la métadonnée',
     'setPrivileges': 'Définir les privilèges',
+    'setBatchPrivileges': 'Modifier tous les privilèges des fiches sélectionnées',
     'setCategories': 'Choisir les catégories',
     'massiveOp': 'Opération sur la sélection',
     'prepareDownload': 'Télécharger les fichiers',

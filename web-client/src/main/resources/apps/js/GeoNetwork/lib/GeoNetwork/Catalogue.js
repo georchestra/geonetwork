@@ -291,6 +291,8 @@ GeoNetwork.Catalogue = Ext.extend(Ext.util.Observable, {
             mdAdminSave: serviceUrl + 'metadata.admin',
             mdAdmin: serviceUrl + 'metadata.admin.form',
             mdAdminXml: serviceUrl + 'xml.metadata.admin.form',
+            mdBatchAdminXml: serviceUrl + 'xml.metadata.batch.admin.form',
+            mdBatchSaveXml: serviceUrl + 'xml.metadata.batch.update.privileges',
             mdValidate: serviceUrl + 'xml.metadata.validate',
             mdSuggestion: serviceUrl + 'metadata.suggestion',
             mdCategory: serviceUrl + 'metadata.category.form',
@@ -349,7 +351,7 @@ GeoNetwork.Catalogue = Ext.extend(Ext.util.Observable, {
             getRegions: serviceUrl + 'xml.info?type=regions',
             getSources: serviceUrl + 'xml.info?type=sources',
             getUsers: serviceUrl + 'xml.info?type=users',
-            getSiteInfo: serviceUrl + 'xml.info?type=site&type=auth',
+            getSiteInfo: serviceUrl + 'xml.info?type=site&type=auth&type=userGroupOnly',
             getInspireInfo: serviceUrl + 'xml.info?type=inspire',
             getIsoLanguages: serviceUrl + 'isolanguages',
             schemaInfo: serviceUrl + 'xml.schema.info',
@@ -373,7 +375,8 @@ GeoNetwork.Catalogue = Ext.extend(Ext.util.Observable, {
             harvestingAdmin: serviceUrl + 'harvesting',
             logoUrl: this.URL + '/images/logos/',
             imgUrl: this.URL + '/images/',
-            harvesterLogoUrl: this.URL + '/images/harvesting/'
+            harvesterLogoUrl: this.URL + '/images/harvesting/',
+            proxy: this.URL + '/proxy'
         };
         
         // TODO : init only once required (ie. metadata show)
@@ -527,7 +530,7 @@ GeoNetwork.Catalogue = Ext.extend(Ext.util.Observable, {
     getInfo: function (refresh) {
         if (refresh || this.info === null) {
             this.info = {};
-            var properties = ['name', 'organization', 'siteId', 'casEnabled'];
+            var properties = ['name', 'organization', 'siteId', 'casEnabled', 'userGroupOnly'];
             var request = OpenLayers.Request.GET({
                 url: this.services.getSiteInfo,
                 async: false
@@ -1096,6 +1099,9 @@ GeoNetwork.Catalogue = Ext.extend(Ext.util.Observable, {
             }
         });
     },
+    getNodeText: function(node){
+    	return node.innerText || node.textContent || node.text;
+    },
     /** api: method[isLoggedIn]
      * 
      *  Get the xml.info for me. If user is not identified
@@ -1109,25 +1115,25 @@ GeoNetwork.Catalogue = Ext.extend(Ext.util.Observable, {
             url: this.services.getMyInfo,
             async: false
         }), exception, authenticated, me;
-       
-       me = response.responseXML.getElementsByTagName('me')[0];
-       authenticated = me.getAttribute('authenticated') == 'true';
-       
+        
+        me = response.responseXML.getElementsByTagName('me')[0];
+        authenticated = me.getAttribute('authenticated') == 'true';
+        
         // Check status and also check than an Exception is not described in the HTML response
         // in case of bad startup
         exception = response.responseText.indexOf('Exception') !== -1;
         
         if (response.status === 200 && authenticated) {
-            this.identifiedUser = {
-                id: me.getElementsByTagName('id')[0].innerText || me.getElementsByTagName('id')[0].textContent,
-                username: me.getElementsByTagName('username')[0].innerText || me.getElementsByTagName('username')[0].textContent,
-                name: me.getElementsByTagName('name')[0].innerText || me.getElementsByTagName('name')[0].textContent,
-                surname: me.getElementsByTagName('surname')[0].innerText || me.getElementsByTagName('surname')[0].textContent,
-                phone: me.getElementsByTagName('phone')[0].innerText || me.getElementsByTagName('phone')[0].textContent,
-                organisation: me.getElementsByTagName('organisation')[0].innerText || me.getElementsByTagName('organisation')[0].textContent,
-                email: me.getElementsByTagName('email')[0].innerText || me.getElementsByTagName('email')[0].textContent,
-                hash: me.getElementsByTagName('hash')[0].innerText || me.getElementsByTagName('hash')[0].textContent,
-                role: me.getElementsByTagName('profile')[0].innerText || me.getElementsByTagName('profile')[0].textContent
+        	this.identifiedUser = {
+                id: this.getNodeText(me.getElementsByTagName('id')[0]),
+                username: this.getNodeText(me.getElementsByTagName('username')[0]),
+                name: this.getNodeText(me.getElementsByTagName('name')[0]),
+                surname: this.getNodeText(me.getElementsByTagName('surname')[0]),
+                phone: this.getNodeText(me.getElementsByTagName('phone')[0]),
+                organisation: this.getNodeText(me.getElementsByTagName('organisation')[0]),
+                email: this.getNodeText(me.getElementsByTagName('email')[0]), 
+                hash: this.getNodeText(me.getElementsByTagName('hash')[0]),
+                role: this.getNodeText(me.getElementsByTagName('profile')[0])
             };
             this.onAfterLogin();
             return true;
@@ -1301,8 +1307,19 @@ GeoNetwork.Catalogue = Ext.extend(Ext.util.Observable, {
      *  FIXME : Need work on GeoNetwork side to fix JS calls
      */
     massiveOp: function(type, cb){
-        var url = this.services.massiveOp[type];
-        this.modalAction(OpenLayers.i18n('massiveOp') + " - " + type, url, cb);
+        if (type === 'Privileges') {
+            var url = this.services.mdBatchAdminXml + "?id=" + id;
+            var privilegesPanel = new GeoNetwork.admin.PrivilegesPanel({
+                id: id,
+                url: url,
+                batch: true,
+                onlyUserGroup: this.info.userGroupOnly.toLowerCase() === 'true' || false
+            });
+            this.modalAction(OpenLayers.i18n('setBatchPrivileges'), privilegesPanel, cb);
+        } else {
+            var url = this.services.massiveOp[type];
+            this.modalAction(OpenLayers.i18n('massiveOp') + " - " + type, url, cb);
+        }
     },
     /** private: method[modalAction]
      *  

@@ -441,6 +441,7 @@ GeoNetwork.Lang.ca={
     'removeSelected': 'Esborrar els seleccionats',
     'ownerName': 'Propietari de la metadada',
     'setPrivileges': 'Definir privilegis',
+    'setBatchPrivileges': 'Overwrite privileges of selected records',
     'setCategories': 'Definir categories',
     'massiveOp': 'Operació batch ',
     'prepareDownload': 'Descarregar arxius',

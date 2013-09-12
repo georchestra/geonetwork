@@ -410,6 +410,7 @@ GeoNetwork.Lang.en = {
     'removeSelected': 'Remove selected',
     'ownerName': 'Metadata record owner',
     'setPrivileges': 'Set privileges',
+    'setBatchPrivileges': 'Overwrite privileges of selected records',
     'setCategories': 'Set categories',
     'massiveOp': 'Batch operation ',
     'prepareDownload': 'Download files',
