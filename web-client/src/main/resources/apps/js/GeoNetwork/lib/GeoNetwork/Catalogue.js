@@ -291,6 +291,8 @@ GeoNetwork.Catalogue = Ext.extend(Ext.util.Observable, {
             mdAdminSave: serviceUrl + 'metadata.admin',
             mdAdmin: serviceUrl + 'metadata.admin.form',
             mdAdminXml: serviceUrl + 'xml.metadata.admin.form',
+            mdBatchAdminXml: serviceUrl + 'xml.metadata.batch.admin.form',
+            mdBatchSaveXml: serviceUrl + 'xml.metadata.batch.update.privileges',
             mdValidate: serviceUrl + 'xml.metadata.validate',
             mdSuggestion: serviceUrl + 'metadata.suggestion',
             mdCategory: serviceUrl + 'metadata.category.form',
@@ -349,7 +351,7 @@ GeoNetwork.Catalogue = Ext.extend(Ext.util.Observable, {
             getRegions: serviceUrl + 'xml.info?type=regions',
             getSources: serviceUrl + 'xml.info?type=sources',
             getUsers: serviceUrl + 'xml.info?type=users',
-            getSiteInfo: serviceUrl + 'xml.info?type=site&type=auth',
+            getSiteInfo: serviceUrl + 'xml.info?type=site&type=auth&type=userGroupOnly',
             getInspireInfo: serviceUrl + 'xml.info?type=inspire',
             getIsoLanguages: serviceUrl + 'isolanguages',
             schemaInfo: serviceUrl + 'xml.schema.info',
@@ -528,7 +530,7 @@ GeoNetwork.Catalogue = Ext.extend(Ext.util.Observable, {
     getInfo: function (refresh) {
         if (refresh || this.info === null) {
             this.info = {};
-            var properties = ['name', 'organization', 'siteId', 'casEnabled'];
+            var properties = ['name', 'organization', 'siteId', 'casEnabled', 'userGroupOnly'];
             var request = OpenLayers.Request.GET({
                 url: this.services.getSiteInfo,
                 async: false
@@ -1305,8 +1307,19 @@ GeoNetwork.Catalogue = Ext.extend(Ext.util.Observable, {
      *  FIXME : Need work on GeoNetwork side to fix JS calls
      */
     massiveOp: function(type, cb){
-        var url = this.services.massiveOp[type];
-        this.modalAction(OpenLayers.i18n('massiveOp') + " - " + type, url, cb);
+        if (type === 'Privileges') {
+            var url = this.services.mdBatchAdminXml + "?id=" + id;
+            var privilegesPanel = new GeoNetwork.admin.PrivilegesPanel({
+                id: id,
+                url: url,
+                batch: true,
+                onlyUserGroup: this.info.userGroupOnly.toLowerCase() === 'true' || false
+            });
+            this.modalAction(OpenLayers.i18n('setBatchPrivileges'), privilegesPanel, cb);
+        } else {
+            var url = this.services.massiveOp[type];
+            this.modalAction(OpenLayers.i18n('massiveOp') + " - " + type, url, cb);
+        }
     },
     /** private: method[modalAction]
      *  

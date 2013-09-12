@@ -380,15 +380,23 @@
 			
 			<output sheet="metadata-admin.xsl"/>
 		</service>
-
+		
+		<service name="xml.metadata.batch.admin.form">
+			<class name=".services.metadata.PrepareBatchUpdatePrivileges"/>
+		</service>
+		
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-
+		
 		<service name="metadata.batch.update.privileges">
 			<class name=".services.metadata.BatchUpdatePrivileges"/>
-
+			
 			<output sheet="metadata-batch-results.xsl">
 				<xml name="info" file="xml/metadata-batchUpdatePrivileges.xml" />
 			</output>
+		</service>
+		
+		<service name="xml.metadata.batch.update.privileges">
+			<class name=".services.metadata.BatchUpdatePrivileges"/>
 		</service>
 		
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

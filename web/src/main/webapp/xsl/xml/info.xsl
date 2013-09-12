@@ -26,7 +26,13 @@
 			</platform>
 		</site>
 	</xsl:template>
-
+	
+	<xsl:template match="usergrouponly">
+		<metadataprivs>
+			<userGroupOnly><xsl:value-of select="value"/></userGroupOnly>
+		</metadataprivs>
+	</xsl:template>
+	
     <xsl:template match="inspire">
         <inspire>
             <enable><xsl:value-of select="children/enable/value"/></enable>

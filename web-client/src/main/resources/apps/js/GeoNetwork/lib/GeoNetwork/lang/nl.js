@@ -431,6 +431,7 @@ GeoNetwork.Lang.nl = {
     'removeSelected': "Verwijder selectie",
     'ownerName': "Metadata record eigenaar",
     'setPrivileges': "Stel rechten in",
+    'setBatchPrivileges': 'Overwrite privileges of selected records',
     'setCategories': "Stel categorieën in",
     'massiveOp': "Bulk operatie",
     'prepareDownload': "Download bestanden",

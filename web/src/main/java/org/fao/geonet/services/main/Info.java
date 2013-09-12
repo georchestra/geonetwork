@@ -129,7 +129,8 @@ public class Info implements Service {
                 Element r = getGroups(context, dbms, params.getChildText("profile"), false);
 				result.addContent(r);
             }
-
+			else if (type.equals("userGroupOnly"))
+                result.addContent(gc.getSettingManager().get("system/metadataprivs/usergrouponly", -1));
             else if (type.equals("groupsIncludingSystemGroups")) {
                 Element r = getGroups(context, dbms, null, true);
                 result.addContent(r);

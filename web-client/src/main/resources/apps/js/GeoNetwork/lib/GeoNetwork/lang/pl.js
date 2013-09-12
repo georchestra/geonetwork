@@ -441,6 +441,7 @@ GeoNetwork.Lang.pl = {
     'removeSelected': 'Usuń zaznaczone',
     'ownerName': 'Właściciel metadanych',
     'setPrivileges': 'Ustaw uprawnienia',
+    'setBatchPrivileges': 'Overwrite privileges of selected records',
     'setCategories': 'Ustaw kategorie',
     'massiveOp': 'Masowa operacja ',
     'prepareDownload': 'Pobierz pliki',

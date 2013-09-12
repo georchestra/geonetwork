@@ -424,6 +424,7 @@ GeoNetwork.Lang.es = {
     'removeSelected':'Eliminar la selección',
     'ownerName':'Propietario del registro de metadatos',
     'setPrivileges':'Establecer privilegios',
+    'setBatchPrivileges': 'Overwrite privileges of selected records',
     'setCategories':'Establecer categorías',
     'massiveOp':'Modo por lotes',
     'prepareDownload':'Descarga de archivos',

@@ -428,6 +428,7 @@ GeoNetwork.Lang.de = {
 'removeSelected':'Auswahl entfernen',
 'ownerName':'Metadatensatz Besitzer',
 'setPrivileges':'Rechte festlegen',
+'setBatchPrivileges': 'Overwrite privileges of selected records',
 'setCategories':'Kategorien festlegen',
 'massiveOp':'Batch-Betrieb',
 'prepareDownload':'Herunterladen von Dateien',
