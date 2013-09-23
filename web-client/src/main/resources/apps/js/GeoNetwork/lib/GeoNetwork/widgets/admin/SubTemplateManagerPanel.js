@@ -178,6 +178,12 @@ GeoNetwork.admin.SubTemplateManagerPanel = Ext.extend(Ext.Panel, {
             },
             scope: panel
         });
+
+
+        this.catalogue.metadataStore.on('load', function () {
+            this.sort('title');
+        });
+
         this.searchForm = new Ext.FormPanel({
             id: 'searchForm',
             border: false,
