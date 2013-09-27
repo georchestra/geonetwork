@@ -236,6 +236,7 @@ GeoNetwork.Lang.fr = {
 //    'dataset': 'Série de données',
 //    'series': 'Ensemble de séries de données',
     'model': 'Catalogue d\'attributs',
+    'featureCatalog': 'Catalogue d\'attributs',
     'dataset': 'Jeu de données',
     'series': 'Séries',
     'service': 'Service',
