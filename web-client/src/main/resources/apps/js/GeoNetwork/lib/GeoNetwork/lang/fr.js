@@ -28,6 +28,7 @@ GeoNetwork.Lang.fr = {
     'harvestingAdmin': 'Gestion du moissonnage',
     'updateUserInfo': 'Afficher mon profil',
     'updatePassword': 'Changer de mot de passe',
+    'checkAllOrNone': 'Cocher tout/rien',
     'myMetadata': 'Mes métadonnées',
     '_owner': 'Identifiant utilisateur',
     '_isHarvested': 'Fiches moissonnées',

@@ -32,6 +32,7 @@ GeoNetwork.Lang.en = {
     'QuickSearch': 'Quick search',
     'LastSubmitted': 'Last submitted',
     'lastUpdates': 'Last update',
+    'checkAllOrNone': 'Check all/none',
     '_indexingError': 'Indexing error',
     'RecordWithIndexingError': 'Records with indexing error',
     'fromLocalCatalog': 'Metadata from local catalog',
