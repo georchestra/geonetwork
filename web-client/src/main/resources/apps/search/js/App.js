@@ -768,14 +768,9 @@ GeoNetwork.app = function () {
             
             var margins = '35 0 0 0';
             var breadcrumb = new Ext.Panel({
-                layout:'table',
                 cls: 'breadcrumb',
                 defaultType: 'button',
-                border: false,
-                split: false,
-                layoutConfig: {
-                    columns:3
-                }
+                border: false
             });
             facetsPanel = new GeoNetwork.FacetsPanel({
                 searchForm: searchForm,
