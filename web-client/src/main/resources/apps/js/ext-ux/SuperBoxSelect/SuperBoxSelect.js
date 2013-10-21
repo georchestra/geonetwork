@@ -240,6 +240,13 @@ Ext.ux.form.SuperBoxSelect = Ext.extend(Ext.ux.form.SuperBoxSelect,Ext.form.Comb
         	});
         }
         
+        if (Ext.isIE8 || Ext.isIE7) {
+            // width: 'auto' is not supported.
+            if (this.listWidth && this.listWidth.indexOf("auto") !== -1) {
+                this.listWidth = undefined;
+            }
+        }
+        
         Ext.ux.form.SuperBoxSelect.superclass.initComponent.call(this);
         if(this.mode === 'remote' && this.store){
         	this.store.on('load', this.onStoreLoad, this);
