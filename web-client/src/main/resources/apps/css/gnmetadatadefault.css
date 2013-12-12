@@ -277,7 +277,6 @@ for long description */
 
 .metadata.xml * textarea.xml {
   width : 99% !important;
-  font-size: 80%;
   border: none;
   height : 100% !important; /* Don't work */
 }
