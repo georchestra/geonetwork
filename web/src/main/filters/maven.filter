@@ -26,7 +26,7 @@ psql.url=jdbc:postgresql://localhost:5432/geonetwork
 
 downloadform.psql.url=jdbc:postgresql://localhost:5432/downloadform
 dlform.activated=true
-dlform.pdf_url=/static/cgu.pdf
+dlform.pdf_url=/header/cgu.pdf
 
 xhr.proxy-url=http://vm-georchestra/proxy/
 
