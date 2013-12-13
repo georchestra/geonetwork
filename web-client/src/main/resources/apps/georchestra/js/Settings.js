@@ -95,5 +95,5 @@ Ext.BLANK_IMAGE_URL = '../js/ext/resources/images/default/s.gif';
 
 GeoNetwork.util.SearchTools.similarity='.8';
 
-GeoNetwork.Settings.DownloadFormPDF = "/_static/cgu.pdf";
+GeoNetwork.Settings.DownloadFormPDF = "";
 GeoNetwork.Settings.HeaderHeight = "90";
