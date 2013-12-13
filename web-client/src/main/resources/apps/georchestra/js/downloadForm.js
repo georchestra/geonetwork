@@ -4,7 +4,7 @@ GeoNetwork.dlForm = (function() {
 	
 	var win;
 	
-	var GN_PDF_URL = GeoNetwork.Settings.DownloadFormPDF || '/static/CGU.pdf';
+	var GN_PDF_URL = GeoNetwork.Settings.DownloadFormPDF || '/_static/CGU.pdf';
 	
 	var createForm = function(options,user,url) {
 		
