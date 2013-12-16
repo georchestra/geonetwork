@@ -281,7 +281,7 @@
 				</xsl:for-each>
 			</xsl:for-each>
 
-			<xsl:for-each select="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:graphicOverview/gmd:MD_BrowseGraphic">
+			<xsl:for-each select="gmd:identificationInfo/*/gmd:graphicOverview/gmd:MD_BrowseGraphic">
 				<xsl:variable name="fileName" select="gmd:fileName/gco:CharacterString"/>
 				<xsl:variable name="fileDescr" select="gmd:fileDescription/gco:CharacterString"/>
 				
