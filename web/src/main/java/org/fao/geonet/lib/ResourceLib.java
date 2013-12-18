@@ -208,10 +208,10 @@ public class ResourceLib {
 		return text;
 	}
 	
-	// Begin Specific Georchestra 
+	// Begin Specific geOrchestra
 	public void downloadFormFilled(ServiceContext context, String id, String fname) throws Exception {
 	        Dbms dbms = (Dbms) context.getResourceManager().open(Geonet.Res.DOWNLOAD_FORM_DB);
-	        String query = "SELECT count(id) FROM download.geonetwork_log where (sessionid=? OR username=?) AND filename=? AND metadata_id=?";
+	        String query = "SELECT count(id) FROM downloadform.geonetwork_log where (sessionid=? OR username=?) AND filename=? AND metadata_id=?";
 	        String sessionid = context.getUserSession().getsHttpSession().getId();
 	        
 	        String username = context.getUserSession().getUsername();
@@ -228,5 +228,5 @@ public class ResourceLib {
 	        }
 	        if(numResults < 1) throw new OperationNotAllowedEx("Download form has not been filled out.  The user needs to fill out the form before requesting the file: "+fname+" of metadata "+id); 
 	    }
-	// End Specific Georchestra 
+	// End Specific geOrchestra 
 }
