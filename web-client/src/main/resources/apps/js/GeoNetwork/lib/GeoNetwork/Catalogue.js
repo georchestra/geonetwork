@@ -1442,6 +1442,21 @@ GeoNetwork.Catalogue = Ext.extend(Ext.util.Observable, {
     metadataPrepareDownload: function(id){
         var url = this.services.prepareDownload + "?id=" + id;
         this.modalAction(OpenLayers.i18n('prepareDownload'), url);
+    },
+    /** api: method[metadataPrepareDownload]
+     *  Prepare download metadata popup
+     */
+    showDownloadForm: function(id,url) {
+      var downloadFormNeeded = ((GeoNetwork.Settings.DownloadFormActivated)
+        && ((url.indexOf(catalogue.hostUrl) == 0) && (url.indexOf("resources.get") > 0)));
+      if (downloadFormNeeded == false) {
+        window.open(url, '_blank');
+      } else {
+        GeoNetwork.dlForm.show({
+          id: id,
+          fname: Ext.urlDecode(url).fname
+        }, catalogue.identifiedUser,url);
+      }
     }
 });
 
