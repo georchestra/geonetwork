@@ -526,7 +526,7 @@
         <xsl:for-each-group select="descendant::gmd:onLine[gmd:CI_OnlineResource/gmd:linkage/gmd:URL!='']" group-by="gmd:CI_OnlineResource/gmd:protocol">
         <tr>
           <td class="main">
-            <!-- Usually, protocole format is OGC:WMS-version-blahblah, remove ':' and get
+            <!-- Usually, protocol format is OGC:WMS-version-blahblah, remove ':' and get
             prefix of the protocol to set the CSS icon class-->
             <span class="{translate(substring-before(current-grouping-key(), '-'), ':', '')} icon">
                 <xsl:variable name="labelBasedOnProtocol" select="/root/gui/schemas/iso19139/labels/element[@name = 'gmd:protocol']/helper/option[@value=normalize-space(current-grouping-key())]"/>
@@ -544,7 +544,7 @@
                   </xsl:apply-templates>
                 </xsl:variable>
                 <li>
-                  <a href="{gmd:CI_OnlineResource/gmd:linkage/gmd:URL}">
+                  <a href="#" onclick="javascript:catalogue.showDownloadForm('{ancestor::*[name() = 'gmd:MD_Metadata']/geonet:info/id}', '{gmd:CI_OnlineResource/gmd:linkage/gmd:URL}')">
                     <xsl:choose>
                       <xsl:when test="contains(current-grouping-key(), 'OGC') or contains(current-grouping-key(), 'DOWNLOAD')">
                         <!-- Name contains layer, feature type, coverage ... -->
