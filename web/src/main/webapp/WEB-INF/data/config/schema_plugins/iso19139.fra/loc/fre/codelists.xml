@@ -74,6 +74,10 @@
 			<label>Fournisseur</label>
 			<description>Organisme qui fournit la ressource. Acteur qui délivre physiquement la ressource, soit de manière directe au destinataire, soit par l’intermédiaire d’un diffuseur</description>
 		</entry>
+    <entry>
+      <code>funder</code>
+      <label>Financeur</label>
+    </entry>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<entry>
 			<code>custodian</code>
