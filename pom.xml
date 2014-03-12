@@ -238,7 +238,7 @@
             <descriptor>release/zip-war.xml</descriptor>
             <descriptor>release/bin.xml</descriptor>
           </descriptors>
-          <finalName>geonetwork-private-${version}</finalName>
+          <finalName>geonetwork-${version}</finalName>
           <outputDirectory>${project.build.directory}/release</outputDirectory>
         </configuration>
       </plugin>
