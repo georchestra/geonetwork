@@ -596,6 +596,12 @@
                               '{gmd:CI_OnlineResource/gmd:linkage/gmd:URL}', 
                               '{gmd:CI_OnlineResource/gmd:name/gco:CharacterString}', '{generate-id()}']]);">&#160;</a>
 -->                  </xsl:if>
+                  <xsl:if test="contains(current-grouping-key(), 'WMC')">
+                    &#160;
+                    <!--  Add WMC to geOrchestra mapfish app -->
+                    <a href="#" class="md-mn addLayer"
+                       onclick="window.open('/mapfishapp/?wmc={gmd:CI_OnlineResource/gmd:linkage/gmd:URL}');">&#160;</a>
+                   </xsl:if>
                 </li>
               </xsl:for-each>
             </ul>
