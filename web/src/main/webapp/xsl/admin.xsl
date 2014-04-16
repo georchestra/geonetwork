@@ -405,6 +405,10 @@
 
                     <!-- user and group services -->
                     <xsl:variable name="persInfoServices">
+                      <!-- In geOrchestra only the LDAP is used so do not
+                      allow user information editing. Only preserve the functionality
+                       for administrator - main use for devs. -->
+                      <xsl:if test="/root/gui/session/profile = 'Administrator'">
                         <xsl:call-template name="addrow">
                             <xsl:with-param name="service" select="'user.pwedit'"/>
                             <xsl:with-param name="args"
@@ -421,26 +425,27 @@
                             <xsl:with-param name="desc" select="/root/gui/strings/userInfoDes"/>
                         </xsl:call-template>
 
-                        <tr>
-                            <td class="spacer"/>
-                        </tr>
+                      </xsl:if>
+                      <tr>
+                          <td class="spacer"/>
+                      </tr>
 
-                        <xsl:call-template name="addrow">
-                            <xsl:with-param name="service" select="'user.list'"/>
-                            <xsl:with-param name="title" select="/root/gui/strings/userManagement"/>
-                            <xsl:with-param name="desc" select="/root/gui/strings/userManagementDes"
-                                    />
-                            <xsl:with-param name="icon">user.png</xsl:with-param>
-                        </xsl:call-template>
+                      <xsl:call-template name="addrow">
+                          <xsl:with-param name="service" select="'user.list'"/>
+                          <xsl:with-param name="title" select="/root/gui/strings/userManagement"/>
+                          <xsl:with-param name="desc" select="/root/gui/strings/userManagementDes"
+                                  />
+                          <xsl:with-param name="icon">user.png</xsl:with-param>
+                      </xsl:call-template>
 
-                        <xsl:if test="java:isAccessibleService('group.update')">
-                            <xsl:call-template name="addrow">
-                                <xsl:with-param name="service" select="'group.list'"/>
-                                <xsl:with-param name="title" select="/root/gui/strings/groupManagement"/>
-                                <xsl:with-param name="desc" select="/root/gui/strings/groupManDes"/>
-                                <xsl:with-param name="icon">group.png</xsl:with-param>
-                            </xsl:call-template>
-                        </xsl:if>
+                      <xsl:if test="java:isAccessibleService('group.update')">
+                          <xsl:call-template name="addrow">
+                              <xsl:with-param name="service" select="'group.list'"/>
+                              <xsl:with-param name="title" select="/root/gui/strings/groupManagement"/>
+                              <xsl:with-param name="desc" select="/root/gui/strings/groupManDes"/>
+                              <xsl:with-param name="icon">group.png</xsl:with-param>
+                          </xsl:call-template>
+                      </xsl:if>
                     </xsl:variable>
 
                     <xsl:if test="not($readonly)">
