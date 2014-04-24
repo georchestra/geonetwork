@@ -2633,7 +2633,10 @@
   <!-- online resources: WMS get map -->
   <!-- ============================================================================= -->
 
-  <xsl:template mode="iso19139" match="gmd:CI_OnlineResource[starts-with(gmd:protocol/gco:CharacterString,'OGC:WMS-') and contains(gmd:protocol/gco:CharacterString,'-get-map') and gmd:name]" priority="2">
+  <xsl:template mode="iso19139" match="gmd:CI_OnlineResource[
+               starts-with(gmd:protocol/gco:CharacterString,'OGC:WMS') or
+               starts-with(gmd:protocol/gco:CharacterString,'OGC:WMC') or
+               starts-with(gmd:protocol/gco:CharacterString,'OGC:OWS')]" priority="2">
     <xsl:param name="schema"/>
     <xsl:param name="edit"/>
     <xsl:variable name="metadata_id" select="//geonet:info/id" />
@@ -2653,7 +2656,19 @@
           <xsl:with-param name="schema"  select="$schema"/>
           <xsl:with-param name="title"  select="/root/gui/strings/interactiveMap"/>
           <xsl:with-param name="text">
-            <a href="javascript:addWMSLayer([['{$name}','{$linkage}','{$name}','{$metadata_id}']])" title="{/root/strings/interactiveMap}">
+            <xsl:variable name="fn">
+              <xsl:choose>
+                <xsl:when test="starts-with(gmd:protocol/gco:CharacterString,'OGC:WMC') or
+               starts-with(gmd:protocol/gco:CharacterString,'OGC:OWS')">
+                  <xsl:value-of select="concat('app.getIMap().addWMC(''', $linkage, ''')')"/>
+               </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="concat('app.getIMap().addWMSLayer([[''', $name, ''',''', $linkage, ''',''', $name, ''',''', $metadata_id, ''']])')"/>
+                </xsl:otherwise>
+              </xsl:choose>
+            </xsl:variable>
+            
+            <a href="javascript:{$fn}" title="{/root/strings/interactiveMap}">
                 <xsl:choose>
                 <xsl:when test="string($description)!=''">
                   <xsl:value-of select="$description"/>
@@ -2662,28 +2677,30 @@
                   <xsl:value-of select="$name"/>
                 </xsl:otherwise>
               </xsl:choose>
-            </a><br/>(OGC-WMS Server: <xsl:value-of select="$linkage"/> )
+            </a><br/>(URL : <xsl:value-of select="$linkage"/> )
           </xsl:with-param>
         </xsl:apply-templates>
         <!-- Create a link for a WMS service that will open in Google Earth through the reflector -->
-        <xsl:apply-templates mode="simpleElement" select=".">
-          <xsl:with-param name="schema"  select="$schema"/>
-          <xsl:with-param name="title"  select="/root/gui/strings/viewInGE"/>
-          <xsl:with-param name="text">
-            <a href="{/root/gui/locService}/google.kml?uuid={//geonet:info/uuid}&amp;layers={$name}" title="{/root/strings/interactiveMap}">
-              <xsl:choose>
-                <xsl:when test="string($description)!=''">
-                  <xsl:value-of select="$description"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:value-of select="$name"/>
-                </xsl:otherwise>
-              </xsl:choose>
-              &#160;
-              <img src="{/root/gui/url}/images/google_earth_link.gif" height="20px" width="20px" alt="{/root/gui/strings/viewInGE}" title="{/root/gui/strings/viewInGE}" style="border: 0px solid;"/>
-            </a>
-          </xsl:with-param>
-        </xsl:apply-templates>
+        <xsl:if test="starts-with(gmd:protocol/gco:CharacterString,'OGC:WMS')">
+          <xsl:apply-templates mode="simpleElement" select=".">
+            <xsl:with-param name="schema"  select="$schema"/>
+            <xsl:with-param name="title"  select="/root/gui/strings/viewInGE"/>
+            <xsl:with-param name="text">
+              <a href="{/root/gui/locService}/google.kml?uuid={//geonet:info/uuid}&amp;layers={$name}" title="{/root/strings/interactiveMap}">
+                <xsl:choose>
+                  <xsl:when test="string($description)!=''">
+                    <xsl:value-of select="$description"/>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <xsl:value-of select="$name"/>
+                  </xsl:otherwise>
+                </xsl:choose>
+                &#160;
+                <img src="{/root/gui/url}/images/google_earth_link.gif" height="20px" width="20px" alt="{/root/gui/strings/viewInGE}" title="{/root/gui/strings/viewInGE}" style="border: 0px solid;"/>
+              </a>
+            </xsl:with-param>
+          </xsl:apply-templates>
+        </xsl:if>
       </xsl:when>
     </xsl:choose>
   </xsl:template>
