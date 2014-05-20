@@ -10,9 +10,17 @@ import java.util.regex.Pattern;
 import jeeves.server.ProfileManager;
 import jeeves.utils.Log;
 
+import jeeves.utils.Xml;
 import org.fao.geonet.constants.Geonet;
+import org.fao.geonet.kernel.ThesaurusManager;
+import org.fao.geonet.kernel.search.KeywordsSearcher;
 import org.fao.geonet.kernel.search.LuceneSearcher;
+import org.fao.geonet.kernel.search.keyword.KeywordSort;
+import org.fao.geonet.kernel.search.keyword.SortDirection;
+import org.fao.geonet.kernel.search.keyword.XmlParams;
 import org.fao.geonet.languages.IsoLanguagesMapper;
+import org.jdom.Element;
+
 /**
  * These are all extension methods for calling from xsl docs.  Note:  All
  * params are objects because it is hard to determine what is passed in from XSLT.
@@ -289,5 +297,32 @@ public final class XslUtil
 		}
 		return src.toString().matches(pattern.toString());
 	}
+
+    /**
+     * Search for a keyword in all thesaurus.
+     *
+     * @param keyword
+     * @param language
+     * @return XML node as String (it need to be parsed by saxon:parse in XSL).
+     * TODO: could be better to return a node type
+     */
+    public static String getKeyword(Object keyword, Object language) {
+        try {
+            Element params = new Element("request");
+            // pNewSearch=true&pTypeSearch=2&pKeyword=CC
+            params.addContent(new Element(XmlParams.pTypeSearch).setText("2"));
+            params.addContent(new Element(XmlParams.pKeyword).setText(keyword.toString()));
+            params.addContent(new Element("pNewSearch").setText("true"));
+
+            ThesaurusManager thesaurusMan = ThesaurusManager.getInstance(null, null, null, null, null);
+            KeywordsSearcher searcher = new KeywordsSearcher(thesaurusMan);
+            searcher.search((String)language, params);
+            searcher.sortResults(KeywordSort.defaultLabelSorter(SortDirection.DESC));
+            return Xml.getString(searcher.getXmlResults());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
 
 }
