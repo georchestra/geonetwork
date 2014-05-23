@@ -357,7 +357,7 @@
   <detail>Détails</detail>
   <grandTotal>Total</grandTotal>
   <counter>sur</counter>
-  <totalHistory>Total history records:</totalHistory>
+  <totalHistory>Nombre de moissonnages effectués:</totalHistory>
   <viewAll>Voir tout</viewAll>
   <deleteHistory>Vider l'historique</deleteHistory>
   <harvestedNothing>Aucun moissonnage</harvestedNothing>
@@ -384,7 +384,7 @@
 		<updated>Mis à jour</updated>
 		<unchanged>Inchangé</unchanged>
 		<unknownSchema>Schema inconnu</unknownSchema>
-		<unretrievable>Inrécupérable</unretrievable>
+		<unretrievable>Irrécupérable</unretrievable>
 		<badFormat>Mauvais format XML</badFormat>
 		<doesNotValidate>Non valide</doesNotValidate>
 		<datasetAdded>Datasets</datasetAdded>
