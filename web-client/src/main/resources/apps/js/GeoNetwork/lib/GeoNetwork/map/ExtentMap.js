@@ -493,7 +493,7 @@ GeoNetwork.map.ExtentMap = function(){
         },
 
         resetMousePosition: function() {
-            for(p in maps) {
+            for(var p in maps) {
                 if(maps[p].events) {
                     maps[p].events.clearMouseCache();
                 }
