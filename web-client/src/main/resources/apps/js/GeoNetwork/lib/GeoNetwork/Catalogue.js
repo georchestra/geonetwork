@@ -432,6 +432,11 @@ GeoNetwork.Catalogue = Ext.extend(Ext.util.Observable, {
             async: false
         }), ro, result = false;
 
+        //IE10 issue
+        if(!request.responseXML) {
+            var parser = new DOMParser();
+            request.responseXML = parser.parseFromString(request.responseText, "application/xml");
+        }
         if (request.responseXML) {
             var xml = request.responseXML.documentElement;
             ro = xml.getElementsByTagName('readonly')[0];
@@ -535,7 +540,12 @@ GeoNetwork.Catalogue = Ext.extend(Ext.util.Observable, {
                 url: this.services.getSiteInfo,
                 async: false
             });
-            
+
+            //IE10 issue
+            if(!request.responseXML) {
+                var parser = new DOMParser();
+                request.responseXML = parser.parseFromString(request.responseText, "application/xml");
+            }
             if (request.responseXML) {
                 var xml = request.responseXML.documentElement;
                 Ext.each(properties, function(item, idx){
@@ -561,6 +571,11 @@ GeoNetwork.Catalogue = Ext.extend(Ext.util.Observable, {
             async: false
         });
 
+        //IE10 issue
+        if(!request.responseXML) {
+            var parser = new DOMParser();
+            request.responseXML = parser.parseFromString(request.responseText, "application/xml");
+        }
         if (request.responseXML) {
             var xml = request.responseXML.documentElement;
             Ext.each(properties, function(item, idx){
@@ -737,6 +752,11 @@ GeoNetwork.Catalogue = Ext.extend(Ext.util.Observable, {
                     selected: type
                 },
                 success: function(response){
+                    //IE10 issue
+                    if(!response.responseXML) {
+                        var parser = new DOMParser();
+                        response.responseXML = parser.parseFromString(response.responseText, "application/xml");
+                    }
                     var nb = response.responseXML.documentElement.getElementsByTagName("Selected")[0].childNodes[0].nodeValue;
                     if (nb) {
                         app.setSelectedRecords(nb);
@@ -763,6 +783,11 @@ GeoNetwork.Catalogue = Ext.extend(Ext.util.Observable, {
                 rating: rating
             },
             success: function(response){
+                //IE10 issue
+                if(!response.responseXML) {
+                    var parser = new DOMParser();
+                    response.responseXML = parser.parseFromString(response.responseText, "application/xml");
+                }
                 var nb = response.responseXML.documentElement.childNodes[0].nodeValue;
                 if (onSuccess) {
                     onSuccess(nb);
@@ -810,6 +835,11 @@ GeoNetwork.Catalogue = Ext.extend(Ext.util.Observable, {
                 selected: type
             },
             success: function(response){
+                //IE10 issue
+                if(!response.responseXML) {
+                    var parser = new DOMParser();
+                    request.responseXML = parser.parseFromString(response.responseText, "application/xml");
+                }
                 var nb = response.responseXML.documentElement.getElementsByTagName("Selected")[0].childNodes[0].nodeValue;
                 if (nb) {
                     app.setSelectedRecords(nb);
@@ -1117,6 +1147,12 @@ GeoNetwork.Catalogue = Ext.extend(Ext.util.Observable, {
         }), exception, authenticated, me;
         
         me = response.responseXML.getElementsByTagName('me')[0];
+
+        //IE10 issue
+        if(!response.responseXML) {
+            var parser = new DOMParser();
+            response.responseXML = parser.parseFromString(response.responseText, "application/xml");
+        }
         authenticated = me.getAttribute('authenticated') == 'true';
         
         // Check status and also check than an Exception is not described in the HTML response
@@ -1234,6 +1270,11 @@ GeoNetwork.Catalogue = Ext.extend(Ext.util.Observable, {
         OpenLayers.Request.GET({
             url: this.services.xmlError,
             success: function(response){
+                //IE10 issue
+                if(!response.responseXML) {
+                    var parser = new DOMParser();
+                    response.responseXML = parser.parseFromString(response.responseText, "application/xml");
+                }
                 error = app.parseError(response.responseXML);
                 msg = error.info + " " + error.exc + "<br/>" + error.stack;
                 app.showError('Catalogue error', msg);
