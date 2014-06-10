@@ -1327,7 +1327,16 @@ GeoNetwork.editor.EditorPanel = Ext.extend(Ext.Panel, {
             split: true,
             autoScroll: true,
             tbar: this.toolbar,
-//            minHeigth: 400,
+            listeners: {
+                afterrender: {
+                    fn: function(c) {
+                        c.body.on('scroll', function(){
+                            this.catalogue.extentMap.resetMousePosition();
+                        }, this);
+                    },
+                    scope: this
+                }
+            },
             items: [this.editorMainPanel]
         };
         this.add(editorPanel);
