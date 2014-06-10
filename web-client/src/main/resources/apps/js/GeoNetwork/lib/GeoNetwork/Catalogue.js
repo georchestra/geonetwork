@@ -1145,14 +1145,14 @@ GeoNetwork.Catalogue = Ext.extend(Ext.util.Observable, {
             url: this.services.getMyInfo,
             async: false
         }), exception, authenticated, me;
-        
-        me = response.responseXML.getElementsByTagName('me')[0];
 
         //IE10 issue
         if(!response.responseXML) {
             var parser = new DOMParser();
             response.responseXML = parser.parseFromString(response.responseText, "application/xml");
         }
+        me = response.responseXML.getElementsByTagName('me')[0];
+
         authenticated = me.getAttribute('authenticated') == 'true';
         
         // Check status and also check than an Exception is not described in the HTML response

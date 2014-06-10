@@ -167,7 +167,13 @@ GeoNetwork.MetadataResultsToolbar = Ext.extend(Ext.Toolbar, {
         Ext.Ajax.request({
  		   url: this.catalogue.services.mdSelect,
  		   success: function(response, opts) {
- 			  var numSelected = response.responseXML.getElementsByTagName('Selected')[0].firstChild.nodeValue;
+               //IE10 issue
+               if(!request.responseXML) {
+                   var parser = new DOMParser();
+                   request.responseXML = parser.parseFromString(request.responseText, "application/xml");
+               }
+
+               var numSelected = response.responseXML.getElementsByTagName('Selected')[0].firstChild.nodeValue;
  			  this.updateSelectionInfo(this.catalogue, parseInt(numSelected));
  		  },
  		  scope:this
