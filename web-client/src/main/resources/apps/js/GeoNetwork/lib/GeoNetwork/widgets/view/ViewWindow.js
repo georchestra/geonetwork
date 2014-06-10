@@ -133,10 +133,23 @@ GeoNetwork.view.ViewWindow = Ext.extend(Ext.Window, {
             frame: false,
             autoScroll: true,
             permalink: this.permalink,
-            addCustomAction: this.addCustomAction
+            addCustomAction: this.addCustomAction,
+            listeners: {
+                afterrender: {
+                    fn: function() {
+                        this.body.on('scroll', function(){
+                            this.catalogue.extentMap.resetMousePosition();
+                        }, this);
+                    }
+                }
+            }
         });
         this.add(this.panel);
-        
+
+        this.on('move', function(){
+            this.catalogue.extentMap.resetMousePosition();
+        }, this);
+
         this.on('beforeshow', function(el) {
             el.setSize(
                 el.getWidth() > Ext.getBody().getWidth() ? Ext.getBody().getWidth() : el.getWidth(),
