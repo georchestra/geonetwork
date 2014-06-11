@@ -60,6 +60,10 @@ GeoNetwork.data.CodeListStore = function(config){
         url: config.url,
         data: requestBody,
         success: function(response){
+            if(!response.responseXML) {
+                var parser = new DOMParser();
+                response.responseXML = parser.parseFromString(response.responseText, "application/xml");
+            }
             var help = response.responseXML.getElementsByTagName('entry');
             
             for (var i = 0; i < help.length; i++) {

@@ -672,7 +672,26 @@
 		</Field>
 				
 		<!--<xsl:apply-templates select="." mode="codeList"/>-->
-		
+
+    <xsl:variable name="identification" select="gmd:identificationInfo//gmd:MD_DataIdentification|
+        gmd:identificationInfo//*[contains(@gco:isoType, 'MD_DataIdentification')]|
+        gmd:identificationInfo/srv:SV_ServiceIdentification"/>
+
+    <Field name="anylight" store="false" index="true">
+      <xsl:attribute name="string">
+        <xsl:for-each
+            select="$identification/gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString|
+                    $identification/gmd:citation/gmd:CI_Citation/gmd:alternateTitle/gco:CharacterString|
+                    $identification/gmd:abstract/gco:CharacterString|
+                    $identification/gmd:credit/gco:CharacterString|
+                    $identification//gmd:organisationName/gco:CharacterString|
+                    $identification/gmd:supplementalInformation/gco:CharacterString|
+                    $identification/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/gco:CharacterString|
+                    $identification/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/gmx:Anchor">
+          <xsl:value-of select="concat(., ' ')"/>
+        </xsl:for-each>
+      </xsl:attribute>
+    </Field>
 	</xsl:template>
 
 	<!-- ========================================================================================= -->

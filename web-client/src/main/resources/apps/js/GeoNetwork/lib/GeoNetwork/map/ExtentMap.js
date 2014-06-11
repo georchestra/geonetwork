@@ -491,6 +491,15 @@ GeoNetwork.map.ExtentMap = function(){
     return {
         init: function(){
         },
+
+        resetMousePosition: function() {
+            for(var p in maps) {
+                if(maps[p].events) {
+                    maps[p].events.clearMouseCache();
+                }
+            }
+        },
+
         /** api: method[initMapDiv]
          *
          * Take all the DIVs of class extentViewer and places a map within. If it
