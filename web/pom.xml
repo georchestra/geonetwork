@@ -255,6 +255,11 @@
       <artifactId>slf4j-log4j12</artifactId>
     </dependency>
     <dependency>
+        <groupId>log4j</groupId>
+        <artifactId>apache-log4j-extras</artifactId>
+        <version>1.2.17</version>
+    </dependency>
+    <dependency>
       <groupId>joda-time</groupId>
       <artifactId>joda-time</artifactId>
     </dependency>
@@ -895,6 +900,7 @@
 								<groupId>org.georchestra</groupId>
 								<artifactId>config</artifactId>
 								<version>${project.version}</version>
+								<classifier>${server}</classifier>
 						</dependency>
 					</dependencies>
 				</plugin>
