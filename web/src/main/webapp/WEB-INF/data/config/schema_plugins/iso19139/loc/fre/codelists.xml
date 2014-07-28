@@ -163,6 +163,7 @@
     <entry>
       <code>funder</code>
       <label>Financeur</label>
+      <description>Financeur de la ressource</description>
     </entry>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<entry>
