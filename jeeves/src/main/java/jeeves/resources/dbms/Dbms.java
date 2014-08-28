@@ -25,9 +25,11 @@ package jeeves.resources.dbms;
 
 import jeeves.constants.Jeeves;
 import jeeves.utils.Log;
+
 import org.jdom.Element;
 
 import javax.sql.DataSource;
+
 import java.io.StringReader;
 import java.sql.Connection;
 import java.sql.Date;
@@ -35,6 +37,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Savepoint;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Types;
@@ -73,7 +76,7 @@ public class Dbms
 		this.dataSource = dataSource;
 		this.url = url;
 	}
-	
+
 	//--------------------------------------------------------------------------
 	//---
 	//--- Connection methods
@@ -215,7 +218,7 @@ public class Dbms
             }
 			long start = System.currentTimeMillis();
             resultSet = stmt.executeQuery();
-			
+
             Element result = buildResponse(resultSet, formats);
 			long end = System.currentTimeMillis();
 
@@ -290,7 +293,7 @@ public class Dbms
 		}
 		finally
 		{
-			if(stmt != null) { 
+			if(stmt != null) {
 			    stmt.close();
 			}
 		}
@@ -446,7 +449,7 @@ public class Dbms
                 output = output.replaceAll(c, "");
             }
 		}
-		
+
 		return output;
 	}
 
@@ -482,16 +485,24 @@ public class Dbms
 
 		return sb.toString();
 	}
-	
+
 	/**
 	 * In case DBMS connection was not closed
-	 * due to some error, close connection on 
+	 * due to some error, close connection on
 	 * finalize.
 	 */
 	protected void finalize() {
 		disconnect();
 	}
-	
+
+    public Savepoint setSavePoint() throws SQLException {
+        return conn.setSavepoint();
+    }
+
+    public void rollbackToSavepoint(Savepoint sp) throws SQLException {
+       conn.rollback(sp);
+    }
+
 }
 
 //=============================================================================
