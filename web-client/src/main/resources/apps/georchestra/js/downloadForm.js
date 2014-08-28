@@ -249,7 +249,7 @@ GeoNetwork.dlForm = (function() {
 		                },user,url)]
 		            }, {
 		                bodyStyle: "padding: 10px",
-		                html: '<font size="6">​Merci.<br /><br /><a href="'+url+
+		                html: '<font size="6">Merci.<br /><br /><a href="'+url+
 		                    '" target="_blank">Télécharger le fichier</a></font>'
 		            }]
 		        }]
