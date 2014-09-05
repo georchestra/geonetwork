@@ -26,6 +26,7 @@ import jeeves.resources.dbms.Dbms;
 import jeeves.server.resources.ResourceManager;
 import jeeves.utils.Log;
 import jeeves.utils.SerialFactory;
+
 import org.fao.geonet.constants.Geonet;
 import org.jdom.Element;
 import org.quartz.JobDataMap;
@@ -39,16 +40,18 @@ import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.DirContext;
 import javax.naming.directory.SearchResult;
+
 import java.sql.SQLException;
+import java.sql.Savepoint;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LDAPSynchronizerJob extends QuartzJobBean {
-    
+
     private ApplicationContext applicationContext;
-    
+
     private DefaultSpringSecurityContextSource contextSource;
-    
+
     @Override
     protected void executeInternal(JobExecutionContext jobExecContext)
             throws JobExecutionException {
@@ -56,54 +59,54 @@ public class LDAPSynchronizerJob extends QuartzJobBean {
             if (Log.isDebugEnabled(Geonet.LDAP)) {
                 Log.debug(Geonet.LDAP, "LDAPSynchronizerJob starting ...");
             }
-            
+
             // Retrieve application context. A defautl SpringBeanJobFactory
             // will not provide the application context to the job. Use
             // AutowiringSpringBeanJobFactory.
             applicationContext = (ApplicationContext) jobExecContext
                     .getJobDetail().getJobDataMap().get("applicationContext");
-            
-            
+
+
             if (applicationContext == null) {
                 Log.error(
                         Geonet.LDAP,
                         "  Application context is null. Be sure to configure SchedulerFactoryBean job factory property with AutowiringSpringBeanJobFactory.");
             }
-            
+
             // Get LDAP information defining which users to sync
             final JobDataMap jdm = jobExecContext.getJobDetail()
                     .getJobDataMap();
             contextSource = (DefaultSpringSecurityContextSource) jdm
                     .get("contextSource");
-            
+
             String ldapUserSearchFilter = (String) jdm
                     .get("ldapUserSearchFilter");
             String ldapUserSearchBase = (String) jdm.get("ldapUserSearchBase");
             String ldapUserSearchAttribute = (String) jdm
                     .get("ldapUserSearchAttribute");
-            
+
             DirContext dc = contextSource.getReadOnlyContext();
-            
+
             // Get database
             ResourceManager resourceManager = applicationContext
                     .getBean(ResourceManager.class);
             Dbms dbms = null;
-            
+
             try {
                 dbms = (Dbms) resourceManager.openDirect(Geonet.Res.MAIN_DB);
-                
+
                 // Users
                 synchronizeUser(ldapUserSearchFilter, ldapUserSearchBase,
                         ldapUserSearchAttribute, dc, dbms);
-                
+
                 // And optionaly groups
                 String createNonExistingLdapGroup = (String) jdm
                         .get("createNonExistingLdapGroup");
-                
+
                 if ("true".equals(createNonExistingLdapGroup)) {
                     SerialFactory serialFactory = applicationContext
                             .getBean(SerialFactory.class);
-                    
+
                     String ldapGroupSearchFilter = (String) jdm
                             .get("ldapGroupSearchFilter");
                     String ldapGroupSearchBase = (String) jdm
@@ -112,7 +115,7 @@ public class LDAPSynchronizerJob extends QuartzJobBean {
                             .get("ldapGroupSearchAttribute");
                     String ldapGroupSearchPattern = (String) jdm
                             .get("ldapGroupSearchPattern");
-                    
+
                     synchronizeGroup(ldapGroupSearchFilter,
                             ldapGroupSearchBase, ldapGroupSearchAttribute,
                             ldapGroupSearchPattern, dc, dbms, serialFactory);
@@ -154,13 +157,13 @@ public class LDAPSynchronizerJob extends QuartzJobBean {
                     e);
             e.printStackTrace();
         }
-        
+
         if (Log.isDebugEnabled(Geonet.LDAP)) {
             Log.debug(Geonet.LDAP, "LDAPSynchronizerJob done.");
         }
     }
-    
-    
+
+
     private void synchronizeUser(String ldapUserSearchFilter,
             String ldapUserSearchBase, String ldapUserSearchAttribute,
             DirContext dc, Dbms dbms) throws NamingException, SQLException {
@@ -168,7 +171,7 @@ public class LDAPSynchronizerJob extends QuartzJobBean {
         // in only.
         NamingEnumeration<?> userList = dc.search(ldapUserSearchBase,
                 ldapUserSearchFilter, null);
-        
+
         // Build a list of LDAP users
         StringBuffer usernames = new StringBuffer();
         while (userList.hasMore()) {
@@ -178,7 +181,7 @@ public class LDAPSynchronizerJob extends QuartzJobBean {
                     .get());
             usernames.append("', ");
         }
-        
+
         // Remove LDAP user available in db and not in LDAP if not linked to
         // metadata
         String query = "SELECT id FROM Users WHERE authtype=? AND username NOT IN ("
@@ -188,25 +191,31 @@ public class LDAPSynchronizerJob extends QuartzJobBean {
             Element r = (Element) record;
             int userId = Integer.valueOf(r.getChildText("id"));
             Log.debug(Geonet.LDAP, "  - Removing user: " + userId);
+            Savepoint sp = null;
             try {
+                sp = dbms.setSavePoint();
                 dbms.execute("DELETE FROM UserGroups WHERE userId=?", userId);
                 dbms.execute("DELETE FROM Users WHERE authtype=? AND id=?",
                         LDAPConstants.LDAP_FLAG, userId);
+
             } catch (Exception ex) {
                 Log.error(Geonet.LDAP, "Failed to remove LDAP user with id "
                         + userId
                         + " in database. User is probably a metadata owner."
                         + " Transfer owner first.", ex);
+                if (sp != null) {
+                    dbms.rollbackToSavepoint(sp);
+                }
             }
         }
     }
-    
-    
+
+
     private void synchronizeGroup(String ldapGroupSearchFilter,
             String ldapGroupSearchBase, String ldapGroupSearchAttribute,
             String ldapGroupSearchPattern, DirContext dc, Dbms dbms,
             SerialFactory serialFactory) throws NamingException, SQLException {
-        
+
         NamingEnumeration<?> groupList = dc.search(ldapGroupSearchBase,
                 ldapGroupSearchFilter, null);
         Pattern ldapGroupSearchPatternCompiled = null;
@@ -214,16 +223,16 @@ public class LDAPSynchronizerJob extends QuartzJobBean {
             ldapGroupSearchPatternCompiled = Pattern
                     .compile(ldapGroupSearchPattern);
         }
-        
+
         while (groupList.hasMore()) {
             SearchResult sr = (SearchResult) groupList.next();
-            
+
             // TODO : should we retrieve LDAP group id and do an update of group
             // name
             // This will require to store in local db the remote id
             String groupName = (String) sr.getAttributes()
                     .get(ldapGroupSearchAttribute).get();
-            
+
             if (!"".equals(ldapGroupSearchPattern)) {
                 Matcher m = ldapGroupSearchPatternCompiled.matcher(groupName);
                 boolean b = m.matches();
@@ -231,14 +240,14 @@ public class LDAPSynchronizerJob extends QuartzJobBean {
                     groupName = m.group(1);
                 }
             }
-            
+
             Element groupIdRequest = dbms.select(
                     "SELECT id FROM Groups WHERE name = ?", groupName);
             Element groupRecord = groupIdRequest.getChild("record");
             String groupId = null;
-            
+
             if (groupRecord == null) {
-                LDAPUtils.createIfNotExist(groupName, groupId, dbms, serialFactory);
+                groupId = LDAPUtils.createIfNotExist(groupName, groupId, dbms, serialFactory);
 
             } else {
                 groupId = groupRecord.getChildText("id");
@@ -248,11 +257,11 @@ public class LDAPSynchronizerJob extends QuartzJobBean {
             }
         }
     }
-    
+
     public DefaultSpringSecurityContextSource getContextSource() {
         return contextSource;
     }
-    
+
     public void setContextSource(
             DefaultSpringSecurityContextSource contextSource) {
         this.contextSource = contextSource;
