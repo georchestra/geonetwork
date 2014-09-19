@@ -77,7 +77,7 @@ GeoNetwork.LoginForm = Ext.extend(Ext.FormPanel, {
          * Template to render user login name
          */
         userInfoTpl: new Ext.XTemplate('<tpl for=".">', 
-                '<img title="Avatar" class="gn-avatar" src="http://gravatar.com/avatar/{hash}?s=18"/>',
+                '<img title="Avatar" class="gn-avatar" src="//gravatar.com/avatar/{hash}?s=18"/>',
                 '<span class="gn-login">{name} {surname}</span><br/>',
                 '</tpl>'),
         /** api: config[searchForm] 
@@ -86,7 +86,7 @@ GeoNetwork.LoginForm = Ext.extend(Ext.FormPanel, {
         userInfoToolTipTpl: new Ext.XTemplate('<tpl for=".">', 
                 '<span class="gn-login">{name} {surname}</span><br/>',
                 '<span class="gn-role">{[OpenLayers.i18n(values.role)]}</span><br/>',
-                '<img title="Avatar" class="gn-avatar" src="http://gravatar.com/avatar/{hash}?s=80"/>',
+                '<img title="Avatar" class="gn-avatar" src="//gravatar.com/avatar/{hash}?s=80"/>',
                 '</tpl>')
     },
     defaultType: 'textfield',
