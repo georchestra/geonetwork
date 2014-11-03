@@ -55,8 +55,14 @@ public class TransformerFactoryFactory {
              */
         }
         else {
+
             factory = TransformerFactory.newInstance();
         }
+    }
+
+    // used for JUnit testing into Eclipse (which selects an incompatible TransformerFactory)
+    public static void setTransformerFactory(TransformerFactory _factory) {
+        factory = _factory;
     }
 
     public static TransformerFactory getTransformerFactory() throws TransformerConfigurationException {
@@ -65,8 +71,8 @@ public class TransformerFactoryFactory {
     		init(null);
     	}
         debug("TransformerFactoryFactory: "
-        		    + factory.getClass().getName() 
-        			+ " produces transformer implementation " 
+        		    + factory.getClass().getName()
+        			+ " produces transformer implementation "
         			+ factory.newTransformer().getClass().getName());
         return factory;
     }

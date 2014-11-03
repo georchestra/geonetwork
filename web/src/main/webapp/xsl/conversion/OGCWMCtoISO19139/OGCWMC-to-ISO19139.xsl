@@ -16,6 +16,9 @@
 
 	<xsl:param name="lang">eng</xsl:param>
 	<xsl:param name="topic"></xsl:param>
+    <xsl:param name="viewer_url"></xsl:param>
+    <xsl:param name="wmc_url"></xsl:param>
+    
 	
 	<xsl:include href="./resp-party.xsl"/>
 	<xsl:include href="./identification.xsl"/>
@@ -107,6 +110,28 @@
 					<xsl:apply-templates select="." mode="DataIdentification">
 						<xsl:with-param name="topic"><xsl:value-of select="$topic"/></xsl:with-param>
 					</xsl:apply-templates>
+					
+					<!--  extracts the extent -->
+					<extent>
+						<EX_Extent>
+							<geographicElement>
+								<EX_GeographicBoundingBox>
+									<westBoundLongitude>
+										<gco:Decimal><xsl:value-of select="/wmc:ViewContext/wmc:General/wmc:BoundingBox/@minx" /></gco:Decimal>
+									</westBoundLongitude>
+									<eastBoundLongitude>
+										<gco:Decimal><xsl:value-of select="/wmc:ViewContext/wmc:General/wmc:BoundingBox/@maxx" /></gco:Decimal>
+									</eastBoundLongitude>
+									<southBoundLatitude>
+										<gco:Decimal><xsl:value-of select="/wmc:ViewContext/wmc:General/wmc:BoundingBox/@miny" /></gco:Decimal>
+									</southBoundLatitude>
+									<northBoundLatitude>
+										<gco:Decimal><xsl:value-of select="/wmc:ViewContext/wmc:General/wmc:BoundingBox/@maxy" /></gco:Decimal>
+									</northBoundLatitude>
+								</EX_GeographicBoundingBox>
+							</geographicElement>
+						</EX_Extent>
+					</extent>
 				</MD_DataIdentification>
 			</identificationInfo>
 			
@@ -118,7 +143,9 @@
 						<MD_DigitalTransferOptions>
 							<onLine>
 								<CI_OnlineResource>
-									<linkage><URL/></linkage>
+									<linkage>
+									  <URL><xsl:value-of select="$wmc_url" /></URL>
+									</linkage>
 									<protocol>
 										<!-- FIXME : use standardized label for WMS protocol -->
 										<gco:CharacterString>OGC:WMC</gco:CharacterString>
@@ -133,6 +160,24 @@
 									</description>
 								</CI_OnlineResource>
 							</onLine>
+							<onLine>
+                                <CI_OnlineResource>
+                                    <linkage>
+                                      <URL><xsl:value-of select="$viewer_url" /></URL>
+                                    </linkage>
+                                    <protocol>
+                                        <gco:CharacterString>WWW:LINK-1.0-http--link</gco:CharacterString>
+                                    </protocol>
+                                    <name>
+                                        <gco:CharacterString><xsl:value-of select="/wmc:ViewContext/wmc:General/wmc:Title
+                                            |/wmc11:ViewContext/wmc11:General/wmc11:Title"/></gco:CharacterString>
+                                    </name>
+                                    <description>
+                                        <gco:CharacterString><xsl:value-of select="/wmc:ViewContext/wmc:General/wmc:Title
+                                            |/wmc11:ViewContext/wmc11:General/wmc11:Title"/></gco:CharacterString>
+                                    </description>
+                                </CI_OnlineResource>
+                            </onLine>
 						</MD_DigitalTransferOptions>
 					</transferOptions>
 				</MD_Distribution>

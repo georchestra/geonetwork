@@ -1,22 +1,21 @@
 package org.fao.geonet.services.mef;
 
 import java.io.File;
-import java.util.Iterator;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-import jeeves.constants.Jeeves;
+import javax.xml.transform.TransformerFactory;
+
 import jeeves.server.ServiceConfig;
 import jeeves.server.context.ServiceContext;
-import jeeves.utils.IO;
 import jeeves.utils.Util;
 import jeeves.utils.Xml;
 
 import org.fao.geonet.constants.Geonet;
-import org.fao.geonet.constants.Params;
-import org.fao.geonet.kernel.mef.MEFLib;
 import org.fao.geonet.services.NotInReadOnlyModeService;
 import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.transform.XSLTransformer;
 
 public class ImportWmc extends NotInReadOnlyModeService {
 
@@ -25,7 +24,7 @@ public class ImportWmc extends NotInReadOnlyModeService {
     @Override
     public void init(String appPath, ServiceConfig params) throws Exception {
         super.init(appPath, params);
-        this.styleSheetWmc = appPath + Geonet.Path.IMPORT_STYLESHEETS + File.pathSeparator
+        this.styleSheetWmc = appPath + Geonet.Path.IMPORT_STYLESHEETS + File.separator
                 + "OGCWMC-to-ISO19139.xsl";
     }
 
@@ -38,20 +37,21 @@ public class ImportWmc extends NotInReadOnlyModeService {
 
         // TODO: actually do something here
 
+        Map<String,String> xslParams = new HashMap<String,String>();
+        xslParams.put("viewer_url", viewerUrl);
+        xslParams.put("wmc_url", wmcUrl);
+
         // 1. JDOMize the string
-        Element wmcDoc = Xml.loadString(wmcString, true);
+        Element wmcDoc = Xml.loadString(wmcString, false);
         // 2. Apply XSL (styleSheetWmc)
-        Element md = Xml.transform(wmcDoc, styleSheetWmc);
-
-        System.out.println(Xml.getString(md));
-
-
-
+        Element transformedMd = Xml.transform(wmcDoc, styleSheetWmc, xslParams);
 
         // 3. Change extra attributes (see parameters)
-        // 4. Inserts metadata (owner is the one doing the action)
+        // TODO: might be done before (parametrized)
 
 
+
+        // 4. Inserts metadata
 
         Element result = new Element("id");
         result.setText("1");
