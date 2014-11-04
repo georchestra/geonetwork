@@ -9,7 +9,9 @@
 				xmlns:gml="http://www.opengis.net/gml"
 				xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 				xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-				xmlns:xlink="http://www.w3.org/1999/xlink">
+				xmlns:xlink="http://www.w3.org/1999/xlink"
+				xmlns:java="java:org.fao.geonet.util.XslUtil"
+				xmlns:saxon="http://saxon.sf.net/">
 
 				
 	<!-- ============================================================================= -->				
@@ -18,6 +20,13 @@
 	<xsl:param name="topic"></xsl:param>
     <xsl:param name="viewer_url"></xsl:param>
     <xsl:param name="wmc_url"></xsl:param>
+    
+    <!-- These are provided by the ImportWmc.java jeeves service -->
+    <xsl:param name="currentuser_name"></xsl:param>
+    <xsl:param name="currentuser_phone"></xsl:param>
+    <xsl:param name="currentuser_mail"></xsl:param>
+    <xsl:param name="currentuser_org"></xsl:param>
+    
     
 	
 	<xsl:include href="./resp-party.xsl"/>
@@ -110,7 +119,39 @@
 					<xsl:apply-templates select="." mode="DataIdentification">
 						<xsl:with-param name="topic"><xsl:value-of select="$topic"/></xsl:with-param>
 					</xsl:apply-templates>
-					
+					<!--  sets a default contact author -->
+					<pointOfContact>
+						<CI_ResponsibleParty>
+							<individualName>
+								<gco:CharacterString><xsl:value-of select="$currentuser_name" /></gco:CharacterString>
+							</individualName>
+							<organisationName>
+								<gco:CharacterString><xsl:value-of select="$currentuser_org" /></gco:CharacterString>
+							</organisationName>
+							<contactInfo>
+								<CI_Contact>
+									<phone>
+										<CI_Telephone>
+											<voice>
+											    <gco:CharacterString><xsl:value-of select="$currentuser_phone" /></gco:CharacterString>
+											</voice>
+										</CI_Telephone>
+									</phone>
+									<address>
+										<CI_Address>
+											<electronicMailAddress>
+												<gco:CharacterString><xsl:value-of select="$currentuser_mail" /></gco:CharacterString>
+											</electronicMailAddress>
+										</CI_Address>
+									</address>
+								</CI_Contact>
+							</contactInfo>
+							<role>
+								<CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_RoleCode"
+								codeListValue="author" />
+							</role>
+						</CI_ResponsibleParty>
+					</pointOfContact>
 					<!--  extracts the extent -->
 					<extent>
 						<EX_Extent>
@@ -142,6 +183,34 @@
 					<transferOptions>
 						<MD_DigitalTransferOptions>
 							<onLine>
+							     <!-- iterates over the layers 
+							     need to:
+							     * extract version
+							     * extract url
+							     * name
+							     * title
+							     -->
+
+			                 <xsl:for-each select="/wmc:ViewContext/wmc:LayerList">
+			                    <xsl:variable name="wmsUrl" select="./wmc:Layer/wmc:Server/wmc:OnlineResource/@xlink:href" />
+			                    <xsl:variable name="wmsName" select="./wmc:Layer/wmc:Name/text()" />
+			                    <xsl:variable name="wmsTitle" select="./wmc:Layer/wmc:Title/text()" />
+			                    <xsl:variable name="wmsVersion" select="./wmc:Layer/wmc:Server/@version" />
+								<CI_OnlineResource>
+									<linkage>
+										<URL><xsl:value-of select="$wmsUrl" /></URL>
+									</linkage>
+									<protocol>
+										<gco:CharacterString><xsl:value-of select="concat('OGC:WMS-', $wmsVersion, '-http-get-map')" /></gco:CharacterString>
+									</protocol>
+									<name>
+										<gco:CharacterString><xsl:value-of select="$wmsName" /></gco:CharacterString>
+									</name>
+									<description>
+										<gco:CharacterString><xsl:value-of select="$wmsTitle" /></gco:CharacterString>
+									</description>
+								</CI_OnlineResource>
+							</xsl:for-each>
 								<CI_OnlineResource>
 									<linkage>
 									  <URL><xsl:value-of select="$wmc_url" /></URL>
@@ -182,7 +251,19 @@
 					</transferOptions>
 				</MD_Distribution>
 			</distributionInfo>
-			
+				 <dataQualityInfo>
+			        <DQ_DataQuality>
+			            <lineage>
+			                <!-- TODO: iterate over the OnlineRes of each layers -->
+			                <LI_Lineage>
+                                <xsl:for-each select="/wmc:ViewContext/wmc:LayerList">
+                                    <xsl:variable name="sourceNode" select="java:generateLineageSource(string(./wmc:Layer/wmc:MetadataURL/wmc:OnlineResource/@xlink:href))" />
+			                        <xsl:copy-of select="saxon:parse($sourceNode)" />
+			                   </xsl:for-each>
+			                </LI_Lineage>
+			            </lineage>
+			        </DQ_DataQuality>
+			    </dataQualityInfo>
 		</MD_Metadata>
 	</xsl:template>	
 	
