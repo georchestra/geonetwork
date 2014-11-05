@@ -329,7 +329,7 @@ public final class XslUtil
     }
 
     public static String generateLineageSource(Object url) {
-        Element ret = new Element("source");
+        Element ret = new Element("source", "gmd", "http://www.isotc211.org/2005/gmd");
         try {
             URL urlUrl = new URL((String) url);
             if (urlUrl.getPath().contains("geonetwork") && (urlUrl.getQuery().contains("uuid"))) {
@@ -338,13 +338,17 @@ public final class XslUtil
                     String uuid = m.group();
                     ret.setAttribute("uuidref", uuid);
                     ret.setAttribute("href", (String) url, Namespace.getNamespace("xlink", "http://www.w3.org/1999/xlink"));
+                    ret.setAttribute("type", "simple", Namespace.getNamespace("xlink", "http://www.w3.org/1999/xlink"));
                 }
             } else
-                ret.setAttribute("href", (String) url, Namespace.getNamespace("xlink", "http://www.w3.org/1999/xlink"));
+                ret.setAttribute("href", (String) url, Namespace.getNamespace("xlink", "http://www.w3.org/1999/xlink"))
+                    .setAttribute("type", "simple", Namespace.getNamespace("xlink", "http://www.w3.org/1999/xlink"));
             return Xml.getString(ret);
         } catch (Exception e) {
             // unparseable result
-            return Xml.getString(new Element("source").setAttribute("href", (String) url, Namespace.getNamespace("xlink", "http://www.w3.org/1999/xlink")));
+            return Xml.getString(ret
+                .setAttribute("href", (String) url, Namespace.getNamespace("xlink", "http://www.w3.org/1999/xlink"))
+                .setAttribute("type", "simple", Namespace.getNamespace("xlink", "http://www.w3.org/1999/xlink")));
         }
     }
 

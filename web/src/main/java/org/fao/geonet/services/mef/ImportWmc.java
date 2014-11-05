@@ -52,6 +52,10 @@ public class ImportWmc extends NotInReadOnlyModeService {
         xslParams.put("viewer_url", viewerUrl);
         xslParams.put("wmc_url", wmcUrl);
 
+        // Should this be configurable ?
+
+        xslParams.put("topic", "location");
+
         UserSession us = context.getUserSession();
 
         if (us != null) {
@@ -65,6 +69,8 @@ public class ImportWmc extends NotInReadOnlyModeService {
         Element wmcDoc = Xml.loadString(wmcString, false);
         // 2. Apply XSL (styleSheetWmc)
         Element transformedMd = Xml.transform(wmcDoc, styleSheetWmc, xslParams);
+
+        System.out.println(Xml.getString(transformedMd));
 
         // 4. Inserts the metadata (does basically the same as the metadata.insert.paste service (see Insert.java)
 
@@ -88,7 +94,7 @@ public class ImportWmc extends NotInReadOnlyModeService {
                 gc.getSiteId(), gc.getSiteName(), context, id, date,
                 date, "1", "n", dbms);
 
-        // TODO handle errors ?
+
 
         Element result = new Element("uuid");
         result.setText(uuid);
