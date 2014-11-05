@@ -70,8 +70,6 @@ public class ImportWmc extends NotInReadOnlyModeService {
         // 2. Apply XSL (styleSheetWmc)
         Element transformedMd = Xml.transform(wmcDoc, styleSheetWmc, xslParams);
 
-        System.out.println(Xml.getString(transformedMd));
-
         // 4. Inserts the metadata (does basically the same as the metadata.insert.paste service (see Insert.java)
 
         String uuid = UUID.randomUUID().toString();
