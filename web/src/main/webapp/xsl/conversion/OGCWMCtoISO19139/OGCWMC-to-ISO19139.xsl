@@ -193,14 +193,14 @@
 				<gmd:MD_Distribution>
 					<gmd:transferOptions>
 						<gmd:MD_DigitalTransferOptions>
-							<xsl:for-each select="/wmc:ViewContext/wmc:LayerList">
+							<xsl:for-each select="/wmc:ViewContext/wmc:LayerList/wmc:Layer">
 								<gmd:onLine>
 									<!-- iterates over the layers -->
 									<xsl:variable name="wmsUrl"
-										select="./wmc:Layer/wmc:Server/wmc:OnlineResource/@xlink:href" />
-									<xsl:variable name="wmsName" select="./wmc:Layer/wmc:Name/text()" />
-									<xsl:variable name="wmsTitle" select="./wmc:Layer/wmc:Title/text()" />
-									<xsl:variable name="wmsVersion" select="./wmc:Layer/wmc:Server/@version" />
+										select="./wmc:Server/wmc:OnlineResource/@xlink:href" />
+									<xsl:variable name="wmsName" select="./wmc:Name/text()" />
+									<xsl:variable name="wmsTitle" select="./wmc:Title/text()" />
+									<xsl:variable name="wmsVersion" select="./wmc:Server/@version" />
 									<gmd:CI_OnlineResource>
 										<gmd:linkage>
 											<gmd:URL>
@@ -279,8 +279,8 @@
 						<gmd:lineage>
 			                <!-- TODO: iterate over the OnlineRes of each layers -->
 			                <gmd:LI_Lineage>
-                                <xsl:for-each select="/wmc:ViewContext/wmc:LayerList">
-                                    <xsl:variable name="sourceNode" select="java:generateLineageSource(string(./wmc:Layer/wmc:MetadataURL/wmc:OnlineResource/@xlink:href))" />
+                                <xsl:for-each select="/wmc:ViewContext/wmc:LayerList/wmc:Layer">
+                                    <xsl:variable name="sourceNode" select="java:generateLineageSource(string(./wmc:MetadataURL/wmc:OnlineResource/@xlink:href))" />
 			                        <xsl:copy-of select="saxon:parse($sourceNode)" />
 			                   </xsl:for-each>
 			                </gmd:LI_Lineage>
