@@ -148,14 +148,14 @@ public class ImportWmcTest {
         }
 
         assertTrue(reprL.size() == 4);
-        assertTrue(    new Double(reprL.get(0)) > 40 // minx
-                    && new Double(reprL.get(0)) < 41
-                    && new Double(reprL.get(2)) > -13 // miny
-                    && new Double(reprL.get(2)) < -12
-                    && new Double(reprL.get(1)) > 52 // maxx
-                    && new Double(reprL.get(1)) < 53
-                    && new Double(reprL.get(3)) > 17 // maxy
-                    && new Double(reprL.get(3)) < 18
+        assertTrue(    new Double(reprL.get(2)) > 40
+                    && new Double(reprL.get(2)) < 41
+                    && new Double(reprL.get(0)) > -13
+                    && new Double(reprL.get(0)) < -12
+                    && new Double(reprL.get(3)) > 52
+                    && new Double(reprL.get(3)) < 53
+                    && new Double(reprL.get(1)) > 17
+                    && new Double(reprL.get(1)) < 18
                 );
     }
 

@@ -365,24 +365,20 @@ public final class XslUtil
             ReferencedEnvelope env = new ReferencedEnvelope(minxf, maxxf, minyf, maxyf, fromCrs);
             ReferencedEnvelope reprojected = env.transform(toCrs, true);
 
-            ret = reprojected.getMinX() + "," + reprojected.getMinY() + ","
-                    + reprojected.getMaxX() + "," + reprojected.getMaxY();
+            Element elemRet = new Element("EX_GeographicBoundingBox", "gmd", "http://www.isotc211.org/2005/gmd");
 
-            Element elemRet = new Element("EX_GeographicBoundingBox", "gmd",
-                    "http://www.isotc211.org/2005/gmd");
-
-            Element elemminx = new Element("westBoundLongitude")
-                    .addContent(new Element("Decimal", "gco",
-                            "http://www.isotc211.org/2005/gco").setText("" + reprojected.getMinX()));
-            Element elemmaxx = new Element("eastBoundLongitude")
-                    .addContent(new Element("Decimal", "gco",
-                            "http://www.isotc211.org/2005/gco").setText("" + reprojected.getMaxX()));
-            Element elemminy = new Element("southBoundLatitude")
+            Element elemminx = new Element("westBoundLongitude", "gmd", "http://www.isotc211.org/2005/gmd")
                     .addContent(new Element("Decimal", "gco",
                             "http://www.isotc211.org/2005/gco").setText("" + reprojected.getMinY()));
-            Element elemmaxy = new Element("northBoundLatitude")
+            Element elemmaxx = new Element("eastBoundLongitude", "gmd", "http://www.isotc211.org/2005/gmd")
                     .addContent(new Element("Decimal", "gco",
                             "http://www.isotc211.org/2005/gco").setText("" + reprojected.getMaxY()));
+            Element elemminy = new Element("southBoundLatitude", "gmd", "http://www.isotc211.org/2005/gmd")
+                    .addContent(new Element("Decimal", "gco",
+                            "http://www.isotc211.org/2005/gco").setText("" + reprojected.getMinX()));
+            Element elemmaxy = new Element("northBoundLatitude", "gmd", "http://www.isotc211.org/2005/gmd")
+                    .addContent(new Element("Decimal", "gco",
+                            "http://www.isotc211.org/2005/gco").setText("" + reprojected.getMaxX()));
 
             elemRet.addContent(elemminx);
             elemRet.addContent(elemmaxx);

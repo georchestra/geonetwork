@@ -264,7 +264,7 @@
 						<gmd:scope>
 							<gmd:DQ_Scope>
 								<gmd:level>
-									<gmd:MD_ScopeCode codeListValue="service"
+									<gmd:MD_ScopeCode codeListValue="mapDigital"
 										codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode" />
 								</gmd:level>
 							</gmd:DQ_Scope>

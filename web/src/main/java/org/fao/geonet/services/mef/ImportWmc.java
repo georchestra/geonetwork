@@ -45,9 +45,6 @@ public class ImportWmc extends NotInReadOnlyModeService {
         String wmcUrl = Util.getParam(params, "wmc_url");
         String viewerUrl = Util.getParam(params, "viewer_url");
 
-
-
-
         Map<String,String> xslParams = new HashMap<String,String>();
         xslParams.put("viewer_url", viewerUrl);
         xslParams.put("wmc_url", wmcUrl);
