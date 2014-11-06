@@ -7,11 +7,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import jeeves.server.ProfileManager;
-import jeeves.server.UserSession;
 import jeeves.utils.Log;
 import jeeves.utils.Xml;
 
-import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.kernel.ThesaurusManager;
 import org.fao.geonet.kernel.search.KeywordsSearcher;
@@ -22,7 +20,6 @@ import org.fao.geonet.kernel.search.keyword.XmlParams;
 import org.fao.geonet.languages.IsoLanguagesMapper;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
-import org.hsqldb.SessionManager;
 import org.jdom.Element;
 import org.jdom.Namespace;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
