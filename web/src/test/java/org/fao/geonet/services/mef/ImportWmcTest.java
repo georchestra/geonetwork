@@ -5,6 +5,10 @@ import static org.junit.Assume.assumeTrue;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.xml.transform.TransformerFactory;
 
@@ -123,6 +127,36 @@ public class ImportWmcTest {
         String el3 = XslUtil.generateLineageSource("Some random junk sent from the WMC document (obviously not a valid URL)");
         assertTrue(el3.contains("xlink:href=\"Some random junk sent from the WMC document (obviously not a valid URL)\""));
 
+    }
+
+    @Test
+    public final void testReproject() {
+            // BoundingBox minx=\"-1363723.31702789990\" miny=\"4981331.59563689958\" maxx=\"1994613.95770959998\" maxy=\"6962579.36878869962\" SRS=\"EPSG:3857\"
+        String minx = "-1363723.31702789990", miny = "4981331.59563689958",
+               maxx = "1994613.95770959998", maxy= "6962579.36878869962",
+               SRS = "EPSG:3857";
+
+        String returnedBbox = XslUtil.reprojectCoords(minx, miny, maxx, maxy, SRS);
+
+        // Never a good idea to parse XML using regex, but for a unit test, I shall allow myself.
+        Matcher m = Pattern.compile("<gco:Decimal xmlns:gco=\"http://www.isotc211.org/2005/gco\">(.*)</gco:Decimal>").matcher(returnedBbox);
+
+        List<String> reprL =  new ArrayList<String>();
+
+        while(m.find()) {
+            reprL.add(m.group(1));
+        }
+
+        assertTrue(reprL.size() == 4);
+        assertTrue(    new Double(reprL.get(0)) > 40 // minx
+                    && new Double(reprL.get(0)) < 41
+                    && new Double(reprL.get(2)) > -13 // miny
+                    && new Double(reprL.get(2)) < -12
+                    && new Double(reprL.get(1)) > 52 // maxx
+                    && new Double(reprL.get(1)) < 53
+                    && new Double(reprL.get(3)) > 17 // maxy
+                    && new Double(reprL.get(3)) < 18
+                );
     }
 
 }

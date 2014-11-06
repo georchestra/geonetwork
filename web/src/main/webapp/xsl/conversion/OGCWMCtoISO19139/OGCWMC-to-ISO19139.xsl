@@ -44,6 +44,17 @@
 	
 	<!-- ============================================================================= -->	
 	
+	<xsl:template match="wmc:BoundingBox" mode="BoundingBox">
+	   <xsl:variable name="minx" select="string(./@minx)" />
+       <xsl:variable name="miny" select="string(./@miny)" />
+       <xsl:variable name="maxx" select="string(./@maxx)" />
+       <xsl:variable name="maxy" select="string(./@maxy)" />
+       <xsl:variable name="fromEpsg" select="string(./@SRS)" />
+       <xsl:variable name="reprojected" select="java:reprojectCoords($minx,$miny,$maxx,$maxy,$fromEpsg)" />
+       
+       <xsl:copy-of select="saxon:parse($reprojected)" />
+	</xsl:template>
+	
 	<xsl:template match="wmc:ViewContext|wmc11:ViewContext">
 		<gmd:MD_Metadata>
 			
@@ -163,24 +174,12 @@
 						<xsl:with-param name="topic"><xsl:value-of select="$topic"/></xsl:with-param>
                         <xsl:with-param name="lang"><xsl:value-of select="$lang"/></xsl:with-param>						
 					</xsl:apply-templates>
-					<!--  extracts the extent (if not 4326) -->
+					<!--  extracts the extent (if not 4326, need to reproject) -->
+					
 					<gmd:extent>
 						<gmd:EX_Extent>
 							<gmd:geographicElement>
-								<gmd:EX_GeographicBoundingBox>
-									<gmd:westBoundLongitude>
-										<gco:Decimal><xsl:value-of select="/wmc:ViewContext/wmc:General/wmc:BoundingBox/@minx" /></gco:Decimal>
-									</gmd:westBoundLongitude>
-									<gmd:eastBoundLongitude>
-										<gco:Decimal><xsl:value-of select="/wmc:ViewContext/wmc:General/wmc:BoundingBox/@maxx" /></gco:Decimal>
-									</gmd:eastBoundLongitude>
-									<gmd:southBoundLatitude>
-										<gco:Decimal><xsl:value-of select="/wmc:ViewContext/wmc:General/wmc:BoundingBox/@miny" /></gco:Decimal>
-									</gmd:southBoundLatitude>
-									<gmd:northBoundLatitude>
-										<gco:Decimal><xsl:value-of select="/wmc:ViewContext/wmc:General/wmc:BoundingBox/@maxy" /></gco:Decimal>
-									</gmd:northBoundLatitude>
-								</gmd:EX_GeographicBoundingBox>
+                                <xsl:apply-templates select="/wmc:ViewContext/wmc:General" mode="BoundingBox" />								
 							</gmd:geographicElement>
 						</gmd:EX_Extent>
 					</gmd:extent>

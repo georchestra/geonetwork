@@ -20,9 +20,12 @@ import org.fao.geonet.kernel.search.keyword.KeywordSort;
 import org.fao.geonet.kernel.search.keyword.SortDirection;
 import org.fao.geonet.kernel.search.keyword.XmlParams;
 import org.fao.geonet.languages.IsoLanguagesMapper;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.referencing.CRS;
 import org.hsqldb.SessionManager;
 import org.jdom.Element;
 import org.jdom.Namespace;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
  * These are all extension methods for calling from xsl docs.  Note:  All
@@ -350,6 +353,51 @@ public final class XslUtil
                 .setAttribute("href", (String) url, Namespace.getNamespace("xlink", "http://www.w3.org/1999/xlink"))
                 .setAttribute("type", "simple", Namespace.getNamespace("xlink", "http://www.w3.org/1999/xlink")));
         }
+    }
+
+    public static String reprojectCoords(Object minx, Object miny, Object maxx, Object maxy, Object fromEpsg) {
+        String ret = "";
+        try {
+            Double minxf = new Double((String) minx);
+            Double minyf = new Double((String) miny);
+            Double maxxf = new Double((String) maxx);
+            Double maxyf = new Double((String) maxy);
+            CoordinateReferenceSystem fromCrs = CRS.decode((String) fromEpsg);
+            CoordinateReferenceSystem toCrs = CRS.decode("EPSG:4326");
+
+            ReferencedEnvelope env = new ReferencedEnvelope(minxf, maxxf, minyf, maxyf, fromCrs);
+            ReferencedEnvelope reprojected = env.transform(toCrs, true);
+
+            ret = reprojected.getMinX() + "," + reprojected.getMinY() + ","
+                    + reprojected.getMaxX() + "," + reprojected.getMaxY();
+
+            Element elemRet = new Element("EX_GeographicBoundingBox", "gmd",
+                    "http://www.isotc211.org/2005/gmd");
+
+            Element elemminx = new Element("westBoundLongitude")
+                    .addContent(new Element("Decimal", "gco",
+                            "http://www.isotc211.org/2005/gco").setText("" + reprojected.getMinX()));
+            Element elemmaxx = new Element("eastBoundLongitude")
+                    .addContent(new Element("Decimal", "gco",
+                            "http://www.isotc211.org/2005/gco").setText("" + reprojected.getMaxX()));
+            Element elemminy = new Element("southBoundLatitude")
+                    .addContent(new Element("Decimal", "gco",
+                            "http://www.isotc211.org/2005/gco").setText("" + reprojected.getMinY()));
+            Element elemmaxy = new Element("northBoundLatitude")
+                    .addContent(new Element("Decimal", "gco",
+                            "http://www.isotc211.org/2005/gco").setText("" + reprojected.getMaxY()));
+
+            elemRet.addContent(elemminx);
+            elemRet.addContent(elemmaxx);
+            elemRet.addContent(elemminy);
+            elemRet.addContent(elemmaxy);
+
+            ret = Xml.getString(elemRet);
+
+        } catch (Throwable e) {}
+
+
+        return ret;
     }
 
 }
