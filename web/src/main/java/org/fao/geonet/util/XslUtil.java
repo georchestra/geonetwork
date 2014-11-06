@@ -6,11 +6,12 @@ import java.net.URLConnection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 import jeeves.server.ProfileManager;
+import jeeves.server.UserSession;
 import jeeves.utils.Log;
-
 import jeeves.utils.Xml;
+
+import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.kernel.ThesaurusManager;
 import org.fao.geonet.kernel.search.KeywordsSearcher;
@@ -19,7 +20,12 @@ import org.fao.geonet.kernel.search.keyword.KeywordSort;
 import org.fao.geonet.kernel.search.keyword.SortDirection;
 import org.fao.geonet.kernel.search.keyword.XmlParams;
 import org.fao.geonet.languages.IsoLanguagesMapper;
+import org.geotools.geometry.jts.ReferencedEnvelope;
+import org.geotools.referencing.CRS;
+import org.hsqldb.SessionManager;
 import org.jdom.Element;
+import org.jdom.Namespace;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
  * These are all extension methods for calling from xsl docs.  Note:  All
@@ -64,13 +70,13 @@ public final class XslUtil
         String result = src.toString().replaceAll(pattern.toString(), substitution.toString());
         return result;
     }
-    
+
     public static boolean isCasEnabled() {
 		return ProfileManager.isCasEnabled();
 	}
-    /** 
+    /**
 	 * Check if bean is defined in the context
-	 * 
+	 *
 	 * @param beanId id of the bean to look up
 	 */
 	public static boolean existsBean(String beanId) {
@@ -80,9 +86,9 @@ public final class XslUtil
 	 * Optimistically check if user can access a given url.  If not possible to determine then
 	 * the methods will return true.  So only use to show url links, not check if a user has access
 	 * for certain.  Spring security should ensure that users cannot access restricted urls though.
-	 *  
-	 * @param serviceName the raw services name (main.home) or (admin) 
-	 * 
+	 *
+	 * @param serviceName the raw services name (main.home) or (admin)
+	 *
 	 * @return true if accessible or system is unable to determine because the current
 	 * 				thread does not have a ServiceContext in its thread local store
 	 */
@@ -174,16 +180,16 @@ public final class XslUtil
 
         return results.toString();
     }
-    
+
 
     /**
      * Get field value for metadata identified by uuid.
-     * 
+     *
      * @param appPath 	Web application name to access Lucene index from environment variable
      * @param uuid 		Metadata uuid
      * @param field 	Lucene field name
      * @param lang 		Language of the index to search in
-     * 
+     *
      * @return metadata title or an empty string if Lucene index or uuid could not be found
      */
     public static String getIndexField(Object appName, Object uuid, Object field, Object lang) {
@@ -234,7 +240,7 @@ public final class XslUtil
             }
         } catch (Exception ex) {
             Log.error(Geonet.GEONETWORK, "Failed to get iso 2 language code for " + iso3LangCode + " caused by " + ex.getMessage());
-            
+
         }
 
         if(iso2LangCode == null) {
@@ -245,7 +251,7 @@ public final class XslUtil
     }
     /**
      * Return '' or error message if error occurs during URL connection.
-     * 
+     *
      * @param url   The URL to ckeck
      * @return
      */
@@ -257,15 +263,15 @@ public final class XslUtil
             u = new URL(url);
             conn = u.openConnection();
             conn.setConnectTimeout(connectionTimeout);
-            
+
             // TODO : set proxy
-            
+
             if (conn instanceof HttpURLConnection) {
                HttpURLConnection httpConnection = (HttpURLConnection) conn;
                httpConnection.setInstanceFollowRedirects(true);
                httpConnection.connect();
                httpConnection.disconnect();
-               // FIXME : some URL return HTTP200 with an empty reply from server 
+               // FIXME : some URL return HTTP200 with an empty reply from server
                // which trigger SocketException unexpected end of file from server
                int code = httpConnection.getResponseCode();
 
@@ -273,16 +279,16 @@ public final class XslUtil
                    return "";
                } else {
                    return "Status: " + code;
-               } 
+               }
             } // TODO : Other type of URLConnection
         } catch (Exception e) {
             e.printStackTrace();
             return e.toString();
         }
-        
+
         return "";
     }
-    
+
 	public static String threeCharLangCode(String langCode) {
 	    if(langCode == null || langCode.length() < 2) return Geonet.DEFAULT_LANGUAGE;
 
@@ -323,6 +329,75 @@ public final class XslUtil
             e.printStackTrace();
             return "";
         }
+    }
+
+    public static String generateLineageSource(Object url) {
+        Element ret = new Element("source", "gmd", "http://www.isotc211.org/2005/gmd");
+        try {
+            URL urlUrl = new URL((String) url);
+            if (urlUrl.getPath().contains("geonetwork") && (urlUrl.getQuery().contains("uuid"))) {
+                Matcher m = Pattern.compile("[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}").matcher(urlUrl.getQuery());
+                if (m.find()) {
+                    String uuid = m.group();
+                    ret.setAttribute("uuidref", uuid);
+                    ret.setAttribute("href", (String) url, Namespace.getNamespace("xlink", "http://www.w3.org/1999/xlink"));
+                    ret.setAttribute("type", "simple", Namespace.getNamespace("xlink", "http://www.w3.org/1999/xlink"));
+                }
+            } else
+                ret.setAttribute("href", (String) url, Namespace.getNamespace("xlink", "http://www.w3.org/1999/xlink"))
+                    .setAttribute("type", "simple", Namespace.getNamespace("xlink", "http://www.w3.org/1999/xlink"));
+            return Xml.getString(ret);
+        } catch (Exception e) {
+            // unparseable result
+            return Xml.getString(ret
+                .setAttribute("href", (String) url, Namespace.getNamespace("xlink", "http://www.w3.org/1999/xlink"))
+                .setAttribute("type", "simple", Namespace.getNamespace("xlink", "http://www.w3.org/1999/xlink")));
+        }
+    }
+
+    public static String reprojectCoords(Object minx, Object miny, Object maxx, Object maxy, Object fromEpsg) {
+        String ret = "";
+        try {
+            Double minxf = new Double((String) minx);
+            Double minyf = new Double((String) miny);
+            Double maxxf = new Double((String) maxx);
+            Double maxyf = new Double((String) maxy);
+            CoordinateReferenceSystem fromCrs = CRS.decode((String) fromEpsg);
+            CoordinateReferenceSystem toCrs = CRS.decode("EPSG:4326");
+
+            ReferencedEnvelope env = new ReferencedEnvelope(minxf, maxxf, minyf, maxyf, fromCrs);
+            ReferencedEnvelope reprojected = env.transform(toCrs, true);
+
+            ret = reprojected.getMinX() + "," + reprojected.getMinY() + ","
+                    + reprojected.getMaxX() + "," + reprojected.getMaxY();
+
+            Element elemRet = new Element("EX_GeographicBoundingBox", "gmd",
+                    "http://www.isotc211.org/2005/gmd");
+
+            Element elemminx = new Element("westBoundLongitude")
+                    .addContent(new Element("Decimal", "gco",
+                            "http://www.isotc211.org/2005/gco").setText("" + reprojected.getMinX()));
+            Element elemmaxx = new Element("eastBoundLongitude")
+                    .addContent(new Element("Decimal", "gco",
+                            "http://www.isotc211.org/2005/gco").setText("" + reprojected.getMaxX()));
+            Element elemminy = new Element("southBoundLatitude")
+                    .addContent(new Element("Decimal", "gco",
+                            "http://www.isotc211.org/2005/gco").setText("" + reprojected.getMinY()));
+            Element elemmaxy = new Element("northBoundLatitude")
+                    .addContent(new Element("Decimal", "gco",
+                            "http://www.isotc211.org/2005/gco").setText("" + reprojected.getMaxY()));
+
+            elemRet.addContent(elemminx);
+            elemRet.addContent(elemmaxx);
+            elemRet.addContent(elemminy);
+            elemRet.addContent(elemmaxy);
+
+            ret = Xml.getString(elemRet);
+
+        } catch (Throwable e) {}
+
+
+        return ret;
     }
 
 }

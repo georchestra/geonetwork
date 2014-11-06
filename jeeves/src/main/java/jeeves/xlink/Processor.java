@@ -63,7 +63,7 @@ public final class Processor {
 	private static final String ACTION_DETACH = "detach";
 
 	public static final String XLINK_JCS = "xlink";
-	
+
 	/**
     * Default constructor.
     * Builds a Processor.
@@ -156,7 +156,7 @@ public final class Processor {
 	}
 
 	//--------------------------------------------------------------------------
-	/** Resolves an xlink 
+	/** Resolves an xlink
 	 */
 	public static Element resolveXLink(String uri, String idSearch, ServiceContext srvContext) throws IOException, JDOMException, CacheException {
 
@@ -170,7 +170,7 @@ public final class Processor {
 
 		if (remoteFragment == null) {
 			Log.info(Log.XLINK_PROCESSOR, "cache MISS on "+uri.toLowerCase());
-			
+
 			try {
 				if(uri.startsWith(XLink.LOCAL_PROTOCOL)) {
 					LocalServiceRequest request = LocalServiceRequest.create(uri.replaceAll("&amp;", "&"));
@@ -182,10 +182,10 @@ public final class Processor {
 					remoteFragment = srvContext.execute(request);
 				} else {
 					URL url = new URL(uri.replaceAll("&amp;", "&"));
-					
+
 					URLConnection conn = url.openConnection();
 					conn.setConnectTimeout(1000);
-				
+
 					BufferedInputStream in = new BufferedInputStream(conn.getInputStream());
 					try {
 						remoteFragment = Xml.loadStream(in);
@@ -199,18 +199,18 @@ public final class Processor {
 				synchronized(Processor.class) {
 					failures.add (System.currentTimeMillis());
 				}
-				Log.error(Log.XLINK_PROCESSOR,"Failed on " + uri 
+				Log.error(Log.XLINK_PROCESSOR,"Failed on " + uri
 						+ " with exception message " + e.getMessage());
 			}
-			
+
 			if (remoteFragment != null) {
 				xlinkCache.put(uri.toLowerCase(), remoteFragment);
                 if(Log.isDebugEnabled(Log.XLINK_PROCESSOR))
                     Log.debug(Log.XLINK_PROCESSOR,"cache miss for "+uri);
 			} else {
 				return null;
-			}	
-					
+			}
+
 		} else {
 			Log.info(Log.XLINK_PROCESSOR, "cache HIT on "+uri.toLowerCase());
 		}
@@ -225,7 +225,7 @@ public final class Processor {
 				if (res != null) {
 					res = (Element)res.clone();
 					res.removeAttribute("id");
-				}	
+				}
 			} catch (Exception e) {
 				Log.warning(Log.XLINK_PROCESSOR,"Failed to search for remote fragment using " + xpath + ", error" + e.getMessage());
 				return null;
@@ -272,10 +272,10 @@ public final class Processor {
 		}
 		return xlinks;
 	}
-				
+
 	//--------------------------------------------------------------------------
   /**
-    * Search for Remote XLinks in XML document. Load and cache remote resource 
+    * Search for Remote XLinks in XML document. Load and cache remote resource
 		* if needed.
     * <p/>
     * TODO : Maybe don't wait to much to load a remote resource. Add timeout
@@ -312,7 +312,7 @@ public final class Processor {
     /**
      * Search for Local XLinks in XML document. eg. xlink:href="#details"
      * <p/>
-     * TODO : cache local fragments to avoid calling same xpath. 
+     * TODO : cache local fragments to avoid calling same xpath.
      *
      * @param action
      *            Define what to do with XLink ({@link #ACTION_DETACH,
@@ -328,7 +328,7 @@ public final class Processor {
 		// now all remote fragments have been added, process local xlinks (uncached)
 		Map<String,Element> localIds = new HashMap<String,Element>();
 		for (Attribute xlink : xlinks) {
-			Element element = xlink.getParent(); 
+			Element element = xlink.getParent();
 			if (action.equals(ACTION_REMOVE)) {
 				element.removeContent();
 			} else {
@@ -337,19 +337,19 @@ public final class Processor {
                     Log.debug(Log.XLINK_PROCESSOR, "process local xlink '"+idSearch+"'");
 				Element localFragment = localIds.get(idSearch);
 				try {
-					if (localFragment == null) {  
+					if (localFragment == null) {
 						localFragment = Xml.selectElement(md, "*//*[@id='" + idSearch + "']");
 						localIds.put(idSearch,localFragment);
 					}
-					
+
 					// -- avoid recursivity if an xlink:href #ID is a descendant of the localFragment
-					
-					// Should work in XPath v2. Failed with JDOM : 
-					// localFragment = Xml.selectElement(md, "*//*[@id='" + idSearch + "' " 
+
+					// Should work in XPath v2. Failed with JDOM :
+					// localFragment = Xml.selectElement(md, "*//*[@id='" + idSearch + "' "
 					//  		+ "and count(descendant::*[@xlink:href='#" + idSearch + "'])=0]");
 					List<Attribute> subXlinks = getXLinksWithXPath(localFragment, "*//@xlink:href[.='#" + idSearch + "']");
 					if (subXlinks.size()!=0) {
-						Log.warning(Log.XLINK_PROCESSOR, "found a fragment " + Xml.getString(localFragment) + " containing " 
+						Log.warning(Log.XLINK_PROCESSOR, "found a fragment " + Xml.getString(localFragment) + " containing "
 								+ subXlinks.size() + " reference(s) to itself. Id: " + idSearch);
 						continue;
 					}
@@ -361,7 +361,7 @@ public final class Processor {
 					localFragment = (Element)localFragment.clone();
 					localFragment.removeAttribute("id");
 					// replace children of this element with the fragment
-					element.removeContent(); 
+					element.removeContent();
 					element.addContent(localFragment);
 				}
 			}
@@ -378,8 +378,10 @@ public final class Processor {
         excludedXlinkElements.add("operatesOn");
         excludedXlinkElements.add("featureCatalogueCitation");
         excludedXlinkElements.add("Anchor");
+        excludedXlinkElements.add("source");
+
         // TODO: Add configuration file
-        
+
         if (excludedXlinkElements.contains(element.getName())) {
            return;
         }
@@ -400,13 +402,13 @@ public final class Processor {
 				} else {
 					try {
 						Element remoteFragment = resolveXLink(hrefUri, idSearch, srvContext);
-						
+
 						// Not resolved in cache or using href
 						if (remoteFragment == null)
 							return;
-						
+
 						searchXLink(remoteFragment, action, srvContext);
-						
+
 						if (show.equalsIgnoreCase(XLink.SHOW_REPLACE)) {
 							// replace this element with the fragment
 						 	if (!action.equals(ACTION_DETACH) && show.equalsIgnoreCase(XLink.SHOW_REPLACE)) {
@@ -418,14 +420,14 @@ public final class Processor {
 							parent.setContent(index,remoteFragment);
 						} else { // show = XLink.SHOW_EMBED
 							// replace children of this element with the fragment
-							element.removeContent(); 
+							element.removeContent();
 							element.addContent(remoteFragment);
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
 						Log.error(Log.XLINK_PROCESSOR,"doXLink "+action+" failed: "+e.getMessage());
 					}
-				} 
+				}
 				cleanXLinkAttributes(element, action);
 			} else {
 				Log.error(Log.XLINK_PROCESSOR,"Invalid xlink:show attribute '"+show+"'");
