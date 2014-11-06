@@ -367,18 +367,32 @@ public final class XslUtil
 
             Element elemRet = new Element("EX_GeographicBoundingBox", "gmd", "http://www.isotc211.org/2005/gmd");
 
+            Double rminx, rmaxx, rminy, rmaxy;
+            boolean forceXY = (System.getProperty("org.geotools.referencing.forceXY") != null &&
+                    System.getProperty("org.geotools.referencing.forceXY").equals("true"));
+            if (forceXY) {
+                rminx = reprojected.getMinY();
+                rmaxx = reprojected.getMaxY();
+                rminy = reprojected.getMinX();
+                rmaxy = reprojected.getMaxX();
+            } else {
+                rminx = reprojected.getMinX();
+                rmaxx = reprojected.getMaxX();
+                rminy = reprojected.getMinY();
+                rmaxy = reprojected.getMaxY();
+            }
             Element elemminx = new Element("westBoundLongitude", "gmd", "http://www.isotc211.org/2005/gmd")
                     .addContent(new Element("Decimal", "gco",
-                            "http://www.isotc211.org/2005/gco").setText("" + reprojected.getMinY()));
+                            "http://www.isotc211.org/2005/gco").setText("" + rminx));
             Element elemmaxx = new Element("eastBoundLongitude", "gmd", "http://www.isotc211.org/2005/gmd")
                     .addContent(new Element("Decimal", "gco",
-                            "http://www.isotc211.org/2005/gco").setText("" + reprojected.getMaxY()));
+                            "http://www.isotc211.org/2005/gco").setText("" + rmaxx));
             Element elemminy = new Element("southBoundLatitude", "gmd", "http://www.isotc211.org/2005/gmd")
                     .addContent(new Element("Decimal", "gco",
-                            "http://www.isotc211.org/2005/gco").setText("" + reprojected.getMinX()));
+                            "http://www.isotc211.org/2005/gco").setText("" + rminy));
             Element elemmaxy = new Element("northBoundLatitude", "gmd", "http://www.isotc211.org/2005/gmd")
                     .addContent(new Element("Decimal", "gco",
-                            "http://www.isotc211.org/2005/gco").setText("" + reprojected.getMaxX()));
+                            "http://www.isotc211.org/2005/gco").setText("" + rmaxy));
 
             elemRet.addContent(elemminx);
             elemRet.addContent(elemmaxx);
@@ -388,7 +402,6 @@ public final class XslUtil
             ret = Xml.getString(elemRet);
 
         } catch (Throwable e) {}
-
 
         return ret;
     }
