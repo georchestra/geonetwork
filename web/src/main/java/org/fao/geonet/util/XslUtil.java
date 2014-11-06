@@ -18,10 +18,12 @@ import org.fao.geonet.kernel.search.keyword.KeywordSort;
 import org.fao.geonet.kernel.search.keyword.SortDirection;
 import org.fao.geonet.kernel.search.keyword.XmlParams;
 import org.fao.geonet.languages.IsoLanguagesMapper;
+import org.geotools.factory.Hints;
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.geotools.referencing.CRS;
+import org.geotools.referencing.ReferencingFactoryFinder;
 import org.jdom.Element;
 import org.jdom.Namespace;
+import org.opengis.referencing.crs.CRSAuthorityFactory;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
@@ -359,8 +361,13 @@ public final class XslUtil
             Double minyf = new Double((String) miny);
             Double maxxf = new Double((String) maxx);
             Double maxyf = new Double((String) maxy);
-            CoordinateReferenceSystem fromCrs = CRS.decode((String) fromEpsg);
-            CoordinateReferenceSystem toCrs = CRS.decode("EPSG:4326");
+            Hints hints = new Hints(Hints.FORCE_LONGITUDE_FIRST_AXIS_ORDER, Boolean.TRUE);
+            CRSAuthorityFactory factory = ReferencingFactoryFinder.getCRSAuthorityFactory("EPSG", hints);
+
+            CoordinateReferenceSystem fromCrs = factory.createCoordinateReferenceSystem((String) fromEpsg);
+            CoordinateReferenceSystem toCrs = factory.createCoordinateReferenceSystem("EPSG:4326");
+
+
 
             ReferencedEnvelope env = new ReferencedEnvelope(minxf, maxxf, minyf, maxyf, fromCrs);
             ReferencedEnvelope reprojected = env.transform(toCrs, true);
@@ -368,19 +375,11 @@ public final class XslUtil
             Element elemRet = new Element("EX_GeographicBoundingBox", "gmd", "http://www.isotc211.org/2005/gmd");
 
             Double rminx, rmaxx, rminy, rmaxy;
-            boolean forceXY = (System.getProperty("org.geotools.referencing.forceXY") != null &&
-                    System.getProperty("org.geotools.referencing.forceXY").equals("true"));
-            if (forceXY) {
-                rminx = reprojected.getMinY();
-                rmaxx = reprojected.getMaxY();
-                rminy = reprojected.getMinX();
-                rmaxy = reprojected.getMaxX();
-            } else {
-                rminx = reprojected.getMinX();
-                rmaxx = reprojected.getMaxX();
-                rminy = reprojected.getMinY();
-                rmaxy = reprojected.getMaxY();
-            }
+            rminx = reprojected.getMinX();
+            rmaxx = reprojected.getMaxX();
+            rminy = reprojected.getMinY();
+            rmaxy = reprojected.getMaxY();
+
             Element elemminx = new Element("westBoundLongitude", "gmd", "http://www.isotc211.org/2005/gmd")
                     .addContent(new Element("Decimal", "gco",
                             "http://www.isotc211.org/2005/gco").setText("" + rminx));
