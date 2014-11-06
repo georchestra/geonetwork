@@ -43,18 +43,7 @@
 	</xsl:template>
 	
 	<!-- ============================================================================= -->	
-	
-	<xsl:template match="wmc:BoundingBox" mode="BoundingBox">
-	   <xsl:variable name="minx" select="string(./@minx)" />
-       <xsl:variable name="miny" select="string(./@miny)" />
-       <xsl:variable name="maxx" select="string(./@maxx)" />
-       <xsl:variable name="maxy" select="string(./@maxy)" />
-       <xsl:variable name="fromEpsg" select="string(./@SRS)" />
-       <xsl:variable name="reprojected" select="java:reprojectCoords($minx,$miny,$maxx,$maxy,$fromEpsg)" />
-       
-       <xsl:copy-of select="saxon:parse($reprojected)" />
-	</xsl:template>
-	
+
 	<xsl:template match="wmc:ViewContext|wmc11:ViewContext">
 		<gmd:MD_Metadata>
 			
@@ -175,11 +164,16 @@
                         <xsl:with-param name="lang"><xsl:value-of select="$lang"/></xsl:with-param>						
 					</xsl:apply-templates>
 					<!--  extracts the extent (if not 4326, need to reproject) -->
-					
 					<gmd:extent>
 						<gmd:EX_Extent>
 							<gmd:geographicElement>
-                                <xsl:apply-templates select="/wmc:ViewContext/wmc:General" mode="BoundingBox" />								
+							       <xsl:variable name="minx" select="string(/wmc:ViewContext/wmc:General/wmc:BoundingBox/@minx)" />
+							       <xsl:variable name="miny" select="string(/wmc:ViewContext/wmc:General/wmc:BoundingBox/@miny)" />
+							       <xsl:variable name="maxx" select="string(/wmc:ViewContext/wmc:General/wmc:BoundingBox/@maxx)" />
+							       <xsl:variable name="maxy" select="string(/wmc:ViewContext/wmc:General/wmc:BoundingBox/@maxy)" />
+							       <xsl:variable name="fromEpsg" select="string(/wmc:ViewContext/wmc:General/wmc:BoundingBox/@SRS)" />
+							       <xsl:variable name="reprojected" select="java:reprojectCoords($minx,$miny,$maxx,$maxy,$fromEpsg)" />
+							       <xsl:copy-of select="saxon:parse($reprojected)" />
 							</gmd:geographicElement>
 						</gmd:EX_Extent>
 					</gmd:extent>
