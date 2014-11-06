@@ -72,6 +72,7 @@ public class ImportWmc extends NotInReadOnlyModeService {
         String uuid = UUID.randomUUID().toString();
         GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
 
+        DataManager dm = gc.getDataManager();
         Dbms dbms = (Dbms) context.getResourceManager().open(Geonet.Res.MAIN_DB);
 
         String uuidAction = Util.getParam(params, Params.UUID_ACTION, Params.NOTHING);
@@ -89,7 +90,7 @@ public class ImportWmc extends NotInReadOnlyModeService {
                 gc.getSiteId(), gc.getSiteName(), context, id, date,
                 date, "1", "n", dbms);
 
-
+        dm.indexInThreadPool(context, id.get(0), dbms);
 
         Element result = new Element("uuid");
         result.setText(uuid);
