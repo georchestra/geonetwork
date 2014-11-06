@@ -18,12 +18,10 @@ import org.fao.geonet.kernel.search.keyword.KeywordSort;
 import org.fao.geonet.kernel.search.keyword.SortDirection;
 import org.fao.geonet.kernel.search.keyword.XmlParams;
 import org.fao.geonet.languages.IsoLanguagesMapper;
-import org.geotools.factory.Hints;
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.geotools.referencing.ReferencingFactoryFinder;
+import org.geotools.referencing.CRS;
 import org.jdom.Element;
 import org.jdom.Namespace;
-import org.opengis.referencing.crs.CRSAuthorityFactory;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 /**
@@ -361,13 +359,9 @@ public final class XslUtil
             Double minyf = new Double((String) miny);
             Double maxxf = new Double((String) maxx);
             Double maxyf = new Double((String) maxy);
-            Hints hints = new Hints(Hints.FORCE_LONGITUDE_FIRST_AXIS_ORDER, Boolean.TRUE);
-            CRSAuthorityFactory factory = ReferencingFactoryFinder.getCRSAuthorityFactory("EPSG", hints);
 
-            CoordinateReferenceSystem fromCrs = factory.createCoordinateReferenceSystem((String) fromEpsg);
-            CoordinateReferenceSystem toCrs = factory.createCoordinateReferenceSystem("EPSG:4326");
-
-
+            CoordinateReferenceSystem fromCrs = CRS.decode((String) fromEpsg, true);
+            CoordinateReferenceSystem toCrs = CRS.decode("EPSG:4326", true);
 
             ReferencedEnvelope env = new ReferencedEnvelope(minxf, maxxf, minyf, maxyf, fromCrs);
             ReferencedEnvelope reprojected = env.transform(toCrs, true);
@@ -400,7 +394,9 @@ public final class XslUtil
 
             ret = Xml.getString(elemRet);
 
-        } catch (Throwable e) {}
+        } catch (Throwable e) {
+            Log.error("Geonet.GEONETWORK", "Error reprojecting coordinates in EPSG:4326: " + e.getMessage());
+        }
 
         return ret;
     }
