@@ -71,6 +71,12 @@
 			<!-- mdHrLv -->
 			<!-- mdHrLvName -->
 
+			<!-- hierarchy level -->
+			<gmd:hierarchyLevel>
+				<gmd:MD_ScopeCode codeListValue="mapDigital"
+					codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode" />
+			</gmd:hierarchyLevel>
+
 			<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
 			<xsl:for-each select="/wmc:ViewContext/wmc:General/wmc:ContactInformation|/wmc11:ViewContext/wmc11:General/wmc11:ContactInformation">

@@ -2569,6 +2569,7 @@
             nameSpace and name attributes of GeneralName may be 'OGC' and 'catalogue'</description>
 		<helper>
 			<option value="OGC:WMS">OGC Web Map Service (OGC:WMS)</option>
+			<option value="OGC:WMC">OGC Web Map Service (OGC:WMC)</option>
 			<option value="OGC:WFS">OGC Web Feature Service (OGC:WFS)</option>
 			<option value="OGC:WCS">OGC Web Coverage Service (OGC:WCS)</option>
 			<option value="W3C:HTML:DOWNLOAD">Download (W3C:HTML:DOWNLOAD)</option>
