@@ -44,6 +44,7 @@ public class ImportWmc extends NotInReadOnlyModeService {
         String wmcString = Util.getParam(params, "wmc_string");
         String wmcUrl = Util.getParam(params, "wmc_url");
         String viewerUrl = Util.getParam(params, "viewer_url");
+        String groupId = Util.getParam(params, "group_id", "1");
 
         Map<String,String> xslParams = new HashMap<String,String>();
         xslParams.put("viewer_url", viewerUrl);
@@ -88,7 +89,7 @@ public class ImportWmc extends NotInReadOnlyModeService {
         // Import record
         Importer.importRecord(uuid, localId , uuidAction, md, "iso19139", 0,
                 gc.getSiteId(), gc.getSiteName(), context, id, date,
-                date, "1", "n", dbms);
+                date, groupId, "n", dbms);
 
         dm.indexInThreadPool(context, id.get(0), dbms);
 
