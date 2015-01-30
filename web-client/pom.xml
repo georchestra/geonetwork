@@ -7,7 +7,7 @@
   <parent>
 		<groupId>org.georchestra</groupId>
     <artifactId>geonetwork</artifactId>
-		<version>14.12-SNAPSHOT</version>
+		<version>14.12</version>
   </parent>
 
   <groupId>org.geonetwork-opensource</groupId>
