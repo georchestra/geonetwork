@@ -147,22 +147,22 @@
 	<importxslt>Apply this XSLT to harvested records</importxslt>
 	<rejectDuplicateResource>Check for duplicate resources based on resource identifier (only for records in ISO19139 or ISO profiles)</rejectDuplicateResource>
 	
-	<at>Ausf�hren um</at>
+	<at>Ausführen um</at>
     <atSpec>( Stunde : Minute z.B. 23:15 )</atSpec>
-    <interval>Wird ausgef�hrt</interval>
+    <interval>Wird ausgeführt</interval>
     <hourintervals>
-        <hour label="st�ndlich">1</hour>
+        <hour label="stündlich">1</hour>
         <hour label="alle 3 Stunden">3</hour>
         <hour label="alle 6 Stunden">6</hour>
         <hour label="alle 12 Stunden">12</hour>
         <hour label="N/A">undefined</hour>
     </hourintervals>
     <hourintervals>
-        <hour label="st�ndlich">1</hour>
+        <hour label="stündlich">1</hour>
         <hour label="alle 3 Stunden">3</hour>
         <hour label="alle 6 Stunden">6</hour>
         <hour label="alle 12 Stunden">12</hour>
-        <hour label="t�glich">24</hour>
+        <hour label="täglich">24</hour>
     </hourintervals>
     <dayofweek>
         <day label="Montag">MON</day>
