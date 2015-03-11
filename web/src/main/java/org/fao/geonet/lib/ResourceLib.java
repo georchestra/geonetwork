@@ -75,6 +75,12 @@ public class ResourceLib {
 		return getMetadataDir(getDataDir(context), id);
 	}
 
+    public File getMetadataDir(File dataDir, String id) {
+        String group = pad(Integer.parseInt(id) / 100, 3);
+        String groupDir = group + "00-" + group + "99";
+        return new File(new File(dataDir,groupDir), id);
+    }
+
 	/**
 	 * Get metadata public or private data directory
 	 * 

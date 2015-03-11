@@ -65,6 +65,8 @@ import org.fao.geonet.constants.Edit;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.constants.Geonet.Namespaces;
 import org.fao.geonet.constants.Params;
+import org.fao.geonet.events.md.MetadataIndexCompleted;
+import org.fao.geonet.events.md.MetadataRemove;
 import org.fao.geonet.exceptions.NoSchemaMatchesException;
 import org.fao.geonet.exceptions.SchemaMatchConflictException;
 import org.fao.geonet.exceptions.SchematronValidationErrorEx;
@@ -85,9 +87,16 @@ import org.jdom.JDOMException;
 import org.jdom.Namespace;
 import org.jdom.filter.ElementFilter;
 import org.jdom.xpath.XPath;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.ApplicationEventPublisherAware;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+
 import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -109,7 +118,9 @@ import java.util.concurrent.Executors;
  * Handles all operations on metadata (select,insert,update,delete etc...).
  *
  */
-public class DataManager {
+public class DataManager implements ApplicationEventPublisherAware {
+
+    private ApplicationEventPublisher applicationEventPublisher;
 
 
     //--------------------------------------------------------------------------
@@ -154,6 +165,7 @@ public class DataManager {
         servContext.setUserSession(session);
         init(parameterObject.context, parameterObject.dbms, false);
     }
+
 
     /**
      * Init Data manager and refresh index if needed.
@@ -456,7 +468,7 @@ public class DataManager {
         try {
             Vector<Element> moreFields = new Vector<Element>();
             int id$ = Integer.valueOf(id);
-
+            
             // get metadata, extracting and indexing any xlinks
             Element md   = xmlSerializer.selectNoXLinkResolver(dbms, "Metadata", id, true);
             if (xmlSerializer.resolveXLinks()) {
@@ -597,11 +609,16 @@ public class DataManager {
                 moreFields.add(SearchManager.makeField("_valid", isValid, true, true));
             }
             searchMan.index(schemaMan.getSchemaDir(schema), md, id, moreFields, isTemplate, title);
+            
+            if (id$ > 0) {
+                applicationEventPublisher.publishEvent(new MetadataIndexCompleted(id$));
+            }
         }
         catch (Exception x) {
             Log.error(Geonet.DATA_MANAGER, "The metadata document index with id=" + id + " is corrupt/invalid - ignoring it. Error: " + x.getMessage());
             x.printStackTrace();
         }
+
     }
 
     /**
@@ -2067,7 +2084,9 @@ public class DataManager {
         if (isTemplate.equals("n")) {
             notifyMetadataDelete(dbms, id, uuid);
         }
-
+        if (id != null) {
+            applicationEventPublisher.publishEvent(new MetadataRemove(new Integer(id).intValue()));
+        }
         //--- update search criteria
         searchMan.delete("_id", id+"");
     }
@@ -3480,4 +3499,11 @@ public class DataManager {
     public enum UpdateDatestamp {
         yes, no
     }
+
+    @Override
+    public void setApplicationEventPublisher(
+            ApplicationEventPublisher applicationEventPublisher) {
+        this.applicationEventPublisher = applicationEventPublisher;
+    }
+
 }

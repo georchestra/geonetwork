@@ -44,22 +44,33 @@ import org.fao.geonet.kernel.SchemaManager;
 import org.fao.geonet.kernel.setting.SettingInfo;
 import org.fao.geonet.languages.IsoLanguagesMapper;
 import org.fao.geonet.services.metadata.Show;
+import org.fao.geonet.services.metadata.format.cache.FormatterCache;
 import org.jdom.Element;
 import org.jdom.JDOMException;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
 /**
  * Allows a user to display a metadata with a particular formatters
  * 
  * @author jeichar
  */
-public class Format extends AbstractFormatService {
+public class Format extends AbstractFormatService implements ApplicationContextAware {
 
 	private Show showService;
     private WeakHashMap<String, List<SchemaLocalization>> labels = new WeakHashMap<String, List<SchemaLocalization>>();
 
+    @Autowired
+    private FormatterCache formatterCache;
+    
+    private ApplicationContext springContext;
+    
     public Element exec(Element params, ServiceContext context) throws Exception {
         ensureInitializedDir(context);
 
+        
         String xslid = Util.getParam(params, "xsl", null);
         String uuid = Util.getParam(params, Params.UUID, null);
         String id = Util.getParam(params, Params.ID, null);
@@ -207,6 +218,15 @@ public class Format extends AbstractFormatService {
         showService = new Show();
         showService.init(appPath, params);
     }
+    
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext)
+            throws BeansException {
+        springContext = applicationContext;
+        
+    }
+    
     
     private static class SchemaLocalization {
         private String schema;

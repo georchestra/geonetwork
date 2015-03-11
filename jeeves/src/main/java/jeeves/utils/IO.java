@@ -28,6 +28,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URI;
 import java.nio.charset.Charset;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -161,6 +162,14 @@ public final class IO
             } catch (Throwable t) {
                 // ignore
             }
+        }
+    }
+
+    public static File toPath(URI uri) throws IOException {
+        try {
+            return new File(uri);
+        } catch (Throwable e) {
+            throw new IOException("No filesystem found for the uri: " + uri);
         }
     }
 }
