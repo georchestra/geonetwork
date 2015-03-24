@@ -3,6 +3,7 @@ package org.fao.geonet.services.metadata;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -24,6 +25,7 @@ import org.apache.commons.lang.time.DateUtils;
 import org.fao.geonet.GeonetworkDataDirectory;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.lib.Lib;
+import org.fao.geonet.util.ISODate;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.quartz.JobExecutionContext;
@@ -32,7 +34,19 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.scheduling.quartz.QuartzJobBean;
-
+/**
+ * This class defines a background process responsible of several things:
+ *
+ * - It generates a html output from a XSL stylesheet for every public or harvested metadatas
+ *   stored in the catalog,
+ * 
+ * - it is responsible of maintaining a  sitemap.xml file for better indexation agains search engines ; [TODO]
+ * 
+ * To function properly, it has to be configured (defined as bean) into config-spring-geonetwork.xml.
+ *
+ * @author pmauduit
+ *
+ */
 public class MetadataCacheSeeder extends QuartzJobBean implements ApplicationContextAware {
 
     /**
@@ -46,20 +60,35 @@ public class MetadataCacheSeeder extends QuartzJobBean implements ApplicationCon
      */
     private String xslStylesheet;
 
-    public void setXslStylesheet(String xslStylesheet) {
-        this.xslStylesheet = xslStylesheet;
-    }
-
     /**
      * The full path to the XSL stylsheet.
      */
     private String xslPath;
+    
     /**
-     * Flag to control if the backup is currently running.
+     * The prefix where the files would be publicly available.
+     * (e.g. http://ids.pigma.org/mds for http://ids.pigma.org/mds/[uuid].html)
+     */
+    private String urlPath = "http://ids.pigma.org/mds";
+    
+    /**
+     * Default change frequency for the sitemap items.
+     */
+    private String changeFreq = "daily";
+    /**
+     * Flag to control if the process is currently running.
      */
     private static AtomicBoolean isRunning = new AtomicBoolean(false);
     
+    /**
+     * The namespace to be used for generating the sitemap.
+     */
+    private final String SITEMAP_NS = "http://www.google.com/schemas/sitemap/0.84";
     
+    
+    /**
+     * The spring application context, used to get a hook to necessary beans of the running catalogue.
+     */
     private ApplicationContext applicationContext;
     
     /**
@@ -88,7 +117,7 @@ public class MetadataCacheSeeder extends QuartzJobBean implements ApplicationCon
         
         // It's actually pretty hard to get a hook on jeeves managed objects from a spring object.
         // Bypassing GN internals and doing it by hand ...
-        // anyway, the system variable is present on every georchestra's geonetwork ...
+        // Anyway, the system variable is present on every georchestra's geonetwork ...
         String userXslDir = System.getProperty(GeonetworkDataDirectory.GEONETWORK_DIR_KEY) + File.separator + "data/user_xsl/";
         xslPath = userXslDir + xslStylesheet + "/view.xsl";
 
@@ -151,6 +180,10 @@ public class MetadataCacheSeeder extends QuartzJobBean implements ApplicationCon
                         Log.error(Geonet.CACHESEEDER, "Error trying to generate an HTML file.", e);
                     }
                 }
+                
+                // step 4. generate a sitemap.xml
+                cachedFiles = FileUtils.iterateFiles(fCachePath, extensions, false);
+                generateSitemapXml(cachedFiles);
             }
         } catch (Exception e) {
             Log.error(Geonet.CACHESEEDER, "Error occured while seeding cache: ", e);
@@ -168,8 +201,45 @@ public class MetadataCacheSeeder extends QuartzJobBean implements ApplicationCon
         }
     }
 
+    
+    /**
+     * This method is responsible of generating a sitemap.xml file in the
+     * cache path folder.
+     * 
+     * @param Iterator<File> cachedFiles the list of files to include
+     * to the sitemap.xml.
+     */
+    private void generateSitemapXml(Iterator<File> cachedFiles) {
+        Element urlset = new Element("urlset", SITEMAP_NS);
+        while (cachedFiles.hasNext()) {
+            File f = cachedFiles.next();
+            String lastMod = new ISODate(f.lastModified()).toString();
+            
+            String strf = f.getAbsolutePath();
+            Element url = new Element("url",SITEMAP_NS);
+            url.addContent(new Element("loc", SITEMAP_NS).setText(urlPath + "/" + FilenameUtils.getName(strf)));
+            url.addContent(new Element("changefreq", SITEMAP_NS).setText(changeFreq));
+            url.addContent(new Element("lastmod", SITEMAP_NS).setText(lastMod));
+            urlset.addContent(url);
+        }
+        
+        try {
+            FileUtils.writeStringToFile(new File(cachePath, "sitemap.xml"), Xml.getString(urlset));
+        } catch (IOException e) {
+            Log.error(Geonet.CACHESEEDER, "Unable to generate the sitemap.xml file: ", e);
+        }
+    }
+
+    /**
+     * This method generates a single html file from a given UUID.
+     * 
+     * @param dbms a DBMS resource to access datas from the database.
+     * @param curUuid the UUID of the metadata.
+     *
+     * @throws Exception
+     */
     private void generateHtmlFile(Dbms dbms, String curUuid) throws Exception {
-        // Does globally the same as Format.java
+        // This does globally the same as Format.java
         // In a more concise way.
         
         Element root = new Element("root");
@@ -226,6 +296,7 @@ public class MetadataCacheSeeder extends QuartzJobBean implements ApplicationCon
         ArrayList<String> mdUuids = new ArrayList<String>();
         // operationid = 0 (view)
         // groupid = 1 (ALL)
+        // or harvested MDs (which are considered public)
         Element resp = dbms.select("SELECT uuid FROM metadata FULL OUTER JOIN operationallowed ON metadata.id = operationallowed.metadataid WHERE (groupid = 1 AND operationid = 0"
                 + " AND schemaid IN ('iso19139.pigma', 'iso19139', 'iso19139.fra')) OR (isharvested = 'y') ; " );
         
@@ -249,14 +320,17 @@ public class MetadataCacheSeeder extends QuartzJobBean implements ApplicationCon
     
     /**
      * Sets the cache path, called internally by Spring at bean instantiation.
-     * @param cachePath
-     *            a String describing the path where the cache files can be
-     *            stored.
+     * 
+     * @param cachePath a String describing the path where the cache files can be stored.
      */
     public void setCachePath(String cachePath) {
         this.cachePath = cachePath;
     }
 
+    public void setXslStylesheet(String xslStylesheet) {
+        this.xslStylesheet = xslStylesheet;
+    }
+    
     @Override
     public void setApplicationContext(ApplicationContext applicationContext)
             throws BeansException {
