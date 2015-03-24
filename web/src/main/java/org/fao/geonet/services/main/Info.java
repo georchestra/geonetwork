@@ -32,6 +32,7 @@ import jeeves.server.ServiceConfig;
 import jeeves.server.UserSession;
 import jeeves.server.context.ServiceContext;
 import jeeves.utils.Xml;
+
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Edit;
 import org.fao.geonet.constants.Geonet;
@@ -42,6 +43,7 @@ import org.fao.geonet.kernel.security.GeonetworkUser;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.lib.Lib;
 import org.fao.geonet.services.region.RegionsDAO;
+import org.fao.geonet.services.region.ThesaurusBasedRegionsDAO;
 import org.fao.geonet.services.util.z3950.RepositoryInfo;
 import org.jdom.Element;
 
@@ -140,7 +142,7 @@ public class Info implements Service {
 				result.addContent(Lib.local.retrieve(dbms, "Operations"));
 
 			else if (type.equals("regions")) {
-		        RegionsDAO dao = context.getApplicationContext().getBean(RegionsDAO.class);
+		        RegionsDAO dao = context.getApplicationContext().getBean(ThesaurusBasedRegionsDAO.class);
 		        Element regions = dao.createSearchRequest(context).xmlResult();
 				result.addContent(regions);
 			}
