@@ -3,7 +3,6 @@ package org.fao.geonet.services.metadata;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -13,7 +12,6 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import jeeves.resources.dbms.Dbms;
-import jeeves.server.context.ServiceContext;
 import jeeves.server.resources.ResourceManager;
 import jeeves.utils.Log;
 import jeeves.utils.Xml;
@@ -24,10 +22,8 @@ import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.fao.geonet.GeonetworkDataDirectory;
 import org.fao.geonet.constants.Geonet;
-import org.fao.geonet.lib.Lib;
 import org.fao.geonet.util.ISODate;
 import org.jdom.Element;
-import org.jdom.JDOMException;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.beans.BeansException;
@@ -40,9 +36,38 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
  * - It generates a html output from a XSL stylesheet for every public or harvested metadatas
  *   stored in the catalog,
  * 
- * - it is responsible of maintaining a  sitemap.xml file for better indexation agains search engines ; [TODO]
+ * - it maintains a sitemap.xml file for better indexation against search engines ;
  * 
- * To function properly, it has to be configured (defined as bean) into config-spring-geonetwork.xml.
+ * To function properly, it has to be configured (defined as bean) into config-spring-geonetwork.xml, using the following
+ * snippet:
+ * 
+ *     <bean name="metadataCacheSeeder" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+ *       <property name="jobClass" value="org.fao.geonet.services.metadata.MetadataCacheSeeder" />
+ *       <property name="jobDataAsMap">
+ *         <map>
+ *           <entry key="xslStylesheet" value="pigma-static-html" />
+ *           <entry key="cachePath" value="/tmp/pigma-md-cache" />
+ *         </map>
+ *       </property>
+ *   </bean>
+ *
+ *   <bean id="metadataCacheSeederCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+ *       <property name="jobDetail" ref="metadataCacheSeeder" />
+ *       <!-- runs every days at 4:00 AM -->
+ *       <property name="cronExpression" value="0 0 4 * * ?" />
+ *       <property name="startDelay" value="30000"/>
+ *   </bean>
+ *   
+ *   <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+ *       <property name="jobFactory">
+ *           <bean class="org.fao.geonet.util.spring.AutowiringSpringBeanJobFactory"/>
+ *       </property>
+ *       <property name="triggers">
+ *           <list>
+ *               <ref bean="metadataCacheSeederCronTrigger" />
+ *           </list>
+ *       </property>
+ *   </bean>
  *
  * @author pmauduit
  *
@@ -92,6 +117,11 @@ public class MetadataCacheSeeder extends QuartzJobBean implements ApplicationCon
     private ApplicationContext applicationContext;
     
     /**
+     * Flag indicating if the service is enabled or not.
+     */
+    private boolean enabled = true;
+    
+    /**
      * Constructor
      */
     public MetadataCacheSeeder() {}
@@ -102,6 +132,10 @@ public class MetadataCacheSeeder extends QuartzJobBean implements ApplicationCon
     @Override
     protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
 
+        if (! enabled) {
+            return;
+        }
+        
         if (isRunning.get()) {
             Log.info(Geonet.CACHESEEDER, "Cache seeder already running. Skipping execution.");
             return;
@@ -126,8 +160,21 @@ public class MetadataCacheSeeder extends QuartzJobBean implements ApplicationCon
             dbms = (Dbms) resourceManager.openDirect(Geonet.Res.MAIN_DB);
             File fCachePath = new File(cachePath);
 
-            if ((Log.isDebugEnabled(Geonet.CACHESEEDER) && !(fCachePath.exists()))) {
-                Log.debug(Geonet.CACHESEEDER, "Directory does not exist. Skipping execution.");
+            if (! fCachePath.isDirectory()) {
+                try {
+                    FileUtils.forceMkdir(fCachePath);
+                } catch (IOException e) {
+                    Log.debug(Geonet.CACHESEEDER, "Unable to create the cache directory. Skipping execution and deactivating the service.");
+                    enabled = false;
+                    return;                    
+                }
+            }
+
+            if (! fCachePath.isDirectory()) {
+                if (Log.isDebugEnabled(Geonet.CACHESEEDER)) {
+                    Log.debug(Geonet.CACHESEEDER, "Directory does not exist. Skipping execution.");
+                }
+                enabled = false;
                 return;
             }
 
@@ -297,8 +344,18 @@ public class MetadataCacheSeeder extends QuartzJobBean implements ApplicationCon
         // operationid = 0 (view)
         // groupid = 1 (ALL)
         // or harvested MDs (which are considered public)
-        Element resp = dbms.select("SELECT uuid FROM metadata FULL OUTER JOIN operationallowed ON metadata.id = operationallowed.metadataid WHERE (groupid = 1 AND operationid = 0"
-                + " AND schemaid IN ('iso19139.pigma', 'iso19139', 'iso19139.fra')) OR (isharvested = 'y') ; " );
+        Element resp = dbms.select("SELECT "
+                + "                        uuid "
+                + "                 FROM "
+                + "                        metadata"
+                + "                 FULL OUTER JOIN "
+                + "                        operationallowed "
+                + "                 ON "
+                + "                        metadata.id = operationallowed.metadataid "
+                + "                 WHERE "
+                + "                       (groupid = 1 AND operationid = 0 AND schemaid IN ('iso19139.pigma', 'iso19139', 'iso19139.fra')) "
+                + "                 OR "
+                + "                       (isharvested = 'y') ; " );
         
         List<Element> records = (List<Element>) resp.getChildren();
         for (Element record : records) {
