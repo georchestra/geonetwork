@@ -31,4 +31,33 @@
 	<bean id="MetadataRegionsDAO" class="org.fao.geonet.services.region.MetadataRegionDAO">
 		<property name="cacheAllRegionsInMemory" value="false"/>
 	</bean>
+
+    <bean name="metadataCacheSeeder" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="org.fao.geonet.services.metadata.MetadataCacheSeeder" />
+        <property name="jobDataAsMap">
+          <map>
+            <entry key="xslStylesheet" value="pigma-static-html" />
+            <entry key="cachePath" value="/tmp/pigma-md-cache" />
+          </map>
+        </property>
+    </bean>
+
+	<bean id="metadataCacheSeederCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="metadataCacheSeeder" />
+        <!-- runs every minutes -->
+        <property name="cronExpression" value="0 * * * * ?" />
+        <property name="startDelay" value="30000"/>
+	</bean>
+	
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="jobFactory">
+            <bean class="org.fao.geonet.util.spring.AutowiringSpringBeanJobFactory"/>
+        </property>
+        <property name="triggers">
+            <list>
+                <ref bean="metadataCacheSeederCronTrigger" />
+            </list>
+        </property>
+    </bean>
+
 </beans>
