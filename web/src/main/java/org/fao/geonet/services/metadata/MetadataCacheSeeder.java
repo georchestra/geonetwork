@@ -353,9 +353,9 @@ public class MetadataCacheSeeder extends QuartzJobBean implements ApplicationCon
                 + "                 ON "
                 + "                        metadata.id = operationallowed.metadataid "
                 + "                 WHERE "
-                + "                       (groupid = 1 AND operationid = 0 AND schemaid IN ('iso19139.pigma', 'iso19139', 'iso19139.fra')) "
+                + "                       (groupid = 1 AND operationid = 0 AND schemaid LIKE 'iso19139%') "
                 + "                 OR "
-                + "                       (isharvested = 'y') ; " );
+                + "                       (isharvested = 'y'  AND schemaid LIKE 'iso19139%'); " );
         
         List<Element> records = (List<Element>) resp.getChildren();
         for (Element record : records) {
