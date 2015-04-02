@@ -580,6 +580,7 @@ public final class Geonet {
     public static final String FEEDBACK = GEONETWORK + ".feedback";
     public static final String GEOPUBLISH = GEONETWORK + ".geopublisher";
     public static final String FORMATTER = GEONETWORK + ".formatter";
+    public static final String CACHESEEDER = GEONETWORK + ".metadata.cacheseeder";
     /**
      * Services.
      */
