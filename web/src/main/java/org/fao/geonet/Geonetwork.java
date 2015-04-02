@@ -393,8 +393,12 @@ public class Geonetwork implements ApplicationHandler {
 		CatalogConfiguration.loadCatalogConfig(path, Csw.CONFIG_FILE);
 		CatalogDispatcher catalogDis = new CatalogDispatcher(new File(path,summaryConfigXmlFile), lc);
 
+        //------------------------------------------------------------------------
+        //--- initialize the Metadata Cache seeder
+
+		
 		//------------------------------------------------------------------------
-		//--- initialize catalogue services for the web
+		//--- initialize OAIPMH server
 
 		logger.info("  - Open Archive Initiative (OAI-PMH) server...");
 
