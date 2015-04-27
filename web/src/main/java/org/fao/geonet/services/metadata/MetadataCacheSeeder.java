@@ -108,7 +108,7 @@ public class MetadataCacheSeeder extends QuartzJobBean implements ApplicationCon
     /**
      * The namespace to be used for generating the sitemap.
      */
-    private final String SITEMAP_NS = "http://www.google.com/schemas/sitemap/0.84";
+    private final static String SITEMAP_NS = "http://www.google.com/schemas/sitemap/0.84";
     
     
     /**
