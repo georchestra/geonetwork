@@ -1028,9 +1028,86 @@
 			<widgets.webapp.resources>,../web-client/src/main/resources/</widgets.webapp.resources>
 		</properties>
     </profile>
-    
+        <profile>
+      <id>debianPackage</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>2.1.1</version>
+            <configuration>
+              <classifier>generic</classifier>
+            </configuration>
+          </plugin>
+          <plugin>
+            <artifactId>maven-resources-plugin</artifactId>
+            <version>2.3</version>
+            <executions>
+              <execution>
+                <id>copy-deb-resources</id>
+                <phase>process-resources</phase>
+                <goals><goal>copy-resources</goal></goals>
+                <configuration>
+                  <overwrite>true</overwrite>
+                  <outputDirectory>${basedir}/target/deb</outputDirectory>
+                  <resources>
+                    <resource>
+                      <directory>src/deb/resources</directory>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>1.6</version>
+            <executions>
+              <execution>
+                <id>fix-permissions</id>
+                <phase>package</phase>
+                <configuration>
+                  <target>
+                    <chmod perm="ugo+x">
+                      <fileset dir="${basedir}/target/deb">
+                        <include name="**/bin/**"/>
+                        <include name="**/sbin/**"/>
+                        <include name="DEBIAN/post*"/>
+                        <include name="DEBIAN/pre*"/>
+                      </fileset>
+                    </chmod>
+                  </target>
+                </configuration>
+                <goals><goal>run</goal></goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <!-- TODO: find a way to get rid of the geonetwork-classes.jar which
+                 ends up bundled into the debian package -->
+            <groupId>net.sf.debian-maven</groupId>
+            <artifactId>debian-maven-plugin</artifactId>
+            <version>1.0.6</version>
+            <configuration>
+              <packageName>georchestra-geonetwork</packageName>
+              <packageDescription>Debian package for the GeoNetwork fork of geOrchestra.</packageDescription>
+              <packageDependencies>
+                <packageDependency>debconf</packageDependency>
+              </packageDependencies>
+              <projectUrl>http://www.georchestra.org/</projectUrl>
+              <projectOrganization>geOrchestra</projectOrganization>
+              <maintainerName>Pierre Mauduit</maintainerName>
+              <maintainerEmail>pierre.mauduit@gmail.com</maintainerEmail>
+              <excludeAllArtifacts>true</excludeAllArtifacts>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
-  
+
   <reporting>
     <plugins>
       <plugin>
