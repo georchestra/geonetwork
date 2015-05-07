@@ -342,9 +342,9 @@ public class MetadataCacheSeeder extends QuartzJobBean implements ApplicationCon
     private ArrayList<String> getPublicUuids(Dbms dbms) throws SQLException {
         ArrayList<String> mdUuids = new ArrayList<String>();
         // operationid = 0 (view)
-        // groupid = 1 (ALL)
+        // groupid = (1 (ALL), 0 (INTRANET))
         // or harvested MDs (which are considered public)
-        Element resp = dbms.select("SELECT "
+        Element resp = dbms.select("SELECT DISTINCT "
                 + "                        uuid "
                 + "                 FROM "
                 + "                        metadata"
@@ -353,7 +353,7 @@ public class MetadataCacheSeeder extends QuartzJobBean implements ApplicationCon
                 + "                 ON "
                 + "                        metadata.id = operationallowed.metadataid "
                 + "                 WHERE "
-                + "                       (groupid = 1 AND operationid = 0 AND schemaid LIKE 'iso19139%') "
+                + "                       (groupid IN (1,0) AND operationid = 0 AND schemaid LIKE 'iso19139%') "
                 + "                 OR "
                 + "                       (isharvested = 'y'  AND schemaid LIKE 'iso19139%'); " );
         
