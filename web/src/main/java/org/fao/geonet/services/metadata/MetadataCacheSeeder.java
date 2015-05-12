@@ -47,6 +47,7 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
  *         <map>
  *           <entry key="xslStylesheet" value="pigma-static-html" />
  *           <entry key="cachePath" value="/tmp/pigma-md-cache" />
+ *           <entry key="urlPath" value="http://georchestra.mydomain.org/metadata" />
  *         </map>
  *       </property>
  *   </bean>
@@ -93,9 +94,10 @@ public class MetadataCacheSeeder extends QuartzJobBean implements ApplicationCon
     /**
      * The prefix where the files would be publicly available.
      * (e.g. http://ids.pigma.org/mds for http://ids.pigma.org/mds/[uuid].html)
+     * default value is "http://georchestra.mydomain.org/mds".
      */
-    private String urlPath = "http://ids.pigma.org/mds";
-    
+    private String urlPath = "http://georchestra.mydomain.org/mds";
+
     /**
      * Default change frequency for the sitemap items.
      */
@@ -260,13 +262,13 @@ public class MetadataCacheSeeder extends QuartzJobBean implements ApplicationCon
         Element urlset = new Element("urlset", SITEMAP_NS);
         while (cachedFiles.hasNext()) {
             File f = cachedFiles.next();
-            String lastMod = new ISODate(f.lastModified()).toString();
+            String[] lastMods = new ISODate(f.lastModified()).toString().split("T");
             
             String strf = f.getAbsolutePath();
             Element url = new Element("url",SITEMAP_NS);
             url.addContent(new Element("loc", SITEMAP_NS).setText(urlPath + "/" + FilenameUtils.getName(strf)));
             url.addContent(new Element("changefreq", SITEMAP_NS).setText(changeFreq));
-            url.addContent(new Element("lastmod", SITEMAP_NS).setText(lastMod));
+            url.addContent(new Element("lastmod", SITEMAP_NS).setText(lastMods[0]));
             urlset.addContent(url);
         }
         
@@ -387,7 +389,11 @@ public class MetadataCacheSeeder extends QuartzJobBean implements ApplicationCon
     public void setXslStylesheet(String xslStylesheet) {
         this.xslStylesheet = xslStylesheet;
     }
-    
+
+    public void setUrlPath(String urlPath) {
+        this.urlPath = urlPath;
+    }
+
     @Override
     public void setApplicationContext(ApplicationContext applicationContext)
             throws BeansException {
