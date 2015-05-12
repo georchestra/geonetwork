@@ -262,13 +262,13 @@ public class MetadataCacheSeeder extends QuartzJobBean implements ApplicationCon
         Element urlset = new Element("urlset", SITEMAP_NS);
         while (cachedFiles.hasNext()) {
             File f = cachedFiles.next();
-            String lastMod = new ISODate(f.lastModified()).toString();
+            String[] lastMods = new ISODate(f.lastModified()).toString().split("T");
             
             String strf = f.getAbsolutePath();
             Element url = new Element("url",SITEMAP_NS);
             url.addContent(new Element("loc", SITEMAP_NS).setText(urlPath + "/" + FilenameUtils.getName(strf)));
             url.addContent(new Element("changefreq", SITEMAP_NS).setText(changeFreq));
-            url.addContent(new Element("lastmod", SITEMAP_NS).setText(lastMod));
+            url.addContent(new Element("lastmod", SITEMAP_NS).setText(lastMods[0]));
             urlset.addContent(url);
         }
         
