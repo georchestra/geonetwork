@@ -47,6 +47,7 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
  *         <map>
  *           <entry key="xslStylesheet" value="pigma-static-html" />
  *           <entry key="cachePath" value="/tmp/pigma-md-cache" />
+ *           <entry key="urlPath" value="http://georchestra.mydomain.org/metadata" />
  *         </map>
  *       </property>
  *   </bean>
@@ -93,9 +94,10 @@ public class MetadataCacheSeeder extends QuartzJobBean implements ApplicationCon
     /**
      * The prefix where the files would be publicly available.
      * (e.g. http://ids.pigma.org/mds for http://ids.pigma.org/mds/[uuid].html)
+     * default value is "http://georchestra.mydomain.org/mds".
      */
-    private String urlPath = "http://ids.pigma.org/mds";
-    
+    private String urlPath = "http://georchestra.mydomain.org/mds";
+
     /**
      * Default change frequency for the sitemap items.
      */
@@ -387,7 +389,11 @@ public class MetadataCacheSeeder extends QuartzJobBean implements ApplicationCon
     public void setXslStylesheet(String xslStylesheet) {
         this.xslStylesheet = xslStylesheet;
     }
-    
+
+    public void setUrlPath(String urlPath) {
+        this.urlPath = urlPath;
+    }
+
     @Override
     public void setApplicationContext(ApplicationContext applicationContext)
             throws BeansException {
