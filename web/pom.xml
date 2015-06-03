@@ -1,14 +1,11 @@
+<?xml version="1.0"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.geonetwork-opensource</groupId>
     <artifactId>geonetwork</artifactId>
     <version>3.0.3-SNAPSHOT</version>
   </parent>
-
-
   <!-- =========================================================== -->
   <!--     Module Description                                      -->
   <!-- =========================================================== -->
@@ -16,7 +13,6 @@
   <packaging>war</packaging>
   <name>GeoNetwork Web module</name>
   <description> GeoNetwork web module description (TODO). </description>
-
   <licenses>
     <license>
       <name>General Public License (GPL)</name>
@@ -24,8 +20,6 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-
-
   <!-- FIXME set common dependencies to the root pom.xml  -->
   <dependencies>
       <dependency>
@@ -106,7 +100,6 @@
       <groupId>marc4j</groupId>
       <artifactId>marc4j</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.geotools</groupId>
       <artifactId>gt-api</artifactId>
@@ -147,7 +140,6 @@
       <groupId>org.geotools.jdbc</groupId>
       <artifactId>gt-jdbc-postgis</artifactId>
     </dependency>
-
     <dependency>
       <groupId>com.vividsolutions</groupId>
       <artifactId>jts</artifactId>
@@ -177,26 +169,26 @@
       <artifactId>lucene-facet</artifactId>
     </dependency>
     <dependency>
-        <groupId>pcj</groupId>
-        <artifactId>pcj</artifactId>
-    </dependency>    
+      <groupId>pcj</groupId>
+      <artifactId>pcj</artifactId>
+    </dependency>
     <dependency>
       <groupId>batik</groupId>
       <artifactId>batik-ext</artifactId>
     </dependency>
     <dependency>
-        <groupId>org.apache.httpcomponents</groupId>
-        <artifactId>httpclient</artifactId>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
     </dependency>
     <dependency>
-        <groupId>commons-net</groupId>
-        <artifactId>commons-net</artifactId>
+      <groupId>commons-net</groupId>
+      <artifactId>commons-net</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-email</artifactId>
     </dependency>
-      <dependency>
+    <dependency>
       <groupId>avalon-framework</groupId>
       <artifactId>avalon-framework-api</artifactId>
     </dependency>
@@ -240,12 +232,6 @@
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
     </dependency>
-		<!-- Not permitted under oracle licensing rules
-    <dependency>
-      <groupId>ojdbc</groupId>
-      <artifactId>ojdbc</artifactId>
-    </dependency>
-		-->
     <dependency>
       <groupId>eu.medsea.mimeutil</groupId>
       <artifactId>mime-util</artifactId>
@@ -262,20 +248,15 @@
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
     </dependency>
-    
-	            
     <dependency>
       <groupId>org.tmatesoft.svnkit</groupId>
       <artifactId>svnkit</artifactId>
     </dependency>
-
-	  <!-- Print service: MapFish -->
-	  <dependency>
+    <dependency>
       <groupId>org.mapfish.print</groupId>
       <artifactId>print-lib</artifactId>
       <version>${print-lib.version}</version>
     </dependency>
-  
     <!-- ====================== -->
     <!-- Generated dependencies -->
     <dependency>
@@ -288,43 +269,38 @@
       <artifactId>oaipmh</artifactId>
       <version>${project.version}</version>
     </dependency>
-    <dependency> <!-- dummy API for ARC SDE stuff -->
+    <dependency>
+      <!-- dummy API for ARC SDE stuff -->
       <groupId>${project.groupId}</groupId>
       <artifactId>dummy-api</artifactId>
       <version>${project.version}</version>
     </dependency>
-
-      <dependency>
-          <groupId>${project.groupId}</groupId>
-          <artifactId>core</artifactId>
-          <version>${project.version}</version>
-      </dependency>
-
-      <dependency>
-          <groupId>${project.groupId}</groupId>
-          <artifactId>services</artifactId>
-          <version>${project.version}</version>
-      </dependency>
-
-      <dependency>
-          <groupId>${project.groupId}</groupId>
-          <artifactId>harvesters</artifactId>
-          <version>${project.version}</version>
-      </dependency>
-
-      <dependency>
-          <groupId>${project.groupId}</groupId>
-          <artifactId>health-monitor</artifactId>
-          <version>${project.version}</version>
-      </dependency>
-
-      <dependency>
-          <groupId>${project.groupId}</groupId>
-          <artifactId>inspire-atom</artifactId>
-          <version>${project.version}</version>
-      </dependency>
-
-      <!-- Handled locally by a temporarly repository -->
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>core</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>services</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>harvesters</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>health-monitor</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>inspire-atom</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <!-- Handled locally by a temporarly repository -->
     <dependency>
       <groupId>dlib</groupId>
       <artifactId>dlib</artifactId>
@@ -397,14 +373,12 @@
       <artifactId>opendap</artifactId>
       <version>2.1</version>
     </dependency>
-
     <dependency>
-	    <groupId>org.jsoup</groupId>
-	    <artifactId>jsoup</artifactId>
-	    <version>0.2.2</version>
-	</dependency>
-
-		<dependency>
+      <groupId>org.jsoup</groupId>
+      <artifactId>jsoup</artifactId>
+      <version>0.2.2</version>
+    </dependency>
+    <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>geonetwork-client</artifactId>
       <version>${project.version}</version>
@@ -416,41 +390,39 @@
       <version>${project.version}</version>
       <scope>provided</scope>
     </dependency>
-      <dependency>
-          <groupId>${project.groupId}</groupId>
-          <artifactId>domain</artifactId>
-          <version>${project.version}</version>
-          <classifier>tests</classifier>
-          <scope>test</scope>
-      </dependency>
-      <dependency>
-          <groupId>${project.groupId}</groupId>
-          <artifactId>core</artifactId>
-          <version>${project.version}</version>
-          <classifier>tests</classifier>
-          <scope>test</scope>
-      </dependency>
-      <dependency>
-          <groupId>${project.groupId}</groupId>
-          <artifactId>services</artifactId>
-          <version>${project.version}</version>
-          <classifier>tests</classifier>
-          <scope>test</scope>
-      </dependency>
-      <dependency>
-          <groupId>${project.groupId}</groupId>
-          <artifactId>wro4j</artifactId>
-          <version>${project.version}</version>
-      </dependency>
-
-      <dependency>
-          <groupId>ro.isdc.wro4j</groupId>
-          <artifactId>wro4j-maven-plugin</artifactId>
-          <version>${wro.version}</version>
-          <scope>test</scope>
-      </dependency>
-
-      <!-- Add dependencies to schema plugin
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>domain</artifactId>
+      <version>${project.version}</version>
+      <classifier>tests</classifier>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>core</artifactId>
+      <version>${project.version}</version>
+      <classifier>tests</classifier>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>services</artifactId>
+      <version>${project.version}</version>
+      <classifier>tests</classifier>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>wro4j</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>ro.isdc.wro4j</groupId>
+      <artifactId>wro4j-maven-plugin</artifactId>
+      <version>${wro.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- Add dependencies to schema plugin
       having a custom Bean to be loaded. -->
     <dependency>
       <groupId>${project.groupId}</groupId>
@@ -467,60 +439,56 @@
       <artifactId>schema-dublin-core</artifactId>
       <version>${project.version}</version>
     </dependency>
-
   </dependencies>
-
-  
   <build>
     <plugins>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>build-helper-maven-plugin</artifactId>
         <version>1.7</version>
-         <executions>
-            <execution>
-                 <id>add-source</id>
-                 <phase>generate-sources</phase>
-                 <goals>
-                    <goal>add-source</goal>
-                 </goals>
-                 <configuration>
-                     <sources>
-                          <source>${basedir}/src/main/java</source>
-                          <source>${basedir}/src/main/webapp/WEB-INF/classes/setup/sql/migrate</source>
-                     </sources>
-                 </configuration>
-            </execution>
-         </executions>
+        <executions>
+          <execution>
+            <id>add-source</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>add-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>${basedir}/src/main/java</source>
+                <source>${basedir}/src/main/webapp/WEB-INF/classes/setup/sql/migrate</source>
+              </sources>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
-      
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-resources-plugin</artifactId>
         <version>2.5</version>
         <executions>
           <execution>
-             <id>copy-filter-webResource</id>
-             <phase>process-resources</phase>
-             <goals>
-               <goal>copy-resources</goal>
-             </goals>
-             <configuration>
-               <includeEmptyDirs>false</includeEmptyDirs>
-               <outputDirectory>${build.webapp.resources}</outputDirectory>
-               <resources>
-                 <resource>
-                   <directory>${basedir}/src/main/webResources</directory>
-                   <filtering>true</filtering>
-                   <targetPath>${build.webapp.resources}</targetPath>
-                 </resource>
-               </resources>
-               <filters>
-                 <filter>${basedir}/src/main/filters/${env}.properties</filter>
-               </filters>
-               <overwrite>true</overwrite>
-             </configuration>
-           </execution>
+            <id>copy-filter-webResource</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <includeEmptyDirs>false</includeEmptyDirs>
+              <outputDirectory>${build.webapp.resources}</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${basedir}/src/main/webResources</directory>
+                  <filtering>true</filtering>
+                  <targetPath>${build.webapp.resources}</targetPath>
+                </resource>
+              </resources>
+              <filters>
+                <filter>${basedir}/src/main/filters/${env}.properties</filter>
+              </filters>
+              <overwrite>true</overwrite>
+            </configuration>
+          </execution>
           <execution>
             <id>copy-schemas</id>
             <phase>process-resources</phase>
@@ -554,28 +522,27 @@
               </resources>
             </configuration>
           </execution>
-         </executions>
+        </executions>
       </plugin>
-      <plugin> 
-        <groupId>org.codehaus.mojo</groupId> 
-        <artifactId>buildnumber-maven-plugin</artifactId> 
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>buildnumber-maven-plugin</artifactId>
         <version>1.3</version>
-        <executions> 
-          <execution> 
-            <phase>validate</phase> 
-            <goals> 
-              <goal>create</goal> 
-            </goals> 
-          </execution> 
-        </executions> 
-        <configuration> 
-          <timestampFormat>{0,date,MM/dd/yyyy hh:mm:ss a}</timestampFormat> 
-          <doCheck>false</doCheck> 
+        <executions>
+          <execution>
+            <phase>validate</phase>
+            <goals>
+              <goal>create</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <timestampFormat>{0,date,MM/dd/yyyy hh:mm:ss a}</timestampFormat>
+          <doCheck>false</doCheck>
           <doUpdate>false</doUpdate>
           <revisionOnScmFailure>true</revisionOnScmFailure>
-        </configuration> 
+        </configuration>
       </plugin>
-
       <plugin>
         <artifactId>maven-war-plugin</artifactId>
         <configuration>
@@ -596,15 +563,13 @@
               <directory>${project.basedir}/../web-client/src/main/resources</directory>
             </resource>-->
             <resource>
-                  <directory>${project.basedir}/../web-ui/src/main/resources</directory>
+              <directory>${project.basedir}/../web-ui/src/main/resources</directory>
             </resource>
             <resource>
               <directory>${build.webapp.resources}</directory>
             </resource>
-
             <!-- Remove comment tag to include documentation in the build. 
             Python and Latex are required to build the documentation. -->
-            
             <!--
             <resource>
               <directory>${rootProjectDir}/docs/eng/users/build/html</directory>
@@ -638,18 +603,19 @@
                 </includes>
             </resource>-->
           </webResources>
-            <!-- <packagingExcludes>WEB-INF/data/**</packagingExcludes> -->
-            <packagingExcludes>
-              xml/schemas/**,
-              catalog/lib/style/bootstrap/docs/**,
-              catalog/lib/style/bootstrap/fonts/**,
-              catalog/lib/style/bootstrap/grunt/**,
-              catalog/lib/style/bootstrap/test-infra/**,
-              catalog/lib/style/font-awesome/css/**,
-              catalog/lib/style/font-awesome/src/**,
-              catalog/lib/style/font-awesome/scss/**
-            </packagingExcludes>
-<!--          <warSourceDirectory>src/main/geonetwork</warSourceDirectory> -->
+          <!-- <packagingExcludes>WEB-INF/data/**</packagingExcludes> -->
+          <packagingExcludes>
+            xml/schemas/**,
+            catalog/lib/style/bootstrap/docs/**,
+            catalog/lib/style/bootstrap/dist/**,
+            catalog/lib/style/bootstrap/fonts/**,
+            catalog/lib/style/bootstrap/grunt/**,
+            catalog/lib/style/bootstrap/test-infra/**,
+            catalog/lib/style/font-awesome/css/**,
+            catalog/lib/style/font-awesome/src/**,
+            catalog/lib/style/font-awesome/scss/**
+          </packagingExcludes>
+          <!--          <warSourceDirectory>src/main/geonetwork</warSourceDirectory> -->
           <webXml>${build.webapp.resources}/WEB-INF/web.xml</webXml>
           <attachClasses>true</attachClasses>
           <warName>geonetwork</warName>
@@ -660,8 +626,8 @@
         <groupId>org.mortbay.jetty</groupId>
         <artifactId>jetty-maven-plugin</artifactId>
         <configuration>
-            <contextXml>${basedir}/jetty-context.xml</contextXml>
-            <connectors>
+          <contextXml>${basedir}/jetty-context.xml</contextXml>
+          <connectors>
             <connector implementation="org.eclipse.jetty.server.bio.SocketConnector">
               <port>8080</port>
               <maxIdleTime>10000</maxIdleTime>
@@ -686,17 +652,17 @@
             <contextPath>/geonetwork</contextPath>
             <descriptor>${project.build.directory}/WEB-INF/web.xml</descriptor>
             <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
-           <!--
+              <!--
               Enable to use ExtJS UI
               Add
               ${rootProjectDir}/web-client/src/main/resources/
               to resourcesAsCSV
             -->
-            <resourcesAsCSV>
+              <resourcesAsCSV>
               ${project.basedir}/src/main/webapp,
               ${rootProjectDir}/web-ui/src/main/resources/,
               ${build.webapp.resources}
-              </resourcesAsCSV>
+            </resourcesAsCSV>
             </baseResource>
           </webApp>
           <systemProperties>
@@ -709,28 +675,28 @@
           <stopPort>8090</stopPort>
         </configuration>
       </plugin>
-
     </plugins>
   </build>
-  
   <!-- Define profiles for running configuration using -Denv=profile.id parameter 
     Profiles configuration is defined in src/main/filters.
     -->
   <profiles>
-	<profile>
-		<id>run-static-analysis</id>
-		<activation>
-			<property><name>!skipTests</name></property>
-		</activation>
-		<build>
-		<plugins>
-		  <plugin>
-			<groupId>org.codehaus.mojo</groupId>
-			<artifactId>findbugs-maven-plugin</artifactId>
-		  </plugin>
+    <profile>
+      <id>run-static-analysis</id>
+      <activation>
+        <property>
+          <name>!skipTests</name>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>findbugs-maven-plugin</artifactId>
+          </plugin>
         </plugins>
-		</build>
-	</profile>
+      </build>
+    </profile>
     <profile>
       <id>no-env-specified</id>
       <activation>
@@ -778,8 +744,80 @@
         <env>inspire</env>
       </properties>
     </profile>
+    <profile>
+      <id>debianPackage</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>2.1.1</version>
+            <configuration>
+              <classifier>generic</classifier>
+            </configuration>
+          </plugin>
+          <plugin>
+            <artifactId>maven-resources-plugin</artifactId>
+            <version>2.3</version>
+            <executions>
+              <execution>
+                <id>copy-deb-resources</id>
+                <phase>process-resources</phase>
+                <goals><goal>copy-resources</goal></goals>
+                <configuration>
+                  <overwrite>true</overwrite>
+                  <outputDirectory>${basedir}/target/deb</outputDirectory>
+                  <resources>
+                    <resource>
+                      <directory>src/deb/resources</directory>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>1.6</version>
+            <executions>
+              <execution>
+                <id>fix-permissions</id>
+                <phase>package</phase>
+                <configuration>
+                  <target>
+                    <chmod perm="ugo+x">
+                      <fileset dir="${basedir}/target/deb">
+                        <include name="**/bin/**"/>
+                        <include name="**/sbin/**"/>
+                        <include name="DEBIAN/post*"/>
+                        <include name="DEBIAN/pre*"/>
+                      </fileset>
+                    </chmod>
+                  </target>
+                </configuration>
+                <goals><goal>run</goal></goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>net.sf.debian-maven</groupId>
+            <artifactId>debian-maven-plugin</artifactId>
+            <version>1.0.6</version>
+            <configuration>
+              <packageName>georchestra-geonetwork</packageName>
+              <packageDescription>Debian package for the GeoNetwork fork of geOrchestra.</packageDescription>
+              <projectUrl>http://www.georchestra.org/</projectUrl>
+              <projectOrganization>geOrchestra</projectOrganization>
+              <maintainerName>Pierre Mauduit</maintainerName>
+              <maintainerEmail>pierre.mauduit@gmail.com</maintainerEmail>
+              <excludeAllArtifacts>true</excludeAllArtifacts>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
-
   <properties>
     <geonetwork.version>${project.version}</geonetwork.version>
     <geonetwork.subversion>SNAPSHOT</geonetwork.subversion>
@@ -790,8 +828,8 @@
     <minify.verbose>false</minify.verbose>
     <build.webapp.resources>${project.build.directory}/webapp</build.webapp.resources>
     <web.xml.main.config.overrides>/WEB-INF/config-overrides-${env}.xml</web.xml.main.config.overrides>
-    <web.xml.widget.config.overrides></web.xml.widget.config.overrides>
-    <system.specific.overrides></system.specific.overrides>
+    <web.xml.widget.config.overrides/>
+    <system.specific.overrides/>
     <rootProjectDir>${basedir}/..</rootProjectDir>
     <wro4jOutput>${project.build.directory}/wro4j-output/</wro4jOutput>
   </properties>

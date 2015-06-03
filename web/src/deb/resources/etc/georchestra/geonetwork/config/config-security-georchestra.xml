@@ -1,0 +1,38 @@
+<beans 
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+          http://www.springframework.org/schema/context
+          http://www.springframework.org/schema/context/spring-context-3.0.xsd
+          http://www.springframework.org/schema/security
+          http://www.springframework.org/schema/security/spring-security-3.1.xsd" 
+          xmlns:sec="http://www.springframework.org/schema/security"
+          xmlns:ctx="http://www.springframework.org/schema/context"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+          xmlns="http://www.springframework.org/schema/beans">
+    
+	<!-- Override passthrough filter -->
+	<bean id="preAuthenticationFilter" class="org.springframework.security.web.authentication.preauth.RequestHeaderAuthenticationFilter">
+		<property name="authenticationManager" ref="authenticationManager"/>
+		<property name="checkForPrincipalChanges" value="true"/>
+		<property name="exceptionIfHeaderMissing" value="false"/>
+		<property name="principalRequestHeader" value="sec-username"></property>
+	</bean>
+	<bean class="org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider" id="preFilterAuthenticationProvider">
+    	<property name="preAuthenticatedUserDetailsService">
+			<bean id="preAuthenticatedUserDetailsService" class="org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper">
+				<property name="userDetailsService" ref="ldapUserService"/>
+		    </bean>
+    	</property>
+    </bean>
+    <bean id="ldapUserService" class="org.springframework.security.ldap.userdetails.LdapUserDetailsService">
+        <constructor-arg index="0" ref="ldapUserSearch" />
+        <property name="userDetailsMapper" ref="ldapUserContextMapper" />
+    </bean>
+
+    <bean id="ldapUserSearch" class="org.springframework.security.ldap.search.FilterBasedLdapUserSearch">
+        <constructor-arg index="0" value="${ldap.base.search.base}"/>
+        <constructor-arg index="1" value="${ldap.base.dn.pattern}"/>
+        <constructor-arg index="2" ref="contextSource" />
+    </bean>
+    
+</beans>
