@@ -1,6 +1,5 @@
 package org.fao.geonet.resources;
 
-import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.Filter;
@@ -97,7 +96,7 @@ public class ResourceFilter implements Filter {
 
 	private void initFields() throws IOException {
         servletContext = config.getServletContext();
-        appPath = new java.io.File(servletContext.getRealPath(".")).getParent();
+        appPath = new java.io.File(servletContext.getRealPath("/")).getAbsolutePath();
         resourcesDir = Resources.locateResourcesDir(config.getServletContext());
 
         defaultImage = Resources.loadResource(resourcesDir, config.getServletContext(), appPath, "images/logos/dummy.gif", new byte[0], -1);

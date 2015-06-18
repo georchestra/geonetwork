@@ -301,7 +301,7 @@ public class Resources {
 		if (!file.exists()) {
 			File webappCopy;
 			if (context != null) {
-				webappCopy = new File(context.getRealPath(filename));
+				webappCopy = new File(context.getRealPath("/" + filename));
 			} else {
 				webappCopy = new File(appPath, filename);
 			}
