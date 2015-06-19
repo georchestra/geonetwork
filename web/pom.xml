@@ -1,13 +1,11 @@
+<?xml version="1.0"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
-		<groupId>org.georchestra</groupId>
+    <groupId>org.georchestra</groupId>
     <artifactId>geonetwork</artifactId>
-		<version>15.12-SNAPSHOT</version>
+    <version>15.12-SNAPSHOT</version>
   </parent>
-
   <!-- =========================================================== -->
   <!--     Module Description                                      -->
   <!-- =========================================================== -->
@@ -16,7 +14,6 @@
   <packaging>war</packaging>
   <name>GeoNetwork Web module</name>
   <description> GeoNetwork web module description (TODO). </description>
-
   <licenses>
     <license>
       <name>General Public License (GPL)</name>
@@ -24,22 +21,18 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-
-
   <!-- FIXME set common dependencies to the root pom.xml  -->
   <dependencies>
-	  <dependency>
-      	<groupId>net.sf.ehcache</groupId>
-      	<artifactId>ehcache-core</artifactId>
-      </dependency>
-
-      <!-- rewrite url servletfilter -->
-      <dependency>
-          <groupId>org.tuckey</groupId>
-          <artifactId>urlrewritefilter</artifactId>
-          <version>3.2.0</version>
-      </dependency>
-
+    <dependency>
+      <groupId>net.sf.ehcache</groupId>
+      <artifactId>ehcache-core</artifactId>
+    </dependency>
+    <!-- rewrite url servletfilter -->
+    <dependency>
+      <groupId>org.tuckey</groupId>
+      <artifactId>urlrewritefilter</artifactId>
+      <version>3.2.0</version>
+    </dependency>
     <dependency>
       <groupId>xalan</groupId>
       <artifactId>xalan</artifactId>
@@ -67,23 +60,21 @@
     <dependency>
       <groupId>org.openrdf</groupId>
       <artifactId>sesame</artifactId>
-    </dependency>	
+    </dependency>
     <dependency>
       <groupId>org.openrdf</groupId>
       <artifactId>rio</artifactId>
     </dependency>
-		<!-- may be required to register connection unwrappers with
-		     geotools
+    <!-- may be required to register connection unwrappers with geotools
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-jdbc</artifactId>
     </dependency>
-		-->
+    -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context-support</artifactId>
     </dependency>
-    
     <!-- Z39.50, SRU  stuff (ie: Spring, CQL, ...)  -->
     <dependency>
       <groupId>org.dspace</groupId>
@@ -97,7 +88,6 @@
       <groupId>marc4j</groupId>
       <artifactId>marc4j</artifactId>
     </dependency>
-    
     <dependency>
       <groupId>org.geotools</groupId>
       <artifactId>gt-api</artifactId>
@@ -134,7 +124,6 @@
       <groupId>org.geotools</groupId>
       <artifactId>gt-epsg-hsql</artifactId>
     </dependency>
-
     <dependency>
       <groupId>com.vividsolutions</groupId>
       <artifactId>jts</artifactId>
@@ -164,9 +153,9 @@
       <artifactId>lucene-facet</artifactId>
     </dependency>
     <dependency>
-        <groupId>pcj</groupId>
-        <artifactId>pcj</artifactId>
-    </dependency>    
+      <groupId>pcj</groupId>
+      <artifactId>pcj</artifactId>
+    </dependency>
     <dependency>
       <groupId>batik</groupId>
       <artifactId>batik-ext</artifactId>
@@ -176,14 +165,14 @@
       <artifactId>commons-httpclient</artifactId>
     </dependency>
     <dependency>
-        <groupId>commons-net</groupId>
-        <artifactId>commons-net</artifactId>
+      <groupId>commons-net</groupId>
+      <artifactId>commons-net</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-email</artifactId>
     </dependency>
-      <dependency>
+    <dependency>
       <groupId>avalon-framework</groupId>
       <artifactId>avalon-framework-api</artifactId>
     </dependency>
@@ -232,12 +221,12 @@
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
     </dependency>
-		<!-- Not permitted under oracle licensing rules
+    <!-- Not permitted under oracle licensing rules
     <dependency>
       <groupId>ojdbc</groupId>
       <artifactId>ojdbc</artifactId>
     </dependency>
-		-->
+    -->
     <dependency>
       <groupId>javax.persistence</groupId>
       <artifactId>persistence-api</artifactId>
@@ -255,9 +244,9 @@
       <artifactId>slf4j-log4j12</artifactId>
     </dependency>
     <dependency>
-        <groupId>log4j</groupId>
-        <artifactId>apache-log4j-extras</artifactId>
-        <version>1.2.17</version>
+      <groupId>log4j</groupId>
+      <artifactId>apache-log4j-extras</artifactId>
+      <version>1.2.17</version>
     </dependency>
     <dependency>
       <groupId>joda-time</groupId>
@@ -266,18 +255,17 @@
     <dependency>
       <groupId>jaxen</groupId>
       <artifactId>jaxen</artifactId>
-      <exclusions> 
-        <exclusion> 
-          <groupId>com.ibm.icu</groupId> 
-          <artifactId>icu4j</artifactId> 
-        </exclusion> 
+      <exclusions>
+        <exclusion>
+          <groupId>com.ibm.icu</groupId>
+          <artifactId>icu4j</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
     </dependency>
-    
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -286,24 +274,21 @@
       <groupId>xmlunit</groupId>
       <artifactId>xmlunit</artifactId>
     </dependency>
-	<dependency>
-		<groupId>org.mockito</groupId>
-		<artifactId>mockito-all</artifactId>
-		<scope>test</scope>
-	</dependency>
-	            
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-all</artifactId>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>org.tmatesoft.svnkit</groupId>
       <artifactId>svnkit</artifactId>
     </dependency>
-
-	  <!-- Print service: MapFish -->
-	  <dependency>
+    <!-- Print service: MapFish -->
+    <dependency>
       <groupId>org.mapfish.print</groupId>
       <artifactId>print-lib</artifactId>
       <version>1.2.0</version>
     </dependency>
-  
     <!-- ====================== -->
     <!-- Generated dependencies -->
     <dependency>
@@ -321,12 +306,12 @@
       <artifactId>oaipmh</artifactId>
       <version>${project.version}</version>
     </dependency>
-    <dependency> <!-- dummy API for ARC SDE stuff -->
+    <dependency>
+      <!-- dummy API for ARC SDE stuff -->
       <groupId>org.geonetwork-opensource</groupId>
       <artifactId>dummy-api</artifactId>
       <version>${project.version}</version>
     </dependency>
-
     <!-- Handled locally by a temporarly repository -->
     <dependency>
       <groupId>dlib</groupId>
@@ -366,95 +351,86 @@
       <artifactId>netcdf</artifactId>
       <version>4.0.patch</version>
     </dependency>
-
-      <!-- Monitoring libraries -->
-      <dependency>
-          <groupId>com.yammer.metrics</groupId>
-          <artifactId>metrics-core</artifactId>
-      </dependency>
-      <dependency>
-          <groupId>com.yammer.metrics</groupId>
-          <artifactId>metrics-servlet</artifactId>
-      </dependency>
-      <dependency>
-          <groupId>com.yammer.metrics</groupId>
-          <artifactId>metrics-web</artifactId>
-      </dependency>
-      <dependency>
-          <groupId>com.yammer.metrics</groupId>
-          <artifactId>metrics-log4j</artifactId>
-      </dependency>
-
-      <!-- language detection -->
-      <dependency>
-          <groupId>com.cybozu.labs</groupId>
-          <artifactId>langdetect</artifactId>
-      </dependency>
-      <dependency>
-          <groupId>net.arnx.jsonic</groupId>
-          <artifactId>jsonic</artifactId>
-          <version>1.2.0</version>
-      </dependency>
-      <!-- end language detection -->
-		<dependency>
+    <!-- Monitoring libraries -->
+    <dependency>
+      <groupId>com.yammer.metrics</groupId>
+      <artifactId>metrics-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.yammer.metrics</groupId>
+      <artifactId>metrics-servlet</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.yammer.metrics</groupId>
+      <artifactId>metrics-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.yammer.metrics</groupId>
+      <artifactId>metrics-log4j</artifactId>
+    </dependency>
+    <!-- language detection -->
+    <dependency>
+      <groupId>com.cybozu.labs</groupId>
+      <artifactId>langdetect</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>net.arnx.jsonic</groupId>
+      <artifactId>jsonic</artifactId>
+      <version>1.2.0</version>
+    </dependency>
+    <!-- end language detection -->
+    <dependency>
       <groupId>opendap</groupId>
       <artifactId>opendap</artifactId>
       <version>2.1</version>
     </dependency>
-
     <dependency>
-	    <groupId>org.jsoup</groupId>
-	    <artifactId>jsoup</artifactId>
-	    <version>0.2.2</version>
-	</dependency>
-
-		<dependency>
+      <groupId>org.jsoup</groupId>
+      <artifactId>jsoup</artifactId>
+      <version>0.2.2</version>
+    </dependency>
+    <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>geonetwork-client</artifactId>
       <version>${project.version}</version>
       <scope>provided</scope>
     </dependency>
-    
     <dependency>
-		<groupId>org.xhtmlrenderer</groupId>
-		<artifactId>flying-saucer-core</artifactId>
-		<version>9.0.1</version>
-	</dependency>
-	<dependency>
-		<groupId>org.xhtmlrenderer</groupId>
-		<artifactId>flying-saucer-pdf</artifactId>
-		<version>9.0.1</version>
-	</dependency>
-	<dependency>
-		<groupId>org.xhtmlrenderer</groupId>
-		<artifactId>flying-saucer-pdf-itext5</artifactId>
-		<version>9.0.1</version>
-	</dependency>
-	
-	
-	</dependencies>
-
-  
+      <groupId>org.xhtmlrenderer</groupId>
+      <artifactId>flying-saucer-core</artifactId>
+      <version>9.0.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.xhtmlrenderer</groupId>
+      <artifactId>flying-saucer-pdf</artifactId>
+      <version>9.0.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.xhtmlrenderer</groupId>
+      <artifactId>flying-saucer-pdf-itext5</artifactId>
+      <version>9.0.1</version>
+    </dependency>
+  </dependencies>
   <build>
     <plugins>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>build-helper-maven-plugin</artifactId>
         <version>1.7</version>
-         <executions>
-            <execution>
-                 <id>add-source</id>
-                 <phase>generate-sources</phase>
-                 <goals>
-                    <goal>add-source</goal>
-                 </goals>
-                 <configuration>
-                     <sources>
-                          <source>${basedir}/src/main/webapp/WEB-INF/classes/setup/sql/migrate</source>
-                     </sources>
-                 </configuration>
-            </execution>
-         </executions>
+        <executions>
+          <execution>
+            <id>add-source</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>add-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>${basedir}/src/main/webapp/WEB-INF/classes/setup/sql/migrate</source>
+              </sources>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -462,80 +438,79 @@
         <version>2.5</version>
         <executions>
           <execution>
-             <id>copy-filter-webResource</id>
-             <phase>process-resources</phase>
-             <goals>
-               <goal>copy-resources</goal>
-             </goals>
-             <configuration>
-               <includeEmptyDirs>false</includeEmptyDirs>
-               <outputDirectory>${build.webapp.resources}</outputDirectory>
-               <resources>
-                 <resource>
-                   <directory>${basedir}/src/main/webResources</directory>
-                   <filtering>true</filtering>
-                   <targetPath>${build.webapp.resources}</targetPath>
-                   <excludes>
-                     <exclude>**/.svn</exclude>
-                   </excludes>
-                 </resource>
-                 <resource>
-                   <directory>${basedir}/src/main/webapp/scripts/lib/</directory>
-                   <filtering>false</filtering>
-                   <targetPath>${build.webapp.resources}/scripts/lib/</targetPath>
-                   <excludes>
-                     <exclude>**/.svn</exclude>
-                     <exclude>**/*.js</exclude>
-                   </excludes>
-                 </resource>
-               </resources>
-               <filters>
-                 <filter>${basedir}/src/main/filters/${env}.properties</filter>
-                 <!-- Start GEORCHESTRA change -->
-                 <filter>${basedir}/src/main/filters/maven.filter</filter>                 
-                 <!-- End GEORCHESTRA change -->
-               </filters>
-               <overwrite>true</overwrite>
-             </configuration>
-           </execution>
-         </executions>
+            <id>copy-filter-webResource</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <includeEmptyDirs>false</includeEmptyDirs>
+              <outputDirectory>${build.webapp.resources}</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${basedir}/src/main/webResources</directory>
+                  <filtering>true</filtering>
+                  <targetPath>${build.webapp.resources}</targetPath>
+                  <excludes>
+                    <exclude>**/.svn</exclude>
+                  </excludes>
+                </resource>
+                <resource>
+                  <directory>${basedir}/src/main/webapp/scripts/lib/</directory>
+                  <filtering>false</filtering>
+                  <targetPath>${build.webapp.resources}/scripts/lib/</targetPath>
+                  <excludes>
+                    <exclude>**/.svn</exclude>
+                    <exclude>**/*.js</exclude>
+                  </excludes>
+                </resource>
+              </resources>
+              <filters>
+                <filter>${basedir}/src/main/filters/${env}.properties</filter>
+                <!-- Start GEORCHESTRA change -->
+                <filter>${basedir}/src/main/filters/maven.filter</filter>
+                <!-- End GEORCHESTRA change -->
+              </filters>
+              <overwrite>true</overwrite>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
-      <plugin> 
-        <groupId>org.codehaus.mojo</groupId> 
-        <artifactId>buildnumber-maven-plugin</artifactId> 
-        <version>1.0</version> 
-        <executions> 
-          <execution> 
-            <phase>validate</phase> 
-            <goals> 
-              <goal>create</goal> 
-            </goals> 
-          </execution> 
-        </executions> 
-        <configuration> 
-          <timestampFormat>{0,date,MM/dd/yyyy hh:mm:ss a}</timestampFormat> 
-          <doCheck>false</doCheck> 
-          <doUpdate>false</doUpdate> 
-        </configuration> 
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>buildnumber-maven-plugin</artifactId>
+        <version>1.0</version>
+        <executions>
+          <execution>
+            <phase>validate</phase>
+            <goals>
+              <goal>create</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <timestampFormat>{0,date,MM/dd/yyyy hh:mm:ss a}</timestampFormat>
+          <doCheck>false</doCheck>
+          <doUpdate>false</doUpdate>
+        </configuration>
       </plugin>
-      
       <plugin>
         <groupId>net.alchim31.maven</groupId>
         <artifactId>yuicompressor-maven-plugin</artifactId>
         <!--  mvn net.alchim31.maven:yuicompressor-maven-plugin:compress -->
         <executions>
           <execution>
-            <!-- 
+            <!--
                 This phase does not belong to the default lifecycle for a jar/war packaging.
-                It has to be run explicitely as mvn command argument for generating obfuscated js. 
-             --> 
+                It has to be run explicitely as mvn command argument for generating obfuscated js.
+             -->
             <phase>prepare-package</phase>
             <goals>
               <goal>compress</goal>
               <!--<goal>jslint</goal>-->
             </goals>
           </execution>
-        </executions> 
+        </executions>
         <configuration>
           <nosuffix>true</nosuffix>
           <gzip>false</gzip>
@@ -557,60 +532,52 @@
                 <include>${geonetwork.build.dir}/scripts/prototype.js</include>
               </includes>
             </aggregation>
-			 <aggregation>
+            <aggregation>
               <output>${geonetwork.webapp.dir}/scripts/lib/gn.libs.map.js</output>
               <includes>
-				<include>${geonetwork.build.dir}/scripts/map/core/OGCUtil.js</include>
+                <include>${geonetwork.build.dir}/scripts/map/core/OGCUtil.js</include>
                 <include>${geonetwork.build.dir}/scripts/map/core/MapStateManager.js</include>
-				<include>${geonetwork.build.dir}/scripts/map/core/CatalogueInterface.js</include>
-				<include>${geonetwork.build.dir}/scripts/map/core/WMCManager.js</include>
-                
+                <include>${geonetwork.build.dir}/scripts/map/core/CatalogueInterface.js</include>
+                <include>${geonetwork.build.dir}/scripts/map/core/WMCManager.js</include>
                 <include>${geonetwork.build.dir}/scripts/map/Control/ExtentBox.js</include>
                 <include>${geonetwork.build.dir}/scripts/map/Control/ZoomWheel.js</include>
-                
-				<include>${geonetwork.build.dir}/scripts/map/lang/en.js</include>
-				<include>${geonetwork.build.dir}/scripts/map/lang/de.js</include>
-				<include>${geonetwork.build.dir}/scripts/map/lang/nl.js</include>
-				<include>${geonetwork.build.dir}/scripts/map/lang/fr.js</include>
-				<include>${geonetwork.build.dir}/scripts/map/lang/no.js</include>
-				<include>${geonetwork.build.dir}/scripts/map/lang/fi.js</include>
-				<include>${geonetwork.build.dir}/scripts/map/lang/it.js</include>
-				<include>${geonetwork.build.dir}/scripts/map/lang/tr.js</include>
-
+                <include>${geonetwork.build.dir}/scripts/map/lang/en.js</include>
+                <include>${geonetwork.build.dir}/scripts/map/lang/de.js</include>
+                <include>${geonetwork.build.dir}/scripts/map/lang/nl.js</include>
+                <include>${geonetwork.build.dir}/scripts/map/lang/fr.js</include>
+                <include>${geonetwork.build.dir}/scripts/map/lang/no.js</include>
+                <include>${geonetwork.build.dir}/scripts/map/lang/fi.js</include>
+                <include>${geonetwork.build.dir}/scripts/map/lang/it.js</include>
+                <include>${geonetwork.build.dir}/scripts/map/lang/tr.js</include>
                 <include>${geonetwork.build.dir}/scripts/map/Ext.ux/form/DateTime.js</include>
-                
-				<include>${geonetwork.build.dir}/scripts/map/widgets/tree/WMSListGenerator.js</include>
-				<include>${geonetwork.build.dir}/scripts/map/widgets/tree/WMSTreeGenerator.js</include>
-				<include>${geonetwork.build.dir}/scripts/map/widgets/wms/BrowserPanel.js</include>
-				<include>${geonetwork.build.dir}/scripts/map/widgets/wms/LayerInfoPanel.js</include>
-				<include>${geonetwork.build.dir}/scripts/map/widgets/wms/LayerStylesPanel.js</include>
-				<include>${geonetwork.build.dir}/scripts/map/widgets/wms/PreviewPanel.js</include>
-				<include>${geonetwork.build.dir}/scripts/map/widgets/wms/WMSLayerInfo.js</include>   
-                
-				<include>${geonetwork.build.dir}/scripts/map/widgets/FeatureInfoPanel.js</include>
-				<include>${geonetwork.build.dir}/scripts/map/widgets/LegendPanel.js</include>
-				<include>${geonetwork.build.dir}/scripts/map/widgets/OpacitySlider.js</include>
-				<include>${geonetwork.build.dir}/scripts/map/widgets/PrintAction.js</include>
-				<include>${geonetwork.build.dir}/scripts/map/widgets/ProjectionSelector.js</include>
+                <include>${geonetwork.build.dir}/scripts/map/widgets/tree/WMSListGenerator.js</include>
+                <include>${geonetwork.build.dir}/scripts/map/widgets/tree/WMSTreeGenerator.js</include>
+                <include>${geonetwork.build.dir}/scripts/map/widgets/wms/BrowserPanel.js</include>
+                <include>${geonetwork.build.dir}/scripts/map/widgets/wms/LayerInfoPanel.js</include>
+                <include>${geonetwork.build.dir}/scripts/map/widgets/wms/LayerStylesPanel.js</include>
+                <include>${geonetwork.build.dir}/scripts/map/widgets/wms/PreviewPanel.js</include>
+                <include>${geonetwork.build.dir}/scripts/map/widgets/wms/WMSLayerInfo.js</include>
+                <include>${geonetwork.build.dir}/scripts/map/widgets/FeatureInfoPanel.js</include>
+                <include>${geonetwork.build.dir}/scripts/map/widgets/LegendPanel.js</include>
+                <include>${geonetwork.build.dir}/scripts/map/widgets/OpacitySlider.js</include>
+                <include>${geonetwork.build.dir}/scripts/map/widgets/PrintAction.js</include>
+                <include>${geonetwork.build.dir}/scripts/map/widgets/ProjectionSelector.js</include>
                 <include>${geonetwork.build.dir}/scripts/map/widgets/TimeSelector.js</include>
-                
-				<include>${geonetwork.build.dir}/scripts/map/windows/BaseWindow.js</include>
-				<include>${geonetwork.build.dir}/scripts/map/windows/SingletonWindowManager.js</include>
-				<include>${geonetwork.build.dir}/scripts/map/windows/AddWMS.js</include>
-				<include>${geonetwork.build.dir}/scripts/map/windows/FeatureInfo.js</include>
-				<include>${geonetwork.build.dir}/scripts/map/windows/Opacity.js</include>
-				<include>${geonetwork.build.dir}/scripts/map/windows/LoadWmc.js</include>
-				<include>${geonetwork.build.dir}/scripts/map/windows/LayerStyles.js</include>
-				<include>${geonetwork.build.dir}/scripts/map/windows/WmsLayerMetadata.js</include>
+                <include>${geonetwork.build.dir}/scripts/map/windows/BaseWindow.js</include>
+                <include>${geonetwork.build.dir}/scripts/map/windows/SingletonWindowManager.js</include>
+                <include>${geonetwork.build.dir}/scripts/map/windows/AddWMS.js</include>
+                <include>${geonetwork.build.dir}/scripts/map/windows/FeatureInfo.js</include>
+                <include>${geonetwork.build.dir}/scripts/map/windows/Opacity.js</include>
+                <include>${geonetwork.build.dir}/scripts/map/windows/LoadWmc.js</include>
+                <include>${geonetwork.build.dir}/scripts/map/windows/LayerStyles.js</include>
+                <include>${geonetwork.build.dir}/scripts/map/windows/WmsLayerMetadata.js</include>
                 <include>${geonetwork.build.dir}/scripts/map/windows/WMSTime.js</include>
                 <include>${geonetwork.build.dir}/scripts/map/windows/Disclaimer.js</include>
-                
-                <include>${geonetwork.build.dir}/scripts/ol_settings.js</include>		
+                <include>${geonetwork.build.dir}/scripts/ol_settings.js</include>
                 <include>${geonetwork.build.dir}/scripts/ol_minimap.js</include>
-                <include>${geonetwork.build.dir}/scripts/ol_map.js</include>             
+                <include>${geonetwork.build.dir}/scripts/ol_map.js</include>
               </includes>
             </aggregation>
-			
             <aggregation>
               <output>${geonetwork.webapp.dir}/scripts/lib/gn.libs.scriptaculous.js</output>
               <includes>
@@ -648,7 +615,7 @@
                 <include>${geonetwork.build.dir}/scripts/editor/metadata-show.js</include>
                 <include>${geonetwork.build.dir}/scripts/editor/simpletooltip.js</include>
                 <include>${geonetwork.build.dir}/scripts/editor/tooltip.js</include>
-                <include>${geonetwork.build.dir}/scripts/editor/tooltip-manager.js</include>                
+                <include>${geonetwork.build.dir}/scripts/editor/tooltip-manager.js</include>
               </includes>
             </aggregation>
             <aggregation>
@@ -678,7 +645,7 @@
                 <include>${geonetwork.build.dir}/scripts/openlayers/lib/OpenLayers/Feature/Vector.js</include>
                 <include>${geonetwork.build.dir}/scripts/openlayers/lib/OpenLayers/Format/WKT.js</include>
                 <include>${geonetwork.build.dir}/scripts/openlayers/lib/OpenLayers/Format/XML.js</include>
-                <include>${geonetwork.build.dir}/scripts/openlayers/lib/OpenLayers/Format/WMSGetFeatureInfo.js</include>                
+                <include>${geonetwork.build.dir}/scripts/openlayers/lib/OpenLayers/Format/WMSGetFeatureInfo.js</include>
                 <include>${geonetwork.build.dir}/scripts/openlayers/lib/OpenLayers/Geometry.js</include>
                 <include>${geonetwork.build.dir}/scripts/openlayers/lib/OpenLayers/Control.js</include>
                 <include>${geonetwork.build.dir}/scripts/openlayers/lib/OpenLayers/Control/PanZoom.js</include>
@@ -769,14 +736,13 @@
                 <include>${geonetwork.build.dir}/scripts/openlayers/lib/OpenLayers/Format/WMSCapabilities/v1_1_0.js</include>
                 <include>${geonetwork.build.dir}/scripts/openlayers/lib/OpenLayers/Format/WMSCapabilities/v1_1_1.js</include>
                 <include>${geonetwork.build.dir}/scripts/openlayers/lib/OpenLayers/Control/ArgParser.js</include>
-                <include>${geonetwork.build.dir}/scripts/openlayers/addins/LoadingPanel.js</include>      
-                <include>${geonetwork.build.dir}/scripts/openlayers/addins/ScaleBar.js</include>              
+                <include>${geonetwork.build.dir}/scripts/openlayers/addins/LoadingPanel.js</include>
+                <include>${geonetwork.build.dir}/scripts/openlayers/addins/ScaleBar.js</include>
               </includes>
             </aggregation>
           </aggregations>
         </configuration>
       </plugin>
-
       <plugin>
         <artifactId>maven-war-plugin</artifactId>
         <configuration>
@@ -787,10 +753,8 @@
             <resource>
               <directory>${build.webapp.resources}</directory>
             </resource>
-          
-            <!-- Remove comment tag to include documentation in the build. 
+            <!-- Remove comment tag to include documentation in the build.
             Python and Latex are required to build the documentation. -->
-            
             <!--
             <resource>
               <directory>../docs/eng/users/build/html</directory>
@@ -806,7 +770,7 @@
             <resource>
             <directory>../docs/eng/developer/build/html</directory>
               <targetPath>docs/eng/developer</targetPath>
-            </resource>  
+            </resource>
             <resource>
               <directory>../docs</directory>
               <targetPath>docs</targetPath>
@@ -833,7 +797,7 @@
           </overlays>
           <!-- <packagingExcludes>WEB-INF/data/**</packagingExcludes> -->
           <packagingExcludes>xml/schemas/**</packagingExcludes>
-<!--          <warSourceDirectory>src/main/geonetwork</warSourceDirectory> -->
+          <!--          <warSourceDirectory>src/main/geonetwork</warSourceDirectory> -->
           <webXml>${build.webapp.resources}/WEB-INF/web.xml</webXml>
           <attachClasses>true</attachClasses>
           <warName>geonetwork</warName>
@@ -843,7 +807,7 @@
       <plugin>
         <groupId>org.mortbay.jetty</groupId>
         <artifactId>jetty-maven-plugin</artifactId>
-				<version>7.5.0.v20110901</version>
+        <version>7.5.0.v20110901</version>
         <configuration>
           <connectors>
             <connector implementation="org.eclipse.jetty.server.bio.SocketConnector">
@@ -868,10 +832,10 @@
           <webAppSourceDirectory>${project.build.directory}/geonetwork</webAppSourceDirectory>
           <webAppConfig>
             <contextPath>/geonetwork</contextPath>
-          	<descriptor>${project.build.directory}/WEB-INF/web.xml</descriptor>
-						<baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
-							<resourcesAsCSV>${basedir}/src/main/webapp,${build.webapp.resources}${widgets.webapp.resources}</resourcesAsCSV>
-						</baseResource>
+            <descriptor>${project.build.directory}/WEB-INF/web.xml</descriptor>
+            <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
+              <resourcesAsCSV>${basedir}/src/main/webapp,${build.webapp.resources}${widgets.webapp.resources}</resourcesAsCSV>
+            </baseResource>
           </webAppConfig>
           <stopKey>JETTY_TOP</stopKey>
           <stopPort>8090</stopPort>
@@ -879,87 +843,87 @@
       </plugin>
     </plugins>
   </build>
-  
-  <!-- Define profiles for running configuration using -Denv=profile.id parameter 
-    Profiles configuration is defined in src/main/filters.
-    -->
+  <!-- Define profiles for running configuration using -Denv=profile.id parameter
+       Profiles configuration is defined in src/main/filters. -->
   <profiles>
     <!-- Start GEORCHESTRA change -->
-	<profile>
-		<id>useConfig</id>
-		<activation>
-			<!-- the activation is always true so that this profile is enabled unless 
-				 intentionally disabled -->
-			<file><missing>${project.build.directory}/this-file-does-not-exist</missing></file>
-		</activation>
-		<build>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-dependency-plugin</artifactId>
-				</plugin>
-				<plugin>
-					<groupId>org.codehaus.groovy.maven</groupId>
-					<artifactId>gmaven-plugin</artifactId>
-					<dependencies>
-						<dependency>
-								<groupId>org.georchestra</groupId>
-								<artifactId>config</artifactId>
-								<version>${project.version}</version>
-								<classifier>${server}</classifier>
-						</dependency>
-					</dependencies>
-				</plugin>
-				<plugin>
-					<artifactId>maven-antrun-plugin</artifactId>
-					<executions>
-						<execution>
-							<id>serverConfigCopy</id>
-							<phase>generate-sources</phase>
-							<configuration>
-								<tasks>
-									<copy todir="${basedir}/src/main/" overwrite="true"
-										verbose="true" failonerror="false">
-										<fileset dir="${confdir}/${project.artifactId}">
-											<exclude name="**/maven.filter" />
-										</fileset>
-									</copy>
-									<copy todir="${basedir}/src/main/filters" overwrite="true"
-										verbose="true" failonerror="false">
-										<fileset dir="${confdir}/${project.artifactId}">
-											<include name="maven.filter" />
-										</fileset>
-									</copy>
-								</tasks>
-							</configuration>
-							<goals>
-								<goal>run</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-			</plugins>
-		</build>
-	</profile>
-<!-- End GEORCHESTRA change -->
-	<profile>
-		<id>run-static-analysis</id>
-		<activation>
-			<property><name>!skipTests</name></property>
-		</activation>
-		<build>
-		<plugins>
-		  <plugin>
-			<groupId>org.codehaus.mojo</groupId>
-			<artifactId>findbugs-maven-plugin</artifactId>
-		  </plugin>
-		  <plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-checkstyle-plugin</artifactId>
-		  </plugin>
-		</plugins>
-		</build>
-	</profile>
+    <profile>
+      <id>useConfig</id>
+      <activation>
+        <!-- the activation is always true so that this profile is enabled unless
+             intentionally disabled -->
+        <file>
+          <missing>${project.build.directory}/this-file-does-not-exist</missing>
+        </file>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+          </plugin>
+          <plugin>
+            <groupId>org.codehaus.groovy.maven</groupId>
+            <artifactId>gmaven-plugin</artifactId>
+            <dependencies>
+              <dependency>
+                <groupId>org.georchestra</groupId>
+                <artifactId>config</artifactId>
+                <version>${project.version}</version>
+                <classifier>${server}</classifier>
+              </dependency>
+            </dependencies>
+          </plugin>
+          <plugin>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>serverConfigCopy</id>
+                <phase>generate-sources</phase>
+                <configuration>
+                  <tasks>
+                    <copy todir="${basedir}/src/main/" overwrite="true" verbose="true" failonerror="false">
+                      <fileset dir="${confdir}/${project.artifactId}">
+                        <exclude name="**/maven.filter"/>
+                      </fileset>
+                    </copy>
+                    <copy todir="${basedir}/src/main/filters" overwrite="true" verbose="true" failonerror="false">
+                      <fileset dir="${confdir}/${project.artifactId}">
+                        <include name="maven.filter"/>
+                      </fileset>
+                    </copy>
+                  </tasks>
+                </configuration>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <!-- End GEORCHESTRA change -->
+    <profile>
+      <id>run-static-analysis</id>
+      <activation>
+        <property>
+          <name>!skipTests</name>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>findbugs-maven-plugin</artifactId>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-checkstyle-plugin</artifactId>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
     <profile>
       <id>no-env-specified</id>
       <activation>
@@ -1017,19 +981,22 @@
     <profile>
       <id>widgets-tab</id>
       <properties>
-          <web.xml.widget.config.overrides>/WEB-INF/config-overrides-widgettab.xml</web.xml.widget.config.overrides>
-          <widgets.webapp.resources>,../web-client/src/main/resources/</widgets.webapp.resources>
+        <web.xml.widget.config.overrides>/WEB-INF/config-overrides-widgettab.xml</web.xml.widget.config.overrides>
+        <widgets.webapp.resources>,../web-client/src/main/resources/</widgets.webapp.resources>
       </properties>
     </profile>
     <profile>
-		<id>html5ui</id>
-		<properties>
-			<web.xml.widget.config.overrides>/WEB-INF/config-overrides-html5ui.xml</web.xml.widget.config.overrides>
-			<widgets.webapp.resources>,../web-client/src/main/resources/</widgets.webapp.resources>
-		</properties>
+      <id>html5ui</id>
+      <properties>
+        <web.xml.widget.config.overrides>/WEB-INF/config-overrides-html5ui.xml</web.xml.widget.config.overrides>
+        <widgets.webapp.resources>,../web-client/src/main/resources/</widgets.webapp.resources>
+      </properties>
     </profile>
-        <profile>
+    <profile>
       <id>debianPackage</id>
+      <properties>
+        <env>prod</env>
+      </properties>
       <build>
         <plugins>
           <plugin>
@@ -1047,7 +1014,9 @@
               <execution>
                 <id>copy-deb-resources</id>
                 <phase>process-resources</phase>
-                <goals><goal>copy-resources</goal></goals>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
                 <configuration>
                   <overwrite>true</overwrite>
                   <outputDirectory>${basedir}/target/deb</outputDirectory>
@@ -1080,13 +1049,13 @@
                     </chmod>
                   </target>
                 </configuration>
-                <goals><goal>run</goal></goals>
+                <goals>
+                  <goal>run</goal>
+                </goals>
               </execution>
             </executions>
           </plugin>
           <plugin>
-            <!-- TODO: find a way to get rid of the geonetwork-classes.jar which
-                 ends up bundled into the debian package -->
             <groupId>net.sf.debian-maven</groupId>
             <artifactId>debian-maven-plugin</artifactId>
             <version>1.0.6</version>
@@ -1107,7 +1076,6 @@
       </build>
     </profile>
   </profiles>
-
   <reporting>
     <plugins>
       <plugin>
@@ -1117,7 +1085,6 @@
       </plugin>
     </plugins>
   </reporting>
-
   <properties>
     <geonetwork.version>${project.version}</geonetwork.version>
     <geonetwork.subversion>SNAPSHOT</geonetwork.subversion>
@@ -1128,9 +1095,9 @@
     <minify.verbose>false</minify.verbose>
     <build.webapp.resources>${project.build.directory}/webapp</build.webapp.resources>
     <web.xml.main.config.overrides>/WEB-INF/config-overrides-${env}.xml</web.xml.main.config.overrides>
-    <web.xml.widget.config.overrides></web.xml.widget.config.overrides>
-    <widgets.webapp.resources></widgets.webapp.resources>
-    <system.specific.overrides></system.specific.overrides>
+    <web.xml.widget.config.overrides/>
+    <widgets.webapp.resources/>
+    <system.specific.overrides/>
     <rootProjectDir>${basedir}/..</rootProjectDir>
   </properties>
 </project>
