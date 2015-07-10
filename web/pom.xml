@@ -1114,7 +1114,7 @@
                     <source>
                       <location>${project.build.directory}</location>
                       <includes>
-                        <include>${project.artifactId}-generic.war</include>
+                        <include>geonetwork-generic.war</include>
                       </includes>
                     </source>
                   </sources>
