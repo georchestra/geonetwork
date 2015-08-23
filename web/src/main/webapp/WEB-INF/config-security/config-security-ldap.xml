@@ -10,8 +10,13 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
           xmlns:ctx="http://www.springframework.org/schema/context"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns="http://www.springframework.org/schema/beans">
-          
-    <ctx:property-override location="WEB-INF/config-security/config-security-overrides.properties"/>
+
+    <ctx:property-override location="WEB-INF/config-security/config-security-overrides.properties" order="2" />
+
+    <!-- using the one from the geOrchestra datadir first (if available) -->
+    <ctx:property-placeholder location="file:${georchestra.datadir}/geonetwork/geonetwork.properties"
+      ignore-resource-not-found="true" ignore-unresolvable="true" order="1" />
+
 
 	<!-- Add ldap authentication to authentication manager -->
 	<bean id="ldapAuthenticationProviderPostProcessor"
@@ -64,7 +69,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
     <!-- User information retrieval could be defined in 3 ways by configuration. Only one could be defined
          for an LDAP provider.                                                                             -->
     
-    <!-- Get all user information from the LDAP user's attributes (including profile and groups)           -->
+    <!-- Get all user information from the LDAP user's attributes (including profile and groups)
     <bean id="ldapUserContextMapper" class="org.fao.geonet.kernel.security.ldap.LDAPUserDetailsContextMapper">
         <property name="mapping">
             <map/>
@@ -79,7 +84,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 		<property name="ldapManager" ref="ldapUserDetailsService" />
         <property name="contextSource" ref="contextSource" />
     </bean>
-    
+    -->
     
     <!-- Get all user information from the LDAP user's attributes (including profile and groups) 
     where profile and groups are stored in one attribute. A custom pattern is defined to extract 
@@ -106,13 +111,19 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
     
     <!-- Get all user information from the LDAP user's attributes excluding profiles and groups
         which are searched in another LDAP location. For profiles and groups, define the search
-        location and the extraction pattern. -->
-    <!--<bean id="ldapUserContextMapper" class="org.fao.geonet.kernel.security.ldap.LDAPUserDetailsContextMapperWithProfileSearch">
+        location and the extraction pattern.
+    <bean id="ldapUserContextMapper" class="org.fao.geonet.kernel.security.ldap.LDAPUserDetailsContextMapperWithProfileSearch">
         <property name="mapping">
             <map/>
          </property>
-        <property name="profileMapping">
-            <map/>
+         <property name="profileMapping" ref="georProfileMapping" />
+          <map>
+            <entry key="" value="" />
+            <entry key="" value="" />
+            <entry key="" value="" />
+            <entry key="" value="" />
+            <entry key="" value="" />
+          </map>
         </property>
         <property name="importPrivilegesFromLdap" value="${ldap.privilege.import}"/>
 		<property name="createNonExistingLdapGroup" value="${ldap.privilege.create.nonexisting.groups}" />
@@ -131,7 +142,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
         <property name="privilegeQueryPattern" value="${ldap.privilege.search.privilege.pattern}"/>
         
         <property name="contextSource" ref="contextSource" />
-    </bean>-->
+    </bean> -->
 
     <bean name="ldapSynchronizer" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
         <property name="jobClass" value="org.fao.geonet.kernel.security.ldap.LDAPSynchronizerJob"/>

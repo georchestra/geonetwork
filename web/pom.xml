@@ -629,7 +629,7 @@
           <contextXml>${basedir}/jetty-context.xml</contextXml>
           <connectors>
             <connector implementation="org.eclipse.jetty.server.bio.SocketConnector">
-              <port>8080</port>
+              <port>8091</port>
               <maxIdleTime>10000</maxIdleTime>
               <requestHeaderSize>20000</requestHeaderSize>
             </connector>
@@ -638,7 +638,7 @@
                     https then it needs the environment variables set as follows:
                     -Djavax.net.ssl.trustStore=keystore.jks -Djavax.net.ssl.trustStorePassword=password
                     -->
-              <port>8443</port>
+              <port>8444</port>
               <keystore>${project.basedir}/keystore.jks</keystore>
               <password>password</password>
               <keyPassword>password</keyPassword>
