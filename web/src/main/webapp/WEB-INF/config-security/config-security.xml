@@ -12,8 +12,8 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
     <!-- <sec:debug/> -->
     <import resource="config-security-core.xml"/>
     <import resource="config-security-mapping.xml"/>
-    <!-- <import resource="config-security-ldap.xml"/> -->
-    <!-- <import resource="file:${georchestra.datadir}/geonetwork/config/config-security-georchestra.xml"/> -->
+    <import resource="config-security-ldap.xml"/>
+    <import resource="file:${georchestra.datadir}/geonetwork/config/config-security-georchestra.xml"/>
     <!-- <import resource="config-security-ecas.xml"/> -->
     <!-- <import resource="config-security-cas.xml"/>
     <import resource="config-security-cas-ldap.xml"/> -->
