@@ -11,11 +11,11 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
           xmlns="http://www.springframework.org/schema/beans">
 
-    <ctx:property-override location="WEB-INF/config-security/config-security-overrides.properties" order="2" />
+	  <ctx:property-override location="WEB-INF/config-security/config-security-overrides.properties" order="2" />
 
-    <!-- using the one from the geOrchestra datadir first (if available) -->
-    <ctx:property-placeholder location="file:${georchestra.datadir}/geonetwork/geonetwork.properties"
-      ignore-resource-not-found="true" ignore-unresolvable="true" order="1" />
+	  <!-- using the one from the geOrchestra datadir first (if available) -->
+	  <ctx:property-placeholder location="file:${georchestra.datadir}/geonetwork/geonetwork.properties"
+	  ignore-resource-not-found="true" ignore-unresolvable="true" order="1" />
 
 
 	<!-- Add ldap authentication to authentication manager -->
@@ -111,38 +111,32 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
     
     <!-- Get all user information from the LDAP user's attributes excluding profiles and groups
         which are searched in another LDAP location. For profiles and groups, define the search
-        location and the extraction pattern.
+        location and the extraction pattern. -->
     <bean id="ldapUserContextMapper" class="org.fao.geonet.kernel.security.ldap.LDAPUserDetailsContextMapperWithProfileSearch">
         <property name="mapping">
             <map/>
          </property>
-         <property name="profileMapping" ref="georProfileMapping" />
-          <map>
-            <entry key="" value="" />
-            <entry key="" value="" />
-            <entry key="" value="" />
-            <entry key="" value="" />
-            <entry key="" value="" />
-          </map>
-        </property>
-        <property name="importPrivilegesFromLdap" value="${ldap.privilege.import}"/>
-		<property name="createNonExistingLdapGroup" value="${ldap.privilege.create.nonexisting.groups}" />
-		<property name="createNonExistingLdapUser" value="${ldap.privilege.create.nonexisting.users}" />
+	 <property name="profileMapping">
+            <map/>
+	 </property>
+	 <property name="importPrivilegesFromLdap" value="${ldap.privilege.import}"/>
+	 <property name="createNonExistingLdapGroup" value="${ldap.privilege.create.nonexisting.groups}" />
+	 <property name="createNonExistingLdapUser" value="${ldap.privilege.create.nonexisting.users}" />
+
+	 <property name="ldapManager" ref="ldapUserDetailsService" />
         
-		<property name="ldapManager" ref="ldapUserDetailsService" />
+	 <property name="groupAttribute" value="${ldap.privilege.search.group.attribute}"/>
+	 <property name="groupObject" value="${ldap.privilege.search.group.object}"/>
+	 <property name="groupQuery" value="${ldap.privilege.search.group.query}"/>
+	 <property name="groupQueryPattern" value="${ldap.privilege.search.group.pattern}"/>
         
-        <property name="groupAttribute" value="${ldap.privilege.search.group.attribute}"/>
-        <property name="groupObject" value="${ldap.privilege.search.group.object}"/>
-        <property name="groupQuery" value="${ldap.privilege.search.group.query}"/>
-        <property name="groupQueryPattern" value="${ldap.privilege.search.group.pattern}"/>
+	 <property name="privilegeAttribute" value="${ldap.privilege.search.privilege.attribute}"/>
+	 <property name="privilegeObject" value="${ldap.privilege.search.privilege.object}"/>
+	 <property name="privilegeQuery" value="${ldap.privilege.search.privilege.query}"/>
+	 <property name="privilegeQueryPattern" value="${ldap.privilege.search.privilege.pattern}"/>
         
-        <property name="privilegeAttribute" value="${ldap.privilege.search.privilege.attribute}"/>
-        <property name="privilegeObject" value="${ldap.privilege.search.privilege.object}"/>
-        <property name="privilegeQuery" value="${ldap.privilege.search.privilege.query}"/>
-        <property name="privilegeQueryPattern" value="${ldap.privilege.search.privilege.pattern}"/>
-        
-        <property name="contextSource" ref="contextSource" />
-    </bean> -->
+	 <property name="contextSource" ref="contextSource" />
+    </bean>
 
     <bean name="ldapSynchronizer" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
         <property name="jobClass" value="org.fao.geonet.kernel.security.ldap.LDAPSynchronizerJob"/>
