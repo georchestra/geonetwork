@@ -758,12 +758,69 @@
           </plugin>
           <plugin>
             <artifactId>maven-resources-plugin</artifactId>
-            <version>2.3</version>
+            <version>2.5</version>
             <executions>
               <execution>
+                <id>copy-filter-webResource</id>
+                <phase>process-resources</phase>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
+                <configuration>
+                  <includeEmptyDirs>false</includeEmptyDirs>
+                  <outputDirectory>${build.webapp.resources}</outputDirectory>
+                  <resources>
+                    <resource>
+                      <directory>${basedir}/src/main/webResources</directory>
+                      <filtering>true</filtering>
+                      <targetPath>${build.webapp.resources}</targetPath>
+                    </resource>
+                  </resources>
+                  <filters>
+                    <filter>${basedir}/src/main/filters/${env}.properties</filter>
+                  </filters>
+                  <overwrite>true</overwrite>
+                </configuration>
+              </execution>
+              <execution>
+                <id>copy-schemas</id>
+                <phase>process-resources</phase>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
+                <configuration>
+                  <includeEmptyDirs>true</includeEmptyDirs>
+                  <overwrite>true</overwrite>
+                  <outputDirectory>${build.webapp.resources}</outputDirectory>
+                  <resources>
+                    <!-- Copy the schema folder to the webapp folder source directory
+                in order to be loaded by the application when running mvn jetty:run.
+                -->
+                <resource>
+                  <directory>${project.basedir}/../schemas/iso19139/src/main/plugin</directory>
+                  <targetPath>${basedir}/src/main/webapp/WEB-INF/data/config/schema_plugins</targetPath>
+                </resource>
+                <resource>
+                  <directory>${project.basedir}/../schemas/iso19110/src/main/plugin</directory>
+                  <targetPath>${basedir}/src/main/webapp/WEB-INF/data/config/schema_plugins</targetPath>
+                </resource>
+                <resource>
+                  <directory>${project.basedir}/../schemas/dublin-core/src/main/plugin</directory>
+                  <targetPath>${basedir}/src/main/webapp/WEB-INF/data/config/schema_plugins</targetPath>
+                </resource>
+                <resource>
+                  <directory>${project.basedir}/../schemas/csw-record/src/main/plugin</directory>
+                  <targetPath>${basedir}/src/main/webapp/WEB-INF/data/config/schema_plugins</targetPath>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+          <execution>
                 <id>copy-deb-resources</id>
                 <phase>process-resources</phase>
-                <goals><goal>copy-resources</goal></goals>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
                 <configuration>
                   <overwrite>true</overwrite>
                   <outputDirectory>${basedir}/target/deb</outputDirectory>
