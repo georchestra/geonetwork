@@ -607,7 +607,6 @@
           <packagingExcludes>
             xml/schemas/**,
             catalog/lib/style/bootstrap/docs/**,
-            catalog/lib/style/bootstrap/dist/**,
             catalog/lib/style/bootstrap/fonts/**,
             catalog/lib/style/bootstrap/grunt/**,
             catalog/lib/style/bootstrap/test-infra/**,
@@ -754,6 +753,34 @@
             <version>2.1.1</version>
             <configuration>
               <classifier>generic</classifier>
+              <archiveClasses>true</archiveClasses>
+              <webResources>
+                <resource>
+                  <directory>${project.basedir}/../schemas</directory>
+                  <includes>
+                    <include>**/src/main/plugin/*</include>
+                  </includes>
+                  <targetPath>WEB-INF/data/config/schema_plugins</targetPath>
+                </resource>
+                <resource>
+                  <directory>${project.basedir}/../web-ui/src/main/resources</directory>
+                </resource>
+                <resource>
+                  <directory>${build.webapp.resources}</directory>
+                </resource>
+              </webResources>
+              <packagingExcludes>
+                xml/schemas/**,
+                catalog/lib/style/bootstrap/docs/**,
+                catalog/lib/style/bootstrap/fonts/**,
+                catalog/lib/style/bootstrap/grunt/**,
+                catalog/lib/style/bootstrap/test-infra/**,
+                catalog/lib/style/font-awesome/css/**,
+                catalog/lib/style/font-awesome/src/**,
+                catalog/lib/style/font-awesome/scss/**
+              </packagingExcludes>
+              <webXml>${build.webapp.resources}/WEB-INF/web.xml</webXml>
+              <attachClasses>true</attachClasses>
             </configuration>
           </plugin>
           <plugin>
@@ -816,64 +843,64 @@
             </configuration>
           </execution>
           <execution>
-                <id>copy-deb-resources</id>
-                <phase>process-resources</phase>
-                <goals>
-                  <goal>copy-resources</goal>
-                </goals>
-                <configuration>
-                  <overwrite>true</overwrite>
-                  <outputDirectory>${basedir}/target/deb</outputDirectory>
-                  <resources>
-                    <resource>
-                      <directory>src/deb/resources</directory>
-                    </resource>
-                  </resources>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-antrun-plugin</artifactId>
-            <version>1.6</version>
-            <executions>
-              <execution>
-                <id>fix-permissions</id>
-                <phase>package</phase>
-                <configuration>
-                  <target>
-                    <chmod perm="ugo+x">
-                      <fileset dir="${basedir}/target/deb">
-                        <include name="**/bin/**"/>
-                        <include name="**/sbin/**"/>
-                        <include name="DEBIAN/post*"/>
-                        <include name="DEBIAN/pre*"/>
-                      </fileset>
-                    </chmod>
-                  </target>
-                </configuration>
-                <goals><goal>run</goal></goals>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>net.sf.debian-maven</groupId>
-            <artifactId>debian-maven-plugin</artifactId>
-            <version>1.0.6</version>
+            <id>copy-deb-resources</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
             <configuration>
-              <packageName>georchestra-geonetwork</packageName>
-              <packageDescription>Debian package for the GeoNetwork fork of geOrchestra.</packageDescription>
-              <projectUrl>http://www.georchestra.org/</projectUrl>
-              <projectOrganization>geOrchestra</projectOrganization>
-              <maintainerName>Pierre Mauduit</maintainerName>
-              <maintainerEmail>pierre.mauduit@gmail.com</maintainerEmail>
-              <excludeAllArtifacts>true</excludeAllArtifacts>
+              <overwrite>true</overwrite>
+              <outputDirectory>${basedir}/target/deb</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>src/deb/resources</directory>
+                </resource>
+              </resources>
             </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.6</version>
+        <executions>
+          <execution>
+            <id>fix-permissions</id>
+            <phase>package</phase>
+            <configuration>
+              <target>
+                <chmod perm="ugo+x">
+                  <fileset dir="${basedir}/target/deb">
+                    <include name="**/bin/**"/>
+                    <include name="**/sbin/**"/>
+                    <include name="DEBIAN/post*"/>
+                    <include name="DEBIAN/pre*"/>
+                  </fileset>
+                </chmod>
+              </target>
+            </configuration>
+            <goals><goal>run</goal></goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>net.sf.debian-maven</groupId>
+        <artifactId>debian-maven-plugin</artifactId>
+        <version>1.0.6</version>
+        <configuration>
+          <packageName>georchestra-geonetwork</packageName>
+          <packageDescription>Debian package for the GeoNetwork fork of geOrchestra.</packageDescription>
+          <projectUrl>http://www.georchestra.org/</projectUrl>
+          <projectOrganization>geOrchestra</projectOrganization>
+          <maintainerName>Pierre Mauduit</maintainerName>
+          <maintainerEmail>pierre.mauduit@gmail.com</maintainerEmail>
+          <excludeAllArtifacts>true</excludeAllArtifacts>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</profile>
   </profiles>
   <properties>
     <geonetwork.version>${project.version}</geonetwork.version>
