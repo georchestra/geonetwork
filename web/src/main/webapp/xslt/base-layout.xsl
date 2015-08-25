@@ -39,11 +39,14 @@
       </head>
 
 
-      <!-- The GnCatController takes care of 
+      <!-- The GnCatController takes care of
       loading site information, check user login state
       and a facet search to get main site information.
       -->
       <body data-ng-controller="GnCatController">
+        <!-- see http://stackoverflow.com/questions/1037839/how-to-force-link-from-iframe-to-be-opened-in-the-parent-window -->
+        <script type="text/javascript" src="/header/js/header.js"></script>
+        <iframe src="/header/?active=geonetwork&amp;lang=en" style="width:100%;height:90px;border:none;overflow:hidden;" scrolling="no" frameborder="0" onload="_headerOnLoad(this)"></iframe>
         <xsl:choose>
           <xsl:when test="ends-with($service, 'nojs')">
             <!-- No JS degraded mode ... -->
