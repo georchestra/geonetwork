@@ -889,7 +889,7 @@
         <artifactId>debian-maven-plugin</artifactId>
         <version>1.0.6</version>
         <configuration>
-          <packageName>georchestra-geonetwork</packageName>
+          <packageName>georchestra-geonetwork3</packageName>
           <packageDescription>Debian package for the GeoNetwork fork of geOrchestra.</packageDescription>
           <projectUrl>http://www.georchestra.org/</projectUrl>
           <projectOrganization>geOrchestra</projectOrganization>
