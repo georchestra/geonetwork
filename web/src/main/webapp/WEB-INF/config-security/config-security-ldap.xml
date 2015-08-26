@@ -102,7 +102,12 @@
       <map/>
     </property>
     <property name="profileMapping">
-      <map/>
+      <map>
+        <entry key="ADMIN"     value="Administrator" />
+        <entry key="REVIEWER"  value="Reviewer" />
+        <entry key="EDITOR"    value="Editor" />
+        <entry key="USER"      value="RegisteredUser" />
+      </map>
     </property>
     <property name="importPrivilegesFromLdap" value="${ldap.privilege.import}"/>
     <property name="createNonExistingLdapGroup" value="${ldap.privilege.create.nonexisting.groups}"/>
