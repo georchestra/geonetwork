@@ -1,38 +1,144 @@
-<beans 
-xsi:schemaLocation="http://www.springframework.org/schema/beans
-          http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-          http://www.springframework.org/schema/context
-          http://www.springframework.org/schema/context/spring-context-3.0.xsd
-          http://www.springframework.org/schema/security
-          http://www.springframework.org/schema/security/spring-security-3.1.xsd" 
-          xmlns:sec="http://www.springframework.org/schema/security"
-          xmlns:ctx="http://www.springframework.org/schema/context"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-          xmlns="http://www.springframework.org/schema/beans">
-    
-	<!-- Override passthrough filter -->
-	<bean id="preAuthenticationFilter" class="org.springframework.security.web.authentication.preauth.RequestHeaderAuthenticationFilter">
-		<property name="authenticationManager" ref="authenticationManager"/>
-		<property name="checkForPrincipalChanges" value="true"/>
-		<property name="exceptionIfHeaderMissing" value="false"/>
-		<property name="principalRequestHeader" value="sec-username"></property>
-	</bean>
-	<bean class="org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider" id="preFilterAuthenticationProvider">
-    	<property name="preAuthenticatedUserDetailsService">
-			<bean id="preAuthenticatedUserDetailsService" class="org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper">
-				<property name="userDetailsService" ref="ldapUserService"/>
-		    </bean>
-    	</property>
-    </bean>
-    <bean id="ldapUserService" class="org.springframework.security.ldap.userdetails.LdapUserDetailsService">
-        <constructor-arg index="0" ref="ldapUserSearch" />
-        <property name="userDetailsMapper" ref="ldapUserContextMapper" />
-    </bean>
+<beans
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+  http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+  http://www.springframework.org/schema/context
+  http://www.springframework.org/schema/context/spring-context-3.0.xsd
+  http://www.springframework.org/schema/security
+  http://www.springframework.org/schema/security/spring-security-3.1.xsd"
+  xmlns:sec="http://www.springframework.org/schema/security"
+  xmlns:ctx="http://www.springframework.org/schema/context"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.springframework.org/schema/beans">
 
-    <bean id="ldapUserSearch" class="org.springframework.security.ldap.search.FilterBasedLdapUserSearch">
-        <constructor-arg index="0" value="${ldap.base.search.base}"/>
-        <constructor-arg index="1" value="${ldap.base.dn.pattern}"/>
-        <constructor-arg index="2" ref="contextSource" />
-    </bean>
-    
+  <!-- Override passthrough filter -->
+  <bean id="preAuthenticationFilter" class="org.springframework.security.web.authentication.preauth.RequestHeaderAuthenticationFilter">
+    <property name="authenticationManager" ref="authenticationManager"/>
+    <property name="checkForPrincipalChanges" value="true"/>
+    <property name="exceptionIfHeaderMissing" value="false"/>
+    <property name="principalRequestHeader" value="sec-username" />
+  </bean>
+
+  <bean class="org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider" id="preFilterAuthenticationProvider">
+    <property name="preAuthenticatedUserDetailsService">
+      <bean id="preAuthenticatedUserDetailsService" class="org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper">
+        <property name="userDetailsService" ref="ldapUserService"/>
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="ldapUserService" class="org.springframework.security.ldap.userdetails.LdapUserDetailsService">
+    <constructor-arg index="0" ref="ldapUserSearch" />
+    <property name="userDetailsMapper" ref="ldapUserContextMapper" />
+  </bean>
+
+  <bean id="ldapUserSearch" class="org.springframework.security.ldap.search.FilterBasedLdapUserSearch">
+    <constructor-arg index="0" value="${ldap.base.search.base}"/>
+    <constructor-arg index="1" value="${ldap.base.dn.pattern}"/>
+    <constructor-arg index="2" ref="contextSource" />
+  </bean>
+
+  <!-- config-security-ldap.xml customized for geOrchestra -->
+
+  <ctx:property-override location="WEB-INF/config-security/config-security-overrides.properties" order="2"/>
+  <!-- using the one from the geOrchestra datadir first (if available) -->
+  <ctx:property-placeholder location="file:${georchestra.datadir}/geonetwork/geonetwork.properties" ignore-resource-not-found="true" ignore-unresolvable="true" order="1"/>
+  <!-- Add ldap authentication to authentication manager -->
+  <bean id="ldapAuthenticationProviderPostProcessor" class="jeeves.config.springutil.AddAuthenticationProviderPostProcessor">
+    <constructor-arg ref="ldapAuthProvider"/>
+  </bean>
+
+  <bean id="ldapUtils" class="org.fao.geonet.kernel.security.ldap.LDAPUtils"/>
+
+  <!-- LDAP configuration-->
+  <bean id="contextSource" class="org.springframework.security.ldap.DefaultSpringSecurityContextSource">
+    <constructor-arg value="${ldap.base.provider.url}/${ldap.base.dn}"/>
+    <!-- For non anonymous binding -->
+    <property name="userDn" value="${ldap.security.principal}"/>
+    <property name="password" value="${ldap.security.credentials}"/>
+  </bean>
+  <bean id="ldapAuthProvider" class="org.springframework.security.ldap.authentication.LdapAuthenticationProvider">
+    <constructor-arg>
+      <bean class="org.springframework.security.ldap.authentication.BindAuthenticator">
+        <constructor-arg ref="contextSource"/>
+        <property name="userDnPatterns">
+          <list>
+            <value>${ldap.base.dn.pattern}</value>
+          </list>
+        </property>
+      </bean>
+    </constructor-arg>
+    <property name="userDetailsContextMapper" ref="ldapUserContextMapper"/>
+  </bean>
+  <!-- Get all user information from the LDAP user's attributes excluding profiles and groups
+        which are searched in another LDAP location. For profiles and groups, define the search
+        location and the extraction pattern. -->
+  <bean id="ldapUserContextMapper" class="org.fao.geonet.kernel.security.ldap.LDAPUserDetailsContextMapperWithProfileSearch">
+    <property name="mapping">
+      <map/>
+    </property>
+    <property name="profileMapping">
+      <map>
+        <entry key="ADMIN"     value="Administrator" />
+        <entry key="REVIEWER"  value="Reviewer" />
+        <entry key="EDITOR"    value="Editor" />
+        <entry key="USER"      value="RegisteredUser" />
+      </map>
+    </property>
+    <property name="importPrivilegesFromLdap" value="${ldap.privilege.import}"/>
+    <property name="createNonExistingLdapGroup" value="${ldap.privilege.create.nonexisting.groups}"/>
+    <property name="createNonExistingLdapUser" value="${ldap.privilege.create.nonexisting.users}"/>
+    <property name="ldapManager" ref="ldapUserDetailsService"/>
+    <property name="groupAttribute" value="${ldap.privilege.search.group.attribute}"/>
+    <property name="groupObject" value="${ldap.privilege.search.group.object}"/>
+    <property name="groupQuery" value="${ldap.privilege.search.group.query}"/>
+    <property name="groupQueryPattern" value="${ldap.privilege.search.group.pattern}"/>
+    <property name="privilegeAttribute" value="${ldap.privilege.search.privilege.attribute}"/>
+    <property name="privilegeObject" value="${ldap.privilege.search.privilege.object}"/>
+    <property name="privilegeQuery" value="${ldap.privilege.search.privilege.query}"/>
+    <property name="privilegeQueryPattern" value="${ldap.privilege.search.privilege.pattern}"/>
+    <property name="contextSource" ref="contextSource"/>
+  </bean>
+  <bean name="ldapSynchronizer" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+    <property name="jobClass" value="org.fao.geonet.kernel.security.ldap.LDAPSynchronizerJob"/>
+    <property name="jobDataAsMap">
+      <map>
+        <entry key="contextSource" value-ref="contextSource"/>
+        <entry key="ldapUserSearchBase" value="${ldap.sync.user.search.base}"/>
+        <entry key="ldapUserSearchFilter" value="${ldap.sync.user.search.filter}"/>
+        <entry key="ldapUserSearchAttribute" value="${ldap.sync.user.search.attribute}"/>
+        <entry key="createNonExistingLdapGroup" value="${ldap.privilege.create.nonexisting.groups}"/>
+        <entry key="ldapGroupSearchBase" value="${ldap.sync.group.search.base}"/>
+        <entry key="ldapGroupSearchFilter" value="${ldap.sync.group.search.filter}"/>
+        <entry key="ldapGroupSearchAttribute" value="${ldap.sync.group.search.attribute}"/>
+        <entry key="ldapGroupSearchPattern" value="${ldap.sync.group.search.pattern}"/>
+      </map>
+    </property>
+  </bean>
+  <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+    <property name="jobDetail" ref="ldapSynchronizer"/>
+    <property name="cronExpression" value="${ldap.sync.cron}"/>
+    <property name="startDelay" value="${ldap.sync.startDelay}"/>
+  </bean>
+  <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+    <property name="jobFactory">
+      <bean class="org.fao.geonet.util.spring.AutowiringSpringBeanJobFactory"/>
+    </property>
+    <property name="triggers">
+      <list>
+        <ref bean="cronTrigger"/>
+      </list>
+    </property>
+  </bean>
+  <bean id="ldapUserDetailsService" class="org.fao.geonet.kernel.security.ldap.LdapUserDetailsManager">
+    <constructor-arg ref="contextSource"/>
+    <constructor-arg name="groupMemberAttributeName" value="${ldap.privilege.search.group.queryprop}"/>
+    <constructor-arg name="query" value="${ldap.privilege.search.group.query}"/>
+    <property name="groupSearchBase" value="${ldap.privilege.search.group.object}"/>
+    <property name="usernameMapper" ref="usernameMapper"/>
+    <property name="userDetailsMapper" ref="ldapUserContextMapper"/>
+  </bean>
+  <bean id="usernameMapper" class="org.springframework.security.ldap.DefaultLdapUsernameToDnMapper">
+    <constructor-arg index="0" type="java.lang.String" name="userDnBase" value="${ldap.base.search.base}"/>
+    <constructor-arg index="1" type="java.lang.String" name="usernameAttribute" value="${ldap.sync.user.search.attribute}"/>
+  </bean>
 </beans>
