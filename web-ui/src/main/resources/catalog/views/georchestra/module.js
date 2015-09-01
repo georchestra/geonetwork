@@ -10,7 +10,8 @@
   /**
    * Overload default settings
    */
-  module.run(['gnSearchSettings', function(gnSearchSettings) {
+  module.run(['gnSearchSettings', 'georLinkActionsService',
+    function(gnSearchSettings, georLinkActionsService) {
 
     gnSearchSettings.linkTypes = {
       links: ['LINK'],
@@ -18,6 +19,20 @@
       layers:['OGC', 'vnd.ogc.wms_xml'],
       maps: ['ows']
     };
+
+    gnSearchSettings.customSelectActions = [{
+      icon: 'fa-globe',
+      fn: function() {
+        georLinkActionsService.extractMetadata('mapfishapp');
+      },
+      label: 'viewLayers'
+    }, {
+      icon: 'fa-eject',
+      fn: function() {
+        georLinkActionsService.extractMetadata('extractLayers');
+      },
+      label: 'viewLayers'
+    }]
   }]);
 
 
