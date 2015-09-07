@@ -1435,7 +1435,7 @@
 			<error sheet="xml-error.xsl" contentType="application/xml; charset=UTF-8" />
 		</service>
 
-        <service name="wmc.import">
+        <service name="map.import">
             <class name=".services.mef.ImportWmc" />
             <error sheet="xml-error.xsl" contentType="application/xml; charset=UTF-8" />
         </service>
