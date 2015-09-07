@@ -78,7 +78,7 @@ public class ImportWmcTest {
         Mockito.when(userSession.getSurname()).thenReturn("Pierre");
         Mockito.when(userSession.getName()).thenReturn("Mauduit");
         Mockito.when(userSession.getOrganisation()).thenReturn("Camptocamp France SAS");
-        Mockito.when(userSession.getPhone()).thenReturn("+33.4.79.26.58.02");
+        Mockito.when(userSession.getPhone()).thenReturn("+33.1.23.45.67.89");
 
         Mockito.when(serviceContext.getHandlerContext(Mockito.anyString())).thenReturn(geonetContext);
         Mockito.when(serviceContext.getResourceManager()).thenReturn(resourceManager);
@@ -97,8 +97,8 @@ public class ImportWmcTest {
 
         Document doc = new Document();
         Element reqElem = new Element("request");
-        reqElem.addContent(new Element("wmc_string").setText(testWmcString));
-        reqElem.addContent(new Element("wmc_url").setText(testWmcUrl));
+        reqElem.addContent(new Element("map_string").setText(testWmcString));
+        reqElem.addContent(new Element("map_url").setText(testWmcUrl));
         reqElem.addContent(new Element("viewer_url").setText(testWmcViewerUrl));
         doc.addContent(reqElem);
 

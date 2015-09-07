@@ -41,8 +41,8 @@ public class ImportWmc extends NotInReadOnlyModeService {
 
     @Override
     public Element serviceSpecificExec(Element params, ServiceContext context)  throws Exception {
-        String wmcString = Util.getParam(params, "wmc_string");
-        String wmcUrl = Util.getParam(params, "wmc_url");
+        String wmcString = Util.getParam(params, "map_string");
+        String wmcUrl = Util.getParam(params, "map_url");
         String viewerUrl = Util.getParam(params, "viewer_url");
         String groupId = Util.getParam(params, "group_id", "1");
 
