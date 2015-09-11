@@ -23,12 +23,28 @@
 
 package org.fao.geonet.kernel.harvest.harvester.ogcwxs;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import jeeves.interfaces.Logger;
 import jeeves.resources.dbms.Dbms;
 import jeeves.server.context.ServiceContext;
 import jeeves.utils.BinaryFile;
 import jeeves.utils.Xml;
 import jeeves.utils.XmlRequest;
+
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.methods.GetMethod;
@@ -50,23 +66,9 @@ import org.fao.geonet.util.Sha1Encoder;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.Namespace;
+import org.jdom.Text;
 import org.jdom.filter.ElementFilter;
 import org.jdom.xpath.XPath;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 
 //=============================================================================
@@ -479,7 +481,6 @@ class Harvester extends BaseAligner
      */
 	private WxSLayerRegistry addLayerMetadata (Element layer, Element capa) throws JDOMException
 	{
-		
 		DateFormat df 		= new SimpleDateFormat ("yyyy-MM-dd'T'HH:mm:ss");
 		Date dt 			= new Date ();
 		WxSLayerRegistry reg= new WxSLayerRegistry ();
@@ -529,11 +530,12 @@ class Harvester extends BaseAligner
 		reg.uuid = Sha1Encoder.encodeString(this.capabilitiesUrl+"#"+reg.name); // the dataset identifier
 	
 		//--- Trying loading metadataUrl element
-		if (params.useLayerMd && !params.ogctype.substring(0,3).equals("WMS")) {
-			log.info("  - MetadataUrl harvester only supported for WMS layers.");
+		if (params.useLayerMd && ! params.ogctype.substring(0,3).equals("WMS") && ! params.ogctype.substring(0,3).equals("WFS")) {
+			log.info("  - MetadataUrl harvester only supported for WMS or WFS layers.");
 		}
 		
-		if (params.useLayerMd && params.ogctype.substring(0,3).equals("WMS")) {
+		if (params.useLayerMd && (params.ogctype.substring(0,3).equals("WMS")
+				|| params.ogctype.substring(0,3).equals("WFS"))) {
 			
 			Namespace xlink 	= Namespace.getNamespace ("http://www.w3.org/1999/xlink");
 			
@@ -548,69 +550,98 @@ class Harvester extends BaseAligner
             boolean addNsPrefix = !layer.getNamespace().equals(Namespace.NO_NAMESPACE);
             if (addNsPrefix) dummyNsPrefix = "x:";
 
-            XPath mdUrl 		= XPath.newInstance ("./" + dummyNsPrefix + "MetadataURL[@type='TC211' and " + dummyNsPrefix + "Format='text/xml']/" + dummyNsPrefix + "OnlineResource");
-            if (addNsPrefix) mdUrl.addNamespace("x", layer.getNamespace().getURI());
-            Element onLineSrc 	= (Element) mdUrl.selectSingleNode (layer);
+            // WMS
+			if (params.ogctype.substring(0, 3).equals("WMS")) {
 
-            // Check if metadataUrl in WMS 1.3.0 format
-            if (onLineSrc == null) {
-                mdUrl 		= XPath.newInstance ("./" + dummyNsPrefix + "MetadataURL[@type='ISO19115:2003' and " + dummyNsPrefix + "Format='text/xml']/" + dummyNsPrefix + "OnlineResource");
-                if (addNsPrefix) mdUrl.addNamespace("x", layer.getNamespace().getURI());
-                onLineSrc 	= (Element) mdUrl.selectSingleNode (layer);
-            }
+				XPath mdUrl = XPath.newInstance("./" + dummyNsPrefix
+						+ "MetadataURL[@type='TC211' and " + dummyNsPrefix
+						+ "Format='text/xml']/" + dummyNsPrefix
+						+ "OnlineResource");
+				if (addNsPrefix)
+					mdUrl.addNamespace("x", layer.getNamespace().getURI());
+				Element onLineSrc = (Element) mdUrl.selectSingleNode(layer);
 
-			if (onLineSrc != null) {
-				org.jdom.Attribute href = onLineSrc.getAttribute ("href", xlink);
+				// Check if metadataUrl in WMS 1.3.0 format
+				if (onLineSrc == null) {
+					mdUrl = XPath.newInstance("./" + dummyNsPrefix
+							+ "MetadataURL[@type='ISO19115:2003' and "
+							+ dummyNsPrefix + "Format='text/xml']/"
+							+ dummyNsPrefix + "OnlineResource");
+					if (addNsPrefix)
+						mdUrl.addNamespace("x", layer.getNamespace().getURI());
+					onLineSrc = (Element) mdUrl.selectSingleNode(layer);
+				}
 
-				if (href != null) {	// No metadataUrl attribute for that layer
-					mdXml = href.getValue ();
-					try {
-						xml = Xml.loadFile (new URL(mdXml));
+				if (onLineSrc != null) {
+					org.jdom.Attribute href = onLineSrc.getAttribute("href",
+							xlink);
 
-                        // If url is CSW GetRecordById remove envelope
-                        if (xml.getName().equals("GetRecordByIdResponse")) {
-                            xml = (Element) xml.getChildren().get(0);
-                        }
+					if (href != null) { // No metadataUrl attribute for that
+										// layer
+						mdXml = href.getValue();
+						try {
+							xml = Xml.loadFile(new URL(mdXml));
 
-						schema = dataMan.autodetectSchema (xml, null); // ie. iso19115 or 139 or DC
-						// Extract uuid from loaded xml document
-						// FIXME : uuid could be duplicate if metadata already exist in catalog
-						reg.uuid = dataMan.extractUUID(schema, xml);
-						exist = dataMan.existsMetadataUuid(dbms, reg.uuid);
-						
-						if (exist) {
-							log.warning("    Metadata uuid already exist in the catalogue. Metadata will not be loaded.");
-							result.layerUuidExist ++;
-							// Return the layer info even if it exists in order
-							// to link to the service record.
-							return reg;
-						}
-						
-						if (schema == null) {
-							log.warning("    Failed to detect schema from metadataUrl file. Use GetCapabilities document instead for that layer.");
-							result.unknownSchema ++;
+							// If url is CSW GetRecordById remove envelope
+							if (xml.getName().equals("GetRecordByIdResponse")) {
+								xml = (Element) xml.getChildren().get(0);
+							}
+
+							schema = dataMan.autodetectSchema(xml, null); // ie. iso19115 or 139 or DC
+							// Extract uuid from loaded xml document
+							// FIXME : uuid could be duplicate if metadata
+							// already exist in catalog
+							reg.uuid = dataMan.extractUUID(schema, xml);
+							exist = dataMan.existsMetadataUuid(dbms, reg.uuid);
+
+							if (exist) {
+								log.warning("    Metadata uuid already exist in the catalogue. Metadata will not be loaded.");
+								result.layerUuidExist++;
+								// Return the layer info even if it exists in
+								// order
+								// to link to the service record.
+								return reg;
+							}
+
+							if (schema == null) {
+								log.warning("    Failed to detect schema from metadataUrl file. Use GetCapabilities document instead for that layer.");
+								result.unknownSchema++;
+								loaded = false;
+							} else {
+								log.info("  - Load layer metadataUrl document ok: "
+										+ mdXml);
+
+								loaded = true;
+								result.layerUsingMdUrl++;
+							}
+							// TODO : catch other exception
+						} catch (Exception e) {
+							log.warning("  - Failed to load layer using metadataUrl attribute : "
+									+ e.getMessage());
 							loaded = false;
-						} else { 
-							log.info("  - Load layer metadataUrl document ok: " + mdXml);
-							
-							loaded = true;
-							result.layerUsingMdUrl ++;
 						}
-					// TODO : catch other exception
-					}catch (Exception e) {
-						log.warning("  - Failed to load layer using metadataUrl attribute : " + e.getMessage());
+					} else {
+						log.info("  - No metadataUrl attribute with format text/xml found for that layer");
 						loaded = false;
 					}
 				} else {
-					log.info("  - No metadataUrl attribute with format text/xml found for that layer");
+					log.info("  - No OnlineResource found for that layer");
 					loaded = false;
 				}
-			} else {
-				log.info("  - No OnlineResource found for that layer");
-				loaded = false;
+			} 
+			// WFS: there are no metadataUrl in WFS 1.0.0, we need to be
+			// in 1.1.0 specifically.
+			else if (params.ogctype.substring(0, 3).equals("WFS")
+					&& params.ogctype.substring(3,8).equals("1.1.0")) {
+				try {
+					xml = getWfsMdFromMetadataUrl(layer);
+					loaded = true;
+				} catch (Throwable e) {
+					log.error("  - Error trying to get the Metadata from the metadataUrl element (WFS): " + e.getMessage());
+					loaded = false;
+				}
 			}
 		}
-		
 		
 		//--- using GetCapabilities document
 		if (!loaded){
@@ -621,7 +652,6 @@ class Harvester extends BaseAligner
 				param.put("Name", reg.name);
 				param.put("lang", params.lang);
 				param.put("topic", params.topic);
-				
 				xml = Xml.transform (capa, styleSheet, param);
                 if(log.isDebugEnabled()) log.debug("  - Layer loaded using GetCapabilities document.");
 				
@@ -697,6 +727,33 @@ class Harvester extends BaseAligner
 		return reg;
 	}
 	
+
+	/**
+	 * 
+	 * @param layer
+	 * @return
+	 */
+	private Element getWfsMdFromMetadataUrl(Element layer) throws Exception {
+        String dummyNsPrefix = "";
+
+        if (! layer.getNamespace().equals(Namespace.NO_NAMESPACE)) {
+        	dummyNsPrefix = "x:";
+        }
+		XPath mdUrl = XPath.newInstance(String.format("./%sMetadataURL[@type='TC211' and @format='text/xml']/text()",
+				dummyNsPrefix));
+
+		if (! layer.getNamespace().equals(Namespace.NO_NAMESPACE)) {
+			mdUrl.addNamespace("x", layer.getNamespace().getURI());
+		}
+
+		Text onLineSrc = (Text) mdUrl.selectSingleNode(layer);
+
+		if (onLineSrc == null) {
+			throw new Exception("Online resource not found in the WFS XML fragment. Skipping.");
+		} else {
+			return Xml.loadFile(new URL(onLineSrc.getText()));
+		}
+	}
 
 	/** 
      * Call GeoNetwork service to load thumbnails and create small and 
