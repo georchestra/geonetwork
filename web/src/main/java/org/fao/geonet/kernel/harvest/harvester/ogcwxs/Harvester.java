@@ -179,13 +179,13 @@ class Harvester extends BaseAligner {
 
         log.info("Retrieving remote metadata information for : " + params.name);
 
-        // Clean all before harvest : Remove/Add mechanism
-        // If harvest failed (ie. if node unreachable), metadata will be
-        // removed, and
-        // the node will not be referenced in the catalogue until next
-        // harvesting.
+        // Clean all before harvest : Remove/Add mechanism. If harvest failed
+        // (ie. if node unreachable), metadata will be removed, and the node
+        // will not be referenced in the catalogue until next harvesting.
+
         // TODO : define a rule for UUID in order to be able to do an update
         // operation ?
+
         UUIDMapper localUuids = new UUIDMapper(dbms, params.uuid);
 
         // Try to load capabilities document
@@ -376,21 +376,6 @@ class Harvester extends BaseAligner {
 
         Element root = md.getChild("identificationInfo", gmd).getChild("SV_ServiceIdentification", srv);
 
-        /*
-         * TODO
-         * 
-         * For each queryable layer queryable = "1" et
-         * /ROOT/Capability/Request/*[name()!='getCapabilities'] or queryable =
-         * "0" et /ROOT/Capability/Request/*[name()!='getCapabilities' and
-         * name!='GetFeatureInfo'] should do
-         * srv:coupledResource/srv:SV_CoupledResource/srv:OperationName =
-         * /ROOT/Capability/Request/child::name()
-         * srv:coupledResource/srv:SV_CoupledResource/srv:identifier = UUID of
-         * the data metadata
-         * srv:coupledResource/srv:SV_CoupledResource/gco:ScopedName =
-         * Layer/Name But is this really useful in ISO19119 ?
-         */
-
         if (root != null) {
             if (log.isDebugEnabled())
                 log.debug("  - add SV_CoupledResource and OperatesOnUuid");
@@ -515,9 +500,7 @@ class Harvester extends BaseAligner {
 
         // --- md5 the full capabilities URL + the layer, coverage or feature
         // name
-        reg.uuid = Sha1Encoder.encodeString(this.capabilitiesUrl + "#" + reg.name); // the
-                                                                                    // dataset
-                                                                                    // identifier
+        reg.uuid = Sha1Encoder.encodeString(this.capabilitiesUrl + "#" + reg.name); // the dataset identifier
 
         // --- Trying loading metadataUrl element
         if (params.useLayerMd && !params.ogctype.substring(0, 3).equals("WMS")
@@ -531,7 +514,7 @@ class Harvester extends BaseAligner {
             Namespace xlink = Namespace.getNamespace("http://www.w3.org/1999/xlink");
 
             // Get metadataUrl xlink:href
-            // TODO : add support for WCS & WFS metadataUrl element.
+            // TODO : add support for WCS metadataUrl element.
 
             // Check if add namespace prefix to Xpath queries. If
             // layer.getNamespace() is:
@@ -576,12 +559,7 @@ class Harvester extends BaseAligner {
                                 xml = (Element) xml.getChildren().get(0);
                             }
 
-                            schema = dataMan.autodetectSchema(xml, null); // ie.
-                                                                          // iso19115
-                                                                          // or
-                                                                          // 139
-                                                                          // or
-                                                                          // DC
+                            schema = dataMan.autodetectSchema(xml, null); // ie. iso19115 or 139 or DC
                             // Extract uuid from loaded xml document
                             // FIXME : uuid could be duplicate if metadata
                             // already exist in catalog
@@ -591,8 +569,7 @@ class Harvester extends BaseAligner {
                             if (exist) {
                                 log.warning("    Metadata uuid already exist in the catalogue. Metadata will not be loaded.");
                                 result.layerUuidExist++;
-                                // Return the layer info even if it exists in
-                                // order
+                                // Return the layer info even if it exists in order
                                 // to link to the service record.
                                 return reg;
                             }
@@ -621,20 +598,36 @@ class Harvester extends BaseAligner {
                     loaded = false;
                 }
             }
-            // WFS: there are no metadataUrl in WFS 1.0.0, we need to be
-            // in 1.1.0 specifically.
+            // WFS: there are no metadataUrl in WFS 1.0.0, we need to be in 1.1.0 specifically.
             else if (params.ogctype.substring(0, 3).equals("WFS") && params.ogctype.substring(3, 8).equals("1.1.0")) {
                 try {
                     xml = getWfsMdFromMetadataUrl(layer);
-                    loaded = true;
+                    // applying the same logic as above (TODO: DRY)
+                    if (xml.getName().equals("GetRecordByIdResponse")) {
+                        xml = (Element) xml.getChildren().get(0);
+                    }
+                    schema = dataMan.autodetectSchema(xml, null); // ie. iso19115 or 139 or DC
+                    reg.uuid = dataMan.extractUUID(schema, xml);
+                    exist = dataMan.existsMetadataUuid(dbms, reg.uuid);
+                    if (exist) {
+                        log.warning("    Metadata uuid already exist in the catalogue. Metadata will not be loaded.");
+                        result.layerUuidExist++;
+                        return reg;
+                    }
+                    if (schema == null) {
+                        log.warning("    Failed to detect schema from metadataUrl file. Use GetCapabilities document instead for that layer.");
+                        result.unknownSchema++;
+                        loaded = false;
+                    } else {
+                        loaded = true;
+                        result.layerUsingMdUrl++;
+                    }
                 } catch (Throwable e) {
-                    log.error("  - Error trying to get the Metadata from the metadataUrl element (WFS): "
-                            + e.getMessage());
+                    log.error("  - Error trying to get the Metadata from the metadataUrl element (WFS): " + e.getMessage());
                     loaded = false;
                 }
             }
         }
-
         // --- using GetCapabilities document
         if (!loaded) {
             try {
@@ -684,13 +677,7 @@ class Harvester extends BaseAligner {
 
             if (log.isDebugEnabled())
                 log.debug("    - Set Harvested.");
-            dataMan.setHarvestedExt(dbms, iId, params.uuid, params.url); // FIXME
-                                                                         // :
-                                                                         // harvestUuid
-                                                                         // should
-                                                                         // be a
-                                                                         // MD5
-                                                                         // string
+            dataMan.setHarvestedExt(dbms, iId, params.uuid, params.url); // FIXME: harvestUuid should be a MD5 string
 
             dbms.commit();
 
@@ -741,7 +728,6 @@ class Harvester extends BaseAligner {
      */
     private Element getWfsMdFromMetadataUrl(Element layer) throws Exception {
         String dummyNsPrefix = "";
-
         if (!layer.getNamespace().equals(Namespace.NO_NAMESPACE)) {
             dummyNsPrefix = "x:";
         }
