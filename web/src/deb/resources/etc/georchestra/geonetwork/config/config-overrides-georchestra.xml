@@ -2,7 +2,7 @@
 <overrides>
   <spring>
     <!-- earlier imported from config-security/config-security.xml -->
-    <import file="/etc/georchestra/geonetwork/config/config-security-georchestra.xml" />
-    <import file="/etc/georchestra/geonetwork/config/config-db-georchestra.xml" />
+    <import file="${env:georchestra.datadir}/geonetwork/config/config-security-georchestra.xml" />
+    <import file="${env:georchestra.datadir}/geonetwork/config/config-db-georchestra.xml" />
   </spring>
 </overrides>
