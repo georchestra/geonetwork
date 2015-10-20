@@ -1,15 +1,11 @@
 <?xml version="1.0"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  
   <modelVersion>4.0.0</modelVersion>
-  
   <parent>
-		<groupId>org.georchestra</groupId>
+    <groupId>org.georchestra</groupId>
     <artifactId>geonetwork</artifactId>
-		<version>15.12-SNAPSHOT</version>
+    <version>15.12-SNAPSHOT</version>
   </parent>
-  
-  
   <!-- =========================================================== -->
   <!--     Module Description                                      -->
   <!-- =========================================================== -->
@@ -20,7 +16,6 @@
   <description>
     Jeeves project.
   </description>
-  
   <licenses>
     <license>
       <name>Lesser General Public License (LGPL)</name>
@@ -28,8 +23,6 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-  
-
   <dependencies>
     <dependency>
         <groupId>${project.groupId}</groupId>
@@ -60,14 +53,14 @@
       <groupId>commons-fileupload</groupId>
       <artifactId>commons-fileupload</artifactId>
     </dependency>
-		<dependency>
-			<groupId>commons-dbcp</groupId>
-			<artifactId>commons-dbcp</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>commons-pool</groupId>
-			<artifactId>commons-pool</artifactId>
-		</dependency>
+    <dependency>
+      <groupId>commons-dbcp</groupId>
+      <artifactId>commons-dbcp</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>commons-pool</groupId>
+      <artifactId>commons-pool</artifactId>
+    </dependency>
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-servlet</artifactId>
@@ -93,12 +86,12 @@
       <artifactId>cog-jglobus</artifactId>
     </dependency>
     <dependency>
-    	<groupId>xerces</groupId>
-     	<artifactId>xercesImpl</artifactId>
+      <groupId>xerces</groupId>
+      <artifactId>xercesImpl</artifactId>
     </dependency>
     <dependency>
-    	<groupId>xml-resolver</groupId>
-     	<artifactId>xml-resolver</artifactId>
+      <groupId>xml-resolver</groupId>
+      <artifactId>xml-resolver</artifactId>
     </dependency>
     <dependency>
       <groupId>org.geotools.jdbc</groupId>
@@ -146,7 +139,7 @@
       <groupId>com.yammer.metrics</groupId>
       <artifactId>metrics-log4j</artifactId>
     </dependency>
-    
+
     <!-- Spring dependencies -->
     <dependency>
       <groupId>org.springframework</groupId>
@@ -175,24 +168,24 @@
   </dependencies>
 
   <profiles>
-	<profile>
-		<id>run-static-analysis</id>
-		<activation>
-			<property><name>!skipTests</name></property>
-		</activation>
-		<build>
-		<plugins>
-		  <plugin>
-			<groupId>org.codehaus.mojo</groupId>
-			<artifactId>findbugs-maven-plugin</artifactId>
-		  </plugin>
-		  <plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-checkstyle-plugin</artifactId>
-		  </plugin>
-		</plugins>
-		</build>
-	</profile>
+    <profile>
+      <id>run-static-analysis</id>
+      <activation>
+        <property><name>!skipTests</name></property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>findbugs-maven-plugin</artifactId>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-checkstyle-plugin</artifactId>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
   <properties>
     <rootProjectDir>${basedir}/..</rootProjectDir>
