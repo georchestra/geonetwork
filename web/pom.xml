@@ -1090,7 +1090,7 @@
             <version>1.0.6</version>
             <configuration>
               <packageName>georchestra-geonetwork</packageName>
-              <packageDescription>geOrchestra GeoNetwok (version 2.11.x).</packageDescription>
+              <packageDescription>geOrchestra GeoNetwork (version 2.11.x).</packageDescription>
               <packageDependencies>
                 <packageDependency>debconf</packageDependency>
               </packageDependencies>
