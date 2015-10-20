@@ -451,16 +451,12 @@
                   <directory>${basedir}/src/main/webResources</directory>
                   <filtering>true</filtering>
                   <targetPath>${build.webapp.resources}</targetPath>
-                  <excludes>
-                    <exclude>**/.svn</exclude>
-                  </excludes>
                 </resource>
                 <resource>
                   <directory>${basedir}/src/main/webapp/scripts/lib/</directory>
                   <filtering>false</filtering>
                   <targetPath>${build.webapp.resources}/scripts/lib/</targetPath>
                   <excludes>
-                    <exclude>**/.svn</exclude>
                     <exclude>**/*.js</exclude>
                   </excludes>
                 </resource>
@@ -1025,16 +1021,12 @@
                       <directory>${basedir}/src/main/webResources</directory>
                       <filtering>true</filtering>
                       <targetPath>${build.webapp.resources}</targetPath>
-                      <excludes>
-                        <exclude>**/.svn</exclude>
-                      </excludes>
                     </resource>
                     <resource>
                       <directory>${basedir}/src/main/webapp/scripts/lib/</directory>
                       <filtering>false</filtering>
                       <targetPath>${build.webapp.resources}/scripts/lib/</targetPath>
                       <excludes>
-                        <exclude>**/.svn</exclude>
                         <exclude>**/*.js</exclude>
                       </excludes>
                     </resource>
@@ -1098,14 +1090,14 @@
             <version>1.0.6</version>
             <configuration>
               <packageName>georchestra-geonetwork</packageName>
-              <packageDescription>Debian package for the GeoNetwork fork of geOrchestra.</packageDescription>
+              <packageDescription>geOrchestra GeoNetwok (version 2.11.x).</packageDescription>
               <packageDependencies>
                 <packageDependency>debconf</packageDependency>
               </packageDependencies>
               <projectUrl>http://www.georchestra.org/</projectUrl>
               <projectOrganization>geOrchestra</projectOrganization>
-              <maintainerName>Pierre Mauduit</maintainerName>
-              <maintainerEmail>pierre.mauduit@gmail.com</maintainerEmail>
+              <maintainerName>PSC</maintainerName>
+              <maintainerEmail>psc@georchestra.org</maintainerEmail>
               <excludeAllArtifacts>true</excludeAllArtifacts>
             </configuration>
           </plugin>
