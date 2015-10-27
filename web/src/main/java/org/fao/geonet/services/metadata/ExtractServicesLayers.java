@@ -39,6 +39,7 @@ import jeeves.server.UserSession;
 import jeeves.server.context.ServiceContext;
 import jeeves.utils.Util;
 
+import org.apache.commons.lang.StringUtils;
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.kernel.DataManager;
@@ -79,8 +80,9 @@ public class ExtractServicesLayers  implements Service {
 		Element ret = new Element("response");
 		
 		String paramId = Util.getParam(params, "id", null) ;
-		ArrayList<String> lst = new ArrayList<String>();
 		
+		ArrayList<String> lst = new ArrayList<String>();
+
 		// case #1 : #id parameter is undefined
 		if (paramId == null) {
 		    synchronized(sm.getSelection("metadata")) {
@@ -91,7 +93,17 @@ public class ExtractServicesLayers  implements Service {
 		        }
 		    }
 		} else { // case #2 : id parameter has been passed
-		    lst.add(paramId);
+		    // if id is not castable into integer, consider finding the MD
+		    // via its uuid
+		    try {
+		        Integer.parseInt(paramId);
+		        lst.add(paramId);
+		    } catch (NumberFormatException e) {
+		        String id = dm.getMetadataId(dbms, paramId);
+		        if (! StringUtils.isEmpty(id)) {
+		            lst.add(id);
+		        }
+		    }
 		}
 		    
 
