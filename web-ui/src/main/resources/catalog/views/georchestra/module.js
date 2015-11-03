@@ -10,30 +10,44 @@
   /**
    * Overload default settings
    */
-  module.run(['gnSearchSettings', 'georLinkActionsService',
-    function(gnSearchSettings, georLinkActionsService) {
+  module.run([
+    'gnSearchSettings',
+    'georLinkActionsService',
+    'gnRelatedResources',
 
-    gnSearchSettings.linkTypes = {
-      links: ['LINK'],
-      downloads: ['DOWNLOAD'],
-      layers:['OGC', 'vnd.ogc.wms_xml'],
-      maps: ['ows']
-    };
+    function(gnSearchSettings, georLinkActionsService, gnRelatedResources) {
 
-    gnSearchSettings.customSelectActions = [{
-      icon: 'fa-globe',
-      fn: function() {
-        georLinkActionsService.extractMetadata('mapfishapp');
-      },
-      label: 'viewLayers'
-    }, {
-      icon: 'fa-eject',
-      fn: function() {
-        georLinkActionsService.extractMetadata('extractLayers');
-      },
-      label: 'viewLayers'
-    }]
-  }]);
+      gnSearchSettings.linkTypes = {
+        links: ['LINK'],
+        downloads: ['DOWNLOAD'],
+        layers:['OGC', 'vnd.ogc.wms_xml'],
+        maps: ['ows']
+      };
+
+      // Add custom actions in selection action button
+      gnSearchSettings.customSelectActions = [{
+        icon: 'fa-globe',
+        fn: function() {
+          georLinkActionsService.extractMetadata('mapfishapp');
+        },
+        label: 'viewLayers'
+      }, {
+        icon: 'fa-eject',
+        fn: function() {
+          georLinkActionsService.extractMetadata('extractLayers');
+        },
+        label: 'extractLayers'
+      }];
+
+      // Overrides the gnRelated buttons action for add wms layers
+      gnRelatedResources.configure({
+        'WMS' : {
+          iconClass: 'fa-globe',
+          label: 'addToMap',
+          action: georLinkActionsService.addWMSLayer
+        }
+      });
+    }]);
 
 
   /**
@@ -48,6 +62,7 @@
   var ExtendMainController = function($scope, georLinkActionsService) {
     if($scope.resultviewFns) {
 
+      // Overrides add wms to map buttons action in main search scope
       $scope.resultviewFns.addMdLayerToMap = georLinkActionsService.addWMSLayer;
       $scope.resultviewFns.addAllMdLayersToMap = function(layers, md) {
         georLinkActionsService.extractMetadata('mapfishapp', md.getId());
