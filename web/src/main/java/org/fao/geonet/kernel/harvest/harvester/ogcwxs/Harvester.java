@@ -179,12 +179,6 @@ class Harvester extends BaseAligner {
 
         log.info("Retrieving remote metadata information for : " + params.name);
 
-        // Clean all before harvest : Remove/Add mechanism. If harvest failed
-        // (ie. if node unreachable), metadata will be removed, and the node
-        // will not be referenced in the catalogue until next harvesting.
-
-        // TODO : define a rule for UUID in order to be able to do an update
-        // operation ?
 
         UUIDMapper localUuids = new UUIDMapper(dbms, params.uuid);
 
@@ -206,29 +200,22 @@ class Harvester extends BaseAligner {
 
         xml = req.execute();
 
-        // -----------------------------------------------------------------------
-        // --- remove old metadata
-        for (String uuid : localUuids.getUUIDs()) {
-            String id = localUuids.getID(uuid);
-
-            if (log.isDebugEnabled())
-                log.debug("  - Removing old metadata before update with id: " + id);
-
-            // Remove thumbnails
-            unsetThumbnail(id);
-
-            // Remove metadata
-            dataMan.deleteMetadata(context, dbms, id);
-
-            result.locallyRemoved++;
-        }
-
-        if (result.locallyRemoved > 0)
-            dbms.commit();
-
         // Convert from GetCapabilities to ISO19119
-        addMetadata(xml);
+        // also adds the children data metadata (if enabled)
+        addMetadata(xml, localUuids);
 
+        // every remaining metadata into localUuids have to be removed
+        log.info("After harvesting, still " + ((java.util.Set<String>) localUuids.getUUIDs()).size() + " to remove");
+        for (String uuid: localUuids.getUUIDs()) {
+        	try {
+        		String mdId = dataMan.getMetadataId(dbms, uuid);
+        		log.info("Deleting MD "+ mdId + " (" + uuid + ")");
+            	dataMan.deleteMetadata(context, dbms, mdId);
+            	result.locallyRemoved++;
+        	} catch (Exception e) {
+        		log.error("MD (" + uuid + ") not found, skipping deletion");
+        	}
+        }
         dbms.commit();
 
         result.totalMetadata = result.addedMetadata + result.layer;
@@ -239,15 +226,19 @@ class Harvester extends BaseAligner {
     /**
      * Add metadata to the node for a WxS service
      * 
-     * 1.Use GetCapabilities Document 2.Transform using XSLT to iso19119 3.Loop
-     * through layers 4.Create md for layer 5.Add operatesOn elem with uuid
+     * 1.Use GetCapabilities Document
+     * 2.Transform using XSLT to iso19119
+     * 3.Loop through layers
+     * 4.Create md for layer
+     * 5.Add operatesOn elem with uuid
      * 6.Save all
      *
      * @param capa
      *            GetCapabilities document
+     * @param localUuids 
      * 
      */
-    private void addMetadata(Element capa) throws Exception {
+    private void addMetadata(Element capa, UUIDMapper localUuids) throws Exception {
         if (capa == null)
             return;
 
@@ -255,10 +246,13 @@ class Harvester extends BaseAligner {
         localCateg = new CategoryMapper(dbms);
         localGroups = new GroupMapper(dbms);
 
-        // md5 the full capabilities URL
-        String uuid = Sha1Encoder.encodeString(this.capabilitiesUrl); // is the
-                                                                      // service
-                                                                      // identifier
+        // sha1 the full capabilities URL
+        String uuid = Sha1Encoder.encodeString(this.capabilitiesUrl);
+
+        // Removes the previous service metadata
+        dbms.execute("DELETE FROM metadata WHERE uuid = ? AND harvestuuid = ? LIMIT 1", uuid, params.uuid);
+        dbms.commit();
+        localUuids.removeUuid(uuid);
 
         // --- Loading stylesheet
         String styleSheet = schemaMan.getSchemaDir(params.outputSchema) + Geonet.Path.CONVERT_STYLESHEETS
@@ -305,6 +299,7 @@ class Harvester extends BaseAligner {
 
                 for (Element layer : layers) {
                     WxSLayerRegistry s = addLayerMetadata(layer, capa);
+                    localUuids.removeUuid(s.uuid);
                     if (s != null)
                         layersRegistry.add(s);
                 }
@@ -317,7 +312,7 @@ class Harvester extends BaseAligner {
             }
         }
 
-        // Save iso19119 metadata in DB
+        // Save iso19119 (service) metadata in DB
         log.info("  - Adding metadata for services with " + uuid);
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         Date date = new Date();
@@ -346,8 +341,7 @@ class Harvester extends BaseAligner {
         result.addedMetadata++;
 
         // Add Thumbnails only after metadata insertion to avoid concurrent
-        // transaction
-        // and loaded thumbnails could eventually failed anyway.
+        // transaction  and loaded thumbnails could eventually fail anyway.
         if (params.ogctype.startsWith("WMS") && params.createThumbnails) {
             for (WxSLayerRegistry layer : layersRegistry) {
                 loadThumbnail(layer);
@@ -498,18 +492,17 @@ class Harvester extends BaseAligner {
 
         log.info("  - Loading layer: " + reg.name);
 
-        // --- md5 the full capabilities URL + the layer, coverage or feature
-        // name
+        // --- sha1 the full capabilities URL + the layer, coverage or feature name
         reg.uuid = Sha1Encoder.encodeString(this.capabilitiesUrl + "#" + reg.name); // the dataset identifier
 
-        // --- Trying loading metadataUrl element
-        if (params.useLayerMd && !params.ogctype.substring(0, 3).equals("WMS")
-                && !params.ogctype.substring(0, 3).equals("WFS")) {
+
+        boolean wmsOrWfs = params.ogctype.substring(0, 3).equals("WMS") || params.ogctype.substring(0, 3).equals("WFS");
+        
+        if (params.useLayerMd && ! wmsOrWfs) {
             log.info("  - MetadataUrl harvester only supported for WMS or WFS layers.");
         }
-
-        if (params.useLayerMd
-                && (params.ogctype.substring(0, 3).equals("WMS") || params.ogctype.substring(0, 3).equals("WFS"))) {
+        // --- Trying to load metadataUrl element
+        if (params.useLayerMd && wmsOrWfs) {
 
             Namespace xlink = Namespace.getNamespace("http://www.w3.org/1999/xlink");
 
@@ -547,9 +540,7 @@ class Harvester extends BaseAligner {
 
                 if (onLineSrc != null) {
                     org.jdom.Attribute href = onLineSrc.getAttribute("href", xlink);
-
-                    if (href != null) { // No metadataUrl attribute for that
-                                        // layer
+                    if (href != null) {
                         mdXml = href.getValue();
                         try {
                             xml = Xml.loadFile(new URL(mdXml));
@@ -561,8 +552,6 @@ class Harvester extends BaseAligner {
 
                             schema = dataMan.autodetectSchema(xml, null); // ie. iso19115 or 139 or DC
                             // Extract uuid from loaded xml document
-                            // FIXME : uuid could be duplicate if metadata
-                            // already exist in catalog
                             reg.uuid = dataMan.extractUUID(schema, xml);
                             exist = dataMan.existsMetadataUuid(dbms, reg.uuid);
 
@@ -602,7 +591,7 @@ class Harvester extends BaseAligner {
             else if (params.ogctype.substring(0, 3).equals("WFS") && params.ogctype.substring(3, 8).equals("1.1.0")) {
                 try {
                     xml = getWfsMdFromMetadataUrl(layer);
-                    // applying the same logic as above (TODO: DRY)
+                    // applying the same logic as above
                     if (xml.getName().equals("GetRecordByIdResponse")) {
                         xml = (Element) xml.getChildren().get(0);
                     }
@@ -628,7 +617,8 @@ class Harvester extends BaseAligner {
                 }
             }
         }
-        // --- using GetCapabilities document
+        // --- No metadataUrl along with the layer block: using the GetCapabilities document
+        // to generate a new MDD.
         if (!loaded) {
             try {
                 // --- set XSL param to filter on layer and set uuid
@@ -646,39 +636,59 @@ class Harvester extends BaseAligner {
             }
         }
 
-        // Insert in db
+        // Insert or update metadata in db
         try {
 
             //
             // insert metadata
             //
-            String group = null, isTemplate = null, docType = null, title = null, category = null;
-            boolean ufo = false, indexImmediate = false;
+            exist = dataMan.existsMetadataUuid(dbms, reg.uuid);
+			String group = null, isTemplate = null, docType = null, title = null, category = null;
+			boolean ufo = false, indexImmediate = false;
+			// MD does not exist yet
+			if (!exist) {
+				log.info("Metadata does not exist yet in the local catalogue, creating ...");
+				schema = dataMan.autodetectSchema(xml);
 
-            schema = dataMan.autodetectSchema(xml);
+				reg.id = dataMan.insertMetadata(context, dbms, schema, xml,
+						context.getSerialFactory().getSerial(dbms, "Metadata"), reg.uuid,
+						Integer.parseInt(params.ownerId), group, params.uuid, isTemplate, docType, title, category,
+						date, date, ufo, indexImmediate);
 
-            reg.id = dataMan.insertMetadata(context, dbms, schema, xml,
-                    context.getSerialFactory().getSerial(dbms, "Metadata"), reg.uuid, Integer.parseInt(params.ownerId),
-                    group, params.uuid, isTemplate, docType, title, category, date, date, ufo, indexImmediate);
+				xml = dataMan.updateFixedInfo(schema, reg.id, params.uuid, xml, null, DataManager.UpdateDatestamp.no,
+						dbms, context);
 
-            xml = dataMan.updateFixedInfo(schema, reg.id, params.uuid, xml, null, DataManager.UpdateDatestamp.no, dbms,
-                    context);
+				int iId = Integer.parseInt(reg.id);
+				if (log.isDebugEnabled())
+					log.debug("    - Layer loaded in DB.");
 
-            int iId = Integer.parseInt(reg.id);
-            if (log.isDebugEnabled())
-                log.debug("    - Layer loaded in DB.");
+				if (log.isDebugEnabled())
+					log.debug("    - Set Privileges and category.");
+				addPrivileges(reg.id, params.getPrivileges(), localGroups, dataMan, context, dbms, log);
 
-            if (log.isDebugEnabled())
-                log.debug("    - Set Privileges and category.");
-            addPrivileges(reg.id, params.getPrivileges(), localGroups, dataMan, context, dbms, log);
+				if (params.datasetCategory != null && !params.datasetCategory.equals(""))
+					dataMan.setCategory(context, dbms, reg.id, params.datasetCategory);
 
-            if (params.datasetCategory != null && !params.datasetCategory.equals(""))
-                dataMan.setCategory(context, dbms, reg.id, params.datasetCategory);
+				if (log.isDebugEnabled())
+					log.debug("    - Set Harvested.");
+				 // FIXME: harvestUuid should be a SHA1 string
+				dataMan.setHarvestedExt(dbms, iId, params.uuid, params.url);
+			}
+			// Update MD
+			else {
+				log.info("Metadata already in local catalogue - updating data metadata");
+				String mdUuid = dataMan.getMetadataUuid(dbms, reg.uuid);
+				String oldHash = Sha1Encoder.encodeString(mdUuid);
+				String newHash = Sha1Encoder.encodeString(Xml.getString(xml));
+				if (oldHash.equals(newHash)) {
+					log.info("Computed / Fetched data metadata is the same as the one currently in database, skipping update");
+				} else {
 
-            if (log.isDebugEnabled())
-                log.debug("    - Set Harvested.");
-            dataMan.setHarvestedExt(dbms, iId, params.uuid, params.url); // FIXME: harvestUuid should be a MD5 string
-
+					dataMan.updateMetadata(context, dbms, dataMan.getMetadataId(dbms, reg.uuid), xml,
+							false, ufo, indexImmediate, null, null, true);
+					// TODO: anything else to do ?
+				}
+			}
             dbms.commit();
 
             dataMan.indexMetadata(dbms, reg.id);

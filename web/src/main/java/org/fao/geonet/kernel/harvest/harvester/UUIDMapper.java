@@ -85,6 +85,12 @@ public class UUIDMapper
 	//--------------------------------------------------------------------------
 
 	public Iterable<String> getUUIDs() { return hmUuidDate.keySet(); }
+	
+	public void removeUuid(String uuid) {
+		hmUuidDate.remove(uuid);
+		hmUuidId.remove(uuid);
+		hmUuidTemplate.remove(uuid);
+	}
 }
 
 //=============================================================================
