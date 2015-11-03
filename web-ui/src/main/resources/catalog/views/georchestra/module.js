@@ -7,6 +7,12 @@
   var module = angular.module('gn_search_georchestra',
       ['gn_search_default', 'georchestra_linkactions']);
 
+
+  // Add a custom georchestra locale file
+  module.config(['$LOCALES', function($LOCALES) {
+    $LOCALES.push('georchestra');
+  }]);
+
   /**
    * Overload default settings
    */
