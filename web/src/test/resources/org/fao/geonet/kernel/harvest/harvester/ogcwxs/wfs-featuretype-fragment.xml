@@ -1,0 +1,18 @@
+<FeatureType xmlns="http://www.opengis.net/wfs" xmlns:geopicardie="http://www.geopicardie.fr/geopicardie">
+  <Name>geopicardie:activite_eco_sites</Name>
+  <Title>Activités économiques - sites</Title>
+  <Abstract>Sites de la base activités économiques de GéoPicardie (zones dʼactivités). La base de données "activités économiques" de GéoPicardie contient la localisation des établissements (au sens de la base SIRENE de l'INSEE), les sites (zones dʼactivités économiques) et les pôles (regroupement de sites). La présente couche contient les sites. La délimitation de ces sites est issue de données remontées par des acteurs locaux de GéoPicardie et complétée par un travail de photo-interprétation.</Abstract>
+  <ows:Keywords xmlns:ows="http://www.opengis.net/ows">
+    <ows:Keyword>activité économique</ows:Keyword>
+    <ows:Keyword>zones d'activités</ows:Keyword>
+    <ows:Keyword>commerces</ows:Keyword>
+    <ows:Keyword>industries</ows:Keyword>
+  </ows:Keywords>
+  <DefaultSRS>urn:x-ogc:def:crs:EPSG:2154</DefaultSRS>
+  <ows:WGS84BoundingBox xmlns:ows="http://www.opengis.net/ows">
+    <ows:LowerCorner>1.2962060620120572 48.85028363134327</ows:LowerCorner>
+    <ows:UpperCorner>4.220573582883188 50.34879744780568</ows:UpperCorner>
+  </ows:WGS84BoundingBox>
+  <MetadataURL type="TC211" format="text/html">http://www.geopicardie.fr/geonetwork/apps/georchestra/?uuid=53ce7e52-4de8-4737-9e66-98b712746ae0</MetadataURL>
+  <MetadataURL type="TC211" format="text/xml">http://www.geopicardie.fr/geonetwork/srv/fre/xml_iso19139?uuid=53ce7e52-4de8-4737-9e66-98b712746ae0</MetadataURL>
+</FeatureType>
