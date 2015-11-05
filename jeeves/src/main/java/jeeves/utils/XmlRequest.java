@@ -67,6 +67,7 @@ import java.util.List;
 public class XmlRequest
 {
 	public enum Method { GET, POST }
+	private String customUserAgent = null;
 
 	//---------------------------------------------------------------------------
 	//---
@@ -318,6 +319,10 @@ public class XmlRequest
 		client.getParams().setAuthenticationPreemptive(true);
 		serverAuthent = true;
 	}
+	
+	public void setCustomUserAgent(String ua) {
+		this.customUserAgent = ua;
+	}
 
 	//---------------------------------------------------------------------------
 	//---
@@ -336,6 +341,9 @@ public class XmlRequest
 
 		try
 		{
+			if (this.customUserAgent != null) {
+				httpMethod.setRequestHeader("User-Agent", this.customUserAgent);
+			}
 			client.executeMethod(httpMethod);
 			data = httpMethod.getResponseBody();
 
