@@ -58,16 +58,17 @@ public class OgcWxSParams extends AbstractParams
 		Element site = node.getChild("site");
 		Element opt  = node.getChild("options");
 
-		url       		= Util.getParam(site, "url",  "");
-		icon      		= Util.getParam(site, "icon", "");
-		ogctype   		= Util.getParam(site, "ogctype", "");
-		lang  	  		= Util.getParam(opt, "lang",  "");
-		topic  	  		= Util.getParam(opt, "topic",  "");
-		createThumbnails= Util.getParam(opt, "createThumbnails",  false);
-		useLayer  		= Util.getParam(opt, "useLayer",  false);
-		useLayerMd		= Util.getParam(opt, "useLayerMd",  false);
-		datasetCategory	= Util.getParam(opt, "datasetCategory",  "");
-		outputSchema	= Util.getParam(opt, "outputSchema",  "");
+		url       				= Util.getParam(site, "url",  "");
+		icon      				= Util.getParam(site, "icon", "");
+		ogctype   				= Util.getParam(site, "ogctype", "");
+		lang  	  				= Util.getParam(opt, "lang",  "");
+		topic  	  				= Util.getParam(opt, "topic",  "");
+		createThumbnails		= Util.getParam(opt, "createThumbnails",  false);
+		useLayer  				= Util.getParam(opt, "useLayer",  false);
+		useLayerMd				= Util.getParam(opt, "useLayerMd",  false);
+		datasetCategory			= Util.getParam(opt, "datasetCategory",  "");
+		outputSchema			= Util.getParam(opt, "outputSchema",  "");
+		useBasicAuthForLayerMd	= Util.getParam(opt, "useBasicAuthForLayerMd", false);
 	}
 
 	//---------------------------------------------------------------------------
@@ -83,17 +84,18 @@ public class OgcWxSParams extends AbstractParams
 		Element site = node.getChild("site");
 		Element opt  = node.getChild("options");
 
-		url       		= Util.getParam(site,  "url",  url);
-		icon      		= Util.getParam(site,  "icon", icon);
-		ogctype  		= Util.getParam(site,  "ogctype", ogctype);
-		
-		lang  	  		= Util.getParam(opt, "lang",  lang);
-		topic  	  		= Util.getParam(opt, "topic",  topic);
-		createThumbnails= Util.getParam(opt, "createThumbnails",  createThumbnails);
-		useLayer  		= Util.getParam(opt, "useLayer",  useLayer);
-		useLayerMd		= Util.getParam(opt, "useLayerMd",  useLayerMd);
-		datasetCategory = Util.getParam(opt, "datasetCategory",  datasetCategory);
-		outputSchema 	= Util.getParam(opt, "outputSchema",  outputSchema);
+		url       			= Util.getParam(site,  "url",  url);
+		icon      				= Util.getParam(site,  "icon", icon);
+		ogctype  				= Util.getParam(site,  "ogctype", ogctype);
+
+		lang  	  				= Util.getParam(opt, "lang",  lang);
+		topic  	  				= Util.getParam(opt, "topic",  topic);
+		createThumbnails		= Util.getParam(opt, "createThumbnails",  createThumbnails);
+		useLayer  				= Util.getParam(opt, "useLayer",  useLayer);
+		useLayerMd				= Util.getParam(opt, "useLayerMd",  useLayerMd);
+		datasetCategory			= Util.getParam(opt, "datasetCategory",  datasetCategory);
+		outputSchema			= Util.getParam(opt, "outputSchema",  outputSchema);
+		useBasicAuthForLayerMd	= Util.getParam(opt, "useBasicAuthForLayerMd", useBasicAuthForLayerMd);
 	}
 
 	//---------------------------------------------------------------------------
@@ -107,16 +109,17 @@ public class OgcWxSParams extends AbstractParams
 		OgcWxSParams copy = new OgcWxSParams(dm);
 		copyTo(copy);
 
-		copy.url  				= url;
-		copy.icon 				= icon;
-		copy.ogctype		 	= ogctype;
-		copy.lang 				= lang;
-		copy.topic 				= topic;
-		copy.createThumbnails 	= createThumbnails;
-		copy.useLayer 			= useLayer;
-		copy.useLayerMd 		= useLayerMd;
-		copy.datasetCategory    = datasetCategory;
-		copy.outputSchema    	= outputSchema;
+		copy.url  					= url;
+		copy.icon 					= icon;
+		copy.ogctype				= ogctype;
+		copy.lang 					= lang;
+		copy.topic 					= topic;
+		copy.createThumbnails		= createThumbnails;
+		copy.useLayer 				= useLayer;
+		copy.useLayerMd 			= useLayerMd;
+		copy.datasetCategory		= datasetCategory;
+		copy.outputSchema			= outputSchema;
+		copy.useBasicAuthForLayerMd = useBasicAuthForLayerMd;
 		return copy;
 	}
 
@@ -136,6 +139,7 @@ public class OgcWxSParams extends AbstractParams
 	public boolean useLayerMd;
 	public String datasetCategory;
 	public String outputSchema;
+	public boolean useBasicAuthForLayerMd;
 }
 
 //=============================================================================

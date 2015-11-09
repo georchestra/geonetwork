@@ -42,6 +42,7 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.io.IOUtils;
+import org.apache.soap.providers.com.Log;
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.constants.Params;
@@ -183,6 +184,15 @@ class Harvester extends BaseAligner {
 	 * used for testing only (@see HarvesterTest.java)
 	 */
 	private boolean allowLocalRetrieval = false;
+	
+	/**
+	 * Host name of the harvested endpoint. This is used to check if the basic
+	 * auth is also needed when harvesting data Metadata: if the data Md url begins
+	 * with the same host as the capabilities url, and the useBasicAuthForLayerMd option
+	 * is set to true for this harvester, then the same basic auth has to be used for
+	 * fetching MD urls.
+	 */
+	private String hostEndpoint = null;
 
 	/**
 	 * Fetches a remote (supposedly XML) document
@@ -221,6 +231,29 @@ class Harvester extends BaseAligner {
 		Element xml = req.execute();
 		return xml;
 	}
+	
+	/**
+	 * Check if the metadata URL passed as argument is on the same
+	 * server as the GetCapabilities.
+	 *
+	 *  @param mdUrl the string representing the data MD url
+	 *
+	 *  @return true if the MD is pointing on the same host, false
+	 *  if error or if it differs.
+	 */
+	private boolean isSameHostAsGetCapabilities(String mdUrl) {
+		try {
+			URL parsedMdUrl = new URL(mdUrl);
+			return parsedMdUrl.getHost().equals(this.hostEndpoint);
+		} catch (Throwable e) {
+			// defensive approach: we are unable to determine
+			// if the MD url is on the same host as the GetCapabilities.
+			// We consider not sending the basic-auth, to avoid providing
+			// sensitive information potentially in the wild.
+			log.error("Unable to parse metadata URL: " + mdUrl);
+			return false;
+		}
+	}
 
 	/**
 	 * Start the harvesting of a WMS, WFS or WCS node.
@@ -235,6 +268,15 @@ class Harvester extends BaseAligner {
 		// Try to load capabilities document
 		this.capabilitiesUrl = getBaseUrl(params.url) + "SERVICE=" + params.ogctype.substring(0, 3) + "&VERSION="
 				+ params.ogctype.substring(3) + "&REQUEST=" + GETCAPABILITIES;
+		
+		
+		try {
+			URL parsedUrl = new URL(this.capabilitiesUrl);
+			this.hostEndpoint = parsedUrl.getHost();
+		} catch (Throwable e) {
+			// this should not happen, but ...
+			this.hostEndpoint = null;
+		}
 
 		if (log.isDebugEnabled())
 			log.debug("GetCapabilities document: " + this.capabilitiesUrl);
@@ -562,6 +604,7 @@ class Harvester extends BaseAligner {
 			boolean addNsPrefix = !layer.getNamespace().equals(Namespace.NO_NAMESPACE);
 			if (addNsPrefix)
 				dummyNsPrefix = "x:";
+			
 
 			// WMS
 			if (params.ogctype.substring(0, 3).equals("WMS")) {
@@ -586,7 +629,8 @@ class Harvester extends BaseAligner {
 					if (href != null) {
 						mdXml = href.getValue();
 						try {
-							xml = retrieveExternalDocument(mdXml, false);
+							boolean needsBasicAuth = this.params.useBasicAuthForLayerMd && isSameHostAsGetCapabilities(mdXml);
+							xml = retrieveExternalDocument(mdXml, needsBasicAuth);
 
 							// If url is CSW GetRecordById remove envelope
 							if (xml.getName().equals("GetRecordByIdResponse")) {
@@ -668,7 +712,7 @@ class Harvester extends BaseAligner {
 		}
 		// --- No metadataUrl along with the layer block: using the
 		// GetCapabilities document to generate a new MDD.
-		if (!loaded) {
+		if (! loaded) {
 			try {
 				// --- set XSL param to filter on layer and set uuid
 				Map<String, String> param = new HashMap<String, String>();
@@ -733,7 +777,7 @@ class Harvester extends BaseAligner {
 				dataMan.setHarvestedExt(dbms, iId, params.uuid, params.url);
 			}
 			//
-			// Update MD
+			// Update MD (only if it was computed from the <Layer> block, no <metadataUrl />)
 			//
 			else {
 				log.info("Metadata already in local catalogue - updating data metadata");
@@ -816,7 +860,8 @@ class Harvester extends BaseAligner {
 		if (onLineSrc == null) {
 			throw new Exception("Online resource not found in the WFS XML fragment. Skipping.");
 		} else {
-			return retrieveExternalDocument(onLineSrc.getText(), false);
+			boolean needsBasicAuth = this.params.useBasicAuthForLayerMd && isSameHostAsGetCapabilities(onLineSrc.getText());
+			return retrieveExternalDocument(onLineSrc.getText(), needsBasicAuth);
 		}
 	}
 
