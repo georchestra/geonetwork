@@ -47,6 +47,7 @@ import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.constants.Params;
 import org.fao.geonet.kernel.DataManager;
+import org.fao.geonet.kernel.MdInfo;
 import org.fao.geonet.kernel.SchemaManager;
 import org.fao.geonet.kernel.harvest.BaseAligner;
 import org.fao.geonet.kernel.harvest.harvester.CategoryMapper;
@@ -190,7 +191,7 @@ class Harvester extends BaseAligner {
 	 * auth is also needed when harvesting data Metadata: if the data Md url begins
 	 * with the same host as the capabilities url, and the useBasicAuthForLayerMd option
 	 * is set to true for this harvester, then the same basic auth has to be used for
-	 * fetching MD urls.
+	 * fetching the metadata.
 	 */
 	private String hostEndpoint = null;
 
@@ -274,7 +275,7 @@ class Harvester extends BaseAligner {
 			URL parsedUrl = new URL(this.capabilitiesUrl);
 			this.hostEndpoint = parsedUrl.getHost();
 		} catch (Throwable e) {
-			// this should not happen, but ...
+			log.error("Unable to parse the host endpoint: " + e.getMessage());
 			this.hostEndpoint = null;
 		}
 
@@ -604,7 +605,6 @@ class Harvester extends BaseAligner {
 			boolean addNsPrefix = !layer.getNamespace().equals(Namespace.NO_NAMESPACE);
 			if (addNsPrefix)
 				dummyNsPrefix = "x:";
-			
 
 			// WMS
 			if (params.ogctype.substring(0, 3).equals("WMS")) {
@@ -691,6 +691,33 @@ class Harvester extends BaseAligner {
 					exist = dataMan.existsMetadataUuid(dbms, reg.uuid);
 					if (exist) {
 						log.warning("    Metadata uuid already exist in the catalogue. Metadata will not be loaded.");
+						if (params.allowAddOLResourcesOfLocalMds) {
+							String mdId = dataMan.getMetadataId(dbms, reg.uuid);
+							MdInfo mdInfo = dataMan.getMetadataInfo(dbms, mdId);
+							if (! mdInfo.isHarvested) {
+								log.warning("modification of onlineresources block flag is set, modifying local metadata " + reg.uuid + " ...");
+								xml = OnlineResourceUtils.removeOnlineResources(xml, "(?i).*"+ this.hostEndpoint +".*geoserver.*request=getfeature.*");
+								List<String> of = OnlineResourceUtils.getWfsGetSupportedOutputFormats(capa, "GetFeature");
+								for (String f: of) {
+									String layerName, layerTitle, layerDesc;
+									layerName = OnlineResourceUtils.extractLayerInfo(layer, "Name");
+									layerTitle = OnlineResourceUtils.extractLayerInfo(layer, "Title");
+									layerDesc = OnlineResourceUtils.extractLayerInfo(layer, "Abstract");
+									// TODO: handle https ?
+									String layerUrl = "http://"+ this.hostEndpoint +
+											"/geoserver?service=WFS&request=GetFeature&version=1.0.0&typeName="+layerName+"&outputFormat="+f;
+									Element newb = OnlineResourceUtils.createOnLineResourceBlock(layerUrl,
+											"WWW:LINK-1.0-http--link", layerTitle + " - (" + f + ")",
+											layerDesc + " - (f)");
+									xml = OnlineResourceUtils.insertOnLineResourceBlock(xml, newb);
+								}
+								
+								dataMan.updateMetadata(context, dbms, mdId, xml,
+											false, false, true, null /* lang only use with validate flag */,
+											null /* changeDate can be null */,
+											false);
+							}
+						}
 						result.layerUuidExist++;
 						return reg;
 					}
@@ -850,7 +877,6 @@ class Harvester extends BaseAligner {
 		}
 		XPath mdUrl = XPath.newInstance(
 				String.format("./%sMetadataURL[@type='TC211' and @format='text/xml']/text()", dummyNsPrefix));
-
 		if (!layer.getNamespace().equals(Namespace.NO_NAMESPACE)) {
 			mdUrl.addNamespace("x", layer.getNamespace().getURI());
 		}
@@ -960,7 +986,7 @@ class Harvester extends BaseAligner {
 
 		HttpClient httpclient = new HttpClient();
 		GetMethod req = new GetMethod(url);
-
+		req.setRequestHeader("User-Agent", GEONETWORK_OGCWXS_UA);
 		if (log.isDebugEnabled())
 			log.debug("Retrieving remote document: " + url);
 

@@ -66,7 +66,8 @@ public class HarvesterTest {
 		Element featureType = prepareFeatureTypeFragment(fixture, mdUrl.toString());
 		ServiceContext ctx = Mockito.mock(ServiceContext.class);
 		Mockito.when(ctx.getHandlerContext(Mockito.anyString())).thenReturn(Mockito.mock(GeonetContext.class));
-		Harvester h = new Harvester(null, ctx, null, null);
+		OgcWxSParams params = new OgcWxSParams(null);
+		Harvester h = new Harvester(null, ctx, null, params);
 		Method m = ReflectionUtils.findMethod(h.getClass(), "getWfsMdFromMetadataUrl", Element.class);
 		m.setAccessible(true);
 		Field f = ReflectionUtils.findField(h.getClass(), "allowLocalRetrieval");
@@ -88,7 +89,8 @@ public class HarvesterTest {
 		Element featureType = prepareFeatureTypeFragment(fixture, null);
 		ServiceContext ctx = Mockito.mock(ServiceContext.class);
 		Mockito.when(ctx.getHandlerContext(Mockito.anyString())).thenReturn(Mockito.mock(GeonetContext.class));
-		Harvester h = new Harvester(null, ctx, null, null);
+		OgcWxSParams params = new OgcWxSParams(null);
+		Harvester h = new Harvester(null, ctx, null, params);
 		Method m = ReflectionUtils.findMethod(h.getClass(), "getWfsMdFromMetadataUrl", Element.class);
 		m.setAccessible(true);
 
@@ -112,7 +114,9 @@ public class HarvesterTest {
 		Element featureType = prepareFeatureTypeFragment(fixture, fileNotfound.toString());
 		ServiceContext ctx = Mockito.mock(ServiceContext.class);
 		Mockito.when(ctx.getHandlerContext(Mockito.anyString())).thenReturn(Mockito.mock(GeonetContext.class));
-		Harvester h = new Harvester(null, ctx, null, null);
+		OgcWxSParams params = new OgcWxSParams(null);
+		
+		Harvester h = new Harvester(null, ctx, null, params);
 		Method m = ReflectionUtils.findMethod(h.getClass(), "getWfsMdFromMetadataUrl", Element.class);
 		m.setAccessible(true);
 		Field f = ReflectionUtils.findField(h.getClass(), "allowLocalRetrieval");
@@ -127,5 +131,5 @@ public class HarvesterTest {
 			fileNotFoundExCaught = e1 instanceof FileNotFoundException;
 		}
 		assertTrue("Expected a FileNotFoundException (no MdUrl found)", fileNotFoundExCaught);
-	}	
+	}
 }

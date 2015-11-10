@@ -98,7 +98,8 @@
 	<wxs139Layer>MetadataURL özellikleri kullanarak katman elemanlarına ait metaveri oluştur(Bu yöntem mevcut olmadığı için çalışmazsa GetCapabilities kullan)</wxs139Layer>
 	
 	<createThumbnails>WMS katmanları için küçük resim oluştur</createThumbnails>
-	
+	<useBasicAuthForLayerMd>Allow the use of the basic-auth to fetch the data metadatas if relevant (same host as the GetCapabilities)</useBasicAuthForLayerMd>
+	<allowAddOLResourcesOfLocalMds>Allow to automatically modify the OnlineResource blocks in the WFS data MD when coming from the local catalogue</allowAddOLResourcesOfLocalMds>
 	<serviceCategory>Servis Kategorisi</serviceCategory>
 	<datasetCategory>Veriseti Kategorisi</datasetCategory>
 	
