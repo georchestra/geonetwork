@@ -3,6 +3,7 @@ package org.fao.geonet.kernel.harvest.harvester.ogcwxs;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeTrue;
 
+import java.io.File;
 import java.net.URL;
 import java.util.List;
 
@@ -36,6 +37,15 @@ public class OnlineResourceUtilsTest {
 		assertTrue(of.size() == 14);
 	}
 	
+	@Test
+	public void getSupportedOutputFormatTestWfs110() throws Exception {
+		URL fixture = this.getClass().getResource("wfs-get-capabilities-110.xml");
+		assumeTrue(fixture != null);
+		Element getcap = Xml.loadFile(fixture);	
+
+		List<String> of = OnlineResourceUtils.getWfsGetSupportedOutputFormats(getcap, "GetFeature");
+		assertTrue(of.size() == 14);
+	}
 	@Test
 	public void createOnLineResourceBlockTest() throws Exception {
 		

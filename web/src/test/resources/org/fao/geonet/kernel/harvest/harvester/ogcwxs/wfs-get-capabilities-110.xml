@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wfs:WFS_Capabilities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.opengis.net/wfs" xmlns:wfs="http://www.opengis.net/wfs" xmlns:ows="http://www.opengis.net/ows" xmlns:gml="http://schemas.opengis.net/gml" xmlns:ogc="http://www.opengis.net/ogc" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:srv="http://schemas.opengis.net/iso/19139/20060504/srv/srv.xsd" xmlns:gmd="http://schemas.opengis.net/iso/19139/20060504/gmd/gmd.xsd" xmlns:gco="http://schemas.opengis.net/iso/19139/20060504/gco/gco.xsd" xmlns:inspire_dls="http://inspire.ec.europa.eu/schemas/inspire_dls/1.0" xmlns:inspire_common="http://inspire.ec.europa.eu/schemas/common/1.0" xmlns:dept80="http://www.geopicardie.fr/dept80" xmlns:cc_pays_noyonnais="http://www.geopicardie.fr/cc_pays_noyonnais" xmlns:dept60="http://www.geopicardie.fr/dept60" xmlns:geopicardie="http://www.geopicardie.fr/geopicardie" xmlns:aduga="http://www.geopicardie.fr/aduga" xmlns:cc_pays_bray="http://www.geopicardie.fr/cc_pays_bray" xmlns:olv="http://www.geopicardie.fr/olv" xmlns:reg22="http://www.geopicardie.fr/reg22" xmlns:geopicardie_loc="http://www.geopicardie.fr/geopicardie_loc" xmlns:cc_canton_oulchy="http://www.geopicardie.fr/cc_canton_oulchy" xmlns:agglo_st_quentin="http://www.geopicardie.fr/agglo_st_quentin" xmlns:cenp="http://www.geopicardie.fr/cenp" xmlns:agglo_beauvais="http://www.geopicardie.fr/agglo_beauvais" xmlns:autres="http://www.geopicardie.fr/autres" xmlns:dept02="http://www.geopicardie.fr/dept02" xmlns:autres_wms_only="http://www.geopicardie.fr/autres_wms_only" xmlns:uccsa="http://www.geopicardie.fr/uccsa" version="1.1.0" xsi:schemaLocation="http://www.opengis.net/wfs http://www.geopicardie.fr/geoserver/schemas/wfs/1.1.0/wfs.xsd http://inspire.ec.europa.eu/schemas/common/1.0 http://inspire.ec.europa.eu/schemas/common/1.0/common.xsd http://inspire.ec.europa.eu/schemas/inspire_dls/1.0 http://inspire.ec.europa.eu/schemas/inspire_dls/1.0/inspire_dls.xsd" updateSequence="4235">
+  <ows:ServiceIdentification>
+    <ows:Title>title</ows:Title>
+    <ows:Abstract>abstract</ows:Abstract>
+    <ows:Keywords>
+      <ows:Keyword>WFS</ows:Keyword>
+    </ows:Keywords>
+    <ows:ServiceType>WFS</ows:ServiceType>
+    <ows:ServiceTypeVersion>1.1.0</ows:ServiceTypeVersion>
+    <ows:Fees>NONE</ows:Fees>
+    <ows:AccessConstraints>NONE</ows:AccessConstraints>
+  </ows:ServiceIdentification>
+  <ows:ServiceProvider>
+    <ows:ProviderName>geOrchestra</ows:ProviderName>
+    <ows:ServiceContact>
+      <ows:IndividualName/>
+      <ows:PositionName/>
+      <ows:ContactInfo>
+        <ows:Phone>
+          <ows:Voice/>
+          <ows:Facsimile/>
+        </ows:Phone>
+        <ows:Address>
+          <ows:DeliveryPoint/>
+          <ows:City/>
+          <ows:AdministrativeArea/>
+          <ows:PostalCode/>
+          <ows:Country/>
+          <ows:ElectronicMailAddress/>
+        </ows:Address>
+      </ows:ContactInfo>
+    </ows:ServiceContact>
+  </ows:ServiceProvider>
+  <ows:OperationsMetadata>
+    <ows:Operation name="GetCapabilities">
+      <ows:DCP>
+        <ows:HTTP>
+          <ows:Get xlink:href="http://www.geopicardie.fr/geoserver/wfs"/>
+          <ows:Post xlink:href="http://www.geopicardie.fr/geoserver/wfs"/>
+        </ows:HTTP>
+      </ows:DCP>
+      <ows:Parameter name="AcceptVersions">
+        <ows:Value>1.0.0</ows:Value>
+        <ows:Value>1.1.0</ows:Value>
+      </ows:Parameter>
+      <ows:Parameter name="AcceptFormats">
+        <ows:Value>text/xml</ows:Value>
+      </ows:Parameter>
+    </ows:Operation>
+    <ows:Operation name="DescribeFeatureType">
+      <ows:DCP>
+        <ows:HTTP>
+          <ows:Get xlink:href="http://www.geopicardie.fr/geoserver/wfs"/>
+          <ows:Post xlink:href="http://www.geopicardie.fr/geoserver/wfs"/>
+        </ows:HTTP>
+      </ows:DCP>
+      <ows:Parameter name="outputFormat">
+        <ows:Value>text/xml; subtype=gml/3.1.1</ows:Value>
+      </ows:Parameter>
+    </ows:Operation>
+    <ows:Operation name="GetFeature">
+      <ows:DCP>
+        <ows:HTTP>
+          <ows:Get xlink:href="http://www.geopicardie.fr/geoserver/wfs"/>
+          <ows:Post xlink:href="http://www.geopicardie.fr/geoserver/wfs"/>
+        </ows:HTTP>
+      </ows:DCP>
+      <ows:Parameter name="resultType">
+        <ows:Value>results</ows:Value>
+        <ows:Value>hits</ows:Value>
+      </ows:Parameter>
+      <ows:Parameter name="outputFormat">
+        <ows:Value>text/xml; subtype=gml/3.1.1</ows:Value>
+        <ows:Value>GML2</ows:Value>
+        <ows:Value>KML</ows:Value>
+        <ows:Value>SHAPE-ZIP</ows:Value>
+        <ows:Value>application/gml+xml; version=3.2</ows:Value>
+        <ows:Value>application/json</ows:Value>
+        <ows:Value>application/vnd.google-earth.kml xml</ows:Value>
+        <ows:Value>application/vnd.google-earth.kml+xml</ows:Value>
+        <ows:Value>csv</ows:Value>
+        <ows:Value>gml3</ows:Value>
+        <ows:Value>gml32</ows:Value>
+        <ows:Value>json</ows:Value>
+        <ows:Value>text/xml; subtype=gml/2.1.2</ows:Value>
+        <ows:Value>text/xml; subtype=gml/3.2</ows:Value>
+      </ows:Parameter>
+      <ows:Constraint name="LocalTraverseXLinkScope">
+        <ows:Value>2</ows:Value>
+      </ows:Constraint>
+    </ows:Operation>
+    <ows:Operation name="GetGmlObject">
+      <ows:DCP>
+        <ows:HTTP>
+          <ows:Get xlink:href="http://www.geopicardie.fr/geoserver/wfs"/>
+          <ows:Post xlink:href="http://www.geopicardie.fr/geoserver/wfs"/>
+        </ows:HTTP>
+      </ows:DCP>
+    </ows:Operation>
+    <ows:Operation name="LockFeature">
+      <ows:DCP>
+        <ows:HTTP>
+          <ows:Get xlink:href="http://www.geopicardie.fr/geoserver/wfs"/>
+          <ows:Post xlink:href="http://www.geopicardie.fr/geoserver/wfs"/>
+        </ows:HTTP>
+      </ows:DCP>
+      <ows:Parameter name="releaseAction">
+        <ows:Value>ALL</ows:Value>
+        <ows:Value>SOME</ows:Value>
+      </ows:Parameter>
+    </ows:Operation>
+    <ows:Operation name="GetFeatureWithLock">
+      <ows:DCP>
+        <ows:HTTP>
+          <ows:Get xlink:href="http://www.geopicardie.fr/geoserver/wfs"/>
+          <ows:Post xlink:href="http://www.geopicardie.fr/geoserver/wfs"/>
+        </ows:HTTP>
+      </ows:DCP>
+      <ows:Parameter name="resultType">
+        <ows:Value>results</ows:Value>
+        <ows:Value>hits</ows:Value>
+      </ows:Parameter>
+      <ows:Parameter name="outputFormat">
+        <ows:Value>text/xml; subtype=gml/3.1.1</ows:Value>
+        <ows:Value>GML2</ows:Value>
+        <ows:Value>KML</ows:Value>
+        <ows:Value>SHAPE-ZIP</ows:Value>
+        <ows:Value>application/gml+xml; version=3.2</ows:Value>
+        <ows:Value>application/json</ows:Value>
+        <ows:Value>application/vnd.google-earth.kml xml</ows:Value>
+        <ows:Value>application/vnd.google-earth.kml+xml</ows:Value>
+        <ows:Value>csv</ows:Value>
+        <ows:Value>gml3</ows:Value>
+        <ows:Value>gml32</ows:Value>
+        <ows:Value>json</ows:Value>
+        <ows:Value>text/xml; subtype=gml/2.1.2</ows:Value>
+        <ows:Value>text/xml; subtype=gml/3.2</ows:Value>
+      </ows:Parameter>
+    </ows:Operation>
+    <ows:Operation name="Transaction">
+      <ows:DCP>
+        <ows:HTTP>
+          <ows:Get xlink:href="http://www.geopicardie.fr/geoserver/wfs"/>
+          <ows:Post xlink:href="http://www.geopicardie.fr/geoserver/wfs"/>
+        </ows:HTTP>
+      </ows:DCP>
+      <ows:Parameter name="inputFormat">
+        <ows:Value>text/xml; subtype=gml/3.1.1</ows:Value>
+      </ows:Parameter>
+      <ows:Parameter name="idgen">
+        <ows:Value>GenerateNew</ows:Value>
+        <ows:Value>UseExisting</ows:Value>
+        <ows:Value>ReplaceDuplicate</ows:Value>
+      </ows:Parameter>
+      <ows:Parameter name="releaseAction">
+        <ows:Value>ALL</ows:Value>
+        <ows:Value>SOME</ows:Value>
+      </ows:Parameter>
+    </ows:Operation>
+    <ows:ExtendedCapabilities>
+      <inspire_dls:ExtendedCapabilities>
+        <inspire_common:MetadataUrl xsi:type="inspire_common:resourceLocatorType">
+          <inspire_common:URL/>
+          <inspire_common:MediaType>application/vnd.ogc.csw.GetRecordByIdResponse_xml</inspire_common:MediaType>
+        </inspire_common:MetadataUrl>
+        <inspire_common:SupportedLanguages xsi:type="inspire_common:supportedLanguagesType">
+          <inspire_common:DefaultLanguage>
+            <inspire_common:Language>eng</inspire_common:Language>
+          </inspire_common:DefaultLanguage>
+        </inspire_common:SupportedLanguages>
+        <inspire_common:ResponseLanguage>
+          <inspire_common:Language>eng</inspire_common:Language>
+        </inspire_common:ResponseLanguage>
+      </inspire_dls:ExtendedCapabilities>
+    </ows:ExtendedCapabilities>
+  </ows:OperationsMetadata>
+  <FeatureTypeList/>
+  <ogc:Filter_Capabilities/>
+</wfs:WFS_Capabilities>

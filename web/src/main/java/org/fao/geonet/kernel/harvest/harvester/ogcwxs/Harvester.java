@@ -705,7 +705,7 @@ class Harvester extends BaseAligner {
 									layerDesc = OnlineResourceUtils.extractLayerInfo(layer, "Abstract");
 									// TODO: handle https ?
 									String layerUrl = "http://"+ this.hostEndpoint +
-											"/geoserver?service=WFS&request=GetFeature&version=1.0.0&typeName="+layerName+"&outputFormat="+f;
+											"/geoserver/ows?service=WFS&request=GetFeature&version=1.0.0&typeName="+layerName+"&outputFormat="+f;
 									Element newb = OnlineResourceUtils.createOnLineResourceBlock(layerUrl,
 											"WWW:LINK-1.0-http--link", layerTitle + " - (" + f + ")",
 											layerDesc + " - (f)");

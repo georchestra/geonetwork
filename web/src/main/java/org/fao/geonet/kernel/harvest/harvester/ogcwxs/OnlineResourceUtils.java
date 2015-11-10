@@ -12,6 +12,8 @@ import org.jdom.Namespace;
 import org.jdom.Text;
 import org.jdom.xpath.XPath;
 
+import jeeves.utils.Xml;
+
 public class OnlineResourceUtils {
 
 	/**
@@ -73,9 +75,12 @@ public class OnlineResourceUtils {
 	public static List<String> getWfsGetSupportedOutputFormats(Element getcap, String operation) throws JDOMException {
 		List<String> of = new ArrayList<String>();
 		// /wfs:WFS_Capabilities/ows:OperationsMetadata/ows:Operation/ows:Parameter/ows:AllowedValues/ows:Value
-		XPath xp = XPath.newInstance("./ows:OperationsMetadata/ows:Operation[@name='"+ operation +"']/ows:Parameter[@name='outputFormat']/ows:AllowedValues/ows:Value/text()");
+		// or
+		// /wfs:WFS_Capabilities/ows:OperationsMetadata/ows:Operation/ows:Parameter
+		// depending on the version
+		XPath xp = XPath.newInstance("./ows:OperationsMetadata/ows:Operation[@name='"+ operation +"']/ows:Parameter[@name='outputFormat']//ows:Value/text()");
 		xp.addNamespace(getcap.getNamespace("ows"));
-		
+		xp.addNamespace(getcap.getNamespace());
 		List<Text> ls = xp.selectNodes(getcap);
 		for(Text t: ls) {
 			of.add(t.getValue());

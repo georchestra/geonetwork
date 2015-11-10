@@ -162,6 +162,8 @@ var updateTemp =
 '      <useLayerMd>{USELAYERMD}</useLayerMd>'+
 '      <datasetCategory>{DATASETCATEGORY}</datasetCategory>'+
 '      <outputSchema>{OUTPUTSCHEMA}</outputSchema>'+
+'      <useBasicAuthForLayerMd>{BASICAUTHFORLAYERMD}</useBasicAuthForLayerMd>'+
+'      <allowAddOLResourcesOfLocalMds>{ALLOWADDOLRES}</allowAddOLResourcesOfLocalMds>'+
 '    </options>'+
 
 '    <content>'+
