@@ -111,7 +111,8 @@
 	<wxs139Layer>Создать метаданные для элементов слоя, используя атрибуты
 		MetadataURL (если присутствуют и не используется GetCapabilities).</wxs139Layer>
 	<createThumbnails>Создать эскизы для WMS-слоев.</createThumbnails>
-
+	<useBasicAuthForLayerMd>Allow the use of the basic-auth to fetch the data metadatas if relevant (same host as the GetCapabilities)</useBasicAuthForLayerMd>
+	<allowAddOLResourcesOfLocalMds>Allow to automatically modify the OnlineResource blocks in the WFS data MD when coming from the local catalogue</allowAddOLResourcesOfLocalMds>
 	<serviceCategory>Категория для сервиса</serviceCategory>
 	<datasetCategory>Категория для наборов данных</datasetCategory>
 

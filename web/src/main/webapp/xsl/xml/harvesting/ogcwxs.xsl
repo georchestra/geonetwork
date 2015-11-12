@@ -24,6 +24,8 @@
 		<createThumbnails><xsl:value-of  select="createThumbnails/value" /></createThumbnails>
 		<useLayer><xsl:value-of  select="useLayer/value" /></useLayer>
 		<useLayerMd><xsl:value-of  select="useLayerMd/value" /></useLayerMd>
+		<useBasicAuthForLayerMd><xsl:value-of  select="useBasicAuthForLayerMd/value" /></useBasicAuthForLayerMd>
+		<allowAddOLResourcesOfLocalMds><xsl:value-of  select="allowAddOLResourcesOfLocalMds/value" /></allowAddOLResourcesOfLocalMds>
 		<datasetCategory><xsl:value-of  select="datasetCategory/value" /></datasetCategory>
 		<outputSchema><xsl:value-of  select="outputSchema/value" /></outputSchema>
 	</xsl:template>

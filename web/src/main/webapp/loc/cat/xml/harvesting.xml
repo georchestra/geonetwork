@@ -108,7 +108,8 @@
     <wxs139>Crear metadades per capes usant informació de GetCapabilities.</wxs139>
     <wxs139Layer>Crear metadades per capes usant atributs de MetadataURL (si existeixen, en cas contrari, usar GetCapabilities).</wxs139Layer>
     <createThumbnails>Crear pre-visualitzacions per capes WMS.</createThumbnails>
-    
+    <useBasicAuthForLayerMd>Allow the use of the basic-auth to fetch the data metadatas if relevant (same host as the GetCapabilities)</useBasicAuthForLayerMd>
+    <allowAddOLResourcesOfLocalMds>Allow to automatically modify the OnlineResource blocks in the WFS data MD when coming from the local catalogue</allowAddOLResourcesOfLocalMds>    
     <serviceCategory>Categoria per serveis</serviceCategory>
     <datasetCategory>Categoria per conjunts de dades</datasetCategory>
 

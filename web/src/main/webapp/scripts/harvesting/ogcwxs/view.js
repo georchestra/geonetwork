@@ -109,6 +109,9 @@ function setData(node)
 	hvutil.setOption(options, 'createThumbnails', 'ogcwxs.createThumbnails');
 	hvutil.setOption(options, 'useLayer', 		  'ogcwxs.useLayer');
 	hvutil.setOption(options, 'useLayerMd',		  'ogcwxs.useLayerMd');
+	hvutil.setOption(options, 'useBasicAuthForLayerMd', 'ogcwxs.useBasicAuthForLayerMd');
+	hvutil.setOption(options, 'allowAddOLResourcesOfLocalMds', 'ogcwxs.allowAddOLResourcesOfLocalMds');
+    
 	hvutil.setOption(options, 'lang', 			  'ogcwxs.lang');
 	hvutil.setOption(options, 'datasetCategory',  'ogcwxs.datasetCategory');
 	
@@ -144,16 +147,18 @@ function getData()
 {
     var data = this.getDataCommon();
 	
-	data.CAPAB_URL        = $F('ogcwxs.capabUrl');
-	data.ICON             = $F('ogcwxs.icon');
-	data.OGCTYPE          = $F('ogcwxs.ogctype');
-	data.LANG             = $F('ogcwxs.lang');
-	data.TOPIC            = $F('ogcwxs.topic');
-	data.DATASETCATEGORY  = ($F('ogcwxs.datasetCategory')==null?'':$F('ogcwxs.datasetCategory'));
-	data.OUTPUTSCHEMA     = $F('ogcwxs.outputSchema');
-	data.CREATETHUMBNAILS = $('ogcwxs.createThumbnails').checked;
-	data.USELAYER	      = $('ogcwxs.useLayer').checked;
-	data.USELAYERMD       = $('ogcwxs.useLayerMd').checked;
+	data.CAPAB_URL           = $F('ogcwxs.capabUrl');
+	data.ICON                = $F('ogcwxs.icon');
+	data.OGCTYPE             = $F('ogcwxs.ogctype');
+	data.LANG                = $F('ogcwxs.lang');
+	data.TOPIC               = $F('ogcwxs.topic');
+	data.DATASETCATEGORY     = ($F('ogcwxs.datasetCategory')==null?'':$F('ogcwxs.datasetCategory'));
+	data.OUTPUTSCHEMA        = $F('ogcwxs.outputSchema');
+	data.CREATETHUMBNAILS    = $('ogcwxs.createThumbnails').checked;
+	data.USELAYER	         = $('ogcwxs.useLayer').checked;
+	data.USELAYERMD          = $('ogcwxs.useLayerMd').checked;
+	data.BASICAUTHFORLAYERMD = $('ogcwxs.useBasicAuthForLayerMd').checked;
+	data.ALLOWADDOLRES       = $('ogcwxs.allowAddOLResourcesOfLocalMds').checked;
 	
 	//--- retrieve privileges and categories information
 	

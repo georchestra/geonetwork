@@ -108,7 +108,8 @@
 	<wxs139>Criar metadados para elementos de layer usando informações de GetCapabilities.</wxs139>
 	<wxs139Layer>Criar metadados para elementos de layer usando atributos de metadadosURL (se existam, se não use-se GetCapabilities).</wxs139Layer>
 	<createThumbnails>Criar pré-visualizações para layers de WMS.</createThumbnails>
-	
+	<useBasicAuthForLayerMd>Allow the use of the basic-auth to fetch the data metadatas if relevant (same host as the GetCapabilities)</useBasicAuthForLayerMd>
+	<allowAddOLResourcesOfLocalMds>Allow to automatically modify the OnlineResource blocks in the WFS data MD when coming from the local catalogue</allowAddOLResourcesOfLocalMds>
 	<serviceCategory>Categoria para serviços</serviceCategory>
 	<datasetCategory>Categoria para registos</datasetCategory>
 		

@@ -107,7 +107,8 @@
 	<wxs139>Opprett metadata for lagelementer ved bruk av GetCapabilities informasjon.</wxs139>
 	<wxs139Layer>Opprett metadata for lagelementer ved å bruke MetadataURL attributter (hvis de finnes, hvis ikke, bruk GetCapabilities).</wxs139Layer>
 	<createThumbnails>Lag miniatyrbilder for WMS lag.</createThumbnails>
-	
+	<useBasicAuthForLayerMd>Allow the use of the basic-auth to fetch the data metadatas if relevant (same host as the GetCapabilities)</useBasicAuthForLayerMd>
+	<allowAddOLResourcesOfLocalMds>Allow to automatically modify the OnlineResource blocks in the WFS data MD when coming from the local catalogue</allowAddOLResourcesOfLocalMds>
 	<serviceCategory>Kategori for tjeneste</serviceCategory>
 	<datasetCategory>Kategori for datasett</datasetCategory>
 	

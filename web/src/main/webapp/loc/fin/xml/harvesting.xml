@@ -94,7 +94,8 @@
 	<wxs139>Luo tasokohtaisten elementtien metatiedot GetCapabilities-tiedon perusteella.</wxs139>
 	<wxs139Layer>Luo tasokohtaisten elementtien metatiedot käyttäen MetadataURL-attribuutteja (jos ei määritelty, käytä GetCapabilities-tietoa).</wxs139Layer>
 	<createThumbnails>Luo näytekuvat WMS-tasoille.</createThumbnails>
-	
+	<useBasicAuthForLayerMd>Allow the use of the basic-auth to fetch the data metadatas if relevant (same host as the GetCapabilities)</useBasicAuthForLayerMd>
+	<allowAddOLResourcesOfLocalMds>Allow to automatically modify the OnlineResource blocks in the WFS data MD when coming from the local catalogue</allowAddOLResourcesOfLocalMds>
 	<serviceCategory>Kategoria palveluille</serviceCategory>
 	<datasetCategory>Kategoria tietoaineistoille</datasetCategory>
 	

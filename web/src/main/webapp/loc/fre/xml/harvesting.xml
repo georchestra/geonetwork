@@ -112,7 +112,8 @@
     
     <serviceCategory>Catégorie pour les métadonnées de services</serviceCategory>
     <datasetCategory>Catégorie pour les métadonnées de données</datasetCategory>
-    
+    <useBasicAuthForLayerMd>Utiliser la basic-auth pour récupérer les métadonnées de données (si pertinent: même hôte)</useBasicAuthForLayerMd>
+    <allowAddOLResourcesOfLocalMds>Autoriser l'ajout automatique des OnlineResources des fiches de données moissonées en WFS si locales au catalogue</allowAddOLResourcesOfLocalMds>
 	<returnedSets>OAI provider sets</returnedSets>
 	<returnedPrefixes>OAI provider prefixes</returnedPrefixes>
 	<retrieveSetsPrefixes>Retrieve Sets/Prefixes</retrieveSetsPrefixes>

@@ -146,8 +146,11 @@ public class OgcWxSHarvester extends AbstractHarvester
 		settingMan.add(dbms, "id:"+optionsId, "createThumbnails",  params.createThumbnails);
 		settingMan.add(dbms, "id:"+optionsId, "useLayer",  params.useLayer);
 		settingMan.add(dbms, "id:"+optionsId, "useLayerMd",  params.useLayerMd);
+		settingMan.add(dbms, "id:"+optionsId, "useBasicAuthForLayerMd",  params.useBasicAuthForLayerMd);
+		settingMan.add(dbms, "id:"+optionsId, "allowAddOLResourcesOfLocalMds",  params.allowAddOLResourcesOfLocalMds);
 		settingMan.add(dbms, "id:"+optionsId, "datasetCategory",  params.datasetCategory);
 		settingMan.add(dbms, "id:"+optionsId, "outputSchema",  params.outputSchema);
+		
 	}
 
 	//---------------------------------------------------------------------------

@@ -120,6 +120,8 @@
 				<xsl:value-of select="/root/gui/harvesting/wxs119Only"/><br/>
 				<input type="checkbox" id="ogcwxs.useLayer" name="ogcwxs.useLayer" value=""/><label for="ogcwxs.useLayer"><xsl:value-of select="/root/gui/harvesting/wxs139"/></label><br/>
 				<input type="checkbox" id="ogcwxs.useLayerMd" name="ogcwxs.useLayerMd" value=""/><label for="ogcwxs.useLayerMd"><xsl:value-of select="/root/gui/harvesting/wxs139Layer"/></label><br/>
+				<input type="checkbox" id="ogcwxs.useBasicAuthForLayerMd" name="ogcwxs.useBasicAuthForLayerMd" value=""/><label for="ogcwxs.useBasicAuthForLayerMd"><xsl:value-of select="/root/gui/harvesting/useBasicAuthForLayerMd"/></label><br/>
+				<input type="checkbox" id="ogcwxs.allowAddOLResourcesOfLocalMds" name="ogcwxs.allowAddOLResourcesOfLocalMds" value=""/><label for="ogcwxs.allowAddOLResourcesOfLocalMds"><xsl:value-of select="/root/gui/harvesting/allowAddOLResourcesOfLocalMds"/></label><br/>
 				<input type="checkbox" id="ogcwxs.createThumbnails" name="ogcwxs.createThumbnails" value=""/><label for="ogcwxs.createThumbnails"><xsl:value-of select="/root/gui/harvesting/createThumbnails"/></label>
 				</td>
 			</tr>

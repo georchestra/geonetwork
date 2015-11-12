@@ -108,7 +108,8 @@
 	<wxs139>Creëer metadata voor kaartlagen met gebruikmaking van GetCapabilities informatie.</wxs139>
 	<wxs139Layer>Creëer metadata voor kaartlagen met gebruikmaking van MetadataURL attributen (als die bestaan, zo niet gebruik GetCapabilities).</wxs139Layer>
 	<createThumbnails>Creëer thumbnails voor WMS layers.</createThumbnails>
-	
+	<useBasicAuthForLayerMd>Allow the use of the basic-auth to fetch the data metadatas if relevant (same host as the GetCapabilities)</useBasicAuthForLayerMd>
+	<allowAddOLResourcesOfLocalMds>Allow to automatically modify the OnlineResource blocks in the WFS data MD when coming from the local catalogue</allowAddOLResourcesOfLocalMds>
 	<serviceCategory>Categorie voor service</serviceCategory>
 	<datasetCategory>Categorie voor datasets</datasetCategory>
 	
