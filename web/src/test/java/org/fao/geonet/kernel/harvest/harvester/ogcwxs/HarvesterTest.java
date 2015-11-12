@@ -6,6 +6,7 @@ import static org.junit.Assume.assumeTrue;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.ArrayList;
@@ -68,6 +69,9 @@ public class HarvesterTest {
 		Harvester h = new Harvester(null, ctx, null, null);
 		Method m = ReflectionUtils.findMethod(h.getClass(), "getWfsMdFromMetadataUrl", Element.class);
 		m.setAccessible(true);
+		Field f = ReflectionUtils.findField(h.getClass(), "allowLocalRetrieval");
+		f.setAccessible(true);
+		f.setBoolean(h, true);
 		
 		Element xml = (Element) ReflectionUtils.invokeMethod(m, h, featureType);
 
@@ -111,6 +115,9 @@ public class HarvesterTest {
 		Harvester h = new Harvester(null, ctx, null, null);
 		Method m = ReflectionUtils.findMethod(h.getClass(), "getWfsMdFromMetadataUrl", Element.class);
 		m.setAccessible(true);
+		Field f = ReflectionUtils.findField(h.getClass(), "allowLocalRetrieval");
+		f.setAccessible(true);
+		f.setBoolean(h, true);
 
 		boolean fileNotFoundExCaught = false;
 		try {
@@ -119,6 +126,6 @@ public class HarvesterTest {
 			Throwable e1 = e.getCause();
 			fileNotFoundExCaught = e1 instanceof FileNotFoundException;
 		}
-		assertTrue("No exception caught, expected one (no MdUrl found)", fileNotFoundExCaught);
+		assertTrue("Expected a FileNotFoundException (no MdUrl found)", fileNotFoundExCaught);
 	}	
 }
