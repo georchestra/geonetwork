@@ -1085,7 +1085,7 @@
       </snapshots>
       <id>boundless</id>
       <name>Boundless repository</name>
-      <url>http://repo.boundlessgeo.com/main/</url>
+      <url>https://repo.boundlessgeo.com/main/</url>
     </repository>
      <repository>
       <snapshots>
