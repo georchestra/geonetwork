@@ -8,6 +8,7 @@ Using the default georchestra overrides files (see https://github.com/georchestr
 If you are using the geOrchestra datadir (via generic WAR archive, or debian/yum packages), ensure the following JAVA options are set before launching your application server:
 
 ```
+  -Dgeorchestra.datadir=/etc/georchestra
   -Dgeonetwork.dir=/srv/tomcat/georchestra/work/gn_data
   -Dgeonetwork.schema.dir=/srv/tomcat/georchestra/work/gn_data/config/schema_plugins
   -Dgeonetwork.jeeves.configuration.overrides.file=/etc/georchestra/geonetwork/config/config-overrides-georchestra.xml
