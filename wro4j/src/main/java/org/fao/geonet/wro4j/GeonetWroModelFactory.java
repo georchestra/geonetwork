@@ -704,6 +704,9 @@ public class GeonetWroModelFactory implements WroModelFactory {
 
                 @Override
                 public Iterator<File> iterator() {
+                    if (! root.exists() || ! root.isDirectory()) {
+                        return Collections.emptyIterator();
+                    }
                     return FileUtils.iterateFiles(root, extToCollect, true);
                 }
             };
