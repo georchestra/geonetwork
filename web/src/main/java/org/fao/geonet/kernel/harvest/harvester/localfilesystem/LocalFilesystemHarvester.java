@@ -27,6 +27,7 @@ import jeeves.interfaces.Logger;
 import jeeves.resources.dbms.Dbms;
 import jeeves.server.context.ServiceContext;
 import jeeves.server.resources.ResourceManager;
+import jeeves.utils.Log;
 import jeeves.utils.Xml;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.kernel.harvest.harvester.AbstractHarvester;
@@ -58,6 +59,7 @@ public class LocalFilesystemHarvester extends AbstractHarvester {
 	
 	private LocalFilesystemParams params;
 	private HarvestResult result;
+	private Logger logger = Log.createLogger(Geonet.HARVESTER);
 	
 	public static void init(ServiceContext context) throws Exception {
 	}
@@ -101,7 +103,7 @@ public class LocalFilesystemHarvester extends AbstractHarvester {
 	 * @return
 	 */
 	private List<String> harvestFromDirectory(File directory, boolean recurse) throws IOException {
-		System.out.println("LocalFilesystem harvesting: directory " + directory.getAbsolutePath());
+		logger.info("LocalFilesystem harvesting: directory " + directory.getAbsolutePath());
 		List<String> results = new ArrayList<String>();
 		if(! directory.exists()) {
 			throw new IOException("directory does not exist: "+ directory.getAbsolutePath());
@@ -124,7 +126,7 @@ public class LocalFilesystemHarvester extends AbstractHarvester {
 					throw new IOException("cannot read file "+ file.getAbsolutePath());
 				}
 				else {
-					System.out.println("adding file: " + file.getName());
+					logger.info("adding file: " + file.getName());
 					results.add(file.getAbsolutePath());
 				}
 			}
@@ -142,7 +144,7 @@ public class LocalFilesystemHarvester extends AbstractHarvester {
 	 * @throws Exception
 	 */
 	private void align(List<String> results, ResourceManager rm) throws Exception {
-		System.out.println("Start of alignment for : "+ params.name);
+		logger.info("Start of alignment for : "+ params.name);
 		this.result = new HarvestResult();
 		Dbms dbms = (Dbms) rm.open(Geonet.Res.MAIN_DB);
 
@@ -167,16 +169,14 @@ public class LocalFilesystemHarvester extends AbstractHarvester {
 			result.totalMetadata++;
 			Element xml;
 			try {
-				System.out.println("reading file: " + xmlFile);	
+				logger.info("reading file: " + xmlFile);
 				xml = Xml.loadFile(xmlFile);
 			} catch (JDOMException e) { // JDOM problem
-				System.out.println("Error loading XML from file " + xmlFile +", ignoring");	
-				e.printStackTrace();
+				logger.error("Error loading XML from file " + xmlFile +", ignoring");
 				result.badFormat++;
 				continue; // skip this one
 			} catch (Exception e) { // some other error
-				System.out.println("Error retrieving XML from file " + xmlFile +", ignoring");	
-				e.printStackTrace();
+				logger.error("Error retrieving XML from file " + xmlFile +", ignoring");
 				result.unretrievable++;
 				continue; // skip this one
 			}
@@ -186,7 +186,7 @@ public class LocalFilesystemHarvester extends AbstractHarvester {
 				try {
 					Xml.validate(xml);
 				} catch (Exception e) {
-					System.out.println("Cannot validate XML from file " + xmlFile +", ignoring. Error was: "+e.getMessage());
+					logger.error("Cannot validate XML from file " + xmlFile +", ignoring. Error was: "+e.getMessage());
 					result.doesNotValidate++;
 					continue; // skip this one
 				}
@@ -197,7 +197,7 @@ public class LocalFilesystemHarvester extends AbstractHarvester {
 				try {
 					xml = Xml.transform(xml, thisXslt);
 				} catch (Exception e) {
-					System.out.println("Cannot transform XML from file " + xmlFile+", ignoring. Error was: "+e.getMessage());
+					logger.error("Cannot transform XML from file " + xmlFile+", ignoring. Error was: "+e.getMessage());
 					result.badFormat++;
 					continue; // skip this one
 				}
@@ -215,12 +215,12 @@ public class LocalFilesystemHarvester extends AbstractHarvester {
 				else {
 					String id = dataMan.getMetadataId(dbms, uuid);
 					if (id == null)	{
-						System.out.println("adding new metadata");
+						logger.info("adding new metadata");
 						id = addMetadata(xml, uuid, dbms, schema, localGroups, localCateg);
 						result.addedMetadata++;
 					}
 					else {
-						System.out.println("updating existing metadata, id is: " + id);
+						logger.info("updating existing metadata, id is: " + id);
 						updateMetadata(xml, id, dbms, localGroups, localCateg);
 						result.updatedMetadata++;
 					}
@@ -243,11 +243,11 @@ public class LocalFilesystemHarvester extends AbstractHarvester {
 				}
 			}			
 		}
-		System.out.println("End of alignment for : "+ params.name);
+		logger.info("End of alignment for : "+ params.name);
 	}
 
 	private void updateMetadata(Element xml, String id, Dbms dbms, GroupMapper localGroups, CategoryMapper localCateg) throws Exception {
-		System.out.println("  - Updating metadata with id: "+ id);
+		logger.info("  - Updating metadata with id: "+ id);
 
         //
         // update metadata
@@ -280,7 +280,7 @@ public class LocalFilesystemHarvester extends AbstractHarvester {
 	 * @throws Exception
 	 */
 	private String addMetadata(Element xml, String uuid, Dbms dbms, String schema, GroupMapper localGroups, CategoryMapper localCateg) throws Exception {
-		System.out.println("  - Adding metadata with remote uuid: "+ uuid);
+		logger.info("  - Adding metadata with remote uuid: "+ uuid);
 
 		String source = params.uuid;
 		String createDate = new ISODate().toString();
@@ -307,10 +307,10 @@ public class LocalFilesystemHarvester extends AbstractHarvester {
 
 	@Override
 	protected void doHarvest(Logger l, ResourceManager rm) throws Exception {
-		System.out.println("LocalFilesystem doHarvest: top directory is " + params.directoryname + ", recurse is " + params.recurse);
+		logger.info("LocalFilesystem doHarvest: top directory is " + params.directoryname + ", recurse is " + params.recurse);
 		File directory = new File(params.directoryname);
 		List<String> results = harvestFromDirectory(directory, params.recurse);
-		System.out.println("LocalFilesystem doHarvest: found #" + results.size() + " results");
+		logger.info("LocalFilesystem doHarvest: found #" + results.size() + " results");
 		align(results, rm);		
 	}
 
