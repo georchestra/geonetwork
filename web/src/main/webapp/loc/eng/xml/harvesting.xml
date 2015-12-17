@@ -218,6 +218,7 @@
 	<validate>Validate</validate>
 	<recurse>Recurse</recurse>
 	<nodelete>Keep local if deleted at source</nodelete>
+	<resetRightsAndCategoriesOnUpdate>Reset rights and categories on update</resetRightsAndCategoriesOnUpdate>
 	<server>Server</server>	
 	<database>Database</database>	
 	<privileges>Privileges</privileges>

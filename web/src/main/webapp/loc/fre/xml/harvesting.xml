@@ -217,6 +217,7 @@
 	<validate>Valider</validate>
 	<recurse>Récursif</recurse>
 	<nodelete>Conserver les fichiers</nodelete>
+	<resetRightsAndCategoriesOnUpdate>Réinitialiser les droits et les catégories lors de la mise à jour</resetRightsAndCategoriesOnUpdate>
 	<server>Serveur</server>
 	<database>Base de données</database>
 	<privileges>Privilèges</privileges>

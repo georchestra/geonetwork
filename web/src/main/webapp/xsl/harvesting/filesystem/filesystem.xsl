@@ -61,7 +61,11 @@
 			<tr>
 				<td class="padded"><label for="filesystem.nodelete"><xsl:value-of select="/root/gui/harvesting/nodelete"/></label></td>
 				<td class="padded"><input id="filesystem.nodelete" type="checkbox" checked="on"/></td>
-			</tr>			
+			</tr>
+			<tr>
+				<td class="padded"><label for="filesystem.resetRightsAndCategoriesOnUpdate"><xsl:value-of select="/root/gui/harvesting/resetRightsAndCategoriesOnUpdate"/></label></td>
+				<td class="padded"><input id="filesystem.resetRightsAndCategoriesOnUpdate" type="checkbox" checked="on"/></td>
+			</tr>
 			<tr>
 				<td class="padded" valign="bottom"><xsl:value-of select="/root/gui/harvesting/icon"/></td>
 				<td class="padded">
