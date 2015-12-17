@@ -3,17 +3,12 @@ package org.fao.geonet.services.config;
 import java.io.File;
 import java.net.URL;
 
-import jeeves.server.context.ServiceContext;
-
 import org.apache.log4j.xml.DOMConfigurator;
 import org.fao.geonet.ApplicationContextHolder;
-import org.fao.geonet.GeonetContext;
-import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.domain.Setting;
 import org.fao.geonet.exceptions.OperationAbortedEx;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.repository.SettingRepository;
-import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
 /**
  * Logger utilities
