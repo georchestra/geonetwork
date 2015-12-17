@@ -77,10 +77,11 @@ function setData(node)
 	var directoryname = node.getElementsByTagName('directory')    [0];
 	var recurse = node.getElementsByTagName('recurse')    [0];
 	var nodelete = node.getElementsByTagName('nodelete')    [0];
+	var resetRightsAndCategoriesOnUpdate = node.getElementsByTagName('resetRightsAndCategoriesOnUpdate')    [0];
 	hvutil.setOption(node, 'directory', 'filesystem.directoryname');
 	hvutil.setOption(node, 'recurse', 'filesystem.recurse');
 	hvutil.setOption(node, 'nodelete', 'filesystem.nodelete');
-	hvutil.setOption(node, 'nodelete', 'filesystem.resetRightsAndCategoriesOnUpdate');
+	hvutil.setOption(node, 'resetRightsAndCategoriesOnUpdate', 'filesystem.resetRightsAndCategoriesOnUpdate');
 	hvutil.setOption(node, 'icon', 'filesystem.icon');
 
 

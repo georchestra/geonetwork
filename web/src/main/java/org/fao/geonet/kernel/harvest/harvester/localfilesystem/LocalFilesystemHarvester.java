@@ -73,6 +73,7 @@ public class LocalFilesystemHarvester extends AbstractHarvester {
 		settingMan.add(dbms, "id:"+siteId, "recurse", lp.recurse);
 		settingMan.add(dbms, "id:"+siteId, "directory", lp.directoryname);
 		settingMan.add(dbms, "id:"+siteId, "nodelete", lp.nodelete);
+		settingMan.add(dbms, "id:"+siteId, "resetRightsAndCategoriesOnUpdate", lp.resetRightsAndCategoriesOnUpdate);
 	}
 
 	@Override

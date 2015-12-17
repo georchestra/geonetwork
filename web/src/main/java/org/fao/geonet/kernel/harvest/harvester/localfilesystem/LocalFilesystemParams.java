@@ -94,6 +94,7 @@ public class LocalFilesystemParams extends AbstractParams {
 		copy.directoryname = directoryname;
 		copy.recurse = recurse;
 		copy.nodelete = nodelete;
-		return copy;		
+		copy.resetRightsAndCategoriesOnUpdate = resetRightsAndCategoriesOnUpdate;
+		return copy;
 	}
 }
