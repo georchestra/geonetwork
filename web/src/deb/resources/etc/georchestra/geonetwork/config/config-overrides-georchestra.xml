@@ -4,6 +4,7 @@
     <!-- earlier imported from config-security/config-security.xml -->
     <import file="${env:georchestra.datadir}/geonetwork/config/config-security-georchestra.xml" />
     <import file="${env:georchestra.datadir}/geonetwork/config/config-db-georchestra.xml" />
+    <import file="${env:georchestra.datadir}/geonetwork/config/config-datadir-georchestra.xml" />
     <import file="${env:georchestra.datadir}/geonetwork/config/config-logging-georchestra.xml" />
   </spring>
 </overrides>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans default-lazy-init="true"
+  xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xsi:schemaLocation="
+  http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+  <context:property-placeholder location="file:${georchestra.datadir}/geonetwork/geonetwork.properties" file-encoding="UTF-8" ignore-unresolvable="true" order="0"/>
+
+  <bean id="GeonetworkDataDirectory" class="org.fao.geonet.kernel.GeonetworkDataDirectory" lazy-init="true">
+    <property name="systemDataDir" ref="GNSystemDataDir"/>
+    <property name="schemaPluginsDir" ref="GNSchemaPluginsDir"/>
+    <property name="spatialIndexPath" ref="GNSpatialIndexPath"/>
+    <property name="configDir" ref="GNConfigDir"/>
+    <property name="luceneDir" ref="GNLuceneDir"/>
+    <property name="thesauriDir" ref="GNThesauriDir"/>
+    <property name="metadataDataDir" ref="GNMetadataDataDir"/>
+    <property name="metadataRevisionDir" ref="GNMetadataRevisionDir"/>
+    <property name="resourcesDir" ref="GNResourcesDir"/>
+    <property name="htmlCacheDir" ref="GNHtmlCacheDir"/>
+    <property name="uploadDir" ref="GNUploadDir"/>
+    <property name="formatterDir" ref="GNFormatterDir"/>
+  </bean>
+  <bean id="GNSystemDataDir" class="java.nio.file.Paths" factory-method="get">
+    <constructor-arg index="0" value="${geonetwork.dir}"/>
+    <constructor-arg index="1"><array /></constructor-arg>
+  </bean>
+  <bean id="GNSchemaPluginsDir" class="java.nio.file.Paths" factory-method="get">
+    <constructor-arg index="0" value="${geonetwork.schema.dir}"/>
+    <constructor-arg index="1"><array /></constructor-arg>
+  </bean>
+  <bean id="GNSpatialIndexPath" class="java.nio.file.Paths" factory-method="get">
+    <constructor-arg index="0" value="${geonetwork.spatial.dir}"/>
+    <constructor-arg index="1"><array /></constructor-arg>
+  </bean>
+  <bean id="GNConfigDir" class="java.nio.file.Paths" factory-method="get">
+    <constructor-arg index="0" value="${geonetwork.config.dir}"/>
+    <constructor-arg index="1"><array /></constructor-arg>
+  </bean>
+  <bean id="GNLuceneDir" class="java.nio.file.Paths" factory-method="get">
+    <constructor-arg index="0" value="${geonetwork.lucene.dir}"/>
+    <constructor-arg index="1"><array /></constructor-arg>
+  </bean>
+  <bean id="GNThesauriDir" class="java.nio.file.Paths" factory-method="get">
+    <constructor-arg index="0" value="${geonetwork.thesauri.dir}"/>
+    <constructor-arg index="1"><array /></constructor-arg>
+  </bean>
+  <bean id="GNMetadataDataDir" class="java.nio.file.Paths" factory-method="get">
+    <constructor-arg index="0" value="${geonetwork.data.dir}"/>
+    <constructor-arg index="1"><array /></constructor-arg>
+  </bean>
+  <bean id="GNMetadataRevisionDir" class="java.nio.file.Paths" factory-method="get">
+    <constructor-arg index="0" value="${geonetwork.svn.dir}"/>
+    <constructor-arg index="1"><array /></constructor-arg>
+  </bean>
+  <bean id="GNResourcesDir" class="java.nio.file.Paths" factory-method="get">
+    <constructor-arg index="0" value="${geonetwork.resources.dir}"/>
+    <constructor-arg index="1"><array /></constructor-arg>
+  </bean>
+  <bean id="GNHtmlCacheDir" class="java.nio.file.Paths" factory-method="get">
+    <constructor-arg index="0" value="${geonetwork.htmlcache.dir}"/>
+    <constructor-arg index="1"><array /></constructor-arg>
+  </bean>
+  <bean id="GNUploadDir" class="java.nio.file.Paths" factory-method="get">
+    <constructor-arg index="0" value="${geonetwork.upload.dir}"/>
+    <constructor-arg index="1"><array /></constructor-arg>
+  </bean>
+  <bean id="GNFormatterDir" class="java.nio.file.Paths" factory-method="get">
+    <constructor-arg index="0" value="${geonetwork.formatter.dir}"/>
+    <constructor-arg index="1"><array /></constructor-arg>
+  </bean>
+
+</beans>
