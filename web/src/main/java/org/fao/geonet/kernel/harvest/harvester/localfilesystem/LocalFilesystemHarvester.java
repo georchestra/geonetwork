@@ -258,12 +258,13 @@ public class LocalFilesystemHarvester extends AbstractHarvester {
         String language = context.getLanguage();
         dataMan.updateMetadata(context, dbms, id, xml, validate, ufo, index, language, new ISODate().toString(), false);
 
-		dbms.execute("DELETE FROM OperationAllowed WHERE metadataId=?", Integer.parseInt(id));
-        addPrivileges(id, params.getPrivileges(), localGroups, dataMan, context, dbms, log);
+		if (params.resetRightsAndCategoriesOnUpdate) {
+			dbms.execute("DELETE FROM OperationAllowed WHERE metadataId=?", Integer.parseInt(id));
+			addPrivileges(id, params.getPrivileges(), localGroups, dataMan, context, dbms, log);
 
-		dbms.execute("DELETE FROM MetadataCateg WHERE metadataId=?", Integer.parseInt(id));
-        addCategories(id, params.getCategories(), localCateg, dataMan, dbms, context, log, null);
-
+			dbms.execute("DELETE FROM MetadataCateg WHERE metadataId=?", Integer.parseInt(id));
+			addCategories(id, params.getCategories(), localCateg, dataMan, dbms, context, log, null);
+		}
 		dbms.commit();
 		dataMan.indexMetadata(dbms, id);
 	}

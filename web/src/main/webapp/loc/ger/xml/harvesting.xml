@@ -222,6 +222,7 @@
 	<validate>Validieren</validate>
 	<recurse>Rekursiv</recurse>
 	<nodelete>Behalte lokal, wenn Quelle gelöscht wird</nodelete>
+	<resetRightsAndCategoriesOnUpdate>Reset rights and categories on update</resetRightsAndCategoriesOnUpdate>
 	<server>Server</server>
 	<database>Datenbank</database>
 	<privileges>Privilegien</privileges>

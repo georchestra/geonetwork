@@ -40,6 +40,8 @@ public class LocalFilesystemParams extends AbstractParams {
 	public String directoryname;
 	public boolean recurse;
 	public boolean nodelete;
+	public boolean resetRightsAndCategoriesOnUpdate;
+
 	
 	public LocalFilesystemParams(DataManager dm) {
 		super(dm);
@@ -80,7 +82,9 @@ public class LocalFilesystemParams extends AbstractParams {
         recurse = (recurseString.equals("on") || recurseString.equals("true"));
         String nodeleteString = Util.getParam(site, "nodelete", "true");
         nodelete = (nodeleteString.equals("on") || nodeleteString.equals("true"));
-        System.out.println("recurse: " + recurse + " nodelete: " + nodelete);
+        String resetRightsAndCategoriesOnUpdateString = Util.getParam(site, "resetRightsAndCategoriesOnUpdate", "true");
+        resetRightsAndCategoriesOnUpdate = (resetRightsAndCategoriesOnUpdateString.equals("on") ||
+        		resetRightsAndCategoriesOnUpdateString.equals("true"));
     }
 
 	public LocalFilesystemParams copy() {

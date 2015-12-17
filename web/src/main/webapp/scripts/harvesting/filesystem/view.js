@@ -46,9 +46,9 @@ function init()
 		{ id:'filesystem.name', type:'length',   minSize :1,  maxSize :200 },
 		{ id:'filesystem.directoryname',     type:'length',   minSize :1,  maxSize :500 },
 		{ id:'filesystem.recurse',     type:'length',   minSize :1,  maxSize :10 },
-		{ id:'filesystem.nodelete',    type:'length',   minSize :1,  maxSize :10 }
+		{ id:'filesystem.nodelete',    type:'length',   minSize :1,  maxSize :10 },
+		{ id:'filesystem.resetRightsAndCategoriesOnUpdate', type:'length',   minSize :1,  maxSize :10 },
 	]);
-
 }
 
 //=====================================================================================
@@ -80,6 +80,7 @@ function setData(node)
 	hvutil.setOption(node, 'directory', 'filesystem.directoryname');
 	hvutil.setOption(node, 'recurse', 'filesystem.recurse');
 	hvutil.setOption(node, 'nodelete', 'filesystem.nodelete');
+	hvutil.setOption(node, 'nodelete', 'filesystem.resetRightsAndCategoriesOnUpdate');
 	hvutil.setOption(node, 'icon', 'filesystem.icon');
 
 
@@ -108,6 +109,7 @@ function getData()
 
 	data.RECURSE = $F('filesystem.recurse');
 	data.NODELETE = $F('filesystem.nodelete');
+	data.RESETRIGHTSANDCATEGORIESONUPDATE = $F('filesystem.resetRightsAndCategoriesOnUpdate');
 
 	data.ICON = $F('filesystem.icon');
 	
