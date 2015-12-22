@@ -820,87 +820,170 @@
                   <overwrite>true</overwrite>
                   <outputDirectory>${build.webapp.resources}</outputDirectory>
                   <resources>
-                    <!-- Copy the schema folder to the webapp folder source directory
-                in order to be loaded by the application when running mvn jetty:run.
-                -->
-                <resource>
-                  <directory>${project.basedir}/../schemas/iso19139/src/main/plugin</directory>
-                  <targetPath>${basedir}/src/main/webapp/WEB-INF/data/config/schema_plugins</targetPath>
-                </resource>
-                <resource>
-                  <directory>${project.basedir}/../schemas/iso19110/src/main/plugin</directory>
-                  <targetPath>${basedir}/src/main/webapp/WEB-INF/data/config/schema_plugins</targetPath>
-                </resource>
-                <resource>
-                  <directory>${project.basedir}/../schemas/dublin-core/src/main/plugin</directory>
-                  <targetPath>${basedir}/src/main/webapp/WEB-INF/data/config/schema_plugins</targetPath>
-                </resource>
-                <resource>
-                  <directory>${project.basedir}/../schemas/csw-record/src/main/plugin</directory>
-                  <targetPath>${basedir}/src/main/webapp/WEB-INF/data/config/schema_plugins</targetPath>
-                </resource>
-              </resources>
-            </configuration>
-          </execution>
-          <execution>
-            <id>copy-deb-resources</id>
-            <phase>process-resources</phase>
-            <goals>
-              <goal>copy-resources</goal>
-            </goals>
+                    <!-- Copy the schema folder to the webapp folder source directory in order to be loaded by the application when running mvn jetty:run.  -->
+                    <resource>
+                      <directory>${project.basedir}/../schemas/iso19139/src/main/plugin</directory>
+                      <targetPath>${basedir}/src/main/webapp/WEB-INF/data/config/schema_plugins</targetPath>
+                    </resource>
+                    <resource>
+                      <directory>${project.basedir}/../schemas/iso19110/src/main/plugin</directory>
+                      <targetPath>${basedir}/src/main/webapp/WEB-INF/data/config/schema_plugins</targetPath>
+                    </resource>
+                    <resource>
+                      <directory>${project.basedir}/../schemas/dublin-core/src/main/plugin</directory>
+                      <targetPath>${basedir}/src/main/webapp/WEB-INF/data/config/schema_plugins</targetPath>
+                    </resource>
+                    <resource>
+                      <directory>${project.basedir}/../schemas/csw-record/src/main/plugin</directory>
+                      <targetPath>${basedir}/src/main/webapp/WEB-INF/data/config/schema_plugins</targetPath>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+              <execution>
+                <id>copy-deb-resources</id>
+                <phase>process-resources</phase>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
+                <configuration>
+                  <overwrite>true</overwrite>
+                  <outputDirectory>${basedir}/target/deb</outputDirectory>
+                  <resources>
+                    <resource>
+                      <directory>src/deb/resources</directory>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>1.6</version>
+            <executions>
+              <execution>
+                <id>fix-permissions</id>
+                <phase>package</phase>
+                <configuration>
+                  <target>
+                    <chmod perm="ugo+x">
+                      <fileset dir="${basedir}/target/deb">
+                        <include name="**/bin/**"/>
+                        <include name="**/sbin/**"/>
+                        <include name="DEBIAN/post*"/>
+                        <include name="DEBIAN/pre*"/>
+                      </fileset>
+                    </chmod>
+                  </target>
+                </configuration>
+                <goals><goal>run</goal></goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>net.sf.debian-maven</groupId>
+            <artifactId>debian-maven-plugin</artifactId>
+            <version>1.0.6</version>
             <configuration>
-              <overwrite>true</overwrite>
-              <outputDirectory>${basedir}/target/deb</outputDirectory>
-              <resources>
-                <resource>
-                  <directory>src/deb/resources</directory>
-                </resource>
-              </resources>
+              <packageName>georchestra-geonetwork3</packageName>
+              <packageDescription>Debian package for the GeoNetwork fork of geOrchestra.</packageDescription>
+              <projectUrl>http://www.georchestra.org/</projectUrl>
+              <projectOrganization>geOrchestra</projectOrganization>
+              <maintainerName>Pierre Mauduit</maintainerName>
+              <maintainerEmail>pierre.mauduit@gmail.com</maintainerEmail>
+              <excludeAllArtifacts>true</excludeAllArtifacts>
             </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-antrun-plugin</artifactId>
-        <version>1.6</version>
-        <executions>
-          <execution>
-            <id>fix-permissions</id>
-            <phase>package</phase>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>rpmPackage</id>
+      <properties>
+        <env>prod</env>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>2.1.1</version>
             <configuration>
-              <target>
-                <chmod perm="ugo+x">
-                  <fileset dir="${basedir}/target/deb">
-                    <include name="**/bin/**"/>
-                    <include name="**/sbin/**"/>
-                    <include name="DEBIAN/post*"/>
-                    <include name="DEBIAN/pre*"/>
-                  </fileset>
-                </chmod>
-              </target>
+              <classifier>generic</classifier>
+              <webResources>
+                <resource>
+                  <directory>${project.basedir}/../schemas</directory>
+                  <includes>
+                    <include>**/src/main/plugin/*</include>
+                  </includes>
+                  <targetPath>WEB-INF/data/config/schema_plugins</targetPath>
+                </resource>
+                <resource>
+                  <directory>${project.basedir}/../web-ui/src/main/resources</directory>
+                </resource>
+                <resource>
+                  <directory>${build.webapp.resources}</directory>
+                </resource>
+              </webResources>
+              <packagingExcludes>
+                xml/schemas/**,
+                catalog/lib/style/bootstrap/docs/**,
+                catalog/lib/style/bootstrap/fonts/**,
+                catalog/lib/style/bootstrap/grunt/**,
+                catalog/lib/style/bootstrap/test-infra/**,
+                catalog/lib/style/font-awesome/css/**,
+                catalog/lib/style/font-awesome/src/**,
+                catalog/lib/style/font-awesome/scss/**
+              </packagingExcludes>
+              <webXml>${build.webapp.resources}/WEB-INF/web.xml</webXml>
+              <attachClasses>true</attachClasses>
             </configuration>
-            <goals><goal>run</goal></goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>net.sf.debian-maven</groupId>
-        <artifactId>debian-maven-plugin</artifactId>
-        <version>1.0.6</version>
-        <configuration>
-          <packageName>georchestra-geonetwork3</packageName>
-          <packageDescription>Debian package for the GeoNetwork fork of geOrchestra.</packageDescription>
-          <projectUrl>http://www.georchestra.org/</projectUrl>
-          <projectOrganization>geOrchestra</projectOrganization>
-          <maintainerName>Pierre Mauduit</maintainerName>
-          <maintainerEmail>pierre.mauduit@gmail.com</maintainerEmail>
-          <excludeAllArtifacts>true</excludeAllArtifacts>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
-</profile>
+          </plugin>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>rpm-maven-plugin</artifactId>
+            <version>2.1.3</version>
+            <executions>
+              <execution>
+                <id>generate-rpm</id>
+                <goals>
+                  <goal>rpm</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <name>georchestra-${project.artifactId}</name>
+              <sourceEncoding>UTF-8</sourceEncoding>
+              <group>Applications/Internet</group>
+              <keyname>${rpm.gpg.key}</keyname>
+              <mappings>
+                <mapping>
+                  <directory>/usr/share/lib/georchestra-${project.artifactId}</directory>
+                  <sources>
+                    <source>
+                      <location>${project.build.directory}</location>
+                      <includes>
+                        <include>geonetwork-generic.war</include>
+                      </includes>
+                    </source>
+                  </sources>
+                </mapping>
+                <mapping>
+                  <directory>/</directory>
+                  <sources>
+                    <source>
+                      <location>${basedir}/src/deb/resources</location>
+                    </source>
+                  </sources>
+                </mapping>
+              </mappings>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
   <properties>
     <geonetwork.version>${project.version}</geonetwork.version>
