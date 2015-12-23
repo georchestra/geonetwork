@@ -750,10 +750,10 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-war-plugin</artifactId>
-            <version>2.1.1</version>
             <configuration>
               <classifier>generic</classifier>
-              <archiveClasses>true</archiveClasses>
+              <archiveClasses>false</archiveClasses>
+              <attachClasses>false</attachClasses>
               <webResources>
                 <resource>
                   <directory>${project.basedir}/../schemas</directory>
@@ -780,7 +780,6 @@
                 catalog/lib/style/font-awesome/scss/**
               </packagingExcludes>
               <webXml>${build.webapp.resources}/WEB-INF/web.xml</webXml>
-              <attachClasses>true</attachClasses>
             </configuration>
           </plugin>
           <plugin>
@@ -891,8 +890,8 @@
               <packageDescription>Debian package for the GeoNetwork fork of geOrchestra.</packageDescription>
               <projectUrl>http://www.georchestra.org/</projectUrl>
               <projectOrganization>geOrchestra</projectOrganization>
-              <maintainerName>Pierre Mauduit</maintainerName>
-              <maintainerEmail>pierre.mauduit@gmail.com</maintainerEmail>
+              <maintainerName>PSC</maintainerName>
+              <maintainerEmail>psc@georchestra.org</maintainerEmail>
               <excludeAllArtifacts>true</excludeAllArtifacts>
             </configuration>
           </plugin>
@@ -909,7 +908,6 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-war-plugin</artifactId>
-            <version>2.1.1</version>
             <configuration>
               <classifier>generic</classifier>
               <webResources>
@@ -938,7 +936,8 @@
                 catalog/lib/style/font-awesome/scss/**
               </packagingExcludes>
               <webXml>${build.webapp.resources}/WEB-INF/web.xml</webXml>
-              <attachClasses>true</attachClasses>
+              <archiveClasses>false</archiveClasses>
+              <attachClasses>false</attachClasses>
             </configuration>
           </plugin>
           <plugin>
