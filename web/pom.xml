@@ -992,7 +992,7 @@
             <artifactId>docker-maven-plugin</artifactId>
             <version>0.3.8</version>
             <configuration>
-              <imageName>${project.parent.artifactId}</imageName>
+              <imageName>georchestra/${project.parent.artifactId}</imageName>
               <dockerDirectory>${project.basedir}/src/docker</dockerDirectory>
               <resources>
                 <resource>
