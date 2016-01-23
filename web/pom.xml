@@ -1000,7 +1000,13 @@
                   <directory>${project.build.directory}</directory>
                   <include>${project.parent.artifactId}.war</include>
                 </resource>
+                <resource>
+                  <targetPath>/etc/georchestra/geonetwork</targetPath>
+                  <directory>${project.basedir}/../../docker/${datadir}/geonetwork</directory>
+                </resource>
               </resources>
+              <serverId>docker-hub</serverId>
+              <registryUrl>https://index.docker.io/v1/</registryUrl>
             </configuration>
             <dependencies>
               <dependency>
@@ -1028,5 +1034,6 @@
     <system.specific.overrides/>
     <rootProjectDir>${basedir}/..</rootProjectDir>
     <wro4jOutput>${project.build.directory}/wro4j-output/</wro4jOutput>
+    <datadir>datadir</datadir>
   </properties>
 </project>
