@@ -1064,10 +1064,6 @@
                   <directory>${project.build.directory}</directory>
                   <include>${project.parent.artifactId}.war</include>
                 </resource>
-                <resource>
-                  <targetPath>/etc/georchestra/geonetwork</targetPath>
-                  <directory>${project.basedir}/../../docker/${datadir}/geonetwork</directory>
-                </resource>
               </resources>
               <serverId>docker-hub</serverId>
               <registryUrl>https://index.docker.io/v1/</registryUrl>
