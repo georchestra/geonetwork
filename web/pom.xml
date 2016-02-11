@@ -441,6 +441,7 @@
     </dependency>
   </dependencies>
   <build>
+    <finalName>geonetwork-${server}</finalName>
     <plugins>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -546,7 +547,6 @@
       <plugin>
         <artifactId>maven-war-plugin</artifactId>
         <configuration>
-          <archiveClasses>true</archiveClasses>
           <!-- Filter resources according to current profile properties
               (see src/main/filters) and copy them to the webapp -->
           <webResources>
@@ -616,8 +616,6 @@
           </packagingExcludes>
           <!--          <warSourceDirectory>src/main/geonetwork</warSourceDirectory> -->
           <webXml>${build.webapp.resources}/WEB-INF/web.xml</webXml>
-          <attachClasses>true</attachClasses>
-          <warName>geonetwork</warName>
           <webappDirectory>${project.build.directory}/geonetwork</webappDirectory>
         </configuration>
       </plugin>
@@ -746,6 +744,7 @@
     <profile>
       <id>debianPackage</id>
       <build>
+        <finalName>geonetwork</finalName>
         <plugins>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
@@ -839,21 +838,24 @@
                   </resources>
                 </configuration>
               </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-scm-plugin</artifactId>
+            <version>1.9.4</version>
+            <configuration>
+              <checkoutDirectory>${project.build.directory}/deb/etc/georchestra</checkoutDirectory>
+              <connectionUrl>scm:git:https://github.com/georchestra/datadir.git</connectionUrl>
+              <pushChanges>false</pushChanges>
+            </configuration>
+            <executions>
               <execution>
-                <id>copy-deb-resources</id>
+                <id>checkout-deb-default-datadir</id>
                 <phase>process-resources</phase>
                 <goals>
-                  <goal>copy-resources</goal>
+                  <goal>checkout</goal>
                 </goals>
-                <configuration>
-                  <overwrite>true</overwrite>
-                  <outputDirectory>${basedir}/target/deb</outputDirectory>
-                  <resources>
-                    <resource>
-                      <directory>src/deb/resources</directory>
-                    </resource>
-                  </resources>
-                </configuration>
               </execution>
             </executions>
           </plugin>
@@ -862,6 +864,23 @@
             <artifactId>maven-antrun-plugin</artifactId>
             <version>1.6</version>
             <executions>
+              <execution>
+                <id>remove-useless-directories</id>
+                <phase>package</phase>
+                <configuration>
+                  <target>
+                    <delete includeemptydirs="true">
+                      <fileset dir="${project.build.directory}/deb/etc/georchestra">
+                        <include name="**/*" />
+                        <exclude name="geonetwork/**" />
+                      </fileset>
+                    </delete>
+                 </target>
+                </configuration>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+              </execution>
               <execution>
                 <id>fix-permissions</id>
                 <phase>package</phase>
@@ -904,6 +923,7 @@
         <env>prod</env>
       </properties>
       <build>
+        <finalName>geonetwork</finalName>
         <plugins>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
@@ -941,6 +961,49 @@
             </configuration>
           </plugin>
           <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-scm-plugin</artifactId>
+            <version>1.9.4</version>
+            <configuration>
+              <checkoutDirectory>${project.build.directory}/deb/etc/georchestra</checkoutDirectory>
+              <connectionUrl>scm:git:https://github.com/georchestra/datadir.git</connectionUrl>
+              <pushChanges>false</pushChanges>
+            </configuration>
+            <executions>
+              <execution>
+                <id>checkout-deb-default-datadir</id>
+                <phase>process-resources</phase>
+                <goals>
+                  <goal>checkout</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>1.6</version>
+            <executions>
+              <execution>
+                <configuration>
+                  <target>
+                    <delete includeemptydirs="true">
+                      <fileset dir="${project.build.directory}/deb/etc/georchestra">
+                        <include name="**/*" />
+                        <exclude name="geonetwork/**" />
+                      </fileset>
+                    </delete>
+                 </target>
+                </configuration>
+                <id>remove-useless-directories</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>rpm-maven-plugin</artifactId>
             <version>2.1.3</version>
@@ -973,7 +1036,7 @@
                   <directory>/</directory>
                   <sources>
                     <source>
-                      <location>${basedir}/src/deb/resources</location>
+                      <location>${project.build.directory}/deb</location>
                     </source>
                   </sources>
                 </mapping>
@@ -986,6 +1049,7 @@
     <profile>
       <id>docker</id>
       <build>
+        <finalName>geonetwork</finalName>
         <plugins>
           <plugin>
             <groupId>com.spotify</groupId>
@@ -999,10 +1063,6 @@
                   <targetPath>/var/lib/jetty/webapps</targetPath>
                   <directory>${project.build.directory}</directory>
                   <include>${project.parent.artifactId}.war</include>
-                </resource>
-                <resource>
-                  <targetPath>/etc/georchestra/geonetwork</targetPath>
-                  <directory>${project.basedir}/../../docker/${datadir}/geonetwork</directory>
                 </resource>
               </resources>
               <serverId>docker-hub</serverId>
