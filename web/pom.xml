@@ -441,6 +441,7 @@
     </dependency>
   </dependencies>
   <build>
+    <finalName>geonetwork-${server}</finalName>
     <plugins>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -546,7 +547,6 @@
       <plugin>
         <artifactId>maven-war-plugin</artifactId>
         <configuration>
-          <archiveClasses>true</archiveClasses>
           <!-- Filter resources according to current profile properties
               (see src/main/filters) and copy them to the webapp -->
           <webResources>
@@ -616,8 +616,6 @@
           </packagingExcludes>
           <!--          <warSourceDirectory>src/main/geonetwork</warSourceDirectory> -->
           <webXml>${build.webapp.resources}/WEB-INF/web.xml</webXml>
-          <attachClasses>true</attachClasses>
-          <warName>geonetwork</warName>
           <webappDirectory>${project.build.directory}/geonetwork</webappDirectory>
         </configuration>
       </plugin>
@@ -746,6 +744,7 @@
     <profile>
       <id>debianPackage</id>
       <build>
+        <finalName>geonetwork</finalName>
         <plugins>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
@@ -924,6 +923,7 @@
         <env>prod</env>
       </properties>
       <build>
+        <finalName>geonetwork</finalName>
         <plugins>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
@@ -1049,6 +1049,7 @@
     <profile>
       <id>docker</id>
       <build>
+        <finalName>geonetwork</finalName>
         <plugins>
           <plugin>
             <groupId>com.spotify</groupId>

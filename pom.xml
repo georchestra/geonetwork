@@ -1209,5 +1209,6 @@
     <npm.version>1.3.23</npm.version>
     <print-lib.version>2.1.1</print-lib.version>
     <flying-saucer>9.0.7</flying-saucer>
+    <server>template</server>
   </properties>
 </project>
