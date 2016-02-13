@@ -1016,13 +1016,13 @@
               </execution>
             </executions>
             <configuration>
-              <name>georchestra-${project.artifactId}</name>
+              <name>georchestra-geonetwork3</name>
               <sourceEncoding>UTF-8</sourceEncoding>
               <group>Applications/Internet</group>
               <keyname>${rpm.gpg.key}</keyname>
               <mappings>
                 <mapping>
-                  <directory>/usr/share/lib/georchestra-${project.artifactId}</directory>
+                  <directory>/usr/share/lib/georchestra-geonetwork3</directory>
                   <sources>
                     <source>
                       <location>${project.build.directory}</location>
