@@ -1,0 +1,1 @@
+export CATALINA_OPTS="$CATALINA_OPTS  -Dgeonetwork.jeeves.configuration.overrides.file=/usr/local/tomcat/webapps/geonetwork/WEB-INF/config-overrides-georchestra.xml -Dgeonetwork.dir=/usr/local/tomcat/work/gn_data -Dgeonetwork-private.schema.dir=/srv/tomcat/tomcat1/webapps/geonetwork-private/WEB-INF/data/config/schema_plugins"
