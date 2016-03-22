@@ -1179,7 +1179,7 @@
               <dockerDirectory>${project.basedir}/src/docker</dockerDirectory>
               <resources>
                 <resource>
-                  <targetPath>/usr/local/tomcat/webapps</targetPath>
+                  <targetPath>/var/lib/jetty/webapps</targetPath>
                   <directory>${project.build.directory}</directory>
                   <include>${project.parent.artifactId}.war</include>
                 </resource>
