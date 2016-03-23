@@ -40,7 +40,7 @@
       }, {
         icon: 'fa-eject',
         fn: function() {
-          georLinkActionsService.extractMetadata('extractLayers');
+          georLinkActionsService.extractMetadata('extractorapp');
         },
         label: 'extractLayers'
       }];
