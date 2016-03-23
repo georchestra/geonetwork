@@ -1,0 +1,4 @@
+#!/bin/bash
+
+chown -R jetty:jetty /var/local/geonetwork
+
