@@ -1059,7 +1059,7 @@
       <properties>
         <dockerImageName>georchestra/${project.parent.artifactId}</dockerImageName>
         <dockerDatadirScmUrl>scm:git:https://github.com/georchestra/datadir.git</dockerDatadirScmUrl>
-        <dockerDatadirScmVersion>docker-15.12</dockerDatadirScmVersion>
+        <dockerDatadirScmVersion>docker</dockerDatadirScmVersion>
       </properties>
       <build>
         <finalName>geonetwork</finalName>
