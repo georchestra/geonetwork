@@ -15,8 +15,9 @@ RUN unzip /var/lib/jetty/webapps/geonetwork.war -d /var/lib/jetty/webapps/geonet
   chown -R jetty:jetty /var/lib/jetty/webapps/geonetwork
 
 ENTRYPOINT [ "/docker-entrypoint.sh" ]
-CMD [ "java","-Djava.io.tmpdir=/tmp/jetty",                                                                                             \
-      "-Dgeonetwork.jeeves.configuration.overrides.file=/var/lib/jetty/webapps/geonetwork/WEB-INF/config-overrides-georchestra.xml",    \
-      "-Dgeonetwork.dir=/var/local/geonetwork",                                                                                         \
-      "-Dgeonetwork-private.schema.dir=/var/lib/jetty/webapps/geonetwork/WEB-INF/data/config/schema_plugins",                           \
-      "-jar","/usr/local/jetty/start.jar" ]
+CMD [ "sh", "-c", "exec java -Djava.io.tmpdir=/tmp/jetty                                                                           \
+      -Dgeonetwork.jeeves.configuration.overrides.file=/var/lib/jetty/webapps/geonetwork/WEB-INF/config-overrides-georchestra.xml  \
+      -Dgeonetwork.dir=/var/local/geonetwork                                                                                       \
+      -Xmx${XMX:-3G} -Xms${XMX:-3G}                                                                                                \
+      -Dgeonetwork-private.schema.dir=/var/lib/jetty/webapps/geonetwork/WEB-INF/data/config/schema_plugins                         \
+      -jar /usr/local/jetty/start.jar ]
