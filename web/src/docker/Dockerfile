@@ -2,6 +2,8 @@ FROM jetty:9.3-jre8
 
 ADD . /
 
+RUN java -jar "$JETTY_HOME/start.jar" --add-to-startd=jmx,jmx-remote,stats
+
 VOLUME [ "/var/local/geonetwork" ]
 
 ENTRYPOINT [ "/docker-entrypoint.sh" ]
