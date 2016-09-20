@@ -19,5 +19,6 @@ CMD [ "sh", "-c", "exec java -Djava.io.tmpdir=/tmp/jetty                        
       -Dgeonetwork.jeeves.configuration.overrides.file=/var/lib/jetty/webapps/geonetwork/WEB-INF/config-overrides-georchestra.xml  \
       -Dgeonetwork.dir=/var/local/geonetwork                                                                                       \
       -Xmx${XMX:-3G} -Xms${XMX:-3G}                                                                                                \
-      -Dgeonetwork-private.schema.dir=/var/lib/jetty/webapps/geonetwork/WEB-INF/data/config/schema_plugins                         \
+      -Dgeonetwork.schema.dir=/var/lib/jetty/webapps/geonetwork/WEB-INF/data/config/schema_plugins                                 \
+      ${ADD_JAVA_OPTS}                                                                                                             \
       -jar /usr/local/jetty/start.jar" ]
