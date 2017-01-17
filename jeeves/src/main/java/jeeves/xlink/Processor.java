@@ -184,7 +184,7 @@ public final class Processor {
 					URL url = new URL(uri.replaceAll("&amp;", "&"));
 
 					URLConnection conn = url.openConnection();
-					conn.setConnectTimeout(1000);
+					conn.setConnectTimeout(10000);
 
 					BufferedInputStream in = new BufferedInputStream(conn.getInputStream());
 					try {
