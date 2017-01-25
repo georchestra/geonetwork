@@ -13,9 +13,6 @@ VOLUME [ "/mnt/geonetwork_datadir", "/tmp", "/run/jetty" ]
 
 ENTRYPOINT [ "/docker-entrypoint.sh" ]
 
-ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /wait-for-it.sh
-RUN chmod +x /wait-for-it.sh
-
 CMD ["sh", "-c", "exec java \
 -Djava.io.tmpdir=/tmp/jetty \
 -Djava.util.prefs.userRoot=/tmp/userPrefs \
