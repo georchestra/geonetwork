@@ -3880,7 +3880,7 @@
         <xsl:variable name="ptFreeTextTree" select="exslt:node-set($tmpFreeText)" />
         
         <xsl:variable name="mainLang"
-          select="string(/root/*/gmd:language/gco:CharacterString|/root/*/gmd:language/gmd:LanguageCode/@codeListValue)" />
+                    select="string(/root/*/gmd:language[1]/gco:CharacterString|/root/gmd:MD_Metadata[1]/gmd:language[1]/gmd:LanguageCode/@codeListValue)" />
         <xsl:variable name="mainLangId">
           <xsl:call-template name="getLangIdFromMetadata">
             <xsl:with-param name="lang" select="$mainLang" />
