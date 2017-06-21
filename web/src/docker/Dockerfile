@@ -6,6 +6,9 @@ RUN java -jar "$JETTY_HOME/start.jar" --add-to-startd=jmx,jmx-remote,stats
 
 ADD . /
 
+RUN mkdir /var/local/geonetwork && \
+    chown jetty:jetty /etc/georchestra /var/local/geonetwork
+
 VOLUME [ "/var/local/geonetwork", "/tmp", "/run/jetty" ]
 
 ENTRYPOINT [ "/docker-entrypoint.sh" ]
