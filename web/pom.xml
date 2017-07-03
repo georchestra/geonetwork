@@ -575,7 +575,10 @@
             <resource>
               <directory>${build.webapp.resources}</directory>
             </resource>
-            <!-- Remove comment tag to include documentation in the build. 
+            <resource>
+              <directory>${project.basedir}/../../target/conf/geonetwork</directory>
+            </resource>
+	    <!-- Remove comment tag to include documentation in the build. 
             Python and Latex are required to build the documentation. -->
             <!--
             <resource>
