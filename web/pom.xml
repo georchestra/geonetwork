@@ -576,7 +576,7 @@
               <directory>${build.webapp.resources}</directory>
             </resource>
             <resource>
-              <directory>${project.basedir}/../../target/conf/geonetwork</directory>
+              <directory>${conf.overwrite}</directory>
             </resource>
 	    <!-- Remove comment tag to include documentation in the build. 
             Python and Latex are required to build the documentation. -->
@@ -1121,6 +1121,17 @@
         </plugins>
       </build>
     </profile>
+    <profile>
+      <id>overwrite-from-conf</id>
+      <activation>
+        <file>
+          <exists>${project.basedir}/../../target/conf/geonetwork/</exists>
+        </file>
+      </activation>
+      <properties>
+        <conf.overwrite>${project.basedir}/../../target/conf/geonetwork</conf.overwrite>
+      </properties>
+    </profile>
   </profiles>
   <properties>
     <geonetwork.version>${project.version}</geonetwork.version>
@@ -1137,5 +1148,6 @@
     <rootProjectDir>${basedir}/..</rootProjectDir>
     <wro4jOutput>${project.build.directory}/wro4j-output/</wro4jOutput>
     <datadir>datadir</datadir>
+    <conf.overwrite>${build.webapp.resources}</conf.overwrite>
   </properties>
 </project>
