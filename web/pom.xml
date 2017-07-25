@@ -508,24 +508,20 @@
               <overwrite>true</overwrite>
               <outputDirectory>${build.webapp.resources}</outputDirectory>
               <resources>
-                <!-- Copy the schema folder to the webapp folder source directory
-                in order to be loaded by the application when running mvn jetty:run.
-                -->
                 <resource>
-                  <directory>${project.basedir}/../schemas/iso19139/src/main/plugin</directory>
-                  <targetPath>${basedir}/src/main/webapp/WEB-INF/data/config/schema_plugins</targetPath>
+                  <directory>${project.basedir}/../schemas</directory>
+                  <includes>
+                    <include>**/src/main/plugin/*</include>
+                  </includes>
+                  <targetPath>${project.build.directory}/geonetwork-jetty-run/WEB-INF/data/config/schema_plugins</targetPath>
                 </resource>
                 <resource>
-                  <directory>${project.basedir}/../schemas/iso19110/src/main/plugin</directory>
-                  <targetPath>${basedir}/src/main/webapp/WEB-INF/data/config/schema_plugins</targetPath>
+                  <directory>${project.basedir}/../web-ui/src/main/resources</directory>
+                  <targetPath>${project.build.directory}/geonetwork-jetty-run/</targetPath>
                 </resource>
                 <resource>
-                  <directory>${project.basedir}/../schemas/dublin-core/src/main/plugin</directory>
-                  <targetPath>${basedir}/src/main/webapp/WEB-INF/data/config/schema_plugins</targetPath>
-                </resource>
-                <resource>
-                  <directory>${project.basedir}/../schemas/csw-record/src/main/plugin</directory>
-                  <targetPath>${basedir}/src/main/webapp/WEB-INF/data/config/schema_plugins</targetPath>
+                  <directory>${basedir}/src/main/webapp</directory>
+                  <targetPath>${project.build.directory}/geonetwork-jetty-run/</targetPath>
                 </resource>
               </resources>
             </configuration>
@@ -575,7 +571,7 @@
             <resource>
               <directory>${build.webapp.resources}</directory>
             </resource>
-            <!-- Remove comment tag to include documentation in the build. 
+            <!-- Remove comment tag to include documentation in the build.
             Python and Latex are required to build the documentation. -->
             <!--
             <resource>
@@ -592,7 +588,7 @@
             <resource>
             <directory>${rootProjectDir}/docs/eng/developer/build/html</directory>
               <targetPath>docs/eng/developer</targetPath>
-            </resource>  
+            </resource>
             <resource>
               <directory>${rootProjectDir}/docs</directory>
               <targetPath>docs</targetPath>
@@ -610,7 +606,6 @@
                 </includes>
             </resource>-->
           </webResources>
-          <!-- <packagingExcludes>WEB-INF/data/**</packagingExcludes> -->
           <packagingExcludes>
             xml/schemas/**,
             catalog/lib/style/bootstrap/docs/**,
@@ -621,7 +616,6 @@
             catalog/lib/style/font-awesome/src/**,
             catalog/lib/style/font-awesome/scss/**
           </packagingExcludes>
-          <!--          <warSourceDirectory>src/main/geonetwork</warSourceDirectory> -->
           <webXml>${build.webapp.resources}/WEB-INF/web.xml</webXml>
           <webappDirectory>${project.build.directory}/geonetwork</webappDirectory>
         </configuration>
@@ -651,22 +645,20 @@
               <maxIdleTime>60000</maxIdleTime>
             </connector>
           </connectors>
-          <webAppSourceDirectory>${project.build.directory}/geonetwork</webAppSourceDirectory>
+
+          <webAppSourceDirectory>${project.build.directory}/geonetwork-jetty-run</webAppSourceDirectory>
           <webApp>
             <contextPath>/geonetwork</contextPath>
-            <descriptor>${project.build.directory}/WEB-INF/web.xml</descriptor>
             <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
-              <!--
-              Enable to use ExtJS UI
-              Add
-              ${rootProjectDir}/web-client/src/main/resources/
-              to resourcesAsCSV
-            -->
+              <!-- can't target directly "target/geonetwork" as don't know how to forbid both .m2 and WEB-INF *.jar
+              to be loaded, thus leading to conflict with domain.jar,
+              "java.lang.IllegalStateException: Conflicting persistence unit definitions",
+              so target geonetwork-jetty-run, same as geonetwork but with no lib in.
+              "geonetwork-jetty-run" is built by maven-resources-plugin, resources listed there should be the same as
+               theses ones listed in maven-war-plugin-->
               <resourcesAsCSV>
-              ${project.basedir}/src/main/webapp,
-              ${rootProjectDir}/web-ui/src/main/resources/,
-              ${build.webapp.resources}
-            </resourcesAsCSV>
+                ${project.build.directory}/geonetwork-jetty-run
+              </resourcesAsCSV>
             </baseResource>
           </webApp>
           <systemProperties>
@@ -812,37 +804,6 @@
                     <filter>${basedir}/src/main/filters/${env}.properties</filter>
                   </filters>
                   <overwrite>true</overwrite>
-                </configuration>
-              </execution>
-              <execution>
-                <id>copy-schemas</id>
-                <phase>process-resources</phase>
-                <goals>
-                  <goal>copy-resources</goal>
-                </goals>
-                <configuration>
-                  <includeEmptyDirs>true</includeEmptyDirs>
-                  <overwrite>true</overwrite>
-                  <outputDirectory>${build.webapp.resources}</outputDirectory>
-                  <resources>
-                    <!-- Copy the schema folder to the webapp folder source directory in order to be loaded by the application when running mvn jetty:run.  -->
-                    <resource>
-                      <directory>${project.basedir}/../schemas/iso19139/src/main/plugin</directory>
-                      <targetPath>${basedir}/src/main/webapp/WEB-INF/data/config/schema_plugins</targetPath>
-                    </resource>
-                    <resource>
-                      <directory>${project.basedir}/../schemas/iso19110/src/main/plugin</directory>
-                      <targetPath>${basedir}/src/main/webapp/WEB-INF/data/config/schema_plugins</targetPath>
-                    </resource>
-                    <resource>
-                      <directory>${project.basedir}/../schemas/dublin-core/src/main/plugin</directory>
-                      <targetPath>${basedir}/src/main/webapp/WEB-INF/data/config/schema_plugins</targetPath>
-                    </resource>
-                    <resource>
-                      <directory>${project.basedir}/../schemas/csw-record/src/main/plugin</directory>
-                      <targetPath>${basedir}/src/main/webapp/WEB-INF/data/config/schema_plugins</targetPath>
-                    </resource>
-                  </resources>
                 </configuration>
               </execution>
             </executions>
@@ -1096,7 +1057,7 @@
                 <resource>
                   <targetPath>/var/lib/jetty/webapps</targetPath>
                   <directory>${project.build.directory}</directory>
-                  <include>${project.parent.artifactId}.war</include>
+                  <include>geonetwork/**</include>
                 </resource>
                 <resource>
                   <targetPath>/etc/georchestra</targetPath>

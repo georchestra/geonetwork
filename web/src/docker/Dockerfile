@@ -7,7 +7,8 @@ RUN java -jar "$JETTY_HOME/start.jar" --add-to-startd=jmx,jmx-remote,stats
 ADD . /
 
 RUN mkdir /mnt/geonetwork_datadir && \
-    chown jetty:jetty /etc/georchestra /mnt/geonetwork_datadir
+    chown jetty:jetty /etc/georchestra /mnt/geonetwork_datadir && \
+    chown -R jetty:jetty /var/lib/jetty/webapps
 
 VOLUME [ "/mnt/geonetwork_datadir", "/tmp", "/run/jetty" ]
 
