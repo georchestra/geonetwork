@@ -75,7 +75,7 @@
                 for (var i = 0; i < data.metadatacategory.length; i++) {
                   res.push({
                     id: data.metadatacategory[i].name,
-                    name: data.metadatacategory[i].label.eng
+                    name: data.metadatacategory[i].label[$scope.lang]
                   });
                 }
                 defer.resolve(res);
