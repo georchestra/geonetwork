@@ -56,6 +56,7 @@ import org.fao.geonet.csw.common.ResultType;
 import org.fao.geonet.csw.common.exceptions.CatalogException;
 import org.fao.geonet.csw.common.exceptions.InvalidParameterValueEx;
 import org.fao.geonet.csw.common.exceptions.NoApplicableCodeEx;
+import org.fao.geonet.csw.common.util.CswCustomQueryParser;
 import org.fao.geonet.domain.Pair;
 import org.fao.geonet.domain.ReservedOperation;
 import org.fao.geonet.exceptions.SearchExpiredEx;
@@ -756,7 +757,7 @@ public class CatalogSearcher implements MetadataRecordSelector {
      */
     public static Query getCswServiceSpecificConstraintQuery(String cswServiceSpecificConstraint, LuceneConfig _luceneConfig) throws ParseException, QueryNodeException {
 //        MultiFieldQueryParser parser = new MultiFieldQueryParser(Geonet.LUCENE_VERSION, fields , SearchManager.getAnalyzer());
-        StandardQueryParser parser = new StandardQueryParser(SearchManager.getAnalyzer());
+        StandardQueryParser parser = new CswCustomQueryParser(SearchManager.getAnalyzer());
         Map<String, NumericConfig> numericMap = new HashMap<String, NumericConfig>();
         for (LuceneConfigNumericField field : _luceneConfig.getNumericFields().values()) {
             String name = field.getName();
