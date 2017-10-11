@@ -4,17 +4,25 @@ ADD . /
 
 RUN java -jar "$JETTY_HOME/start.jar" --add-to-startd=jmx,jmx-remote,stats
 
+# Temporary switch to root
+USER root
+
 RUN apt-get update && \
     apt-get install -y unzip && \
     rm -rf /var/lib/apt/lists/*
 
-VOLUME [ "/var/local/geonetwork" ]
 
 RUN unzip /var/lib/jetty/webapps/geonetwork.war -d /var/lib/jetty/webapps/geonetwork && \
   rm -f /var/lib/jetty/webapps/geonetwork.war && \
   chown -R jetty:jetty /var/lib/jetty/webapps/geonetwork
 
+# Restore jetty user
+USER jetty
+
+VOLUME [ "/var/local/geonetwork" ]
+
 ENTRYPOINT [ "/docker-entrypoint.sh" ]
+
 CMD [ "sh", "-c", "exec java -Djava.io.tmpdir=/tmp/jetty                                                                           \
       -Dgeonetwork.jeeves.configuration.overrides.file=/var/lib/jetty/webapps/geonetwork/WEB-INF/config-overrides-georchestra.xml  \
       -Dgeonetwork.dir=/var/local/geonetwork                                                                                       \
