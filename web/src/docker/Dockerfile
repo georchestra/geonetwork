@@ -6,6 +6,9 @@ RUN java -jar "$JETTY_HOME/start.jar" --add-to-startd=jmx,jmx-remote,stats
 
 ADD . /
 
+# Temporary switch to root
+USER root
+
 RUN mkdir /mnt/geonetwork_datadir && \
     chown jetty:jetty /mnt/geonetwork_datadir
 
@@ -13,11 +16,14 @@ RUN apt-get update && \
     apt-get install -y unzip && \
     rm -rf /var/lib/apt/lists/*
 
-VOLUME [ "/mnt/geonetwork_datadir", "/tmp", "/run/jetty" ]
-
 RUN unzip /var/lib/jetty/webapps/geonetwork.war -d /var/lib/jetty/webapps/geonetwork && \
   rm -f /var/lib/jetty/webapps/geonetwork.war && \
   chown -R jetty:jetty /var/lib/jetty/webapps/geonetwork
+
+# Restore jetty user
+USER jetty
+
+VOLUME [ "/mnt/geonetwork_datadir", "/tmp", "/run/jetty" ]
 
 ENTRYPOINT [ "/docker-entrypoint.sh" ]
 
@@ -32,3 +38,4 @@ CMD [ "sh", "-c", "exec java \
 -XX:-UsePerfData \
 ${JAVA_OPTIONS} \
 -jar /usr/local/jetty/start.jar" ]
+
