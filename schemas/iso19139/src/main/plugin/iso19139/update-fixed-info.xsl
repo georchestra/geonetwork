@@ -189,43 +189,34 @@
 	<!-- online resources: download -->
 	<!-- ================================================================= -->
 
-	<xsl:template match="gmd:CI_OnlineResource[matches(gmd:protocol/gco:CharacterString,'^WWW:DOWNLOAD-.*-http--download.*') and gmd:name]">
-		<xsl:variable name="fname" select="gmd:name/gco:CharacterString|gmd:name/gmx:MimeFileType"/>
-		<xsl:variable name="mimeType">
-			<xsl:call-template name="getMimeTypeFile">
-				<xsl:with-param name="datadir" select="/root/env/datadir"/>
-				<xsl:with-param name="fname" select="$fname"/>
-			</xsl:call-template>
-		</xsl:variable>
+  <xsl:template
+    match="gmd:CI_OnlineResource[matches(gmd:protocol/gco:CharacterString,'^WWW:DOWNLOAD-.*-http--download.*') and gmd:name]">
+    <xsl:variable name="fname" select="gmd:name/gco:CharacterString|gmd:name/gmx:MimeFileType"/>
+    <xsl:variable name="mimeType">
+      <xsl:call-template name="getMimeTypeFile">
+        <xsl:with-param name="datadir" select="/root/env/datadir"/>
+        <xsl:with-param name="fname" select="$fname"/>
+      </xsl:call-template>
+    </xsl:variable>
 
-		<xsl:copy>
-			<xsl:copy-of select="@*"/>
-			<gmd:linkage>
-				<gmd:URL>
-					<xsl:choose>
-						<xsl:when test="/root/env/system/downloadservice/simple='true'">
-							<xsl:value-of select="concat($serviceUrl,'resources.get?uuid=',/root/env/uuid,'&amp;fname=',$fname,'&amp;access=private')"/>
-						</xsl:when>
-						<xsl:when test="/root/env/system/downloadservice/withdisclaimer='true'">
-							<xsl:value-of select="concat($serviceUrl,'file.disclaimer?uuid=',/root/env/uuid,'&amp;fname=',$fname,'&amp;access=private')"/>
-						</xsl:when>
-						<xsl:otherwise> <!-- /root/env/config/downloadservice/leave='true' -->
-							<xsl:value-of select="gmd:linkage/gmd:URL"/>
-						</xsl:otherwise>
-					</xsl:choose>
-				</gmd:URL>
-			</gmd:linkage>
-			<xsl:copy-of select="gmd:protocol"/>
-			<xsl:copy-of select="gmd:applicationProfile"/>
-			<gmd:name>
-				<gmx:MimeFileType type="{$mimeType}">
-					<xsl:value-of select="$fname"/>
-				</gmx:MimeFileType>
-			</gmd:name>
-			<xsl:copy-of select="gmd:description"/>
-			<xsl:copy-of select="gmd:function"/>
-		</xsl:copy>
-	</xsl:template>
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <gmd:linkage>
+        <gmd:URL>
+          <xsl:value-of select="gmd:linkage/gmd:URL"/>
+        </gmd:URL>
+      </gmd:linkage>
+      <xsl:copy-of select="gmd:protocol"/>
+      <xsl:copy-of select="gmd:applicationProfile"/>
+      <gmd:name>
+        <gmx:MimeFileType type="{$mimeType}">
+          <xsl:value-of select="$fname"/>
+        </gmx:MimeFileType>
+      </gmd:name>
+      <xsl:copy-of select="gmd:description"/>
+      <xsl:copy-of select="gmd:function"/>
+    </xsl:copy>
+  </xsl:template>
 
 	<!-- ================================================================= -->
 	<!-- online resources: link-to-downloadable data etc -->
