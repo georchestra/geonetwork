@@ -27,14 +27,6 @@ import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 
-import jeeves.constants.Jeeves;
-import jeeves.exceptions.BadParameterEx;
-import jeeves.interfaces.Service;
-import jeeves.server.ServiceConfig;
-import jeeves.server.UserSession;
-import jeeves.server.context.ServiceContext;
-import jeeves.utils.Util;
-
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.constants.Params;
@@ -43,6 +35,14 @@ import org.fao.geonet.lib.Lib;
 import org.fao.geonet.services.Utils;
 import org.fao.geonet.services.metadata.XslProcessing;
 import org.jdom.Element;
+
+import jeeves.constants.Jeeves;
+import jeeves.exceptions.BadParameterEx;
+import jeeves.interfaces.Service;
+import jeeves.server.ServiceConfig;
+import jeeves.server.UserSession;
+import jeeves.server.context.ServiceContext;
+import jeeves.utils.Util;
 
 /**
  * Handles the file upload and attach the uploaded service to the metadata record
@@ -87,7 +87,8 @@ public class UploadAndProcess implements Service {
                 + context.getIpAddress() + "," + username);
 
         // Set parameter and process metadata to reference the uploaded file
-        params.addContent(new Element("url").setText(filename));
+
+        params.addContent(new Element("url").setText(getUploadedFileUrl(dataMan, context, id, filename)));
         params.addContent(new Element("name").setText(filename));
         params.addContent(new Element("protocol")
                 .setText("WWW:DOWNLOAD-1.0-http--download"));
@@ -116,5 +117,10 @@ public class UploadAndProcess implements Service {
                 .addContent(new Element(Geonet.Elem.ID).setText(id));
 
         return response;
+    }
+
+    private String getUploadedFileUrl(DataManager dataMan, ServiceContext context, String metadataId, String filename) {
+        String baseUrl = dataMan.getSiteURL(context);
+        return String.format("%s/resources.get?access=private&id=%s&fname=%s", baseUrl, metadataId, filename);
     }
 }
