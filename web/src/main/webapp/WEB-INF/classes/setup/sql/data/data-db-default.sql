@@ -654,7 +654,7 @@ INSERT INTO Settings (name, value, datatype, position, internal) VALUES
   ('map/proj4js', '[{"code":"EPSG:2154","value":"+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"}]', 0, 9591, 'n');
 
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES
-  ('map/isMapViewerEnabled', 'false', 2, 9592, 'n');
+  ('map/isMapViewerEnabled', 'true', 2, 9592, 'n');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES
   ('map/is3DModeAllowed', 'false', 2, 9593, 'n');
 INSERT INTO Settings (name, value, datatype, position, internal) VALUES
