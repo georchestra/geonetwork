@@ -74,7 +74,20 @@ public class List {
         java.util.List<LogFileResponse> logFileList = new ArrayList<LogFileResponse>();
         final GeonetworkDataDirectory dataDirectory =
             ApplicationContextHolder.get().getBean(GeonetworkDataDirectory.class);
-        String classesFolder = dataDirectory.getWebappDir() + "/WEB-INF/classes";
+
+        String classesFolder = null;
+        // If a logPlaceHolder directory (String) bean is defined, use it
+        // instead of the default WEB-INF/classes
+        try {
+            Object logov = ApplicationContextHolder.get().getBean("logPlaceHolder");
+            classesFolder = logov.toString();
+        } catch (Throwable e) {
+            // falling back onto the default behaviour
+        }
+
+        if (classesFolder == null) {
+            classesFolder = dataDirectory.getWebappDir() + "/WEB-INF/classes";
+        }
         File folder = new File(classesFolder);
 
         if (folder != null && folder.isDirectory()) {
