@@ -1,0 +1,4 @@
+#!/bin/bash
+
+/wait-for-it.sh database:5432 -s -t 0 -- echo "DB OK"
+

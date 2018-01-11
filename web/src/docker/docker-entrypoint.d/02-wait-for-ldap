@@ -1,0 +1,4 @@
+#!/bin/bash
+
+/wait-for-it.sh ldap:389 -s -t 0 -- echo "LDAP OK"
+

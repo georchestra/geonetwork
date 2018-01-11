@@ -452,6 +452,13 @@
       <version>0.2.2</version>
     </dependency>
     <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>apache-log4j-extras</artifactId>
+      <version>1.1</version>
+      <type>jar</type>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>web-ui</artifactId>
       <version>${project.version}</version>
@@ -531,7 +538,7 @@
 
 
   <build>
-  
+   <finalName>geonetwork-${server}</finalName>
     <plugins>
     
       <!-- Generate a properties file with the commit hash to be displayed on the admin.console -->
@@ -735,7 +742,6 @@
               <Implementation-Build>${git.commit.id}</Implementation-Build>
             </manifestEntries>
           </archive>
-          <archiveClasses>true</archiveClasses>
           <!-- Filter resources according to current profile properties
               (see src/main/filters) and copy them to the webapp -->
           <webResources>
@@ -766,8 +772,6 @@
           </packagingExcludes>
           <!--          <warSourceDirectory>src/main/geonetwork</warSourceDirectory> -->
           <webXml>${build.webapp.resources}/WEB-INF/web.xml</webXml>
-          <attachClasses>true</attachClasses>
-          <warName>geonetwork</warName>
           <webappDirectory>${project.build.directory}/geonetwork</webappDirectory>
         </configuration>
       </plugin>
@@ -874,6 +878,216 @@
         <es.spring.profile>es</es.spring.profile>
       </properties>
     </profile>
+    <profile>
+      <id>debianPackage</id>
+      <build>
+        <finalName>geonetwork</finalName>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <configuration>
+              <classifier>generic</classifier>
+              <archiveClasses>false</archiveClasses>
+              <attachClasses>false</attachClasses>
+              <webResources>
+                <resource>
+                  <directory>${project.basedir}/../schemas</directory>
+                  <includes>
+                    <include>**/src/main/plugin/*</include>
+                  </includes>
+                  <targetPath>WEB-INF/data/config/schema_plugins</targetPath>
+                </resource>
+                <resource>
+                  <directory>${project.basedir}/../web-ui/src/main/resources</directory>
+                </resource>
+                <resource>
+                  <directory>${build.webapp.resources}</directory>
+                </resource>
+              </webResources>
+              <packagingExcludes>
+                xml/schemas/**,
+                catalog/lib/style/bootstrap/docs/**,
+                catalog/lib/style/bootstrap/fonts/**,
+                catalog/lib/style/bootstrap/grunt/**,
+                catalog/lib/style/bootstrap/test-infra/**,
+                catalog/lib/style/font-awesome/css/**,
+                catalog/lib/style/font-awesome/src/**,
+                catalog/lib/style/font-awesome/scss/**
+              </packagingExcludes>
+              <webXml>${build.webapp.resources}/WEB-INF/web.xml</webXml>
+            </configuration>
+          </plugin>
+          <plugin>
+            <artifactId>maven-resources-plugin</artifactId>
+            <version>2.5</version>
+            <executions>
+              <execution>
+                <id>copy-filter-webResource</id>
+                <phase>process-resources</phase>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
+                <configuration>
+                  <includeEmptyDirs>false</includeEmptyDirs>
+                  <outputDirectory>${build.webapp.resources}</outputDirectory>
+                  <resources>
+                    <resource>
+                      <directory>${basedir}/src/main/webResources</directory>
+                      <filtering>true</filtering>
+                      <targetPath>${build.webapp.resources}</targetPath>
+                    </resource>
+                  </resources>
+                  <filters>
+                    <filter>${basedir}/src/main/filters/${env}.properties</filter>
+                  </filters>
+                  <overwrite>true</overwrite>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-scm-plugin</artifactId>
+            <version>1.9.4</version>
+            <configuration>
+              <checkoutDirectory>${project.build.directory}/deb/etc/georchestra</checkoutDirectory>
+              <connectionUrl>scm:git:https://github.com/georchestra/datadir.git</connectionUrl>
+              <pushChanges>false</pushChanges>
+            </configuration>
+            <executions>
+              <execution>
+                <id>checkout-deb-default-datadir</id>
+                <phase>process-resources</phase>
+                <goals>
+                  <goal>checkout</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>1.6</version>
+            <executions>
+              <execution>
+                <id>remove-useless-directories</id>
+                <phase>package</phase>
+                <configuration>
+                  <target>
+                    <delete includeemptydirs="true">
+                      <fileset dir="${project.build.directory}/deb/etc/georchestra">
+                        <include name="**/*" />
+                        <exclude name="geonetwork/**" />
+                      </fileset>
+                    </delete>
+                 </target>
+                </configuration>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>fix-permissions</id>
+                <phase>package</phase>
+                <configuration>
+                  <target>
+                    <chmod perm="ugo+x">
+                      <fileset dir="${basedir}/target/deb">
+                        <include name="**/bin/**"/>
+                        <include name="**/sbin/**"/>
+                        <include name="DEBIAN/post*"/>
+                        <include name="DEBIAN/pre*"/>
+                      </fileset>
+                    </chmod>
+                  </target>
+                </configuration>
+                <goals><goal>run</goal></goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>net.sf.debian-maven</groupId>
+            <artifactId>debian-maven-plugin</artifactId>
+            <version>1.0.6</version>
+            <configuration>
+              <packageName>georchestra-geonetwork3</packageName>
+              <packageDescription>Debian package for the GeoNetwork fork of geOrchestra.</packageDescription>
+              <projectUrl>http://www.georchestra.org/</projectUrl>
+              <projectOrganization>geOrchestra</projectOrganization>
+              <maintainerName>PSC</maintainerName>
+              <maintainerEmail>psc@georchestra.org</maintainerEmail>
+              <excludeAllArtifacts>true</excludeAllArtifacts>
+              <snapshotRevisionFile>${project.build.directory}</snapshotRevisionFile>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>docker</id>
+      <properties>
+        <dockerImageName>georchestra/${project.parent.artifactId}:3-latest</dockerImageName>
+        <dockerDatadirScmUrl>scm:git:https://github.com/georchestra/datadir.git</dockerDatadirScmUrl>
+        <dockerDatadirScmVersion>docker-master</dockerDatadirScmVersion>
+      </properties>
+      <build>
+        <finalName>geonetwork</finalName>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-scm-plugin</artifactId>
+            <version>1.9.4</version>
+            <configuration>
+              <checkoutDirectory>${project.build.directory}/datadir/</checkoutDirectory>
+              <connectionUrl>${dockerDatadirScmUrl}</connectionUrl>
+              <pushChanges>false</pushChanges>
+              <scmVersion>${dockerDatadirScmVersion}</scmVersion>
+              <scmVersionType>branch</scmVersionType>
+            </configuration>
+            <executions>
+              <execution>
+                <id>checkout-docker-default-datadir</id>
+                <phase>process-resources</phase>
+                <goals>
+                  <goal>checkout</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>com.spotify</groupId>
+            <artifactId>docker-maven-plugin</artifactId>
+            <version>0.3.8</version>
+            <configuration>
+              <imageName>${dockerImageName}</imageName>
+              <dockerDirectory>${project.basedir}/src/docker</dockerDirectory>
+              <resources>
+                <resource>
+                  <targetPath>/var/lib/jetty/webapps</targetPath>
+                  <directory>${project.build.directory}</directory>
+                  <include>geonetwork/**</include>
+                </resource>
+                <resource>
+                  <targetPath>/etc/georchestra</targetPath>
+                  <directory>${project.build.directory}/datadir</directory>
+                  <include>${project.parent.artifactId}/**</include>
+                </resource>
+              </resources>
+              <serverId>docker-hub</serverId>
+              <registryUrl>https://index.docker.io/v1/</registryUrl>
+            </configuration>
+            <dependencies>
+              <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>19.0</version>
+              </dependency>
+            </dependencies>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
 
   </profiles>
 
@@ -893,5 +1107,6 @@
     <system.specific.overrides></system.specific.overrides>
     <rootProjectDir>${basedir}/..</rootProjectDir>
     <wro4jOutput>${project.build.directory}/wro4j-output/</wro4jOutput>
+    <datadir>datadir</datadir>
   </properties>
 </project>

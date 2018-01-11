@@ -17,8 +17,6 @@
     <ul class="nav navbar-nav">
       <li data-ng-if="gnCfg.mods.home.enabled">
         <a data-gn-active-tb-item="{{gnCfg.mods.home.appUrl}}">
-          <img class="gn-logo"
-               data-ng-src="{{gnUrl}}../images/logos/{{info['system/site/siteId']}}.png?random{{info['system/site/lastUpdate']}}"/>
           <span class="hidden-sm hidden-md">{{info['system/site/name']}}</span>
         </a>
       </li>
@@ -29,7 +27,7 @@
           <span class="hidden-sm" data-translate="">search</span>
         </a>
       </li>
-      <li data-ng-if="gnCfg.mods.map.enabled">
+      <!-- <li data-ng-if="gnCfg.mods.map.enabled">
         <a data-gn-active-tb-item="{{gnCfg.mods.map.appUrl}}"
            title="{{'map' | translate}}">
           <i class="fa fa-globe"></i>
@@ -37,7 +35,7 @@
 
           <span data-gnv-layer-indicator=""/>
         </a>
-      </li>
+      </li>  -->
       <li class="dropdown dropdown-hover open" data-ng-if="gnCfg.mods.editor.enabled"
           data-ng-show="authenticated && user.isEditorOrMore()"
           id="gn-login-dropdown">
@@ -97,14 +95,14 @@
     </ul>
 
 
-    <form class="navbar-form navbar-right" role="language">
+    <!-- <form class="navbar-form navbar-right" role="language">
       <div class="form-group"
            data-gn-language-switcher="lang"
            data-langs="langs"
            data-lang-labels="langLabels"/>
-    </form>
+    </form> -->
 
-    <ul data-ng-if="gnCfg.mods.signin.enabled"
+    <!-- <ul data-ng-if="gnCfg.mods.signin.enabled"
         class="nav navbar-nav navbar-right">
       <li class="dropdown dropdown-hover open" data-ng-show="authenticated">
         <a data-gn-active-tb-item="{{gnCfg.mods.admin.appUrl}}#/organization/users?userOrGroup={{user.username}}"
@@ -183,6 +181,6 @@
           </li>
         </ul>
       </li>
-    </ul>
+    </ul> -->
   </div>
 </div>
