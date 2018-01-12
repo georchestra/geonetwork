@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans default-lazy-init="true" xmlns="http://www.springframework.org/schema/beans"
+  xmlns:context="http://www.springframework.org/schema/context" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+  http://www.springframework.org/schema/beans
+  http://www.springframework.org/schema/beans/spring-beans.xsd
+  http://www.springframework.org/schema/context
+  http://www.springframework.org/schema/context/spring-context-3.2.xsd
+  ">
+
+  <context:component-scan base-package="org.georchestra.geonetwork" />
+
+  <!-- Job checking validation against schematron -->
+  <bean id="schematronValidatorJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+    <property name="jobClass" value="org.georchestra.geonetwork.SchematronJob" />
+  </bean>
+
+  <bean id="schematronJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+    <property name="jobDetail" ref="schematronValidatorJob" />
+    <!-- fires every 2 hours -->
+    <property name="cronExpression" value="0 0 0/2 * * ?" />
+    <property name="startDelay" value="1000"/>
+  </bean>
+
+  <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+    <property name="jobFactory">
+      <bean class="org.fao.geonet.util.spring.AutowiringSpringBeanJobFactory"/>
+    </property>
+    <property name="jobDetails">
+      <list>
+        <ref bean="schematronValidatorJob" />
+      </list>
+    </property>
+    <property name="triggers">
+      <list>
+        <ref bean="schematronJobTrigger" />
+      </list>
+    </property>
+    <property name="applicationContextSchedulerContextKey">
+      <value>applicationContext</value>
+    </property>
+  </bean>
+</beans>
