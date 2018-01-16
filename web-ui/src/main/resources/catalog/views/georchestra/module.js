@@ -19,10 +19,8 @@
   module.run([
     'gnSearchSettings',
     'georLinkActionsService',
-    'gnRelatedResources',
 
-    function(gnSearchSettings, georLinkActionsService, gnRelatedResources) {
-
+    function(gnSearchSettings, georLinkActionsService) {
       gnSearchSettings.linkTypes = {
         links: ['LINK'],
         downloads: ['DOWNLOAD'],
@@ -44,15 +42,6 @@
         },
         label: 'extractLayers'
       }];
-
-      // Overrides the gnRelated buttons action for add wms layers
-      gnRelatedResources.configure({
-        'WMS' : {
-          iconClass: 'fa-globe',
-          label: 'addToMap',
-          action: georLinkActionsService.addWMSLayer
-        }
-      });
     }]);
 
 
@@ -65,7 +54,7 @@
    * @param {Object} georLinkActionsService
    * @constructor
    */
-  var ExtendMainController = function($scope, georLinkActionsService) {
+  var ExtendMainController = function($scope, georLinkActionsService, gnRelatedResources) {
     if($scope.resultviewFns) {
 
       // Overrides add wms to map buttons action in main search scope
@@ -74,6 +63,13 @@
         georLinkActionsService.extractMetadata('mapfishapp', md.getId());
       }
     }
+    gnRelatedResources.configure({
+        'WMS' : {
+          iconClass: 'fa-globe',
+          label: 'addToMap',
+          action: georLinkActionsService.addWMSLayer
+        }
+     });
   };
 
   module.directive('gnExtendMainctrl', [
@@ -88,7 +84,8 @@
 
   ExtendMainController['$inject'] = [
     '$scope',
-    'georLinkActionsService'
+    'georLinkActionsService',
+    'gnRelatedResources'
   ];
 
 })();
