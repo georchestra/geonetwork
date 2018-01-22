@@ -816,7 +816,7 @@
               <checkoutDirectory>${project.build.directory}/deb/etc/georchestra</checkoutDirectory>
               <connectionUrl>scm:git:https://github.com/georchestra/datadir.git</connectionUrl>
               <pushChanges>false</pushChanges>
-              <scmVersion>${project.parent.version}</scmVersion>
+              <scmVersion>${packageDatadirScmVersion}</scmVersion>
               <scmVersionType>branch</scmVersionType>
             </configuration>
             <executions>
@@ -939,7 +939,7 @@
               <checkoutDirectory>${project.build.directory}/deb/etc/georchestra</checkoutDirectory>
               <connectionUrl>scm:git:https://github.com/georchestra/datadir.git</connectionUrl>
               <pushChanges>false</pushChanges>
-              <scmVersion>${project.parent.version}</scmVersion>
+              <scmVersion>${packageDatadirScmVersion}</scmVersion>
               <scmVersionType>branch</scmVersionType>
             </configuration>
             <executions>
@@ -1024,7 +1024,6 @@
       <properties>
         <dockerImageName>georchestra/${project.parent.artifactId}:3-latest</dockerImageName>
         <dockerDatadirScmUrl>scm:git:https://github.com/georchestra/datadir.git</dockerDatadirScmUrl>
-        <dockerDatadirScmVersion>docker-16.12</dockerDatadirScmVersion>
       </properties>
       <build>
         <finalName>geonetwork</finalName>
@@ -1037,7 +1036,7 @@
               <checkoutDirectory>${project.build.directory}/datadir/</checkoutDirectory>
               <connectionUrl>${dockerDatadirScmUrl}</connectionUrl>
               <pushChanges>false</pushChanges>
-              <scmVersion>${dockerDatadirScmVersion}</scmVersion>
+              <scmVersion>docker-${packageDatadirScmVersion}</scmVersion>
               <scmVersionType>branch</scmVersionType>
             </configuration>
             <executions>
@@ -1099,5 +1098,6 @@
     <rootProjectDir>${basedir}/..</rootProjectDir>
     <wro4jOutput>${project.build.directory}/wro4j-output/</wro4jOutput>
     <datadir>datadir</datadir>
+    <packageDatadirScmVersion>16.12</packageDatadirScmVersion>
   </properties>
 </project>
