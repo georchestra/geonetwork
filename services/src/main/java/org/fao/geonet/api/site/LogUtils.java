@@ -27,10 +27,12 @@ import org.apache.log4j.xml.DOMConfigurator;
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.domain.Setting;
 import org.fao.geonet.exceptions.OperationAbortedEx;
+import org.fao.geonet.kernel.GeonetworkDataDirectory;
 import org.fao.geonet.kernel.setting.Settings;
 import org.fao.geonet.repository.SettingRepository;
 import org.fao.geonet.services.config.DoActions;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
@@ -49,10 +51,23 @@ public class LogUtils {
         SettingRepository repository =
             ApplicationContextHolder.get().getBean(SettingRepository.class);
         Setting setting = repository.findOne(Settings.SYSTEM_SERVER_LOG);
-
+        final GeonetworkDataDirectory dataDirectory =
+                ApplicationContextHolder.get().getBean(GeonetworkDataDirectory.class);
+            String classesFolder = dataDirectory.getWebappDir() + "/WEB-INF/classes";
+            try {
+                Object logov = ApplicationContextHolder.get().getBean("logPlaceHolder");
+                classesFolder = logov.toString();
+            } catch (Throwable e) {
+              // default behaviour
+            }
         // get log config from db settings
         String log4jProp = setting != null ? setting.getValue() : DEFAULT_LOG_FILE;
-        URL url = DoActions.class.getResource("/" + log4jProp);
+        URL url;
+        try {
+            url = new URL("file://" + classesFolder + "/" + log4jProp);
+        } catch (MalformedURLException e) {
+            url = DoActions.class.getResource("/" + log4jProp);
+        }
         if (url != null) {
             // refresh configuration
             DOMConfigurator.configure(url);
