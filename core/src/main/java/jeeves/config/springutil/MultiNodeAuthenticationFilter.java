@@ -129,9 +129,15 @@ public class MultiNodeAuthenticationFilter extends GenericFilterBean {
     DefaultLanguage defaultLanguage;
 
     private String getRequestLanguage(ConfigurableApplicationContext appContext, HttpServletRequest request) {
+        // if a hl parameter is available
         String language = request.getParameter("hl");
-        if (language == null) {
-            final Cookie[] cookies = request.getCookies();
+        if (language != null) {
+            return language;
+        }
+
+        // if a cookie defines the language
+        final Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals(Jeeves.LANG_COOKIE)) {
                     language = cookie.getValue();
@@ -140,19 +146,20 @@ public class MultiNodeAuthenticationFilter extends GenericFilterBean {
             }
         }
 
-        if (language == null) {
-            String pathInfo = request.getPathInfo();
-            language = ServiceRequestFactory.extractLanguage(pathInfo);
+        // if the lang is implicit in the requested path
+        String pathInfo = request.getPathInfo();
+        language = ServiceRequestFactory.extractLanguage(pathInfo);
+        if (language != null) {
+            return language;
         }
 
-        if (language == null) {
-            language = defaultLanguage.getLanguage();
+        // using the defaultLanguage bean
+        language = defaultLanguage.getLanguage();
+        if (language != null) {
+            return language;
         }
 
-        if (language == null) {
-            language = Geonet.DEFAULT_LANGUAGE;
-        }
-        return language;
+        return Geonet.DEFAULT_LANGUAGE;
     }
 
     private void throwAuthError() {
