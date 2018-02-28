@@ -88,7 +88,7 @@ public class LocaleRedirects {
                 redirectURL.append("&" + originalRequest.getQueryString());
             }
         } catch(ClassCastException ex){
-            redirectURL = new StringBuilder("/geonetwork/?login");
+            redirectURL = new StringBuilder(request.getContextPath() + "/?login");
         }
         return redirectURL(redirectURL.toString());
     }
