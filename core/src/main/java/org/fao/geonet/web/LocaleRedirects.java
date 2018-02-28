@@ -32,6 +32,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.web.savedrequest.DefaultSavedRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -98,7 +99,21 @@ public class LocaleRedirects {
                               @CookieValue(value = Jeeves.LANG_COOKIE, required = false) String langCookie,
                               @RequestHeader(value = ACCEPT_LANGUAGE_HEADER, required = false) final String langHeader) {
         String lang = lang(langParam, langCookie, langHeader);
-        return redirectURL(createServiceUrl(request, "catalog.signin", lang, node));
+        StringBuilder redirectURL;
+
+        try {
+            DefaultSavedRequest originalRequest = (DefaultSavedRequest) request.getSession().getAttribute("SPRING_SECURITY_SAVED_REQUEST");
+            redirectURL = new StringBuilder();
+            redirectURL.append(originalRequest.getContextPath() + originalRequest.getServletPath() + originalRequest.getPathInfo());
+            redirectURL.append("?login");
+            if (originalRequest.getQueryString() != null && originalRequest.getQueryString().length() > 0) {
+                redirectURL.append("&" + originalRequest.getQueryString());
+            }
+        } catch(ClassCastException ex){
+            redirectURL = new StringBuilder(request.getContextPath() + "/?login");
+        }
+        return redirectURL(redirectURL.toString());
+
     }
 
     @RequestMapping(value = "/accessDenied.jsp")
