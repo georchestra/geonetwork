@@ -1114,6 +1114,7 @@
             <configuration>
               <packageName>georchestra-geonetwork3</packageName>
               <packageDescription>Debian package for the GeoNetwork fork of geOrchestra.</packageDescription>
+              <packageRevision>${maven.build.timestamp}~${build.commit.id.abbrev}</packageRevision>
               <projectUrl>http://www.georchestra.org/</projectUrl>
               <projectOrganization>geOrchestra</projectOrganization>
               <maintainerName>PSC</maintainerName>
