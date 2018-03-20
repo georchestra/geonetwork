@@ -40,7 +40,7 @@
       }, {
         icon: 'fa-eject',
         fn: function() {
-          georLinkActionsService.extractMetadata('extractorapp');
+          georLinkActionsService.extractMetadata('mapfishapp/?addons=extractor_0');
         },
         label: 'extractLayers'
       }];
