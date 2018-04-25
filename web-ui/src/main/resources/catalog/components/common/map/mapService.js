@@ -163,19 +163,19 @@
               defer.reject();
               return $q.defer().promise;
             }
-            
+
             //Check if the layer has some projection restriction
             //If no restriction, just (try to) add it
-            if(layerInfo.projectionList && layerInfo.projectionList.length 
+            if(layerInfo.projectionList && layerInfo.projectionList.length
                 && layerInfo.projectionList.length > 0) {
               var addIt = false;
-              
+
               $.each(layerInfo.projectionList, function(i, p){
                 if(map.getView().getProjection().getCode() == p) {
                   addIt = true;
                 }
               });
-              
+
               if(!addIt) {
                 defer.reject();
                 return $q.defer().promise;
@@ -190,22 +190,22 @@
                 }));
                 break;
 
-              case 'tms':            
-                var prop = { 
+              case 'tms':
+                var prop = {
                   // Settings are usually encoded
                     url: decodeURI(layerInfo.url)
                 };
-                
+
                 if(layerInfo.projection) {
                   prop.projection = layerInfo.projection;
                 }
-                
+
                 if(layerInfo.attribution) {
                   prop.attributions = [
                     new ol.Attribution({"html": layerInfo.attribution})
                   ]
                 }
-                
+
                 defer.resolve(new ol.layer.Tile({
                   source: new ol.source.XYZ(prop),
                   title: layerInfo.title || 'TMS Layer'
@@ -251,11 +251,11 @@
                         layer.set('title', layerInfo.title);
                         layer.set('label', layerInfo.title);
                       }
-                      
+
                       if(layerInfo.attribution) {
                         layer.getSource().setAttributions(layerInfo.attribution);
                       }
-                      
+
                       defer.resolve(layer);
                     });
                 break;
@@ -274,11 +274,11 @@
                         layer.set('title', layerInfo.title);
                         layer.set('label', layerInfo.title);
                       }
-                      
+
                       if(layerInfo.attribution) {
                         layer.getSource().setAttributions(layerInfo.attribution);
                       }
-                      
+
                       defer.resolve(layer);
                     });
                 break;
@@ -2013,6 +2013,30 @@
            */
           secureExtent: function(extent, proj) {
             return ol.extent.getIntersection(extent, proj.getExtent());
+          },
+
+          getLayerConfigFromLink: function(link) {
+            var config = {
+              type: link.protocol.indexOf('WMTS') > -1 ? 'wmts' : 'wms',
+              url: $filter('gnLocalized')(link.url) || link.url
+            };
+
+            if (angular.isObject(link.title)) {
+              link.title = $filter('gnLocalized')(link.title);
+            }
+            if (angular.isObject(link.name)) {
+              link.name = $filter('gnLocalized')(link.name);
+            }
+
+            if (link.name && link.name !== '') {
+              config.name = link.name;
+              config.group = link.group;
+              // Related service return a property title for the name
+            } else if (link.title) {
+              config.name = link.title;
+            }
+            return config;
+
           }
         };
       }];

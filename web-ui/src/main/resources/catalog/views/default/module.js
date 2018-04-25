@@ -219,7 +219,7 @@
       $scope.toggleListType = function(type) {
         $scope.type = type;
       };
-      
+
       $scope.infoTabs = {
         lastRecords: {
           title: 'lastRecords',
