@@ -18,7 +18,8 @@
     'gnHttp',
     'gnAlertService',
     '$location',
-      function(gnHttp, gnAlertService, $location) {
+    'gnMap',
+      function(gnHttp, gnAlertService, $location, gnMap) {
 
         /**
          * Url pattern for metadata page
@@ -37,22 +38,24 @@
           var jsonObject = {services: [], layers: []};
           var metadataUrl = baseMdUrl + md.getUuid();
 
+          var layerConfig = gnMap.getLayerConfigFromLink(link);
+
           // If !link.name then it's a service
-          if(link.name) {
+          if(layerConfig.name) {
             jsonObject.layers.push({
-              layername: link.name,
+              layername: layerConfig.name,
               metadataURL: metadataUrl,
               owstype: 'WMS',
-              owsurl: link.url,
-              title: link.desc
+              owsurl: layerConfig.url,
+              title: layerConfig.desc
             });
           }
           else {
             jsonObject.services.push({
               metadataURL: metadataUrl,
               owstype: 'WMS',
-              owsurl: link.url,
-              title: link.desc
+              owsurl: layerConfig.url,
+              title: layerConfig.desc
             });
           }
           sendPostForm('mapfishapp', JSON.stringify(jsonObject));
