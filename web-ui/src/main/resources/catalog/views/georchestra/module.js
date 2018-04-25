@@ -5,7 +5,7 @@
   goog.require('georchestra_linkactions');
 
   var module = angular.module('gn_search_georchestra',
-      ['gn_search_default', 'georchestra_linkactions']);
+    ['gn_search_default', 'georchestra_linkactions']);
 
 
   // Add a custom georchestra locale file
@@ -74,6 +74,18 @@
         georLinkActionsService.extractMetadata('mapfishapp', md.getId());
       }
     }
+    gnRelatedResources.configure({
+      'WMS' : {
+        iconClass: 'fa-globe',
+        label: 'addToMap',
+        action: georLinkActionsService.addWMSLayer
+      },
+      'WMSSERVICE' : {
+        iconClass: 'fa-globe',
+        label: 'addServiceLayersToMap',
+        action: georLinkActionsService.addWMSLayer
+      }
+    });
   };
 
   module.directive('gnExtendMainctrl', [
