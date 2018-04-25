@@ -259,26 +259,8 @@
 
       $scope.resultviewFns = {
         addMdLayerToMap: function (link, md) {
-          var config = {
-            uuid: md ? md.getUuid() : null,
-            type: link.protocol.indexOf('WMTS') > -1 ? 'wmts' : 'wms',
-            url: $filter('gnLocalized')(link.url) || link.url
-          };
-
-          if (angular.isObject(link.title)) {
-            link.title = $filter('gnLocalized')(link.title);
-          }
-          if (angular.isObject(link.name)) {
-            link.name = $filter('gnLocalized')(link.name);
-          }
-
-          if (link.name && link.name !== '') {
-            config.name = link.name;
-            config.group = link.group;
-            // Related service return a property title for the name
-          } else if (link.title) {
-            config.name = link.title;
-          }
+          var config = gnMap.getLayerConfigFromLink(link);
+          config.uuid = md ? md.getUuid() : null;
 
           // This is probably only a service
           // Open the add service layer tab

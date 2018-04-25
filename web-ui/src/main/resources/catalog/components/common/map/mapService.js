@@ -62,10 +62,11 @@
       'gnGlobalSettings',
       'gnViewerSettings',
       'gnViewerService',
+      '$filter',
       function(ngeoDecorateLayer, gnOwsCapabilities, gnConfig, $log,
           gnSearchLocation, $rootScope, gnUrlUtils, $q, $translate,
           gnWmsQueue, gnSearchManagerService, Metadata, gnWfsService,
-          gnGlobalSettings, gnViewerSettings, gnViewerService) {
+          gnGlobalSettings, gnViewerSettings, gnViewerService, $filter) {
 
         /**
          * @description
@@ -1924,6 +1925,30 @@
            */
           secureExtent: function(extent, proj) {
             return ol.extent.getIntersection(extent, proj.getExtent());
+          },
+
+          getLayerConfigFromLink: function(link) {
+            var config = {
+              type: link.protocol.indexOf('WMTS') > -1 ? 'wmts' : 'wms',
+              url: $filter('gnLocalized')(link.url) || link.url
+            };
+
+            if (angular.isObject(link.title)) {
+              link.title = $filter('gnLocalized')(link.title);
+            }
+            if (angular.isObject(link.name)) {
+              link.name = $filter('gnLocalized')(link.name);
+            }
+
+            if (link.name && link.name !== '') {
+              config.name = link.name;
+              config.group = link.group;
+              // Related service return a property title for the name
+            } else if (link.title) {
+              config.name = link.title;
+            }
+            return config;
+
           }
         };
       }];
