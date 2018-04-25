@@ -80,6 +80,11 @@
         label: 'addToMap',
         action: georLinkActionsService.addWMSLayer
       },
+      'WFS' : {
+        iconClass: 'fa-globe',
+        label: 'addToMap',
+        action: null
+      },
       'WMSSERVICE' : {
         iconClass: 'fa-globe',
         label: 'addServiceLayersToMap',
