@@ -63,6 +63,7 @@ public class ExtractServicesLayers {
     public JSONObject getLayersFromSelectedMetadatas(
         @PathVariable String lang,
         @RequestParam(value = "id", required = false) String paramId,
+        @RequestParam(value = "bucket", required = false, defaultValue = "s101") String bucket,
         final NativeWebRequest webRequest) throws Exception {
 
         final ServiceManager serviceManager = ApplicationContextHolder.get().getBean(ServiceManager.class);
@@ -80,8 +81,8 @@ public class ExtractServicesLayers {
 
         // case #1 : #id parameter is undefined
         if (paramId == null) {
-            synchronized (sm.getSelection("metadata")) {
-                for (Iterator<String> iter = sm.getSelection("metadata").iterator(); iter.hasNext(); ) {
+            synchronized (sm.getSelection(bucket)) {
+                for (Iterator<String> iter = sm.getSelection(bucket).iterator(); iter.hasNext(); ) {
                     String uuid = (String) iter.next();
                     String id = dm.getMetadataId(uuid);
                     lst.add(id);
