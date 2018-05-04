@@ -88,9 +88,7 @@
       };
 
       this.setMap = function() {
-        if (gnGlobalSettings.isMapViewerEnabled) {
-          $location.path(this.MAP);
-        }
+        window.open('/mapfishapp');
       };
 
       this.setSearch = function(params) {
