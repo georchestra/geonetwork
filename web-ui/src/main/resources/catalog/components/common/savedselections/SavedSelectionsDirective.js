@@ -59,6 +59,7 @@
               return md.getLinksByType('OGC:WMS').length > 0;
             },
             fn: function(uuids, records) {
+              var layers = [];
               for (var i = 0; i < uuids.length; i++) {
                 var uuid = uuids[i], record = records[uuid];
 
@@ -81,15 +82,10 @@
                       link.name, link.url)) {
                     return;
                   }
-                  gnMap.addWmsFromScratch(viewerMap,
-                      link.url, link.name,
-                      false, md).then(function(layer) {
-                    if (layer) {
-                      gnMap.feedLayerWithRelated(layer, link.group);
-                    }
-                  });
+                  layers.push({ link: link, md: md});
                 });
               }
+              gnViewerSettings.resultviewFns.addWMSLayers(layers);
             },
             icon: 'fa-globe'
           }

@@ -28,38 +28,62 @@
         var baseMdUrl = $location.absUrl().split('#')[0] + '#/metadata/';
 
         /**
+         * Send WMS layers to mapfishapp
+         *
+         * @param {Array.<Object>} layers
+         * @property {Object} layers[].link the linked resource
+         * @property {Object} layers[].md the metadata object
+         */
+        this.addWMSLayers = function (layers) {
+          var jsonObject = {services: [], layers: []};
+          layers.forEach(function(layer) {
+            jsonObject.layers.push(this.getLayerJSONSpec(layer.link, layer.md));
+          }.bind(this));
+          sendPostForm('mapfishapp', JSON.stringify(jsonObject));
+        };
+
+        /**
          * Send a WMS layer to mapfishapp
          *
          * @param {Object} link the linked resource
          * @param {Object} md the metadata object
          */
         this.addWMSLayer = function (link, md) {
-
           var jsonObject = {services: [], layers: []};
-          var metadataUrl = baseMdUrl + md.getUuid();
+          jsonObject.layers.push(this.getLayerJSONSpec(link, md));
+          sendPostForm('mapfishapp', JSON.stringify(jsonObject));
+        };
 
+        /**
+         * Get JSON spec to send to mapfishapp
+         *
+         * @param {Object} link the linked resource
+         * @param {Object} md the metadata object
+         */
+        this.getLayerJSONSpec = function(link, md) {
+          var metadataUrl = baseMdUrl + md.getUuid();
           var layerConfig = gnMap.getLayerConfigFromLink(link);
+          var json;
 
           // If !link.name then it's a service
           if(layerConfig.name) {
-            jsonObject.layers.push({
+            json = {
               layername: layerConfig.name,
               metadataURL: metadataUrl,
               owstype: 'WMS',
               owsurl: layerConfig.url,
               title: layerConfig.desc
-            });
-          }
-          else {
-            jsonObject.services.push({
+            };
+          } else {
+            json = {
               metadataURL: metadataUrl,
               owstype: 'WMS',
               owsurl: layerConfig.url,
               title: layerConfig.desc
-            });
+            };
           }
-          sendPostForm('mapfishapp', JSON.stringify(jsonObject));
-        };
+          return json;
+        }
 
         /**
          * @ngdoc method
