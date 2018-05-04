@@ -121,10 +121,7 @@
       };
 
       this.setMap = function() {
-        if (gnGlobalSettings.isMapViewerEnabled &&
-            !gnExternalViewer.isEnabled()) {
-          $location.path(this.MAP);
-        }
+        window.open('/mapfishapp');
       };
 
       this.setSearch = function(params) {
