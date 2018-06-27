@@ -616,6 +616,7 @@
 								<includeOnlyProperty>^git.tags$</includeOnlyProperty>
 								<includeOnlyProperty>^git.branch$</includeOnlyProperty>
 								<includeOnlyProperty>^git.commit.id$</includeOnlyProperty>
+								<includeOnlyProperty>^git.commit.id.abbrev$</includeOnlyProperty>
 								<includeOnlyProperty>^git.commit.id.describe.short$</includeOnlyProperty>
 								<includeOnlyProperty>^git.build.time$</includeOnlyProperty>
 							</includeOnlyProperties>
@@ -1062,6 +1063,23 @@
                 </configuration>
                 <goals><goal>run</goal></goals>
               </execution>
+              <execution>
+                <id>set-project-packageversion</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+                <configuration>
+                  <exportAntProperties>true</exportAntProperties>
+                  <target>
+                    <condition property="project.packageVersion"
+                      value="99.master.${maven.build.timestamp}~${git.commit.id.abbrev}"
+                      else="${project.version}.${maven.build.timestamp}~${git.commit.id.abbrev}">
+                      <matches string="${project.version}" pattern="SNAPSHOT$" />
+                    </condition>
+                  </target>
+               </configuration>
+            </execution>
             </executions>
           </plugin>
           <plugin>
@@ -1072,7 +1090,6 @@
               <packageName>georchestra-geonetwork3</packageName>
               <packageDescription>Debian package for the GeoNetwork fork of geOrchestra.</packageDescription>
               <packageVersion>${project.packageVersion}</packageVersion>
-              <packageRevision>${maven.build.timestamp}~${build.commit.id.abbrev}</packageRevision>
               <projectUrl>http://www.georchestra.org/</projectUrl>
               <projectOrganization>geOrchestra</projectOrganization>
               <maintainerName>PSC</maintainerName>
