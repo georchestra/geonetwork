@@ -1439,7 +1439,7 @@
     <spring.version>4.2.6.RELEASE</spring.version>
     <spring.security.version>3.2.0.RELEASE</spring.security.version>
     <metrics.version>2.1.1</metrics.version>
-    <maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
+    <maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
     <build.timestamp>${maven.build.timestamp}</build.timestamp>
     <rootProjectDir>..</rootProjectDir>
     <wro.version>1.7.9</wro.version>
