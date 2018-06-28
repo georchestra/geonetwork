@@ -830,6 +830,24 @@
             </executions>
           </plugin>
           <plugin>
+            <groupId>pl.project13.maven</groupId>
+            <artifactId>git-commit-id-plugin</artifactId>
+            <version>2.1.10</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>revision</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <prefix>git</prefix>
+              <failOnNoGitDirectory>false</failOnNoGitDirectory>
+              <skipPoms>false</skipPoms>
+              <verbose>false</verbose>
+            </configuration>
+          </plugin>
+          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-antrun-plugin</artifactId>
             <version>1.7</version>
@@ -840,7 +858,7 @@
                 <configuration>
                   <target>
                     <delete includeemptydirs="true">
-                      <fileset dir="${project.build.directory}/deb/etc/georchestra">
+                      <fileset defaultexcludes="false" dir="${project.build.directory}/deb/etc/georchestra">
                         <include name="**/*" />
                         <exclude name="geonetwork/**" />
                       </fileset>
@@ -868,6 +886,23 @@
                 </configuration>
                 <goals><goal>run</goal></goals>
               </execution>
+              <execution>
+                <id>set-project-packageversion</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+                <configuration>
+                  <exportAntProperties>true</exportAntProperties>
+                  <target>
+                    <condition property="project.packageVersion"
+                      value="3.0.4.${maven.build.timestamp}~${git.commit.id.abbrev}"
+                      else="${project.version}.${maven.build.timestamp}~${git.commit.id.abbrev}">
+                      <matches string="${project.version}" pattern="SNAPSHOT$" />
+                    </condition>
+                  </target>
+               </configuration>
+            </execution>
             </executions>
           </plugin>
           <plugin>
@@ -878,7 +913,6 @@
               <packageName>georchestra-geonetwork3</packageName>
               <packageDescription>Debian package for the GeoNetwork fork of geOrchestra.</packageDescription>
               <packageVersion>${project.packageVersion}</packageVersion>
-              <packageRevision>${maven.build.timestamp}~${build.commit.id.abbrev}</packageRevision>
               <projectUrl>http://www.georchestra.org/</projectUrl>
               <projectOrganization>geOrchestra</projectOrganization>
               <maintainerName>PSC</maintainerName>
