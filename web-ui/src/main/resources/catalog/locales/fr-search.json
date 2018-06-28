@@ -75,6 +75,7 @@
     "wfsFeatureNotIndexed": "Les entités de la couche <em>{{wfsUrl}}#{{featureTypeName}}</em> n'ont pas été indexées.",
     "indexNotRunning": "Index non disponible",
     "addToMap": "Visualiser",
+    "addToExtract": "Extraire",
     "addToMaponlinesrc": "Visualiser",
     "mapLinkonlinesrc": "Charger la carte",
     "openRecord": "Consulter",
