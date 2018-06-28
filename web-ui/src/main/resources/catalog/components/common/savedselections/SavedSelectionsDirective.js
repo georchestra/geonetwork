@@ -52,6 +52,22 @@
             fn: searchRecordsInSelection,
             icon: 'fa-search'
           },
+          'MapExtractList': {
+            label: 'addToExtract',
+            fn: searchRecordsInSelection,
+            icon: 'fa-search',
+            fn: function(uuids, records) {
+              var layers = [];
+              for (var i = 0; i < uuids.length; i++) {
+                var uuid = uuids[i], record = records[uuid];
+                var md = new Metadata(record);
+                angular.forEach(md.getLinksByType('OGC:WMS'), function(link) {
+                  layers.push({link: link, md: md});
+                });
+              }
+              gnViewerSettings.resultviewFns.addWMSLayers(layers, true);
+            }
+          },
           'MapLayerlist': {
             label: 'addToMap',
             filterFn: function(record) {
@@ -72,7 +88,7 @@
                   layers.push({ link: link, md: md});
                 });
               }
-              gnViewerSettings.resultviewFns.addWMSLayers(layers);
+              gnViewerSettings.resultviewFns.addWMSLayers(layers, false);
             },
             icon: 'fa-globe'
           }
@@ -100,6 +116,11 @@
           //   name: 'DataDownloaderlist',
           //   records: [],
           //   storage: null
+        },{
+          id: -30,
+          name: 'MapExtractList',
+          records: [],
+          storage: null
         }]
       };
     }]);
