@@ -33,13 +33,17 @@
          * @param {Array.<Object>} layers
          * @property {Object} layers[].link the linked resource
          * @property {Object} layers[].md the metadata object
+         * @param {boolean} for extraction
          */
-        this.addWMSLayers = function (layers) {
+        this.addWMSLayers = function (layers, extract) {
           var jsonObject = {services: [], layers: []};
           layers.forEach(function(layer) {
             jsonObject.layers.push(this.getLayerJSONSpec(layer.link, layer.md));
           }.bind(this));
-          sendPostForm('mapfishapp', JSON.stringify(jsonObject));
+          sendPostForm(
+            'mapfishapp' + ((extract) ? '/?addons=extractor_0' : ''),
+            JSON.stringify(jsonObject)
+          );
         };
 
         /**
