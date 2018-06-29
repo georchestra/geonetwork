@@ -40,7 +40,7 @@
             jsonObject.layers.push(this.getLayerJSONSpec(layer.link, layer.md));
           }.bind(this));
           sendPostForm('mapfishapp', JSON.stringify(jsonObject));
-        };
+        }.bind(this);
 
         /**
          * Send a WMS layer to mapfishapp
@@ -52,7 +52,7 @@
           var jsonObject = {services: [], layers: []};
           jsonObject.layers.push(this.getLayerJSONSpec(link, md));
           sendPostForm('mapfishapp', JSON.stringify(jsonObject));
-        };
+        }.bind(this);
 
         /**
          * Get JSON spec to send to mapfishapp
