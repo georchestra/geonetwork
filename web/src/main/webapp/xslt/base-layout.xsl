@@ -68,7 +68,7 @@
       and a facet search to get main site information.
       -->
       <body data-ng-controller="GnCatController">
-        <iframe src="/header/?active=geonetwork" style="width:100%;height:90px;border:none;overflow:hidden;" scrolling="no" frameborder="0"></iframe>
+        <iframe src="{$headerUrl}?active=geonetwork" style="width:100%;height:{$headerHeight}px;border:none;overflow:hidden;" scrolling="no" frameborder="0"></iframe>
 
         <div data-gn-alert-manager=""></div>
 

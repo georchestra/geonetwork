@@ -23,27 +23,17 @@
 
 package org.fao.geonet.util;
 
-import static org.fao.geonet.kernel.search.spatial.SpatialIndexWriter.parseGml;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Function;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
+import com.vividsolutions.jts.geom.Envelope;
+import com.vividsolutions.jts.geom.MultiPolygon;
+import jeeves.component.ProfileManager;
+import jeeves.server.ServiceConfig;
+import jeeves.server.context.ServiceContext;
+import net.objecthunter.exp4j.Expression;
+import net.objecthunter.exp4j.ExpressionBuilder;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.io.IOUtils;
@@ -85,18 +75,29 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.http.client.ClientHttpResponse;
 import org.w3c.dom.Node;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.base.Function;
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
-import com.vividsolutions.jts.geom.Envelope;
-import com.vividsolutions.jts.geom.MultiPolygon;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Random;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import jeeves.component.ProfileManager;
-import jeeves.server.ServiceConfig;
-import jeeves.server.context.ServiceContext;
-import net.objecthunter.exp4j.Expression;
-import net.objecthunter.exp4j.ExpressionBuilder;
+import static org.fao.geonet.kernel.search.spatial.SpatialIndexWriter.parseGml;
 
 /**
  * These are all extension methods for calling from xsl docs.  Note:  All params are objects because
@@ -112,6 +113,86 @@ public final class XslUtil {
     private static final char TS_WKT = ',';
     private static final char CS_WKT = ' ';
     private static ThreadLocal<Boolean> allowScripting = new InheritableThreadLocal<Boolean>();
+
+    private static String headerUrl;
+    private static String headerHeight;
+
+
+    public static String getGeorchestraHeaderUrl(){
+
+        if(XslUtil.headerUrl == null) {
+
+            // Set default value
+            XslUtil.headerUrl = "/header/";
+
+            // Load value from datadir
+            Properties properties = XslUtil.loadDatadirProperties();
+            if (properties.containsKey("headerUrl"))
+                XslUtil.headerUrl = properties.getProperty("headerUrl");
+        }
+
+        return XslUtil.headerUrl;
+    }
+
+    public static String getGeorchestraHeaderHeight(){
+
+        if(XslUtil.headerHeight == null) {
+
+            // Set default value
+            XslUtil.headerHeight = "90";
+
+            // Load value from datadir
+            Properties properties = XslUtil.loadDatadirProperties();
+            if (properties.containsKey("headerHeight"))
+                XslUtil.headerHeight = properties.getProperty("headerHeight");
+        }
+
+        return XslUtil.headerHeight;
+    }
+
+    private static Properties loadProperties(File path, Properties prop) throws IOException {
+        FileInputStream fisProp = null;
+        try {
+            fisProp = new FileInputStream(path);
+            InputStreamReader isrProp = new InputStreamReader(fisProp, "UTF8");
+            prop.load(isrProp);
+        } finally {
+            if (fisProp != null) {
+                fisProp.close();
+            }
+        }
+        return prop;
+    }
+
+    private static Properties loadDatadirProperties(){
+
+        String globalDatadirPath = System.getProperty("georchestra.datadir");
+        Properties properties = new Properties();
+
+        if (globalDatadirPath != null) {
+            File defaultConfiguration = new File(String.format("%s%s%s", globalDatadirPath,
+                File.separator, "default.properties"));
+            File geoserverConfiguration = new File(String.format("%s%s%s%s%s", globalDatadirPath,
+                File.separator, "geonetwork", File.separator, "geonetwork.properties"));
+
+            if (defaultConfiguration.canRead()) {
+                try {
+                    XslUtil.loadProperties(defaultConfiguration, properties);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (geoserverConfiguration.canRead()) {
+                try {
+                    XslUtil.loadProperties(geoserverConfiguration, properties);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return properties;
+    }
+
 
     /**
      * clean the src of ' and <>
