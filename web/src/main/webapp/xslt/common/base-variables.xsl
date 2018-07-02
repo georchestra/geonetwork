@@ -33,6 +33,9 @@
   <xsl:output name="default-indent-mode" indent="yes"
               omit-xml-declaration="yes"/>
 
+  <xsl:variable name="headerUrl" select="util:getGeorchestraHeaderUrl()"/>
+  <xsl:variable name="headerHeight" select="util:getGeorchestraHeaderHeight()"/>
+
   <!--
   -->
   <xsl:variable name="gnUri" select="'http://www.fao.org/geonetwork'"/>
