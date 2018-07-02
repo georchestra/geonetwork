@@ -75,11 +75,11 @@ import org.w3c.dom.Node;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.io.InputStreamReader;
+import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -102,6 +102,86 @@ public final class XslUtil {
     private static final char TS_WKT = ',';
     private static final char CS_WKT = ' ';
     private static ThreadLocal<Boolean> allowScripting = new InheritableThreadLocal<Boolean>();
+
+    private static String headerUrl;
+    private static String headerHeight;
+
+
+    public static String getGeorchestraHeaderUrl(){
+
+        if(XslUtil.headerUrl == null) {
+
+            // Set default value
+            XslUtil.headerUrl = "/header/";
+
+            // Load value from datadir
+            Properties properties = XslUtil.loadDatadirProperties();
+            if (properties.containsKey("headerUrl"))
+                XslUtil.headerUrl = properties.getProperty("headerUrl");
+        }
+
+        return XslUtil.headerUrl;
+    }
+
+    public static String getGeorchestraHeaderHeight(){
+
+        if(XslUtil.headerHeight == null) {
+
+            // Set default value
+            XslUtil.headerHeight = "90";
+
+            // Load value from datadir
+            Properties properties = XslUtil.loadDatadirProperties();
+            if (properties.containsKey("headerHeight"))
+                XslUtil.headerHeight = properties.getProperty("headerHeight");
+        }
+
+        return XslUtil.headerHeight;
+    }
+
+    private static Properties loadProperties(File path, Properties prop) throws IOException {
+        FileInputStream fisProp = null;
+        try {
+            fisProp = new FileInputStream(path);
+            InputStreamReader isrProp = new InputStreamReader(fisProp, "UTF8");
+            prop.load(isrProp);
+        } finally {
+            if (fisProp != null) {
+                fisProp.close();
+            }
+        }
+        return prop;
+    }
+
+    private static Properties loadDatadirProperties(){
+
+        String globalDatadirPath = System.getProperty("georchestra.datadir");
+        Properties properties = new Properties();
+
+        if (globalDatadirPath != null) {
+            File defaultConfiguration = new File(String.format("%s%s%s", globalDatadirPath,
+                File.separator, "default.properties"));
+            File geoserverConfiguration = new File(String.format("%s%s%s%s%s", globalDatadirPath,
+                File.separator, "geonetwork", File.separator, "geonetwork.properties"));
+
+            if (defaultConfiguration.canRead()) {
+                try {
+                    XslUtil.loadProperties(defaultConfiguration, properties);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (geoserverConfiguration.canRead()) {
+                try {
+                    XslUtil.loadProperties(geoserverConfiguration, properties);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return properties;
+    }
+
 
     /**
      * clean the src of ' and <>
