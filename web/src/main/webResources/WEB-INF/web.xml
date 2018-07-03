@@ -30,7 +30,14 @@
 	     version="3.0"
          metadata-complete="true">
 
+
   <display-name>${application.name}</display-name>
+
+  <context-param>
+    <param-name>org.eclipse.jetty.servlet.Default.dirAllowed</param-name>
+    <param-value>false</param-value>
+  </context-param>
+
   <listener>
     <listener-class>jeeves.config.springutil.JeevesContextLoaderListener</listener-class>
   </listener>
