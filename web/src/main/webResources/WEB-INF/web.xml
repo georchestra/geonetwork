@@ -30,6 +30,12 @@
          metadata-complete="true">
 
   <display-name>geonetwork</display-name>
+
+  <context-param>
+    <param-name>org.eclipse.jetty.servlet.Default.dirAllowed</param-name>
+    <param-value>false</param-value>
+  </context-param>
+
   <listener>
     <listener-class>jeeves.config.springutil.JeevesContextLoaderListener</listener-class>
   </listener>
