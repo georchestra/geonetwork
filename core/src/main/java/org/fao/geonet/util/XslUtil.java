@@ -172,7 +172,7 @@ public final class XslUtil {
         if (globalDatadirPath != null) {
             File defaultConfiguration = new File(String.format("%s%s%s", globalDatadirPath,
                 File.separator, "default.properties"));
-            File geoserverConfiguration = new File(String.format("%s%s%s%s%s", globalDatadirPath,
+            File geonetworkConfiguration = new File(String.format("%s%s%s%s%s", globalDatadirPath,
                 File.separator, "geonetwork", File.separator, "geonetwork.properties"));
 
             if (defaultConfiguration.canRead()) {
@@ -182,9 +182,9 @@ public final class XslUtil {
                     e.printStackTrace();
                 }
             }
-            if (geoserverConfiguration.canRead()) {
+            if (geonetworkConfiguration.canRead()) {
                 try {
-                    XslUtil.loadProperties(geoserverConfiguration, properties);
+                    XslUtil.loadProperties(geonetworkConfiguration, properties);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
