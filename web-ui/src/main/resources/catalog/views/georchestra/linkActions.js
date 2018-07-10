@@ -41,7 +41,7 @@
             jsonObject.layers.push(this.getLayerJSONSpec(layer.link, layer.md));
           }.bind(this));
           sendPostForm(
-            'mapfishapp' + ((extract) ? '/?addons=extractor_0' : ''),
+            'mapfishapp' + ((extract) ? '/?addons=extractor_0' : '/'),
             JSON.stringify(jsonObject)
           );
         }.bind(this);
@@ -55,7 +55,7 @@
         this.addWMSLayer = function (link, md) {
           var jsonObject = {services: [], layers: []};
           jsonObject.layers.push(this.getLayerJSONSpec(link, md));
-          sendPostForm('mapfishapp', JSON.stringify(jsonObject));
+          sendPostForm('mapfishapp/', JSON.stringify(jsonObject));
         }.bind(this);
 
         /**
@@ -170,7 +170,7 @@
               });
               return;
             }
-            sendPostForm(destUrl, JSON.stringify(response.data));
+            sendPostForm(destUrl + '/', JSON.stringify(response.data));
           });
         };
 
@@ -183,7 +183,7 @@
          * @param {string} content
          */
         function sendPostForm(destUrl, content) {
-          var tmpForm = $('<form action="/' + destUrl + '/" method="POST" ' +
+          var tmpForm = $('<form action="/' + destUrl + '" method="POST" ' +
               'target="_blank"></form>');
           var tmpInput = $('<input name="data" />');
           tmpForm.appendTo('body');
