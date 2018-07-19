@@ -51,7 +51,7 @@
                   attrs['autoUpload'] == 'true';
               var defaultStatus =
                   angular.isUndefined(attrs['defaultStatus']) ?
-                  'public' : attrs['defaultStatus'];
+                  'private' : attrs['defaultStatus'];
 
               scope.setResource = function(r) {
                 scope.selectCallback({ selected: r });
