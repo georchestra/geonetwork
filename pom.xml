@@ -1422,7 +1422,7 @@
      allows to change at run time the list of hosts. It
      may be a bit slower as it requires to check for every
      request the list of hosts (but JPA cache db queries). -->
-    <cors.allowedHosts>*</cors.allowedHosts>
+    <cors.allowedHosts></cors.allowedHosts>
 
 
     <jetty.version>9.4.12.v20180830</jetty.version>
