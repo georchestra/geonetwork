@@ -207,3 +207,80 @@
 }
 
 @import "gn_view.less";
+
+li.list-group-item.gn-map-item {
+  text-align: center;
+  font-size: 12px;
+
+  .gn-md-thumbnail {
+    display: inline-block;
+    float: none;
+    margin: 0px;
+    background-image: url(../catalog/views/default/images/no-thumbnail.png);
+    background-size: cover;
+    background-position: center;
+    width: auto;
+    height: auto;
+  }
+
+  .gn-img-thumbnail-caption {
+    height: 40px;
+    line-height: 1.2em;
+    overflow: hidden;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 12px;
+      background: linear-gradient(to bottom, fade(white, 0%) 0%, white 100%);
+    }
+  }
+
+  .gn-top-records [data-gn-results-container]  & {
+    padding: 14px;
+    height: 205px;
+
+    .gn-img-thumbnail-caption {
+      margin: 5px 0px;
+    }
+
+    &:hover {
+      cursor: pointer;
+
+      // note, this may not be correct if a theme is applied,
+      // as the actual result hover color is transparent black
+      @result-hover-color: rgb(234, 234, 234);
+      .gn-img-thumbnail-caption::after {
+        background: linear-gradient(to bottom, fade(@result-hover-color, 0%) 0%, @result-hover-color 100%);
+      }
+    }
+  }
+
+  [gn-ows-context] ul.gn-resultview & {
+    padding: 5px;
+    height: 205px;
+    text-align: center;
+
+    .gn-md-thumbnail {
+      width: 147px;
+    }
+    .gn-img-thumbnail-caption {
+      height: 30px;
+    }
+
+    &:hover {
+      cursor: pointer;
+
+      // note, this may not be correct if a theme is applied,
+      // as the actual result hover color is transparent black
+      @result-hover-color: #f3f3f3;
+      .gn-img-thumbnail-caption::after {
+        background: linear-gradient(to bottom, fade(@result-hover-color, 0%) 0%, @result-hover-color 100%);
+      }
+    }
+  }
+}
