@@ -174,7 +174,6 @@
                   </ul>
                 </xsl:for-each>
               </section>
-
               <section class="gn-md-side-access">
                 <div class="well text-center">
                   <span itemprop="identifier"
@@ -197,7 +196,6 @@
                 </div>
               </section>
             </xsl:if>
-
             <section class="gn-md-side-associated">
               <h4>
                 <i class="fa fa-fw fa-link">&#160;</i>
