@@ -4,14 +4,15 @@ ENV XMS=1G XMX=6G
 
 RUN java -jar "$JETTY_HOME/start.jar" --create-startd --add-to-start=jmx,jmx-remote,stats
 
-ADD . /
+ADD --chown=jetty:jetty ./var/lib/jetty/webapps /var/lib/jetty/
+ADD --chown=jetty:jetty ./etc/georchestra /etc/
+ADD *.sh docker-entrypoint.d /
 
 # Temporary switch to root
 USER root
 
 RUN mkdir /mnt/geonetwork_datadir && \
-    chown jetty:jetty /etc/georchestra /mnt/geonetwork_datadir && \
-    chown -R jetty:jetty /var/lib/jetty/webapps
+    chown jetty:jetty /mnt/geonetwork_datadir
 
 
 # Restore jetty user
