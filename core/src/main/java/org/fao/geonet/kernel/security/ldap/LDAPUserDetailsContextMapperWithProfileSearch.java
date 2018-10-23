@@ -127,7 +127,7 @@ public class LDAPUserDetailsContextMapperWithProfileSearch extends
                             profileList.add(p);
                         }
                     } else {
-                        Log.error(Geonet.LDAP, "LDAP profile '" + profileName + "' does not match search pattern '"
+                        Log.debug(Geonet.LDAP, "LDAP profile '" + profileName + "' does not match search pattern '"
                             + privilegeQueryPattern + "'. Information ignored.");
                     }
                 }
@@ -194,7 +194,7 @@ public class LDAPUserDetailsContextMapperWithProfileSearch extends
                                 userDetails.addPrivilege(group,
                                     userDetails.getUser().getProfile());
                             } else {
-                                Log.error(Geonet.LDAP, "LDAP group '" + groupName
+                                Log.debug(Geonet.LDAP, "LDAP group '" + groupName
                                     + "' does not match search pattern '"
                                     + groupQueryPattern + "'. Information ignored.");
                             }
@@ -208,7 +208,7 @@ public class LDAPUserDetailsContextMapperWithProfileSearch extends
                             userDetails.addPrivilege(group,
                                 userDetails.getUser().getProfile());
                         } else {
-                            Log.error(Geonet.LDAP, "LDAP group '" + groupName
+                            Log.debug(Geonet.LDAP, "LDAP group '" + groupName
                                 + "' does not match search pattern '"
                                 + groupQueryPattern + "'. Information ignored.");
                         }
