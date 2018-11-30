@@ -30,7 +30,7 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
 	">
-  <bean id="database-migration-bean" class="org.fao.geonet.DatabaseMigration">
+  <bean id="database-migration-bean" class="org.fao.geonet.DatabaseMigration" depends-on="SettingManager">
     <property name="migration" ref="migrationMap"/>
     <property name="initAfter" value="javax.sql.DataSource"/>
   </bean>
@@ -167,7 +167,7 @@
     </entry>
     <entry key="3.1.0">
       <list>
-        <value>java:org.fao.geonet.api.records.attachments.MetadataResourceDatabaseMigration</value>
+        <value>java:org.fao.geonet.MetadataResourceDatabaseMigration</value>
         <value>WEB-INF/classes/setup/sql/migrate/v310/migrate-</value>
       </list>
     </entry>
