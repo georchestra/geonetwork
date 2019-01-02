@@ -91,6 +91,19 @@
     </property>
   </bean>
 
+  <bean class="org.fao.geonet.util.spring.HibernateAwareObjectMapper" id="hibernateAwareObjectMapper" />
+  <bean
+    class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+    <property name="targetObject" ref="hibernateAwareObjectMapper" />
+    <property name="targetMethod" value="configure" />
+    <property name="arguments">
+      <list>
+        <value type="com.fasterxml.jackson.databind.DeserializationFeature">FAIL_ON_UNKNOWN_PROPERTIES</value>
+        <value>false</value>
+      </list>
+    </property>
+  </bean>
+
   <mvc:annotation-driven content-negotiation-manager="cnManager">
     <mvc:message-converters>
       <bean class="org.fao.geonet.api.DOMElementMessageConverter"/>
@@ -106,7 +119,7 @@
 
       <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
         <property name="objectMapper">
-          <bean class="org.fao.geonet.util.spring.HibernateAwareObjectMapper" />
+          <ref bean="hibernateAwareObjectMapper"/>
         </property>
       </bean>
     </mvc:message-converters>
