@@ -208,6 +208,13 @@ public class Dbms
 		PreparedStatement stmt = null;
 		ResultSet resultSet = null;
 
+		// Fixing connection issues: if connection has been closed, then ask for a new one.
+		// This fix is meant to address harvesting issues in case of the database server is
+		// closing connections. This has been encountered on CIGAL & PIGMA platforms.
+		if (conn.isClosed()) {
+		    conn = dataSource.getConnection();
+		}
+
 		try
 		{
 		    stmt = conn.prepareStatement(query);
