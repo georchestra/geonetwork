@@ -805,6 +805,10 @@
               <name>org.eclipse.jetty.server.Request.maxFormContentSize</name>
               <value>5000000</value>
             </systemProperty>
+            <systemProperty>
+              <name>georchestra.datadir</name>
+              <value>/etc/georchestra</value>
+            </systemProperty>
           </systemProperties>
           <stopKey>JETTY_TOP</stopKey>
           <stopPort>8090</stopPort>
