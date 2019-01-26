@@ -1327,7 +1327,7 @@
     <xmlunit.version>2.1.1</xmlunit.version>
     <print-lib.version>2.1.1</print-lib.version>
     <flying-saucer>9.0.7</flying-saucer>
-    <server>template</server>
+    <server>generic</server>
     <camel.version>2.14.4</camel.version>
     <log4j.version>1.2.17</log4j.version>
     <log4j2.version>2.7</log4j2.version>
