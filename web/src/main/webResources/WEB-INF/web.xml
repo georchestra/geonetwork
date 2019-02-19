@@ -441,6 +441,7 @@
 
   <session-config>
     <session-timeout>${sessionTimeout}</session-timeout>
+    <tracking-mode>COOKIE</tracking-mode>
   </session-config>
 
   <context-param>
