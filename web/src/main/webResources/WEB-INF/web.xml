@@ -503,6 +503,7 @@
       <http-only>true</http-only>
       <secure>${cookieSecureFlag}</secure>
     </cookie-config>
+    <tracking-mode>COOKIE</tracking-mode>
   </session-config>
 
   <context-param>
