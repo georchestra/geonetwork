@@ -1,4 +1,16 @@
 #!/bin/bash
+set -e
 
-/wait-for-it.sh ldap:389 -s -t 0 -- echo "LDAP OK"
+LDAP_URL=`grep ldap.base.provider.url               \
+  /etc/georchestra/geonetwork/geonetwork.properties \
+  | cut -d '=' -f 2                                 \
+  | xargs`
+# typically something like ldap://ldap.georchestra-ldap:389
 
+HOST=`echo $LDAP_URL | cut -f 3 -d '/' | cut -f 1 -d ':'`
+PORT=`echo $LDAP_URL | cut -f 3 -d ':'`
+PORT="${PORT:-389}"
+
+echo Waiting for $HOST:$PORT to become available...
+
+/wait-for-it.sh $HOST:$PORT -s -t 0 -- echo "LDAP OK"
