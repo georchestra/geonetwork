@@ -1056,7 +1056,7 @@
     <profile>
       <id>docker</id>
       <properties>
-        <dockerImageName>georchestra/${project.parent.artifactId}:18.06</dockerImageName>
+        <dockerImageName>georchestra/${project.parent.artifactId}:latest</dockerImageName>
         <dockerDatadirScmUrl>scm:git:https://github.com/georchestra/datadir.git</dockerDatadirScmUrl>
         <dockerDatadirScmVersion>docker-master</dockerDatadirScmVersion>
       </properties>
