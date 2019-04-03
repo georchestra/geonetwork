@@ -1056,9 +1056,9 @@
     <profile>
       <id>docker</id>
       <properties>
-        <dockerImageName>georchestra/${project.parent.artifactId}:18.06</dockerImageName>
+        <dockerImageName>georchestra/${project.parent.artifactId}:19.04</dockerImageName>
         <dockerDatadirScmUrl>scm:git:https://github.com/georchestra/datadir.git</dockerDatadirScmUrl>
-        <dockerDatadirScmVersion>docker-18.12</dockerDatadirScmVersion>
+        <dockerDatadirScmVersion>docker-19.04</dockerDatadirScmVersion>
       </properties>
       <build>
         <finalName>geonetwork</finalName>
