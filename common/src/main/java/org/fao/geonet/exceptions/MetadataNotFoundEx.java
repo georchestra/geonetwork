@@ -38,7 +38,7 @@ public class MetadataNotFoundEx extends NotFoundEx {
     private static final long serialVersionUID = -5759127829247984309L;
 
     public MetadataNotFoundEx(String name) {
-        super("Metadata not found", name);
+        super(String.format("Metadata not found %s", name), name);
 
         id = "metadata-not-found";
     }
