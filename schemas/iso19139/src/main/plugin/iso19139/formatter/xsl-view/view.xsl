@@ -73,6 +73,7 @@
 
   <xsl:variable name="langId" select="gn-fn-iso19139:getLangId($metadata, $language)"/>
 
+  <xsl:variable name="schemaLocs" select="tr:create($schema, $lang)"/>
 
   <!-- Ignore some fields displayed in header or in right column -->
   <xsl:template mode="render-field"
@@ -225,7 +226,7 @@
         <dt>
           <xsl:value-of select="if ($fieldName)
                                   then $fieldName
-                                  else tr:node-label(tr:create($schema), name(), null)"/>
+                                  else tr:node-label($schemaLocs, name(), null)"/>
         </dt>
         <dd>
           <xsl:apply-templates mode="render-value" select="*|*/@codeListValue"/>
@@ -244,7 +245,7 @@
       <dt>
         <xsl:value-of select="if ($fieldName)
                                 then $fieldName
-                                else tr:node-label(tr:create($schema), name(), null)"/>
+                                else tr:node-label($schemaLocs, name(), null)"/>
       </dt>
       <dd>
         <xsl:apply-templates mode="render-value" select="."/>
@@ -278,7 +279,7 @@
 
     <div class="entry name">
       <h2>
-        <xsl:value-of select="tr:node-label(tr:create($schema), name(), null)"/>
+        <xsl:value-of select="tr:node-label($schemaLocs, name(), null)"/>
         <xsl:apply-templates mode="render-value"
                              select="@*"/>
       </h2>
@@ -462,7 +463,7 @@
                 priority="100">
     <dl>
       <dt>
-        <xsl:value-of select="tr:node-label(tr:create($schema), name(), null)"/>
+        <xsl:value-of select="tr:node-label($schemaLocs, name(), null)"/>
       </dt>
       <dd>
         <xsl:apply-templates mode="render-value" select="*"/>
@@ -484,7 +485,7 @@
         itemscope="itemscope"
         itemtype="http://schema.org/DataDownload">
       <dt>
-        <xsl:value-of select="tr:node-label(tr:create($schema), name(), null)"/>
+        <xsl:value-of select="tr:node-label($schemaLocs, name(), null)"/>
       </dt>
       <dd>
         <xsl:variable name="linkUrl"
@@ -527,7 +528,7 @@
                 priority="100">
     <dl class="gn-code">
       <dt>
-        <xsl:value-of select="tr:node-label(tr:create($schema), name(), null)"/>
+        <xsl:value-of select="tr:node-label($schemaLocs, name(), null)"/>
       </dt>
       <dd>
 
@@ -619,7 +620,7 @@
                 priority="100">
     <dl class="gn-format">
       <dt>
-        <xsl:value-of select="tr:node-label(tr:create($schema), name(), null)"/>
+        <xsl:value-of select="tr:node-label($schemaLocs, name(), null)"/>
       </dt>
       <dd>
         <ul>
@@ -652,7 +653,7 @@
                 priority="100">
     <dl class="gn-date">
       <dt>
-        <xsl:value-of select="tr:node-label(tr:create($schema), name(), null)"/>
+        <xsl:value-of select="tr:node-label($schemaLocs, name(), null)"/>
         <xsl:if test="*/gmd:dateType/*[@codeListValue != '']">
           (<xsl:apply-templates mode="render-value"
                                 select="*/gmd:dateType/*/@codeListValue"/>)
@@ -672,7 +673,7 @@
                 priority="100">
     <dl class="gn-date">
       <dt>
-        <xsl:value-of select="tr:node-label(tr:create($schema), name(), null)"/>
+        <xsl:value-of select="tr:node-label($schemaLocs, name(), null)"/>
       </dt>
       <dd>
         <ul>
@@ -706,7 +707,7 @@
     <xsl:if test="$isFirstOfItsKind">
       <dl class="gn-md-associated-resources">
         <dt>
-          <xsl:value-of select="tr:node-label(tr:create($schema), name(), null)"/>
+          <xsl:value-of select="tr:node-label($schemaLocs, name(), null)"/>
         </dt>
         <dd>
           <ul>
@@ -849,14 +850,14 @@
     <xsl:variable name="id" select="."/>
     <xsl:variable name="codelistTranslation"
                   select="tr:codelist-value-label(
-                            tr:create($schema),
+                            $schemaLocs,
                             parent::node()/local-name(), $id)"/>
     <xsl:choose>
       <xsl:when test="$codelistTranslation != ''">
 
         <xsl:variable name="codelistDesc"
                       select="tr:codelist-value-desc(
-                            tr:create($schema),
+                            $schemaLocs,
                             parent::node()/local-name(), $id)"/>
         <span title="{$codelistDesc}">
           <xsl:value-of select="$codelistTranslation"/>
@@ -876,14 +877,14 @@
     <xsl:variable name="id" select="."/>
     <xsl:variable name="codelistTranslation"
                   select="tr:codelist-value-label(
-                            tr:create($schema),
+                            $schemaLocs,
                             local-name(), $id)"/>
     <xsl:choose>
       <xsl:when test="$codelistTranslation != ''">
 
         <xsl:variable name="codelistDesc"
                       select="tr:codelist-value-desc(
-                            tr:create($schema),
+                            $schemaLocs,
                             local-name(), $id)"/>
         <span title="{$codelistDesc}">
           <xsl:value-of select="$codelistTranslation"/>
