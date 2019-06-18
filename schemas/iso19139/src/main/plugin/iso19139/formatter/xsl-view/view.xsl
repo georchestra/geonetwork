@@ -77,6 +77,7 @@
 
   <xsl:variable name="langId" select="gn-fn-iso19139:getLangId($metadata, $language)"/>
 
+  <xsl:variable name="schemaLocs" select="tr:create($schema, $lang)"/>
 
   <!-- Ignore some fields displayed in header or in right column -->
   <xsl:template mode="render-field"
@@ -948,7 +949,7 @@
 
         <xsl:variable name="codelistDesc"
                       select="tr:codelist-value-desc(
-                            tr:create($schema),
+                            $schemaLocs,
                             parent::node()/local-name(), $id)"/>
         <span title="{$codelistDesc}">
           <xsl:value-of select="$codelistTranslation"/>
@@ -969,14 +970,14 @@
     <xsl:variable name="id" select="."/>
     <xsl:variable name="codelistTranslation"
                   select="tr:codelist-value-label(
-                            tr:create($schema),
+                            $schemaLocs,
                             local-name(), $id)"/>
     <xsl:choose>
       <xsl:when test="$codelistTranslation != ''">
 
         <xsl:variable name="codelistDesc"
                       select="tr:codelist-value-desc(
-                            tr:create($schema),
+                            $schemaLocs,
                             local-name(), $id)"/>
         <span title="{$codelistDesc}">
           <xsl:value-of select="$codelistTranslation"/>
