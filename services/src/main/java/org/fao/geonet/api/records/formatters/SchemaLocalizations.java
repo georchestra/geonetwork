@@ -30,11 +30,11 @@ import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-
 import com.vividsolutions.jts.util.Assert;
-
 import groovy.util.slurpersupport.GPathResult;
-
+import jeeves.server.dispatchers.guiservices.XmlFile;
+import jeeves.server.sources.ServiceRequestFactory;
+import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.api.records.formatters.groovy.CurrentLanguageHolder;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.domain.IsoLanguage;
@@ -44,9 +44,12 @@ import org.fao.geonet.repository.IsoLanguageRepository;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -55,12 +58,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-
-import jeeves.server.dispatchers.guiservices.XmlFile;
-import jeeves.server.sources.ServiceRequestFactory;
 
 import static jeeves.config.springutil.JeevesDelegatingFilterProxy.getApplicationContextFromServletContext;
 
@@ -122,6 +119,24 @@ public class SchemaLocalizations {
         ServletContext context = request.getSession(false).getServletContext();
         final ApplicationContext appContext = getApplicationContextFromServletContext(context);
         final String lang3 = ServiceRequestFactory.extractLanguage(request.getPathInfo());
+        final String lang2 = appContext.getBean(IsoLanguagesMapper.class).iso639_2_to_iso639_1(lang3);
+        CurrentLanguageHolder languageHolder = new CurrentLanguageHolder() {
+            @Override
+            public String getLang3() {
+                return lang3;
+            }
+
+            @Override
+            public String getLang2() {
+                return lang2;
+            }
+        };
+        return new SchemaLocalizations(appContext, languageHolder, schema, null);
+
+    }
+
+    public static SchemaLocalizations create(String schema, String lang3) throws IOException, JDOMException {
+        ConfigurableApplicationContext appContext = ApplicationContextHolder.get();
         final String lang2 = appContext.getBean(IsoLanguagesMapper.class).iso639_2_to_iso639_1(lang3);
         CurrentLanguageHolder languageHolder = new CurrentLanguageHolder() {
             @Override
