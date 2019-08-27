@@ -126,11 +126,15 @@ public class LDAPSynchronizerJob extends QuartzJobBean {
                 String ldapGroupSearchFilter = (String) jdm.get("ldapGroupSearchFilter");
                 String ldapGroupSearchBase = (String) jdm.get("ldapGroupSearchBase");
                 String ldapGroupSearchAttribute = (String) jdm.get("ldapGroupSearchAttribute");
+                String ldapGroupLabelAttribute = ldapGroupSearchAttribute;
+                if (jdm.get("ldapGroupLabelAttribute") != null) {
+                    ldapGroupLabelAttribute = (String)jdm.get("ldapGroupLabelAttribute");
+                };
                 String ldapGroupSearchPattern = (String) jdm.get("ldapGroupSearchPattern");
 
                 synchronizeGroup(applicationContext, ldapGroupSearchFilter,
                     ldapGroupSearchBase, ldapGroupSearchAttribute,
-                    ldapGroupSearchPattern, dc);
+                    ldapGroupSearchPattern, ldapGroupLabelAttribute, dc);
             }
 
         } catch (SQLException | NamingException e) {
@@ -205,7 +209,7 @@ public class LDAPSynchronizerJob extends QuartzJobBean {
 
     private void synchronizeGroup(ApplicationContext applicationContext, String ldapGroupSearchFilter,
                                   String ldapGroupSearchBase, String ldapGroupSearchAttribute,
-                                  String ldapGroupSearchPattern, DirContext dc) throws NamingException, SQLException {
+                                  String ldapGroupSearchPattern, String ldapGroupLabelAttribute, DirContext dc) throws NamingException, SQLException {
 
         NamingEnumeration<?> groupList = null;
         try {
@@ -223,6 +227,7 @@ public class LDAPSynchronizerJob extends QuartzJobBean {
                 // This will require to store in local db the remote id
                 String groupName = (String) sr.getAttributes().get(ldapGroupSearchAttribute).get();
 
+
                 if (ldapGroupSearchPatternCompiled != null && !"".equals(ldapGroupSearchPattern)) {
                     Matcher m = ldapGroupSearchPatternCompiled.matcher(groupName);
                     boolean b = m.matches();
@@ -238,8 +243,9 @@ public class LDAPSynchronizerJob extends QuartzJobBean {
                     group = new Group().setName(groupName);
                     LanguageRepository langRepository = this.applicationContext.getBean(LanguageRepository.class);
                     java.util.List<Language> allLanguages = langRepository.findAll();
+                    String label = (String) sr.getAttributes().get(ldapGroupLabelAttribute).get();
                     for (Language l : allLanguages) {
-                        group.getLabelTranslations().put(l.getId(), groupName);
+                        group.getLabelTranslations().put(l.getId(), label);
                     }
                     groupRepo.save(group);
                 } else {
