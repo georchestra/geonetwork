@@ -1211,7 +1211,6 @@
         </plugins>
       </build>
     </profile>
-
     <profile>
       <id>slave</id>
       <dependencies>
@@ -1219,6 +1218,17 @@
           <groupId>org.geonetwork-opensource</groupId>
           <artifactId>slave</artifactId>
           <version>${project.version}</version>
+        </dependency>
+      </dependencies>
+    </profile>
+
+    <profile>
+      <id>log4j-logstash</id>
+      <dependencies>
+        <dependency>
+          <groupId>net.logstash.log4j</groupId>
+          <artifactId>jsonevent-layout</artifactId>
+          <version>1.7</version>
         </dependency>
       </dependencies>
     </profile>
