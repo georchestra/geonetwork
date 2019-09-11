@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:java="java:org.fao.geonet.util.XslUtil"
+                version="2.0">
 
-  <xsl:output  indent="yes" method="text" encoding="UTF-8" media-type="application/json"/>
+  <xsl:output indent="yes" method="text" encoding="UTF-8" media-type="application/json"/>
 
   <xsl:include href="base-variables.xsl"/>
 
@@ -16,13 +18,13 @@
     <xsl:if test="following-sibling::at">,</xsl:if>
   </xsl:template>
   <xsl:template mode="error" match="message|class|stack|request">
-    "<xsl:value-of select="name(.)"/>": 
+    "<xsl:value-of select="name(.)"/>":
     <xsl:choose>
       <xsl:when test="*">
         {<xsl:apply-templates mode="error" select="*"/>}
       </xsl:when>
       <xsl:otherwise>
-        "<xsl:value-of select="."/>"
+        "<xsl:value-of select="java:encodeForHTML(.)"/>"
       </xsl:otherwise>
     </xsl:choose>
     <!-- Last element of interest for error is request. Next one is the record. -->
