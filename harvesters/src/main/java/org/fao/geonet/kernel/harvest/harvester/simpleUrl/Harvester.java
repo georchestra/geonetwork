@@ -52,10 +52,15 @@ import org.springframework.http.client.ClientHttpResponse;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+<<<<<<< HEAD
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+=======
+import java.net.URI;
+import java.net.URISyntaxException;
+>>>>>>> 4918e66602 (Harvester / Simple URL)
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -139,6 +144,7 @@ class Harvester implements IHarvester<HarvestResult> {
 
                         nodes.forEach(record -> {
                             String uuid = this.extractUuidFromIdentifier(record.get(params.recordIdPath).asText());
+<<<<<<< HEAD
                             String apiUrl = params.url.split("\\?")[0];
                             URL url = null;
                             try {
@@ -149,6 +155,10 @@ class Harvester implements IHarvester<HarvestResult> {
                             } catch (MalformedURLException e) {
                                 log.warning("Failed to parse Node URL");
                             }
+=======
+                            Element xml = convertRecordToXml(record, uuid);
+                            uuids.put(uuid, xml);
+>>>>>>> 4918e66602 (Harvester / Simple URL)
                         });
                         aligner.align(uuids, errors);
                         allUuids.putAll(uuids);
@@ -201,8 +211,13 @@ class Harvester implements IHarvester<HarvestResult> {
             numberOfRecordsPerPage = Integer.parseInt(pageSizeParamValue);
         } else {
             log.warning(String.format(
+<<<<<<< HEAD
                     "Page size param '%s' not found or is not a numeric in URL '%s'. Can't build a list of pages.",
                     params.pageSizeParam, params.url));
+=======
+                "Page size param '%s' not found or is not a numeric in URL '%s'. Can't build a list of pages.",
+                params.pageSizeParam, params.url));
+>>>>>>> 4918e66602 (Harvester / Simple URL)
             urlList.add(params.url);
             return urlList;
         }
@@ -213,8 +228,13 @@ class Harvester implements IHarvester<HarvestResult> {
             startAtZero = Integer.parseInt(pageFromParamValue) == 0;
         } else {
             log.warning(String.format(
+<<<<<<< HEAD
                     "Page from param '%s' not found or is not a numeric in URL '%s'. Can't build a list of pages.",
                     params.pageFromParam, params.url));
+=======
+                "Page from param '%s' not found or is not a numeric in URL '%s'. Can't build a list of pages.",
+                params.pageFromParam, params.url));
+>>>>>>> 4918e66602 (Harvester / Simple URL)
             urlList.add(params.url);
             return urlList;
         }
@@ -225,17 +245,26 @@ class Harvester implements IHarvester<HarvestResult> {
         for (int i = 0; i < numberOfPages; i++) {
             int from = i * numberOfRecordsPerPage + (startAtZero ? 0 : 1);
             int size = i == numberOfPages - 1 ? // Last page
+<<<<<<< HEAD
                     numberOfRecordsToHarvest - from + (startAtZero ? 0 : 1) :
                     numberOfRecordsPerPage;
             String url = params.url
                     .replaceAll(params.pageFromParam + "=[0-9]+", params.pageFromParam + "=" + from)
                     .replaceAll(params.pageSizeParam + "=[0-9]+", params.pageSizeParam + "=" + size);
+=======
+                numberOfRecordsToHarvest - from + (startAtZero ? 0 : 1) :
+                numberOfRecordsPerPage;
+            String url = params.url
+                .replaceAll(params.pageFromParam + "=[0-9]+", params.pageFromParam + "=" + from)
+                .replaceAll(params.pageSizeParam + "=[0-9]+", params.pageSizeParam + "=" + size);
+>>>>>>> 4918e66602 (Harvester / Simple URL)
             urlList.add(url);
         }
 
         return urlList;
     }
 
+<<<<<<< HEAD
     private Element convertRecordToXml(JsonNode record, String uuid, String apiUrl, String nodeUrl) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
@@ -247,6 +276,17 @@ class Harvester implements IHarvester<HarvestResult> {
             recordAsElement.addContent(new Element("uuid").setText(uuid));
             recordAsElement.addContent(new Element("apiUrl").setText(apiUrl));
             recordAsElement.addContent(new Element("nodeUrl").setText(nodeUrl));
+=======
+    private Element convertRecordToXml(JsonNode record, String uuid) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            String recordAsXml = XML.toString(
+                new JSONObject(
+                    objectMapper.writeValueAsString(record)), "record");
+            recordAsXml = Xml.stripNonValidXMLCharacters(recordAsXml).replace("<@", "<").replace("</@", "</");
+            Element recordAsElement = Xml.loadString(recordAsXml, false);
+            recordAsElement.addContent(new Element("uuid").setText(uuid));
+>>>>>>> 4918e66602 (Harvester / Simple URL)
             Path importXsl = context.getAppPath().resolve(Geonet.Path.IMPORT_STYLESHEETS);
             final Path xslPath = importXsl.resolve(params.toISOConversion + ".xsl");
             return Xml.transform(recordAsElement, xslPath);
