@@ -353,7 +353,6 @@
         <artifactId>urlrewritefilter</artifactId>
         <version>4.0.3</version>
       </dependency>
-
       <!-- XML -->
       <dependency>
         <groupId>org.jdom</groupId>
@@ -1248,6 +1247,14 @@
       <name>The Seasar Foundation Maven2 Repository</name>
       <url>http://maven.seasar.org/maven2</url>
     </repository>
+    <repository>
+      <snapshots>
+        <enabled>true</enabled>
+        <checksumPolicy>ignore</checksumPolicy>
+      </snapshots>
+      <id>georchestra</id>
+      <url>https://packages.georchestra.org/artifactory/maven</url>
+    </repository>
 
     <repository>
       <id>georchestra-mfprint</id>
@@ -1446,7 +1453,7 @@
     <node.version>v8.11.1</node.version>
     <npm.version>5.8.0</npm.version>
     <xmlunit.version>2.1.1</xmlunit.version>
-    <print-lib.version>2.1.6</print-lib.version>
+    <print-lib.version>2.1.6-georchestra</print-lib.version>
     <flying-saucer>9.0.7</flying-saucer>
     <server>generic</server>
     <camel.version>2.14.4</camel.version>
