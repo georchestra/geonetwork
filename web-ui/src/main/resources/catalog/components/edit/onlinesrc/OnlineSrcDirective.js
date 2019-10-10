@@ -799,7 +799,21 @@
                     scope.map.removeLayer(layer);
                   });
 
-                  scope.map.addLayer(gnMap.getLayersFromConfig());
+                  var conf = gnMap.getMapConfig();
+
+                  if (conf.useOSM) {
+                    scope.map.addLayer(new ol.layer.Tile({source:  new ol.source.OSM()}));
+                  }
+                  else {
+                    conf['map-editor'].layers.forEach(function(layerInfo) {
+                        gnMap.createLayerFromProperties(layerInfo, scope.map)
+                            .then(function(layer) {
+                              if (layer) {
+                                scope.map.addLayer(layer);
+                              }
+                            });
+                      });
+                  }
 
                   // Add each WMS layer to the map
                   scope.layers = scope.gnCurrentEdit.layerConfig;
@@ -843,11 +857,20 @@
                 };
 
                 scope.generateThumbnail = function() {
+                  //Added mandatory custom params here to avoid
+                  //changing other printing services
+                  jsonSpec = angular.extend(
+                          scope.jsonSpec,
+                          {
+                              hasNoTitle: true
+                          });
+
                   return $http.put('../api/0.1/records/' +
                       scope.gnCurrentEdit.uuid +
                       '/attachments/print-thumbnail', null, {
                         params: {
-                          jsonConfig: angular.fromJson(scope.jsonSpec)
+                          jsonConfig: angular.fromJson(jsonSpec),
+                          rotationAngle: ((jsonSpec.layout == 'landscape')? 90 : 0)
                         }
                       }).then(function() {
                     $rootScope.$broadcast('gnFileStoreUploadDone');
