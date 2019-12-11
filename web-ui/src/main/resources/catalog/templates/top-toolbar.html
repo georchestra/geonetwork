@@ -25,19 +25,10 @@
     </button>
   </div>
   <div id="navbar" class="navbar-collapse collapse">
-    <ul class="nav navbar-nav gn-menu-xs" role="menu">
-      <li class="clearfix hidden-xs" data-ng-if="gnCfg.mods.home.enabled">
-        <a class="pull-left gn-logo-link" data-gn-active-tb-item="{{gnCfg.mods.home.appUrl}}" data-ng-hide="{{gnCfg.mods.header.isLogoInHeader}}">
-          <img class="gn-logo"
-                alt="{{'siteLogo' | translate}}"
-                data-ng-src="{{gnUrl}}../images/logos/{{info['node/id'] || info['system/site/siteId']}}.png?random{{info['system/site/lastUpdate']}}"/>
-        </a>
-        <a class="pull-left hidden-sm"
-           data-ng-class="gnCfg.mods.header.isLogoInHeader ? '' : 'gn-nopadding-left'"
-           data-gn-active-tb-item="{{gnCfg.mods.home.appUrl}}">
-          <span class="gn-name"
-                data-ng-class="authenticated && user.isEditorOrMore() ? 'gn-truncate' : ''"
-                title="{{info['system/site/name']}}">{{info['node/name'] || info['system/site/name']}}</span>
+    <ul class="nav navbar-nav">
+      <li data-ng-if="gnCfg.mods.home.enabled">
+        <a data-gn-active-tb-item="{{gnCfg.mods.home.appUrl}}">
+          <span class="hidden-sm hidden-md">{{info['system/site/name']}}</span>
         </a>
       </li>
       <li class="gn-menuitem-xs" data-ng-if="gnCfg.mods.search.enabled">
@@ -47,15 +38,7 @@
           <span translate>search</span>
         </a>
       </li>
-      <li class="gn-menuitem-xs" data-ng-if="gnCfg.mods.map.enabled">
-        <a data-gn-active-tb-item="{{isExternalViewerEnabled ? externalViewerUrl : gnCfg.mods.map.appUrl}}"
-          title="{{'map' | translate}}">
-          <i class="fa fa-fw fa-globe hidden-sm"></i>
-          <span translate>makeYourMap</span>
-          <span data-gnv-layer-indicator=""/>
-        </a>
-      </li>
-      <li class="dropdown dropdown-hover open gn-clear-xs" data-ng-if="gnCfg.mods.editor.enabled"
+      <li class="dropdown dropdown-hover open" data-ng-if="gnCfg.mods.editor.enabled"
           data-ng-show="authenticated && user.isEditorOrMore()"
           id="gn-login-dropdown">
         <a data-gn-active-tb-item="{{gnCfg.mods.editor.appUrl}}"
@@ -137,126 +120,5 @@
       <li gn-static-pages-list-viewer data-section="top" data-language="{{lang}}" />
     </ul>
 
-
-    <form class="navbar-form navbar-right language-switcher">
-      <span class="gn-menuheader-xs visible-xs"
-            data-ng-if="!authenticated && service !== 'catalog.signin' && service !== 'new.account' && !shibbolethEnabled"
-            data-translate="">language</span>
-      <div class="form-group"
-           data-gn-language-switcher="lang"
-           data-langs="langs"
-           data-lang-labels="langLabels">
-      </div>
-    </form>
-
-    <ul data-ng-if="gnCfg.mods.signin.enabled"
-        class="nav navbar-nav navbar-right username-dropdown">
-      <li class="dropdown dropdown-hover open" data-ng-show="authenticated">
-        <a data-gn-active-tb-item="{{gnCfg.mods.admin.appUrl}}#/organization/users?userOrGroup={{user.username}}"
-          title="{{'userDetails' | translate}}"
-          class="dropdown-toggle gn-menuitem-xs"
-          role="button" aria-expanded="false">
-          <img class="img-circle"
-            alt="{{'avatar' | translate}}"
-            data-ng-src="//gravatar.com/avatar/{{user.email | md5}}?s=18"/>
-          <div class="gn-user-info hidden-sm hidden-md">
-            {{user.name}} {{user.surname}}<br>
-            <span class="gn-user-role">{{user.profile | lowercase | translate}}</span>
-          </div>
-          <span class="alert alert-danger ng-hide"
-                data-ng-show="session.remainingTime > 0 &&
-                    session.remainingTime < session.alertInTitleWhen"
-                translate
-                data-translate-values="{remainingTime: '{{session.remainingTime}}'}">
-            sessionWillExpireIn
-          </span>
-        </a>
-        <ul class="dropdown-menu gn-menuitem-xs" role="menu">
-          <li class="text-center hidden-xs" role="menuitem">
-            <img class="img-circle"
-                 alt="{{'avatar' | translate}}"
-                 data-ng-src="//gravatar.com/avatar/{{user.email | md5}}?s=56"/>
-          </li>
-          <li role="separator" class="divider hidden-xs"></li>
-          <li class="dropdown-header hidden-xs" role="menuitem" translate>username</li>
-          <li class="hidden-xs" role="menuitem">
-            <a data-gn-active-tb-item="{{gnCfg.mods.admin.appUrl}}#/organization/users?userOrGroup={{user.username}}">{{user.name}} {{user.surname}}</a>
-          </li>
-          <li class="dropdown-header hidden-xs" role="menuitem" translate>profile</li>
-          <li class="hidden-xs" role="menuitem">
-            <a data-gn-active-tb-item="{{gnCfg.mods.admin.appUrl}}#/organization/users?userOrGroup={{user.username}}">{{user.profile | lowercase | translate}}</a>
-          </li>
-          <li role="separator" class="divider hidden-xs"></li>
-          <li role="menuitem">
-            <a href="{{gnCfg.mods.signout.appUrl}}"
-               title="{{'signout' | translate}}">
-              <i class="fa fa-sign-out"></i>&nbsp;
-              {{'signout' | translate}}
-            </a>
-          </li>
-        </ul>
-      </li>
-      <li class="dropdown dropdown-hover open signin-dropdown"
-        data-ng-if="!authenticated && service !== 'catalog.signin' && service !== 'new.account' && !shibbolethEnabled">
-        <a href="{{gnCfg.mods.signin.appUrl | signInLink}}"
-           title="{{'signIn'|translate}}"
-           class="dropdown-toggle gn-menuheader-xs"
-           data-ng-keypress="$event"
-           data-ng-mouseover="focusLoginPopup()">
-          <i class="fa fa-fw fa-sign-in hidden-sm"></i>
-          {{'signIn' | translate}}
-        </a>
-        <ul class="dropdown-menu" role="menu">
-          <li role="menuitem">
-            <form name="gnSigninForm" class="navbar-form flex-row"
-              action="{{signInFormAction}}" method="post" role="form">
-              <input type="hidden" name="_csrf" value="{{csrf}}"/>
-              <div class="form-group form-group-sm">
-                <div class="input-group">
-                  <span class="input-group-addon">
-                    <i class="fa fa-fw fa-user"></i>
-                  </span>
-                  <input type="text"
-                         class="form-control"
-                         id="inputUsername"
-                         name="username"
-                         autofocus=""
-                         aria-label="{{'username' | translate}}"
-                         placeholder="{{'username' | translate}}" 
-                         data-ng-model="signinUsername"
-                         required=""/>
-                </div>
-              </div>
-              <div class="flex-spacer hidden-xs"></div>
-              <div class="form-group form-group-sm">
-                <div class="input-group">
-                  <span class="input-group-addon">
-                    <i class="fa fa-fw fa-lock"></i>
-                  </span>
-                  <input type="password"
-                         class="form-control"
-                         id="inputPassword"
-                         name="password"
-                         autocomplete="off"
-                         data-ng-model="signinPassword"
-                         aria-label="{{'password' | translate}}"
-                         placeholder="{{'password' | translate}}"
-                         required=""/>
-                </div>
-              </div>
-              <div class="flex-spacer hidden-xs"></div>
-
-              <input type="hidden" name="redirectUrl" value="{{redirectUrlAfterSign}}"/>
-
-              <button type="submit" class="btn btn-primary btn-sm pull-right"
-                      aria-label="{{'signIn' | translate}}"
-                      data-ng-disabled="!gnSigninForm.$valid">
-                <i class="fa fa-sign-in"></i>
-              </button>
-            </form>
-          </li>
-        </ul>
-      </li>
-    </ul>
   </div>
 </div>

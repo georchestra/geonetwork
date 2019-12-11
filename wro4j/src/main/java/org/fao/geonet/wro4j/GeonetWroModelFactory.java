@@ -712,13 +712,10 @@ public class GeonetWroModelFactory implements WroModelFactory {
 
                 @Override
                 public Iterator<File> iterator() {
-                    // More detailed error about 
-                    // Parameter 'directory' is not a directory 
-                    // when a missing lib is not found by wro4j when geonetwork initialized.
-                    // It may happen when submodules are not loaded properly.
-                    if (!root.isDirectory()) {
-                        throw new IllegalArgumentException(
-                            String.format("Directory '%s' is not a directory. It could be a missing library. Check the source if you have all dependency files required.", root));
+                    if (! root.exists() || ! root.isDirectory()) {
+                        Log.warning(WRO4J_LOG, root + " does not exist or is not a directory, skipping. UI files might be missing.");
+                        return Collections.emptyIterator();
+
                     }
                     return FileUtils.iterateFiles(root, extToCollect, true);
                 }
