@@ -29,7 +29,6 @@ docs/*/users/build
 docs/schema-loc-*.rst
 web/src/main/webapp/WEB-INF/server.prop
 *.iml
-.*/
 */.*
 eclipse/
 web/src/main/webapp/WEB-INF/data/data/metadata_data
