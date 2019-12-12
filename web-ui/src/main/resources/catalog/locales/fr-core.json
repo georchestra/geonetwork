@@ -420,7 +420,6 @@
     "resolveCaptcha": "Valider la vérification reCAPTCHA",
     "resolutions": "Résolution",
     "loginTitle": "S'identifier",
-<<<<<<< HEAD
     "loginText": "Identifiez-vous avec votre nom d'utilisateur et votre mot de passe pour décrire vos données et services.",
     "siteLogo": "Logo",
     "currentStatus": "Dernier statut",
@@ -484,7 +483,3 @@
     "deleteWorkingCopyRecordConfirm": "Voulez-vous vraiment supprimer la copie de travail ?",
     "workingCopy": "Brouillon"
 }
-=======
-    "loginText": "Identifiez-vous avec votre nom d'utilisateur et votre mot de passe pour décrire vos données et services."
-}
->>>>>>> a286e088f3... Add extraction list & send to mapfishapp
