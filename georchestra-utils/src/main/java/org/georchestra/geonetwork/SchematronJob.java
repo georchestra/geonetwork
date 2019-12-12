@@ -8,15 +8,17 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.apache.log4j.Logger;
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.domain.Metadata;
-import org.fao.geonet.kernel.DataManager;
+import org.fao.geonet.kernel.datamanager.IMetadataValidator;
 import org.fao.geonet.repository.MetadataRepository;
-import org.jdom.Document;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 import org.springframework.stereotype.Component;
+
+import jeeves.server.context.ServiceContext;
 
 @Component
 public class SchematronJob extends QuartzJobBean {
@@ -27,9 +29,7 @@ public class SchematronJob extends QuartzJobBean {
     @Autowired
     private ConfigurableApplicationContext applicationContext;
     @Autowired
-    private DataManager _dataManager;
-
-    private String defaultLanguage = "eng";
+    private IMetadataValidator metadataValidator;
 
     @Override
     protected void executeInternal(final JobExecutionContext jobExecContext) throws JobExecutionException {
@@ -40,18 +40,20 @@ public class SchematronJob extends QuartzJobBean {
         try {
             started.set(true);
 
-            if ((applicationContext == null) || (_dataManager == null)) {
+            if ((applicationContext == null) || (metadataValidator == null)) {
                 Log.error("applicationContext or _dataManager is null, skipping execution");
                 return;
             }
             ApplicationContextHolder.set(applicationContext);
             MetadataRepository mdrepo = applicationContext.getBean(MetadataRepository.class);
-            List<Integer> mdToValidate = mdrepo.findAllIdsBy(isHarvested(false));
+            ServiceContext serviceContext = ServiceContext.get();
+            
+            List<Integer> mdToValidate = mdrepo.findAllIdsBy((Specification<Metadata>) isHarvested(false));
             for (Integer mdId : mdToValidate) {
                 Metadata record = mdrepo.findOne(mdId);
                 try {
-                    _dataManager.doValidate(record.getDataInfo().getSchemaId(), mdId.toString(),
-                            new Document(record.getXmlData(false)), defaultLanguage);
+                	metadataValidator.validateMetadata(record.getDataInfo().getSchemaId(),
+                			record.getXmlData(false), serviceContext, " ");
                 } catch (Exception e) {
                     Log.error("Error validating metadata id " + record.getUuid());
                 }

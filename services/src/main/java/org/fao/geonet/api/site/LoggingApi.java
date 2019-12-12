@@ -23,13 +23,29 @@
 
 package org.fao.geonet.api.site;
 
-import static org.fao.geonet.api.ApiParams.API_CLASS_CATALOG_OPS;
-import static org.fao.geonet.api.ApiParams.API_CLASS_CATALOG_TAG;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import org.apache.commons.io.IOUtils;
+import org.apache.log4j.FileAppender;
+import org.apache.log4j.Logger;
+import org.fao.geonet.api.API;
+import org.fao.geonet.constants.Geonet;
+import org.fao.geonet.kernel.GeonetworkDataDirectory;
+import org.fao.geonet.api.site.model.ListLogFilesResponse;
+import org.fao.geonet.util.FileUtil;
+import org.fao.geonet.utils.Log;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,33 +56,8 @@ import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.io.IOUtils;
-import org.apache.log4j.FileAppender;
-import org.apache.log4j.Logger;
-import org.fao.geonet.api.API;
-import org.fao.geonet.api.site.model.ListLogFilesResponse;
-import org.fao.geonet.constants.Geonet;
-import org.fao.geonet.kernel.GeonetworkDataDirectory;
-import org.fao.geonet.util.FileUtil;
-import org.fao.geonet.utils.Log;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import static org.fao.geonet.api.ApiParams.API_CLASS_CATALOG_OPS;
+import static org.fao.geonet.api.ApiParams.API_CLASS_CATALOG_TAG;
 
 
 @RequestMapping(value = {
@@ -80,7 +71,6 @@ import io.swagger.annotations.ApiParam;
 @Controller("logging")
 @PreAuthorize("hasRole('Administrator')")
 public class LoggingApi {
-
     private final String regexp = "log4j(-(.*?))?\\.xml";
 
     @Autowired
@@ -102,12 +92,6 @@ public class LoggingApi {
         java.util.List<ListLogFilesResponse.LogFileResponse> logFileList =
             new ArrayList<>();
         String classesFolder = dataDirectory.getWebappDir() + "/WEB-INF/classes";
-        try {
-            Object logov = ApplicationContextHolder.get().getBean("logPlaceHolder");
-            classesFolder = logov.toString();
-        } catch (Throwable e) {
-          // default behaviour
-        }
         File folder = new File(classesFolder);
 
         if (folder != null && folder.isDirectory()) {
