@@ -63,10 +63,11 @@
       'gnViewerSettings',
       'gnViewerService',
       'gnAlertService',
+      '$filter',
       function(ngeoDecorateLayer, gnOwsCapabilities, gnConfig, $log,
           gnSearchLocation, $rootScope, gnUrlUtils, $q, $translate,
           gnWmsQueue, gnSearchManagerService, Metadata, gnWfsService,
-          gnGlobalSettings, gnViewerSettings, gnViewerService, gnAlertService) {
+          gnGlobalSettings, gnViewerSettings, gnViewerService, gnAlertService, $filter) {
 
         /**
          * @description
