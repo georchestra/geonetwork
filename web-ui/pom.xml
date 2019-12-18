@@ -30,7 +30,7 @@
   <parent>
     <groupId>org.geonetwork-opensource</groupId>
     <artifactId>geonetwork</artifactId>
-    <version>3.8.3-SNAPSHOT</version>
+    <version>3.8.2</version>
   </parent>
 
   <groupId>org.geonetwork-opensource</groupId>
@@ -79,10 +79,20 @@
         </excludes>
       </resource>
     </resources>
+    <plugins>
+        <plugin>
+            <groupId>ro.isdc.wro4j</groupId>
+            <artifactId>wro4j-maven-plugin</artifactId>
+            <version>1.8.0</version>
+            <configuration>
+                <targetGroups>all</targetGroups>
+                <minimize>true</minimize>
+            </configuration>
+        </plugin>
+    </plugins>
   </build>
   <properties>
-    <geonetwork.build.dir>${project.build.directory}/${project.build.finalName}
-    </geonetwork.build.dir>
+    <geonetwork.build.dir>${project.build.directory}/${project.build.finalName}</geonetwork.build.dir>
     <closure.compile.level/>
   </properties>
   <profiles>
