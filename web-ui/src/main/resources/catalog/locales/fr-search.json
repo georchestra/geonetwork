@@ -500,5 +500,20 @@
     "userSearchUpdated": "Recherche utilisateur sauvegardée",
     "userSearchUpdatedError": "Erreur lors de la sauvegarde de la recherche",
     "seeDraft": "Cette fiche a une version brouillon en cours de rédaction. Cliquer ici pour la voir.",
-    "seeNoDraft": "Cette fiche a une version approuvée. Cliquer ici pour la voir."
+    "seeNoDraft": "Cette fiche a une version approuvée. Cliquer ici pour la voir.",
+    "who": "Qui ?",
+    "moreFacet": "{{count}} de plus",
+    "lessFacet": "{{count}} de moins",
+    "allFacet": "tout ({{count}})",
+    "initialFacet": "initial ({{count}})",
+    "removeThisFilter": "Supprimer ce filtre",
+    "removeAllFilters": "Supprimer tous les filtres",
+    "creationDateFrom": "Resources créées après",
+    "creationDateTo": "Resources créées avant",
+    "changeDateFrom": "Resources modifiées après",
+    "changeDateTo": "Resources modifiées avant",
+    "dateFrom": "Fiches mises à jour après",
+    "dateTo": "Fiches mises à jour avant",
+    "activeFilters": "Filtres actifs",
+    "geometryFilter": "Emprise dessinée"
 }
