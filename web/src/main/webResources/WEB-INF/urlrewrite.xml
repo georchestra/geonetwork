@@ -109,6 +109,64 @@
   </rule>
 
 
+  <rule>
+          <from>/srv/ar/(.*)$</from>
+          <to type="permanent-redirect" last="true">%{context-path}/srv/ara/$1</to>
+  </rule>
+  <rule>
+          <from>/srv/ca/(.*)$</from>
+          <to type="permanent-redirect" last="true">%{context-path}/srv/cat/$1</to>
+  </rule>
+  <rule>
+          <from>/srv/cn/(.*)$</from>
+          <to type="permanent-redirect" last="true">%{context-path}/srv/chi/$1</to>
+  </rule>
+  <rule>
+          <from>/srv/nl/(.*)$</from>
+          <to type="permanent-redirect" last="true">%{context-path}/srv/dut/$1</to>
+  </rule>
+  <rule>
+          <from>/srv/fi/(.*)$</from>
+          <to type="permanent-redirect" last="true">%{context-path}/srv/fin/$1</to>
+  </rule>
+  <rule>
+          <from>/srv/fr/(.*)$</from>
+          <to type="permanent-redirect" last="true">%{context-path}/srv/fre/$1</to>
+  </rule>
+  <rule>
+          <from>/srv/de/(.*)$</from>
+          <to type="permanent-redirect" last="true">%{context-path}/srv/ger/$1</to>
+  </rule>
+  <rule>
+          <from>/srv/no/(.*)$</from>
+          <to type="permanent-redirect" last="true">%{context-path}/srv/nor/$1</to>
+  </rule>
+  <rule>
+          <from>/srv/pt/(.*)$</from>
+          <to type="permanent-redirect" last="true">%{context-path}/srv/por/$1</to>
+  </rule>
+  <rule>
+          <from>/srv/ru/(.*)$</from>
+          <to type="permanent-redirect" last="true">%{context-path}/srv/rus/$1</to>
+  </rule>
+  <rule>
+          <from>/srv/es/(.*)$</from>
+          <to type="permanent-redirect" last="true">%{context-path}/srv/spa/$1</to>
+  </rule>
+  <rule>
+          <from>/srv/en/(.*)$</from>
+          <to type="permanent-redirect" last="true">%{context-path}/srv/eng/$1</to>
+  </rule>
+  <rule>
+          <from>/srv/tr/(.*)$</from>
+          <to type="permanent-redirect" last="true">%{context-path}/srv/tur/$1</to>
+  </rule>
+  <rule>
+          <from>/srv/it/(.*)$</from>
+          <to type="permanent-redirect" last="true">%{context-path}/srv/ita/$1</to>
+  </rule>
+
+
 
   <rule>
     <note>
