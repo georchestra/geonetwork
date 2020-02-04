@@ -1152,7 +1152,7 @@
       <properties>
         <dockerImageName>georchestra/${project.parent.artifactId}:3.8.2-master</dockerImageName>
         <dockerDatadirScmUrl>scm:git:https://github.com/georchestra/datadir.git</dockerDatadirScmUrl>
-        <dockerDatadirScmVersion>docker-master</dockerDatadirScmVersion>
+        <dockerDatadirScmVersion>docker-20.0</dockerDatadirScmVersion>
       </properties>
       <build>
         <finalName>geonetwork</finalName>
