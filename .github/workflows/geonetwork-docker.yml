@@ -2,8 +2,6 @@ name: CI
 
 on:
   push:
-    branches:
-    - georchestra-gn3.8.2-master
 
 jobs:
   build:
@@ -11,31 +9,39 @@ jobs:
     steps:
     - name: "Checking out"
       uses: actions/checkout@v1
+
     - name: "Checking out submodules"
       uses: textbook/git-checkout-submodule-action@2.0.0
+
     - name: Setting up JDK 1.8
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
+
     - name: "Configuring Maven"
       run: |
           mkdir -p $HOME/.m2
           echo $M2_SETTINGS_FILE > $HOME/.m2/settings.xml
       env:
           M2_SETTINGS_FILE: ${{ secrets.M2_SETTINGS_FILE }}
+
     - name: "Logging onto docker-hub"
       run: docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
       env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
-    - name: First clean install no tests
+
+    - name: "First clean install no tests"
       run: mvn clean install -DskipTests
-    - name: run test
+
+    - name: "Running tests"
       run: mvn clean install
-    - name: build a docker image
+
+    - name: "Building a docker image"
       working-directory: web/
-      run: mvn clean package docker:build -Pdocker -DdockerImageName=docker.pkg.github.com/georchestra/geonetwork/geonetwork:${GITHUB_REF##*/}
-    - name: publish the docker image
+      run: mvn clean package docker:build -Pdocker -DdockerImageName=docker.pkg.github.com/georchestra/geonetwork/geonetwork:${GITHUB_REF##*/} -DskipTests
+
+    - name: "Publishing the docker image"
       run: |
         docker login docker.pkg.github.com --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
         docker push docker.pkg.github.com/georchestra/geonetwork/geonetwork:${GITHUB_REF##*/}
