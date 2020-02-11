@@ -1,8 +1,6 @@
-# Build Health
+# GeoNetwork fork for geOrchestra
 
-[![Build Status](https://travis-ci.org/geonetwork/core-geonetwork.svg?branch=3.8.x)](https://travis-ci.org/geonetwork/core-geonetwork)
-
-# Features
+## Features
 
 * Immediate search access to local and distributed geospatial catalogues
 * Up- and downloading of data, graphics, documents, pdf files and any other content type
@@ -13,7 +11,7 @@
 * Fine-grained access control with group and user management
 * Multi-lingual user interface
 
-# Documentation
+## Documentation
 
 User documentation is in the docs submodule in the current repository and is compiled into html pages during a release for publishing on
 a website.
@@ -22,12 +20,12 @@ Developer documentation is also in the docs submodule but is being migrated out 
 in the project.  General documentation for the project as a whole is in this Readme and module specific documentation can be found in
 each module (assuming there is module specific documentation required).
 
-# Software Development
+## Software Development
 
 Instructions for setting up a development environment/building Geonetwork/compiling user documentation/making a release see:
 [Software Development Documentation](/software_development/)
 
-# Testing
+## Testing
 
 With regards to testing Geonetwork is a standard Java project and primarily depends on JUnit for testing.  However there is a very important
 issue to consider when writing JUnit tests in Geonetwork and that is the separation between unit tests and integration tests

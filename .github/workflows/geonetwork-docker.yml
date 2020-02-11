@@ -25,26 +25,39 @@ jobs:
       env:
           M2_SETTINGS_FILE: ${{ secrets.M2_SETTINGS_FILE }}
 
-    - name: "Logging onto docker-hub"
-      run: docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
-      env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
-
-    - name: "First clean install no tests"
+    - name: "Installing"
       run: mvn clean install -DskipTests
 
     - name: "Running tests"
       run: mvn clean install
 
-    - name: "Building a docker image"
-      working-directory: web/
-      run: mvn clean package docker:build -Pdocker -DdockerImageName=docker.pkg.github.com/georchestra/geonetwork/geonetwork:${GITHUB_REF##*/} -DskipTests
+    - name: Getting image tag
+      id: version
+      run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
 
-    - name: "Publishing the docker image"
+    - name: "Building docker image"
+      working-directory: web/
+      run: mvn clean package docker:build -Pdocker -DdockerImageName=georchestra/geonetwork:${{ steps.version.outputs.VERSION }} -DskipTests
+
+    - name: "Logging in docker.io"
+      uses: azure/docker-login@v1
+      with:
+        username: '${{ secrets.DOCKER_HUB_USERNAME }}'
+        password: '${{ secrets.DOCKER_HUB_PASSWORD }}'
+
+    - name: "Pushing latest to docker.io"
+      if: contains(github.ref, '-master')
       run: |
-        docker login docker.pkg.github.com --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
-        docker push docker.pkg.github.com/georchestra/geonetwork/geonetwork:${GITHUB_REF##*/}
-      env:
-          DOCKER_USERNAME: georchestra
-          DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+        docker tag georchestra/geonetwork:${{ steps.version.outputs.VERSION }} georchestra/geonetwork:latest
+        docker push georchestra/geonetwork:latest
+
+    - name: "Pushing release branch to docker.io"
+      if: contains(github.ref, '-20.0')
+      run: |
+        docker tag georchestra/geonetwork:${{ steps.version.outputs.VERSION }} georchestra/geonetwork:20.0.x
+        docker push georchestra/geonetwork:20.0.x
+
+    - name: "Pushing release tag to docker.io"
+      if: contains(github.ref, 'refs/tags/20.')
+      run: |
+        docker push georchestra/geonetwork:${{ steps.version.outputs.VERSION }}
