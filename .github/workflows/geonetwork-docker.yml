@@ -28,8 +28,9 @@ jobs:
     - name: "Installing"
       run: mvn clean install -DskipTests
 
-    - name: "Running tests"
-      run: mvn clean install
+#    #SaveTheEarth
+#    - name: "Running tests"
+#      run: mvn clean install
 
     - name: Getting image tag
       id: version
