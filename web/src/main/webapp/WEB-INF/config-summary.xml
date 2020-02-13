@@ -65,6 +65,7 @@
       * (optional) translator: Define a DB translator to retrieve label from description
           tables (eg. categoriesdes) or codelist translator to retrieve label from schema
           codelists files.
+      * (optional) pageSize: "show more"/"show less" page size of the facet items in the UI
 
     eg. for category
 
@@ -126,23 +127,25 @@
 
     <facet name="maintenanceAndUpdateFrequency" indexKey="cl_maintenanceAndUpdateFrequency"
            label="maintenanceAndUpdateFrequencies"/>
-    <facet name="mdActions" indexKey="_mdActions" label="mdActions"/> 
+    <facet name="mdActions" indexKey="_mdActions" label="mdActions"/>
   </facets>
 
   <summaryTypes>
     <summaryType name="details" format="DIMENSION">
       <item facet="type" translator="codelist:gmd:MD_ScopeCode"/>
       <item facet="mdActions"/>
-      <item facet="topicCat" translator="codelist:gmd:MD_TopicCategoryCode" max="20"/>
+      <item facet="topicCat" translator="codelist:gmd:MD_TopicCategoryCode" max="20" pageSize="3"/>
       <item facet="inspireThemeURI" sortBy="value" sortOrder="asc" max="35"
-            translator="term:http://inspire.ec.europa.eu/theme"/>
+            translator="term:http://inspire.ec.europa.eu/theme"
+            pageSize="3"/>
       <!--<item facet="inspireTheme" sortBy="value" sortOrder="asc" max="35"/>-->
       <!--<item facet="inspireThemeWithAc" sortBy="value" sortOrder="asc" max="35"/>-->
       <item facet="keyword" max="15"/>
-      <item facet="orgName" max="25"/>
+      <item facet="orgName" max="25" pageSize="3"/>
       <item facet="sourceCatalog"
-            translator="db:org.fao.geonet.repository.SourceRepository:findOneByUuid"/>
-      <item facet="createDateYear" sortBy="value" sortOrder="desc" max="40"/>
+            translator="db:org.fao.geonet.repository.SourceRepository:findOneByUuid"
+            pageSize="3"/>
+      <item facet="createDateYear" sortBy="value" sortOrder="desc" max="40" pageSize="3"/>
       <item facet="format" max="15" sortBy="value" sortOrder="asc"/>
       <item facet="spatialRepresentationType"
             translator="codelist:gmd:MD_SpatialRepresentationTypeCode"/>

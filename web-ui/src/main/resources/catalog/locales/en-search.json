@@ -501,5 +501,20 @@
   "userSearchUpdated": "User search saved",
   "userSearchUpdatedError": "Error saving user search",
   "seeDraft": "This record has a working copy version. Click here to see it.",
-  "seeNoDraft": "This record has an approved and published version. Click here to see it."
+  "seeNoDraft": "This record has an approved and published version. Click here to see it.",
+  "who": "Who ?",
+  "moreFacet": "{{count}} more",
+  "lessFacet": "{{count}} less",
+  "allFacet": "all ({{count}})",
+  "initialFacet": "initial ({{count}})",
+  "removeThisFilter": "Remove this filter",
+  "removeAllFilters": "Remove all filters",
+  "creationDateFrom": "Resources created after",
+  "creationDateTo": "Resources created before",
+  "changeDateFrom": "Resources changed after",
+  "changeDateTo": "Resources changed before",
+  "dateFrom": "Records updated before",
+  "dateTo": "Records updated after",
+  "activeFilters": "Active filters",
+  "geometryFilter": "Bounding Box"
 }
