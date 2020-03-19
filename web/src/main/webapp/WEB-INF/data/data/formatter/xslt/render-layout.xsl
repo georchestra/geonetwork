@@ -24,7 +24,6 @@
   <xsl:template mode="getOverviews" match="*"/>
   <xsl:template mode="getMetadataThumbnail" match="*"/>
   <xsl:template mode="getMetadataHeader" match="*"/>
-  <xsl:template mode="getMetadataCitation" match="*"/>
   <xsl:template mode="getJsonLD" match="*"/>
   <!-- Those templates should be overridden in the schema plugin - end -->
 
@@ -113,7 +112,6 @@
               </xsl:choose>
             </div>
 
-            <xsl:apply-templates mode="getMetadataCitation" select="$metadata"/>
           </div>
           <div class="gn-md-side gn-md-side-advanced col-md-4">
             <xsl:apply-templates mode="getOverviews" select="$metadata"/>
