@@ -38,7 +38,7 @@ jobs:
     - name: "Building docker image"
       if: github.repository == 'georchestra/geonetwork'
       working-directory: web/
-      run: mvn clean package docker:build -Pdocker,log4j-logstash,sentry-spring -DdockerImageName=georchestra/geonetwork:${{ steps.version.outputs.VERSION }} -DskipTests
+      run: mvn clean package docker:build -Pdocker,log4j-logstash,sentry-log4j -DdockerImageName=georchestra/geonetwork:${{ steps.version.outputs.VERSION }} -DskipTests
 
     - name: "Logging in docker.io"
       if: github.repository == 'georchestra/geonetwork'
