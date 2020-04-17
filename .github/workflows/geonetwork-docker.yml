@@ -53,12 +53,6 @@ jobs:
         docker tag georchestra/geonetwork:${{ steps.version.outputs.VERSION }} georchestra/geonetwork:latest
         docker push georchestra/geonetwork:latest
 
-    - name: "Pushing release branch to docker.io"
-      if: contains(github.ref, '-20.0') && github.repository == 'georchestra/geonetwork'
-      run: |
-        docker tag georchestra/geonetwork:${{ steps.version.outputs.VERSION }} georchestra/geonetwork:20.0.x
-        docker push georchestra/geonetwork:20.0.x
-
     - name: "Pushing release tag to docker.io"
       if: contains(github.ref, 'refs/tags/20.') && github.repository == 'georchestra/geonetwork'
       run: |
