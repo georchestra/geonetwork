@@ -48,7 +48,7 @@ jobs:
         password: '${{ secrets.DOCKER_HUB_PASSWORD }}'
 
     - name: "Pushing latest to docker.io"
-      if: contains(github.ref, '-master') && github.repository == 'georchestra/geonetwork'
+      if: contains(github.ref, 'georchestra-gn3.8.2') && github.repository == 'georchestra/geonetwork'
       run: |
         docker tag georchestra/geonetwork:${{ steps.version.outputs.VERSION }} georchestra/geonetwork:latest
         docker push georchestra/geonetwork:latest
