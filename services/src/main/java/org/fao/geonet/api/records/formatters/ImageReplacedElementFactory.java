@@ -44,6 +44,7 @@ import org.xhtmlrenderer.render.BlockBox;
 import org.xhtmlrenderer.simple.extend.FormSubmissionListener;
 
 import java.io.InputStream;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Set;
@@ -129,9 +130,11 @@ public class ImageReplacedElementFactory implements ReplacedElementFactory {
                                       int cssWidth, int cssHeight, String url, float scaleFactor) {
         InputStream input = null;
         try {
-            Log.error(Geonet.GEONETWORK, "URL -> " + url.toString());
+            URI normalizedUrl = new URI(url).normalize();
+            Log.debug(Geonet.GEONETWORK, String.format("URL -> %s, normalized URL -> %s",
+                url, normalizedUrl.toString()));
+            input = normalizedUrl.toURL().openStream();
 
-            input = new URL(url).openStream();
             byte[] bytes = IOUtils.toByteArray(input);
             Image image = Image.getInstance(bytes);
 
