@@ -217,7 +217,7 @@
     "parentIdentifier": "Identifiant de la fiche parent",
     "distributor": "Distributeur",
     "sourceDataset": "Données source",
-    "metadataInXML": "Télécharger la fiche",
+    "metadataInXML": "Consulter la fiche (XML)",
     "language": "Langue",
     "metadataLanguage": "Langue de la fiche",
     "sendMail": "Envoie de courriel",
