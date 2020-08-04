@@ -43,6 +43,7 @@ import javax.persistence.criteria.Root;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.GeonetContext;
@@ -737,7 +738,11 @@ public class SiteApi {
                         dataDirectory.getResourcesDir().resolve("images").resolve("logos").resolve("favicon.png"));
                 } else {
                     Path logo = nodeLogoDirectory.resolve("logos").resolve(nodeUuid + ".png");
-                    Path defaultLogo = nodeLogoDirectory.resolve("images").resolve("logo.png");
+                    Path defaultLogoPath = nodeLogoDirectory.resolve("images");
+                    if (! defaultLogoPath.toFile().exists()) {
+                        FileUtils.forceMkdir(defaultLogoPath.toFile());
+                    }
+                    Path defaultLogo = defaultLogoPath.resolve("logo.png");
 
                     if (!file.endsWith(".png")) {
                         try (
