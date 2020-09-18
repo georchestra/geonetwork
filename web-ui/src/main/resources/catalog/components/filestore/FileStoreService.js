@@ -25,7 +25,9 @@
   goog.provide('gn_filestore_service');
 
   var module = angular.module('gn_filestore_service', []);
-
+  module.filter('decodeURIComponent', function() {
+    return window.decodeURIComponent;
+  });
   module.factory('gnFileStoreService',
       ['$http',
        function($http) {
