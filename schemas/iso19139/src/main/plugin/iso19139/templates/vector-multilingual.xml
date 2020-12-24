@@ -171,22 +171,22 @@
       <gmd:citation>
         <gmd:CI_Citation>
           <gmd:title xsi:type="gmd:PT_FreeText_PropertyType">
-            <gco:CharacterString>Template for Vector data in ISO19139 (multilingual)
+            <gco:CharacterString>Template for Vector data (ISO19139) (multilingual)
             </gco:CharacterString>
             <gmd:PT_FreeText>
               <gmd:textGroup>
-                <gmd:LocalisedCharacterString locale="#FR">Modèle de données vectorielles en
-                  ISO19139 (multilingue)
+                <gmd:LocalisedCharacterString locale="#FR">Modèle de données vectorielles
+                  (ISO19139) (multilingue)
                 </gmd:LocalisedCharacterString>
               </gmd:textGroup>
               <gmd:textGroup>
-                <gmd:LocalisedCharacterString locale="#GE">Vorlage für die Vektor-Daten in ISO19139
+                <gmd:LocalisedCharacterString locale="#GE">Vorlage für die Vektor-Daten (ISO19139)
                   (mehrsprachig)
                 </gmd:LocalisedCharacterString>
               </gmd:textGroup>
               <gmd:textGroup>
-                <gmd:LocalisedCharacterString locale="#SP">De plantilla para el vector de datos en
-                  ISO19139 (multilingüe)
+                <gmd:LocalisedCharacterString locale="#SP">De plantilla para el vector de datos
+                  (ISO19139) (multilingüe)
                 </gmd:LocalisedCharacterString>
               </gmd:textGroup>
               <gmd:textGroup>
