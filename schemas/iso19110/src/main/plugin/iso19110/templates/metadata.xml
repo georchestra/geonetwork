@@ -29,7 +29,7 @@
                          xmlns:gmx="http://www.isotc211.org/2005/gmx"
                          uuid="56cf8277-e2be-48ef-9bb7-05a10dedf665">
   <gmx:name>
-    <gco:CharacterString>Feature catalogue template in ISO19110</gco:CharacterString>
+    <gco:CharacterString>Feature catalogue template (ISO19110)</gco:CharacterString>
   </gmx:name>
   <gmx:scope>
     <gco:CharacterString>Scope</gco:CharacterString>
