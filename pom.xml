@@ -1236,13 +1236,13 @@
         <checksumPolicy>ignore</checksumPolicy>
       </snapshots>
       <id>georchestra</id>
-      <url>https://packages.georchestra.org/artifactory/maven</url>
+      <url>https://artifactory.georchestra.org/artifactory/maven</url>
     </repository>
 
     <repository>
       <id>georchestra-mfprint</id>
       <name>build-releases</name>
-      <url>https://packages.georchestra.org/artifactory/mapfish-print</url>
+      <url>https://artifactory.georchestra.org/artifactory/mapfish-print</url>
     </repository>
 
   </repositories>
