@@ -57,6 +57,7 @@
   -->
 
   <import resource="config-security-${geonetwork.security.type:default}.xml"/>
+  <import resource="config-security-georchestra.xml"/>
   <!--<import resource="config-security-keycloak.xml"/> -->
   <!--<import resource="config-security-openidconnect.xml"/> -->
   <!--<import resource="config-security-ldap.xml"/>-->

@@ -3,8 +3,16 @@ volumes:
   geonetwork:
 
 services:
+
+  ldap:
+    image: georchestra/ldap:latest
+    environment:
+      - SLAPD_ORGANISATION=georchestra
+      - SLAPD_DOMAIN=georchestra.org
+      - SLAPD_PASSWORD=secret
+      - SLAPD_LOG_LEVEL=32768
   geonetwork:
-    image: jetty:jre8
+    image: jetty:9.4-jre8
     restart: always
     ports:
       - 8080:8080
