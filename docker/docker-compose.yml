@@ -4,7 +4,7 @@ volumes:
 
 services:
   geonetwork:
-    image: geonetwork:3.99.0
+    image: jetty:jre8
     restart: always
     ports:
       - 8080:8080
@@ -14,6 +14,7 @@ services:
       ES_PROTOCOL: http
       ES_PORT: 9200
       KB_URL: http://kibana:5601
+      JAVA_OPTIONS: -Duser.home=/tmp/jetty
 
       # Note: defining the following variable will activate the postgresql
       # configuration and will require an external database (see the database
@@ -26,6 +27,7 @@ services:
 
     volumes:
       - geonetwork:/var/lib/geonetwork_data
+      - ../web/target/geonetwork.war:/var/lib/jetty/webapps/geonetwork.war
     depends_on:
       - kibana
       - elasticsearch
@@ -38,6 +40,8 @@ services:
 
   kibana:
     image: kibana:7.6.2
+    environment:
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
     volumes:
       - ./kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
 
