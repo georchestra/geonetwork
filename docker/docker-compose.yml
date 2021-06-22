@@ -24,14 +24,6 @@ services:
       KB_URL: http://kibana:5601
       JAVA_OPTIONS: -Duser.home=/tmp/jetty
 
-      # Note: defining the following variable will activate the postgresql
-      # configuration and will require an external database (see the database
-      # service below)
-      POSTGRES_DB_HOST: database
-
-      POSTGRES_DB_NAME: geonetwork
-      POSTGRES_DB_USERNAME: geonetwork
-      POSTGRES_DB_PASSWORD: geonetwork
 
     volumes:
       - geonetwork:/var/lib/geonetwork_data
@@ -42,12 +34,12 @@ services:
       - database
 
   elasticsearch:
-    image: elasticsearch:7.6.2
+    image: elasticsearch:7.9.0
     environment:
       discovery.type: single-node
 
   kibana:
-    image: kibana:7.6.2
+    image: kibana:7.9.0
     environment:
       ELASTICSEARCH_HOSTS: http://elasticsearch:9200
     volumes:
@@ -59,4 +51,3 @@ services:
       POSTGRES_USER: geonetwork
       POSTGRES_PASSWORD: geonetwork
       POSTGRES_DB: geonetwork
-
