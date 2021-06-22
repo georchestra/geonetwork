@@ -25,11 +25,19 @@
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        default-lazy-init="true"
        xmlns="http://www.springframework.org/schema/beans"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd">
   <!--  Postgresql database with postgis extenstion to allow storing spatial index in postgres. -->
 
   <!-- allow loading properties from the tomcat conf directory. If not found the default jdbc.properties will be used. Uncomment to use. -->
   <!-- context:property-placeholder location="file:${catalina.home}/conf/jdbc.properties" ignore-resource-not-found="true" file-encoding="UTF-8" ignore-unresolvable="true" order="0"/-->
+
+  <!-- TODO: should be placed into the datadir -->
+  <context:property-placeholder location="WEB-INF/config-geonetwork-georchestra.properties" ignore-resource-not-found="true" ignore-unresolvable="true" order="1"/>
+
 
   <import resource="defaultJdbcDataSource.xml"/>
   <import resource="postgis-alternate-datasource.xml"/>
