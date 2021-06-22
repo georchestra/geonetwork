@@ -1435,9 +1435,10 @@
         GEONETWORK_DB_CONNECTION_PROPERTIES=
     -->
 
-    <db.type>${geonetwork.db.type:h2}</db.type>
+
+   <!--  <db.type>${geonetwork.db.type:postgres-postgis}</db.type> -->
     <!-- Instead of using db_type a specific config file can be specified -->
-    <db.config.file>../config-db/${db.type}.xml</db.config.file>
+    <db.config.file>../config-db/postgres-postgis.xml</db.config.file>
     <db.host>#{systemEnvironment['GEONETWORK_DB_HOST']?:'localhost'}</db.host>
     <db.port>#{systemEnvironment['GEONETWORK_DB_PORT']}</db.port>
     <db.name>#{systemEnvironment['GEONETWORK_DB_NAME']?:'~/gn'}</db.name>
