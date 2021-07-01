@@ -1,6 +1,7 @@
 version: '3.1'
 volumes:
   geonetwork:
+  postgresql_data:
 
 services:
 
@@ -11,18 +12,60 @@ services:
       - SLAPD_DOMAIN=georchestra.org
       - SLAPD_PASSWORD=secret
       - SLAPD_LOG_LEVEL=32768
+
+  database:
+    image: georchestra/database:latest
+    environment:
+      - POSTGRES_USER=georchestra
+      - POSTGRES_PASSWORD=georchestra
+    volumes:
+      - postgresql_data:/var/lib/postgresql/data
+
+  proxy:
+    image: georchestra/security-proxy:latest
+    depends_on:
+      - ldap
+      - database
+    volumes:
+      - ./config:/etc/georchestra
+    ports:
+    - 8080:8080
+    environment:
+      - JAVA_OPTIONS=-Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF
+      - XMS=256M
+      - XMX=1G
+
+  cas:
+    image: georchestra/cas:latest
+    depends_on:
+      - ldap
+    volumes:
+      - ./config:/etc/georchestra
+    environment:
+      - JAVA_OPTIONS=-Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF
+      - XMS=256M
+      - XMX=1G
+
+  header:
+    image: georchestra/header:latest
+    volumes:
+      - ./config:/etc/georchestra
+    environment:
+      - JAVA_OPTIONS=-Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF
+      - XMS=256M
+      - XMX=512M
+
   geonetwork:
     image: jetty:9.4-jre8
-    restart: always
-    ports:
-      - 8080:8080
     environment:
       DATA_DIR: /var/lib/geonetwork_data
       ES_HOST: elasticsearch
       ES_PROTOCOL: http
       ES_PORT: 9200
       KB_URL: http://kibana:5601
-      JAVA_OPTIONS: -Duser.home=/tmp/jetty
+      JAVA_OPTIONS: -Duser.home=/tmp/jetty -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005
+    ports:
+      - 5005:5005
 
 
     volumes:
@@ -44,10 +87,3 @@ services:
       ELASTICSEARCH_HOSTS: http://elasticsearch:9200
     volumes:
       - ./kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
-
-  database:
-    image: mdillon/postgis
-    environment:
-      POSTGRES_USER: geonetwork
-      POSTGRES_PASSWORD: geonetwork
-      POSTGRES_DB: geonetwork
