@@ -40,8 +40,6 @@
 
 
   <import resource="defaultJdbcDataSource.xml"/>
-  <import resource="postgis-alternate-datasource.xml"/>
-
   <bean id="jpaVendorAdapterDatabaseParam" class="java.lang.String">
     <constructor-arg value="POSTGRESQL"/>
   </bean>
