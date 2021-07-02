@@ -45,6 +45,10 @@
   <import resource="config-print/config-spring-print.xml"/>
   <import resource="config-etf-validator.xml"/>
 
+  <!-- TODO ? -->
+  <import resource="config-georchestra-geonetwork-datadirs.xml"/>
+
+
   <!-- For database configuration look in the config-node configuration files (config-node/srv.xml) -->
 
   <!-- Import the versioning configuration (subversion etc...) -->
