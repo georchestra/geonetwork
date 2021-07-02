@@ -48,6 +48,9 @@
   <!-- TODO ? -->
   <import resource="config-georchestra-geonetwork-datadirs.xml"/>
 
+  <bean id="loggingConfigurationPath" class="java.lang.String">
+    <constructor-arg value="${georchestra.datadir}/geonetwork/log4j"/>
+  </bean>
 
   <!-- For database configuration look in the config-node configuration files (config-node/srv.xml) -->
 
