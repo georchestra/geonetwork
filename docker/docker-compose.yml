@@ -63,14 +63,13 @@ services:
       ES_PROTOCOL: http
       ES_PORT: 9200
       KB_URL: http://kibana:5601
-      JAVA_OPTIONS: -Duser.home=/tmp/jetty -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005
+      JAVA_OPTIONS: -Duser.home=/tmp/jetty -Dgeorchestra.datadir=/etc/georchestra -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005
     ports:
       - 5005:5005
-
-
     volumes:
       - geonetwork:/var/lib/geonetwork_data
       - ../web/target/geonetwork.war:/var/lib/jetty/webapps/geonetwork.war
+      - ./config:/etc/georchestra
     depends_on:
       - kibana
       - elasticsearch
