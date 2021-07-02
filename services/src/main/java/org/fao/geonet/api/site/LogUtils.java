@@ -23,6 +23,7 @@
 
 package org.fao.geonet.api.site;
 
+import net.bytebuddy.pool.TypePool;
 import org.apache.log4j.xml.DOMConfigurator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.LoggerContext;
@@ -32,10 +33,13 @@ import org.fao.geonet.domain.Setting;
 import org.fao.geonet.exceptions.OperationAbortedEx;
 import org.fao.geonet.kernel.setting.Settings;
 import org.fao.geonet.repository.SettingRepository;
+import org.springframework.beans.BeansException;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.Optional;
 
 /**
@@ -51,6 +55,7 @@ public class LogUtils {
      * Default built-in log4j2 configuration.
      */
     static final String DEFAULT_LOG_FILE = "log4j2.xml";
+
 
     /**
      * Refresh logger configuration. If settings is not set in database, using default log4j2.xml
@@ -75,9 +80,26 @@ public class LogUtils {
             setting = settingOpt.get();
         }
 
+
+        String loggingConfigurationPath;
+        try {
+            loggingConfigurationPath = (String) ApplicationContextHolder.get().getBean("loggingConfigurationPath");
+        } catch (BeansException e) {
+            loggingConfigurationPath = null;
+        }
         // get log config from db settings
         String log4jProp = setting != null ? setting.getValue() : DEFAULT_LOG_FILE;
-        URL url = LogUtils.class.getResource("/" + log4jProp);
+        URL url ;
+
+        if (loggingConfigurationPath != null) {
+            try {
+                url = Paths.get(loggingConfigurationPath, log4jProp).toUri().toURL();
+            } catch (MalformedURLException e) {
+                url = LogUtils.class.getResource("/" + log4jProp);
+            }
+        } else {
+                url = LogUtils.class.getResource("/" + log4jProp);
+        }
         try {
             if (url != null) {
                 // refresh configuration

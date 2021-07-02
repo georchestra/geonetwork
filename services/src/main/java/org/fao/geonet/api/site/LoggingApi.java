@@ -26,6 +26,7 @@ package org.fao.geonet.api.site;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.commons.io.IOUtils;
+import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.api.site.model.ListLogFilesResponse;
 import org.fao.geonet.kernel.GeonetworkDataDirectory;
 import org.fao.geonet.util.FileUtil;
@@ -88,8 +89,15 @@ public class LoggingApi {
     ) throws Exception {
         java.util.List<ListLogFilesResponse.LogFileResponse> logFileList =
             new ArrayList<>();
-        String classesFolder = dataDirectory.getWebappDir() + "/WEB-INF/classes";
-        File folder = new File(classesFolder);
+        String loggingConfigurationFolder = dataDirectory.getWebappDir() + "/WEB-INF/classes";
+        // overrides if a "loggingConfigurationPath" bean is available
+        try {
+            loggingConfigurationFolder = (String) ApplicationContextHolder.get().getBean("loggingConfigurationPath");
+        } catch (Exception e) {
+            // stick with the folder in the classpath.
+        }
+
+        File folder = new File(loggingConfigurationFolder);
 
         if (folder != null && folder.isDirectory()) {
             Pattern pattern = Pattern.compile(regexp, Pattern.CASE_INSENSITIVE);
