@@ -50,9 +50,10 @@
 
   <bean id="AccessManager" class="org.fao.geonet.kernel.AccessManager" lazy-init="true"/>
   <bean id="DataManager" class="org.fao.geonet.kernel.DataManager" lazy-init="true"/>
+  <!-- will be defined into the web/ module
   <bean id="GeonetworkDataDirectory" class="org.fao.geonet.kernel.GeonetworkDataDirectory"
         lazy-init="true"/>
-
+  -->
   <bean id="ThesaurusManager" class="org.fao.geonet.kernel.ThesaurusManager" lazy-init="true"/>
 
   <util:list id="allThesaurusExclude">
