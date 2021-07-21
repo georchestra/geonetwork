@@ -405,10 +405,10 @@
   -->
   <servlet>
     <servlet-name>ESFeaturesProxy</servlet-name>
-    <servlet-class>org.mitre.dsmiley.httpproxy.URITemplateProxyServlet</servlet-class>
+    <servlet-class>org.fao.geonet.proxy.ConfigurableUriTemplateProxyServlet</servlet-class>
     <init-param>
       <param-name>targetUri</param-name>
-      <param-value>${es.url}/${es.index.features}/{_}</param-value>
+      <param-value>es.featureproxy.targeturi</param-value>
     </init-param>
     <init-param>
       <param-name>log</param-name>
@@ -422,10 +422,10 @@
 
   <servlet>
     <servlet-name>HttpDashboardProxy</servlet-name>
-    <servlet-class>org.mitre.dsmiley.httpproxy.ProxyServlet</servlet-class>
+    <servlet-class>org.fao.geonet.proxy.ConfigurableProxyServlet</servlet-class>
     <init-param>
       <param-name>targetUri</param-name>
-      <param-value>${kb.url}</param-value>
+      <param-value>kb.url</param-value>
     </init-param>
     <init-param>
       <param-name>log</param-name>
