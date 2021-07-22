@@ -56,7 +56,7 @@ services:
       - XMX=512M
 
   geonetwork:
-    image: jetty:9.4-jre8
+    image: jetty:9.4-jre11
     environment:
       DATA_DIR: /var/lib/geonetwork_data
       ES_HOST: elasticsearch
