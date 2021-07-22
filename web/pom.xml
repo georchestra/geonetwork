@@ -355,7 +355,7 @@
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>gn-core</artifactId>
-      <version>${project.version}</version>
+      <version>4.0.5-georchestra</version>
       <exclusions>
         <exclusion>
           <groupId>javax.servlet</groupId>
@@ -367,7 +367,7 @@
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>gn-services</artifactId>
-      <version>${project.version}</version>
+      <version>4.0.5-georchestra</version>
     </dependency>
 
     <dependency>
@@ -477,7 +477,7 @@
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>gn-web-ui</artifactId>
-      <version>${project.version}</version>
+      <version>4.0.5-georchestra</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -490,14 +490,14 @@
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>gn-core</artifactId>
-      <version>${project.version}</version>
+      <version>4.0.5-georchestra</version>
       <classifier>tests</classifier>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>gn-services</artifactId>
-      <version>${project.version}</version>
+      <version>4.0.5-georchestra</version>
       <classifier>tests</classifier>
       <scope>test</scope>
     </dependency>
