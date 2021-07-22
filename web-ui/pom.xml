@@ -37,6 +37,7 @@
   <artifactId>gn-web-ui</artifactId>
   <packaging>jar</packaging>
   <name>GeoNetwork user interface module</name>
+  <version>4.0.5-georchestra</version>
   <description/>
 
   <licenses>
