@@ -33,6 +33,7 @@
 
   <artifactId>gn-core</artifactId>
   <name>GeoNetwork core</name>
+  <version>4.0.5-georchestra</version>
 
   <dependencies>
     <dependency>
@@ -333,14 +334,14 @@
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>gn-domain</artifactId>
-      <version>${project.version}</version>
+      <version>${project.parent.version}</version>
       <classifier>tests</classifier>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>gn-events</artifactId>
-      <version>${project.version}</version>
+      <version>${project.parent.version}</version>
     </dependency>
 
     <dependency>
@@ -427,27 +428,27 @@
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>gn-oaipmh</artifactId>
-      <version>${project.version}</version>
+      <version>${project.parent.version}</version>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>gn-domain</artifactId>
-      <version>${project.version}</version>
+      <version>${project.parent.version}</version>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>gn-cachingxslt</artifactId>
-      <version>${project.version}</version>
+      <version>${project.parent.version}</version>
     </dependency>
     <dependency>
       <groupId>org.geonetwork-opensource.schemas</groupId>
       <artifactId>gn-schema-iso19139</artifactId>
-      <version>${project.version}</version>
+      <version>${project.parent.version}</version>
     </dependency>
     <dependency> <!-- dummy API for ARC SDE stuff -->
       <groupId>${project.groupId}</groupId>
       <artifactId>gn-dummy-api</artifactId>
-      <version>${project.version}</version>
+      <version>${project.parent.version}</version>
     </dependency>
 
     <!-- Handled locally by a temporarly repository -->
@@ -511,7 +512,7 @@
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>gn-index</artifactId>
-      <version>${project.version}</version>
+      <version>${project.parent.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
