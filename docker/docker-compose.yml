@@ -5,6 +5,25 @@ volumes:
 
 services:
 
+  georchestra-127-0-1-1.traefik.me:
+    image: traefik:2.4
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./resources/ssl:/etc/certs:ro
+      - ./resources/traefik.yml:/etc/traefik/traefik.yml:ro
+      - ./resources/traefik-config.yml:/etc/traefik/config.yml:ro
+    restart: always
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.tls=true"
+      - "traefik.http.routers.traefik.rule=Host(`georchestra-127-0-1-1.traefik.me`) && (PathPrefix(`/traefik`) || PathPrefix(`/api`))"
+      - "traefik.http.routers.traefik.service=api@internal"
+      - "traefik.http.routers.traefik.middlewares=traefik-strip"
+      - "traefik.http.middlewares.traefik-strip.stripprefix.prefixes=/traefik"
+
   ldap:
     image: georchestra/ldap:latest
     environment:
@@ -34,6 +53,10 @@ services:
       - JAVA_OPTIONS=-Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF
       - XMS=256M
       - XMX=1G
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.proxy.tls=true"
+      - "traefik.http.routers.proxy.rule=Host(`georchestra-127-0-1-1.traefik.me`)"
 
   cas:
     image: georchestra/cas:latest
@@ -45,6 +68,10 @@ services:
       - JAVA_OPTIONS=-Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF
       - XMS=256M
       - XMX=1G
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.cas.tls=true"
+      - "traefik.http.routers.cas.rule=Host(`georchestra-127-0-1-1.traefik.me`) && PathPrefix(`/cas`)"
 
   header:
     image: georchestra/header:latest
