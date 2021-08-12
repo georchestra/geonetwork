@@ -61,6 +61,10 @@ affecting other systems.
 - The component integrates geOrchestra authZN with GeoNetwork can automate
 the link
 
+## Feature set
+
+
+
 ## Architecture
 
 With `org.georchestra.geonetwork.security` as base package:
@@ -74,7 +78,7 @@ authentication
      |
      | <uses>
      V
- repository
+ repository ----> org.fao.geonet.domain.georchestra
 ````
 
 
@@ -90,6 +94,52 @@ with geOrchestra users.
 
 - The `security-proxy-spring-integration` dependency provides the 
 pre-authentication Servlet filter.
+
+
+# User and Group synchronization
+
+
+
+## Roles and Groups
+
+*geOrchestra* provides user privileges through user roles in the `sec-roles` header.
+For example `sec-roles: ADMINISTRATOR; GN_ADMIN`.
+
+These roles need to be mapped to a pair of GeoNetwork "Group" and "Profile".
+The Group is identified by its `name`, and the profile to one of the constants 
+`Administrator`, `UserAdmin`, `Reviewer`, `Editor`, `RegisteredUser`, 
+`Guest`, `Monitor`. "Profiles" are organized hierarchically by it's `parents` 
+property as follows:
+
+```
+   Administrator
+        ^
+     ___|_____
+    |         |
+UserAdmin  Monitor
+   ^
+   |
+Reviewer
+   ^
+   |
+Editor
+   ^
+   |
+RegisteredUser
+   ^
+   |
+ Guest
+```
+
+Mapping geOr roles to Profiles in 3.0.x is done through the `ldapUserContextMapper:LDAPUserDetailsContextMapperWithProfileSearch` bean
+defined in `config/config-security-georchestra.xml`:
+
+```
+ADMIN -> Administrator
+REVIEWER -> Reviewer
+EDITOR -> Editor
+USER -> RegisteredUser
+```
 
 ---
 

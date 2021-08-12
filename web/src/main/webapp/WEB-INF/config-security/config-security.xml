@@ -32,7 +32,11 @@
   <!-- <sec:debug/> -->
   <import resource="config-security-core.xml"/>
   <import resource="config-security-mapping.xml"/>
-  <import resource="config-security-georchestra.xml"/>
+  <!-- 
+    geOrchestra authNZ Configured by dependency 
+    org.geonetwork-opensource:gn-georchestra-authnz 
+    <import resource="config-security-georchestra.xml"/> 
+  -->
   <!--<import resource="config-security-keycloak.xml"/> -->
   <!--<import resource="config-security-ldap.xml"/>-->
   <!--<import resource="config-security-ldap-recursive.xml"/>-->
