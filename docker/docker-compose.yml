@@ -1,50 +1,88 @@
 version: '3.1'
 volumes:
   geonetwork:
+  postgresql_data:
 
 services:
-  geonetwork:
-    image: geonetwork:3.99.0
-    restart: always
+
+  ldap:
+    image: georchestra/ldap:latest
+    environment:
+      - SLAPD_ORGANISATION=georchestra
+      - SLAPD_DOMAIN=georchestra.org
+      - SLAPD_PASSWORD=secret
+      - SLAPD_LOG_LEVEL=32768
+
+  database:
+    image: georchestra/database:latest
+    environment:
+      - POSTGRES_USER=georchestra
+      - POSTGRES_PASSWORD=georchestra
+    volumes:
+      - postgresql_data:/var/lib/postgresql/data
+
+  proxy:
+    image: georchestra/security-proxy:latest
+    depends_on:
+      - ldap
+      - database
+    volumes:
+      - ./config:/etc/georchestra
     ports:
-      - 8080:8080
+    - 8080:8080
+    environment:
+      - JAVA_OPTIONS=-Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF
+      - XMS=256M
+      - XMX=1G
+
+  cas:
+    image: georchestra/cas:latest
+    depends_on:
+      - ldap
+    volumes:
+      - ./config:/etc/georchestra
+    environment:
+      - JAVA_OPTIONS=-Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF
+      - XMS=256M
+      - XMX=1G
+
+  header:
+    image: georchestra/header:latest
+    volumes:
+      - ./config:/etc/georchestra
+    environment:
+      - JAVA_OPTIONS=-Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF
+      - XMS=256M
+      - XMX=512M
+
+  geonetwork:
+    image: jetty:9.4-jre8
     environment:
       DATA_DIR: /var/lib/geonetwork_data
       ES_HOST: elasticsearch
       ES_PROTOCOL: http
       ES_PORT: 9200
       KB_URL: http://kibana:5601
-
-      # Note: defining the following variable will activate the postgresql
-      # configuration and will require an external database (see the database
-      # service below)
-      POSTGRES_DB_HOST: database
-
-      POSTGRES_DB_NAME: geonetwork
-      POSTGRES_DB_USERNAME: geonetwork
-      POSTGRES_DB_PASSWORD: geonetwork
-
+      JAVA_OPTIONS: -Duser.home=/tmp/jetty -Dgeorchestra.datadir=/etc/georchestra -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005
+    ports:
+      - 5005:5005
     volumes:
       - geonetwork:/var/lib/geonetwork_data
+      - ../web/target/geonetwork.war:/var/lib/jetty/webapps/geonetwork.war
+      - ./config:/etc/georchestra
     depends_on:
       - kibana
       - elasticsearch
       - database
 
   elasticsearch:
-    image: elasticsearch:7.6.2
+    image: elasticsearch:7.9.0
     environment:
       discovery.type: single-node
 
   kibana:
-    image: kibana:7.6.2
+    image: kibana:7.9.0
+    environment:
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
     volumes:
       - ./kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
-
-  database:
-    image: mdillon/postgis
-    environment:
-      POSTGRES_USER: geonetwork
-      POSTGRES_PASSWORD: geonetwork
-      POSTGRES_DB: geonetwork
-

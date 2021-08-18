@@ -1290,6 +1290,7 @@
     <module>messaging</module>
     <module>estest</module>
     <module>index</module>
+    <module>georchestra-utils</module>
   </modules>
 
   <profiles>
@@ -1429,9 +1430,10 @@
         GEONETWORK_DB_CONNECTION_PROPERTIES=
     -->
 
-    <db.type>${geonetwork.db.type:h2}</db.type>
+
+   <!--  <db.type>${geonetwork.db.type:postgres-postgis}</db.type> -->
     <!-- Instead of using db_type a specific config file can be specified -->
-    <db.config.file>../config-db/${db.type}.xml</db.config.file>
+    <db.config.file>../config-db/postgres-postgis.xml</db.config.file>
     <db.host>#{systemEnvironment['GEONETWORK_DB_HOST']?:'localhost'}</db.host>
     <db.port>#{systemEnvironment['GEONETWORK_DB_PORT']}</db.port>
     <db.name>#{systemEnvironment['GEONETWORK_DB_NAME']?:'~/gn'}</db.name>
@@ -1502,7 +1504,7 @@
     <kb.platform>linux-x86_64</kb.platform>
     <kb.installer.extension>tar.gz</kb.installer.extension>
     <kb.port>5601</kb.port>
-    <kb.url>http://localhost:${kb.port}</kb.url>
+    <kb.url>http://kibana:${kb.port}</kb.url>
 
     <jms.url>tcp://localhost:61616</jms.url>
     <activemq.version>5.6.0</activemq.version>
