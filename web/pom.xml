@@ -1472,7 +1472,7 @@
     <profile>
       <id>docker</id>
       <properties>
-        <dockerImageName>georchestra/${project.parent.artifactId}:${git.closest.tag.name}-${git.closest.tag.commit.count}</dockerImageName>
+        <dockerImageName>georchestra/${project.parent.artifactId}:${git.closest.tag.name}-dev</dockerImageName>
         <dockerDatadirScmUrl>scm:git:https://github.com/georchestra/datadir.git</dockerDatadirScmUrl>
         <dockerDatadirScmVersion>docker-20.0</dockerDatadirScmVersion>
       </properties>
