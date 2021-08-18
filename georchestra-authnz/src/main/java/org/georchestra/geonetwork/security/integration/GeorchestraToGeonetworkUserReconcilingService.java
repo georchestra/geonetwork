@@ -27,6 +27,7 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import org.fao.geonet.domain.Pair;
 import org.fao.geonet.domain.User;
 import org.fao.geonet.repository.UserRepository;
 import org.georchestra.config.security.GeorchestraUserDetails;
@@ -34,7 +35,6 @@ import org.georchestra.geonetwork.logging.Logging;
 import org.georchestra.geonetwork.security.repository.UserLink;
 import org.georchestra.geonetwork.security.repository.UserLinkRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.util.Pair;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
@@ -51,12 +51,13 @@ public class GeorchestraToGeonetworkUserReconcilingService {
 
     private final UserLocks locks = new UserLocks();
 
-    private final UserMapperService mapper = new UserMapperService();
+    private final UserMapperService mapper;
 
     public @Autowired GeorchestraToGeonetworkUserReconcilingService(UserRepository userRepository,
-            UserLinkRepository userLinkRepository) {
+            UserLinkRepository userLinkRepository, UserMapperService mapper) {
         this.userRepository = userRepository;
         this.userLinkRepository = userLinkRepository;
+        this.mapper = mapper;
     }
 
     /**
@@ -162,7 +163,7 @@ public class GeorchestraToGeonetworkUserReconcilingService {
     private void logChanges(Map<String, Pair<?, ?>> changes) {
 
         Supplier<String> changesStr = () -> changes.entrySet().stream()
-                .map(e -> String.format("%s[%s -> %s]", e.getKey(), e.getValue().getFirst(), e.getValue().getSecond()))
+                .map(e -> String.format("%s[%s -> %s]", e.getKey(), e.getValue().one(), e.getValue().two()))
                 .collect(Collectors.joining(","));
 
         log.info("Updated user properties: %s", changesStr);

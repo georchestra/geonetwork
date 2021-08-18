@@ -56,12 +56,17 @@ public class GeorchestraPreAuthenticationFilter extends AbstractPreAuthenticated
     @Override
     protected User getPreAuthenticatedPrincipal(HttpServletRequest request) {
         final GeorchestraUserDetails georchestraUser = delegate.getPreAuthenticatedPrincipal(request);
-        System.err.println("pre-auth: " + georchestraUser);
-        if (georchestraUser == null || georchestraUser.isAnonymous()) {
+        if (georchestraUser == null) {
+            log.debug("geOrchestrea pre-auth not provided. URI: ", request.getRequestURI());
             return null;
         }
-        checkMandatoryFields(georchestraUser);
+        if (georchestraUser.isAnonymous()) {
+            log.debug("geOrchestrea pre-auth is anonymous. URI: ", request.getRequestURI());
+            return null;
+        }
         ensureLastUpdatedPropertyIsProvidedOrCreateIt(georchestraUser);
+        log.info("pre-auth: " + georchestraUser);
+        checkMandatoryFields(georchestraUser);
 
         Optional<User> uptodateUser = userLinkService.findUpToDateUser(georchestraUser);
         return uptodateUser.orElseGet(() -> userLinkService.forceMatchingGeonetworkUser(georchestraUser));

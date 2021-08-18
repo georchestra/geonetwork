@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans default-lazy-init="true" xmlns="http://www.springframework.org/schema/beans"
-  xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:ctx="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+  xmlns:context="http://www.springframework.org/schema/context" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:jpa="http://www.springframework.org/schema/data/jpa"
   xsi:schemaLocation="
   http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
   http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd
    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
@@ -14,20 +15,35 @@
   <context:annotation-config />
   <tx:annotation-driven proxy-target-class="true" />
 
- <!-- Look up the JPA repositories -->
-<!--  Didn't work either, can't get this freaking entity to be loaded when spring sets up JPA -->
-<!--   <jpa:repositories base-package="org.georchestra.geonetwork.security.jpa" -->
-<!--                     base-class="org.georchestra.geonetwork.security.jpa.JPAUserLinkRepository" -->
-<!--                     entity-manager-factory-ref="georEntityManagerFactory" -->
-<!--                     transaction-manager-ref="transactionManager"/> -->
+  <!-- Load context properties from the geOrchestra datadir first (if available) -->
+<!--   <ctx:property-placeholder -->
+<!--     location="file:${georchestra.datadir}/geonetwork/geonetwork.properties"  -->
+<!--     ignore-resource-not-found="false" -->
+<!--     ignore-unresolvable="true"  -->
+<!--     order="1" /> -->
 
-<!--  <bean id="georEntityManagerFactory" -->
-<!--         class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"> -->
-<!--     <property name="dataSource" ref="jdbcDataSource"/> -->
-<!--     <property name="packagesToScan" value="org.georchestra.geonetwork.security.jpa"/> -->
-<!--     <property name="jpaVendorAdapter" ref="jpaVendorAdapter"/> -->
-<!--     <property name="jpaPropertyMap" ref="jpaPropertyMap"/> -->
-<!--   </bean> -->
+  <!-- TODO: should be placed into the datadir -->
+  <!-- <ctx:property-placeholder location="WEB-INF/config-geonetwork-georchestra.properties" -->
+  <!-- ignore-resource-not-found="true" ignore-unresolvable="true" order="1" /> -->
+
+  <!-- Look up the JPA repositories -->
+  <!-- Didn't work either, can't get this freaking entity to be loaded when spring sets up JPA -->
+  <!-- <jpa:repositories base-package="org.georchestra.geonetwork.security.jpa" -->
+  <!-- base-class="org.georchestra.geonetwork.security.jpa.JPAUserLinkRepository" -->
+  <!-- entity-manager-factory-ref="georEntityManagerFactory" -->
+  <!-- transaction-manager-ref="transactionManager"/> -->
+
+  <!-- <bean id="georEntityManagerFactory" -->
+  <!-- class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"> -->
+  <!-- <property name="dataSource" ref="jdbcDataSource"/> -->
+  <!-- <property name="packagesToScan" value="org.georchestra.geonetwork.security.jpa"/> -->
+  <!-- <property name="jpaVendorAdapter" ref="jpaVendorAdapter"/> -->
+  <!-- <property name="jpaPropertyMap" ref="jpaPropertyMap"/> -->
+  <!-- </bean> -->
+
+  <!-- Look up the JPA repositories -->
+  <jpa:repositories base-package="org.georchestra.geonetwork.jpa"
+    entity-manager-factory-ref="entityManagerFactory" transaction-manager-ref="transactionManager" />
 
   <!-- redirect to cas when need to be logged in -->
   <bean id="authenticationEntryPoint"
@@ -42,158 +58,147 @@
     <property name="checkForPrincipalChanges" value="true" />
   </bean>
 
-<!--   <bean name="ldapSynchronizer" class="org.springframework.scheduling.quartz.JobDetailFactoryBean"> -->
-<!--     <property name="jobClass" value="org.fao.geonet.kernel.security.ldap.LDAPSynchronizerJob" /> -->
-<!--     <property name="jobDataAsMap"> -->
-<!--       <map> -->
-<!--         <entry key="contextSource" value-ref="contextSource" /> -->
-<!--         <entry key="ldapUserSearchBase" value="${ldap.users.search.base}" /> -->
-<!--         <entry key="ldapUserSearchFilter" value="(&amp;(objectClass=*)(mail=*@*)(givenName=*))" /> -->
-<!--         <entry key="ldapUserSearchAttribute" value="uid" /> -->
-<!--         <entry key="createNonExistingLdapGroup" value="true" /> -->
-<!--         <entry key="ldapGroupSearchBase" value="${ldap.groups.search.base}" /> -->
-<!--         <entry key="ldapGroupSearchFilter" value="(objectClass=groupOfMembers)" /> -->
-<!--         <entry key="ldapGroupSearchAttribute" value="cn" /> -->
-<!--         <entry key="ldapGroupSearchPattern" value="(.*)" /> -->
-<!--         <entry key="ldapGroupLabelAttribute" value="o" /> -->
-<!--       </map> -->
-<!--     </property> -->
-<!--   </bean> -->
+  <!-- <bean name="ldapSynchronizer" class="org.springframework.scheduling.quartz.JobDetailFactoryBean"> -->
+  <!-- <property name="jobClass" value="org.fao.geonet.kernel.security.ldap.LDAPSynchronizerJob" /> -->
+  <!-- <property name="jobDataAsMap"> -->
+  <!-- <map> -->
+  <!-- <entry key="contextSource" value-ref="contextSource" /> -->
+  <!-- <entry key="ldapUserSearchBase" value="${ldap.users.search.base}" /> -->
+  <!-- <entry key="ldapUserSearchFilter" value="(&amp;(objectClass=*)(mail=*@*)(givenName=*))" /> -->
+  <!-- <entry key="ldapUserSearchAttribute" value="uid" /> -->
+  <!-- <entry key="createNonExistingLdapGroup" value="true" /> -->
+  <!-- <entry key="ldapGroupSearchBase" value="${ldap.groups.search.base}" /> -->
+  <!-- <entry key="ldapGroupSearchFilter" value="(objectClass=groupOfMembers)" /> -->
+  <!-- <entry key="ldapGroupSearchAttribute" value="cn" /> -->
+  <!-- <entry key="ldapGroupSearchPattern" value="(.*)" /> -->
+  <!-- <entry key="ldapGroupLabelAttribute" value="o" /> -->
+  <!-- </map> -->
+  <!-- </property> -->
+  <!-- </bean> -->
 
-<!--   <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"> -->
-<!--     <property name="jobDetail" ref="ldapSynchronizer" /> -->
-<!--     <property name="cronExpression" value="${ldap.sync.cron}" /> -->
-<!--     <property name="startDelay" value="60000" /> -->
-<!--   </bean> -->
+  <!-- <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"> -->
+  <!-- <property name="jobDetail" ref="ldapSynchronizer" /> -->
+  <!-- <property name="cronExpression" value="${ldap.sync.cron}" /> -->
+  <!-- <property name="startDelay" value="60000" /> -->
+  <!-- </bean> -->
 
-<!--   <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean"> -->
-<!--     <property name="jobFactory"> -->
-<!--       <bean class="org.fao.geonet.util.spring.AutowiringSpringBeanJobFactory" /> -->
-<!--     </property> -->
-<!--     <property name="triggers"> -->
-<!--       <list> -->
-<!--         <ref bean="cronTrigger" /> -->
-<!--       </list> -->
-<!--     </property> -->
-<!--   </bean> -->
+  <!-- <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean"> -->
+  <!-- <property name="jobFactory"> -->
+  <!-- <bean class="org.fao.geonet.util.spring.AutowiringSpringBeanJobFactory" /> -->
+  <!-- </property> -->
+  <!-- <property name="triggers"> -->
+  <!-- <list> -->
+  <!-- <ref bean="cronTrigger" /> -->
+  <!-- </list> -->
+  <!-- </property> -->
+  <!-- </bean> -->
 
 
-<!--   <bean id="preFilterAuthenticationProvider" -->
-<!--     class="org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider"> -->
-<!--     <property name="preAuthenticatedUserDetailsService"> -->
-<!--       <bean id="preAuthenticatedUserDetailsService" -->
-<!--         class="org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper"> -->
-<!--         <property name="userDetailsService" ref="ldapUserService" /> -->
-<!--       </bean> -->
-<!--     </property> -->
-<!--   </bean> -->
+  <!-- <bean id="preFilterAuthenticationProvider" -->
+  <!-- class="org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider"> -->
+  <!-- <property name="preAuthenticatedUserDetailsService"> -->
+  <!-- <bean id="preAuthenticatedUserDetailsService" -->
+  <!-- class="org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper"> -->
+  <!-- <property name="userDetailsService" ref="ldapUserService" /> -->
+  <!-- </bean> -->
+  <!-- </property> -->
+  <!-- </bean> -->
 
-<!--   <bean id="ldapUserService" class="org.springframework.security.ldap.userdetails.LdapUserDetailsService"> -->
-<!--     <constructor-arg index="0" ref="ldapUserSearch" /> -->
-<!--     <property name="userDetailsMapper" ref="ldapUserContextMapper" /> -->
-<!--   </bean> -->
+  <!-- <bean id="ldapUserService" class="org.springframework.security.ldap.userdetails.LdapUserDetailsService"> -->
+  <!-- <constructor-arg index="0" ref="ldapUserSearch" /> -->
+  <!-- <property name="userDetailsMapper" ref="ldapUserContextMapper" /> -->
+  <!-- </bean> -->
 
-<!--   <bean id="ldapUserSearch" class="org.springframework.security.ldap.search.FilterBasedLdapUserSearch"> -->
-<!--     <constructor-arg index="0" value="${ldap.users.search.base}" /> -->
-<!--     <constructor-arg index="1" value="uid={0}" /> -->
-<!--     <constructor-arg index="2" ref="contextSource" /> -->
-<!--   </bean> -->
+  <!-- <bean id="ldapUserSearch" class="org.springframework.security.ldap.search.FilterBasedLdapUserSearch"> -->
+  <!-- <constructor-arg index="0" value="${ldap.users.search.base}" /> -->
+  <!-- <constructor-arg index="1" value="uid={0}" /> -->
+  <!-- <constructor-arg index="2" ref="contextSource" /> -->
+  <!-- </bean> -->
 
   <!-- config-security-ldap.xml customized for geOrchestra -->
-<!--   <ctx:property-override location="WEB-INF/config-security/config-security-overrides.properties"  order="2" /> -->
-
-<!--   <ctx:property-override -->
-<!--     location="file:${georchestra.datadir}/geonetwork/geonetwork-security-overrides.properties" order="1" -->
-<!--     ignore-resource-not-found="true" /> -->
-  <!-- using the one from the geOrchestra datadir first (if available) -->
-<!--   <ctx:property-placeholder -->
-<!--     location="file:${georchestra.datadir}/geonetwork/geonetwork.properties" ignore-resource-not-found="true" -->
-<!--     ignore-unresolvable="true" order="1" /> -->
-  <!-- TODO: should be placed into the datadir -->
-<!--   <ctx:property-placeholder location="WEB-INF/config-geonetwork-georchestra.properties" -->
-<!--     ignore-resource-not-found="true" ignore-unresolvable="true" order="1" /> -->
+  <!-- <ctx:property-override location="WEB-INF/config-security/config-security-overrides.properties" order="2" /> -->
 
 
   <!-- Add ldap authentication to authentication manager -->
-<!--   <bean id="ldapAuthenticationProviderPostProcessor" -->
-<!--     class="jeeves.config.springutil.AddAuthenticationProviderPostProcessor"> -->
-<!--     <constructor-arg ref="ldapAuthProvider" /> -->
-<!--   </bean> -->
+  <!-- <bean id="ldapAuthenticationProviderPostProcessor" -->
+  <!-- class="jeeves.config.springutil.AddAuthenticationProviderPostProcessor"> -->
+  <!-- <constructor-arg ref="ldapAuthProvider" /> -->
+  <!-- </bean> -->
 
-<!--   <bean id="ldapUtils" class="org.fao.geonet.kernel.security.ldap.LDAPUtils" /> -->
+  <!-- <bean id="ldapUtils" class="org.fao.geonet.kernel.security.ldap.LDAPUtils" /> -->
 
   <!-- LDAP configuration -->
-<!--   <bean id="contextSource" class="org.springframework.security.ldap.DefaultSpringSecurityContextSource"> -->
-<!--     <constructor-arg value="${ldap.url}/${ldap.base.dn}" /> -->
-<!--     For non anonymous binding -->
-<!--     <property name="userDn" value="${ldap.security.principal}" /> -->
-<!--     <property name="password" value="${ldap.security.credentials}" /> -->
-<!--   </bean> -->
+  <!-- <bean id="contextSource" class="org.springframework.security.ldap.DefaultSpringSecurityContextSource"> -->
+  <!-- <constructor-arg value="${ldap.url}/${ldap.base.dn}" /> -->
+  <!-- For non anonymous binding -->
+  <!-- <property name="userDn" value="${ldap.security.principal}" /> -->
+  <!-- <property name="password" value="${ldap.security.credentials}" /> -->
+  <!-- </bean> -->
 
-<!--   <bean id="ldapAuthProvider" class="org.springframework.security.ldap.authentication.LdapAuthenticationProvider"> -->
-<!--     <constructor-arg> -->
-<!--       <bean class="org.springframework.security.ldap.authentication.BindAuthenticator"> -->
-<!--         <constructor-arg ref="contextSource" /> -->
-<!--         <property name="userDnPatterns"> -->
-<!--           <list> -->
-<!--             <value>uid={0}</value> -->
-<!--           </list> -->
-<!--         </property> -->
-<!--       </bean> -->
-<!--     </constructor-arg> -->
-<!--     <property name="userDetailsContextMapper" ref="ldapUserContextMapper" /> -->
-<!--   </bean> -->
+  <!-- <bean id="ldapAuthProvider" class="org.springframework.security.ldap.authentication.LdapAuthenticationProvider"> -->
+  <!-- <constructor-arg> -->
+  <!-- <bean class="org.springframework.security.ldap.authentication.BindAuthenticator"> -->
+  <!-- <constructor-arg ref="contextSource" /> -->
+  <!-- <property name="userDnPatterns"> -->
+  <!-- <list> -->
+  <!-- <value>uid={0}</value> -->
+  <!-- </list> -->
+  <!-- </property> -->
+  <!-- </bean> -->
+  <!-- </constructor-arg> -->
+  <!-- <property name="userDetailsContextMapper" ref="ldapUserContextMapper" /> -->
+  <!-- </bean> -->
 
   <!-- Get all user information from the LDAP user's attributes excluding profiles and groups which are searched in another 
     LDAP location. For profiles and groups, define the search location and the extraction pattern. -->
-<!--   <bean id="ldapUserContextMapper" -->
-<!--     class="org.fao.geonet.kernel.security.ldap.LDAPUserDetailsContextMapperWithProfileSearch"> -->
-<!--     <property name="mapping"> -->
-<!--       <map /> -->
-<!--     </property> -->
-<!--     <property name="profileMapping"> -->
-<!--       <map> -->
-<!--         <entry key="ADMIN" value="Administrator" /> -->
-<!--         <entry key="REVIEWER" value="Reviewer" /> -->
-<!--         <entry key="EDITOR" value="Editor" /> -->
-<!--         <entry key="USER" value="RegisteredUser" /> -->
-<!--       </map> -->
-<!--     </property> -->
-<!--     <property name="importPrivilegesFromLdap" value="true" /> -->
-<!--     <property name="createNonExistingLdapGroup" value="true" /> -->
-<!--     <property name="createNonExistingLdapUser" value="true" /> -->
-<!--     <property name="ldapManager" ref="ldapUserDetailsService" /> -->
+  <!-- <bean id="ldapUserContextMapper" -->
+  <!-- class="org.fao.geonet.kernel.security.ldap.LDAPUserDetailsContextMapperWithProfileSearch"> -->
+  <!-- <property name="mapping"> -->
+  <!-- <map /> -->
+  <!-- </property> -->
+  <!-- <property name="profileMapping"> -->
+  <!-- <map> -->
+  <!-- <entry key="ADMIN" value="Administrator" /> -->
+  <!-- <entry key="REVIEWER" value="Reviewer" /> -->
+  <!-- <entry key="EDITOR" value="Editor" /> -->
+  <!-- <entry key="USER" value="RegisteredUser" /> -->
+  <!-- </map> -->
+  <!-- </property> -->
+  <!-- <property name="importPrivilegesFromLdap" value="true" /> -->
+  <!-- <property name="createNonExistingLdapGroup" value="true" /> -->
+  <!-- <property name="createNonExistingLdapUser" value="true" /> -->
+  <!-- <property name="ldapManager" ref="ldapUserDetailsService" /> -->
 
-<!--     <property name="groupAttribute" value="cn" /> -->
-<!--     <property name="groupObject" value="${ldap.groups.search.base}" /> -->
-<!--     <property name="groupQuery" -->
-<!--       value="(&amp;(objectClass=groupOfMembers)(member=uid={0},${ldap.users.search.base},${ldap.base.dn}))" /> -->
-<!--     <property name="groupQueryPattern" value="(.*)" /> -->
+  <!-- <property name="groupAttribute" value="cn" /> -->
+  <!-- <property name="groupObject" value="${ldap.groups.search.base}" /> -->
+  <!-- <property name="groupQuery" -->
+  <!-- value="(&amp;(objectClass=groupOfMembers)(member=uid={0},${ldap.users.search.base},${ldap.base.dn}))" /> -->
+  <!-- <property name="groupQueryPattern" value="(.*)" /> -->
 
-<!--     <property name="privilegeAttribute" value="cn" /> -->
-<!--     <property name="privilegeObject" value="${ldap.roles.search.base}" /> -->
-<!--     <property name="privilegeQuery" -->
-<!--       value="(&amp;(objectClass=groupOfMembers)(member=uid={0},${ldap.users.search.base},${ldap.base.dn}))" /> -->
-<!--     <property name="privilegeQueryPattern" value="GN_(.*)" /> -->
+  <!-- <property name="privilegeAttribute" value="cn" /> -->
+  <!-- <property name="privilegeObject" value="${ldap.roles.search.base}" /> -->
+  <!-- <property name="privilegeQuery" -->
+  <!-- value="(&amp;(objectClass=groupOfMembers)(member=uid={0},${ldap.users.search.base},${ldap.base.dn}))" /> -->
+  <!-- <property name="privilegeQueryPattern" value="GN_(.*)" /> -->
 
-<!--     <property name="contextSource" ref="contextSource" /> -->
-<!--   </bean> -->
+  <!-- <property name="contextSource" ref="contextSource" /> -->
+  <!-- </bean> -->
 
 
-<!--   <bean id="ldapUserDetailsService" class="org.fao.geonet.kernel.security.ldap.LdapUserDetailsManager"> -->
-<!--     <constructor-arg ref="contextSource" /> -->
-<!--     <constructor-arg name="groupMemberAttributeName" value="member" /> -->
-<!--     <constructor-arg name="query" -->
-<!--       value="(&amp;(objectClass=groupOfMembers)(member=uid={0},${ldap.users.search.base},${ldap.base.dn}))" /> -->
-<!--     <property name="groupSearchBase" value="${ldap.groups.search.base}" /> -->
-<!--     <property name="usernameMapper" ref="usernameMapper" /> -->
-<!--     <property name="userDetailsMapper" ref="ldapUserContextMapper" /> -->
-<!--   </bean> -->
+  <!-- <bean id="ldapUserDetailsService" class="org.fao.geonet.kernel.security.ldap.LdapUserDetailsManager"> -->
+  <!-- <constructor-arg ref="contextSource" /> -->
+  <!-- <constructor-arg name="groupMemberAttributeName" value="member" /> -->
+  <!-- <constructor-arg name="query" -->
+  <!-- value="(&amp;(objectClass=groupOfMembers)(member=uid={0},${ldap.users.search.base},${ldap.base.dn}))" /> -->
+  <!-- <property name="groupSearchBase" value="${ldap.groups.search.base}" /> -->
+  <!-- <property name="usernameMapper" ref="usernameMapper" /> -->
+  <!-- <property name="userDetailsMapper" ref="ldapUserContextMapper" /> -->
+  <!-- </bean> -->
 
-<!--   <bean id="usernameMapper" class="org.springframework.security.ldap.DefaultLdapUsernameToDnMapper"> -->
-<!--     <constructor-arg index="0" type="java.lang.String" name="userDnBase" -->
-<!--       value="${ldap.users.search.base}" /> -->
-<!--     <constructor-arg index="1" type="java.lang.String" name="usernameAttribute" value="uid" /> -->
-<!--   </bean> -->
+  <!-- <bean id="usernameMapper" class="org.springframework.security.ldap.DefaultLdapUsernameToDnMapper"> -->
+  <!-- <constructor-arg index="0" type="java.lang.String" name="userDnBase" -->
+  <!-- value="${ldap.users.search.base}" /> -->
+  <!-- <constructor-arg index="1" type="java.lang.String" name="usernameAttribute" value="uid" /> -->
+  <!-- </bean> -->
 
 </beans>

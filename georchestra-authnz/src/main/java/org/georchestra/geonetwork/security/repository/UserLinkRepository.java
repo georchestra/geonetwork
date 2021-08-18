@@ -18,17 +18,16 @@
  */
 package org.georchestra.geonetwork.security.repository;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import org.fao.geonet.domain.User;
-import org.fao.geonet.repository.UserRepository;
-import org.georchestra.geonetwork.jpa.JPAUserLink;
+import org.fao.geonet.domain.georchestra.JPAUserLink;
 import org.georchestra.geonetwork.jpa.JPAUserLinkRepository;
 import org.georchestra.geonetwork.logging.Logging;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
@@ -40,12 +39,10 @@ import org.springframework.stereotype.Service;
 public class UserLinkRepository {
     private static final Logging log = Logging.getLogger("org.georchestra.geonetwork.security.repository");
 
-    private @Autowired ApplicationContext applicationContext;
+    private @Autowired JPAUserLinkRepository _repo;
 
     private JPAUserLinkRepository repo() {
-        UserRepository bean = applicationContext.getBean(UserRepository.class);
-        log.info("UserRepository found: %s", bean);
-        return applicationContext.getBean(JPAUserLinkRepository.class);
+        return _repo;
     }
 
     public Optional<UserLink> findById(@NonNull String georchestraUserId) {
@@ -54,11 +51,13 @@ public class UserLinkRepository {
 
     @Transactional
     public void save(UserLink link) {
+        Objects.requireNonNull(link);
         JPAUserLink entity = toJPA(link);
         repo().save(entity);
     }
 
     private JPAUserLink toJPA(UserLink link) {
+        Objects.requireNonNull(link);
         return new JPAUserLink()//
                 .setGeorchestraUserId(link.getGeorchestraUserId())//
                 .setLastUpdated(link.getLastUpdated())//
@@ -66,6 +65,7 @@ public class UserLinkRepository {
     }
 
     private UserLink toModel(JPAUserLink link) {
+        Objects.requireNonNull(link);
         return new UserLink()//
                 .setGeorchestraUserId(link.getGeorchestraUserId())//
                 .setLastUpdated(link.getLastUpdated())//

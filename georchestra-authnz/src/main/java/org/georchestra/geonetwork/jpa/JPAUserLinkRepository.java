@@ -19,6 +19,7 @@
 package org.georchestra.geonetwork.jpa;
 
 import org.fao.geonet.domain.User;
+import org.fao.geonet.domain.georchestra.JPAUserLink;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 

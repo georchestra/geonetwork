@@ -8,7 +8,12 @@
 
   <!-- TODO: in the geOr datadir -->
   <context:property-placeholder location="WEB-INF/config-geonetwork-georchestra.properties" ignore-resource-not-found="true" ignore-unresolvable="true" order="1"/>
-
+  <!-- Load context properties from the geOrchestra datadir first (if available) -->
+  <context:property-placeholder
+     location="file:${georchestra.datadir}/geonetwork/geonetwork.properties" 
+     ignore-resource-not-found="false"
+     ignore-unresolvable="true" 
+     order="1" />
 
   <bean id="GeonetworkDataDirectory" class="org.fao.geonet.kernel.GeonetworkDataDirectory" lazy-init="true">
     <property name="systemDataDir" ref="GNSystemDataDir"/>
