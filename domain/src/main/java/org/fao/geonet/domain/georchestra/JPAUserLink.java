@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License along with
  * geOrchestra.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.georchestra.geonetwork.jpa;
+package org.fao.geonet.domain.georchestra;
 
 import java.util.Objects;
 
@@ -43,16 +43,24 @@ import org.fao.geonet.domain.User;
 @Table(schema = "geonetwork_georchestra")
 public class JPAUserLink {
 
-    @Id
     private String georchestraUserId;
 
-    @OneToOne
     private User geonetworkUser;
 
     private String lastUpdated;
 
+    @Id
     public String getGeorchestraUserId() {
         return georchestraUserId;
+    }
+
+    @OneToOne
+    public User getGeonetworkUser() {
+        return geonetworkUser;
+    }
+
+    public String getLastUpdated() {
+        return lastUpdated;
     }
 
     public JPAUserLink setGeorchestraUserId(String georchestraUserId) {
@@ -60,17 +68,9 @@ public class JPAUserLink {
         return this;
     }
 
-    public User getGeonetworkUser() {
-        return geonetworkUser;
-    }
-
     public JPAUserLink setGeonetworkUser(User geonetworkUser) {
         this.geonetworkUser = geonetworkUser;
         return this;
-    }
-
-    public String getLastUpdated() {
-        return lastUpdated;
     }
 
     public JPAUserLink setLastUpdated(String lastUpdated) {
