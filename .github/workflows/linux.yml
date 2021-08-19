@@ -20,11 +20,6 @@ jobs:
       with:
         java-version: 8
 
-    - name: Set up Maven
-      uses: stCarolas/setup-maven@v4
-      with:
-        maven-version: 3.6.3
-
     - name: Maven repository caching
       uses: actions/cache@v2
       with:
@@ -38,7 +33,7 @@ jobs:
 
     # geOrchestra specific
     - name: Build a docker image
-      run: mvn -B -V package docker:build -Pdocker -pl web
+      run: mvn -B -V package docker:build -Pdocker -pl web -DskipTests
 
     - name: publish the artifact
       if: github.repository == 'georchestra/geonetwork' && github.ref == 'refs/heads/georchestra-gn4-4.x-dev'
