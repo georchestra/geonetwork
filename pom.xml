@@ -1521,7 +1521,7 @@
     <kb.platform>linux-x86_64</kb.platform>
     <kb.installer.extension>tar.gz</kb.installer.extension>
     <kb.port>5601</kb.port>
-    <kb.url>http://kibana:${kb.port}</kb.url>
+    <kb.url>http://localhost:${kb.port}</kb.url>
 
     <jms.url>tcp://localhost:61616</jms.url>
     <activemq.version>5.6.0</activemq.version>
