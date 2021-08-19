@@ -32,6 +32,9 @@ jobs:
       run: mvn -B -V install -DskipTests=true -Dmaven.javadoc.skip=true
 
     # geOrchestra specific
+    - name: debug docker
+      run: docker run -it --rm hello-world
+
     - name: Build a docker image
       run: mvn -B -V package docker:build -Pdocker -pl web -DskipTests
 
