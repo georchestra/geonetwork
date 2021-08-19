@@ -32,11 +32,8 @@ jobs:
       run: mvn -B -V install -DskipTests=true -Dmaven.javadoc.skip=true
 
     # geOrchestra specific
-    - name: debug docker
-      run: docker run -it --rm hello-world
-
     - name: Build a docker image
-      run: mvn -B -V package docker:build -Pdocker -pl web -DskipTests
+      run: mvn -B -V package docker:build -Pdocker -pl web -DskipTests -DdockerImageName=georchestra/geonetwork:4.x-dev
 
     - name: publish the artifact
       if: github.repository == 'georchestra/geonetwork' && github.ref == 'refs/heads/georchestra-gn4-4.x-dev'
@@ -51,12 +48,10 @@ jobs:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
-    # TODO: this will break next time a version is released and we update with upstream
-    # because the closest tag won't be 4.0.5 anymore
     - name: Publish the docker image
       if: github.repository == 'georchestra/geonetwork' && github.ref == 'refs/heads/georchestra-gn4-4.x-dev'
       run: |
-        docker push georchestra/geonetwork:4.0.5-dev
+        docker push georchestra/geonetwork:4.x-dev
 
     - name: Remove SNAPSHOT jars from repository
       run: |
