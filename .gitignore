@@ -59,6 +59,7 @@ web/src/main/webapp/WEB-INF/data/config/schema_plugins/*/schematron/schematron*.
 web/src/main/webapp/WEB-INF/data/config/schema_plugins/csw-record
 web/src/main/webapp/WEB-INF/data/config/schema_plugins/dublin-core
 web/src/main/webapp/WEB-INF/data/config/schema_plugins/iso19*
+web/src/main/webapp/WEB-INF/data/config/schema_plugins/dcat2
 web/src/main/webapp/WEB-INF/data/config/schema_plugins/schemaplugin-uri-catalog.xml
 web/src/main/webapp/WEB-INF/data/config/schemaplugin-uri-catalog.xml
 web/src/main/webapp/WEB-INF/data/config/encryptor.properties
