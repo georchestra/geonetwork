@@ -31,6 +31,7 @@ import org.georchestra.config.security.GeorchestraSecurityProxyAuthenticationFil
 import org.georchestra.config.security.GeorchestraUserDetails;
 import org.georchestra.geonetwork.logging.Logging;
 import org.georchestra.geonetwork.security.integration.GeorchestraToGeonetworkUserReconcilingService;
+import org.georchestra.security.model.GeorchestraUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 
@@ -55,25 +56,26 @@ public class GeorchestraPreAuthenticationFilter extends AbstractPreAuthenticated
 
     @Override
     protected User getPreAuthenticatedPrincipal(HttpServletRequest request) {
-        final GeorchestraUserDetails georchestraUser = delegate.getPreAuthenticatedPrincipal(request);
-        if (georchestraUser == null) {
+        final GeorchestraUserDetails auth = delegate.getPreAuthenticatedPrincipal(request);
+        if (auth == null) {
             log.debug("geOrchestrea pre-auth not provided. URI: ", request.getRequestURI());
             return null;
         }
-        if (georchestraUser.isAnonymous()) {
+        if (auth.isAnonymous()) {
             log.debug("geOrchestrea pre-auth is anonymous. URI: ", request.getRequestURI());
             return null;
         }
-        ensureLastUpdatedPropertyIsProvidedOrCreateIt(georchestraUser);
-        log.info("pre-auth: " + georchestraUser);
-        checkMandatoryFields(georchestraUser);
+        final GeorchestraUser user = auth.getUser();
+        ensureLastUpdatedPropertyIsProvidedOrCreateIt(user);
+        log.info("pre-auth: " + auth);
+        checkMandatoryFields(user);
 
-        Optional<User> uptodateUser = userLinkService.findUpToDateUser(georchestraUser);
-        return uptodateUser.orElseGet(() -> userLinkService.forceMatchingGeonetworkUser(georchestraUser));
+        Optional<User> uptodateUser = userLinkService.findUpToDateUser(user);
+        return uptodateUser.orElseGet(() -> userLinkService.forceMatchingGeonetworkUser(user));
     }
 
-    private void checkMandatoryFields(GeorchestraUserDetails user) {
-        requireNonNull(user.getUserId(), "GeorchestraUserDetails.userId is mandatory");
+    private void checkMandatoryFields(GeorchestraUser user) {
+        requireNonNull(user.getId(), "GeorchestraUserDetails.userId is mandatory");
         requireNonNull(user.getOrganization().getId(), "GeorchestraUserDetails.organization.id is mandatory");
         requireNonNull(user.getOrganization().getName(), "GeorchestraUserDetails.organization.name is mandatory");
         if (user.getRoles().isEmpty()) {
@@ -82,18 +84,18 @@ public class GeorchestraPreAuthenticationFilter extends AbstractPreAuthenticated
         requireNonNull(user.getLastUpdated(), "GeorchestraUserDetails.lastUpdated is mandatory");
     }
 
-    private void ensureLastUpdatedPropertyIsProvidedOrCreateIt(GeorchestraUserDetails georchestraUser) {
+    private void ensureLastUpdatedPropertyIsProvidedOrCreateIt(GeorchestraUser georchestraUser) {
         if (null == georchestraUser.getLastUpdated()) {
             String hash = createLastUpdatedUserHash(georchestraUser);
             log.info("lastUpdated not provided for user %s(%s), using a hash based on relevant fields: %s",
-                    georchestraUser.getUserId(), georchestraUser.getUsername(), hash);
+                    georchestraUser.getId(), georchestraUser.getUsername(), hash);
             georchestraUser.setLastUpdated(hash);
         }
     }
 
-    private String createLastUpdatedUserHash(GeorchestraUserDetails user) {
+    private String createLastUpdatedUserHash(GeorchestraUser user) {
         Hasher hasher = Hashing.sha256().newHasher();
-        hasher.putUnencodedChars(nonNull(user.getUserId()));
+        hasher.putUnencodedChars(nonNull(user.getId()));
         hasher.putUnencodedChars(nonNull(user.getUsername()));
         hasher.putUnencodedChars(nonNull(user.getFirstName()));
         hasher.putUnencodedChars(nonNull(user.getLastName()));
