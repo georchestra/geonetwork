@@ -30,10 +30,10 @@ import javax.transaction.Transactional;
 import org.fao.geonet.domain.Pair;
 import org.fao.geonet.domain.User;
 import org.fao.geonet.repository.UserRepository;
-import org.georchestra.config.security.GeorchestraUserDetails;
 import org.georchestra.geonetwork.logging.Logging;
 import org.georchestra.geonetwork.security.repository.UserLink;
 import org.georchestra.geonetwork.security.repository.UserLinkRepository;
+import org.georchestra.security.model.GeorchestraUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
@@ -62,7 +62,7 @@ public class GeorchestraToGeonetworkUserReconcilingService {
 
     /**
      * Finds the {@link org.fao.geonet.domain.User} that's the internal surrogate
-     * representation of the canonical {@link GeorchestraUserDetails}, or
+     * representation of the canonical {@link GeorchestraUser}, or
      * {@link Optional#empty() emtpy} if none exists.
      * 
      * @see UserLinkRepository
@@ -73,8 +73,8 @@ public class GeorchestraToGeonetworkUserReconcilingService {
         return user;
     }
 
-    public Optional<User> findUpToDateUser(@NonNull GeorchestraUserDetails canonical) {
-        return findLink(canonical.getUserId())//
+    public Optional<User> findUpToDateUser(@NonNull GeorchestraUser canonical) {
+        return findLink(canonical.getId())//
                 .filter(link -> gnUserIsUpToDate(canonical, link))//
                 .map(UserLink::getGeonetworkUser);
     }
@@ -96,8 +96,8 @@ public class GeorchestraToGeonetworkUserReconcilingService {
      * matches the credentials of the provided canonical user info.
      */
     @Transactional
-    public @NonNull User forceMatchingGeonetworkUser(@NonNull GeorchestraUserDetails georchestraUser) {
-        final String userId = georchestraUser.getUserId();
+    public @NonNull User forceMatchingGeonetworkUser(@NonNull GeorchestraUser georchestraUser) {
+        final String userId = georchestraUser.getId();
         log.info("Forcing up-to-date user from geOrchestra user %s (%s)...", userId, georchestraUser.getUsername());
         // avoid concurrent requests updating/creating the same User
         final Lock lock = locks.getUserLock(userId);
@@ -113,8 +113,8 @@ public class GeorchestraToGeonetworkUserReconcilingService {
         }
     }
 
-    private @NonNull User createGeonetworkUser(@NonNull GeorchestraUserDetails georUser) {
-        final String userId = georUser.getUserId();
+    private @NonNull User createGeonetworkUser(@NonNull GeorchestraUser georUser) {
+        final String userId = georUser.getId();
         log.info("Creating GN User %s (%s)...", userId, georUser.getUsername());
         User newUser = userRepository.save(mapper.toGeonetorkUser(georUser));
         UserLink link = findLink(userId).orElseGet(() -> newLink(georUser, newUser));
@@ -132,16 +132,16 @@ public class GeorchestraToGeonetworkUserReconcilingService {
      *         properties must be updated in the database to match the geOrchestra
      *         user.
      */
-    private boolean gnUserIsUpToDate(final @NonNull GeorchestraUserDetails preAuthUser, final @NonNull UserLink link) {
+    private boolean gnUserIsUpToDate(final @NonNull GeorchestraUser preAuthUser, final @NonNull UserLink link) {
         final String expected = preAuthUser.getLastUpdated();
         final String actual = link.getLastUpdated();
         final boolean userExists = link.getGeonetworkUser() != null;
         return Objects.equals(expected, actual) && userExists;
     }
 
-    private @NonNull User reconcile(@NonNull GeorchestraUserDetails canonical, @NonNull UserLink link) {
+    private @NonNull User reconcile(@NonNull GeorchestraUser canonical, @NonNull UserLink link) {
         if (gnUserIsUpToDate(canonical, link)) {
-            log.debug("GN user is up to date. Id: %s, version: %s", canonical.getUserId(), link.getLastUpdated());
+            log.debug("GN user is up to date. Id: %s, version: %s", canonical.getId(), link.getLastUpdated());
             return link.getGeonetworkUser();
         }
         final User user = link.getGeonetworkUser();
@@ -176,9 +176,9 @@ public class GeorchestraToGeonetworkUserReconcilingService {
         return link;
     }
 
-    private UserLink newLink(@NonNull GeorchestraUserDetails georchestraUser, @NonNull User gnUser) {
+    private UserLink newLink(@NonNull GeorchestraUser georchestraUser, @NonNull User gnUser) {
         UserLink link = new UserLink();
-        link.setGeorchestraUserId(georchestraUser.getUserId());
+        link.setGeorchestraUserId(georchestraUser.getId());
         link.setLastUpdated(georchestraUser.getLastUpdated());
         link.setGeonetworkUser(gnUser);
         return link;

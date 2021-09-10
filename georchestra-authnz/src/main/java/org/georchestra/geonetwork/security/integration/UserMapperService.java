@@ -31,8 +31,8 @@ import java.util.stream.Collectors;
 import org.fao.geonet.domain.Pair;
 import org.fao.geonet.domain.Profile;
 import org.fao.geonet.domain.User;
-import org.georchestra.config.security.GeorchestraUserDetails;
 import org.georchestra.geonetwork.logging.Logging;
+import org.georchestra.security.model.GeorchestraUser;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -90,7 +90,7 @@ public class UserMapperService implements InitializingBean {
                 + ", mappings: " + logStrMappings());
     }
 
-    public User toGeonetorkUser(GeorchestraUserDetails canonical) {
+    public User toGeonetorkUser(GeorchestraUser canonical) {
         User user = new User();
         updateGeonetworkUser(canonical, user);
         return user;
@@ -104,7 +104,7 @@ public class UserMapperService implements InitializingBean {
      *                  {@code canonical}
      * @return a map of changed property names to old/new value pairs
      */
-    public Map<String, Pair<?, ?>> updateGeonetworkUser(@NonNull GeorchestraUserDetails canonical, User user) {
+    public Map<String, Pair<?, ?>> updateGeonetworkUser(@NonNull GeorchestraUser canonical, User user) {
         // ? user.setEnabled(true);
         // ? user.setKind("")
 
@@ -156,7 +156,7 @@ public class UserMapperService implements InitializingBean {
                 .toArray(Profile[]::new);
     }
 
-    private Set<String> extractEmails(GeorchestraUserDetails canonical) {
+    private Set<String> extractEmails(GeorchestraUser canonical) {
         Set<String> emails = new HashSet<>();
         if (null != canonical.getEmail()) {
             emails.add(canonical.getEmail());
