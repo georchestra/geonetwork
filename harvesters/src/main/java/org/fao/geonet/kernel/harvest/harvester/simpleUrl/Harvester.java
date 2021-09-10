@@ -52,8 +52,10 @@ import org.springframework.http.client.ClientHttpResponse;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -137,8 +139,16 @@ class Harvester implements IHarvester<HarvestResult> {
 
                         nodes.forEach(record -> {
                             String uuid = this.extractUuidFromIdentifier(record.get(params.recordIdPath).asText());
-                            Element xml = convertRecordToXml(record, uuid);
-                            uuids.put(uuid, xml);
+                            String apiUrl = params.url.split("\\?")[0];
+                            URL url = null;
+                            try {
+                                url = new URL(apiUrl);
+                                String nodeUrl = new StringBuilder(url.getProtocol()).append("://").append(url.getAuthority()).toString();
+                                Element xml = convertRecordToXml(record, uuid, apiUrl, nodeUrl);
+                                uuids.put(uuid, xml);
+                            } catch (MalformedURLException e) {
+                                log.warning("Failed to parse Node URL");
+                            }
                         });
                         aligner.align(uuids, errors);
                         allUuids.putAll(uuids);
@@ -226,7 +236,7 @@ class Harvester implements IHarvester<HarvestResult> {
         return urlList;
     }
 
-    private Element convertRecordToXml(JsonNode record, String uuid) {
+    private Element convertRecordToXml(JsonNode record, String uuid, String apiUrl, String nodeUrl) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             String recordAsXml = XML.toString(
@@ -235,6 +245,8 @@ class Harvester implements IHarvester<HarvestResult> {
             recordAsXml = Xml.stripNonValidXMLCharacters(recordAsXml).replace("<@", "<").replace("</@", "</");
             Element recordAsElement = Xml.loadString(recordAsXml, false);
             recordAsElement.addContent(new Element("uuid").setText(uuid));
+            recordAsElement.addContent(new Element("apiUrl").setText(apiUrl));
+            recordAsElement.addContent(new Element("nodeUrl").setText(nodeUrl));
             Path importXsl = context.getAppPath().resolve(Geonet.Path.IMPORT_STYLESHEETS);
             final Path xslPath = importXsl.resolve(params.toISOConversion + ".xsl");
             return Xml.transform(recordAsElement, xslPath);
