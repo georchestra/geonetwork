@@ -32,11 +32,9 @@ import org.georchestra.config.security.GeorchestraUserDetails;
 import org.georchestra.geonetwork.logging.Logging;
 import org.georchestra.geonetwork.security.integration.GeorchestraToGeonetworkUserReconcilingService;
 import org.georchestra.security.model.GeorchestraUser;
+import org.georchestra.security.model.GeorchestraUserHasher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
-
-import com.google.common.hash.Hasher;
-import com.google.common.hash.Hashing;
 
 public class GeorchestraPreAuthenticationFilter extends AbstractPreAuthenticatedProcessingFilter {
 
@@ -86,36 +84,11 @@ public class GeorchestraPreAuthenticationFilter extends AbstractPreAuthenticated
 
     private void ensureLastUpdatedPropertyIsProvidedOrCreateIt(GeorchestraUser georchestraUser) {
         if (null == georchestraUser.getLastUpdated()) {
-            String hash = createLastUpdatedUserHash(georchestraUser);
+            String hash = GeorchestraUserHasher.createLastUpdatedUserHash(georchestraUser);
             log.info("lastUpdated not provided for user %s(%s), using a hash based on relevant fields: %s",
                     georchestraUser.getId(), georchestraUser.getUsername(), hash);
             georchestraUser.setLastUpdated(hash);
         }
-    }
-
-    private String createLastUpdatedUserHash(GeorchestraUser user) {
-        Hasher hasher = Hashing.sha256().newHasher();
-        hasher.putUnencodedChars(nonNull(user.getId()));
-        hasher.putUnencodedChars(nonNull(user.getUsername()));
-        hasher.putUnencodedChars(nonNull(user.getFirstName()));
-        hasher.putUnencodedChars(nonNull(user.getLastName()));
-        hasher.putUnencodedChars(nonNull(user.getEmail()));
-        hasher.putUnencodedChars(nonNull(user.getNotes()));
-        hasher.putUnencodedChars(nonNull(user.getPostalAddress()));
-        hasher.putUnencodedChars(nonNull(user.getTelephoneNumber()));
-        hasher.putUnencodedChars(nonNull(user.getTitle()));
-
-        user.getRoles().forEach(role -> hasher.putUnencodedChars(nonNull(role)));
-
-        hasher.putUnencodedChars(nonNull(user.getOrganization().getId()));
-        hasher.putUnencodedChars(nonNull(user.getOrganization().getName()));
-
-        String hexHash = hasher.hash().toString();
-        return hexHash;
-    }
-
-    private CharSequence nonNull(String s) {
-        return s == null ? "" : s;
     }
 
     /**
