@@ -12,4 +12,4 @@
 	url = https://github.com/geonetwork/doc.git
 [submodule "schemas/dcat2"]
 	path = schemas/dcat2
-	url = https://github.com/metadata101/dcat2
+	url = https://github.com/camptocamp/geonetwork-dcat2
