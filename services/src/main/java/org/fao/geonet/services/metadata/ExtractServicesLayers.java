@@ -77,8 +77,8 @@ public class ExtractServicesLayers {
 
         // case #1 : #id parameter is undefined
         if (paramId == null) {
-            synchronized (sm.getSelection("metadata")) {
-                for (Iterator<String> iter = sm.getSelection("metadata").iterator(); iter.hasNext(); ) {
+            synchronized (sm.getSelection("s101")) {
+                for (Iterator<String> iter = sm.getSelection("s101").iterator(); iter.hasNext(); ) {
                     String uuid = iter.next();
                     String id = dm.getMetadataId(uuid);
                     lst.add(id);
