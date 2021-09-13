@@ -44,13 +44,11 @@ public class Logging {
 
     @SafeVarargs
     public final void debug(String msgFormat, Supplier<?>... args) {
-        if (logger.isDebugEnabled())
-            debug(msgFormat, resolveArgs(args));
+        debug(msgFormat, resolveArgs(args));
     }
 
     public void debug(String msgFormat, Object... msgArgs) {
         String msg = resolveMessage(msgFormat, msgArgs);
-        System.err.println("--------------- " + msg);
         if (logger.isDebugEnabled())
             logger.debug(msg);
     }
@@ -62,7 +60,6 @@ public class Logging {
 
     public void info(String msgFormat, Object... msgArgs) {
         String msg = resolveMessage(msgFormat, msgArgs);
-        System.err.println("--------------- " + msg);
         if (logger.isInfoEnabled()) {
             logger.info(msg);
         }
@@ -75,10 +72,7 @@ public class Logging {
 
     public void warn(String msgFormat, Object... msgArgs) {
         String msg = resolveMessage(msgFormat, msgArgs);
-        System.err.println("--------------- " + msg);
-        if (logger.isInfoEnabled()) {
-            logger.info(msg);
-        }
+        logger.warn(msg);
     }
 
     private String resolveMessage(String msgFormat, Object... msgArgs) {

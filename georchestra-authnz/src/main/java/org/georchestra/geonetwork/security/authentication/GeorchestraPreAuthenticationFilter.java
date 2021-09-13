@@ -21,8 +21,6 @@ package org.georchestra.geonetwork.security.authentication;
 import static java.util.Objects.requireNonNull;
 import static org.georchestra.commons.security.SecurityHeaders.SEC_PROXY;
 
-import java.util.Optional;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.fao.geonet.domain.User;
@@ -30,12 +28,20 @@ import org.georchestra.commons.security.SecurityHeaders;
 import org.georchestra.config.security.GeorchestraSecurityProxyAuthenticationFilter;
 import org.georchestra.config.security.GeorchestraUserDetails;
 import org.georchestra.geonetwork.logging.Logging;
+import org.georchestra.geonetwork.security.integration.AccountsSynchronizationService;
 import org.georchestra.geonetwork.security.integration.GeorchestraToGeonetworkUserReconcilingService;
+import org.georchestra.geonetwork.security.repository.UserLink;
 import org.georchestra.security.model.GeorchestraUser;
-import org.georchestra.security.model.GeorchestraUserHasher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 
+/**
+ * Pre auth filter that gets the credentials as a {@link GeorchestraUser} from a
+ * {@link GeorchestraSecurityProxyAuthenticationFilter} using composition, and
+ * makes sure GeoNetwork user matches the georchestra user info.
+ * 
+ * @see GeorchestraToGeonetworkUserReconcilingService
+ */
 public class GeorchestraPreAuthenticationFilter extends AbstractPreAuthenticatedProcessingFilter {
 
     private static final Logging log = Logging.getLogger("org.georchestra.geonetwork.security.authentication");
@@ -51,25 +57,32 @@ public class GeorchestraPreAuthenticationFilter extends AbstractPreAuthenticated
      * {@link User}
      */
     private @Autowired GeorchestraToGeonetworkUserReconcilingService userLinkService;
+    /**
+     * This is the stupidest thing. We don't need this bean here, but for some
+     * reason I can't get the system to load it as a @Service on its own merit. I'm
+     * sure I'm missing something obvious though...
+     */
+    @SuppressWarnings("unused")
+    private @Autowired AccountsSynchronizationService synchroizationService;
 
     @Override
     protected User getPreAuthenticatedPrincipal(HttpServletRequest request) {
         final GeorchestraUserDetails auth = delegate.getPreAuthenticatedPrincipal(request);
         if (auth == null) {
-            log.debug("geOrchestrea pre-auth not provided. URI: ", request.getRequestURI());
+            log.debug("geOrchestrea pre-auth not provided. URI: %s", request.getRequestURI());
             return null;
         }
         if (auth.isAnonymous()) {
-            log.debug("geOrchestrea pre-auth is anonymous. URI: ", request.getRequestURI());
+            log.debug("geOrchestrea pre-auth is anonymous. URI: %s", request.getRequestURI());
             return null;
         }
         final GeorchestraUser user = auth.getUser();
-        ensureLastUpdatedPropertyIsProvidedOrCreateIt(user);
         log.info("pre-auth: " + auth);
         checkMandatoryFields(user);
 
-        Optional<User> uptodateUser = userLinkService.findUpToDateUser(user);
-        return uptodateUser.orElseGet(() -> userLinkService.forceMatchingGeonetworkUser(user));
+        UserLink link = userLinkService.findUpToDateUserLink(user)
+                .orElseGet(() -> userLinkService.forceMatchingGeonetworkUser(user));
+        return link.getGeonetworkUser();
     }
 
     private void checkMandatoryFields(GeorchestraUser user) {
@@ -80,15 +93,6 @@ public class GeorchestraPreAuthenticationFilter extends AbstractPreAuthenticated
             throw new IllegalArgumentException("GeorchestraUserDetails.roles is mandatory");
         }
         requireNonNull(user.getLastUpdated(), "GeorchestraUserDetails.lastUpdated is mandatory");
-    }
-
-    private void ensureLastUpdatedPropertyIsProvidedOrCreateIt(GeorchestraUser georchestraUser) {
-        if (null == georchestraUser.getLastUpdated()) {
-            String hash = GeorchestraUserHasher.createLastUpdatedUserHash(georchestraUser);
-            log.info("lastUpdated not provided for user %s(%s), using a hash based on relevant fields: %s",
-                    georchestraUser.getId(), georchestraUser.getUsername(), hash);
-            georchestraUser.setLastUpdated(hash);
-        }
     }
 
     /**

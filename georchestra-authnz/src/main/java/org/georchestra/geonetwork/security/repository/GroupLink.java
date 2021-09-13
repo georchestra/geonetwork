@@ -20,38 +20,38 @@ package org.georchestra.geonetwork.security.repository;
 
 import java.util.Objects;
 
-import org.fao.geonet.domain.User;
-import org.georchestra.security.model.GeorchestraUser;
+import org.fao.geonet.domain.Group;
+import org.georchestra.security.model.Organization;
 
 /**
- * Entity that represents a link between a geOrchestra {@link GeorchestraUser
- * user} and a GeoNetwork {@link User user}.
+ * Entity that represents a link between a geOrchestra {@link Organization} and
+ * a GeoNetwork {@link Group}.
  * <p>
- * Used to enforce a 1:1 relationship between the two, with geOrchestra users
- * being the source of truth for authentication and authorization, while at the
- * same time not interfering with regular GeoNetwork internals, which require
- * users to be defined on its PostgreSQL database.
+ * Used to enforce a 1:1 relationship between the two, with geOrchestra
+ * organizations being the source of truth for authentication and authorization,
+ * while at the same time not interfering with regular GeoNetwork internals,
+ * which require groups to be defined on its PostgreSQL database.
  */
-public class UserLink {
-    private String georchestraUserId;
-    private User geonetworkUser;
+public class GroupLink {
+    private String georchestraOrgId;
+    private Group geonetworkGroup;
     private String lastUpdated;
 
-    public String getGeorchestraUserId() {
-        return georchestraUserId;
+    public String getGeorchestraOrgId() {
+        return georchestraOrgId;
     }
 
-    public UserLink setGeorchestraUserId(String georchestraUserId) {
-        this.georchestraUserId = georchestraUserId;
+    public GroupLink setGeorchestraOrgId(String georchestraOrgId) {
+        this.georchestraOrgId = georchestraOrgId;
         return this;
     }
 
-    public User getGeonetworkUser() {
-        return geonetworkUser;
+    public Group getGeonetworkGroup() {
+        return geonetworkGroup;
     }
 
-    public UserLink setGeonetworkUser(User geonetworkUser) {
-        this.geonetworkUser = geonetworkUser;
+    public GroupLink setGeonetworkGroup(Group geonetworkGroup) {
+        this.geonetworkGroup = geonetworkGroup;
         return this;
     }
 
@@ -59,14 +59,14 @@ public class UserLink {
         return lastUpdated;
     }
 
-    public UserLink setLastUpdated(String lastUpdated) {
+    public GroupLink setLastUpdated(String lastUpdated) {
         this.lastUpdated = lastUpdated;
         return this;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(geonetworkUser, georchestraUserId, lastUpdated);
+        return Objects.hash(geonetworkGroup, georchestraOrgId, lastUpdated);
     }
 
     @Override
@@ -77,9 +77,9 @@ public class UserLink {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        UserLink other = (UserLink) obj;
-        return Objects.equals(geonetworkUser, other.geonetworkUser)
-                && Objects.equals(georchestraUserId, other.georchestraUserId)
+        GroupLink other = (GroupLink) obj;
+        return Objects.equals(geonetworkGroup, other.geonetworkGroup)
+                && Objects.equals(georchestraOrgId, other.georchestraOrgId)
                 && Objects.equals(lastUpdated, other.lastUpdated);
     }
 
