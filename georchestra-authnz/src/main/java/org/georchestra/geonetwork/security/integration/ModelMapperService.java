@@ -28,11 +28,15 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
+import org.fao.geonet.domain.Group;
+import org.fao.geonet.domain.Language;
 import org.fao.geonet.domain.Pair;
 import org.fao.geonet.domain.Profile;
 import org.fao.geonet.domain.User;
+import org.fao.geonet.repository.LanguageRepository;
 import org.georchestra.geonetwork.logging.Logging;
 import org.georchestra.security.model.GeorchestraUser;
+import org.georchestra.security.model.Organization;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -42,16 +46,20 @@ import org.springframework.stereotype.Service;
 import jeeves.component.ProfileManager;
 
 @Service
-public class UserMapperService implements InitializingBean {
+public class ModelMapperService implements InitializingBean {
     private static final Logging log = Logging.getLogger("org.georchestra.geonetwork.security.integration");
 
     private static final String DEFAULT_ROLE_MAPPING_PROP = "geonetwork.profiles.default";
     private static final String ROLES_MAPPING_CONFIG_PROP = "geonetwork.profiles.rolemappings";
 
+    /**
+     * Georchestra role name (without ROLE_ prefix) to GN profile mappings
+     */
     private Map<String, Profile> roleToProfileMapping = Collections.emptyMap();
     private Profile defaultProfile;
 
     private @Autowired Environment env;
+    private @Autowired LanguageRepository langRepository;
 
     @SuppressWarnings("unchecked")
     @Override
@@ -59,10 +67,9 @@ public class UserMapperService implements InitializingBean {
         log.info("georchestra.datadir = '%s'", env.getProperty("georchestra.datadir"));
         log.info("%s = '%s'", DEFAULT_ROLE_MAPPING_PROP, env.getProperty(DEFAULT_ROLE_MAPPING_PROP));
         log.info("%s = '%s'", ROLES_MAPPING_CONFIG_PROP, env.getProperty(ROLES_MAPPING_CONFIG_PROP));
-        log.info("es.featureproxy.targeturi = '%s'", env.getProperty("es.featureproxy.targeturi"));
 
-        roleToProfileMapping = env.getProperty(ROLES_MAPPING_CONFIG_PROP, Map.class);
-        defaultProfile = env.getProperty(DEFAULT_ROLE_MAPPING_PROP, Profile.class);
+        Map<String, Profile> roleToProfileMapping = env.getProperty(ROLES_MAPPING_CONFIG_PROP, Map.class);
+        Profile defaultProfile = env.getProperty(DEFAULT_ROLE_MAPPING_PROP, Profile.class);
 
         if (null == defaultProfile) {
             // REVISIT: not sure why it's not loading from
@@ -76,16 +83,20 @@ public class UserMapperService implements InitializingBean {
             // REVISIT: not sure why it's not loading from
             // config/geonetwork/geonetwork.properties
             roleToProfileMapping = new HashMap<>();
-            roleToProfileMapping.put("ROLE_ADMINISTRATOR", Profile.Administrator);
-            roleToProfileMapping.put("ROLE_GN_ADMIN", Profile.Administrator);
-            roleToProfileMapping.put("ROLE_REVIEWER", Profile.Reviewer);
-            roleToProfileMapping.put("ROLE_EDITOR", Profile.Editor);
-            roleToProfileMapping.put("ROLE_USER", Profile.RegisteredUser);
+            roleToProfileMapping.put("ADMINISTRATOR", Profile.Administrator);
+            roleToProfileMapping.put("GN_ADMIN", Profile.Administrator);
+            roleToProfileMapping.put("REVIEWER", Profile.Reviewer);
+            roleToProfileMapping.put("EDITOR", Profile.Editor);
+            roleToProfileMapping.put("USER", Profile.RegisteredUser);
 //            throw new BeanInitializationException(
 //                    "No Georchestra roles to GeoNetwork Profile mappings provided through config property map "
 //                            + ROLES_MAPPING_CONFIG_PROP + ".*");
         }
+        roleToProfileMapping = roleToProfileMapping.entrySet().stream()
+                .collect(Collectors.toMap(e -> stripRolesPrefix(e.getKey()), Map.Entry::getValue));
 
+        this.defaultProfile = defaultProfile;
+        this.roleToProfileMapping = roleToProfileMapping;
         log.info("Initalized geOrchestra roles to GeoNetwork Profile mappings. Default: " + defaultProfile
                 + ", mappings: " + logStrMappings());
     }
@@ -94,6 +105,12 @@ public class UserMapperService implements InitializingBean {
         User user = new User();
         updateGeonetworkUser(canonical, user);
         return user;
+    }
+
+    public Group toGeonetorkGroup(Organization canonical) {
+        Group group = new Group();
+        updateGeonetworkGroup(canonical, group);
+        return group;
     }
 
     /**
@@ -109,24 +126,48 @@ public class UserMapperService implements InitializingBean {
         // ? user.setKind("")
 
         Map<String, Pair<?, ?>> changes = new HashMap<>();
-        update(changes, "userName", canonical.getUsername(), user.getUsername(), user::setUsername);
+        update(changes, "username", canonical.getUsername(), user.getUsername(), user::setUsername);
         update(changes, "name", canonical.getFirstName(), user.getName(), user::setName);
-        update(changes, "surName", canonical.getLastName(), user.getSurname(), user::setSurname);
+        update(changes, "surname", canonical.getLastName(), user.getSurname(), user::setSurname);
         update(changes, "emailAddresses", extractEmails(canonical), user.getEmailAddresses(), user::setEmailAddresses);
         String title = canonical.getTitle();
-        if(title != null && title.length() > 16) {
-            //hack: PSQLException: ERROR: value too long for type character varying(16)
+        if (title != null && title.length() > 16) {
+            // hack: PSQLException: ERROR: value too long for type character varying(16)
             title = title.substring(0, 16);
         }
         update(changes, "kind", title, user.getKind(), user::setKind);
 
-        String organisation = canonical.getOrganization().getId();
+        String organisation = canonical.getOrganization().getShortName();
         update(changes, "organisation", organisation, user.getOrganisation(), user::setOrganisation);
 
         Profile profile = resolveUserProfile(canonical.getRoles());
         update(changes, "profile", profile, user.getProfile(), user::setProfile);
-        
+
         return changes;
+    }
+
+    public Map<String, Pair<?, ?>> updateGeonetworkGroup(@NonNull Organization canonical, Group group) {
+        Map<String, Pair<?, ?>> changes = new HashMap<>();
+
+        final boolean nameChanged = !Objects.equals(canonical.getShortName(), group.getName());
+        if (nameChanged) {
+            updateLabelTranslations(canonical, group, changes);
+        }
+
+        update(changes, "name", canonical.getShortName(), group.getName(), group::setName);
+        update(changes, "description", canonical.getDescription(), group.getDescription(), group::setDescription);
+        update(changes, "website", canonical.getLinkage(), group.getWebsite(), group::setWebsite);
+
+        return changes;
+    }
+
+    private void updateLabelTranslations(Organization canonical, Group group, Map<String, Pair<?, ?>> changes) {
+        final String newName = canonical.getShortName();
+
+        Map<String, String> newLangs = langRepository.findAll().stream()
+                .collect(Collectors.toMap(Language::getId, l -> newName));
+        newLangs.forEach(group.getLabelTranslations()::put);
+        changes.put("labelTranslations", org.fao.geonet.domain.Pair.read(group.getName(), canonical.getShortName()));
     }
 
     private <V> void update(Map<String, Pair<?, ?>> changes, String propertyName, V newValue, V oldValue,
@@ -151,9 +192,13 @@ public class UserMapperService implements InitializingBean {
 
     private Profile[] rolesToProfile(@NonNull List<String> roles) {
         return roles.stream()//
-                .map(this.roleToProfileMapping::get)//
+                .map(this::stripRolesPrefix).map(this.roleToProfileMapping::get)//
                 .filter(Objects::nonNull)//
                 .toArray(Profile[]::new);
+    }
+
+    private String stripRolesPrefix(String role) {
+        return (role == null || !role.startsWith("ROLE_")) ? role : role.substring("ROLE_".length());
     }
 
     private Set<String> extractEmails(GeorchestraUser canonical) {

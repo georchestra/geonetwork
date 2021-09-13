@@ -35,8 +35,8 @@ class UserLocks {
 
     private final ConcurrentMap<Integer, Lock> locks = new ConcurrentHashMap<>();
 
-    public Lock getUserLock(@NonNull String userId) {
-        HashCode hashCode = Hashing.goodFastHash(64).hashString(userId, StandardCharsets.UTF_8);
+    public Lock getLock(@NonNull String id) {
+        HashCode hashCode = Hashing.goodFastHash(64).hashString(id, StandardCharsets.UTF_8);
         int bucket = Hashing.consistentHash(hashCode, MAX_LOCKS);
         return locks.computeIfAbsent(bucket, b -> new ReentrantLock());
     }
