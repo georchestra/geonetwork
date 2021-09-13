@@ -16,8 +16,17 @@
  * You should have received a copy of the GNU General Public License along with
  * geOrchestra.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.georchestra.geonetwork.security.integration;
+package org.georchestra.geonetwork.jpa;
 
-public interface RemoteUserService {
+import org.fao.geonet.domain.Group;
+import org.fao.geonet.domain.georchestra.JPAGroupLink;
+import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.stereotype.Repository;
 
+/**
+ * JPA repository to track 1:1 relationships between geOrchestra groups (given
+ * by their id), and GeoNetwork {@link Group groups}.
+ */
+@Repository
+public interface JPAGroupLinkRepository extends PagingAndSortingRepository<JPAGroupLink, String> {
 }
