@@ -612,7 +612,15 @@ public class EsSearchManager implements ISearchManager {
 
             if (name.equals("geom")) {
                 try {
-                    doc.put("geom", mapper.readTree(nodeElements.get(0).getTextNormalize()));
+                    final String contentString = nodeElements.get(0).getTextNormalize();
+
+                    if(contentString !=null && contentString.startsWith("POLYGON")) {
+                        // The Geometry can either be constructed as a WKT STRING:
+                        doc.put("geom",  contentString);
+                    } else {
+                        // or as GeoJSON:
+                        doc.set("geom", mapper.readTree(contentString));
+                    }
                 } catch (IOException e) {
                     LOGGER.error("Parsing invalid geometry for JSON node {}. Error is: {}",
                         new Object[]{nodeElements.get(0).getTextNormalize(), e.getMessage()});
