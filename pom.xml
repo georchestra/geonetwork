@@ -1290,8 +1290,7 @@
     <module>messaging</module>
     <module>estest</module>
     <module>index</module>
-    <module>georchestra-utils</module>
-    <module>georchestra-authnz</module>
+    <module>georchestra-integration</module>
   </modules>
 
   <profiles>
