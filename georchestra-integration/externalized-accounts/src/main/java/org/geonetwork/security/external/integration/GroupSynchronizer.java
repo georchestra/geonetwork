@@ -40,7 +40,7 @@ interface GroupSynchronizer {
     /**
      * Reads the canonical groups from the external source of truth
      */
-    List<CanonicalGroup> findCanonicalGroups();
+    List<CanonicalGroup> fetchCanonicalGroups();
 
     List<GroupLink> getSynchronizedGroups();
 

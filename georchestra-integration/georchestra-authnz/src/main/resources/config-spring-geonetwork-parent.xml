@@ -18,8 +18,8 @@
     order="1" />
   
 
-   <bean id="georchestraCanonicalAccountsModelMapper" class="org.georchestra.geonetwork.integration.CanonicalModelMapper"/>
-   <bean id="georchestraGeorchestraAccountsRepository" class="org.georchestra.geonetwork.integration.GeorchestraAccountsRepository"/>
+   <bean id="georchestraCanonicalAccountsModelMapper" class="org.georchestra.geonetwork.security.integration.CanonicalModelMapper"/>
+   <bean id="georchestraGeorchestraAccountsRepository" class="org.georchestra.geonetwork.security.integration.GeorchestraAccountsRepository"/>
 
   <!-- 
    console app client, implements OrgsApi, UsersApi, RolesApi, with which 

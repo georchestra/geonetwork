@@ -26,6 +26,7 @@ import org.geonetwork.security.external.configuration.ExternalizedSecurityProper
 import org.geonetwork.security.external.configuration.ScheduledSynchronizationProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -34,7 +35,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * internal GeoNetwork authorization domain model objects based on the
  * {@link ScheduledSynchronizationProperties}.
  */
-public class ScheduledAccountsSynchronizationService implements InitializingBean {
+public class ScheduledAccountsSynchronizationService implements InitializingBean, DisposableBean {
 
     static final Logger log = LoggerFactory
             .getLogger(ScheduledAccountsSynchronizationService.class.getPackage().getName());
@@ -46,6 +47,24 @@ public class ScheduledAccountsSynchronizationService implements InitializingBean
 
     private ScheduledSynchronizationProperties getConfig() {
         return config.getScheduled();
+    }
+
+    public enum Status {
+        DISABLED, SCHEDULED, RUNNING;
+    }
+
+    private Status status = Status.DISABLED;
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public boolean isScheduled() {
+        return status == Status.SCHEDULED;
+    }
+
+    public boolean isRunning() {
+        return status == Status.RUNNING;
     }
 
     @Override
@@ -65,16 +84,26 @@ public class ScheduledAccountsSynchronizationService implements InitializingBean
         }
     }
 
+    @Override
+    public void destroy() throws Exception {
+        if (scheduledExecutor != null) {
+            scheduledExecutor.shutdownNow();
+        }
+    }
+
     private void scheduleNextSync(long delay, TimeUnit unit) {
         this.scheduledExecutor.schedule(this::synchronize, delay, unit);
+        this.status = Status.SCHEDULED;
     }
 
     public void synchronize() {
         ScheduledSynchronizationProperties config = getConfig();
         if (!config.isEnabled()) {
+            this.status = Status.DISABLED;
             log.debug("Scheduled synchronization disabled, task won't be executed.");
             return;
         }
+        this.status = Status.RUNNING;
         log.debug("Synchronizing users and groups...");
         try {
             this.reconcilingService.synchronize();
@@ -92,4 +121,5 @@ public class ScheduledAccountsSynchronizationService implements InitializingBean
             }
         }
     }
+
 }

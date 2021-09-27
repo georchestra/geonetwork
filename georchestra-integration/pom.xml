@@ -19,6 +19,21 @@
     <module>externalized-accounts</module>
     <module>georchestra-authnz</module>
   </modules>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.georchestra</groupId>
+        <artifactId>security-proxy-spring-integration</artifactId>
+        <version>${georchestra.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.georchestra</groupId>
+        <artifactId>georchestra-testcontainers</artifactId>
+        <version>${georchestra.version}</version>
+        <scope>test</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <build>
     <plugins>
       <plugin>

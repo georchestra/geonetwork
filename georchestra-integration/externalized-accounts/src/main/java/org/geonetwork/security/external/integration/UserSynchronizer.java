@@ -68,7 +68,7 @@ class UserSynchronizer {
 
     protected @Autowired UserGroupRepository internalUserToGroupLinks;
 
-    private @Autowired GroupSynchronizer userProvilegesResolver;
+    private @Autowired GroupSynchronizer userPrivilegesResolver;
 
     public UserSynchronizer(CanonicalAccountsRepository canonicalAccounts) {
         Objects.requireNonNull(canonicalAccounts);
@@ -131,7 +131,7 @@ class UserSynchronizer {
 
         UserLink link = resolveLink(canonical);
         if (!link.isUpToDateWith(canonical)) {
-            Privileges privileges = userProvilegesResolver.resolvePrivilegesFor(canonical);
+            Privileges privileges = userPrivilegesResolver.resolvePrivilegesFor(canonical);
             setGeonetworkUserProperties(canonical, link.getInternalUser(), privileges.getUserProfile());
             link.setLastUpdated(canonical.getLastUpdated());
             link = externalUserLinks.save(link);

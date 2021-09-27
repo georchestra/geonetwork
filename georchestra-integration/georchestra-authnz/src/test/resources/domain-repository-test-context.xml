@@ -9,23 +9,23 @@
   http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd
   http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-  <!-- <context:property-placeholder location="file:${georchestra.datadir}/geonetwork/geonetwork.properties" file-encoding="UTF-8" 
-    ignore-unresolvable="true" order="0"/> -->
+  <context:property-placeholder location="file:${georchestra.datadir}/geonetwork/geonetwork.properties" file-encoding="UTF-8" 
+    ignore-unresolvable="true" order="0"/>
 
   <!-- Default JDBC datasource -->
   <bean id="jdbcDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-    <property name="driverClassName" value="${jdbc.driver:org.postgresql.Driver}" />
+    <property name="driverClassName" value="org.postgresql.Driver" />
     <property name="Url" value="${jdbc.url:jdbc:postgresql://${jdbc.host}:${jdbc.port}/${jdbc.database}}" />
     <property name="username" value="${jdbc.username}" />
     <property name="password" value="${jdbc.password}" />
     <property name="removeAbandoned" value="true" />
     <property name="removeAbandonedTimeout" value="300" />
     <property name="logAbandoned" value="true" />
-    <property name="maxActive" value="${jdbc.basic.maxActive}" />
-    <property name="minIdle" value="${jdbc.basic.minIdle}" />
-    <property name="maxIdle" value="${jdbc.basic.maxIdle}" />
-    <property name="maxWait" value="${jdbc.basic.maxWait}" />
-    <property name="testOnBorrow" value="${jdbc.basic.testOnBorrow}" />
+    <property name="maxActive" value="50" />
+    <property name="minIdle" value="1" />
+    <property name="maxIdle" value="10" />
+    <property name="maxWait" value="200" />
+    <property name="testOnBorrow" value="true" />
     <property name="timeBetweenEvictionRunsMillis" value="1000" />
     <property name="minEvictableIdleTimeMillis" value="1800000" />
     <property name="testWhileIdle" value="true" />

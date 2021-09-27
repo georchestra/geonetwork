@@ -29,8 +29,11 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import javax.transaction.Transactional;
 
+import org.fao.geonet.domain.Group;
 import org.fao.geonet.domain.User;
+import org.geonetwork.security.external.model.CanonicalGroup;
 import org.geonetwork.security.external.model.CanonicalUser;
+import org.geonetwork.security.external.model.GroupLink;
 import org.geonetwork.security.external.model.UserLink;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,6 +61,14 @@ public class AccountsReconcilingService {
                 .findUserLink(canonical.getId())//
                 .filter(l -> l.isUpToDateWith(canonical))//
                 .map(UserLink::getInternalUser);
+    }
+
+    public Optional<Group> findUpToDateGroup(@NonNull CanonicalGroup canonical) {
+        requireNonNull(canonical);
+        return this.groupSynchronizer//
+                .findGroupLink(canonical.getId())//
+                .filter(l -> l.isUpToDateWith(canonical))//
+                .map(GroupLink::getGeonetworkGroup);
     }
 
     /**
