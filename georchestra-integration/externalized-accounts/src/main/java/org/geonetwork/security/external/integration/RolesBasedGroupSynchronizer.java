@@ -54,7 +54,7 @@ public class RolesBasedGroupSynchronizer extends AbstractGroupSynchronizer {
         return GroupSyncMode.roles;
     }
 
-    public @Override List<CanonicalGroup> findCanonicalGroups() {
+    public @Override List<CanonicalGroup> fetchCanonicalGroups() {
         List<CanonicalGroup> roles = canonicalAccounts.findAllRoles();
         return roles.stream().filter(this::matchesRoleNameFilter).collect(Collectors.toList());
     }

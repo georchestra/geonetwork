@@ -20,6 +20,7 @@ package org.georchestra.geonetwork.security.integration;
 
 import org.geonetwork.security.external.model.CanonicalGroup;
 import org.geonetwork.security.external.model.CanonicalUser;
+import org.geonetwork.security.external.model.GroupSyncMode;
 import org.georchestra.security.model.GeorchestraUser;
 import org.georchestra.security.model.Organization;
 import org.georchestra.security.model.Role;
@@ -39,7 +40,7 @@ public class CanonicalModelMapper {
                 .withLastName(user.getLastName())//
                 .withOrganization(user.getOrganization())//
                 .withRoles(user.getRoles())//
-                .withLastName(user.getLastUpdated())//
+                .withLastUpdated(user.getLastUpdated())//
                 .withEmail(user.getEmail())//
                 .withTitle(user.getTitle())//
                 .build();
@@ -52,6 +53,7 @@ public class CanonicalModelMapper {
                 .withDescription(org.getDescription())//
                 .withLastUpdated(org.getLastUpdated())//
                 .withLinkage(org.getLinkage())//
+                .withOrigin(GroupSyncMode.orgs)//
                 .build();
     }
 
@@ -61,6 +63,7 @@ public class CanonicalModelMapper {
                 .withName(role.getName())//
                 .withDescription(role.getDescription())//
                 .withLastUpdated(role.getLastUpdated())//
+                .withOrigin(GroupSyncMode.roles)//
                 .build();
     }
 

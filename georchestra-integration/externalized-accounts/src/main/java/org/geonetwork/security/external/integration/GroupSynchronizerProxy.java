@@ -52,8 +52,8 @@ class GroupSynchronizerProxy implements GroupSynchronizer {
         }
     }
 
-    public @Override List<CanonicalGroup> findCanonicalGroups() {
-        return resolve().findCanonicalGroups();
+    public @Override List<CanonicalGroup> fetchCanonicalGroups() {
+        return resolve().fetchCanonicalGroups();
     }
 
     public @Override List<GroupLink> getSynchronizedGroups() {

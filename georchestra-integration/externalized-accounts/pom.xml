@@ -75,15 +75,8 @@
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>testcontainers</artifactId>
-      <version>1.16.0</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>postgresql</artifactId>
-      <version>1.16.0</version>
+      <groupId>org.georchestra</groupId>
+      <artifactId>georchestra-testcontainers</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>

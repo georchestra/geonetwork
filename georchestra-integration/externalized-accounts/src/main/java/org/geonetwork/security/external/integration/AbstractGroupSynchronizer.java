@@ -89,7 +89,7 @@ abstract class AbstractGroupSynchronizer implements GroupSynchronizer {
     @Transactional
     public void synchronizeAll() {
         ApplicationContextHolder.set(appContext);
-        List<CanonicalGroup> canonicalGroups = findCanonicalGroups();
+        List<CanonicalGroup> canonicalGroups = fetchCanonicalGroups();
         synchronizeAll(canonicalGroups);
     }
 
