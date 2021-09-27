@@ -36,6 +36,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 
+import com.google.common.annotations.VisibleForTesting;
+
 /**
  * Pre-auth filter that gets the credentials as a {@link GeorchestraUser} from a
  * {@link GeorchestraSecurityProxyAuthenticationFilter} using composition, and
@@ -61,7 +63,7 @@ public class GeorchestraPreAuthenticationFilter extends AbstractPreAuthenticated
     private @Autowired CanonicalModelMapper modelMapper;
 
     @Override
-    protected User getPreAuthenticatedPrincipal(HttpServletRequest request) {
+    public @VisibleForTesting User getPreAuthenticatedPrincipal(HttpServletRequest request) {
         final GeorchestraUserDetails auth = delegate.getPreAuthenticatedPrincipal(request);
         User user = null;
         if (auth == null) {

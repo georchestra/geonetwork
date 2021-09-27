@@ -42,7 +42,7 @@ class OrgsBasedGroupSynchronizer extends AbstractGroupSynchronizer {
         return GroupSyncMode.orgs;
     }
 
-    public @Override List<CanonicalGroup> findCanonicalGroups() {
+    public @Override List<CanonicalGroup> fetchCanonicalGroups() {
         return canonicalAccounts.findAllGroups();
     }
 

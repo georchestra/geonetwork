@@ -19,7 +19,6 @@
     <dependency>
       <groupId>org.georchestra</groupId>
       <artifactId>security-proxy-spring-integration</artifactId>
-      <version>${georchestra.version}</version>
     </dependency>
     <dependency>
       <groupId>org.geonetwork-opensource</groupId>
@@ -82,15 +81,13 @@
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>testcontainers</artifactId>
-      <version>1.16.0</version>
+      <groupId>org.georchestra</groupId>
+      <artifactId>georchestra-testcontainers</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.testcontainers</groupId>
+      <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
-      <version>1.16.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
