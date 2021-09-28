@@ -26,13 +26,44 @@ import org.geonetwork.security.external.model.CanonicalUser;
 
 public interface CanonicalAccountsRepository {
 
+    /**
+     * Return all external authority users in their canonical form
+     */
     List<CanonicalUser> findAllUsers();
 
-    List<CanonicalGroup> findAllGroups();
+    /**
+     * Return all external authority groups that represent an Organization
+     */
+    List<CanonicalGroup> findAllOrganizations();
 
+    /**
+     * Return all external authority groups that represent an authorization ROLE
+     */
     List<CanonicalGroup> findAllRoles();
 
-    Optional<CanonicalGroup> findGroupByName(String name);
+    /**
+     * Find a canonical user representing an externally defined "user" or "account"
+     * by login name.
+     * <p>
+     * Note whereas an user's login name may change over time, it's required to be
+     * unique.
+     */
+    Optional<CanonicalUser> findUserByUsername(String username);
 
+    /**
+     * Find a canonical group representing an externally defined "organization" by
+     * name.
+     * <p>
+     * Note whereas an Organization name may change over time, it's required to be
+     * unique.
+     */
+    Optional<CanonicalGroup> findOrganizationByName(String name);
+
+    /**
+     * Find a canonical group representing an externally defined "user role" by
+     * name.
+     * <p>
+     * Note whereas an Role name may change over time, it's required to be unique.
+     */
     Optional<CanonicalGroup> findRoleByName(String name);
 }

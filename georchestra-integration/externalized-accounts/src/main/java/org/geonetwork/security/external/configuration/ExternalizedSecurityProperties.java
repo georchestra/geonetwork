@@ -22,7 +22,6 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-import org.geonetwork.security.external.integration.RolesBasedGroupSynchronizer;
 import org.geonetwork.security.external.model.GroupSyncMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

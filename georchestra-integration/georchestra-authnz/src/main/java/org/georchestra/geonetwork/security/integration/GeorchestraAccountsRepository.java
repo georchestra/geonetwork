@@ -54,11 +54,15 @@ public class GeorchestraAccountsRepository implements CanonicalAccountsRepositor
         return georchestraUsers.findAll().stream().map(mapper::toCanonical).collect(Collectors.toList());
     }
 
-    public @Override Optional<CanonicalGroup> findGroupByName(String name) {
+    public @Override Optional<CanonicalUser> findUserByUsername(String username) {
+        return georchestraUsers.findByUsername(username).map(mapper::toCanonical);
+    }
+
+    public @Override Optional<CanonicalGroup> findOrganizationByName(String name) {
         return georchestraOrgs.findByShortName(name).map(mapper::toCanonical);
     }
 
-    public @Override List<CanonicalGroup> findAllGroups() {
+    public @Override List<CanonicalGroup> findAllOrganizations() {
         return georchestraOrgs.findAll().stream().map(mapper::toCanonical).collect(Collectors.toList());
     }
 
@@ -69,4 +73,5 @@ public class GeorchestraAccountsRepository implements CanonicalAccountsRepositor
     public @Override List<CanonicalGroup> findAllRoles() {
         return georchestraRoles.findAll().stream().map(mapper::toCanonical).collect(Collectors.toList());
     }
+
 }
