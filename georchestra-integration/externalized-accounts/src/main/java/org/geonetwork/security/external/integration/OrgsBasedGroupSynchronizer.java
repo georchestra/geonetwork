@@ -43,7 +43,7 @@ class OrgsBasedGroupSynchronizer extends AbstractGroupSynchronizer {
     }
 
     public @Override List<CanonicalGroup> fetchCanonicalGroups() {
-        return canonicalAccounts.findAllGroups();
+        return canonicalAccounts.findAllOrganizations();
     }
 
     protected @Override List<CanonicalGroup> resolveGroupsOf(CanonicalUser user) {
@@ -52,7 +52,7 @@ class OrgsBasedGroupSynchronizer extends AbstractGroupSynchronizer {
                 .map(GroupLink::getCanonical)//
                 // not found in db, defer to canonical source
                 .orElseGet(() -> //
-                canonicalAccounts.findGroupByName(orgName)//
+                canonicalAccounts.findOrganizationByName(orgName)//
                         .orElseThrow(notFound(orgName)));
 
         return Collections.singletonList(canonicalOrganization);

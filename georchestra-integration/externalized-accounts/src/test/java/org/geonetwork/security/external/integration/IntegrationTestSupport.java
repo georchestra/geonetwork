@@ -102,7 +102,7 @@ public class IntegrationTestSupport extends ExternalResource {
     }
 
     public List<CanonicalGroup> loadCanonicalGroups() {
-        return canonicalAccounts.findAllGroups();
+        return canonicalAccounts.findAllOrganizations();
     }
 
     public void setUpDefaultUsersAndGroups() {

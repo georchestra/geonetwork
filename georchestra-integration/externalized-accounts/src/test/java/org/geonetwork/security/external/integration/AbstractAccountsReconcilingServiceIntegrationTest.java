@@ -54,7 +54,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 @RunWith(SpringRunner.class)
 //@TestPropertySource(locations = "classpath:geonetwork-test.properties")
 @ContextConfiguration(locations = { //
-        "classpath:config-spring-geonetwork-parent.xml", //
+        "classpath:config-spring-geonetwork.xml", //
         "classpath:domain-repository-test-context.xml" })
 @DirtiesContext // reset the app context for each test
 public abstract class AbstractAccountsReconcilingServiceIntegrationTest {
@@ -116,7 +116,7 @@ public abstract class AbstractAccountsReconcilingServiceIntegrationTest {
         defaultGroups = createDefaultOrgs();
         defaultRoles = createDefaultRoles();
         when(canonicalAccountsRepositoryMock.findAllUsers()).thenReturn(defaultUsers);
-        when(canonicalAccountsRepositoryMock.findAllGroups()).thenReturn(defaultGroups);
+        when(canonicalAccountsRepositoryMock.findAllOrganizations()).thenReturn(defaultGroups);
         when(canonicalAccountsRepositoryMock.findAllRoles()).thenReturn(defaultRoles);
 
         mockRoleLookups(defaultRoles);
@@ -125,7 +125,7 @@ public abstract class AbstractAccountsReconcilingServiceIntegrationTest {
 
     private void mockOrgLookups(List<CanonicalGroup> orgs) {
         for (CanonicalGroup groupFromOrg : orgs) {
-            when(canonicalAccountsRepositoryMock.findGroupByName(groupFromOrg.getName()))
+            when(canonicalAccountsRepositoryMock.findOrganizationByName(groupFromOrg.getName()))
                     .thenReturn(Optional.of(groupFromOrg));
         }
     }

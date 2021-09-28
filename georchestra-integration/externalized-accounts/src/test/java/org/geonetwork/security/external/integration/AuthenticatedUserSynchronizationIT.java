@@ -112,7 +112,7 @@ public class AuthenticatedUserSynchronizationIT extends AbstractAccountsReconcil
         assertFalse(service.findUpToDateUser(existingUserWithChangedOrg).isPresent());
 
         // make the synchronizer find the new org that was not yet synchronized
-        when(canonicalAccountsRepositoryMock.findGroupByName(newOrg.getName())).thenReturn(Optional.of(newOrg));
+        when(canonicalAccountsRepositoryMock.findOrganizationByName(newOrg.getName())).thenReturn(Optional.of(newOrg));
 
         User user = service.forceMatchingGeonetworkUser(existingUserWithChangedOrg);
         support.assertUser(existingUserWithChangedOrg, user);
@@ -160,8 +160,8 @@ public class AuthenticatedUserSynchronizationIT extends AbstractAccountsReconcil
         assertFalse(service.findUpToDateUser(existingUserWithRenamedOrg).isPresent());
 
         // make the synchronizer find the new org that was not yet synchronized
-        when(canonicalAccountsRepositoryMock.findGroupByName(oldOrgName)).thenReturn(Optional.empty());
-        when(canonicalAccountsRepositoryMock.findGroupByName(orgRenamed.getName())).thenReturn(Optional.of(orgRenamed));
+        when(canonicalAccountsRepositoryMock.findOrganizationByName(oldOrgName)).thenReturn(Optional.empty());
+        when(canonicalAccountsRepositoryMock.findOrganizationByName(orgRenamed.getName())).thenReturn(Optional.of(orgRenamed));
 
         User user = service.forceMatchingGeonetworkUser(existingUserWithRenamedOrg);
         support.assertUser(existingUserWithRenamedOrg, user);
@@ -207,7 +207,7 @@ public class AuthenticatedUserSynchronizationIT extends AbstractAccountsReconcil
         assertFalse(service.findUpToDateUser(newUser).isPresent());
 
         // make the synchronizer find the new org that was not yet synchronized
-        when(canonicalAccountsRepositoryMock.findGroupByName(newOrg.getName())).thenReturn(Optional.of(newOrg));
+        when(canonicalAccountsRepositoryMock.findOrganizationByName(newOrg.getName())).thenReturn(Optional.of(newOrg));
 
         User user = service.forceMatchingGeonetworkUser(newUser);
         support.assertUser(newUser, user);

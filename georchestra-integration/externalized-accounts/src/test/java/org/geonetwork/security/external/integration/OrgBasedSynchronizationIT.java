@@ -159,7 +159,7 @@ public class OrgBasedSynchronizationIT extends AbstractAccountsReconcilingServic
             UserLink link = support.assertUserLink(expected);
             User actual = link.getInternalUser();
             String orgName = expected.getOrganization();
-            CanonicalGroup expectedOrg = canonicalAccountsRepositoryMock.findGroupByName(orgName).get();
+            CanonicalGroup expectedOrg = canonicalAccountsRepositoryMock.findOrganizationByName(orgName).get();
             support.assertGroup(actual, expectedOrg);
         }
     }
@@ -191,8 +191,8 @@ public class OrgBasedSynchronizationIT extends AbstractAccountsReconcilingServic
         CanonicalGroup changedOrg = super.withName(changedOrgOrig, changedOrgOrig.getName() + "Modified");
         groups.remove(changedOrgOrig);
         groups.add(changedOrg);
-        when(canonicalAccountsRepositoryMock.findGroupByName(changedOrgOrig.getName())).thenReturn(Optional.empty());
-        when(canonicalAccountsRepositoryMock.findGroupByName(changedOrg.getName())).thenReturn(Optional.of(changedOrg));
+        when(canonicalAccountsRepositoryMock.findOrganizationByName(changedOrgOrig.getName())).thenReturn(Optional.empty());
+        when(canonicalAccountsRepositoryMock.findOrganizationByName(changedOrg.getName())).thenReturn(Optional.of(changedOrg));
 
         List<CanonicalUser> users = new ArrayList<>(super.defaultUsers);
         CanonicalUser newuser1 = super.createUser("newuser1", changedOrg, roleOrgAdmin);
@@ -210,7 +210,7 @@ public class OrgBasedSynchronizationIT extends AbstractAccountsReconcilingServic
         users.forEach(u -> assertNotEquals(u.toString(), removedOrg.getName(), u.getOrganization()));
         users.forEach(u -> assertNotEquals(u.toString(), changedOrgOrig.getName(), u.getOrganization()));
 
-        when(canonicalAccountsRepositoryMock.findAllGroups()).thenReturn(groups);
+        when(canonicalAccountsRepositoryMock.findAllOrganizations()).thenReturn(groups);
         when(canonicalAccountsRepositoryMock.findAllUsers()).thenReturn(users);
 
         service.synchronize();
@@ -220,7 +220,7 @@ public class OrgBasedSynchronizationIT extends AbstractAccountsReconcilingServic
     /**
      * When using {@code groups} {@link ExternalizedSecurityProperties#getSyncMode()
      * syncMode}, a GeoNetwork {@link Group} exists for each external system
-     * {@link CanonicalAccountsRepository#findAllGroups() group}, and a single
+     * {@link CanonicalAccountsRepository#findAllOrganizations() group}, and a single
      * {@link UserGroup} exists for each user/group, with its
      * {@link UserGroup#getProfile() profile} set to the highest one matching the
      * user roles.
