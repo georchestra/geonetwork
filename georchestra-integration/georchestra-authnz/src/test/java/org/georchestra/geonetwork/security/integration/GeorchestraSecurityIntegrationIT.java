@@ -78,10 +78,10 @@ import org.testcontainers.Testcontainers;
 import org.testcontainers.shaded.org.awaitility.Awaitility;
 
 @RunWith(SpringRunner.class)
-@TestPropertySource(properties = "georchestra.datadir=src/test/resources/data_directory")
+@TestPropertySource(properties = "georchestra.datadir=${user.dir}/src/test/resources/data_directory")
 @ContextConfiguration(locations = { //
-        "classpath*:config-spring-geonetwork-parent.xml", //
-        "classpath:config-security-georchestra-authzn.xml", //
+        "classpath:config-spring-geonetwork.xml", //
+        "classpath:config-security-georchestra.xml", //
         "classpath:domain-repository-test-context.xml" })
 @DirtiesContext // reset the app context for each test
 public class GeorchestraSecurityIntegrationIT {
@@ -142,7 +142,7 @@ public class GeorchestraSecurityIntegrationIT {
         ApplicationContextHolder.clear();
         configProps.getScheduled().setEnabled(false);
         when(consoleAccountsRepository.findAllUsers()).thenCallRealMethod();
-        when(consoleAccountsRepository.findAllGroups()).thenCallRealMethod();
+        when(consoleAccountsRepository.findAllOrganizations()).thenCallRealMethod();
         when(consoleAccountsRepository.findAllRoles()).thenCallRealMethod();
     }
 
@@ -162,12 +162,12 @@ public class GeorchestraSecurityIntegrationIT {
     public @Test void testConsoleAccountsRepository_Groups() {
         Map<String, Organization> expected = toIdMap(support.loadExpectedGeorchestraOrgs(), Organization::getShortName);
 
-        Map<String, CanonicalGroup> bridged = toIdMap(consoleAccountsRepository.findAllGroups(),
+        Map<String, CanonicalGroup> bridged = toIdMap(consoleAccountsRepository.findAllOrganizations(),
                 CanonicalGroup::getName);
         assertEquals(expected.keySet(), bridged.keySet());
         expected.values().forEach(org -> {
             support.assertGroup(org, bridged.get(org.getShortName()));
-            Optional<CanonicalGroup> byName = consoleAccountsRepository.findGroupByName(org.getShortName());
+            Optional<CanonicalGroup> byName = consoleAccountsRepository.findOrganizationByName(org.getShortName());
             assertTrue(byName.isPresent());
             support.assertGroup(org, byName.get());
         });

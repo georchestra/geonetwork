@@ -62,6 +62,10 @@ public class GeorchestraPreAuthenticationFilter extends AbstractPreAuthenticated
 
     private @Autowired CanonicalModelMapper modelMapper;
 
+    public GeorchestraPreAuthenticationFilter() {
+        log.info("Using {}", GeorchestraPreAuthenticationFilter.class.getSimpleName());
+    }
+    
     @Override
     public @VisibleForTesting User getPreAuthenticatedPrincipal(HttpServletRequest request) {
         final GeorchestraUserDetails auth = delegate.getPreAuthenticatedPrincipal(request);
