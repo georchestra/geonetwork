@@ -145,7 +145,7 @@ public class RoleBasedSynchronizationIT extends AbstractAccountsReconcilingServi
     }
 
     public @Test void Synchronize_updates_group_members_when_role_members_changed() {
-        support.setUpDefaultUsersAndGroups();
+        support.synchronizeDefaultUsersAndGroups();
 
         List<CanonicalUser> origUsers = super.defaultUsers;
 
@@ -170,7 +170,7 @@ public class RoleBasedSynchronizationIT extends AbstractAccountsReconcilingServi
     }
 
     public @Test void Synchronize_creates_updates_and_deletes_users_and_groups_based_on_roles() {
-        support.setUpDefaultUsersAndGroups();
+        support.synchronizeDefaultUsersAndGroups();
 
         List<CanonicalGroup> roles = new ArrayList<>(super.defaultRoles);
         CanonicalGroup newrole1;
@@ -189,8 +189,8 @@ public class RoleBasedSynchronizationIT extends AbstractAccountsReconcilingServi
                 .thenReturn(Optional.of(changedRole));
 
         List<CanonicalUser> users = new ArrayList<>(super.defaultUsers);
-        users.add(super.createUser("newuser1", changedRole, roleAdministrator));
-        users.add(super.createUser("newuser2", newrole1, roleUser));
+        users.add(super.setUpNewUser("newuser1", changedRole, roleAdministrator));
+        users.add(super.setUpNewUser("newuser2", newrole1, roleUser));
 
         users.remove(super.testeditor);
 
@@ -216,7 +216,7 @@ public class RoleBasedSynchronizationIT extends AbstractAccountsReconcilingServi
      * <p>
      */
     public @Test void Role_based_synchronization_respects_regex_filter_from_config() {
-        support.setUpDefaultUsersAndGroups();
+        support.synchronizeDefaultUsersAndGroups();
         ExternalizedSecurityProperties config = support.getConfig();
         config.setSyncRolesFilter(Pattern.compile("GN_.*"));
 

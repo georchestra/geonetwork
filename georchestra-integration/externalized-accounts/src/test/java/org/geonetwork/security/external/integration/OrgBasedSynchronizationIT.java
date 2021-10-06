@@ -145,7 +145,7 @@ public class OrgBasedSynchronizationIT extends AbstractAccountsReconcilingServic
     }
 
     public @Test void Synchronize_updates_group_members_when_organization_members_changed() {
-        support.setUpDefaultUsersAndGroups();
+        support.synchronizeDefaultUsersAndGroups();
 
         List<CanonicalUser> origUsers = super.defaultUsers;
         List<CanonicalUser> usersRelocatedToOtherOrgs = origUsers.stream().map(this::swapOrg)
@@ -175,7 +175,7 @@ public class OrgBasedSynchronizationIT extends AbstractAccountsReconcilingServic
     }
 
     public @Test void Synchronize_creates_updates_and_deletes_users_and_groups() {
-        support.setUpDefaultUsersAndGroups();
+        support.synchronizeDefaultUsersAndGroups();
 
         List<CanonicalGroup> groups = new ArrayList<>(super.defaultGroups);
 
@@ -195,8 +195,8 @@ public class OrgBasedSynchronizationIT extends AbstractAccountsReconcilingServic
         when(canonicalAccountsRepositoryMock.findOrganizationByName(changedOrg.getName())).thenReturn(Optional.of(changedOrg));
 
         List<CanonicalUser> users = new ArrayList<>(super.defaultUsers);
-        CanonicalUser newuser1 = super.createUser("newuser1", changedOrg, roleOrgAdmin);
-        CanonicalUser newuser2 = super.createUser("newuser2", neworg1, roleUser);
+        CanonicalUser newuser1 = super.setUpNewUser("newuser1", changedOrg, roleOrgAdmin);
+        CanonicalUser newuser2 = super.setUpNewUser("newuser2", neworg1, roleUser);
         users.add(newuser1);
         users.add(newuser2);
 
@@ -226,7 +226,7 @@ public class OrgBasedSynchronizationIT extends AbstractAccountsReconcilingServic
      * user roles.
      */
     public @Test void Synchronized_users_are_bound_to_highest_profile_mapped_from_its_roles() {
-        support.setUpDefaultUsersAndGroups();
+        support.synchronizeDefaultUsersAndGroups();
         for (CanonicalUser user : super.defaultUsers) {
             List<String> roles = user.getRoles();
             Profile expected = support.getProfileMappings().resolveHighestProfileFromRoleNames(roles);

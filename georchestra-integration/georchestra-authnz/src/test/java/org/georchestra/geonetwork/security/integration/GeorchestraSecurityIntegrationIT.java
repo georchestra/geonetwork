@@ -20,26 +20,18 @@
 package org.georchestra.geonetwork.security.integration;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.when;
 
-import java.io.File;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.domain.Group;
 import org.fao.geonet.domain.Profile;
 import org.fao.geonet.domain.User;
-import org.fao.geonet.kernel.datamanager.base.BaseMetadataUtils;
 import org.geonetwork.security.external.configuration.ExternalizedSecurityProperties;
 import org.geonetwork.security.external.configuration.ProfileMappingProperties;
 import org.geonetwork.security.external.integration.AccountsReconcilingService;
@@ -48,103 +40,19 @@ import org.geonetwork.security.external.model.CanonicalGroup;
 import org.geonetwork.security.external.model.CanonicalUser;
 import org.geonetwork.security.external.model.GroupSyncMode;
 import org.geonetwork.security.external.repository.CanonicalAccountsRepository;
-import org.geonetwork.testcontainers.postgres.GeorchestraDatabaseContainer;
-import org.georchestra.geonetwork.security.authentication.GeorchestraPreAuthenticationFilter;
-import org.georchestra.security.api.UsersApi;
+import org.georchestra.geonetwork.security.AbstractGeorchestraIntegrationTest;
 import org.georchestra.security.model.GeorchestraUser;
 import org.georchestra.security.model.Organization;
 import org.georchestra.security.model.Role;
-import org.georchestra.testcontainers.console.GeorchestraConsoleContainer;
-import org.georchestra.testcontainers.ldap.GeorchestraLdapContainer;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.SpyBean;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.testcontainers.Testcontainers;
 import org.testcontainers.shaded.org.awaitility.Awaitility;
 
-@RunWith(SpringRunner.class)
-@TestPropertySource(properties = "georchestra.datadir=${user.dir}/src/test/resources/data_directory")
-@ContextConfiguration(locations = { //
-        "classpath:config-spring-geonetwork.xml", //
-        "classpath:config-security-georchestra.xml", //
-        "classpath:domain-repository-test-context.xml" })
-@DirtiesContext // reset the app context for each test
-public class GeorchestraSecurityIntegrationIT {
-
-    static final Logger log = LoggerFactory.getLogger(GeorchestraSecurityIntegrationIT.class.getPackage().getName());
-
-    public static @ClassRule GeorchestraLdapContainer ldap = new GeorchestraLdapContainer();
-    public static @ClassRule GeorchestraDatabaseContainer db = new GeorchestraDatabaseContainer();
-    public static GeorchestraConsoleContainer console;
-
-    public @MockBean BaseMetadataUtils baseMetadataUtils;
-
-    // it'll be too much of a pita to actually do CRUD operations on the console
-    // app, so spy the repo to tweak its responses when needed
-    private @SpyBean CanonicalAccountsRepository consoleAccountsRepository;
-
-    private @Autowired UsersApi consoleUsersApiClient;
+public class GeorchestraSecurityIntegrationIT extends AbstractGeorchestraIntegrationTest {
 
     private @Autowired ExternalizedSecurityProperties configProps;
     private @Autowired AccountsReconcilingService synchronizationService;
     private @Autowired ScheduledAccountsSynchronizationService scheduledSynchronizationService;
-    private @Autowired CanonicalModelMapper mapper;
-
-    private @Autowired GeorchestraPreAuthenticationFilter authFilter;
-    private @MockBean(name = "authenticationManager") AuthenticationManager authenticationManager;
-
-    public @Rule IntegrationTestSupport support = new IntegrationTestSupport();
-
-    @SuppressWarnings("resource")
-    public static @BeforeClass void startUpConsoleContainer() {
-
-        Testcontainers.exposeHostPorts(ldap.getMappedLdapPort(), db.getMappedDatabasePort());
-
-        console = new GeorchestraConsoleContainer()//
-                .withFileSystemBind(resolveHostDataDirectory(), "/etc/georchestra")//
-                .withEnv("pgsqlHost", "host.testcontainers.internal")//
-                .withEnv("pgsqlPort", String.valueOf(db.getMappedDatabasePort()))//
-                .withEnv("ldapHost", "host.testcontainers.internal")//
-                .withEnv("ldapPort", String.valueOf(ldap.getMappedLdapPort()))//
-                .withLogToStdOut();
-
-        console.start();
-        System.setProperty("georchestra.console.url",
-                String.format("http://localhost:%d", console.getMappedConsolePort()));
-    }
-
-    private static String resolveHostDataDirectory() {
-        File dataDir = new File("src/test/resources/data_directory").getAbsoluteFile();
-        assertTrue(dataDir.isDirectory());
-        return dataDir.getAbsolutePath();
-    }
-
-    public static @AfterClass void shutDownConsoleContainer() {
-        console.stop();
-    }
-
-    public @Before void before() {
-        ApplicationContextHolder.clear();
-        configProps.getScheduled().setEnabled(false);
-        when(consoleAccountsRepository.findAllUsers()).thenCallRealMethod();
-        when(consoleAccountsRepository.findAllOrganizations()).thenCallRealMethod();
-        when(consoleAccountsRepository.findAllRoles()).thenCallRealMethod();
-    }
 
     public @Test void testConsoleAccountsRepository_Users() {
         Map<String, GeorchestraUser> expected = toIdMap(support.loadExpectedGeorchestraUsers(),
@@ -153,9 +61,12 @@ public class GeorchestraSecurityIntegrationIT {
         CanonicalAccountsRepository repo = this.consoleAccountsRepository;
         Map<String, CanonicalUser> bridged = toIdMap(repo.findAllUsers(), CanonicalUser::getUsername);
         assertEquals(expected.keySet(), bridged.keySet());
-        expected.values().forEach(u -> {
-            String username = u.getUsername();
-            support.assertUser(u, bridged.get(username));
+        expected.values().forEach(georchestraUser -> {
+            String username = georchestraUser.getUsername();
+            support.assertUser(georchestraUser, bridged.get(username));
+            Optional<CanonicalUser> byName = consoleAccountsRepository.findUserByUsername(username);
+            assertTrue(byName.isPresent());
+            support.assertUser(georchestraUser, byName.get());
         });
     }
 
@@ -184,33 +95,6 @@ public class GeorchestraSecurityIntegrationIT {
             assertTrue(byName.isPresent());
             support.assertRole(role, byName.get());
         });
-    }
-
-    public @Test void testGeorchestraPreAuthenticationFilter_synchronizes_user_before_proceeding() {
-        MockHttpServletRequest request = new MockHttpServletRequest();
-        GeorchestraUser preAuthUser = consoleUsersApiClient.findByUsername("testadmin")
-                .orElseThrow(NoSuchElementException::new);
-        //make it a non default user to avoid race conditions due to test execution order
-        preAuthUser.setUsername("testadmin2");
-        preAuthUser.setId(UUID.randomUUID().toString());
-        preAuthUser.setLastUpdated(UUID.randomUUID().toString());
-        
-        String preAuthPayload = support.jsonEncode(preAuthUser);
-
-        request.addHeader("sec-proxy", "true");
-        request.addHeader("sec-user", preAuthPayload);
-
-        CanonicalUser canonical = mapper.toCanonical(preAuthUser);
-        assertFalse(synchronizationService.findUpToDateUser(canonical).isPresent());
-
-        User createdUponAuthentication = authFilter.getPreAuthenticatedPrincipal(request);
-        assertNotNull(createdUponAuthentication);
-        assertEquals(canonical.getUsername(), createdUponAuthentication.getUsername());
-
-        User found = synchronizationService.findUpToDateUser(canonical)
-                .orElseThrow(() -> new IllegalStateException("user should have been synchronized"));
-
-        assertEquals(canonical.getUsername(), found.getUsername());
     }
 
     /**
@@ -259,8 +143,8 @@ public class GeorchestraSecurityIntegrationIT {
         // enable synchronization, was disabled at @Before
         configProps.getScheduled().setTimeUnit(TimeUnit.SECONDS);
         configProps.getScheduled().setInitialDelay(1);
-
         configProps.getScheduled().setEnabled(true);
+
         // make it think the app context just started up
         scheduledSynchronizationService.afterPropertiesSet();
         Awaitility.await().atMost(5, TimeUnit.SECONDS).until(this.scheduledSynchronizationService::isScheduled);

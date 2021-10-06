@@ -25,6 +25,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
+import org.fao.geonet.domain.Profile;
+import org.fao.geonet.domain.User;
+import org.geonetwork.security.external.configuration.ExternalizedSecurityProperties;
+import org.geonetwork.security.external.configuration.ProfileMappingProperties;
 import org.geonetwork.security.external.model.CanonicalGroup;
 import org.geonetwork.security.external.model.CanonicalUser;
 import org.geonetwork.security.external.model.GroupSyncMode;
@@ -32,7 +36,6 @@ import org.georchestra.commons.security.SecurityHeaders;
 import org.georchestra.security.model.GeorchestraUser;
 import org.georchestra.security.model.Organization;
 import org.georchestra.security.model.Role;
-import org.junit.rules.ExternalResource;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -40,7 +43,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
-public class IntegrationTestSupport extends ExternalResource {
+public class IntegrationTestSupport {
+
+    private ExternalizedSecurityProperties configProps;
+
+    public IntegrationTestSupport(ExternalizedSecurityProperties configProps) {
+        this.configProps = configProps;
+    }
 
     public List<GeorchestraUser> loadExpectedGeorchestraUsers() {
         return loadJson("defaultUsers.json", GeorchestraUser.class);
@@ -80,6 +89,24 @@ public class IntegrationTestSupport extends ExternalResource {
         assertEquals(real.getRoles(), mapped.getRoles());
         assertEquals(real.getEmail(), mapped.getEmail());
         assertEquals(real.getTitle(), mapped.getTitle());
+    }
+
+    public void assertUser(CanonicalUser expected, User user) {
+        assertNotNull(user);
+        assertEquals(expected.getUsername(), user.getUsername());
+        assertEquals(expected.getOrganization(), user.getOrganisation());
+        assertEquals(expected.getFirstName(), user.getName());
+        assertEquals(expected.getLastName(), user.getSurname());
+        assertEquals(expected.getEmail(), user.getEmail());
+        String expectedTitle = expected.getTitle();
+        if (null != expectedTitle && expectedTitle.length() > 16) {
+            expectedTitle = expectedTitle.substring(0, 16);
+        }
+        assertEquals(expectedTitle, user.getKind());
+
+        ProfileMappingProperties profileMappings = configProps.getProfiles();
+        Profile expectedProfile = profileMappings.resolveHighestProfileFromRoleNames(expected.getRoles());
+        assertEquals(expectedProfile, user.getProfile());
     }
 
     public void assertGroup(Organization real, CanonicalGroup mapped) {

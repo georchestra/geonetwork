@@ -105,17 +105,17 @@ public class IntegrationTestSupport extends ExternalResource {
         return canonicalAccounts.findAllOrganizations();
     }
 
-    public void setUpDefaultUsersAndGroups() {
-        setUpDefaultGroups();
-        setUpDefaultUsers();
+    public void synchronizeDefaultUsersAndGroups() {
+        synchronizeGroups();
+        synchronizeUsers();
     }
 
-    public List<UserLink> setUpDefaultUsers() {
+    public List<UserLink> synchronizeUsers() {
         this.userSynchronizer.synchronizeAll();
         return this.userSynchronizer.getSynchronizedUsers();
     }
 
-    public List<GroupLink> setUpDefaultGroups() {
+    public List<GroupLink> synchronizeGroups() {
         this.groupSynchronizer.synchronizeAll();
         return this.groupSynchronizer.getSynchronizedGroups();
     }
@@ -127,7 +127,11 @@ public class IntegrationTestSupport extends ExternalResource {
         assertEquals(expected.getFirstName(), user.getName());
         assertEquals(expected.getLastName(), user.getSurname());
         assertEquals(expected.getEmail(), user.getEmail());
-        assertEquals(expected.getTitle(), user.getKind());
+        String expectedTitle = expected.getTitle();
+        if (null != expectedTitle && expectedTitle.length() > 16) {
+            expectedTitle = expectedTitle.substring(0, 16);
+        }
+        assertEquals(expectedTitle, user.getKind());
 
         ProfileMappingProperties profileMappings = configProps.getProfiles();
         Profile expectedProfile = profileMappings.resolveHighestProfileFromRoleNames(expected.getRoles());
