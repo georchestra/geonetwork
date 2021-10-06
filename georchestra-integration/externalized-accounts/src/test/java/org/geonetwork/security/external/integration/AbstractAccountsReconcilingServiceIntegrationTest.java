@@ -51,6 +51,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.containers.PostgreSQLContainer;
 
+import com.google.common.collect.Lists;
+
 @RunWith(SpringRunner.class)
 //@TestPropertySource(locations = "classpath:geonetwork-test.properties")
 @ContextConfiguration(locations = { //
@@ -119,8 +121,15 @@ public abstract class AbstractAccountsReconcilingServiceIntegrationTest {
         when(canonicalAccountsRepositoryMock.findAllOrganizations()).thenReturn(defaultGroups);
         when(canonicalAccountsRepositoryMock.findAllRoles()).thenReturn(defaultRoles);
 
+        mockUserLookups(defaultUsers);
         mockRoleLookups(defaultRoles);
         mockOrgLookups(defaultGroups);
+    }
+
+    private void mockUserLookups(List<CanonicalUser> users) {
+        for (CanonicalUser user : users) {
+            when(canonicalAccountsRepositoryMock.findUserByUsername(user.getUsername())).thenReturn(Optional.of(user));
+        }
     }
 
     private void mockOrgLookups(List<CanonicalGroup> orgs) {
@@ -150,7 +159,7 @@ public abstract class AbstractAccountsReconcilingServiceIntegrationTest {
     }
 
     private List<CanonicalGroup> createDefaultRoles() {
-        return Arrays.asList(//
+        return Lists.newArrayList(//
                 roleOrgAdmin = createRole("ORGADMIN"), //
                 roleSuperUser = createRole("SUPERUSER"), //
                 roleAdministrator = createRole("ADMINISTRATOR"), //
@@ -162,13 +171,13 @@ public abstract class AbstractAccountsReconcilingServiceIntegrationTest {
     }
 
     private List<CanonicalGroup> createDefaultOrgs() {
-        return Arrays.asList(//
+        return Lists.newArrayList(//
                 orgPsc = createOrg("PSC"), //
                 orgC2c = createOrg("C2C"));
     }
 
     private List<CanonicalUser> createDefaultUsers() {
-        return Arrays.asList(//
+        return Lists.newArrayList(//
                 testuser = createUser("testuser", "PSC", "USER"), //
                 testeditor = createUser("testeditor", "C2C", "GN_EDITOR", "USER"), //
                 testadmin = createUser("testadmin", "PSC", //
@@ -177,6 +186,13 @@ public abstract class AbstractAccountsReconcilingServiceIntegrationTest {
                         "GN_ADMIN", //
                         "USER")//
         );
+    }
+
+    protected CanonicalUser setUpNewUser(String username, CanonicalGroup organization, CanonicalGroup... roles) {
+        CanonicalUser user = createUser(username, organization, roles);
+        when(canonicalAccountsRepositoryMock.findUserByUsername(username)).thenReturn(Optional.of(user));
+        this.defaultUsers.add(user);
+        return user;
     }
 
     protected CanonicalUser createUser(String username, CanonicalGroup organization, CanonicalGroup... roles) {

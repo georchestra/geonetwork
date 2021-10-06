@@ -65,23 +65,36 @@ public class GeorchestraPreAuthenticationFilter extends AbstractPreAuthenticated
     public GeorchestraPreAuthenticationFilter() {
         log.info("Using {}", GeorchestraPreAuthenticationFilter.class.getSimpleName());
     }
-    
+
     @Override
     public @VisibleForTesting User getPreAuthenticatedPrincipal(HttpServletRequest request) {
         final GeorchestraUserDetails auth = delegate.getPreAuthenticatedPrincipal(request);
-        User user = null;
         if (auth == null) {
             log.debug("geOrchestrea pre-auth not provided. URI: %s", request.getRequestURI());
-        } else if (auth.isAnonymous()) {
+            return null;
+        }
+        if (auth.isAnonymous()) {
             log.debug("geOrchestrea pre-auth is anonymous. URI: %s", request.getRequestURI());
-        } else {
-            final GeorchestraUser authenticatedUser = checkMandatoryProperties(auth.getUser());
-            final CanonicalUser canonicalizedUser = modelMapper.toCanonical(authenticatedUser);
+            return null;
+        }
 
+        final GeorchestraUser authenticatedUser = auth.getUser();
+        final boolean isFullyAuthorized = null != authenticatedUser.getLastUpdated();
+        User user;
+
+        if (isFullyAuthorized) {// sec-user provided full user representation as JSON payload
+            checkMandatoryProperties(auth.getUser());
+            final CanonicalUser canonicalizedUser = modelMapper.toCanonical(authenticatedUser);
             user = userLinkService//
                     .findUpToDateUser(canonicalizedUser)//
                     .orElseGet(() -> userLinkService.forceMatchingGeonetworkUser(canonicalizedUser));
+        } else {// legacy authentication mode, find by username
+            final String userName = authenticatedUser.getUsername();
+            user = userLinkService//
+                    .findUpToDateUserByUsername(userName)//
+                    .orElseGet(() -> userLinkService.forceMatchingGeonetworkUser(userName));
         }
+
         return user;
     }
 

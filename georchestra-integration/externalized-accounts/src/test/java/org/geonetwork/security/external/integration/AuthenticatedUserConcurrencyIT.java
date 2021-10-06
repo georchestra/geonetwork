@@ -41,9 +41,9 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 
 /**
  * Concurrency related test cases that can't run on
- * {@link AuthenticatedUserSynchronizationIT} because it sets
+ * {@link AuthenticatedFullUserSynchronizationIT} because it sets
  * {@code @Transactional} at class level and makes concurrent calls to
- * transcational methods hang.
+ * transactional methods hang.
  */
 public class AuthenticatedUserConcurrencyIT extends AbstractAccountsReconcilingServiceIntegrationTest {
 
@@ -60,8 +60,8 @@ public class AuthenticatedUserConcurrencyIT extends AbstractAccountsReconcilingS
         executor.shutdownNow();
     }
 
-    public @Test void concurrent_requests_for_non_existing_geonetwork_user_create_it_ony_once() throws Exception {
-        final CanonicalUser newUser = createUser("newUser", orgC2c, roleUser, roleOrgAdmin);
+    public @Test void concurrent_requests_for_non_existing_geonetwork_user_create_it_ony_once_with_full_pre_auth() throws Exception {
+        final CanonicalUser newUser = setUpNewUser("User_Full", orgC2c, roleUser, roleOrgAdmin);
 
         final Callable<User> task = () -> service.forceMatchingGeonetworkUser(newUser);
 
@@ -73,8 +73,23 @@ public class AuthenticatedUserConcurrencyIT extends AbstractAccountsReconcilingS
         results.forEach(returned -> support.assertUser(newUser, returned));
     }
 
-    public @Test void concurrent_requests_for_outdated_geonetwork_user_update_it_ony_once() throws Exception {
-        support.setUpDefaultUsersAndGroups();
+    public @Test void concurrent_requests_for_non_existing_geonetwork_user_create_it_ony_once_with_username_only_pre_auth() throws Exception {
+        final CanonicalUser newUser = setUpNewUser("User_Legacy", orgC2c, roleUser, roleOrgAdmin);
+
+        final String username = newUser.getUsername();
+        
+        final Callable<User> task = () -> service.forceMatchingGeonetworkUser(username);
+
+        final int nTasks = 4 * nThreads;
+        List<User> results = invokeAllAndGet(task, nTasks);
+
+        verify(userSynchronizer, times(1)).synchronize(eq(newUser));
+        results.forEach(user -> assertEquals(results.get(0).getId(), user.getId()));
+        results.forEach(returned -> support.assertUser(newUser, returned));
+    }
+
+    public @Test void concurrent_requests_for_outdated_geonetwork_user_update_it_ony_once_with_full_pre_auth() throws Exception {
+        support.synchronizeDefaultUsersAndGroups();
 
         final CanonicalUser currentUser = super.testuser;
         final CanonicalUser updated = super.withOrganization(currentUser, orgC2c.getName());

@@ -26,7 +26,6 @@ import static org.mockito.Mockito.when;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.UUID;
 
 import javax.transaction.Transactional;
 
@@ -35,14 +34,21 @@ import org.geonetwork.security.external.model.CanonicalGroup;
 import org.geonetwork.security.external.model.CanonicalUser;
 import org.geonetwork.security.external.repository.CanonicalAccountsRepository;
 import org.junit.Test;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.annotation.DirtiesContext;
 
 /**
- * {@link AccountsReconcilingService} integration tests suite for
- * pre-authentication usage scenarios, where a {@link CanonicalUser} is received
- * as a pre-authenticated payload, and
+ * {@link AccountsReconcilingService} integration tests suite for <b>legacy</b>
+ * pre-authentication usage scenarios, where only <b>{@code sec-proxy=true}</b>
+ * and <b>{@code sec-username=<loginname>}</b> request headers are provided.
+ * <p>
+ * In such scenario, where, for example, another application provides only the
+ * username, the full {@link CanonicalUser} shall be retrieved (albeit probably
+ * cached for a while) from {@link CanonicalAccountsRepository}, to ensure the
+ * currentness of the internal {@link User}.
+ * <p>
  * {@link AccountsReconcilingService#findUpToDateUserLink findUpToDateUserLink}
- * and {@link AccountsReconcilingService#forceMatchingGeonetworkUser
+ * and {@link AccountsReconcilingService#forceMatchingGeonetworkUser(String)
  * forceMatchingGeonetworkUser} are used to ensure the GeoNetwork account is up
  * to date with the provided canonical representation before proceeding to serve
  * the request.
@@ -55,89 +61,85 @@ import org.springframework.test.annotation.DirtiesContext;
  */
 @Transactional // run each test on a TestTransaction so no manual db cleanup is needed
 @DirtiesContext // reset the app context for each test
-public class AuthenticatedUserSynchronizationIT extends AbstractAccountsReconcilingServiceIntegrationTest {
+public class AuthenticatedUsernameUserSynchronizationIT extends AbstractAccountsReconcilingServiceIntegrationTest {
 
-    public @Test void up_to_date_user_info_returned_from_link() {
-        CanonicalUser existingUser = super.testadmin;
-        assertFalse(service.findUpToDateUser(existingUser).isPresent());
+    @Test(expected = UsernameNotFoundException.class)
+    public void non_existing_auth_username_throws_UsernameNotFoundException() {
+        final String username = "authname1";
+        assertFalse(service.findUpToDateUserByUsername(username).isPresent());
 
-        support.setUpDefaultUsersAndGroups();
-
-        Optional<User> user = service.findUpToDateUser(existingUser);
-        assertTrue(user.isPresent());
-        support.assertUser(existingUser, user.get());
+        service.forceMatchingGeonetworkUser(username);
     }
 
-    /**
-     * If any canonical user property changed, it's the
-     * {@link CanonicalAccountsRepository provider}'s responsibility to set a
-     * different {@link CanonicalUser#getLastUpdated() lastUpdated} value.
-     */
-    public @Test void up_to_date_user_not_found_if_existing_user_lastupdated_property_changed() {
-        support.setUpDefaultUsersAndGroups();
+    public @Test void geonetwork_user_is_looked_up_and_created_from_the_authenticated_username() {
+        CanonicalUser expected = super.testadmin;
+        final String username = expected.getUsername();
 
-        CanonicalUser existingUserUnchanged = super.testadmin;
-        assertTrue(service.findUpToDateUser(existingUserUnchanged).isPresent());
+        assertFalse(service.findUpToDateUserByUsername(username).isPresent());
 
-        CanonicalUser existingUserChanged = CanonicalUser.builder()//
-                .init(existingUserUnchanged)//
-                .withLastUpdated(UUID.randomUUID().toString()).build();
+        User user = service.forceMatchingGeonetworkUser(username);
+        support.assertUser(expected, user);
 
-        assertFalse(service.findUpToDateUser(existingUserChanged).isPresent());
+        assertEquals(user, service.findUpToDateUserByUsername(username).orElseThrow(NoSuchElementException::new));
     }
 
-    public @Test void Geonetwork_user_is_created_from_the_authenticated_user() {
-        support.setUpDefaultUsersAndGroups();
+    public @Test void new_geonetwork_user_is_created_from_the_authenticated_username() {
+        support.synchronizeDefaultUsersAndGroups();
 
-        CanonicalUser stillNotSyncedUser = super.createUser("newuser", orgC2c, roleGnEditor);
+        CanonicalUser newUser = super.setUpNewUser("newuser2", orgC2c, roleGnEditor);
+        final String username = newUser.getUsername();
 
-        assertFalse(service.findUpToDateUser(stillNotSyncedUser).isPresent());
+        assertFalse(service.findUpToDateUserByUsername(username).isPresent());
 
-        User user = service.forceMatchingGeonetworkUser(stillNotSyncedUser);
-        support.assertUser(stillNotSyncedUser, user);
+        User user = service.forceMatchingGeonetworkUser(username);
+        support.assertUser(newUser, user);
 
-        assertEquals(user, service.findUpToDateUser(stillNotSyncedUser).orElseThrow(NoSuchElementException::new));
+        assertEquals(user, service.findUpToDateUserByUsername(username).orElseThrow(NoSuchElementException::new));
     }
 
-    public @Test void Geonetwork_group_is_created_from_auth_user_org_if_it_doesnt_exist_and_org_syncmode_is_set() {
+    public @Test void Geonetwork_group_is_created_from_username_based_auth_if_it_doesnt_exist_and_org_syncmode_is_set() {
         support.setOrgsSyncMode();
-        support.setUpDefaultUsersAndGroups();
-
-        CanonicalUser existingUserUnchanged = super.testadmin;
+        support.synchronizeDefaultUsersAndGroups();
 
         CanonicalGroup newOrg = super.createOrg("neworg");
-        CanonicalUser existingUserWithChangedOrg = withOrganization(existingUserUnchanged, newOrg.getName());
+        CanonicalUser existingUserWithChangedOrg = withOrganization(super.testadmin, newOrg.getName());
+        final String username = existingUserWithChangedOrg.getUsername();
 
-        assertTrue(service.findUpToDateUser(existingUserUnchanged).isPresent());
-        assertFalse(service.findUpToDateUser(existingUserWithChangedOrg).isPresent());
-
+        when(canonicalAccountsRepositoryMock.findUserByUsername(username))
+                .thenReturn(Optional.of(existingUserWithChangedOrg));
         // make the synchronizer find the new org that was not yet synchronized
         when(canonicalAccountsRepositoryMock.findOrganizationByName(newOrg.getName())).thenReturn(Optional.of(newOrg));
 
-        User user = service.forceMatchingGeonetworkUser(existingUserWithChangedOrg);
+        assertFalse(service.findUpToDateUserByUsername(username).isPresent());
+
+        User user = service.forceMatchingGeonetworkUser(username);
+
         support.assertUser(existingUserWithChangedOrg, user);
         support.assertGroup(user, newOrg);
     }
 
-    public @Test void Geonetwork_groups_are_created_from_auth_user_roles_dont_exist_and_role_syncmode_is_set() {
+    public @Test void Geonetwork_groups_are_created_from_user_roles_with_username_based_auth_when_role_syncmode_is_set() {
         support.setRolesSyncMode();
-        support.setUpDefaultUsersAndGroups();
+        support.synchronizeDefaultUsersAndGroups();
 
         final CanonicalUser existingUserUnchanged = super.testuser;
         final CanonicalGroup newRole1 = super.createRole("NEW_ROLE_1");
         final CanonicalGroup newRole2 = super.createRole("NEW_ROLE_2");
 
         CanonicalUser existingUserWithUnsyncRoles = withRoles(existingUserUnchanged, newRole1, newRole2);
+        final String username = existingUserWithUnsyncRoles.getUsername();
 
-        assertTrue(service.findUpToDateUser(existingUserUnchanged).isPresent());
-        assertFalse(service.findUpToDateUser(existingUserWithUnsyncRoles).isPresent());
+        when(canonicalAccountsRepositoryMock.findUserByUsername(username))
+                .thenReturn(Optional.of(existingUserWithUnsyncRoles));
+
+        assertFalse(service.findUpToDateUserByUsername(username).isPresent());
 
         // make the synchronizer find the new roles that were not yet synchronized at
         // the time the authenticated user hit the app
         when(canonicalAccountsRepositoryMock.findRoleByName(newRole1.getName())).thenReturn(Optional.of(newRole1));
         when(canonicalAccountsRepositoryMock.findRoleByName(newRole2.getName())).thenReturn(Optional.of(newRole2));
 
-        User user = service.forceMatchingGeonetworkUser(existingUserWithUnsyncRoles);
+        User user = service.forceMatchingGeonetworkUser(username);
         support.assertUser(existingUserWithUnsyncRoles, user);
         support.assertGroup(user, newRole1);
         support.assertGroup(user, newRole2);
@@ -145,7 +147,7 @@ public class AuthenticatedUserSynchronizationIT extends AbstractAccountsReconcil
 
     public @Test void an_organization_name_may_have_changed_but_it_must_refer_to_the_same_group() {
         support.setOrgsSyncMode();
-        support.setUpDefaultUsersAndGroups();
+        support.synchronizeDefaultUsersAndGroups();
 
         CanonicalUser existingUserUnchanged = super.testadmin;
         final String oldOrgName = existingUserUnchanged.getOrganization();
@@ -156,21 +158,26 @@ public class AuthenticatedUserSynchronizationIT extends AbstractAccountsReconcil
         final CanonicalGroup orgRenamed = withName(orgWithOldName, newOrgName);
         final CanonicalUser existingUserWithRenamedOrg = withOrganization(existingUserUnchanged, newOrgName);
 
-        assertTrue(service.findUpToDateUser(existingUserUnchanged).isPresent());
-        assertFalse(service.findUpToDateUser(existingUserWithRenamedOrg).isPresent());
+        final String username = existingUserWithRenamedOrg.getUsername();
+        when(canonicalAccountsRepositoryMock.findUserByUsername(username))
+                .thenReturn(Optional.of(existingUserWithRenamedOrg));
+
+        service.setUsernameCacheTTL(0);// disable cache
+        assertFalse(service.findUpToDateUserByUsername(username).isPresent());
 
         // make the synchronizer find the new org that was not yet synchronized
         when(canonicalAccountsRepositoryMock.findOrganizationByName(oldOrgName)).thenReturn(Optional.empty());
-        when(canonicalAccountsRepositoryMock.findOrganizationByName(orgRenamed.getName())).thenReturn(Optional.of(orgRenamed));
+        when(canonicalAccountsRepositoryMock.findOrganizationByName(orgRenamed.getName()))
+                .thenReturn(Optional.of(orgRenamed));
 
-        User user = service.forceMatchingGeonetworkUser(existingUserWithRenamedOrg);
+        User user = service.forceMatchingGeonetworkUser(username);
         support.assertUser(existingUserWithRenamedOrg, user);
         support.assertGroup(user, orgRenamed);
     }
 
     public @Test void role_names_may_have_changed_but_them_must_refer_to_the_same_groups() {
         support.setRolesSyncMode();
-        support.setUpDefaultUsersAndGroups();
+        support.synchronizeDefaultUsersAndGroups();
 
         final CanonicalUser userUnchanged = super.testadmin;
         final CanonicalGroup[] renamedRoles = userUnchanged.getRoles().stream()
@@ -179,9 +186,13 @@ public class AuthenticatedUserSynchronizationIT extends AbstractAccountsReconcil
         assertTrue(renamedRoles.length > 0);
 
         CanonicalUser userWithRenamedRoles = withRoles(userUnchanged, renamedRoles);
+        final String username = userWithRenamedRoles.getUsername();
 
-        assertTrue(service.findUpToDateUser(userUnchanged).isPresent());
-        assertFalse(service.findUpToDateUser(userWithRenamedRoles).isPresent());
+        service.setUsernameCacheTTL(0);// disable cache
+        when(canonicalAccountsRepositoryMock.findUserByUsername(username))
+                .thenReturn(Optional.of(userWithRenamedRoles));
+
+        assertFalse(service.findUpToDateUserByUsername(username).isPresent());
 
         // make the synchronizer find the new roles that were not yet synchronized at
         // the time the authenticated user hit the app
@@ -190,7 +201,7 @@ public class AuthenticatedUserSynchronizationIT extends AbstractAccountsReconcil
                     .thenReturn(Optional.of(renamedRole));
         }
 
-        User user = service.forceMatchingGeonetworkUser(userWithRenamedRoles);
+        User user = service.forceMatchingGeonetworkUser(username);
         support.assertUser(userWithRenamedRoles, user);
         for (CanonicalGroup renamedRole : renamedRoles) {
             support.assertGroup(user, renamedRole);
@@ -199,17 +210,19 @@ public class AuthenticatedUserSynchronizationIT extends AbstractAccountsReconcil
 
     public @Test void Both_user_and_group_are_created_when_using_group_based_synchronization() {
         support.setOrgsSyncMode();
-        support.setUpDefaultUsersAndGroups();
+        support.synchronizeDefaultUsersAndGroups();
 
         CanonicalGroup newOrg = super.createOrg("neworg");
-        CanonicalUser newUser = super.createUser("newuser", newOrg, super.roleUser);
+        CanonicalUser newUser = super.setUpNewUser("newuser", newOrg, super.roleUser);
 
-        assertFalse(service.findUpToDateUser(newUser).isPresent());
+        final String username = newUser.getUsername();
+
+        assertFalse(service.findUpToDateUserByUsername(username).isPresent());
 
         // make the synchronizer find the new org that was not yet synchronized
         when(canonicalAccountsRepositoryMock.findOrganizationByName(newOrg.getName())).thenReturn(Optional.of(newOrg));
 
-        User user = service.forceMatchingGeonetworkUser(newUser);
+        User user = service.forceMatchingGeonetworkUser(username);
         support.assertUser(newUser, user);
         support.assertGroup(user, newOrg);
     }
@@ -217,19 +230,21 @@ public class AuthenticatedUserSynchronizationIT extends AbstractAccountsReconcil
     public @Test void Both_user_and_groups_are_created_when_using_role_based_synchronization() {
         support.setRolesSyncMode();
 
-        support.setUpDefaultUsersAndGroups();
+        support.synchronizeDefaultUsersAndGroups();
 
         CanonicalGroup newRole1 = super.createRole("newrole1");
         CanonicalGroup newRole2 = super.createRole("newrole2");
-        CanonicalUser newUser = super.createUser("newuser", super.orgC2c, newRole1, newRole2, super.roleGnReviewer);
+        CanonicalUser newUser = super.setUpNewUser("newuser", super.orgC2c, newRole1, newRole2, super.roleGnReviewer);
 
-        assertFalse(service.findUpToDateUser(newUser).isPresent());
+        final String username = newUser.getUsername();
+        service.setUsernameCacheTTL(0);
+        assertFalse(service.findUpToDateUserByUsername(username).isPresent());
 
         // make the synchronizer find the new roles that were not yet synchronized
         when(canonicalAccountsRepositoryMock.findRoleByName(newRole1.getName())).thenReturn(Optional.of(newRole1));
         when(canonicalAccountsRepositoryMock.findRoleByName(newRole2.getName())).thenReturn(Optional.of(newRole2));
 
-        User user = service.forceMatchingGeonetworkUser(newUser);
+        User user = service.forceMatchingGeonetworkUser(username);
         support.assertUser(newUser, user);
         support.assertGroup(user, newRole1);
         support.assertGroup(user, newRole2);
