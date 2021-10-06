@@ -80,6 +80,11 @@ class UserSynchronizer {
         return canonicalAccounts.findAllUsers();
     }
 
+    public Optional<CanonicalUser> findCanonicalUserByUsername(String username) {
+        Objects.requireNonNull(username);
+        return this.canonicalAccounts.findUserByUsername(username);
+    }
+
     public List<UserLink> getSynchronizedUsers() {
         ApplicationContextHolder.set(appContext);
         return externalUserLinks.findAll();
@@ -292,5 +297,4 @@ class UserSynchronizer {
     private <K, T> Map<K, T> toIdMap(List<T> list, Function<T, K> idExtractor) {
         return list.stream().collect(Collectors.toMap(idExtractor, Function.identity()));
     }
-
 }

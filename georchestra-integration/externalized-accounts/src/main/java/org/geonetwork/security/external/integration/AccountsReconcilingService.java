@@ -24,6 +24,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -35,25 +36,79 @@ import org.geonetwork.security.external.model.CanonicalGroup;
 import org.geonetwork.security.external.model.CanonicalUser;
 import org.geonetwork.security.external.model.GroupLink;
 import org.geonetwork.security.external.model.UserLink;
+import org.geonetwork.security.external.repository.CanonicalAccountsRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import com.google.common.hash.HashCode;
 import com.google.common.hash.Hashing;
 
 /**
- * Service that
+ * Pre-authentication integration facade between a
+ * {@link CanonicalAccountsRepository} and GeoNetwork's internal users and
+ * groups.
  */
 public class AccountsReconcilingService {
 
     static final Logger log = LoggerFactory.getLogger(AccountsReconcilingService.class.getPackage().getName());
 
+    private static final int DEFAULT_USERNAME_CACHE_TTL_MS = 1_000;
+
     private @Autowired GroupSynchronizer groupSynchronizer;
     private @Autowired UserSynchronizer userSynchronizer;
 
+    private Cache<String, CanonicalUser> usernameResolved;
+
     private final UserLocks locks = new UserLocks();
+
+    public AccountsReconcilingService() {
+        this.usernameResolved = buildUsernameCache(DEFAULT_USERNAME_CACHE_TTL_MS);
+    }
+
+    public void setUsernameCacheTTL(int milliseconds) {
+        this.usernameResolved = buildUsernameCache(milliseconds);
+    }
+
+    private Cache<String, CanonicalUser> buildUsernameCache(int milliseconds) {
+        if (milliseconds < 0) {
+            throw new IllegalArgumentException("invalid cache ttl: " + milliseconds);
+        }
+
+        return CacheBuilder.newBuilder()//
+                .expireAfterWrite(milliseconds, TimeUnit.MILLISECONDS)//
+                .build();
+    }
+
+    public Optional<User> findUpToDateUserByUsername(@NonNull String username) {
+        requireNonNull(username);
+        Optional<CanonicalUser> canonical = findCanonicalUserByUsername(username);
+        return canonical.flatMap(this::findUpToDateUser);
+    }
+
+    private Optional<CanonicalUser> findCanonicalUserByUsername(String username) {
+        CanonicalUser canonical = this.usernameResolved.getIfPresent(username);
+        if (canonical == null) {
+            final Lock lock = locks.getLock(username);
+            lock.lock();
+            try {
+                canonical = this.usernameResolved.getIfPresent(username);
+                if (canonical == null) {
+                    canonical = this.userSynchronizer.findCanonicalUserByUsername(username).orElse(null);
+                    if (canonical != null) {
+                        this.usernameResolved.put(username, canonical);
+                    }
+                }
+            } finally {
+                lock.unlock();
+            }
+        }
+        return Optional.ofNullable(canonical);
+    }
 
     public Optional<User> findUpToDateUser(@NonNull CanonicalUser canonical) {
         requireNonNull(canonical);
@@ -98,6 +153,31 @@ public class AccountsReconcilingService {
         } finally {
             lock.unlock();
         }
+    }
+
+    /**
+     * Takes a user login name (for example, as given by georchestra's
+     * {@code sec-username} pre-authentication request header), and returns the
+     * GeoNetwork {@link User user} that's linked to it, possibly reconciling (i.e.
+     * creating or updating) the GeoNetwork user properties.
+     * <p>
+     * If the GN user does not exist, one will be created. If the GN user properties
+     * are outdated with regard to the canonical user (rather, the relevant ones for
+     * the sake of keeping the credentials in synch with the canonical user), the GN
+     * user will be updated to match the canonical information provided by the
+     * external system (or whatever other means the canonical user representation
+     * was obtained from).
+     * <p>
+     * When this method returns, it is assured that the returned GeoNetwork user
+     * matches the credentials of the provided canonical user info.
+     * 
+     * @throws UsernameNotFoundException if the user can't be found on the
+     *                                   {@link CanonicalAccountsRepository}
+     */
+    public @NonNull User forceMatchingGeonetworkUser(@NonNull String username) {
+        return findCanonicalUserByUsername(username)//
+                .map(this::forceMatchingGeonetworkUser)//
+                .orElseThrow(() -> new UsernameNotFoundException("User " + username + " does not exist"));
     }
 
     /**
