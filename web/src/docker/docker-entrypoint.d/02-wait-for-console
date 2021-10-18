@@ -1,0 +1,16 @@
+#!/bin/bash
+set -e
+
+CONSOLE_URL=`grep georchestra.console.url              \
+  /etc/georchestra/geonetwork/geonetwork.properties \
+  | cut -d '=' -f 2                                 \
+  | xargs`
+# typically something like http://console:8080
+
+HOST=`echo $CONSOLE_URL | cut -f 3 -d '/' | cut -f 1 -d ':'`
+PORT=`echo $CONSOLE_URL | cut -f 3 -d ':'`
+PORT="${PORT:-8080}"
+
+echo Waiting for $HOST:$PORT to become available...
+
+/wait-for-it.sh $HOST:$PORT -s -t 0 -- echo "CONSOLE OK"
