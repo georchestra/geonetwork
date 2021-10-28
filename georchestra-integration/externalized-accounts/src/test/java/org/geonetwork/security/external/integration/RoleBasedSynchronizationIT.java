@@ -19,6 +19,10 @@
 
 package org.geonetwork.security.external.integration;
 
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.toSet;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
@@ -33,9 +37,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -121,8 +123,7 @@ public class RoleBasedSynchronizationIT extends AbstractAccountsReconcilingServi
 
     private void createOnlyGeonetworkUsersAndGroupsFromRoles(List<CanonicalUser> users,
             List<CanonicalGroup> roleGroups) {
-        Map<String, CanonicalGroup> groups = roleGroups.stream()
-                .collect(Collectors.toMap(CanonicalGroup::getName, Function.identity()));
+        Map<String, CanonicalGroup> groups = roleGroups.stream().collect(toMap(CanonicalGroup::getName, identity()));
 
         for (CanonicalGroup g : groups.values()) {
             support.addGeonetworkGroup(g);
@@ -151,7 +152,7 @@ public class RoleBasedSynchronizationIT extends AbstractAccountsReconcilingServi
 
         List<CanonicalGroup> newRoles = Arrays.asList(roleUser, roleGnEditor, roleGnReviewer);
         List<CanonicalUser> usersWithChangedRoles = origUsers.stream().map(u -> swapRoles(u, newRoles))
-                .collect(Collectors.toList());
+                .collect(toList());
 
         when(canonicalAccountsRepositoryMock.findAllUsers()).thenReturn(usersWithChangedRoles);
 
@@ -212,23 +213,25 @@ public class RoleBasedSynchronizationIT extends AbstractAccountsReconcilingServi
      * In
      * {@link ExternalizedSecurityProperties#setSyncRolesFilter(java.util.regex.Pattern)},
      * it is possible to set a Java regular expression to filter which role names
-     * are to be mapped to Geonetwork {@link Group groups}
+     * are to be mapped to Geonetwork {@link Group groups}.
      * <p>
+     * Also, if the configured pattern contains groups, the {@link CanonicalGroup}s
+     * used will be renamed to match the groups, usually to filter out prefixes from
+     * the role names, like in {@literal GN_(.*)} will strip off the {@literal GN_}
+     * prefix.
      */
-    public @Test void Role_based_synchronization_respects_regex_filter_from_config() {
-        support.synchronizeDefaultUsersAndGroups();
+    public @Test void Role_based_synchronization_respects_regex_filter_from_config_and_applies_pattern_group_filter() {
         ExternalizedSecurityProperties config = support.getConfig();
-        config.setSyncRolesFilter(Pattern.compile("GN_.*"));
+        config.setSyncRolesFilter(Pattern.compile("GN_(.*)"));
 
         service.synchronize();
 
-        Set<CanonicalGroup> expectedGroups = super.defaultRoles.stream()
-                .filter(r -> config.matchesRoleNameFilter(r.getName())).collect(Collectors.toSet());
-        assertEquals(3, expectedGroups.size());
-        assertEquals(Sets.newLinkedHashSet(roleGnAdmin, roleGnEditor, roleGnReviewer), expectedGroups);
+        Set<CanonicalGroup> origGroups = rolesMatchingPattern(config);
+        Set<CanonicalGroup> syncedGroups = getSavedCanonicalGroups();
+        assertEquals(origGroups.size(), syncedGroups.size());
+        assertNotEquals("group names should differ due to pattern grouping", origGroups, syncedGroups);
 
-        Set<CanonicalGroup> syncedGroups = support.groupLinkRepository.findAll().stream().map(GroupLink::getCanonical)
-                .collect(Collectors.toSet());
+        Set<CanonicalGroup> expectedGroups = stripOffRolePrefixFromGroupNames(origGroups);
         assertEquals(expectedGroups, syncedGroups);
 
         List<CanonicalUser> expectedUsers = super.defaultUsers;
@@ -236,17 +239,40 @@ public class RoleBasedSynchronizationIT extends AbstractAccountsReconcilingServi
         assertEquals(expectedUsers.size(), syncedUsers.size());
 
         Map<String, CanonicalGroup> expectedGroupsByName = expectedGroups.stream()
-                .collect(Collectors.toMap(CanonicalGroup::getName, Function.identity()));
+                .collect(toMap(CanonicalGroup::getName, identity()));
         for (CanonicalUser expectedUser : expectedUsers) {
             UserLink link = support.assertUserLink(expectedUser);
 
             List<String> expectedUserGroupNames = expectedUser.getRoles().stream().filter(config::matchesRoleNameFilter)
-                    .collect(Collectors.toList());
+                    .collect(toList());
             for (String roleGroupName : expectedUserGroupNames) {
+                roleGroupName = roleGroupName.replace("GN_", "");
                 CanonicalGroup canonicalGroup = expectedGroupsByName.get(roleGroupName);
                 support.assertGroup(link.getInternalUser(), canonicalGroup);
             }
         }
+    }
+
+    private Set<CanonicalGroup> getSavedCanonicalGroups() {
+        Set<CanonicalGroup> syncedGroups = support.groupLinkRepository.findAll().stream().map(GroupLink::getCanonical)
+                .collect(toSet());
+        return syncedGroups;
+    }
+
+    private Set<CanonicalGroup> stripOffRolePrefixFromGroupNames(Set<CanonicalGroup> origGroups) {
+        Set<CanonicalGroup> expectedGroups = origGroups.stream()
+                .map(g -> CanonicalGroup.builder().init(g).withName(g.getName().replace("GN_", "")).build())
+                .collect(toSet());
+        return expectedGroups;
+    }
+
+    private Set<CanonicalGroup> rolesMatchingPattern(ExternalizedSecurityProperties config) {
+        Set<CanonicalGroup> origGroups = super.defaultRoles.stream()
+                .filter(r -> config.matchesRoleNameFilter(r.getName())).collect(toSet());
+        assertEquals(3, origGroups.size());
+        assertEquals("preflight check failed", Sets.newLinkedHashSet(roleGnAdmin, roleGnEditor, roleGnReviewer),
+                origGroups);
+        return origGroups;
     }
 
     private void verify(List<CanonicalUser> expectedUsers, List<CanonicalGroup> expectedGroupsFromRoles) {

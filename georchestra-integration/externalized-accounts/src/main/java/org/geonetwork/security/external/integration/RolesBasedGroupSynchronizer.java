@@ -23,7 +23,10 @@ import static java.util.Objects.requireNonNull;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Supplier;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import org.fao.geonet.domain.Group;
@@ -54,9 +57,39 @@ public class RolesBasedGroupSynchronizer extends AbstractGroupSynchronizer {
         return GroupSyncMode.roles;
     }
 
+    /**
+     * Gets all the canonical groups representing Roles from
+     * {@link CanonicalAccountsRepository#findAllRoles()} and filters them out using
+     * the {@link Pattern} provided in the
+     * {@link ExternalizedSecurityProperties#getSyncRolesFilter() configuration}.
+     * <p>
+     * If the pattern contains groups, the returned {@link CanonicalGroup}s are
+     * renamed using the concatenation of groups matching each role name. For
+     * example, for a pattern {@literal EL_(.*)}, and roles
+     * {@literal ADMIN, EL_User, EL_Editor}, the returned {@link CanonicalGroup}s
+     * will be {@literal User} and {@literal Editor}.
+     */
     public @Override List<CanonicalGroup> fetchCanonicalGroups() {
         List<CanonicalGroup> roles = canonicalAccounts.findAllRoles();
-        return roles.stream().filter(this::matchesRoleNameFilter).collect(Collectors.toList());
+        Stream<CanonicalGroup> matches = roles.stream().filter(this::matchesRoleNameFilter);
+        return matches.map(this::renameRoleUsingConfigPattern).collect(Collectors.toList());
+    }
+
+    private CanonicalGroup renameRoleUsingConfigPattern(CanonicalGroup role) {
+        Pattern pattern = config.getSyncRolesFilter();
+        String name = role.getName();
+        Matcher matcher = pattern.matcher(name);
+        if (!matcher.matches()) {
+            throw new IllegalArgumentException("role name filtering shall be performed prior to calling this method");
+        }
+        int groupCount = matcher.groupCount();
+        if (groupCount == 0) {
+            return role;
+        }
+        String group = matcher.group(1);
+        String filteredName = IntStream.rangeClosed(1, groupCount).mapToObj(matcher::group)
+                .collect(Collectors.joining());
+        return CanonicalGroup.builder().init(role).withName(filteredName).build();
     }
 
     protected @Override List<CanonicalGroup> resolveGroupsOf(CanonicalUser user) {
