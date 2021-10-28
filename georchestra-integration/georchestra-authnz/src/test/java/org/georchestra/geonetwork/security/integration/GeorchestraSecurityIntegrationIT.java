@@ -122,7 +122,7 @@ public class GeorchestraSecurityIntegrationIT extends AbstractGeorchestraIntegra
     public @Test void verify_configuration_loaded_from_data_directory_geonetwork_dot_properties() {
         ExternalizedSecurityProperties config = this.configProps;
         assertEquals(GroupSyncMode.orgs, config.getSyncMode());
-        assertEquals("GN_(.*)", config.getSyncRolesFilter().toString());
+        assertEquals("EL_(.*)", config.getSyncRolesFilter().toString());
 
         ProfileMappingProperties profiles = config.getProfiles();
         assertEquals(Profile.RegisteredUser, profiles.getDefault());
