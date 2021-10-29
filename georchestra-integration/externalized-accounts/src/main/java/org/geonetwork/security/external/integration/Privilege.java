@@ -37,4 +37,8 @@ class Privilege {
     public Profile getProfile() {
         return profile;
     }
+
+    public @Override String toString() {
+        return String.format("%s[%s]", group.getName(), profile);
+    }
 }

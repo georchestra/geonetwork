@@ -24,7 +24,10 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.fao.geonet.domain.Group;
 import org.fao.geonet.domain.Profile;
@@ -46,7 +49,6 @@ import org.geonetwork.security.external.repository.GroupLinkRepository;
 import org.geonetwork.security.external.repository.UserLinkRepository;
 import org.junit.rules.ExternalResource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.Specification;
 
 public class IntegrationTestSupport extends ExternalResource {
 
@@ -151,13 +153,19 @@ public class IntegrationTestSupport extends ExternalResource {
 //        }
 //    }
 
-    public void assertGroup(User user, CanonicalGroup belongsTo) {
+    public UserGroup assertGroup(User user, CanonicalGroup belongsTo) {
         GroupLink link = assertGroupLink(belongsTo);
         Group group = link.getGeonetworkGroup();
-        Specification<UserGroup> query = UserGroupSpecs.hasGroupId(group.getId())
-                .and(UserGroupSpecs.hasUserId(user.getId()));
-        Optional<UserGroup> internalUserToGroupLink = gnUserGroupRepository.findOne(query);
-        assertTrue(internalUserToGroupLink.isPresent());
+        Map<Integer, UserGroup> byGroupId = gnUserGroupRepository.findAll(UserGroupSpecs.hasUserId(user.getId()))
+                .stream().collect(Collectors.toMap(ug -> ug.getGroup().getId(), Function.identity()));
+
+        UserGroup userGroup = byGroupId.get(group.getId());
+        String msg = String.format("User '%s': link to group %s not found. Got: %s", user.getUsername(),
+                group.getName(),
+                user.getUsername() + " user's link to group " + group.getName() + " not found: " + byGroupId.values()
+                        .stream().map(UserGroup::getGroup).map(Group::getName).collect(Collectors.joining(",")));
+        assertNotNull(msg, userGroup);
+        return userGroup;
     }
 
     public UserLink assertUserLink(CanonicalUser expected) {

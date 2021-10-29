@@ -86,7 +86,6 @@ public class RolesBasedGroupSynchronizer extends AbstractGroupSynchronizer {
         if (groupCount == 0) {
             return role;
         }
-        String group = matcher.group(1);
         String filteredName = IntStream.rangeClosed(1, groupCount).mapToObj(matcher::group)
                 .collect(Collectors.joining());
         return CanonicalGroup.builder().init(role).withName(filteredName).build();
