@@ -21,6 +21,7 @@ package org.geonetwork.security.external.integration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.fao.geonet.domain.Profile;
 
@@ -40,5 +41,10 @@ class Privileges {
 
     public List<Privilege> getAdditionalProvileges() {
         return additionalProvileges;
+    }
+
+    public @Override String toString() {
+        return String.format("profile: %s, other: %s", userProfile,
+                additionalProvileges.stream().map(Privilege::toString).collect(Collectors.joining(", ")));
     }
 }

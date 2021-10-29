@@ -27,6 +27,7 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -191,8 +192,10 @@ public class OrgBasedSynchronizationIT extends AbstractAccountsReconcilingServic
         CanonicalGroup changedOrg = super.withName(changedOrgOrig, changedOrgOrig.getName() + "Modified");
         groups.remove(changedOrgOrig);
         groups.add(changedOrg);
-        when(canonicalAccountsRepositoryMock.findOrganizationByName(changedOrgOrig.getName())).thenReturn(Optional.empty());
-        when(canonicalAccountsRepositoryMock.findOrganizationByName(changedOrg.getName())).thenReturn(Optional.of(changedOrg));
+        when(canonicalAccountsRepositoryMock.findOrganizationByName(changedOrgOrig.getName()))
+                .thenReturn(Optional.empty());
+        when(canonicalAccountsRepositoryMock.findOrganizationByName(changedOrg.getName()))
+                .thenReturn(Optional.of(changedOrg));
 
         List<CanonicalUser> users = new ArrayList<>(super.defaultUsers);
         CanonicalUser newuser1 = super.setUpNewUser("newuser1", changedOrg, roleOrgAdmin);
@@ -220,8 +223,8 @@ public class OrgBasedSynchronizationIT extends AbstractAccountsReconcilingServic
     /**
      * When using {@code groups} {@link ExternalizedSecurityProperties#getSyncMode()
      * syncMode}, a GeoNetwork {@link Group} exists for each external system
-     * {@link CanonicalAccountsRepository#findAllOrganizations() group}, and a single
-     * {@link UserGroup} exists for each user/group, with its
+     * {@link CanonicalAccountsRepository#findAllOrganizations() group}, and a
+     * single {@link UserGroup} exists for each user/group, with its
      * {@link UserGroup#getProfile() profile} set to the highest one matching the
      * user roles.
      */
@@ -236,6 +239,30 @@ public class OrgBasedSynchronizationIT extends AbstractAccountsReconcilingServic
             User internalUser = link.get().getInternalUser();
             assertEquals(expected, internalUser.getProfile());
         }
+    }
+
+    public @Test void Synchronize_user_changed_roles_are_remapped_to_geonetwork_profiles() {
+        support.synchronizeDefaultUsersAndGroups();
+
+        final CanonicalUser user = super.testuser;
+        assertEquals(Collections.singletonList("USER"), user.getRoles());
+        final CanonicalUser editor = super.withRoles(user, super.roleGnEditor);
+
+        List<CanonicalUser> users = new ArrayList<>(super.defaultUsers);
+        users.remove(user);
+        users.add(editor);
+        when(canonicalAccountsRepositoryMock.findAllUsers()).thenReturn(users);
+
+        service.synchronize();
+
+        final UserLink link = support.userLinkRepository.findById(editor.getId())
+                .orElseThrow(IllegalStateException::new);
+        assertEquals(editor.getLastUpdated(), link.getLastUpdated());
+        User gnUser = link.getInternalUser();
+        assertEquals(Profile.Editor, gnUser.getProfile());
+
+        UserGroup userGroup = support.assertGroup(gnUser, orgPsc);
+        assertEquals(Profile.Editor, userGroup.getProfile());
     }
 
     private void verify(List<CanonicalUser> expectedUsers, List<CanonicalGroup> expectedGroups) {

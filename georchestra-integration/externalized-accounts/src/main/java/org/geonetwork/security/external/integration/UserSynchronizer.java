@@ -20,7 +20,6 @@ package org.geonetwork.security.external.integration;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -33,7 +32,6 @@ import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 
 import org.fao.geonet.ApplicationContextHolder;
-import org.fao.geonet.domain.Group;
 import org.fao.geonet.domain.Profile;
 import org.fao.geonet.domain.User;
 import org.fao.geonet.domain.UserGroup;
@@ -146,51 +144,16 @@ class UserSynchronizer {
     }
 
     private void synchronizeUserGroups(User user, List<Privilege> privileges) {
-        Map<Integer, UserGroup> current = getCurrentUserGroups(user);
-        Map<Integer, Privilege> actual = toIdMap(privileges, gl -> gl.getGroup().getId());
-        Set<Integer> gone = Sets.difference(current.keySet(), actual.keySet());
-        // remove gone group associations
-        for (Integer goneGroupLinkId : gone) {
-            UserGroup goneAssociation = current.get(goneGroupLinkId);
-            this.internalUserToGroupLinks.delete(goneAssociation);
-            log.info("Removed association of user {} to group {}", user.getUsername(),
-                    goneAssociation.getGroup().getName());
-        }
-        List<UserGroup> userGroupLinks = new ArrayList<>();
-        userGroupLinks.addAll(resolveNewPrivileges(user, actual, current));
-        userGroupLinks.addAll(resolveUpdatedPrivileges(user, actual, current));
-        this.internalUserToGroupLinks.saveAll(userGroupLinks);
+        List<UserGroup> current = getCurrentUserGroups(user);
+        List<UserGroup> userGroups = resolveNewPrivileges(user, privileges);
+        UserGroupRepository repo = this.internalUserToGroupLinks;
+        repo.deleteAll(current);
+        repo.saveAll(userGroups);
     }
 
-    private List<UserGroup> resolveUpdatedPrivileges(User user, Map<Integer, Privilege> actual,
-            Map<Integer, UserGroup> current) {
+    private List<UserGroup> resolveNewPrivileges(User user, List<Privilege> actual) {
 
-        Set<Integer> commonGroupIds = Sets.intersection(actual.keySet(), current.keySet());
-        return commonGroupIds.stream()//
-                .map(toUpdateGroupId -> {
-                    UserGroup currentUserGroup = current.get(toUpdateGroupId);
-                    Privilege privilege = actual.get(toUpdateGroupId);
-                    Profile profile = privilege.getProfile();
-                    Profile currentProfile = currentUserGroup.getProfile();
-                    Group group = privilege.getGroup();
-                    if (Objects.equals(profile, currentProfile)) {
-                        return null;
-                    }
-                    log.info("Updating user {}'s profile for group {} from {} to {}", user.getUsername(),
-                            group.getName(), currentProfile, profile);
-                    currentUserGroup.setProfile(profile);
-                    return currentUserGroup;
-                })//
-                .filter(Objects::nonNull)//
-                .collect(Collectors.toList());
-    }
-
-    private List<UserGroup> resolveNewPrivileges(User user, Map<Integer, Privilege> actual,
-            Map<Integer, UserGroup> current) {
-
-        final Set<Integer> newGroupIds = Sets.difference(actual.keySet(), current.keySet());
-        return newGroupIds.stream()//
-                .map(actual::get)//
+        return actual.stream()//
                 .map(privilege -> newUserGroup(user, privilege))//
                 .collect(Collectors.toList());
     }
@@ -201,10 +164,9 @@ class UserSynchronizer {
         return new UserGroup().setUser(user).setGroup(privilege.getGroup()).setProfile(privilege.getProfile());
     }
 
-    private Map<Integer, UserGroup> getCurrentUserGroups(User user) {
+    private List<UserGroup> getCurrentUserGroups(User user) {
         Specification<UserGroup> spec = UserGroupSpecs.hasUserId(user.getId());
-        List<UserGroup> userGroups = internalUserToGroupLinks.findAll(spec);
-        return toIdMap(userGroups, ug -> ug.getGroup().getId());
+        return internalUserToGroupLinks.findAll(spec);
     }
 
     private UserLink resolveLink(CanonicalUser canonical) {
