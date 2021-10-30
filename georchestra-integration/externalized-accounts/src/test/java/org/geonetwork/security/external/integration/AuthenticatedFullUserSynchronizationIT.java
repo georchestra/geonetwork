@@ -24,13 +24,20 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
 import javax.transaction.Transactional;
 
+import org.fao.geonet.domain.Profile;
 import org.fao.geonet.domain.User;
+import org.fao.geonet.domain.UserGroup;
+import org.fao.geonet.repository.UserGroupRepository;
+import org.fao.geonet.repository.specification.UserGroupSpecs;
+import org.geonetwork.security.external.configuration.ProfileMappingProperties;
 import org.geonetwork.security.external.model.CanonicalGroup;
 import org.geonetwork.security.external.model.CanonicalUser;
 import org.geonetwork.security.external.repository.CanonicalAccountsRepository;
@@ -237,4 +244,22 @@ public class AuthenticatedFullUserSynchronizationIT extends AbstractAccountsReco
         support.assertGroup(user, newRole2);
     }
 
+    public @Test void User_with_no_organization_is_valid_and_its_default_role_is_mapped_from_config() {
+        final CanonicalUser userWithNoOrg = super.testreviewer;
+        assertEquals(Collections.singletonList("GN_REVIEWER"), userWithNoOrg.getRoles());
+        ProfileMappingProperties profiles = support.getConfig().getProfiles();
+        profiles.getRolemappings().put("GN_REVIEWER", Profile.Reviewer);
+
+        support.setOrgsSyncMode();
+
+        assertFalse(service.findUpToDateUser(userWithNoOrg).isPresent());
+
+        User user = service.forceMatchingGeonetworkUser(userWithNoOrg);
+        support.assertUser(userWithNoOrg, user);
+        assertEquals(Profile.Reviewer, user.getProfile());
+
+        UserGroupRepository userGroupRepo = support.gnUserGroupRepository;
+        List<UserGroup> userGroups = userGroupRepo.findAll(UserGroupSpecs.hasUserId(user.getId()));
+        assertTrue(userGroups.isEmpty());
+    }
 }

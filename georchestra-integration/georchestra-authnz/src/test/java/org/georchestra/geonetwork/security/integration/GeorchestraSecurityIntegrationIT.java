@@ -126,11 +126,12 @@ public class GeorchestraSecurityIntegrationIT extends AbstractGeorchestraIntegra
 
         ProfileMappingProperties profiles = config.getProfiles();
         assertEquals(Profile.RegisteredUser, profiles.getDefault());
-        assertEquals(4, profiles.getRolemappings().size());
+        assertEquals(5, profiles.getRolemappings().size());
         assertEquals(Profile.Administrator, profiles.getRolemappings().get("GN_ADMIN"));
+        assertEquals(Profile.UserAdmin, profiles.getRolemappings().get("GN_USERADMIN"));
         assertEquals(Profile.Reviewer, profiles.getRolemappings().get("GN_REVIEWER"));
         assertEquals(Profile.Editor, profiles.getRolemappings().get("GN_EDITOR"));
-        assertEquals(Profile.RegisteredUser, profiles.getRolemappings().get("GN_USER"));
+        assertEquals(Profile.RegisteredUser, profiles.getRolemappings().get("USER"));
     }
 
     public @Test void testScheduledSynchronization() throws Exception {
