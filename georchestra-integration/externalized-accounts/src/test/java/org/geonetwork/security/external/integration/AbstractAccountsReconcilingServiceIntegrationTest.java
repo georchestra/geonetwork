@@ -84,6 +84,8 @@ public abstract class AbstractAccountsReconcilingServiceIntegrationTest {
 
     protected CanonicalUser testuser;
     protected CanonicalUser testeditor;
+    protected CanonicalUser testuseradmin;
+    protected CanonicalUser testreviewer;// has no org
     protected CanonicalUser testadmin;
 
     protected CanonicalGroup orgPsc;
@@ -94,6 +96,7 @@ public abstract class AbstractAccountsReconcilingServiceIntegrationTest {
     protected CanonicalGroup roleAdministrator;
     protected CanonicalGroup roleGnReviewer;
     protected CanonicalGroup roleGnEditor;
+    protected CanonicalGroup roleGnUserAdmin;
     protected CanonicalGroup roleGnAdmin;
     protected CanonicalGroup roleUser;
 
@@ -153,6 +156,7 @@ public abstract class AbstractAccountsReconcilingServiceIntegrationTest {
         Map<String, Profile> rolemappings = profileMappings.getRolemappings();
         rolemappings.put("ADMINISTRATOR", Profile.Administrator);
         rolemappings.put("GN_ADMIN", Profile.Administrator);
+        rolemappings.put("GN_USERADMIN", Profile.UserAdmin);
         rolemappings.put("GN_EDITOR", Profile.Editor);
         rolemappings.put("GN_REVIEWER", Profile.Reviewer);
         rolemappings.put("USER", Profile.RegisteredUser);
@@ -165,6 +169,7 @@ public abstract class AbstractAccountsReconcilingServiceIntegrationTest {
                 roleAdministrator = createRole("ADMINISTRATOR"), //
                 roleGnEditor = createRole("GN_EDITOR"), //
                 roleGnReviewer = createRole("GN_REVIEWER"), //
+                roleGnUserAdmin = createRole("GN_USERADMIN"), //
                 roleGnAdmin = createRole("GN_ADMIN"), //
                 roleUser = createRole("USER")//
         );
@@ -180,6 +185,8 @@ public abstract class AbstractAccountsReconcilingServiceIntegrationTest {
         return Lists.newArrayList(//
                 testuser = createUser("testuser", "PSC", "USER"), //
                 testeditor = createUser("testeditor", "C2C", "GN_EDITOR", "USER"), //
+                testuseradmin = createUser("testuseradmin", "PSC", "GN_USERADMIN"), //
+                testreviewer = createUser("testreviewer", null/* no org */, "GN_REVIEWER"), //
                 testadmin = createUser("testadmin", "PSC", //
                         "ADMINISTRATOR", //
                         "SUPERUSER", //
