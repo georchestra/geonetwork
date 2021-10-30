@@ -31,6 +31,7 @@ import org.geonetwork.security.external.model.GroupLink;
 import org.geonetwork.security.external.model.GroupSyncMode;
 import org.geonetwork.security.external.repository.CanonicalAccountsRepository;
 import org.springframework.lang.NonNull;
+import org.springframework.util.StringUtils;
 
 class OrgsBasedGroupSynchronizer extends AbstractGroupSynchronizer {
 
@@ -48,6 +49,9 @@ class OrgsBasedGroupSynchronizer extends AbstractGroupSynchronizer {
 
     protected @Override List<CanonicalGroup> resolveGroupsOf(CanonicalUser user) {
         final String orgName = user.getOrganization();
+        if(!StringUtils.hasLength(orgName)) {
+            return Collections.emptyList();
+        }
         CanonicalGroup canonicalOrganization = this.externalGroupLinks.findByName(orgName)//
                 .map(GroupLink::getCanonical)//
                 // not found in db, defer to canonical source

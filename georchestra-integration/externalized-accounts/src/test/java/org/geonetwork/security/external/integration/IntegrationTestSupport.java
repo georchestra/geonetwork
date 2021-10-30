@@ -140,19 +140,6 @@ public class IntegrationTestSupport extends ExternalResource {
         assertEquals(expectedProfile, user.getProfile());
     }
 
-//    public void assertGroupsAndProfiles(CanonicalUser expected, User user) {
-//        final GroupSyncMode syncMode = this.configProps.getSyncMode();
-//        if (syncMode == GroupSyncMode.roles) {
-//            throw new UnsupportedOperationException("implement");
-//        } else {
-//            assertEquals(GroupSyncMode.orgs, syncMode);
-//            final String orgShortName = expected.getOrganization();
-//            List<Group> syncedGroups = this.groupSynchronizer.findGroupsFor(user);
-//            assertEquals(1, syncedGroups.size());
-//            assertEquals(orgShortName, syncedGroups.get(0).getName());
-//        }
-//    }
-
     public UserGroup assertGroup(User user, CanonicalGroup belongsTo) {
         GroupLink link = assertGroupLink(belongsTo);
         Group group = link.getGeonetworkGroup();
