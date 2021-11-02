@@ -495,10 +495,6 @@ form.gn-editor.gn-indent-colored {
       border-top-left-radius: @gn-border-radius;
       border-top-right-radius: @gn-border-radius;
     }
-    // No highlight on hover
-    .field-bg {
-      background: transparent;
-    }
     fieldset {
       margin: 10px 15px;
       border-left-color: @brand-success;
@@ -606,5 +602,267 @@ form.gn-editor.gn-indent-bluescale {
   &:before {
     content: "";
 
+  }
+}
+
+// Fix sidebar being overlaid by the top buttons bar
+.gn-editor-sidebar {
+  margin-top: 50px;
+}
+
+// Use green for G2F graphic chart
+@g2f-green: #8BC832;
+.btn-success {
+  background-color: @g2f-green;
+  background-image: -webkit-linear-gradient(top, @g2f-green 0%, @g2f-green 100%);
+  background-image:      -o-linear-gradient(top, @g2f-green 0%, @g2f-green 100%);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(@g2f-green), to(@g2f-green));
+  background-image:         linear-gradient(to bottom, @g2f-green 0%, @g2f-green 100%);
+  background-repeat: repeat-x;
+  border-color: #3e8f3e;
+}
+.btn-success:hover,
+.btn-success:focus {
+  background-color: @g2f-green;
+  background-position: 0 -15px;
+}
+.btn-success:active,
+.btn-success.active {
+  background-color: @g2f-green;
+  border-color: #3e8f3e;
+}
+.btn-success:disabled,
+.btn-success[disabled] {
+  background-color: @g2f-green;
+  background-image: none;
+}
+form.geo2france-view {
+  // map extent panel
+  //.gn-drawmap-panel > div:nth-child(4) {
+  //  display:none;
+  //}
+  //
+  //label.control-label {
+  //  background-color: @g2f-green;
+  //}
+  // do not display useless button
+  div[data-gn-toggle],
+  div.btn-toolbar {
+    display: none;
+  }
+
+  // Fix pointOfContact block display
+  fieldset.gn-pointOfContact {
+    width: 79%;
+    float:left;
+    border: 0px;
+    margin: 0 0 0 10px;
+
+    legend {
+      display:none;
+      //float: left;
+      //width: 16.67%;
+      //text-align: right;
+      //font-size: 12px;
+      //font-weight: bold;
+      //padding: 0px 15px;
+      //margin: 0px;
+      //line-height: 22px;
+      //visibility: hidden;
+    }
+
+    table.gn-table {
+      float: left;
+      width: 100%;
+      padding: 0px 20px;
+      margin: 0px;
+    }
+  }
+
+  // fix responsiveness issue with title and state fields labels when screen width is around 750px
+  //.col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12 {
+  //  float: none;
+  //}
+
+  // remove mandatory label (star)
+  .gn-required > label::after {
+    display: none;
+  }
+
+  // do not highlight field on hover
+  form.gn-editor .field-bg {
+    background: none;
+  }
+
+  // table added when adding a custom poc (not using the directory)
+  fieldset.gn-pointOfContact + table.gn-table {
+    float: left;
+    width: 75%;
+    padding: 0px 15px;
+    margin: 0 0 0 17%;
+  }
+  // Add new contact row
+  div.label-override.poc + div.gn-add-field {
+    float:left;
+    width:75%;
+    label {
+      display:none;
+    }
+  }
+
+  fieldset.gn-EX_GeographicBoundingBox {
+    border: 0;
+    background: transparent;
+
+    legend.EX_GeographicBoundingBox {
+      display: none;
+      //clear: left;
+      float: left;
+      width: 17%;
+      padding: 0px 15px;
+      font-size: 12px;
+      //display: block;
+      //background-color: #f2f2f2;
+      line-height: 22px;
+      text-align: right;
+      //padding: 2px;
+      font-weight: bold;
+      a {
+        display: none;
+      }
+    }
+    div.gn-drawmap-panel {
+      float: left;
+      width: 75%;
+      padding: 6px 20px;
+    }
+    div.gn-drawmap-panel > div:first-child {
+      display:none;
+    }
+    div.gn-drawmap-panel > div:nth-child(2) {
+      display:none;
+    }
+  }
+
+  .section > div {
+    display:block;
+    background-color: #f2f2f2;
+    line-height: 22px;
+    padding: 2px;
+    font-weight:bold;
+    font-size:14px;
+  }
+
+   .field-helper {
+     clear:both;
+     color: #0F4396;
+     font-size: smaller;
+     font-style: italic;
+     text-align: left;
+     padding:0px 5% 5px 5%;
+     margin-bottom: 10px;
+     border-bottom: 1px solid @g2f-green;
+     div.col-sm-10 {
+       padding-left: 50px;
+     }
+   }
+
+  // No highlight on hover
+  .field-bg {
+    background: transparent;
+  }
+  // Hacking keyword display
+
+  // large keyword selector widget
+  div[data-gn-keyword-selector] > span.ng-scope > div.row:nth-child(2) {
+    display:none;
+  }
+  fieldset legend[data-gn-slide-toggle]::before {
+    display:none;
+  }
+
+  // override a label (thesaurus fields)
+  .label-override div.newlabel,
+  .gn-field > label.control-label {
+    clear:left;
+    float:left;
+    text-align: right;
+    font-weight: bold;
+    font-size: 14px;
+    color: white;
+    //line-height: 40px;
+    //vertical-align:middle;
+    //display:inline;
+  }
+  // and hide base label
+  .label-override + div[data-gn-keyword-selector] label.control-label,
+  .label-override + div.gn-add-field label.control-label
+  {
+    display: none;
+  }
+  .label-override.invisible {
+    color: @g2f-green;
+  }
+
+  // hide 'add' buttons if already preceded by a form field (show only if no form)
+  div[data-gn-keyword-selector] + div.gn-add-field,
+  div.gn-field + div.gn-add-field {
+    display: none;
+  }
+
+  // un-bold spatial resolution sub-labels
+  .gn-denominator > label.control-label,
+  .gn-Saisir.une.distance.si.pas > label.control-label {
+    font-weight: normal;
+    font-size: 12px;
+  }
+
+  //hide otherConstraints additional info
+  .gn-otherConstraints {
+    div.well {
+      display: none;
+    }
+
+    label.control-label{
+      visibility: hidden;
+    }
+  }
+
+  .bootstrap-tagsinput,
+  div[data-gn-keyword-selector=tagsinput]{
+    margin-bottom: 0;
+  }
+
+  div.no-geo-button + div + div.gn-process-add-extent-from-geokeywords {
+    display: none;
+  }
+  div.no-geo-button + div + div.gn-process-add-extent-from-geokeywords + div.gn-process-add-extent-from-geokeywords {
+     display: none;
+   }
+
+  @media (min-width:770px) {
+    div.bg {
+      div.no-bg {
+        height: 100%;
+        background-color: inherit;
+        position: absolute;
+        z-index: -1;
+      }
+
+      div.light-bg {
+        height: 100%;
+        background-color: @g2f-green;
+        color: #f2f2f2;
+        position: absolute;
+        z-index: -1;
+      }
+    }
+  }
+  .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+    background-color: @g2f-green !important;
+  }
+
+  .field-helper:last-of-type {
+    border: 0;
   }
 }

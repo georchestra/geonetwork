@@ -242,4 +242,157 @@
   <east>east</east>
   <south>south</south>
   <west>west</west>
+
+  <g2f-flat-view>Simplified, flat</g2f-flat-view>
+  <g2f-bg>
+    <div class="bg">
+      <div class="col-sm-2 light-bg"></div>
+      <div class="col-sm-10 no-bg"></div>
+    </div>
+  </g2f-bg>
+  <g2f-title>Title</g2f-title>
+  <g2f-title-help>
+    <div class="row field-helper">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-10">Un titre explicite qui aide à identifier la donnée</div>
+    </div>
+  </g2f-title-help>
+  <g2f-abstract>Astract</g2f-abstract>
+  <g2f-abstract-help>
+    <div class="row field-helper">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-10">Présentation de la donnée, de son contexte, de la façon dont elle a été produite, des données qui ont servi à la produire et de l'usage pour lequel elle a été pensée</div>
+    </div>
+  </g2f-abstract-help>
+  <g2f-lineage>Lineage</g2f-lineage>
+  <g2f-lineage-help>
+    <div class="row field-helper">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-10">Présentation de la donnée, de son contexte, de la façon dont elle a été produite, des données qui ont servi à la produire et de l'usage pour lequel elle a été pensée</div>
+    </div>
+  </g2f-lineage-help>
+  <g2f-status-help>
+    <div class="row field-helper">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-10">State of the dataset</div>
+    </div>
+  </g2f-status-help>
+  <g2f-label-override-poc>
+    <div class="label-override poc">
+      <div class="col-sm-2 newlabel">Points of contact for the dataset</div>
+    </div>
+  </g2f-label-override-poc>
+  <g2f-poc-help>
+    <div class="row field-helper">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-10">
+        Il est fortement conseillé de charger les contacts via les entrées d'annuaire, via la barre de recherche ci-dessus.
+        <br />Si vous ne sélectionnez qu'un contact, la convention est de la définir comme "Point de contact"
+      </div>
+    </div>
+  </g2f-poc-help>
+  <g2f-add-keyword>Add a keyword</g2f-add-keyword>
+  <g2f-add>Add</g2f-add>
+  <g2f-label-override-gemet>
+    <div class="label-override">
+      <div class="col-sm-2 newlabel">Generic keywords (Th. GEMET)</div>
+    </div>
+  </g2f-label-override-gemet>
+  <g2f-th-gemet-keywords-help>
+    <div class="row field-helper">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-10">
+        Le thésaurus GEMET propose un grand nombre de mots clefs liés à l'environnement. <a href="https://www.eionet.europa.eu/gemet/en/about/" >En savoir plus</a>.
+      </div>
+    </div>
+  </g2f-th-gemet-keywords-help>
+  <g2f-label-override-territories>
+    <div class="label-override">
+      <div class="col-sm-2 newlabel">Territories</div>
+    </div>
+  </g2f-label-override-territories>
+  <g2f-th-geo-keywords-help>
+    <div class="row field-helper">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-10">
+        Ces thésauri géographiques vous permettent de sélectionner l'emprise concernée par votre donnée.
+        <br />De manière générale, on sélectionnera l'entité englobante de plus faible niveau (ex. commune plutôt que EPCI si la donnée ne concerne qu'une commune).
+        <br />Vous pouvez générer l'emprise géographique de votre métadonnée en cliquant sur le bouton ci-dessus. Il est recommandé d'enc réer au moins une.
+      </div>
+    </div>
+  </g2f-th-geo-keywords-help>
+  <g2f-label-override-geoextent>
+    <div class="label-override">
+      <div class="col-sm-2 newlabel">Geographical extent</div>
+    </div>
+  </g2f-label-override-geoextent>
+  <g2f-th-geo-extent-help>
+    <div class="row field-helper">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-10">
+
+      </div>
+    </div>
+  </g2f-th-geo-extent-help>
+  <g2f-label-override-territorialgranularity>
+    <div class="label-override">
+      <div class="col-sm-2 newlabel">Territorial granularity</div>
+    </div>
+  </g2f-label-override-territorialgranularity>
+  <g2f-th-granularity-keywords-help>
+    <div class="row field-helper">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-10">
+        Define territorial granularity
+      </div>
+    </div>
+  </g2f-th-granularity-keywords-help>
+  <g2f-label-override-denominator>
+    <div class="label-override">
+      <div class="col-sm-2 newlabel">Spatial resolution</div>
+    </div>
+  </g2f-label-override-denominator>
+  <g2f-label-override-spatialDistance>
+    <div class="label-override invisible">
+      <div class="col-sm-2 newlabel">.</div>
+    </div>
+  </g2f-label-override-spatialDistance>
+  <g2f-geo-denominator-help>
+    <div class="row field-helper">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-10">
+        <b>Dimension of reference :</b>
+        <ul>
+          <li>En cas de donnée vectorielle, il s'agit de l'échelle de référence. Champ spécifique à une donnée géospatiale de type vecteur. Ce champ prend le dénominateur d'échelle (ex. 25000 si échelle 1/25000e).
+            Il et conseillé d'utiliser la boite déroulante à droite pour saisir l'échelle de référence.</li>
+          <li>En cas de donnée raster, il s'agit de la dimension d'un pixel de la donnée raster</li>
+        </ul>
+      </div>
+    </div>
+  </g2f-geo-denominator-help>
+  <g2f-addConstraint>Define the license</g2f-addConstraint>
+  <g2f-label-override-otherConstraints>
+    <div class="label-override">
+      <div class="col-sm-2 newlabel">License</div>
+    </div>
+  </g2f-label-override-otherConstraints>
+  <g2f-license-odbl>ODbL 1.0 license</g2f-license-odbl>
+  <g2f-license-licenceouverte>Licence ouverte 2.0</g2f-license-licenceouverte>
+  <g2f-license-other>Other</g2f-license-other>
+  <g2f-license-help>
+    <div class="row field-helper">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-10">If you choose <i>Other</i>, enter the description in the empty field
+      </div>
+    </div>
+  </g2f-license-help>
+  <g2f-creation-or-update-date>Creation / Update date of the dataset</g2f-creation-or-update-date>
+  <g2f-time-updatedate-help>
+    <div class="row field-helper">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-10">
+        Date de création ou dernière date de mise à jour. En cas de mise à jour, préférez la date de mise à jour (la plus récente).
+      </div>
+    </div>
+  </g2f-time-updatedate-help>
 </strings>

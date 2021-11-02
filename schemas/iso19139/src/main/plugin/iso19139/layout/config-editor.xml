@@ -210,7 +210,7 @@
         data-search-action="true"
         data-popup-action="true"
         data-template-type="contact"
-        data-insert-modes=""
+        data-insert-modes="xlink"
         data-variables="gmd:role/gmd:CI_RoleCode/@codeListValue~{role}"/>
     </for>
     <for name="gmd:distributorContact" addDirective="data-gn-directory-entry-selector">
@@ -249,8 +249,6 @@
         data-insert-modes=""
         data-template-type="report"/>
     </for>
-
-
 
 
     <!-- Example configuration: Add onLine source from subtemplate
@@ -508,6 +506,403 @@
 
   <!-- View configuration -->
   <views>
+
+<!--    This view aims to provide a flat editing form, with limited number of available fields,
+To provide a better user experience and a simpler workflow.
+Disclaimer: this is using a lot of *very dirty hacks*, I'm doing my best with the config-editor's
+capabilities and my own knowledge. Please don't blame me -at least not too much-.
+In case you want to provide -positive- feedback, propose improvements or want some help in figuring
+out what the hell I'm doing here, contact me at jean.pommier at pi-geosolutions dot fr and
+I'll do my best
+-->
+    <view name="g2f-flat-view"
+          upAndDownControlHidden="true"
+          displayTooltips="false"
+          hideTimeInCalendar="true"
+          class="geo2france-view ">
+      <thesaurusList>
+        <thesaurus key="external.theme.gemet"
+                   fieldset="false"
+                   transformations="to-iso19139-keyword-with-anchor"/>
+        <thesaurus key="external.place.territoires"
+                   fieldset="false"
+                   transformations="to-iso19139-keyword-with-anchor"/>
+        <thesaurus key="external.theme.granularite_territoriale"
+                   maxtags="1"
+                   fieldset="false"
+                   transformations="to-iso19139-keyword-with-anchor"/>
+      </thesaurusList>
+      <sidePanel>
+        <directive data-gn-overview-manager=""/>
+        <directive data-gn-onlinesrc-list=""
+                   data-types="onlinesrc|parent|dataset|service|source|sibling|associated|fcats"/>
+      </sidePanel>
+
+      <tab id="default" default="true" mode="flat">
+        <section>
+
+          <text ref="g2f-bg"/>
+
+          <field name="g2f-title"
+                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:title"/>
+          <text ref="g2f-title-help"/>
+
+          <field name="g2f-abstract"
+                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:abstract"/>
+          <text ref="g2f-abstract-help"/>
+
+          <field name="g2f-lineage"
+                 xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement"/>
+          <text ref="g2f-lineage-help"/>
+
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:status"
+                 or="status"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/*"
+                  if="count(/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:status) = 0"
+          />
+
+<!--          <action type="add" btnLabel="status"-->
+<!--                  name="status" or="status"-->
+<!--                  if="count(gmd:MD_Metadata/gmd:identificationInfo/*/gmd:status) = 0"-->
+<!--                  in="/gmd:MD_Metadata">-->
+<!--            <template>-->
+<!--              <snippet>-->
+<!--                <gmd:status>-->
+<!--                  <gmd:MD_ProgressCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode"-->
+<!--                                       codeListValue=""/>-->
+<!--                </gmd:status>-->
+<!--              </snippet>-->
+<!--            </template>-->
+<!--          </action>-->
+          <text ref="g2f-status-help"/>
+
+          <text ref="g2f-label-override-poc"/>
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:pointOfContact"
+                 or="pointOfContact" in="/gmd:MD_Metadata/gmd:identificationInfo/*"/>
+          <!-- For the contacts, to get something simpler, I can either
+          * change the config in the directiveAttributes but it will affect all forms, I believe
+          * use CSS to hide the explorer box.
+          See definition of the directive in web-ui/src/main/resources/catalog/components
+          -->
+          <text ref="g2f-poc-help"/>
+
+<!--        Si on veut afficher tous les thesauri + le bouton du thesauri picker -->
+<!--          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords"-->
+<!--                 or="descriptiveKeywords" in="/gmd:MD_Metadata/gmd:identificationInfo/*"/>-->
+          <text ref="g2f-label-override-gemet"/>
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'GEMET']"/>
+
+          <action type="add" btnLabel="g2f-add-keyword"
+                  if="count(/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'GEMET']) = 0"
+                  or="descriptiveKeywords"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/*">
+            <template>
+              <snippet>
+                <gmd:descriptiveKeywords>
+                  <gmd:MD_Keywords>
+                    <gmd:type>
+                      <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
+                                              codeListValue="theme"/>
+                    </gmd:type>
+                    <gmd:thesaurusName>
+                      <gmd:CI_Citation>
+                        <gmd:title>
+                          <gmx:Anchor xlink:href="http://geonetwork-opensource.org/gemet">GEMET</gmx:Anchor>
+                        </gmd:title>
+                        <gmd:date>
+                          <gmd:CI_Date>
+                            <gmd:date>
+                              <gco:Date>2018-08-16</gco:Date>
+                            </gmd:date>
+                            <gmd:dateType>
+                              <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                                   codeListValue="publication"/>
+                            </gmd:dateType>
+                          </gmd:CI_Date>
+                        </gmd:date>
+                        <gmd:identifier>
+                          <gmd:MD_Identifier>
+                            <gmd:code>
+                              <gmx:Anchor xlink:href="http://localhost:8080/geonetwork/srv/api/registries/vocabularies/external.theme.gemet">geonetwork.thesaurus.external.theme.gemet</gmx:Anchor>
+                            </gmd:code>
+                          </gmd:MD_Identifier>
+                        </gmd:identifier>
+                      </gmd:CI_Citation>
+                    </gmd:thesaurusName>
+                  </gmd:MD_Keywords>
+                </gmd:descriptiveKeywords>
+              </snippet>
+            </template>
+          </action>
+          <text ref="g2f-th-gemet-keywords-help"/>
+
+          <text ref="g2f-label-override-territories"/>
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'Territoires']"/>
+          <action type="add" btnLabel="g2f-add-keyword"
+                  if="count(/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'Territoires']) = 0"
+                  or="descriptiveKeywords"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/*">
+            <template>
+              <snippet>
+                <gmd:descriptiveKeywords>
+                  <gmd:MD_Keywords>
+                    <gmd:keyword gco:nilReason="missing">
+                      <gmx:Anchor xlink:href=""/>
+                    </gmd:keyword>
+                    <gmd:type>
+                      <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
+                                              codeListValue="place"/>
+                    </gmd:type>
+                    <gmd:thesaurusName>
+                      <gmd:CI_Citation>
+                        <gmd:title>
+                          <gmx:Anchor xlink:href="https://www.geo2france.fr/catalogue/administrativeEntities">Territoires</gmx:Anchor>
+                        </gmd:title>
+                        <gmd:date>
+                          <gmd:CI_Date>
+                            <gmd:date>
+                              <gco:Date>2021-10-28</gco:Date>
+                            </gmd:date>
+                            <gmd:dateType>
+                              <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                                   codeListValue="publication"/>
+                            </gmd:dateType>
+                          </gmd:CI_Date>
+                        </gmd:date>
+                        <gmd:identifier>
+                          <gmd:MD_Identifier>
+                            <gmd:code>
+                              <gmx:Anchor xlink:href="http://localhost:8080/geonetwork/srv/api/registries/vocabularies/external.place.territoires">geonetwork.thesaurus.external.place.territoires</gmx:Anchor>
+                            </gmd:code>
+                          </gmd:MD_Identifier>
+                        </gmd:identifier>
+                      </gmd:CI_Citation>
+                    </gmd:thesaurusName>
+                  </gmd:MD_Keywords>
+                </gmd:descriptiveKeywords>
+              </snippet>
+            </template>
+          </action>
+          <text ref="g2f-th-geo-keywords-help"/>
+
+          <text ref="g2f-label-override-geoextent"/>
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:extent/*/gmd:geographicElement"/>
+          <text ref="g2f-th-geo-extent-help"/>
+<!--           Display action only if none set.-->
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:spatialRepresentationType"
+                  if="gmd:MD_Metadata/gmd:identificationInfo/*/gmd:spatialRepresentationType/*/@codeListValue= '' "/>
+          <action type="add" btnLabel="g2f-add"
+                  or="spatialRepresentationType"
+                  if="count(gmd:MD_Metadata/gmd:identificationInfo/*/gmd:spatialRepresentationType/*/@codeListValue) = 0"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/*">
+            <template>
+              <snippet>
+                <gmd:spatialRepresentationType>
+                  <gmd:MD_SpatialRepresentationTypeCode codeList="https://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_SpatialRepresentationTypeCode"
+                                                        codeListValue=""/>
+                </gmd:spatialRepresentationType>
+              </snippet>
+            </template>
+          </action>
+
+          <text ref="g2f-label-override-territorialgranularity"/>
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'Granularité territoriale']"/>
+          <action type="add" btnLabel="g2f-add"
+                  if="count(/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords[*/gmd:thesaurusName/*/gmd:title/*/text() = 'Granularité territoriale']) = 0"
+                  or="descriptiveKeywords"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/*">
+            <template>
+              <snippet>
+                <gmd:descriptiveKeywords>
+                  <gmd:MD_Keywords>
+                    <gmd:keyword gco:nilReason="missing">
+                      <gmx:Anchor xlink:href=""/>
+                    </gmd:keyword>
+                    <gmd:type>
+                      <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
+                                              codeListValue="theme"/>
+                    </gmd:type>
+                    <gmd:thesaurusName>
+                      <gmd:CI_Citation>
+                        <gmd:title>
+                          <gmx:Anchor xlink:href="http://geonetwork-opensource.org/granularite_territoriale">Granularité territoriale</gmx:Anchor>
+                        </gmd:title>
+                        <gmd:date>
+                          <gmd:CI_Date>
+                            <gmd:date>
+                              <gco:Date>2021-10-29</gco:Date>
+                            </gmd:date>
+                            <gmd:dateType>
+                              <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                                   codeListValue="publication"/>
+                            </gmd:dateType>
+                          </gmd:CI_Date>
+                        </gmd:date>
+                        <gmd:identifier>
+                          <gmd:MD_Identifier>
+                            <gmd:code>
+                              <gmx:Anchor xlink:href="http://localhost:8080/geonetwork/srv/api/registries/vocabularies/external.theme.granularite_territoriale">geonetwork.thesaurus.external.theme.granularite_territoriale</gmx:Anchor>
+                            </gmd:code>
+                          </gmd:MD_Identifier>
+                        </gmd:identifier>
+                      </gmd:CI_Citation>
+                    </gmd:thesaurusName>
+                  </gmd:MD_Keywords>
+                </gmd:descriptiveKeywords>
+              </snippet>
+            </template>
+          </action>
+          <text ref="g2f-th-granularity-keywords-help"/>
+
+          <text ref="g2f-label-override-denominator"/>
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/
+                    */gmd:spatialResolution/
+                      */gmd:equivalentScale/*/gmd:denominator"
+                 del="../../../.."/>
+          <action type="add" btnLabel="spatialResolution" or="spatialResolution"
+                  if="count(/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:spatialResolution/*/gmd:equivalentScale/*/gmd:denominator) = 0"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/*">
+            <template>
+              <snippet>
+                <gmd:spatialResolution>
+                  <gmd:MD_Resolution>
+                    <gmd:equivalentScale>
+                      <gmd:MD_RepresentativeFraction>
+                        <gmd:denominator>
+                          <gco:Integer/>
+                        </gmd:denominator>
+                      </gmd:MD_RepresentativeFraction>
+                    </gmd:equivalentScale>
+                  </gmd:MD_Resolution>
+                </gmd:spatialResolution>
+              </snippet>
+            </template>
+          </action>
+          <text ref="g2f-geo-denominator-help"/><!--Actually empty, but necessary for css hacks-->
+
+          <text ref="g2f-label-override-spatialDistance"/>
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/
+                    */gmd:spatialResolution/*/gmd:distance"
+                 del="../.."/>
+          <action type="add" btnLabel="spatialDistance" or="spatialResolution"
+                  if="count(/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:spatialResolution/*/gmd:distance) = 0"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/*">
+            <template>
+              <snippet>
+                <gmd:spatialResolution>
+                  <gmd:MD_Resolution>
+                    <gmd:distance>
+                      <gco:Distance uom="m"/>
+                    </gmd:distance>
+                  </gmd:MD_Resolution>
+                </gmd:spatialResolution>
+              </snippet>
+            </template>
+          </action>
+          <text ref="g2f-geo-spatialResolution-help"/>
+
+          <field name="g2f-creation-or-update-date"
+                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/*/gmd:date"/>
+          <text ref="g2f-time-updatedate-help"/>
+
+
+<!--          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:useLimitation"/>-->
+<!--          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:accessConstraints"/>-->
+<!--          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:useConstraints"/>-->
+          <text ref="g2f-label-override-otherConstraints"/>
+          <field xpath="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:otherConstraints"/>
+          <action type="add"
+                  btnLabel="g2f-addConstraint"
+                  name="g2f-license"
+                  or="resourceConstraints"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/*">
+            <template>
+              <snippet label="g2f-license-licenceouverte">
+                <gmd:resourceConstraints>
+                  <gmd:MD_LegalConstraints>
+                    <gmd:accessConstraints>
+                      <gmd:MD_RestrictionCode
+                        codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions">
+                        otherRestrictions
+                      </gmd:MD_RestrictionCode>
+                    </gmd:accessConstraints>
+                    <gmd:otherConstraints>
+                      <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadatacodelist/LimitationsOnPublicAccess/noLimitations">Pas de restriction d’accès public</gmx:Anchor>
+                    </gmd:otherConstraints>
+                    <gmd:useConstraints>
+                      <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions">
+                        otherRestrictions
+                      </gmd:MD_RestrictionCode>
+                    </gmd:useConstraints>
+                    <gmd:otherConstraints>
+                      <gco:CharacterString>Licence Ouverte version 2.0  https://www.etalab.gouv.fr/wp-content/uploads/2017/04/ETALAB-Licence-Ouverte-v2.0.pdf</gco:CharacterString>
+                    </gmd:otherConstraints>
+                  </gmd:MD_LegalConstraints>
+                </gmd:resourceConstraints>
+              </snippet>
+              <snippet label="g2f-license-odbl">
+                <gmd:resourceConstraints>
+                  <gmd:MD_LegalConstraints>
+                    <gmd:accessConstraints>
+                      <gmd:MD_RestrictionCode
+                        codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions">
+                        otherRestrictions
+                      </gmd:MD_RestrictionCode>
+                    </gmd:accessConstraints>
+                    <gmd:otherConstraints>
+                      <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadatacodelist/LimitationsOnPublicAccess/noLimitations">Pas de restriction d’accès public</gmx:Anchor>
+                    </gmd:otherConstraints>
+                    <gmd:useConstraints>
+                      <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions">
+                        otherRestrictions
+                      </gmd:MD_RestrictionCode>
+                    </gmd:useConstraints>
+                    <gmd:otherConstraints>
+                      <gco:CharacterString>Licence ODbL mai 2013 (basée sur ODbL 1.0) https://data.rennesmetropole.fr/pages/licence/</gco:CharacterString>
+                    </gmd:otherConstraints>
+                  </gmd:MD_LegalConstraints>
+                </gmd:resourceConstraints>
+              </snippet>
+              <snippet label="g2f-license-other">
+                <gmd:resourceConstraints>
+                  <gmd:MD_LegalConstraints>
+                    <gmd:accessConstraints>
+                      <gmd:MD_RestrictionCode
+                        codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions">
+                        otherRestrictions
+                      </gmd:MD_RestrictionCode>
+                    </gmd:accessConstraints>
+                    <gmd:otherConstraints>
+                      <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadatacodelist/LimitationsOnPublicAccess/noLimitations">Pas de restriction d’accès public</gmx:Anchor>
+                    </gmd:otherConstraints>
+                    <gmd:useConstraints>
+                      <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions">
+                        otherRestrictions
+                      </gmd:MD_RestrictionCode>
+                    </gmd:useConstraints>
+                    <gmd:otherConstraints>
+                      <gco:CharacterString></gco:CharacterString>
+                    </gmd:otherConstraints>
+                  </gmd:MD_LegalConstraints>
+                </gmd:resourceConstraints>
+              </snippet>
+            </template>
+          </action>
+          <text ref="g2f-license-help"/>
+        </section>
+      </tab>
+
+      <flatModeExceptions>
+        <for name="gmd:descriptiveKeywords" />
+        <for name="gmd:status"/>
+        <for name="gmd:pointOfContact"/>
+        <for name="gmd:spatialResolution"/>
+        <for name="gmd:denominator"/>
+        <for name="gmd:geographicElement"/>
+      </flatModeExceptions>
+    </view>
+
+
     <!--Turn on INSPIRE according to system settings
     WARNING: INSPIRE view is not compatible with ISO19139:2005 schema.
     You have to use the default ISO19139:2007 schema.
@@ -1420,46 +1815,46 @@
 
         <section name="temporalSection">
           <field name="temporalRangeSection" templateModeOnly="true" notDisplayedIfMissing="true"
-                   xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:temporalElement"
-                   if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
-              <template>
-                <values>
-                  <!-- -Need a * for gml:TimePeriodTypeCHOICE_ELEMENT2 added by editor enumerated tree
-                        but this will make the XSLT formatter fails. Using // to access the element in both case. -->
-                  <key label="beginPosition"
-                       xpath="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod//gml:beginPosition"
-                       use="gn-date-picker"
-                       tooltip="gmd:extent|gmd:EX_TemporalExtent">
-                    <directiveAttributes
-                      data-tag-name="gml:beginPosition"
-                      data-indeterminate-position="eval#gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/*/gml:beginPosition/@indeterminatePosition"/>
+                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:temporalElement"
+                 if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
+            <template>
+              <values>
+                <!-- -Need a * for gml:TimePeriodTypeCHOICE_ELEMENT2 added by editor enumerated tree
+                      but this will make the XSLT formatter fails. Using // to access the element in both case. -->
+                <key label="beginPosition"
+                     xpath="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod//gml:beginPosition"
+                     use="gn-date-picker"
+                     tooltip="gmd:extent|gmd:EX_TemporalExtent">
+                  <directiveAttributes
+                    data-tag-name="gml:beginPosition"
+                    data-indeterminate-position="eval#gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/*/gml:beginPosition/@indeterminatePosition"/>
 
-                  </key>
-                  <key label="endPosition"
-                       xpath="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod//gml:endPosition"
-                       use="gn-date-picker"
-                       tooltip="gmd:extent|gmd:EX_TemporalExtent">
-                    <directiveAttributes
-                      data-tag-name="gml:endPosition"
-                      data-indeterminate-position="eval#gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/*/gml:endPosition/@indeterminatePosition"/>
+                </key>
+                <key label="endPosition"
+                     xpath="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod//gml:endPosition"
+                     use="gn-date-picker"
+                     tooltip="gmd:extent|gmd:EX_TemporalExtent">
+                  <directiveAttributes
+                    data-tag-name="gml:endPosition"
+                    data-indeterminate-position="eval#gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/*/gml:endPosition/@indeterminatePosition"/>
 
 
-                  </key>
-                </values>
-                <snippet>
-                  <gmd:temporalElement>
-                    <gmd:EX_TemporalExtent>
-                      <gmd:extent>
-                        <gml:TimePeriod gml:id="">
-                          {{beginPosition}}
-                          {{endPosition}}
-                        </gml:TimePeriod>
-                      </gmd:extent>
-                    </gmd:EX_TemporalExtent>
-                  </gmd:temporalElement>
-                </snippet>
-              </template>
-            </field>
+                </key>
+              </values>
+              <snippet>
+                <gmd:temporalElement>
+                  <gmd:EX_TemporalExtent>
+                    <gmd:extent>
+                      <gml:TimePeriod gml:id="">
+                        {{beginPosition}}
+                        {{endPosition}}
+                      </gml:TimePeriod>
+                    </gmd:extent>
+                  </gmd:EX_TemporalExtent>
+                </gmd:temporalElement>
+              </snippet>
+            </template>
+          </field>
 
           <action type="add" name="extent" or="extent" btnLabel="temporalRangeSection"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification"
@@ -1485,41 +1880,41 @@
           </action>
 
           <field name="temporalRangeSection" templateModeOnly="true" notDisplayedIfMissing="true"
-                   xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:extent/gmd:EX_Extent/gmd:temporalElement"
-                   if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
-              <template>
-                <values>
-                  <!-- Need a * for gml:TimePeriodTypeCHOICE_ELEMENT2 added by editor enumerated tree -->
-                  <key label="beginPosition"
-                       xpath="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod//gml:beginPosition"
-                       use="gn-date-picker"
-                       tooltip="gmd:extent|gmd:EX_TemporalExtent">
-                    <directiveAttributes data-tag-name="gml:beginPosition"/>
-                  </key>
-                  <key label="endPosition"
-                       xpath="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod//gml:endPosition"
-                       use="gn-date-picker"
-                       tooltip="gmd:extent|gmd:EX_TemporalExtent"
-                  >
-                    <directiveAttributes
-                      data-tag-name="gml:endPosition"/>
-                  </key>
+                 xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:extent/gmd:EX_Extent/gmd:temporalElement"
+                 if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) > 0">
+            <template>
+              <values>
+                <!-- Need a * for gml:TimePeriodTypeCHOICE_ELEMENT2 added by editor enumerated tree -->
+                <key label="beginPosition"
+                     xpath="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod//gml:beginPosition"
+                     use="gn-date-picker"
+                     tooltip="gmd:extent|gmd:EX_TemporalExtent">
+                  <directiveAttributes data-tag-name="gml:beginPosition"/>
+                </key>
+                <key label="endPosition"
+                     xpath="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod//gml:endPosition"
+                     use="gn-date-picker"
+                     tooltip="gmd:extent|gmd:EX_TemporalExtent"
+                >
+                  <directiveAttributes
+                    data-tag-name="gml:endPosition"/>
+                </key>
 
-                </values>
-                <snippet>
-                  <gmd:temporalElement>
-                    <gmd:EX_TemporalExtent>
-                      <gmd:extent>
-                        <gml:TimePeriod gml:id="">
-                          {{beginPosition}}
-                          {{endPosition}}
-                        </gml:TimePeriod>
-                      </gmd:extent>
-                    </gmd:EX_TemporalExtent>
-                  </gmd:temporalElement>
-                </snippet>
-              </template>
-            </field>
+              </values>
+              <snippet>
+                <gmd:temporalElement>
+                  <gmd:EX_TemporalExtent>
+                    <gmd:extent>
+                      <gml:TimePeriod gml:id="">
+                        {{beginPosition}}
+                        {{endPosition}}
+                      </gml:TimePeriod>
+                    </gmd:extent>
+                  </gmd:EX_TemporalExtent>
+                </gmd:temporalElement>
+              </snippet>
+            </template>
+          </field>
 
           <action type="add" name="extent" or="extent" btnLabel="temporalRangeSection"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification"
@@ -3195,7 +3590,7 @@
         <directive data-gn-need-help="user-guide/describing-information/creating-metadata.html"/>
       </sidePanel>
 
-      <tab id="default" default="true" mode="flat">
+      <tab id="default-legacy" default="true" mode="flat">
         <section xpath="/gmd:MD_Metadata/gmd:identificationInfo"/>
         <section xpath="/gmd:MD_Metadata/gmd:referenceSystemInfo"/>
         <section xpath="/gmd:MD_Metadata/gmd:spatialRepresentationInfo"/>
