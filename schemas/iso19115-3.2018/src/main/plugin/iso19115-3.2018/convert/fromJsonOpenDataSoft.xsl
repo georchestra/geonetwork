@@ -45,9 +45,7 @@
                 xmlns:java-xsl-util="java:org.fao.geonet.util.XslUtil"
                 exclude-result-prefixes="#all">
 
-  <xsl:import href="protocol-mapping.xsl"></xsl:import>
-
-  <xsl:output method="xml" indent="yes"/>
+    <xsl:output method="xml" indent="yes"/>
 
     <xsl:strip-space elements="*"/>
 
@@ -504,38 +502,10 @@
 
               </mrd:MD_DigitalTransferOptions>
             </mrd:transferOptions>
-            <mrd:transferOptions>
-              <mrd:MD_DigitalTransferOptions>
-                <mrd:onLine>
-                  <cit:CI_OnlineResource>
-                    <cit:linkage>
-                      <gco:CharacterString>
-                        <xsl:value-of select="concat(nodeUrl,
-                                          '/explore/dataset/',
-                                          (datasetid|dataset/dataset_id)[1],
-                                           '/information/')" />
-                      </gco:CharacterString>
-                    </cit:linkage>
-                    <cit:protocol>
-                      <gco:CharacterString>
-                        WWW:LINK:LANDING_PAGE
-                      </gco:CharacterString>
-                    </cit:protocol>
-                    <cit:name>
-                      <gco:CharacterString>
-                        Landing Page
-                      </gco:CharacterString>
-                    </cit:name>
-                    <cit:description>
-                      <gco:CharacterString>
-                      </gco:CharacterString>
-                    </cit:description>
-                  </cit:CI_OnlineResource>
-                </mrd:onLine>
-              </mrd:MD_DigitalTransferOptions>
-            </mrd:transferOptions>
           </mrd:MD_Distribution>
         </mdb:distributionInfo>
+
+
 
         <mdb:resourceLineage>
           <mrl:LI_Lineage>
@@ -569,18 +539,16 @@
             </gco:CharacterString>
           </cit:linkage>
           <cit:protocol>
-            <gco:CharacterString>
-              <xsl:value-of select="$format-protocol-mapping/entry[format=lower-case($format)]/protocol"/>
-            </gco:CharacterString>
+            <gco:CharacterString>WWW:DOWNLOAD-1.0-http--download</gco:CharacterString>
           </cit:protocol>
           <cit:name>
             <gco:CharacterString>
-              <xsl:value-of select="$format"/>
+              <xsl:value-of select="concat('Download as ', upper-case($format))"/>
             </gco:CharacterString>
           </cit:name>
           <cit:description>
             <gco:CharacterString>
-              <xsl:value-of select="$format"/>
+              <xsl:value-of select="concat('Download this dataset in the ', upper-case($format), ' format.')"/>
             </gco:CharacterString>
           </cit:description>
           <cit:function>
