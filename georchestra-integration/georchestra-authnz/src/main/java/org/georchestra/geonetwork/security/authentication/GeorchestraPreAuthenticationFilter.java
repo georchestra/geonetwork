@@ -101,7 +101,6 @@ public class GeorchestraPreAuthenticationFilter extends AbstractPreAuthenticated
 
     private GeorchestraUser checkMandatoryProperties(GeorchestraUser user) {
         requireNonNull(user.getId(), "GeorchestraUserDetails.userId is mandatory");
-        requireNonNull(user.getOrganization(), "GeorchestraUserDetails.organization");
         if (user.getRoles() == null || user.getRoles().isEmpty()) {
             throw new IllegalArgumentException("GeorchestraUserDetails.roles is mandatory");
         }
