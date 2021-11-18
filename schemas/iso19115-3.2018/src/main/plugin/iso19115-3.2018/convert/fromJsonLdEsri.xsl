@@ -47,6 +47,7 @@
     <xsl:import href="protocol-mapping.xsl"></xsl:import>
     <xsl:output method="xml" indent="yes"/>
     <xsl:strip-space elements="*"/>
+    <xsl:import href="protocol-mapping.xsl"></xsl:import>
 
     <xsl:template match="/record">
       <xsl:variable name="cataloglang" select="'fre'"></xsl:variable>
@@ -471,7 +472,9 @@
                           <xsl:choose>
                             <xsl:when test="format = 'Web Page'">WWW:LINK-1.0-http--link</xsl:when>
                             <xsl:when test="format = 'ArcGIS GeoServices REST API'">ESRI:REST</xsl:when>
-                            <xsl:otherwise>WWW:DOWNLOAD</xsl:otherwise>
+                            <xsl:otherwise>
+                              <xsl:value-of select="concat($format-mimetype-mapping/entry[format=lower-case(format)]/protocol,':', mediaType)"/>
+                            </xsl:otherwise>
                           </xsl:choose>
                         </gco:CharacterString>
                       </cit:protocol>

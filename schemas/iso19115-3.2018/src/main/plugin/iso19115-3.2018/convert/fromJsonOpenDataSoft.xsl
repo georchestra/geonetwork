@@ -45,7 +45,9 @@
                 xmlns:java-xsl-util="java:org.fao.geonet.util.XslUtil"
                 exclude-result-prefixes="#all">
 
-    <xsl:output method="xml" indent="yes"/>
+  <xsl:import href="protocol-mapping.xsl"></xsl:import>
+
+  <xsl:output method="xml" indent="yes"/>
 
     <xsl:strip-space elements="*"/>
 
@@ -484,17 +486,21 @@
                 <xsl:if test="$count > 0">
                   <xsl:call-template name="dataLink">
                     <xsl:with-param name="format">csv</xsl:with-param>
+                    <xsl:with-param name="fields"><xsl:copy-of select="fields"></xsl:copy-of></xsl:with-param>
                   </xsl:call-template>
                   <xsl:call-template name="dataLink">
                     <xsl:with-param name="format">json</xsl:with-param>
+                    <xsl:with-param name="fields"><xsl:copy-of select="fields"></xsl:copy-of></xsl:with-param>
                   </xsl:call-template>
                   <xsl:if test="count(.//features[. = 'geo']) > 0">
                     <xsl:call-template name="dataLink">
                       <xsl:with-param name="format">geojson</xsl:with-param>
+                      <xsl:with-param name="fields"><xsl:copy-of select="fields"></xsl:copy-of></xsl:with-param>
                     </xsl:call-template>
                     <xsl:if test="$count &lt; 5000">
                       <xsl:call-template name="dataLink">
                         <xsl:with-param name="format">shapefile</xsl:with-param>
+                        <xsl:with-param name="fields"><xsl:copy-of select="fields"></xsl:copy-of></xsl:with-param>
                       </xsl:call-template>
                     </xsl:if>
                   </xsl:if>
@@ -504,8 +510,6 @@
             </mrd:transferOptions>
           </mrd:MD_Distribution>
         </mdb:distributionInfo>
-
-
 
         <mdb:resourceLineage>
           <mrl:LI_Lineage>
@@ -526,6 +530,12 @@
 
     <xsl:template name="dataLink">
       <xsl:param name="format" />
+      <xsl:param name="fields" />
+      <xsl:variable name="description">
+        <xsl:for-each select="$fields/fields">
+          <xsl:value-of select="concat('- *', label, '* : ', name, '[', type, ']\n')" />
+        </xsl:for-each>
+      </xsl:variable>
 
       <mrd:onLine>
         <cit:CI_OnlineResource>
@@ -539,16 +549,18 @@
             </gco:CharacterString>
           </cit:linkage>
           <cit:protocol>
-            <gco:CharacterString>WWW:DOWNLOAD-1.0-http--download</gco:CharacterString>
+            <gco:CharacterString>
+              <xsl:value-of select="concat($format-mimetype-mapping/entry[format=lower-case($format)]/protocol,':', $format-mimetype-mapping/entry[format=lower-case($format)]/mimetype)"/>
+            </gco:CharacterString>
           </cit:protocol>
           <cit:name>
             <gco:CharacterString>
-              <xsl:value-of select="concat('Download as ', upper-case($format))"/>
+              <xsl:value-of select="$format"/>
             </gco:CharacterString>
           </cit:name>
           <cit:description>
             <gco:CharacterString>
-              <xsl:value-of select="concat('Download this dataset in the ', upper-case($format), ' format.')"/>
+              <xsl:value-of select="$description"/>
             </gco:CharacterString>
           </cit:description>
           <cit:function>
