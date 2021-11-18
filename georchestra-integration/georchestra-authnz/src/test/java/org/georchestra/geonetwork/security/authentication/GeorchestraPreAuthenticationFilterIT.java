@@ -85,7 +85,7 @@ public class GeorchestraPreAuthenticationFilterIT extends AbstractGeorchestraInt
                 .orElseThrow(() -> new IllegalStateException("user should have been synchronized"));
 
         assertNotNull(found);
-        
+
         CanonicalUser canonical = mapper.toCanonical(consoleUser);
         support.assertUser(canonical, found);
     }
@@ -98,7 +98,7 @@ public class GeorchestraPreAuthenticationFilterIT extends AbstractGeorchestraInt
         final GeorchestraUser consoleUser = preAuthTestadmin;
         request.addHeader("sec-proxy", "true");
         request.addHeader("sec-username", consoleUser.getUsername());
-        
+
         User createdUponAuthentication = authFilter.getPreAuthenticatedPrincipal(request);
 
         assertNotNull(createdUponAuthentication);
@@ -107,6 +107,31 @@ public class GeorchestraPreAuthenticationFilterIT extends AbstractGeorchestraInt
                 .orElseThrow(() -> new IllegalStateException("user should have been synchronized"));
 
         CanonicalUser canonical = mapper.toCanonical(consoleUser);
+        support.assertUser(canonical, found);
+    }
+
+    public @Test void user_with_no_organization_is_allowed() {
+        final GeorchestraUser testreviewer = consoleUsersApiClient.findByUsername("testreviewer")
+                .orElseThrow(NoSuchElementException::new);
+        assertNotNull(testreviewer);
+        assertNull("test data error, testreviewer should have no org", testreviewer.getOrganization());
+        String testreviewerPayload = support.jsonEncode(testreviewer);
+
+        request.addHeader("sec-proxy", "true");
+        request.addHeader("sec-user", testreviewerPayload);
+
+        User gnUser = authFilter.getPreAuthenticatedPrincipal(request);
+        assertNotNull(gnUser);
+        assertNull(gnUser.getOrganisation());
+
+        assertEquals(testreviewer.getUsername(), gnUser.getUsername());
+
+        User found = synchronizationService.findUpToDateUserByUsername(testreviewer.getUsername())
+                .orElseThrow(() -> new IllegalStateException("user should have been synchronized"));
+
+        assertNotNull(found);
+
+        CanonicalUser canonical = mapper.toCanonical(testreviewer);
         support.assertUser(canonical, found);
     }
 }
