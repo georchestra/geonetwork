@@ -34,6 +34,7 @@ import org.georchestra.security.model.GeorchestraUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 
 import com.google.common.annotations.VisibleForTesting;
@@ -114,5 +115,26 @@ public class GeorchestraPreAuthenticationFilter extends AbstractPreAuthenticated
     @Override
     protected Boolean getPreAuthenticatedCredentials(HttpServletRequest request) {
         return Boolean.parseBoolean(SecurityHeaders.decode(request.getHeader(SEC_PROXY)));
+    }
+
+    /**
+     * If {@link #setInvalidateSessionOnPrincipalChange(boolean)} is
+     * {@literal true}, which is the default, this method is called by the
+     * superclass right after a successful authentication to invalidate the http
+     * session. We override it here because due to inconsistencies in the
+     * {@link User#equals(Object)} implementation two equivalent {@literal User}s
+     * won't match and hence the session will be invalidated; so we check for
+     * {@link User#getId()}
+     */
+    @Override
+    protected boolean principalChanged(HttpServletRequest request, Authentication currentAuthentication) {
+        User principal = getPreAuthenticatedPrincipal(request);
+        Object curr = currentAuthentication.getPrincipal();
+        if (principal != null && (curr instanceof User)) {
+            int id = principal.getId();
+            int currId = ((User) curr).getId();
+            return currId != id;
+        }
+        return true;
     }
 }
