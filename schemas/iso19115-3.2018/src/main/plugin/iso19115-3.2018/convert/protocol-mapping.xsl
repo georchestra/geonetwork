@@ -9,37 +9,45 @@
     <xsl:output method="xml" indent="yes"/>
     <xsl:strip-space elements="*"/>
 
-    <xsl:variable name="format-protocol-mapping">
+    <xsl:variable name="format-mimetype-mapping">
         <entry>
             <format>csv</format>
-            <protocol>WWW:DOWNLOAD:text/csv</protocol>
+            <mimetype>text/csv</mimetype>
+            <protocol>WWW:DOWNLOAD</protocol>
         </entry>
         <entry>
             <format>geojson</format>
-            <protocol>WWW:DOWNLOAD:application/vnd.geo+json</protocol>
+            <mimetype>application/vnd.geo+json</mimetype>
+            <protocol>WWW:DOWNLOAD</protocol>
         </entry>
         <entry>
             <format>kml</format>
-            <protocol>WWW:DOWNLOAD:application/vnd.google-earth.kml+xml</protocol>
+            <mimetype>application/vnd.google-earth.kml+xml</mimetype>
+            <protocol>WWW:DOWNLOAD</protocol>
         </entry>
         <entry>
             <format>zip</format>
-            <protocol>WWW:DOWNLOAD:application/zip</protocol>
+            <mimetype>application/zip</mimetype>
+            <protocol>WWW:DOWNLOAD</protocol>
         </entry>
         <entry>
             <format>shapefile</format>
-            <protocol>WWW:DOWNLOAD:x-gis/x-shapefile</protocol>
+            <mimetype>x-gis/x-shapefile</mimetype>
+            <protocol>WWW:DOWNLOAD</protocol>
         </entry>
         <entry>
             <format>json</format>
-            <protocol>WWW:DOWNLOAD:application/json</protocol>
+            <mimetype>application/json</mimetype>
+            <protocol>WWW:DOWNLOAD</protocol>
         </entry>
         <entry>
             <format>web page</format>
-            <protocol>WWW:LINK-1.0-http--link</protocol>
+            <mimetype>text/html</mimetype>
+            <protocol>WWW:LINK</protocol>
         </entry>
         <entry>
             <format>arcgis geoservices rest api</format>
+            <mimetype>application/json</mimetype>
             <protocol>ESRI:REST</protocol>
         </entry>
     </xsl:variable>
