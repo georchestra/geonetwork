@@ -47,7 +47,6 @@
     <xsl:import href="protocol-mapping.xsl"></xsl:import>
     <xsl:output method="xml" indent="yes"/>
     <xsl:strip-space elements="*"/>
-    <xsl:import href="protocol-mapping.xsl"></xsl:import>
 
     <xsl:template match="/record">
       <xsl:variable name="cataloglang" select="'fre'"></xsl:variable>
