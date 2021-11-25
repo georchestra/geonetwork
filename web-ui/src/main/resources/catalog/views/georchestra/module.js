@@ -74,7 +74,8 @@
             }).forEach(function (layer) {
               var service = {
                 name: layer.layername,
-                url: layer.owsurl
+                url: layer.owsurl,
+                type: layer.owstype
               };
               var md = {
                 uui: layer.muuid
