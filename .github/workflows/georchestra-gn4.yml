@@ -1,0 +1,76 @@
+name: Building georchestra-geonetwork4 artifacts
+
+on:
+  push:
+    branches:
+    - georchestra-gn4-4.x-dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+    - name: "Checking out"
+      uses: actions/checkout@v2.4.0
+      with:
+        submodules: 'recursive'
+
+    - name: "Maven repository caching"
+      uses: actions/cache@v1
+      with:
+        path: ~/.m2/repository
+        key: geonetwork-${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+          geonetwork-${{ runner.os }}-maven-
+
+    - name: "Checking out geOrchestra (needed for building dependencies)"
+      uses: actions/checkout@v2.4.0
+      with:
+        repository: "georchestra/georchestra"
+        path: "georchestra"
+
+    - name: Setting up JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+
+    - name: "Installing the geOrchestra root pom"
+      run: |
+          mvn install --non-recursive -f georchestra/pom.xml
+
+    - name: "Installing testcontainers georchestra module"
+      run: |
+          mvn clean install -f georchestra/testcontainers/pom.xml
+
+    - name: "Installing georchestra commons module"
+      run: |
+          mvn clean install -f georchestra/commons/pom.xml
+
+    - name: "Installing security-proxy-spring-integration georchestra module"
+      run: |
+          mvn clean install -f georchestra/security-proxy-spring-integration/pom.xml
+
+    - name: "Installing GeoNetwork"
+      run: mvn clean install -DskipTests
+
+    - name: "Building the docker image"
+      working-directory: web/
+      run: |
+        mvn clean package docker:build -Pdocker,log4j-logstash,sentry-log4j \
+        -DdockerImageName=georchestra/geonetwork:4.x-dev -DskipTests
+
+    - name: "publish the webapp as artifact"
+      uses: actions/upload-artifact@v1
+      with:
+        name: geonetwork.war
+        path: web/target/geonetwork.war
+
+    - name: "Login onto ghcr.io"
+      uses: docker/login-action@v1
+      with:
+        username: '${{ secrets.DOCKER_HUB_USERNAME }}'
+        password: '${{ secrets.DOCKER_HUB_PASSWORD }}'
+
+    - name: "Pushing the image to docker-hub"
+      run: |
+        docker push georchestra/geonetwork:4.x-dev
