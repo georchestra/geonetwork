@@ -30,7 +30,7 @@
   <parent>
     <groupId>org.geonetwork-opensource</groupId>
     <artifactId>geonetwork</artifactId>
-    <version>4.0.6-georchestra-SNAPSHOT</version>
+    <version>4.0.7-SNAPSHOT</version>
   </parent>
 
 
@@ -359,7 +359,7 @@
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>gn-core</artifactId>
-      <version>4.0.6-georchestra-SNAPSHOT</version>
+      <version>4.0.7-SNAPSHOT</version>
       <exclusions>
         <exclusion>
           <groupId>javax.servlet</groupId>
@@ -371,7 +371,7 @@
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>gn-services</artifactId>
-      <version>4.0.6-georchestra-SNAPSHOT</version>
+      <version>4.0.7-SNAPSHOT</version>
     </dependency>
 
     <dependency>
@@ -485,7 +485,7 @@
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>gn-web-ui</artifactId>
-      <version>4.0.6-georchestra-SNAPSHOT</version>
+      <version>4.0.7-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -498,14 +498,14 @@
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>gn-core</artifactId>
-      <version>4.0.6-georchestra-SNAPSHOT</version>
+      <version>4.0.7-SNAPSHOT</version>
       <classifier>tests</classifier>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>gn-services</artifactId>
-      <version>4.0.6-georchestra-SNAPSHOT</version>
+      <version>4.0.7-SNAPSHOT</version>
       <classifier>tests</classifier>
       <scope>test</scope>
     </dependency>
