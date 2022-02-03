@@ -29,7 +29,7 @@
   <groupId>org.geonetwork-opensource</groupId>
   <artifactId>geonetwork</artifactId>
   <packaging>pom</packaging>
-  <version>4.0.6-georchestra-SNAPSHOT</version>
+  <version>4.0.6-georchestra</version>
   <name>GeoNetwork opensource</name>
   <description>GeoNetwork opensource is a standards based, Free and
     Open Source catalog application to manage spatially referenced
@@ -928,6 +928,16 @@
         <groupId>org.codehaus.izpack</groupId>
         <artifactId>izpack-standalone-compiler</artifactId>
         <version>4.3.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jsoup</groupId>
+        <artifactId>jsoup</artifactId>
+        <version>1.14.3</version>
+      </dependency>
+      <dependency>
+        <groupId>com.neovisionaries</groupId>
+        <artifactId>nv-i18n</artifactId>
+        <version>1.29</version>
       </dependency>
       <dependency>
         <groupId>org.springframework</groupId>
