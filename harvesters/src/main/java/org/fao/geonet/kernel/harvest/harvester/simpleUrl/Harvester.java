@@ -201,8 +201,8 @@ class Harvester implements IHarvester<HarvestResult> {
             numberOfRecordsPerPage = Integer.parseInt(pageSizeParamValue);
         } else {
             log.warning(String.format(
-                "Page size param '%s' not found or is not a numeric in URL '%s'. Can't build a list of pages.",
-                params.pageSizeParam, params.url));
+                    "Page size param '%s' not found or is not a numeric in URL '%s'. Can't build a list of pages.",
+                    params.pageSizeParam, params.url));
             urlList.add(params.url);
             return urlList;
         }
@@ -213,8 +213,8 @@ class Harvester implements IHarvester<HarvestResult> {
             startAtZero = Integer.parseInt(pageFromParamValue) == 0;
         } else {
             log.warning(String.format(
-                "Page from param '%s' not found or is not a numeric in URL '%s'. Can't build a list of pages.",
-                params.pageFromParam, params.url));
+                    "Page from param '%s' not found or is not a numeric in URL '%s'. Can't build a list of pages.",
+                    params.pageFromParam, params.url));
             urlList.add(params.url);
             return urlList;
         }
@@ -225,11 +225,11 @@ class Harvester implements IHarvester<HarvestResult> {
         for (int i = 0; i < numberOfPages; i++) {
             int from = i * numberOfRecordsPerPage + (startAtZero ? 0 : 1);
             int size = i == numberOfPages - 1 ? // Last page
-                numberOfRecordsToHarvest - from + (startAtZero ? 0 : 1) :
-                numberOfRecordsPerPage;
+                    numberOfRecordsToHarvest - from + (startAtZero ? 0 : 1) :
+                    numberOfRecordsPerPage;
             String url = params.url
-                .replaceAll(params.pageFromParam + "=[0-9]+", params.pageFromParam + "=" + from)
-                .replaceAll(params.pageSizeParam + "=[0-9]+", params.pageSizeParam + "=" + size);
+                    .replaceAll(params.pageFromParam + "=[0-9]+", params.pageFromParam + "=" + from)
+                    .replaceAll(params.pageSizeParam + "=[0-9]+", params.pageSizeParam + "=" + size);
             urlList.add(url);
         }
 
@@ -240,8 +240,8 @@ class Harvester implements IHarvester<HarvestResult> {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             String recordAsXml = XML.toString(
-                new JSONObject(
-                    objectMapper.writeValueAsString(record)), "record");
+                    new JSONObject(
+                            objectMapper.writeValueAsString(record)), "record");
             recordAsXml = Xml.stripNonValidXMLCharacters(recordAsXml).replace("<@", "<").replace("</@", "</");
             Element recordAsElement = Xml.loadString(recordAsXml, false);
             recordAsElement.addContent(new Element("uuid").setText(uuid));
