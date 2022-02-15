@@ -3,7 +3,7 @@ name: Building georchestra-geonetwork4 artifacts
 on:
   push:
     branches:
-    - rebased-onto-upstream-4.0.6
+    - georchestra-gn4-4.0.6
 
 jobs:
   build:
