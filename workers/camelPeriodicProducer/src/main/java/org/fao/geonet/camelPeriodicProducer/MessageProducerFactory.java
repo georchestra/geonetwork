@@ -27,7 +27,6 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.quartz2.QuartzComponent;
 import org.apache.camel.component.quartz2.QuartzEndpoint;
 import org.apache.camel.model.RouteDefinition;
-import org.fao.geonet.harvester.wfsfeatures.worker.WFSHarvesterRouteBuilder;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
 import org.quartz.TriggerBuilder;
