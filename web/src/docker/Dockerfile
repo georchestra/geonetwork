@@ -9,7 +9,7 @@ COPY --chown=jetty:jetty . /
 # Temporary switch to root
 USER root
 
-RUN mkdir /mnt/geonetwork_datadir && \
+RUN mkdir -p /mnt/geonetwork_datadir && \
     chown jetty:jetty /mnt/geonetwork_datadir
 
 # Restore jetty user
