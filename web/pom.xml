@@ -1495,6 +1495,9 @@
         <dockerImageName>georchestra/${project.parent.artifactId}:${git.closest.tag.name}-dev</dockerImageName>
         <dockerDatadirScmUrl>scm:git:https://github.com/georchestra/datadir.git</dockerDatadirScmUrl>
         <dockerDatadirScmVersion>docker-20.0</dockerDatadirScmVersion>
+        <dockerGnDatadirScmUrl>scm:git:https://github.com/georchestra/geonetwork_minimal_datadir.git</dockerGnDatadirScmUrl>
+        <dockerGnDatadirScmVersion>gn4.0.6</dockerGnDatadirScmVersion>
+
       </properties>
       <build>
         <finalName>geonetwork</finalName>
@@ -1503,13 +1506,6 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-scm-plugin</artifactId>
             <version>1.9.4</version>
-            <configuration>
-              <checkoutDirectory>${project.build.directory}/datadir/</checkoutDirectory>
-              <connectionUrl>${dockerDatadirScmUrl}</connectionUrl>
-              <pushChanges>false</pushChanges>
-              <scmVersion>${dockerDatadirScmVersion}</scmVersion>
-              <scmVersionType>branch</scmVersionType>
-            </configuration>
             <executions>
               <execution>
                 <id>checkout-docker-default-datadir</id>
@@ -1517,6 +1513,27 @@
                 <goals>
                   <goal>checkout</goal>
                 </goals>
+                <configuration>
+                  <checkoutDirectory>${project.build.directory}/datadir/</checkoutDirectory>
+                  <connectionUrl>${dockerDatadirScmUrl}</connectionUrl>
+                  <pushChanges>false</pushChanges>
+                  <scmVersion>${dockerDatadirScmVersion}</scmVersion>
+                  <scmVersionType>branch</scmVersionType>
+                </configuration>
+              </execution>
+              <execution>
+                <id>checkout-docker-gn-datadir</id>
+                <phase>process-resources</phase>
+                <goals>
+                  <goal>checkout</goal>
+                </goals>
+                <configuration>
+                  <checkoutDirectory>${project.build.directory}/gn_datadir/</checkoutDirectory>
+                  <connectionUrl>${dockerGnDatadirScmUrl}</connectionUrl>
+                  <pushChanges>false</pushChanges>
+                  <scmVersion>${dockerGnDatadirScmVersion}</scmVersion>
+                  <scmVersionType>branch</scmVersionType>
+                </configuration>
               </execution>
             </executions>
           </plugin>
@@ -1537,6 +1554,12 @@
                   <targetPath>/etc/georchestra</targetPath>
                   <directory>${project.build.directory}/datadir</directory>
                   <include>${project.parent.artifactId}/**</include>
+                </resource>
+                <resource>
+                  <targetPath>/mnt/geonetwork_datadir</targetPath>
+                  <directory>${project.build.directory}/gn_datadir</directory>
+                  <exclude>.git**</exclude>
+                  <filtering>true</filtering>
                 </resource>
               </resources>
               <serverId>docker-hub</serverId>
