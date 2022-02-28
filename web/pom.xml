@@ -1494,7 +1494,7 @@
       <properties>
         <dockerImageName>georchestra/${project.parent.artifactId}:${git.closest.tag.name}-dev</dockerImageName>
         <dockerDatadirScmUrl>scm:git:https://github.com/georchestra/datadir.git</dockerDatadirScmUrl>
-        <dockerDatadirScmVersion>docker-20.0</dockerDatadirScmVersion>
+        <dockerDatadirScmVersion>docker-master</dockerDatadirScmVersion>
         <dockerGnDatadirScmUrl>scm:git:https://github.com/georchestra/geonetwork_minimal_datadir.git</dockerGnDatadirScmUrl>
         <dockerGnDatadirScmVersion>gn4.0.6</dockerGnDatadirScmVersion>
 
