@@ -71,7 +71,7 @@ geonetwork.syncRolesFilter=GN_(.*)
 
 # Map geOrchestra user role names to GeoNetwork user profiles.
 # Available GN profile names are:
-# Administrator, UserAdmin, Reviewer, Editor, RegisteredUser, Guest, Monitor
+# Administrator, Reviewer, Editor, RegisteredUser, Guest, Monitor
 geonetwork.profiles.default=RegisteredUser
 geonetwork.profiles.rolemappings.[GN_ADMIN]=Administrator
 geonetwork.profiles.rolemappings.[GN_REVIEWER]=Reviewer

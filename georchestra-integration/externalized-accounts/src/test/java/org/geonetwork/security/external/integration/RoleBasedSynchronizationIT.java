@@ -269,9 +269,9 @@ public class RoleBasedSynchronizationIT extends AbstractAccountsReconcilingServi
     private Set<CanonicalGroup> rolesMatchingPattern(ExternalizedSecurityProperties config) {
         Set<CanonicalGroup> origGroups = super.defaultRoles.stream()
                 .filter(r -> config.matchesRoleNameFilter(r.getName())).collect(toSet());
-        assertEquals(4, origGroups.size());
+        assertEquals(3, origGroups.size());
         assertEquals("preflight check failed",
-                Sets.newLinkedHashSet(roleGnAdmin, roleGnUserAdmin, roleGnEditor, roleGnReviewer), origGroups);
+                Sets.newLinkedHashSet(roleGnAdmin, roleGnEditor, roleGnReviewer), origGroups);
         return origGroups;
     }
 
