@@ -100,7 +100,7 @@ public class GeorchestraSecurityIntegrationIT extends AbstractGeorchestraIntegra
     /**
      * From
      * {@code src/test/resources/data_directory/geonetwork/geonetwork.properties}:
-     * 
+     *
      * <pre>
      * <code>
      * geonetwork.syncMode=orgs
@@ -126,9 +126,8 @@ public class GeorchestraSecurityIntegrationIT extends AbstractGeorchestraIntegra
 
         ProfileMappingProperties profiles = config.getProfiles();
         assertEquals(Profile.RegisteredUser, profiles.getDefault());
-        assertEquals(5, profiles.getRolemappings().size());
+        assertEquals(4, profiles.getRolemappings().size());
         assertEquals(Profile.Administrator, profiles.getRolemappings().get("GN_ADMIN"));
-        assertEquals(Profile.UserAdmin, profiles.getRolemappings().get("GN_USERADMIN"));
         assertEquals(Profile.Reviewer, profiles.getRolemappings().get("GN_REVIEWER"));
         assertEquals(Profile.Editor, profiles.getRolemappings().get("GN_EDITOR"));
         assertEquals(Profile.RegisteredUser, profiles.getRolemappings().get("USER"));
