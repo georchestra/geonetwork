@@ -320,6 +320,10 @@ public class ServiceContext extends BasicContext {
         this._statusCode = statusCode;
     }
 
+    public static void clearThreadLocalInstanceContext() {
+        THREAD_LOCAL_INSTANCE.remove();
+        ApplicationContextHolder.clear();
+    }
 }
 
 //=============================================================================
