@@ -43,7 +43,7 @@ import com.google.common.annotations.VisibleForTesting;
  * Pre-auth filter that gets the credentials as a {@link GeorchestraUser} from a
  * {@link GeorchestraSecurityProxyAuthenticationFilter} using composition, and
  * makes sure GeoNetwork user matches the georchestra user info.
- * 
+ *
  * @see AccountsReconcilingService
  */
 public class GeorchestraPreAuthenticationFilter extends AbstractPreAuthenticatedProcessingFilter {
@@ -71,11 +71,11 @@ public class GeorchestraPreAuthenticationFilter extends AbstractPreAuthenticated
     public @VisibleForTesting User getPreAuthenticatedPrincipal(HttpServletRequest request) {
         final GeorchestraUserDetails auth = delegate.getPreAuthenticatedPrincipal(request);
         if (auth == null) {
-            log.debug("geOrchestrea pre-auth not provided. URI: %s", request.getRequestURI());
+            log.debug("geOrchestra pre-auth not provided. URI: {}", request.getRequestURI());
             return null;
         }
         if (auth.isAnonymous()) {
-            log.debug("geOrchestrea pre-auth is anonymous. URI: %s", request.getRequestURI());
+            log.debug("geOrchestra pre-auth is anonymous. URI: {}", request.getRequestURI());
             return null;
         }
 
