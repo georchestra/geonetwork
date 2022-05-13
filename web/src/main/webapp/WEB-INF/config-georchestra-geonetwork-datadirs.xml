@@ -23,6 +23,7 @@
     <property name="htmlCacheDir" ref="GNHtmlCacheDir"/>
     <property name="uploadDir" ref="GNUploadDir"/>
     <property name="formatterDir" ref="GNFormatterDir"/>
+    <property name="indexConfigDir" ref="GNIndexConfigDir" />
   </bean>
   <bean id="GNSystemDataDir" class="java.nio.file.Paths" factory-method="get">
     <constructor-arg index="0" value="${geonetwork.dir}"/>
@@ -62,6 +63,10 @@
   </bean>
   <bean id="GNFormatterDir" class="java.nio.file.Paths" factory-method="get">
     <constructor-arg index="0" value="${geonetwork.formatter.dir}"/>
+    <constructor-arg index="1"><array /></constructor-arg>
+  </bean>
+  <bean id="GNIndexConfigDir" class="java.nio.file.Paths" factory-method="get">
+    <constructor-arg index="0" value="${geonetwork.indexConfig.dir}"/>
     <constructor-arg index="1"><array /></constructor-arg>
   </bean>
 
