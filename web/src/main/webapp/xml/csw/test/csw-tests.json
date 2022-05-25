@@ -2,6 +2,7 @@
 "csw-GetCapabilities": ["csw-GetCapabilities",""],
 "csw-DescribeRecord":["csw-DescribeRecord",""],
 "csw-DescribeRecordWithMD_Metadata":["csw-DescribeRecord with gmd:MD_Metadata",""],
+"csw-DescribeRecordWithMD_Metadata":["csw-DescribeRecord with gmd:MD_TopicCategoryCode_Type",""],
 "csw-DescribeRecordWithMultipleTypeName":["csw-DescribeRecord multiple typenames",""],
 "csw-GetRecordsNoFilter":["csw-GetRecords | no filter",""],
 "csw-GetRecordsNoFilterResults":[    "csw-GetRecords | no filter | results",""],
