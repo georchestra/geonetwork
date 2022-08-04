@@ -246,7 +246,7 @@ public class UpdateMetadataStatus extends DatabaseMigrationTask {
                                 changeflag = true;
                             }
                         }
-                        if (changeflag = true) {
+                        if (changeflag == true) {
                             updateRowCount++;
                             metadataStatusRepository.save(metadataStatus);
                             changeflag=false;
