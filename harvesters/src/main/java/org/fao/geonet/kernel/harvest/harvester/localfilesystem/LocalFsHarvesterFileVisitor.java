@@ -73,8 +73,6 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static org.fao.geonet.kernel.HarvestValidationEnum.NOVALIDATION;
-
 
 /**
  * @author Jesse on 11/6/2014.
@@ -182,8 +180,9 @@ class LocalFsHarvesterFileVisitor extends SimpleFileVisitor<Path> {
             String recordAsJson = objectMapper.readTree(filePath.toFile()).toString();
             JSONObject sanitizedJson = sanitize(new JSONObject(recordAsJson));
             String recordAsXml = XML.toString(sanitizedJson,"record")
-                            .replace("<@", "<")
-                            .replace("</@", "</");
+                .replace("<@", "<")
+                .replace("</@", "</")
+                .replaceAll("(:)(?![^<>]*<)", "_"); // this removes colon from property names
             recordAsXml = Xml.stripNonValidXMLCharacters(recordAsXml);
             recordAsElement = Xml.loadString(recordAsXml, false);
             recordAsElement.addContent(new Element("uuid").setText(uuid));
