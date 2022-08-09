@@ -33,7 +33,7 @@
 
   <artifactId>gn-services</artifactId>
   <name>GeoNetwork services</name>
-  <version>4.0.6-georchestra</version>
+  <version>4.2.0-georchestra</version>
 
   <dependencies>
     <dependency>
