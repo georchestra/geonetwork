@@ -30,7 +30,7 @@
   <parent>
     <groupId>org.geonetwork-opensource</groupId>
     <artifactId>geonetwork</artifactId>
-    <version>4.0.6-georchestra</version>
+    <version>4.2.0-georchestra</version>
   </parent>
 
 
@@ -455,7 +455,6 @@
     <dependency>
       <groupId>edu.ucar</groupId>
       <artifactId>netcdf</artifactId>
-      <version>4.3.23</version>
     </dependency>
 
     <!-- Monitoring libraries -->

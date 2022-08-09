@@ -164,10 +164,15 @@ public class GlobalExceptionController {
         Exception.class,
         RuntimeException.class
     })
-    public ApiError runtimeExceptionHandler(final Exception exception) {
+    public ApiError runtimeExceptionHandler(final Exception exception, final HttpServletRequest request) {
         storeApiErrorCause(exception);
 
-        return new ApiError("runtime_exception", exception);
+        if (contentTypeNeedsBody(request)) {
+            return new ApiError("runtime_exception", exception);
+        } else {
+            return null;
+        }
+
     }
 
     @ResponseBody
@@ -176,10 +181,21 @@ public class GlobalExceptionController {
     @ExceptionHandler({
         FeatureNotEnabledException.class
     })
-    public ApiError runtimeExceptionHandler(final FeatureNotEnabledException exception) {
+    public ApiError runtimeExceptionHandler(final HttpServletRequest request, final Exception exception) {
         storeApiErrorCause(exception);
 
-        return new ApiError("feature_disabled", exception);
+        if (contentTypeNeedsBody(request)) {
+            if (exception instanceof ILocalizedException && StringUtils.isEmpty(((ILocalizedException) exception).getMessageKey())) {
+                ((ILocalizedException) exception).setMessageKey("api.exception.resourceNotFound");
+            }
+            if (exception instanceof ILocalizedException && StringUtils.isEmpty(((ILocalizedException) exception).getDescriptionKey())) {
+                ((ILocalizedException) exception).setDescriptionKey("api.exception.resourceNotFound.description");
+            }
+            updateExceptionLocale(exception, request);
+            return new ApiError("feature_disabled", exception);
+        } else {
+            return null;
+        }
     }
 
 
@@ -333,10 +349,13 @@ public class GlobalExceptionController {
         MultipartException.class,
         DoiClientException.class
     })
-    public ApiError unsatisfiedParameterHandler(final Exception exception) {
+    public ApiError unsatisfiedParameterHandler(final Exception exception, final HttpServletRequest request) {
         storeApiErrorCause(exception);
 
-        return new ApiError("unsatisfied_request_parameter", exception);
+        if (contentTypeNeedsBody(request)) {
+            return new ApiError("unsatisfied_request_parameter", exception);
+        }
+        return null;
     }
 
     @ResponseBody

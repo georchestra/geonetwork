@@ -42,7 +42,7 @@
       'topic*',
       'inspire*',
       'resource*',
-      'draft',
+      'draft*',
       'overview.*',
       'owner*',
       'link*',
@@ -95,7 +95,7 @@
             'creat*',
             'group*',
             'resource*',
-            'draft',
+            'draft*',
             'owner*',
             'recordOwner',
             'status*',
@@ -204,7 +204,9 @@
             'uuid',
             'overview.*',
             'resource*',
-            'link'
+            'link',
+            'format',
+            'cl_status.key'
           ]
         }
       },
