@@ -40,6 +40,29 @@
               "english_stemmer"
             ]
           },
+          "french_rebuilt": {
+            "tokenizer":  "standard",
+            "filter": [
+              "lowercase",
+              "french_synonym",
+              "french_elision",
+              "french_stop",
+              "asciifolding",
+              "french_keywords",
+              "french_stemmer"
+            ]
+          },
+          "english_rebuilt": {
+            "tokenizer":  "standard",
+            "filter": [
+              "english_possessive_stemmer",
+              "lowercase",
+              "english_synonym",
+              "english_stop",
+              "english_keywords",
+              "english_stemmer"
+            ]
+          },
           "synInspireAnnexes": {
             "tokenizer": "keyword",
             "filter": [
