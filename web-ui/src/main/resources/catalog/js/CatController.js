@@ -146,8 +146,8 @@ goog.require('gn_alert');
           // Full text on all fields
           // 'queryBase': '${any}',
           // Full text but more boost on title match
-          'queryBase': 'any:(${any}) resourceTitleObject.\\*:(${any})^2',
-          'queryTitle': '${any}',
+          'queryBase': 'any.\\*:(${any}) any.common:(${any}) resourceTitleObject.\\*:(${any})^2',
+          'queryTitle': 'resourceTitleObject.\\*:(${any})',
           'searchOptions': true,
           // Score query may depend on where we are in the app?
           'scoreConfig': {
