@@ -12,7 +12,7 @@
   <name>geOrchestra integration</name>
   <properties>
     <rootProjectDir>${basedir}/..</rootProjectDir>
-    <georchestra.version>22.0.3</georchestra.version>
+    <georchestra.version>22.0.4-SNAPSHOT</georchestra.version>
   </properties>
   <modules>
     <module>georchestra-utils</module>
