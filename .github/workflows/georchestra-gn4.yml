@@ -3,7 +3,7 @@ name: Building georchestra-geonetwork4 artifacts
 on:
   push:
     branches:
-    - georchestra-gn4-4.0.6
+    - georchestra-gn4-4.0.6-22.0.x
 
 jobs:
   build:
