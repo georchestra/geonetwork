@@ -50,4 +50,9 @@ public class IntegrationConfiguration {
     protected @Bean OrgsBasedGroupSynchronizer orgsGroupSynchronizer() {
         return new OrgsBasedGroupSynchronizer(canonicalAccountsRepository);
     }
+
+    protected @Bean LogoUpdater logoUpdater() {
+        return new LogoUpdater(canonicalAccountsRepository);
+    }
+
 }

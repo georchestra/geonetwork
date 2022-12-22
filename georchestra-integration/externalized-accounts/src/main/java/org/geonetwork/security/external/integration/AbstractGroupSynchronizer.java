@@ -66,6 +66,8 @@ abstract class AbstractGroupSynchronizer implements GroupSynchronizer {
 
     protected @Autowired ExternalizedSecurityProperties configProperties;
 
+    private @Autowired LogoUpdater logoUpdater;
+
     protected AbstractGroupSynchronizer(CanonicalAccountsRepository canonicalAccounts) {
         Objects.requireNonNull(canonicalAccounts);
         this.canonicalAccounts = canonicalAccounts;
@@ -151,6 +153,7 @@ abstract class AbstractGroupSynchronizer implements GroupSynchronizer {
             updateLabelTranslations(canonical, group);
         }
 
+        logoUpdater.synchronize(canonical.getId(), group);
         group.setName(canonical.getName());
         group.setDescription(canonical.getDescription());
         group.setWebsite(canonical.getLinkage());

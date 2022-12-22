@@ -66,4 +66,6 @@ public interface CanonicalAccountsRepository {
      * Note whereas an Role name may change over time, it's required to be unique.
      */
     Optional<CanonicalGroup> findRoleByName(String name);
+
+    Optional<byte[]> getLogo(String id);
 }

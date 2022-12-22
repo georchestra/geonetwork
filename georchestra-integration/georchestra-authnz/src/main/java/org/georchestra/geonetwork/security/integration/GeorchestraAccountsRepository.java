@@ -74,4 +74,7 @@ public class GeorchestraAccountsRepository implements CanonicalAccountsRepositor
         return georchestraRoles.findAll().stream().map(mapper::toCanonical).collect(Collectors.toList());
     }
 
+    public @Override Optional<byte[]> getLogo(String id) {
+        return georchestraOrgs.getLogo(id);
+    }
 }
