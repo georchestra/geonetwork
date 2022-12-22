@@ -1031,6 +1031,15 @@
               "mineral resources => http://inspire.ec.europa.eu/theme/mr"
             ]
           }
+        },
+        "normalizer": {
+          "case_insensitive": {
+            "char_filter": [],
+            "filter": [
+              "lowercase", "asciifolding"
+            ],
+            "type": "custom"
+          }
         }
       }
     }
@@ -1747,7 +1756,8 @@
         "type": "keyword"
       },
       "format": {
-        "type": "keyword"
+        "type": "keyword",
+        "normalizer": "case_insensitive"
       },
       "spatialRepresentationType": {
         "type": "keyword"
