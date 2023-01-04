@@ -1121,6 +1121,19 @@
                   }
                 }
               },
+              "langdut": {
+                "type": "text",
+                "analyzer": "dutch",
+                "copy_to": [
+                  "any.langdut"
+                ],
+                "fields": {
+                  "keyword": {
+                    "type": "keyword",
+                    "ignore_above": 256
+                  }
+                }
+              },
               "langita": {
                 "type": "text",
                 "analyzer": "italian",
@@ -1198,14 +1211,6 @@
         }
       },
       {
-        "org": {
-          "match": "*Org*",
-          "mapping": {
-            "type": "keyword"
-          }
-        }
-      },
-      {
         "tree": {
           "match": "th_*_tree",
           "mapping": {
@@ -1254,6 +1259,12 @@
                   "any.langger"
                 ]
               },
+              "langdut": {
+                "type": "keyword",
+                "copy_to": [
+                  "any.langdut"
+                ]
+              },
               "langita": {
                 "type": "keyword",
                 "copy_to": [
@@ -1289,6 +1300,14 @@
                 "type": "keyword"
               }
             }
+          }
+        }
+      },
+      {
+        "org": {
+          "match": "*Org*",
+          "mapping": {
+            "type": "keyword"
           }
         }
       },
@@ -1431,6 +1450,10 @@
             "type": "text",
             "analyzer": "german"
           },
+          "langdut": {
+            "type": "text",
+            "analyzer": "dutch"
+          },
           "langita": {
             "type": "text",
             "analyzer": "italian"
@@ -1474,6 +1497,12 @@
             "type": "keyword",
             "copy_to": [
               "any.langger"
+              ]
+          },
+          "langdut": {
+            "type": "keyword",
+            "copy_to": [
+              "any.langdut"
               ]
           },
           "langita": {
@@ -1737,6 +1766,14 @@
       "resourceType": {
         "type": "keyword"
       },
+      "resourceTypeNameObject": {
+        "type": "object",
+        "properties": {
+          "default": {
+            "type": "keyword"
+          }
+        }
+      },
       "resourceIdentifier": {
         "type": "object",
         "properties": {
@@ -1833,6 +1870,12 @@
         "type": "keyword"
       },
       "root": {
+        "type": "keyword"
+      },
+      "indexingError": {
+        "type": "boolean"
+      },
+      "indexingErrorMsg": {
         "type": "keyword"
       },
       "statusWorkflow": {

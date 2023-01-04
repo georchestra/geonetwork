@@ -25,6 +25,9 @@ package org.fao.geonet.api.site;
 
 import net.bytebuddy.pool.TypePool;
 import org.apache.log4j.xml.DOMConfigurator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.LoggerContext;
+import org.apache.logging.log4j.status.StatusLogger;
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.domain.Setting;
 import org.fao.geonet.exceptions.OperationAbortedEx;
@@ -33,24 +36,40 @@ import org.fao.geonet.repository.SettingRepository;
 import org.springframework.beans.BeansException;
 
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.Optional;
 
 /**
- * Logger utilities
+ * Logger utilities.
+ *
+ * <p>To troubleshoot use {@code org.apache.logging.log4j.simplelog.StatusLogger.level=DEBUG}, or
+ * adjust {@code log4j2.xml} file &lt;Configuration status=&quote;trace&quote;&gt;.
  *
  * @author bmaire
  */
 public class LogUtils {
-    public static final String DEFAULT_LOG_FILE = "log4j.xml";
+    /**
+     * Default built-in log4j2 configuration.
+     */
+    static final String DEFAULT_LOG_FILE = "log4j2.xml";
 
 
     /**
-     * Refresh logger configuration. If settings is not set in database, using default log4j.xml
-     * file. If requested file does not exist, using default log4j.xml file.
+     * Refresh logger configuration. If settings is not set in database, using default log4j2.xml
+     * file. If requested file does not exist, using default log4j2.xml file.
+     *
+     * As a side effect of this activity the a {@code Console} and {@code File} appender
+     * may be configured. Jeeves {@code Log} uses this information to determine logfile location
+     * (and set up harvesters with their own logfile).
+     *
+     * The {@code LoggingAPI} service, and {@code LogConfig} service, also make use of this information
+     * to retrieve {@code geonetwork.log} file contents.
      */
     public static void refreshLogConfiguration() {
+        final StatusLogger CONFIG_LOG = StatusLogger.getLogger();
+
         SettingRepository repository =
             ApplicationContextHolder.get().getBean(SettingRepository.class);
         Optional<Setting> settingOpt = repository.findById(Settings.SYSTEM_SERVER_LOG);
@@ -60,35 +79,34 @@ public class LogUtils {
             setting = settingOpt.get();
         }
 
-
-        String loggingConfigurationPath;
-        try {
-            loggingConfigurationPath = (String) ApplicationContextHolder.get().getBean("loggingConfigurationPath");
-        } catch (BeansException e) {
-            loggingConfigurationPath = null;
-        }
         // get log config from db settings
         String log4jProp = setting != null ? setting.getValue() : DEFAULT_LOG_FILE;
-        URL url ;
+        URL url = LogUtils.class.getResource("/" + log4jProp);
+        try {
+            if (url != null) {
+                // refresh configuration
+                if (log4jProp.startsWith("log4j2")){
+                    // current context, no need to enforce autoclosable
+                    final LoggerContext loggerContext = (LoggerContext) LogManager.getContext(false);
 
-        if (loggingConfigurationPath != null) {
-            try {
-                url = Paths.get(loggingConfigurationPath, log4jProp).toUri().toURL();
-            } catch (MalformedURLException e) {
-                url = LogUtils.class.getResource("/" + log4jProp);
+                    CONFIG_LOG.info("Load log4j2 config from '"+url+"'");
+                    loggerContext.setConfigLocation(url.toURI());
+                }
+                else {
+                    CONFIG_LOG.info("Load log4j config from '"+url+"'");
+                    DOMConfigurator.configure(url);
+                }
+            } else {
+                CONFIG_LOG.info("Unable  to load '"+log4jProp+"', using '"+DEFAULT_LOG_FILE+"'");
+                DOMConfigurator.configure(LogUtils.class.getResource("/" + DEFAULT_LOG_FILE));
+                throw new OperationAbortedEx("Can't refresh log configuration because file '" +
+                    log4jProp + "' doesn't exist. Using log4j.xml.");
             }
-        } else {
-                url = LogUtils.class.getResource("/" + log4jProp);
-        }
-
-        if (url != null) {
-            // refresh configuration
-            DOMConfigurator.configure(url);
-        } else {
-            DOMConfigurator.configure(
-                LogUtils.class.getResource("/" + DEFAULT_LOG_FILE));
-            throw new OperationAbortedEx("Can't refresh log configuration because file '" +
-                log4jProp + "' doesn't exist. Using log4j.xml.");
+        } catch (URISyntaxException | RuntimeException unsuccessful) {
+            CONFIG_LOG.info("Unable  to load '"+log4jProp+"', using '"+DEFAULT_LOG_FILE+"'");
+            DOMConfigurator.configure(LogUtils.class.getResource("/" + DEFAULT_LOG_FILE));
+            throw new OperationAbortedEx("Can't refresh log configuration '" +
+                log4jProp + "' due to issue with configuration: "+unsuccessful.getMessage(),unsuccessful);
         }
     }
 }

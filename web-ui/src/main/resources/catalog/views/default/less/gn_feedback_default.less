@@ -155,6 +155,13 @@ q, blockquote {
   }
 }
 
+html[ng-app='gn_admin'] {
+  .gn-userfeedback-card {
+    width: unset;
+    float: unset;
+  }
+}
+
 // detailpage - sidebar
 .gn-userfeedback-sidebar {
   margin-top: 10px;
@@ -265,6 +272,18 @@ q, blockquote {
         }
       }
     }
+  }
+  // errors
+  input, textarea {
+    &.ng-invalid {
+      border-color: @brand-danger;
+      &:focus {
+        box-shadow: none;
+      }
+    }
+  }
+  .help-block {
+    color: @brand-danger;
   }
   // panels
   .panel {

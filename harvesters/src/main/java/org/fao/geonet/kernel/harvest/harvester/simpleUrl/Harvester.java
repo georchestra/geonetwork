@@ -240,8 +240,8 @@ class Harvester implements IHarvester<HarvestResult> {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             String recordAsXml = XML.toString(
-                new JSONObject(
-                    objectMapper.writeValueAsString(record)), "record");
+                    new JSONObject(
+                            objectMapper.writeValueAsString(record)), "record");
             recordAsXml = Xml.stripNonValidXMLCharacters(recordAsXml)
                     .replace("<@", "<")
                     .replace("</@", "</")
