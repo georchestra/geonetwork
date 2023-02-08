@@ -1,16 +1,24 @@
 #!/bin/bash
 set -e
 
-HOST=`grep jdbc.host                               \
-  /etc/georchestra/geonetwork/geonetwork.properties \
-  | cut -d '=' -f 2                                 \
-  | xargs`
+if [[ -n $PG_HOST ]]; then
+  HOST=$PG_HOST
+else
+  HOST=`grep jdbc.host                               \
+    /etc/georchestra/geonetwork/geonetwork.properties \
+    | cut -d '=' -f 2                                 \
+    | xargs`
+fi
 
-PORT=`grep jdbc.port                                \
-  /etc/georchestra/geonetwork/geonetwork.properties \
-  | cut -d '=' -f 2                                 \
-  | xargs`
-PORT="${PORT:-5432}"
+if [[ -n $PG_PORT ]]; then
+  PORT=$PG_PORT
+else
+  PORT=`grep jdbc.port                                \
+    /etc/georchestra/geonetwork/geonetwork.properties \
+    | cut -d '=' -f 2                                 \
+    | xargs`
+  PORT="${PORT:-5432}"
+fi
 
 echo Waiting for $HOST:$PORT to become available...
 /wait-for-it.sh $HOST:$PORT -s -t 0 -- echo "DB OK"
