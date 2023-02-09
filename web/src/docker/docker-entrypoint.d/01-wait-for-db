@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-if [[ -n $PG_HOST ]]; then
-  HOST=$PG_HOST
+if [[ -n $PGHOST ]]; then
+  HOST=$PGHOST
 else
   HOST=`grep jdbc.host                               \
     /etc/georchestra/geonetwork/geonetwork.properties \
@@ -10,8 +10,8 @@ else
     | xargs`
 fi
 
-if [[ -n $PG_PORT ]]; then
-  PORT=$PG_PORT
+if [[ -n $PGPORT ]]; then
+  PORT=$PGPORT
 else
   PORT=`grep jdbc.port                                \
     /etc/georchestra/geonetwork/geonetwork.properties \
