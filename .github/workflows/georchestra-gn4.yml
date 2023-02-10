@@ -3,7 +3,7 @@ name: Building georchestra-geonetwork4 artifacts
 on:
   push:
     branches:
-    - georchestra-gn4.2.x
+    - fix_tests
 
 env:
   DOCKER_TAG: 4.2.x
