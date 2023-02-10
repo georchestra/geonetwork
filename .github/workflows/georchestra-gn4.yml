@@ -47,6 +47,9 @@ jobs:
     - name: "Installing GeoNetwork"
       run: mvn clean install -DskipTests
 
+    - name: "run tests"
+      run: mvn verify -Pit
+
     - name: "Building the docker image"
       working-directory: web/
       run: |
