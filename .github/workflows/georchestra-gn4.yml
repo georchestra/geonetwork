@@ -1,7 +1,7 @@
 name: Building georchestra-geonetwork4 artifacts
 
 on:
-  push:
+  pull_request:
     branches:
     - georchestra-gn4.2.x
 
@@ -67,4 +67,4 @@ jobs:
 
     - name: "Pushing the image to docker-hub"
       run: |
-        docker push georchestra/geonetwork:4.2.x-dev
+        docker push georchestra/geonetwork:4.2.x-dev-test
