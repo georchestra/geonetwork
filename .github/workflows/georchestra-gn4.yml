@@ -3,7 +3,7 @@ name: Building georchestra-geonetwork4 artifacts
 on:
   push:
     branches:
-    - fix_tests
+    - more_robust_ldap_synchro
 
 jobs:
   build:
