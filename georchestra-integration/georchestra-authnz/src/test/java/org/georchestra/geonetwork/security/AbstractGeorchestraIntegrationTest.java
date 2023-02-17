@@ -49,6 +49,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.Testcontainers;
+import org.testcontainers.utility.MountableFile;
 
 @RunWith(SpringRunner.class)
 @TestPropertySource(properties = { //
@@ -86,7 +87,7 @@ public abstract class AbstractGeorchestraIntegrationTest {
         Testcontainers.exposeHostPorts(ldap.getMappedLdapPort(), db.getMappedDatabasePort());
 
         console = new GeorchestraConsoleContainer()//
-                .withFileSystemBind(resolveHostDataDirectory(), "/etc/georchestra")//
+                .withCopyFileToContainer(MountableFile.forClasspathResource("data_directory"), "/etc/georchestra")//
                 .withEnv("pgsqlHost", "host.testcontainers.internal")//
                 .withEnv("pgsqlPort", String.valueOf(db.getMappedDatabasePort()))//
                 .withEnv("ldapHost", "host.testcontainers.internal")//
@@ -96,12 +97,6 @@ public abstract class AbstractGeorchestraIntegrationTest {
         console.start();
         System.setProperty("georchestra.console.url",
                 String.format("http://localhost:%d", console.getMappedConsolePort()));
-    }
-
-    private static String resolveHostDataDirectory() {
-        File dataDir = new File("src/test/resources/data_directory").getAbsoluteFile();
-        assertTrue(dataDir.isDirectory());
-        return dataDir.getAbsolutePath();
     }
 
     public static @AfterClass void shutDownConsoleContainer() {
