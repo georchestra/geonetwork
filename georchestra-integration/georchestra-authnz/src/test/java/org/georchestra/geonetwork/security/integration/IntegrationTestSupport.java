@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
+import lombok.experimental.Delegate;
 import org.fao.geonet.domain.Profile;
 import org.fao.geonet.domain.User;
 import org.geonetwork.security.external.configuration.ExternalizedSecurityProperties;
@@ -136,6 +137,33 @@ public class IntegrationTestSupport {
             return SecurityHeaders.encodeBase64(json);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public static class CanonicalUserWrapper implements CanonicalUser {
+        @Delegate(excludes = ExcludedListMethods.class)
+        private CanonicalUser canonicalUser;
+
+        public CanonicalUserWrapper(CanonicalUser canonicalUser) {
+            this.canonicalUser = canonicalUser;
+        }
+
+        @Override
+        public String getEmail() {
+            return "updated";
+        }
+
+        @Override
+        public String getLastUpdated() {
+            return "new_date";
+        }
+
+        private abstract class ExcludedListMethods {
+            public abstract String getEmail();
+
+            public abstract String getLastUpdated();
+
+
         }
     }
 }

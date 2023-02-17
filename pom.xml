@@ -1342,10 +1342,16 @@
               <debug>true</debug>   <!-- Whether to include debugging information.   -->
               <encoding>UTF-8</encoding> <!-- The -encoding argument for the Java compiler. -->
               <compilerArgs>
-                <arg>-proc:none</arg>
                 <arg>--add-exports</arg>
                 <arg>java.base/sun.net.ftp=ALL-UNNAMED</arg>
               </compilerArgs> <!-- disable automatic annotation processing according to: http://docs.jboss.org/hibernate/jpamodelgen/1.0/reference/en-US/html_single/#d0e261 -->
+              <annotationProcessorPaths>
+                <path>
+                  <groupId>org.projectlombok</groupId>
+                  <artifactId>lombok</artifactId>
+                  <version>1.18.24</version>
+                </path>
+              </annotationProcessorPaths>
             </configuration>
           </plugin>
         </plugins>

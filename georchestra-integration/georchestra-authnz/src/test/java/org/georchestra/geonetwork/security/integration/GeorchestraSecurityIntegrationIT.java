@@ -21,6 +21,7 @@ package org.georchestra.geonetwork.security.integration;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.doAnswer;
 
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,7 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.fao.geonet.domain.Group;
 import org.fao.geonet.domain.Profile;
@@ -39,7 +41,9 @@ import org.geonetwork.security.external.integration.ScheduledAccountsSynchroniza
 import org.geonetwork.security.external.model.CanonicalGroup;
 import org.geonetwork.security.external.model.CanonicalUser;
 import org.geonetwork.security.external.model.GroupSyncMode;
+import org.geonetwork.security.external.model.UserLink;
 import org.geonetwork.security.external.repository.CanonicalAccountsRepository;
+import org.geonetwork.security.external.repository.UserLinkRepository;
 import org.georchestra.geonetwork.security.AbstractGeorchestraIntegrationTest;
 import org.georchestra.security.model.GeorchestraUser;
 import org.georchestra.security.model.Organization;
@@ -53,6 +57,7 @@ public class GeorchestraSecurityIntegrationIT extends AbstractGeorchestraIntegra
     private @Autowired ExternalizedSecurityProperties configProps;
     private @Autowired AccountsReconcilingService synchronizationService;
     private @Autowired ScheduledAccountsSynchronizationService scheduledSynchronizationService;
+    private @Autowired UserLinkRepository userLinkRepository;
 
     public @Test void testConsoleAccountsRepository_Users() {
         Map<String, GeorchestraUser> expected = toIdMap(support.loadExpectedGeorchestraUsers(),
@@ -166,6 +171,20 @@ public class GeorchestraSecurityIntegrationIT extends AbstractGeorchestraIntegra
             Optional<Group> synced = this.synchronizationService.findUpToDateGroup(canonical);
             assertTrue(synced.isPresent());
         });
+    }
+
+    public @Test void usersUpdate() {
+        doAnswer(invocation -> ((List<CanonicalUser>)invocation.callRealMethod())
+            .stream()
+            .map(user -> new IntegrationTestSupport.CanonicalUserWrapper(user))
+            .collect(Collectors.toList())
+        ).when(consoleAccountsRepository).findAllUsers();
+
+        synchronizationService.synchronize();
+
+        List<User> users = userLinkRepository.findAll().stream().map(UserLink::getInternalUser).collect(Collectors.toList());
+        assertEquals(5, users.stream().map(User::getUsername).distinct().count());
+        assertEquals(1, users.stream().map(User::getEmail).distinct().count());
     }
 
     private <T> Map<String, T> toIdMap(List<T> list, Function<T, String> idExtractor) {
