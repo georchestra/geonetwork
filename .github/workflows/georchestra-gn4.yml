@@ -5,6 +5,9 @@ on:
     branches:
     - georchestra-gn4.2.x
 
+env:
+  DOCKER_TAG: 4.2.x
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -51,7 +54,7 @@ jobs:
       working-directory: web/
       run: |
         mvn clean package docker:build -Pdocker,log4j-logstash,sentry-log4j \
-        -DdockerImageName=georchestra/geonetwork:4.2.x-dev -DskipTests
+        -DdockerImageName=georchestra/geonetwork:${DOCKER_TAG} -DskipTests
 
     - name: "publish the webapp as artifact"
       uses: actions/upload-artifact@v1
@@ -65,6 +68,11 @@ jobs:
         username: '${{ secrets.DOCKER_HUB_USERNAME }}'
         password: '${{ secrets.DOCKER_HUB_PASSWORD }}'
 
-    - name: "Pushing the image to docker-hub"
+    - name: "Pushing branch image to docker-hub"
       run: |
-        docker push georchestra/geonetwork:4.2.x-dev
+        docker push georchestra/geonetwork:${DOCKER_TAG}
+
+    - name: "Pushing latest image to docker-hub"
+      run: |
+        docker tag georchestra/geonetwork:${DOCKER_TAG} georchestra/geonetwork:latest
+        docker push georchestra/geonetwork:latest
