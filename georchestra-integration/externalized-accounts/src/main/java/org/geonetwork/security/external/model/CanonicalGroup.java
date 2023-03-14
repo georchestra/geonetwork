@@ -42,6 +42,8 @@ public interface CanonicalGroup {
      */
     String getName();
 
+    String getOrgTitle();
+
     /**
      * An indication of the external entity's version, used to ensure currentness of
      * the GeoNetwork {@link Group} definition. Whenever the internally kept version

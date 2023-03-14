@@ -211,7 +211,8 @@ abstract class AbstractGroupSynchronizer implements GroupSynchronizer {
     }
 
     private void updateLabelTranslations(CanonicalGroup canonical, Group group) {
-        final String newName = canonical.getName();
+        final String newName = Optional.ofNullable(canonical.getOrgTitle()).map(String::isBlank).orElse(true)
+            ? canonical.getName() : canonical.getOrgTitle();
         Map<String, String> newLangs = langRepository.findAll().stream()
                 .collect(Collectors.toMap(Language::getId, l -> newName));
         newLangs.forEach(group.getLabelTranslations()::put);
