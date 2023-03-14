@@ -39,6 +39,7 @@ public class CanonicalGroupImpl implements CanonicalGroup {
     private String lastUpdated;
     private String description;
     private String linkage;
+    private String orgTitle;
 
     private GroupSyncMode origin;
 
@@ -50,6 +51,7 @@ public class CanonicalGroupImpl implements CanonicalGroup {
         this.linkage = builder.linkage;
         this.lastUpdated = builder.lastUpdated;
         this.origin = builder.origin;
+        this.orgTitle = builder.orgTitle;
     }
 
     public @Override String getId() {
@@ -58,6 +60,10 @@ public class CanonicalGroupImpl implements CanonicalGroup {
 
     public @Override String getName() {
         return this.name;
+    }
+
+    public @Override String getOrgTitle() {
+        return this.orgTitle;
     }
 
     public @Override GroupSyncMode getOrigin() {
@@ -90,7 +96,7 @@ public class CanonicalGroupImpl implements CanonicalGroup {
         CanonicalGroupImpl other = (CanonicalGroupImpl) obj;
         return Objects.equals(description, other.description) && Objects.equals(id, other.id)
                 && Objects.equals(lastUpdated, other.lastUpdated) && Objects.equals(linkage, other.linkage)
-                && Objects.equals(name, other.name) && origin == other.origin;
+                && Objects.equals(name, other.name) && origin == other.origin && Objects.equals(orgTitle, other.orgTitle);
     }
 
     public @Override String toString() {
@@ -99,7 +105,7 @@ public class CanonicalGroupImpl implements CanonicalGroup {
 
     /**
      * Creates builder to build {@link CanonicalGroup}.
-     * 
+     *
      * @return created builder
      */
     public static Builder builder() {
@@ -115,6 +121,7 @@ public class CanonicalGroupImpl implements CanonicalGroup {
         private String description;
         private String linkage;
         private String lastUpdated;
+        private String orgTitle;
         private GroupSyncMode origin;
 
         private Builder() {
@@ -123,6 +130,7 @@ public class CanonicalGroupImpl implements CanonicalGroup {
         public Builder init(CanonicalGroup group) {
             this.id = group.getId();
             this.name = group.getName();
+            this.orgTitle = group.getOrgTitle();
             this.description = group.getDescription();
             this.linkage = group.getLinkage();
             this.lastUpdated = group.getLastUpdated();
@@ -137,6 +145,11 @@ public class CanonicalGroupImpl implements CanonicalGroup {
 
         public Builder withName(String name) {
             this.name = name;
+            return this;
+        }
+
+        public Builder withOrgTitle(String orgTitle) {
+            this.orgTitle = orgTitle;
             return this;
         }
 

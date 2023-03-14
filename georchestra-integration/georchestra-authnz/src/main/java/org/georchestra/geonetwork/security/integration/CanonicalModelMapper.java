@@ -50,6 +50,7 @@ public class CanonicalModelMapper {
         return CanonicalGroup.builder()//
                 .withId(org.getId())//
                 .withName(org.getShortName())//
+                .withOrgTitle(org.getName())//
                 .withDescription(org.getDescription())//
                 .withLastUpdated(org.getLastUpdated())//
                 .withLinkage(org.getLinkage())//
