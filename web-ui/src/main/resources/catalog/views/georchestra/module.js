@@ -30,10 +30,10 @@
       var baseMdUrl = $location.absUrl().split('#')[0] + '#/metadata/';
 
       gnSearchSettings.linkTypes = {
-        links: ['LINK'],
-        downloads: ['DOWNLOAD'],
-        layers: ['OGC:WMS'],
-        maps: ['ows']
+        links: ["LINK"],
+        downloads: ["DOWNLOAD"],
+        layers: ["OGC:WMS", "OGC:3DTILES"],
+        maps: ["ows"]
       };
 
       // Add custom actions in selection action button
