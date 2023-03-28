@@ -11,7 +11,7 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 40
     steps:
     - name: "Checking out"
       uses: actions/checkout@v2.4.0
@@ -49,6 +49,9 @@ jobs:
 
     - name: "Installing GeoNetwork"
       run: mvn clean install -DskipTests
+
+    - name: "run tests"
+      run: mvn verify -Pit
 
     - name: "Building the docker image"
       working-directory: web/
