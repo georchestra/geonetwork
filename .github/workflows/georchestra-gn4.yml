@@ -3,7 +3,7 @@ name: Building georchestra-geonetwork4 artifacts
 on:
   push:
     branches:
-    - georchestra-gn4.2.x
+    - csw-server-can-handle-percent-as-wildcard
 
 env:
   DOCKER_TAG: 4.2.x
@@ -57,7 +57,7 @@ jobs:
       working-directory: web/
       run: |
         mvn clean package docker:build -Pdocker,log4j-logstash,sentry-log4j \
-        -DdockerImageName=georchestra/geonetwork:${DOCKER_TAG} -DskipTests
+        -DdockerImageName=georchestra/geonetwork:georhena -DskipTests
 
     - name: "publish the webapp as artifact"
       uses: actions/upload-artifact@v1
@@ -73,9 +73,4 @@ jobs:
 
     - name: "Pushing branch image to docker-hub"
       run: |
-        docker push georchestra/geonetwork:${DOCKER_TAG}
-
-    - name: "Pushing latest image to docker-hub"
-      run: |
-        docker tag georchestra/geonetwork:${DOCKER_TAG} georchestra/geonetwork:latest
-        docker push georchestra/geonetwork:latest
+        docker push georchestra/geonetwork:georhena
