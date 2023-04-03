@@ -363,7 +363,7 @@ public class CswFilter2Es extends AbstractFilterVisitor {
         String dataPropertyValue = stack.pop();
         String dataPropertyName = stack.pop();
 
-        final String filterEqualTo = String.format(templateMatch, dataPropertyName, dataPropertyValue);
+        final String filterEqualTo = String.format(templateMatch, dataPropertyName, dataPropertyValue.replaceAll("\\/", "\\\\\\\\/"));
         stack.push(filterEqualTo);
 
         return this;
@@ -463,7 +463,7 @@ public class CswFilter2Es extends AbstractFilterVisitor {
 
     /**
      * Fills out the templateSpatial.
-     * 
+     *
      * @param shapeType For example "bbox" or "polygon".
      * @param coords    The coordinates in the form needed by shapeType.
      * @param relation  Spatial operation, like "intersects".
