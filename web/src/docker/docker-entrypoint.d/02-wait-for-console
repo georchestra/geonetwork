@@ -1,10 +1,14 @@
 #!/bin/bash
 set -e
 
-CONSOLE_URL=`grep georchestra.console.url              \
-  /etc/georchestra/geonetwork/geonetwork.properties \
-  | cut -d '=' -f 2                                 \
-  | xargs`
+if [[ -n $CONSOLE_URL ]]; then
+  CONSOLE_URL=$CONSOLE_URL
+else
+    CONSOLE_URL=`grep georchestra.console.url              \
+      /etc/georchestra/geonetwork/geonetwork.properties \
+      | cut -d '=' -f 2                                 \
+      | xargs`
+fi
 # typically something like http://console:8080
 
 HOST=`echo $CONSOLE_URL | cut -f 3 -d '/' | cut -f 1 -d ':'`
