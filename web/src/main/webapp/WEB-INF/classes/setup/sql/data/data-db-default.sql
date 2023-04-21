@@ -1009,7 +1009,7 @@ INSERT INTO settings_ui VALUES ('srv', '{
         "enabled": true,
         "enabledViewAction": false,
         "openNewWindow": false,
-        "urlTemplate": "/mapstore/#/?actions=[{\"type\":\"CATALOG:ADD_LAYERS_FROM_CATALOGS\",\"layers\":[${service.name}],\"sources\":[${service.url}]}]",
+        "urlTemplate": "/mapstore/#/?actions=[{\"type\":\"CATALOG:ADD_LAYERS_FROM_CATALOGS\",\"layers\":[\"${service.name}\"],\"sources\":[{\"type\":\"${service.type}\",\"url\":\"${service.url}\"}]}]",
         "valuesSeparator": ","
       },
       "graticuleOgcService": {},
