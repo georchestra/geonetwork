@@ -42,7 +42,7 @@
       gnSearchSettings.linkTypes = {
         links: ["LINK"],
         downloads: ["DOWNLOAD"],
-        layers: ["OGC:WMS"],
+        layers: ["OGC:WMS", "OGC:3DTILES"],
         maps: ["ows"]
       };
 
