@@ -912,7 +912,7 @@ INSERT INTO settings_ui VALUES ('srv', '{
       "minUserProfileToCreateTemplate": ""
     },
     "footer": {
-      "enabled": true,
+      "enabled": false,
       "showSocialBarInFooter": true
     },
     "geocoder": {
