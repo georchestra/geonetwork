@@ -22,9 +22,10 @@
 		"id": "ab9d8932-a17c-4767-840d-940a183654f3",
 		"name": "GN_ADMIN",
 		"description": "This role grants admin access to GeoNetwork",
-		"lastUpdated": "23d138ea682a104ef579712a308444899440c607a1c7253c3ba0760aa500ae1a",
+		"lastUpdated": "208d95ebddc7d6772babe417ade1c440af5b2d614fa3bef3bd1a8e419975f718",
 		"members": [
-			"testadmin"
+			"testadmin",
+			"idatafeeder"
 		]
 	},
 	{
