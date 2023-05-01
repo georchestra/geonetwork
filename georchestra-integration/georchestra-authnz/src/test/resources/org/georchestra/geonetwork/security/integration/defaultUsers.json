@@ -71,6 +71,22 @@
 		"notes": "Internal CRM notes on testadmin"
 	},
 	{
+		"username": "idatafeeder",
+		"roles": [
+			"GN_ADMIN"
+		],
+		"organization": null,
+		"id": "0c6bb556-4ee8-46f2-892d-6116e262b489",
+		"lastUpdated": "d5c90e086bac3be58f5d5069982d63199ecba3f99381f2adeafc743ee7818eef",
+		"firstName": "Import",
+		"lastName": "Datafeeder",
+		"email": "psc+idatafeeder@georchestra.org",
+		"postalAddress": null,
+		"telephoneNumber": null,
+		"title": null,
+		"notes": null
+	},
+	{
 		"username": "testdelegatedadmin",
 		"roles": [
 			"USER",
