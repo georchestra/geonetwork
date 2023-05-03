@@ -103,41 +103,6 @@
           label: "viewLayers"
         }
       ];
-
-      gnExternalViewer._commit = function () {
-        if (!this._toView.length) {
-          return;
-        }
-
-        var layers =
-          this._toView
-            .map(function (toView) {
-              var name = toView.service.name;
-              return encodeURIComponent($filter("gnLocalized")(name) || name || "");
-            })
-            .map(function (name) {
-              return '"' + name + '"';
-            }) || "";
-
-        var services = this._toView
-          .map(function (toView) {
-            var url = toView.service.url;
-            return JSON.stringify({
-              type: toView.service.type,
-              url: encodeURIComponent($filter("gnLocalized")(url) || url || "")
-            });
-          })
-          .join(settings.valueSaparator || ",");
-
-        var url = settings.urlTemplate
-          .replace("${service.url}", services)
-          .replace("${service.name}", layers);
-
-        settings.openNewWindow ? $window.open(url, "_blank") : ($window.location = url);
-
-        // reset list of services to view
-        this._toView.length = 0;
-      }.bind(gnExternalViewer);
     }
   ]);
 })();
