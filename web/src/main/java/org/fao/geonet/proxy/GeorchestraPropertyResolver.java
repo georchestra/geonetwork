@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.nio.file.Paths;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * This class allows to resolve variables from the georchestra.datadir/geonetwork/geonetwork.properties
@@ -31,6 +33,16 @@ public class GeorchestraPropertyResolver {
         } catch (Exception ex) {
             throw new RuntimeException("unable to read geonetwork.properties from the geOrchestra datadir");
         }
-        return gnProps.getProperty(name);
+        String prop = gnProps.getProperty(name);
+        // Resolve environment variables in the property string
+        Pattern p = Pattern.compile("\\$\\{([A-Z_]+)\\}") ;
+        Matcher m = p.matcher(prop) ;
+        while (m.find()) {
+            String envvar = m.group();
+            // Get the string stripped of its $ and braces
+            String envvar_str = envvar.replaceAll("[\\$\\{\\}]", "");
+            prop = prop.replaceAll(Pattern.quote(envvar), System.getenv(envvar_str));
+        }
+        return prop;
     }
 }
