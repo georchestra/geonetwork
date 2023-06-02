@@ -68,6 +68,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static org.fao.geonet.kernel.HarvestValidationEnum.NOVALIDATION;
 
 /**
  * @author Jesse on 11/6/2014.
