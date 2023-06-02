@@ -1300,7 +1300,6 @@
       </dependencies>
     </profile>
 
-<<<<<<< HEAD
     <profile>
       <id>war</id>
       <dependencies>
@@ -1311,7 +1310,6 @@
         </dependency>
       </dependencies>
     </profile>
-=======
     <!-- specific to geOrchestra build -->
     <profile>
       <id>debianPackage</id>
@@ -1593,8 +1591,6 @@
         </dependency>
       </dependencies>
     </profile>
-
->>>>>>> 78a80e8362 (reintroducing maven profiles for deb,docker and extra logging deps)
   </profiles>
 
   <properties>
