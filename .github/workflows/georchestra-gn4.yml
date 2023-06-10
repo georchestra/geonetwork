@@ -3,7 +3,7 @@ name: Building georchestra-geonetwork4 artifacts
 on:
   push:
     branches:
-    - georchestra-gn4-4.0.6-22.0.x
+    - georchestra-gn4-4.0.6-22.0.x-dreal-corse
 
 jobs:
   build:
@@ -52,7 +52,7 @@ jobs:
       working-directory: web/
       run: |
         mvn clean package docker:build -Pdocker,log4j-logstash,sentry-log4j \
-        -DdockerImageName=georchestra/geonetwork:4.0.6-dev -DskipTests
+        -DdockerImageName=georchestra/geonetwork:4.0.6-dev-dreal-corse -DskipTests
 
     - name: "publish the webapp as artifact"
       uses: actions/upload-artifact@v1
@@ -68,4 +68,4 @@ jobs:
 
     - name: "Pushing the image to docker-hub"
       run: |
-        docker push georchestra/geonetwork:4.0.6-dev
+        docker push georchestra/geonetwork:4.0.6-dev-dreal-corse
