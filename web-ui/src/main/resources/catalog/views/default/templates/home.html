@@ -87,8 +87,7 @@
         </h1>
         <div class="gn-topic-select col-md-12">
           <label data-ng-repeat="facetKey in homeFacet.list"
-                 data-ng-init="agg = searchInfo.aggregations[facetKey]"
-                 data-ng-show="agg.buckets.length > 0 && facetKey != homeFacet.lastKey">
+                 data-ng-init="agg = searchInfo.aggregations[facetKey]">
             <input type="radio" name="homeFacet"
                    class="sr-only"
                    data-ng-model="homeFacet.key"
@@ -143,34 +142,6 @@
               <i class="fa fa-fw fa-file-text-o"></i>{{facet.doc_count}}</div>
           </div>
         </span>
-      </div>
-    </div>
-    <div data-ng-show="searchInfo.aggregations[homeFacet.lastKey].buckets.length > 0">
-      <div class="row">
-        <h1 class="col-md-12" data-translate="">{{('facet-' + homeFacet.lastKey) | facetKeyTranslator}}</h1>
-      </div>
-      <div class="row">
-        <div data-ng-repeat="(key, facet) in searchInfo.aggregations[homeFacet.lastKey].buckets"
-             data-ng-show="facet.key"
-             class="col-xs-6 col-sm-4 col-md-3 col-lg-2 gn-topic">
-          <div class="panel panel-default gn-facet-{{homeFacet.lastKey}}">
-            <div class="panel-body">
-              <a title="{{facet.key}}"
-                 class="clearfix"
-                 data-ng-href='#/search?query_string={"{{homeFacet.lastKey}}": {"{{facet.key}}": true} }'>
-                <i class="fa fa-2x gn-icon-{{facet.key.replace('/', '').replace(' ', '')}} pull-left"
-                   data-ng-show="homeFacet.lastKey === 'topic_text' || homeFacet.lastKey === 'cl_hierarchyLevel.key'">
-                </i>
-                <h2>
-                  <span class="clamp-2">{{facet.key | facetTranslator: homeFacet.key | capitalize}}</span>
-                </h2>
-              </a>
-            </div>
-            <div class="panel-footer">
-              <i class="fa fa-fw fa-file-text-o"></i>{{facet.doc_count}}
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
