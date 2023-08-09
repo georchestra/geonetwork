@@ -12,7 +12,7 @@
 
     <!-- traitement spécial pour les éléments gmd:online -->
     <xsl:template match="gmd:onLine">
-        <xsl:variable name="url" select="gmd:CI_OnlineResource/gmd:linkage/gmd:URL"/>
+        <xsl:variable name="url" select="replace(gmd:CI_OnlineResource/gmd:linkage/gmd:URL, 'http://', 'https://')"/>
         <xsl:variable name="layerName" select="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:alternateTitle"/>
 
         <!-- il s'agit d'une url de base de services WxS : créer deux liens explicites pour WMS et WFS -->
