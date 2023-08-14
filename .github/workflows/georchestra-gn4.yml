@@ -23,6 +23,7 @@ jobs:
       with:
         repository: "georchestra/georchestra"
         path: "georchestra"
+        ref: 22.0.6
 
     - name: "Setting up Java"
       uses: actions/setup-java@v2
