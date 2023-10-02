@@ -68,6 +68,8 @@ public interface CanonicalGroup {
      */
     String getLinkage();
 
+    String getMail();
+
     static CanonicalGroupImpl.Builder builder() {
         return CanonicalGroupImpl.builder();
     }

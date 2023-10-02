@@ -55,6 +55,7 @@ public class CanonicalModelMapper {
                 .withLastUpdated(org.getLastUpdated())//
                 .withLinkage(org.getLinkage())//
                 .withOrigin(GroupSyncMode.orgs)//
+                .withMail(org.getMail())//
                 .build();
     }
 

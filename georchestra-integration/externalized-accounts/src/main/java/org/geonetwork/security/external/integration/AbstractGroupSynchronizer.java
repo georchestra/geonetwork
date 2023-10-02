@@ -134,7 +134,7 @@ abstract class AbstractGroupSynchronizer implements GroupSynchronizer {
             Group group = this.gnGroupRepository.findByName(canonical.getName());
             if (null == group) {
                 group = new Group();
-                log.info("Creatinng GN group {} (Id: {}, version '{}')", //
+                log.info("Creating GN group {} (Id: {}, version '{}')", //
                         canonical.getName(), canonical.getId(), canonical.getLastUpdated());
             } else {
                 log.info("Reconciling existing GN group {} with canonical group (id: {})", group.getName(),
@@ -157,6 +157,7 @@ abstract class AbstractGroupSynchronizer implements GroupSynchronizer {
         group.setName(canonical.getName());
         group.setDescription(canonical.getDescription());
         group.setWebsite(canonical.getLinkage());
+        group.setEmail(canonical.getMail());
         link.setCanonical(canonical);
         link = externalGroupLinks.save(link);
         assert link.isUpToDateWith(canonical);

@@ -41,6 +41,7 @@ public class CanonicalGroupImpl implements CanonicalGroup {
     private String linkage;
     private String orgTitle;
 
+    private String orgMail;
     private GroupSyncMode origin;
 
     @Generated("SparkTools")
@@ -52,6 +53,7 @@ public class CanonicalGroupImpl implements CanonicalGroup {
         this.lastUpdated = builder.lastUpdated;
         this.origin = builder.origin;
         this.orgTitle = builder.orgTitle;
+        this.orgMail = builder.orgMail;
     }
 
     public @Override String getId() {
@@ -77,6 +79,9 @@ public class CanonicalGroupImpl implements CanonicalGroup {
     public @Override String getLinkage() {
         return linkage;
     }
+
+    @Override
+    public String getMail() { return orgMail; }
 
     public @Override String getLastUpdated() {
         return lastUpdated;
@@ -122,6 +127,8 @@ public class CanonicalGroupImpl implements CanonicalGroup {
         private String linkage;
         private String lastUpdated;
         private String orgTitle;
+
+        private String orgMail;
         private GroupSyncMode origin;
 
         private Builder() {
@@ -135,6 +142,7 @@ public class CanonicalGroupImpl implements CanonicalGroup {
             this.linkage = group.getLinkage();
             this.lastUpdated = group.getLastUpdated();
             this.origin = group.getOrigin();
+            this.orgMail = group.getMail();
             return this;
         }
 
@@ -172,6 +180,12 @@ public class CanonicalGroupImpl implements CanonicalGroup {
             this.origin = origin;
             return this;
         }
+
+        public Builder withMail(String mail) {
+            this.orgMail = mail;
+            return this;
+        }
+
 
         public CanonicalGroup build() {
             return new CanonicalGroupImpl(this);
