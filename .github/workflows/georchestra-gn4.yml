@@ -4,6 +4,8 @@ on:
   push:
     branches:
     - georchestra-gn4.2.x
+  pull_request:
+  workflow_dispatch:
 
 env:
   DOCKER_TAG: 4.2.x
@@ -60,22 +62,26 @@ jobs:
         -DdockerImageName=georchestra/geonetwork:${DOCKER_TAG} -DskipTests
 
     - name: "publish the webapp as artifact"
+      if: github.repository == 'georchestra/geonetwork' && github.actor != 'dependabot[bot]' && github.ref == 'refs/heads/georchestra-gn4.2.x' && github.event_name != 'pull_request'
       uses: actions/upload-artifact@v1
       with:
         name: geonetwork.war
         path: web/target/geonetwork.war
 
     - name: "Login onto docker-hub"
+      if: github.repository == 'georchestra/geonetwork' && github.actor != 'dependabot[bot]' && github.ref == 'refs/heads/georchestra-gn4.2.x' && github.event_name != 'pull_request'
       uses: docker/login-action@v1
       with:
         username: '${{ secrets.DOCKER_HUB_USERNAME }}'
         password: '${{ secrets.DOCKER_HUB_PASSWORD }}'
 
     - name: "Pushing branch image to docker-hub"
+      if: github.repository == 'georchestra/geonetwork' && github.actor != 'dependabot[bot]' && github.ref == 'refs/heads/georchestra-gn4.2.x' && github.event_name != 'pull_request'
       run: |
         docker push georchestra/geonetwork:${DOCKER_TAG}
 
     - name: "Pushing latest image to docker-hub"
+      if: github.repository == 'georchestra/geonetwork' && github.actor != 'dependabot[bot]' && github.ref == 'refs/heads/georchestra-gn4.2.x' && github.event_name != 'pull_request'
       run: |
         docker tag georchestra/geonetwork:${DOCKER_TAG} georchestra/geonetwork:latest
         docker push georchestra/geonetwork:latest
