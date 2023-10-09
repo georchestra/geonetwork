@@ -12,7 +12,8 @@ git*.properties
 */*/.*
 */*/target/
 */target/
-.*/
+**/.idea
+**/.settings
 GeoNetwork*
 /geonetwork*
 camel-harvesters/wfsfeature-harvester/logs

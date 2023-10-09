@@ -201,18 +201,16 @@ public class CswFilter2Es extends AbstractFilterVisitor {
     protected static String convertLikePattern(PropertyIsLike filter) {
         String result = filter.getLiteral();
         if (!filter.getWildCard().equals("*")) {
-            final String wildcardRe =
-                StringUtils.isNotEmpty(filter.getEscape())
-                    ? Pattern.quote(filter.getEscape() + filter.getWildCard())
-                    : filter.getWildCard();
+            final String wildcardRe = "(?<!" + Pattern.quote(filter.getEscape()) + ")" + Pattern.quote(filter.getWildCard());
             result = result.replaceAll(wildcardRe, "*");
         }
         if (!filter.getSingleChar().equals("?")) {
-            final String singleCharRe =
-                StringUtils.isNotEmpty(filter.getEscape())
-                    ? Pattern.quote(filter.getEscape() + filter.getSingleChar())
-                    : filter.getSingleChar();
+            final String singleCharRe = "(?<!" + Pattern.quote(filter.getEscape()) + ")" + Pattern.quote(filter.getSingleChar());
             result = result.replaceAll(singleCharRe, "?");
+        }
+        if (!filter.getEscape().equals("\\")) {
+            final String escapeRe = Pattern.quote(filter.getEscape()) + "(.)";
+            result = result.replaceAll(escapeRe, "\\\\$1");
         }
         return result;
     }
@@ -365,7 +363,7 @@ public class CswFilter2Es extends AbstractFilterVisitor {
         String dataPropertyValue = stack.pop();
         String dataPropertyName = stack.pop();
 
-        final String filterEqualTo = String.format(templateMatch, dataPropertyName, dataPropertyValue);
+        final String filterEqualTo = String.format(templateMatch, dataPropertyName, dataPropertyValue.replaceAll("\\/", "\\\\\\\\/"));
         stack.push(filterEqualTo);
 
         return this;
