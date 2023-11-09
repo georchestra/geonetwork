@@ -913,7 +913,7 @@ INSERT INTO settings_ui VALUES ('srv', '{
     },
     "footer": {
       "enabled": false,
-      "showSocialBarInFooter": true
+      "showSocialBarInFooter": false
     },
     "geocoder": {
       "appUrl": "https://secure.geonames.org/searchJSON",
@@ -953,6 +953,7 @@ INSERT INTO settings_ui VALUES ('srv', '{
     "home": {
       "appUrl": "../../{{node}}/{{lang}}/catalog.search#/home",
       "enabled": true,
+      "showMosaic": false,
       "facetConfig": {
         "cl_hierarchyLevel.key": {
           "terms": {
@@ -964,12 +965,6 @@ INSERT INTO settings_ui VALUES ('srv', '{
           "terms": {
             "field": "cl_topic.key",
             "size": 20
-          }
-        },
-        "inspireThemeUri": {
-          "terms": {
-            "field": "inspireThemeUri",
-            "size": 34
           }
         }
       },
@@ -1071,7 +1066,7 @@ INSERT INTO settings_ui VALUES ('srv', '{
     },
     "recordview": {
       "enabled": true,
-      "isSocialbarEnabled": true
+      "isSocialbarEnabled": false
     },
     "search": {
       "appUrl": "../../{{node}}/{{lang}}/catalog.search#/search",
@@ -1262,7 +1257,7 @@ INSERT INTO settings_ui VALUES ('srv', '{
         60,
         120
       ],
-      "isFilterTagsDisplayedInSearch": true,
+      "isFilterTagsDisplayedInSearch": false,
       "isVegaEnabled": true,
       "linkTypes": {
         "downloads": [
