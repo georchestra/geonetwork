@@ -264,6 +264,8 @@ public final class XslUtil {
 
     private static String headerUrl;
     private static String headerHeight;
+    private static String useLegacyHeader;
+    private static String headerScript;
 
 
     public static String getGeorchestraHeaderUrl(){
@@ -296,6 +298,38 @@ public final class XslUtil {
         }
 
         return XslUtil.headerHeight;
+    }
+
+    public static String getGeorchestraUseLegacyHeader(){
+
+        if(XslUtil.useLegacyHeader == null) {
+
+            // Set default value
+            XslUtil.useLegacyHeader = "false";
+
+            // Load value from datadir
+            Properties properties = XslUtil.loadDatadirProperties();
+            if (properties.containsKey("useLegacyHeader"))
+                XslUtil.useLegacyHeader = properties.getProperty("useLegacyHeader");
+        }
+
+        return XslUtil.useLegacyHeader;
+    }
+
+    public static String getGeorchestraHeaderScript(){
+
+        if(XslUtil.headerScript == null) {
+
+            // Set default value
+            XslUtil.headerScript = "https://cdn.jsdelivr.net/gh/georchestra/header@dist/header.js";
+
+            // Load value from datadir
+            Properties properties = XslUtil.loadDatadirProperties();
+            if (properties.containsKey("headerScript"))
+                XslUtil.headerScript = properties.getProperty("headerScript");
+        }
+
+        return XslUtil.headerScript;
     }
 
     private static Properties loadProperties(File path, Properties prop) throws IOException {
