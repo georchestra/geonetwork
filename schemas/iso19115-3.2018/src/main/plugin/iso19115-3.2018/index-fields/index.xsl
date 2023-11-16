@@ -1083,6 +1083,9 @@
             "descriptionObject": <xsl:value-of select="gn-fn-index:add-multilingual-field(
                                 'description', description/*, $allLanguages, true())"/>,
           </xsl:if>
+          <xsl:if test="nilReason">
+            "nilReason": "<xsl:value-of select="nilReason"/>",
+          </xsl:if>
           "applicationProfile": "<xsl:value-of select="gn-fn-index:json-escape(
                                         applicationProfile/text())"/>"
           }
@@ -1101,15 +1104,73 @@
           <xsl:copy-of select="gn-fn-index:build-record-link(@uuidref, $xlink, @xlink:title, 'sources')"/>
         </xsl:for-each>
 
-        <xsl:for-each select=".//mrl:source/*/mrl:description[gco:CharacterString != '']">
+        <xsl:for-each select="mrl:source/*/mrl:description[gco:CharacterString != '']">
           <xsl:copy-of select="gn-fn-index:add-multilingual-field('sourceDescription', ., $allLanguages)"/>
         </xsl:for-each>
+
+
+
+        <xsl:variable name="processSteps"
+                      select="mrl:processStep/*[mrl:description/gco:CharacterString != '']"/>
+        <xsl:for-each select="$processSteps">
+          <processSteps type="object">{
+            "descriptionObject": <xsl:value-of select="gn-fn-index:add-multilingual-field(
+                                'description', mrl:description, $allLanguages, true())"/>
+            <xsl:if test="normalize-space(mrl:stepDateTime) != ''">
+              ,"date": "<xsl:value-of select="mrl:stepDateTime//gml:timePosition/text()"/>"
+            </xsl:if>
+            <xsl:if test="normalize-space(mrl:source) != ''">
+              ,"source": [
+              <xsl:for-each select="mrl:source/*[mrl:description/gco:CharacterString != '']">
+                {
+                "descriptionObject": <xsl:value-of
+                select="gn-fn-index:add-multilingual-field(
+                                            'description', mrl:description, $allLanguages, true())"/>
+                }
+                <xsl:if test="position() != last()">,</xsl:if>
+              </xsl:for-each>
+              ]
+            </xsl:if>
+
+            <xsl:variable name="processor"
+                          select="mrl:processor/*[.//cit:CI_Organisation/cit:name != '']"/>
+            <xsl:if test="count($processor) > 0">
+              ,"processor": [
+              <xsl:for-each select="$processor">
+                <xsl:variable name="individualName"
+                              select="(.//cit:CI_Individual/cit:name/gco:CharacterString/text())[1]"/>
+                {
+                  "organisationObject": <xsl:value-of
+                select="gn-fn-index:add-multilingual-field(
+                                            'description', .//cit:CI_Organisation/cit:name,
+                                             $allLanguages, true())"/>
+                <xsl:if test="$individualName != ''">
+                  ,"individual":"<xsl:value-of select="gn-fn-index:json-escape($individualName)"/>"
+                </xsl:if>
+                }
+                <xsl:if test="position() != last()">,</xsl:if>
+              </xsl:for-each>
+              ]
+            </xsl:if>
+            }</processSteps>
+        </xsl:for-each>
+
+        <xsl:for-each-group select="mrl:processStep//mrl:processor[.//cit:CI_Organisation/cit:name != '']"
+                            group-by=".//cit:CI_Organisation/cit:name/gco:CharacterString">
+          <xsl:apply-templates mode="index-contact"
+                               select=".">
+            <xsl:with-param name="fieldSuffix" select="'ForProcessing'"/>
+            <xsl:with-param name="languages" select="$allLanguages"/>
+          </xsl:apply-templates>
+        </xsl:for-each-group>
       </xsl:for-each>
 
 
       <xsl:for-each select="mdb:dataQualityInfo/*">
         <xsl:for-each select="mdq:report/*[
-                normalize-space(mdq:measure/*/mdq:nameOfMeasure/gco:CharacterString) != '']">
+                normalize-space(mdq:measure/*/mdq:nameOfMeasure/gco:CharacterString) != ''
+                or normalize-space(mdq:measure/*/mdq:measureDescription/gco:CharacterString) != ''
+                ]">
 
           <xsl:variable name="name"
                         select="(mdq:measure/*/mdq:nameOfMeasure/gco:CharacterString)[1]"/>
@@ -1196,6 +1257,9 @@
             <xsl:if test="normalize-space(cit:description) != ''">
               "descriptionObject": <xsl:value-of select="gn-fn-index:add-multilingual-field(
                                 'description', cit:description, $allLanguages, true())"/>,
+            </xsl:if>
+            <xsl:if test="../@gco:nilReason">
+              "nilReason": "<xsl:value-of select="../@gco:nilReason"/>",
             </xsl:if>
             "function":"<xsl:value-of select="cit:function/cit:CI_OnLineFunctionCode/@codeListValue"/>",
             "applicationProfile":"<xsl:value-of select="gn-fn-index:json-escape(cit:applicationProfile/gco:CharacterString/text())"/>",
@@ -1348,6 +1412,7 @@
 
     <xsl:variable name="identifiers"
                   select=".//cit:partyIdentifier/*"/>
+
     <xsl:element name="contact{$fieldSuffix}">
       <!-- TODO: Can be multilingual -->
       <xsl:attribute name="type" select="'object'"/>{
@@ -1363,6 +1428,9 @@
       "position":"<xsl:value-of select="gn-fn-index:json-escape($positionName)"/>",
       "phone":"<xsl:value-of select="gn-fn-index:json-escape($phone)"/>",
       "address":"<xsl:value-of select="gn-fn-index:json-escape($address)"/>"
+      <xsl:if test="@gco:nilReason">
+        ,"nilReason": "<xsl:value-of select="@gco:nilReason"/>"
+      </xsl:if>
       <xsl:if test="count($identifiers) > 0">
         ,"identifiers":[
         <xsl:for-each select="$identifiers">

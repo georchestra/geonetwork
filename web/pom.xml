@@ -30,7 +30,7 @@
   <parent>
     <groupId>org.geonetwork-opensource</groupId>
     <artifactId>geonetwork</artifactId>
-    <version>4.2.6-0</version>
+    <version>4.4.0-0</version>
   </parent>
 
 
@@ -82,6 +82,10 @@
     <dependency>
       <groupId>xalan</groupId>
       <artifactId>xalan</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>xalan</groupId>
+      <artifactId>serializer</artifactId>
     </dependency>
     <dependency>
       <groupId>net.sf.saxon</groupId>
@@ -334,6 +338,10 @@
         <exclusion>
           <groupId>xalan</groupId>
           <artifactId>xalan</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>xalan</groupId>
+          <artifactId>serializer</artifactId>
         </exclusion>
         <exclusion>
           <groupId>org.apache.xmlgraphics</groupId>
@@ -1031,6 +1039,10 @@
               <value>5000000</value>
             </systemProperty>
             <systemProperty>
+              <name>org.eclipse.jetty.server.Request.maxFormKeys</name>
+              <value>8000</value>
+            </systemProperty>
+            <systemProperty>
               <name>org.eclipse.jetty.classInheritanceMap</name>
               <value>true</value>
             </systemProperty>
@@ -1063,6 +1075,13 @@
             <groupId>ro.isdc.wro4j</groupId>
             <artifactId>wro4j-maven-plugin</artifactId>
             <version>${wro.version}</version>
+            <dependencies>
+              <dependency>
+                <groupId>org.webjars.npm</groupId>
+                <artifactId>glob</artifactId>
+                <version>7.1.1</version>
+              </dependency>
+            </dependencies>
             <executions>
               <execution>
                 <id>wro4j-prebuild-cache</id>
@@ -1298,6 +1317,39 @@
         <dependency>
           <groupId>${project.groupId}</groupId>
           <artifactId>slave</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+      </dependencies>
+    </profile>
+
+    <profile>
+      <id>datastorage-cmis</id>
+      <dependencies>
+        <dependency>
+          <groupId>org.geonetwork-opensource.datastorage</groupId>
+          <artifactId>gn-datastorage-cmis</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+      </dependencies>
+    </profile>
+
+    <profile>
+      <id>datastorage-jcloud</id>
+      <dependencies>
+        <dependency>
+          <groupId>org.geonetwork-opensource.datastorage</groupId>
+          <artifactId>gn-datastorage-jcloud</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+      </dependencies>
+    </profile>
+
+    <profile>
+      <id>datastorage-s3</id>
+      <dependencies>
+        <dependency>
+          <groupId>org.geonetwork-opensource.datastorage</groupId>
+          <artifactId>gn-datastorage-s3</artifactId>
           <version>${project.version}</version>
         </dependency>
       </dependencies>
