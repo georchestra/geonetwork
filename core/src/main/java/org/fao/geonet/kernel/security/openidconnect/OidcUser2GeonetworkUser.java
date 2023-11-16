@@ -41,8 +41,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.util.StringUtils;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Class for handling Oidc User and the Geonetwork User.
@@ -52,21 +54,21 @@ import java.util.Map;
 public class OidcUser2GeonetworkUser {
 
     @Autowired
-    OIDCConfiguration oidcConfiguration;
+    protected OIDCConfiguration oidcConfiguration;
     @Autowired
-    OIDCRoleProcessor oidcRoleProcessor;
+    protected OIDCRoleProcessor oidcRoleProcessor;
     @Autowired
-    SimpleOidcUserFactory simpleOidcUserFactory;
+    protected SimpleOidcUserFactory simpleOidcUserFactory;
     @Autowired
-    private UserRepository userRepository;
+    protected UserRepository userRepository;
     @Autowired
-    private GroupRepository groupRepository;
+    protected GroupRepository groupRepository;
     @Autowired
-    private LanguageRepository langRepository;
+    protected LanguageRepository langRepository;
     @Autowired
-    private UserGroupRepository userGroupRepository;
+    protected UserGroupRepository userGroupRepository;
     @Autowired
-    private GeonetworkAuthenticationProvider geonetworkAuthenticationProvider;
+    protected GeonetworkAuthenticationProvider geonetworkAuthenticationProvider;
 
 
     public UserDetails getUserDetails(Map attributes, boolean withDbUpdate) throws Exception {
@@ -158,9 +160,8 @@ public class OidcUser2GeonetworkUser {
      * @param user          to apply the changes to.
      */
     //from keycloak
-    private void updateGroups(Map<Profile, List<String>> profileGroups, User user) {
-        // First we remove all previous groups
-        userGroupRepository.deleteAll(UserGroupSpecs.hasUserId(user.getId()));
+    protected void updateGroups(Map<Profile, List<String>> profileGroups, User user) {
+        Set<UserGroup> userGroups = new HashSet<>();
 
         // Now we add the groups
         for (Profile p : profileGroups.keySet()) {
@@ -201,13 +202,13 @@ public class OidcUser2GeonetworkUser {
                     ug.setGroup(group);
                     ug.setUser(user);
                     ug.setProfile(Profile.Editor);
-                    userGroupRepository.save(ug);
+                    userGroups.add(ug);
                 }
 
-                userGroupRepository.save(usergroup);
+                userGroups.add(usergroup);
             }
         }
+
+        userGroupRepository.updateUserGroups(user.getId(), userGroups);
     }
-
-
 }

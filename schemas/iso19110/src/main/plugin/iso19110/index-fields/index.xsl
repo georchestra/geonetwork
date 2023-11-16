@@ -65,16 +65,34 @@
 
       <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
       <!-- === Version identifier === -->
-      <versionIdentifier>
+      <resourceEdition>
         <xsl:value-of select="string(/gfc:FC_FeatureCatalogue/gmx:versionNumber/gco:CharacterString|
         /gfc:FC_FeatureCatalogue/gfc:versionNumber/gco:CharacterString)"/>
-      </versionIdentifier>
+      </resourceEdition>
+
+      <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+      <!-- === Responsible organization === -->
+      <xsl:for-each select="/gfc:FC_FeatureCatalogue/gfc:producer">
+        <xsl:apply-templates mode="index-contact"
+                             select=".">
+          <xsl:with-param name="fieldSuffix" select="''"/>
+        </xsl:apply-templates>
+        <xsl:apply-templates mode="index-contact"
+                             select=".">
+          <xsl:with-param name="fieldSuffix" select="'ForResource'"/>
+        </xsl:apply-templates>
+      </xsl:for-each>
 
       <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
       <!-- === Revision date === -->
-      <xsl:for-each select="/gfc:FC_FeatureCatalogue/gmx:versionDate/gco:Date|
-        /gfc:FC_FeatureCatalogue/gfc:versionDate/gco:Date">
-        <revisionDate><xsl:value-of select="date-util:convertToISOZuluDateTime(string(.))"/></revisionDate>
+      <xsl:for-each select="/gfc:FC_FeatureCatalogue/gmx:versionDate/(gco:Date|gco:DateTime)
+                           |/gfc:FC_FeatureCatalogue/gfc:versionDate/(gco:Date|gco:DateTime)">
+        <xsl:variable name="dateStamp"
+                      select="date-util:convertToISOZuluDateTime(string(.))"/>
+        <resourceDate type="object">
+          {"type": "revision", "date": "<xsl:value-of select="$dateStamp"/>"}
+        </resourceDate>
+        <dateStamp><xsl:value-of select="$dateStamp"/></dateStamp>
       </xsl:for-each>
 
       <xsl:variable name="jsonFeatureTypes">[
@@ -99,6 +117,9 @@
               "code": "<xsl:value-of select="gn-fn-index:json-escape(*/gfc:code/*/text())"/>",
               "link": "<xsl:value-of select="*/gfc:code/*/@xlink:href"/>",
               "type": "<xsl:value-of select="*/gfc:valueType/gco:TypeName/gco:aName/*/text()"/>"
+              <xsl:if test="*/gfc:cardinality">
+                ,"cardinality": "<xsl:value-of select="concat(*/gfc:cardinality//gco:lower/*/text(), '..', */gfc:cardinality//gco:upper/*/text())"/>"
+              </xsl:if>
               <xsl:if test="*/gfc:listedValue">
                 ,"values": [
                 <xsl:for-each select="*/gfc:listedValue">{
@@ -124,5 +145,66 @@
         <xsl:value-of select="$jsonFeatureTypes"/>
       </featureTypes>
     </doc>
+  </xsl:template>
+
+  <xsl:template mode="index-contact" match="*[gmd:CI_ResponsibleParty]">
+    <xsl:param name="fieldSuffix" select="''" as="xs:string"/>
+    <xsl:param name="languages" as="node()?"/>
+
+    <!-- Select the first child which should be a CI_ResponsibleParty.
+    Some records contains more than one CI_ResponsibleParty which is
+    not valid and they will be ignored.
+     Same for organisationName eg. de:b86a8604-bf78-480f-a5a8-8edff5586679 -->
+    <xsl:variable name="organisationName"
+                  select="*[1]/gmd:organisationName[1]"
+                  as="node()?"/>
+    <xsl:variable name="uuid" select="@uuid"/>
+
+    <xsl:variable name="role"
+                  select="replace(*[1]/gmd:role/*/@codeListValue, ' ', '')"
+                  as="xs:string?"/>
+    <xsl:variable name="logo" select=".//gmx:FileName/@src"/>
+    <xsl:variable name="website" select=".//gmd:onlineResource/*/gmd:linkage/gmd:URL"/>
+    <xsl:variable name="email"
+                  select="*[1]/gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress/gco:CharacterString"/>
+    <xsl:variable name="phone"
+                  select="*[1]/gmd:contactInfo/*/gmd:phone/*/gmd:voice[normalize-space(.) != '']/*/text()"/>
+    <xsl:variable name="individualName"
+                  select="*[1]/gmd:individualName/gco:CharacterString/text()"/>
+    <xsl:variable name="positionName"
+                  select="*[1]/gmd:positionName/gco:CharacterString/text()"/>
+    <xsl:variable name="address" select="string-join(*[1]/gmd:contactInfo/*/gmd:address/*/(
+                                        gmd:deliveryPoint|gmd:postalCode|gmd:city|
+                                        gmd:administrativeArea|gmd:country)/gco:CharacterString/text(), ', ')"/>
+
+    <xsl:variable name="roleField"
+                  select="concat(replace($role, '[^a-zA-Z0-9-]', ''),
+                                 'Org', $fieldSuffix)"/>
+    <xsl:variable name="orgField"
+                  select="concat('Org', $fieldSuffix)"/>
+
+
+    <xsl:if test="normalize-space($organisationName) != ''">
+      <xsl:copy-of select="gn-fn-index:add-multilingual-field(
+                            $orgField, $organisationName, $languages)"/>
+      <xsl:copy-of select="gn-fn-index:add-multilingual-field(
+                            $roleField, $organisationName, $languages)"/>
+    </xsl:if>
+    <xsl:element name="contact{$fieldSuffix}">
+      <xsl:attribute name="type" select="'object'"/>{
+      <xsl:if test="$organisationName">
+        "organisationObject": <xsl:value-of select="gn-fn-index:add-multilingual-field(
+                              'organisation', $organisationName, $languages, true())"/>,
+      </xsl:if>
+      "role":"<xsl:value-of select="$role"/>",
+      "email":"<xsl:value-of select="gn-fn-index:json-escape($email[1])"/>",
+      "website":"<xsl:value-of select="$website"/>",
+      "logo":"<xsl:value-of select="$logo"/>",
+      "individual":"<xsl:value-of select="gn-fn-index:json-escape($individualName)"/>",
+      "position":"<xsl:value-of select="gn-fn-index:json-escape($positionName)"/>",
+      "phone":"<xsl:value-of select="gn-fn-index:json-escape($phone[1])"/>",
+      "address":"<xsl:value-of select="gn-fn-index:json-escape($address)"/>"
+      }
+    </xsl:element>
   </xsl:template>
 </xsl:stylesheet>

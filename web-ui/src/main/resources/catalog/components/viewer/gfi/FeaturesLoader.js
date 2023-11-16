@@ -210,8 +210,8 @@
     var promises = [this.promise, this.dictionary];
 
     return $q.all(promises).then(function (data) {
-      features = data[0];
-      dictionary = data[1];
+      var features = data[0];
+      var dictionary = data[1];
 
       if (!features || features.length == 0) {
         return;
@@ -247,12 +247,18 @@
             }
           }
         });
+
+        // Lower case the keys
+        obj = _.mapKeys(obj, function (v, k) {
+          return k.toLowerCase();
+        });
+
         return obj;
       });
 
       var columns = Object.keys(features[0].getProperties()).map(function (x) {
         return {
-          field: x,
+          field: x.toLowerCase(),
           title: x,
           titleTooltip: x,
           sortable: true,
@@ -265,7 +271,7 @@
           var fieldSpec = dictionary[columns[i]["field"]];
           if (angular.isDefined(fieldSpec)) {
             columns[i]["title"] = fieldSpec.name;
-            columns[i]["titleTooltip"] = fieldSpec.definition || fieldSpec.code;
+            columns[i]["titleTooltip"] = fieldSpec.definition || fieldSpec.name;
           }
         }
       }

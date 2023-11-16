@@ -293,7 +293,7 @@
           } else {
             metadataUuid = getSelectedMdIdentifierTemplate().template;
 
-            for (key in $scope.mdIdentifierTemplateTokens) {
+            for (var key in $scope.mdIdentifierTemplateTokens) {
               var labelKey = $scope.mdIdentifierTemplateTokens[key].label;
               metadataUuid = metadataUuid.replace(
                 "{" + labelKey + "}",
@@ -314,7 +314,9 @@
             metadataUuid,
             true
           )
-          .error(function (data) {
+          .catch(function (response) {
+            var data = response.data;
+
             $rootScope.$broadcast("StatusUpdated", {
               title: $translate.instant("createMetadataError"),
               error: data.description ? data.description : data.error,
@@ -357,7 +359,7 @@
       $scope.updateMdIdentifierTemplateLabel = function () {
         $scope.mdIdSelectedTemplateForLabel = getSelectedMdIdentifierTemplate().template;
 
-        for (key in $scope.mdIdentifierTemplateTokens) {
+        for (var key in $scope.mdIdentifierTemplateTokens) {
           if ($scope.mdIdentifierTemplateTokens[key].value) {
             var labelKey = $scope.mdIdentifierTemplateTokens[key].label;
 
@@ -400,7 +402,7 @@
 
         var fieldsFilled = true;
 
-        for (key in $scope.mdIdentifierTemplateTokens) {
+        for (var key in $scope.mdIdentifierTemplateTokens) {
           if (!$scope.mdIdentifierTemplateTokens[key].value) {
             fieldsFilled = false;
             break;
@@ -435,8 +437,8 @@
       function loadMetadataIdentifierTemplates() {
         $scope.mdIdentifierTemplateSelected = {};
 
-        $http.get("../api/identifiers").success(function (data) {
-          $scope.mdIdentifierTemplates = data;
+        $http.get("../api/identifiers").then(function (response) {
+          $scope.mdIdentifierTemplates = response.data;
         });
       }
 

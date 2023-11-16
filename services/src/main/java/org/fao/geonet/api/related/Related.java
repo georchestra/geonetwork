@@ -39,6 +39,7 @@ import org.fao.geonet.api.records.model.related.RelatedResponse;
 import org.fao.geonet.api.tools.i18n.LanguageUtils;
 import org.fao.geonet.domain.AbstractMetadata;
 import org.fao.geonet.kernel.GeonetworkDataDirectory;
+import org.fao.geonet.lib.Lib;
 import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.Xml;
 import org.jdom.Element;
@@ -56,6 +57,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+
+import static org.fao.geonet.api.records.attachments.AbstractStore.getAndCheckMetadataId;
 
 @RequestMapping(value = {
     "/{portal}/api/related"
@@ -104,6 +107,9 @@ public class Related implements ApplicationContextAware {
         )
         @RequestParam(defaultValue = "", name = "uuid")
             String[] uuids,
+        @Parameter(description = "Use approved version or not", example = "true")
+        @RequestParam(required = false, defaultValue = "true")
+        Boolean approved,
         HttpServletRequest request) throws Exception {
 
         Locale language = languageUtils.parseAcceptLanguage(request.getLocales());
@@ -115,13 +121,13 @@ public class Related implements ApplicationContextAware {
 
         for (String uuid : uuids) {
             try {
-                md = ApiUtils.canViewRecord(uuid, request);
+                md = ApiUtils.canViewRecord(uuid, approved, request);
                 Element raw = new Element("root").addContent(Arrays.asList(
                     new Element("gui").addContent(Arrays.asList(
                         new Element("language").setText(language.getISO3Language()),
                         new Element("url").setText(context.getBaseUrl())
                     )),
-                    MetadataUtils.getRelated(context, md.getId(), md.getUuid(), types, 0, 100, true)
+                    MetadataUtils.getRelated(context, md.getId(), md.getUuid(), types, 0, 100)
                 ));
                 final Element transform = Xml.transform(raw, relatedXsl);
                 RelatedResponse response = (RelatedResponse) Xml.unmarshall(transform, RelatedResponse.class);

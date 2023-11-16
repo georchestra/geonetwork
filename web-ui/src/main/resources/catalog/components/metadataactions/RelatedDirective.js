@@ -48,15 +48,16 @@
     "$http",
     "$q",
     function ($http, $q) {
-      this.get = function (uuidOrId, types) {
+      this.get = function (uuidOrId, types, approved) {
         var canceller = $q.defer();
         var request = $http({
           method: "get",
           url:
             "../api/records/" +
             uuidOrId +
-            "/related?" +
-            (types ? "type=" + types.split("|").join("&type=") : ""),
+            "/related?type=" +
+            (types ? types.split("|").join("&type=") : "") +
+            (approved === false ? "&approved=false" : ""),
           timeout: canceller.promise,
           cache: true
         });
@@ -87,11 +88,15 @@
         var uuids = mds.map(function (md) {
           return md.uuid;
         });
+        var approved = mds.map(function (md) {
+          return md.draft !== "y";
+        });
         var url = "../api/related";
         return $http.get(url, {
           params: {
             type: types,
-            uuid: uuids
+            uuid: uuids,
+            approved: approved
           }
         });
       };
@@ -279,7 +284,8 @@
   module.directive("gnRecordIsReplacedBy", [
     "$http",
     "Metadata",
-    function ($http, Metadata) {
+    "gnESFacet",
+    function ($http, Metadata, gnESFacet) {
       return {
         restrict: "A",
         templateUrl:
@@ -289,13 +295,14 @@
         },
         link: function (scope) {
           $http
-            .post("../api/search/records/_search", {
-              query: {
+            .post(
+              "../api/search/records/_search",
+              gnESFacet.buildDefaultQuery({
                 query_string: {
                   query: '+agg_associated_revisionOf:"' + scope.uuid + '"'
                 }
-              }
-            })
+              })
+            )
             .then(function (r) {
               scope.items = r.data.hits.hits.map(function (r) {
                 return new Metadata(r);
@@ -402,6 +409,19 @@
                 scope.relations[idx] = value;
               }
 
+              // For draft version append "approved=false" to url
+              if (scope.md.draft === "y" && idx === "onlines") {
+                for (var i = 0; i < scope.relations[idx].length; i++) {
+                  if (
+                    scope.relations[idx][i].url.match(
+                      ".*/api/records/" + scope.md.uuid + "/attachments/.*"
+                    ) != null
+                  ) {
+                    scope.relations[idx][i].url += "?approved=false";
+                  }
+                }
+              }
+
               // siblings, children, parent can contain elements from
               // siblings or associated if linking is made in both direction
               // Priority:
@@ -471,7 +491,11 @@
               if (controller) {
                 controller.startGnRelatedRequest(elem);
               }
-              (promise = gnRelatedService.get(scope.id, scope.types)).then(
+              (promise = gnRelatedService.get(
+                scope.id,
+                scope.types,
+                scope.md.draft !== "y"
+              )).then(
                 function (data) {
                   scope.loadRelations(data);
                   if (angular.isDefined(scope.container) && scope.relations == null) {
@@ -692,7 +716,8 @@
   ]);
 
   module.directive("gnMetadataCard", [
-    function () {
+    "gnGlobalSettings",
+    function (gnGlobalSettings) {
       return {
         restrict: "E",
         transclude: true,
@@ -708,6 +733,19 @@
         },
         link: function (scope, element, attrs, controller) {
           scope.lang = scope.lang || scope.$parent.lang;
+          scope.showStatusFooterFor =
+            gnGlobalSettings.gnCfg.mods.search.showStatusFooterFor;
+
+          scope.getOverviewUrl = function (md) {
+            if (md.overview && md.overview.length > 0) {
+              return md.overview[0].url;
+              // Related records contain the first overview in the properties.overview property
+            } else if (md.properties && md.properties.overview) {
+              return md.properties.overview;
+            }
+
+            return "";
+          };
         }
       };
     }

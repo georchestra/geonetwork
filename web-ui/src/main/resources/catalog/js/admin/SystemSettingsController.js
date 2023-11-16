@@ -127,7 +127,7 @@
           from: 1,
           to: 50,
           isTemplate: "y",
-          sortBy: "resourceType,resourceTitleObject.default.keyword",
+          sortBy: "resourceType,resourceTitleObject.default.sort",
           sortOrder: "asc,asc"
         }
       };
@@ -149,22 +149,22 @@
       };
       $scope.stagingProfiles = ["production", "development", "testing"];
       $scope.updateProfile = function () {
-        $http
-          .put("../api/site/info/staging/" + $scope.systemInfo.stagingProfile)
-          .success(function (data) {
+        $http.put("../api/site/info/staging/" + $scope.systemInfo.stagingProfile).then(
+          function (response) {
             $rootScope.$broadcast("StatusUpdated", {
               msg: $translate.instant("profileUpdated"),
               timeout: 2,
               type: "success"
             });
-          })
-          .error(function (data) {
+          },
+          function (response) {
             $rootScope.$broadcast("StatusUpdated", {
               msg: $translate.instant("profileUpdatedFailed"),
               timeout: 2,
               type: "danger"
             });
-          });
+          }
+        );
       };
 
       $scope.defaultConfigId = "srv";
@@ -192,23 +192,29 @@
        * element name in XML Jeeves request element).
        */
       function loadSettings() {
-        $http.get("../api/site/info/build").success(function (data) {
-          $scope.systemInfo = data;
+        $http.get("../api/site/info/proxy").then(function (response) {
+          $scope.isProxyConfiguredInSystemProperties =
+            response.data.proxyConfiguredInSystemProperties;
         });
 
-        $http.get("../api/site/info/notificationLevels").success(function (data) {
-          $scope.notificationLevels = data;
+        $http.get("../api/site/info/build").then(function (response) {
+          $scope.systemInfo = response.data;
+        });
+
+        $http.get("../api/site/info/notificationLevels").then(function (response) {
+          $scope.notificationLevels = response.data;
           $scope.notificationLevels.unshift("");
         });
 
         // load log files
-        $http.get("../api/site/logging").success(function (data) {
-          $scope.logfiles = data;
+        $http.get("../api/site/logging").then(function (response) {
+          $scope.logfiles = response.data;
         });
 
-        $http
-          .get("../api/site/settings/details")
-          .success(function (data) {
+        $http.get("../api/site/settings/details").then(
+          function (response) {
+            var data = response.data;
+
             var sectionsLevel1 = [];
             var sectionsLevel2 = [];
 
@@ -221,6 +227,9 @@
 
             $scope.settings = data;
             angular.copy(data, $scope.initalSettings);
+
+            $scope.inspireApiUrl = undefined;
+            $scope.inspireApiKey = undefined;
 
             for (var i = 0; i < $scope.settings.length; i++) {
               if ($scope.settings[i].name == "metadata/workflow/enable") {
@@ -235,9 +244,19 @@
               ) {
                 $scope.isGroupPublicationNotificationLevel =
                   $scope.settings[i].value === "recordGroupEmail";
-              } else if ("system/localrating/notificationLevel") {
+              } else if (
+                $scope.settings[i].name == "system/localrating/notificationLevel"
+              ) {
                 $scope.isGroupLocalRatingNotificationLevel =
                   $scope.settings[i].value === "recordGroupEmail";
+              } else if (
+                $scope.settings[i].name == "system/inspire/remotevalidation/url"
+              ) {
+                $scope.inspireApiUrl = $scope.settings[i].value;
+              } else if (
+                $scope.settings[i].name == "system/inspire/remotevalidation/apikey"
+              ) {
+                $scope.inspireApiKey = $scope.settings[i].value;
               }
 
               var tokens = $scope.settings[i].name.split("/");
@@ -255,10 +274,23 @@
                 var level2name = level1name + "/" + tokens[1];
                 if (sectionsLevel2.indexOf(level2name) === -1) {
                   sectionsLevel2.push(level2name);
+
+                  var sectionChildren;
+
+                  // Remove the system proxy information if using Java system properties
+                  if (
+                    level2name === "system/proxy" &&
+                    $scope.isProxyConfiguredInSystemProperties
+                  ) {
+                    sectionChildren = [];
+                  } else {
+                    sectionChildren = filterBySection($scope.settings, level2name);
+                  }
+
                   $scope.sectionsLevel1[level1name].children.push({
                     name: level2name,
                     position: $scope.settings[i].position,
-                    children: filterBySection($scope.settings, level2name)
+                    children: sectionChildren
                   });
                 }
               }
@@ -270,10 +302,11 @@
                 }, 900);
               }
             }
-          })
-          .error(function (data) {
+          },
+          function (response) {
             // TODO
-          });
+          }
+        );
         loadUiConfigurations();
       }
 
@@ -283,7 +316,9 @@
         $scope.uiConfiguration = undefined;
         $scope.uiConfigurationId = "";
         $scope.uiConfigurationIdIsValid = false;
-        return $http.get("../api/ui").success(function (data) {
+        return $http.get("../api/ui").then(function (response) {
+          var data = response.data;
+
           for (var i = 0; i < data.length; i++) {
             data[i].configuration == angular.toJson(data[i].configuration);
 
@@ -404,8 +439,8 @@
       };
 
       function loadUsers() {
-        $http.get("../api/users").success(function (data) {
-          $scope.systemUsers = data;
+        $http.get("../api/users").then(function (response) {
+          $scope.systemUsers = response.data;
         });
       }
 
@@ -436,27 +471,29 @@
           .post("../api/site/settings", gnUtilityService.serialize(formId), {
             headers: { "Content-Type": "application/x-www-form-urlencoded" }
           })
-          .success(function (data) {
-            $(".gn-no-setting").attr("disabled", false);
+          .then(
+            function (response) {
+              $(".gn-no-setting").attr("disabled", false);
 
-            $rootScope.$broadcast("StatusUpdated", {
-              msg: $translate.instant("settingsUpdated"),
-              timeout: 2,
-              type: "success"
-            });
+              $rootScope.$broadcast("StatusUpdated", {
+                msg: $translate.instant("settingsUpdated"),
+                timeout: 2,
+                type: "success"
+              });
 
-            $scope.loadCatalogInfo();
-          })
-          .error(function (data) {
-            $(".gn-no-setting").attr("disabled", false);
+              $scope.loadCatalogInfo();
+            },
+            function (response) {
+              $(".gn-no-setting").attr("disabled", false);
 
-            $rootScope.$broadcast("StatusUpdated", {
-              title: $translate.instant("settingsUpdateError"),
-              error: data,
-              timeout: 0,
-              type: "danger"
-            });
-          });
+              $rootScope.$broadcast("StatusUpdated", {
+                title: $translate.instant("settingsUpdateError"),
+                error: response.data,
+                timeout: 0,
+                type: "danger"
+              });
+            }
+          );
       };
 
       $scope.filterForm = function (e, formId) {
@@ -566,18 +603,18 @@
        * Execute Atom feed harvester
        */
       $scope.executeAtomHarvester = function () {
-        return $http
-          .get("../api/atom/scan")
-          .success(function (data) {
-            $scope.loadTplReport = data;
+        return $http.get("../api/atom/scan").then(
+          function (response) {
+            $scope.loadTplReport = response.data;
 
             $("#atomHarvesterModal").modal();
-          })
-          .error(function (data) {
-            $scope.loadTplReport = data;
+          },
+          function (response) {
+            $scope.loadTplReport = response.data;
 
             $("#atomHarvesterModal").modal();
-          });
+          }
+        );
       };
 
       /**
@@ -608,7 +645,7 @@
           to: 50,
           op1: 1,
           linkProtocol: "OGC:OWS-C",
-          sortBy: "resourceTitleObject.default.keyword",
+          sortBy: "resourceTitleObject.default.sort",
           sortOrder: "asc"
         }
       };

@@ -48,6 +48,11 @@ public class Settings {
     public static final String SYSTEM_XLINK_ALLOW_REFERENCED_DELETION = "system/xlinkResolver/referencedDeletionAllowed";
     public static final String SYSTEM_SERVER_LOG = "system/server/log";
     public static final String SYSTEM_SERVER_TIMEZONE = "system/server/timeZone";
+
+    public static final String METADATA_URL_SITEMAPLINKURL = "metadata/url/sitemapLinkUrl";
+    public static final String METADATA_URL_SITEMAPDOIFIRST = "metadata/url/sitemapDoiFirst";
+    public static final String METADATA_URL_DYNAMICAPPLINKURL = "metadata/url/dynamicAppLinkUrl";
+
     public static final String SYSTEM_INSPIRE_ENABLE = "system/inspire/enable";
     public static final String SYSTEM_INSPIRE_ATOM = "system/inspire/atom";
     public static final String SYSTEM_INSPIRE_ATOM_SCHEDULE = "system/inspire/atomSchedule";
@@ -70,6 +75,7 @@ public class Settings {
     public static final GNSetting SYSTEM_SITE_SVNUUID = new GNSetting("system/site/svnUuid", true);
     public static final String SYSTEM_INTRANET_NETWORK = "system/intranet/network";
     public static final String SYSTEM_INTRANET_NETMASK = "system/intranet/netmask";
+    public static final String SYSTEM_INTRANET_IP_SEPARATOR = ",";
     public static final String SYSTEM_Z3950_ENABLE = "system/z3950/enable";
     public static final String SYSTEM_Z3950_PORT = "system/z3950/port";
     public static final String SYSTEM_SELECTIONMANAGER_MAXRECORDS = "system/selectionmanager/maxrecords";
@@ -124,13 +130,18 @@ public class Settings {
     public static final String REGION_GETMAP_SUMMARY_WIDTH = "region/getmap/summaryWidth";
     public static final String METADATA_WORKFLOW_ENABLE = "metadata/workflow/enable";
     public static final String METADATA_WORKFLOW_DRAFT_WHEN_IN_GROUP = "metadata/workflow/draftWhenInGroup";
-    public static final String METADATA_WORKFLOW_ALLOW_SUBMIT_APPROVE_INVALID_MD = "metadata/workflow/allowSumitApproveInvalidMd";
+    public static final String METADATA_WORKFLOW_ALLOW_SUBMIT_APPROVE_INVALID_MD = "metadata/workflow/allowSubmitApproveInvalidMd";
     public static final String METADATA_WORKFLOW_ALLOW_PUBLISH_INVALID_MD = "metadata/workflow/allowPublishInvalidMd";
     public static final String METADATA_WORKFLOW_ALLOW_PUBLISH_NON_APPROVED_MD = "metadata/workflow/allowPublishNonApprovedMd";
+    public static final String METADATA_WORKFLOW_AUTOMATIC_UNPUBLISH_INVALID_MD = "metadata/workflow/automaticUnpublishInvalidMd";
+    public static final String METADATA_WORKFLOW_FORCE_VALIDATION_ON_MD_SAVE = "metadata/workflow/forceValidationOnMdSave";
     public static final String METADATA_LINK_EXCLUDEPATTERN = "metadata/link/excludedUrlPattern";
     public static final String METADATA_IMPORT_RESTRICT = "metadata/import/restrict";
     public static final String METADATA_IMPORT_USERPROFILE = "metadata/import/userprofile";
+    public static final String METADATA_BATCH_EDITING_ACCESS_LEVEL = "metadata/batchediting/accesslevel";
     public static final String METADATA_PUBLISHED_DELETE_USERPROFILE = "metadata/delete/profilePublishedMetadata";
+    public static final String METADATA_PUBLISH_USERPROFILE = "metadata/publication/profilePublishMetadata";
+    public static final String METADATA_UNPUBLISH_USERPROFILE = "metadata/publication/profileUnpublishMetadata";
     public static final String METADATA_BACKUPARCHIVE_ENABLE = "metadata/backuparchive/enable";
     public static final String METADATA_VCS = "metadata/vcs/enable";
     public static final String VIRTUAL_SETTINGS_SUFFIX_ISDEFINED = "IsDefined";
@@ -144,6 +155,7 @@ public class Settings {
     public static final String SYSTEM_SECURITY_PASSWORDENFORCEMENT_PATTERN = "system/security/passwordEnforcement/pattern";
     public static final String SYSTEM_SECURITY_PASSWORD_ALLOWADMINRESET = "system/security/password/allowAdminReset";
 
+    public static final String MICROSERVICES_ENABLED = "microservices/enabled";
 
     public static class GNSetting {
         private String name;

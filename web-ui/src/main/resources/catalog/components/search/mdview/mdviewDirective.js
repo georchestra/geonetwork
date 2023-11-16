@@ -97,7 +97,8 @@
     "$http",
     "gnGlobalSettings",
     "Metadata",
-    function ($http, gnGlobalSettings, Metadata) {
+    "gnESFacet",
+    function ($http, gnGlobalSettings, Metadata, gnESFacet) {
       return {
         scope: {
           md: "=gnMoreLikeThis"
@@ -134,20 +135,8 @@
             };
 
           function buildQuery() {
-            var query = {
-              _source: {
-                include: [
-                  "id",
-                  "uuid",
-                  "overview.*",
-                  "resourceTitle*",
-                  "resourceAbstract*",
-                  "resourceType",
-                  "cl_status*"
-                ]
-              },
-              size: scope.size,
-              query: {
+            var query = gnESFacet.buildDefaultQuery(
+              {
                 bool: {
                   must: [
                     moreLikeThisQuery,
@@ -168,8 +157,10 @@
                     }
                   ]
                 }
-              }
-            };
+              },
+              scope.size
+            );
+
             query.query.bool.must[0].more_like_this.like = scope.md.resourceTitle;
 
             var resourceType = scope.md.resourceType
@@ -224,8 +215,7 @@
         scope: {
           md: "=gnDataPreview"
         },
-        templateUrl:
-          "../../catalog/components/search/mdview/partials/" + "datapreview.html",
+        templateUrl: "../../catalog/components/search/mdview/partials/datapreview.html",
         controller: [
           "$scope",
           "$timeout",
@@ -365,8 +355,8 @@
           scope.rateForRecord = function () {
             return $http
               .put("../api/records/" + scope.md.uuid + "/rate", scope.rate)
-              .success(function (data) {
-                scope.rate = data;
+              .then(function (response) {
+                scope.rate = response.data;
               });
           };
         }
@@ -412,7 +402,7 @@
     "$filter",
     function ($http, $filter) {
       return {
-        templateUrl: "../../catalog/components/search/mdview/partials/" + "contact.html",
+        templateUrl: "../../catalog/components/search/mdview/partials/contact.html",
         restrict: "A",
         scope: {
           mdContacts: "=gnMetadataContacts",
@@ -567,6 +557,55 @@
               ? "default"
               : "";
           };
+        }
+      };
+    }
+  ]);
+
+  module.directive("gnMetadataSocialLink", [
+    "gnUtilityService",
+    "$http",
+    function (gnUtilityService, $http) {
+      return {
+        templateUrl: "../../catalog/components/search/mdview/partials/social.html",
+        scope: {
+          md: "=gnMetadataSocialLink"
+        },
+        link: function (scope, element, attrs) {
+          scope.mdService = gnUtilityService;
+          $http
+            .get("../api/records/" + scope.md.getUuid() + "/permalink")
+            .then(function (r) {
+              scope.socialMediaLink = r.data;
+            });
+        }
+      };
+    }
+  ]);
+
+  module.directive("gnQualityMeasuresTable", [
+    "gnGlobalSettings",
+    function (gnGlobalSettings) {
+      return {
+        templateUrl:
+          "../../catalog/components/search/mdview/partials/qualitymeasures.html",
+        scope: {
+          measures: "=gnQualityMeasuresTable"
+        },
+        link: function (scope, element, attrs) {
+          scope.columnVisibility = {
+            name: false,
+            description: false,
+            value: false,
+            type: false
+          };
+          for (idx in scope.measures) {
+            angular.forEach(Object.keys(scope.columnVisibility), function (p) {
+              if (scope.measures[idx][p]) {
+                scope.columnVisibility[p] = true;
+              }
+            });
+          }
         }
       };
     }

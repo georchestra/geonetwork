@@ -270,14 +270,12 @@
                 // No UUID can be easily extracted.
                 try {
                   scope.remoteRecord.title = doc.replace(
-                    /(.|[\r\n])*<title>(.*)<\/title>(.|[\r\n])*/,
-                    "$2"
+                    /(.|[\r\n])*<title(.*)>(.*)<\/title>(.|[\r\n])*/,
+                    "$3"
                   );
+
                   scope.remoteRecord.uuid = scope.remoteRecord.remoteUrl;
 
-                  if (scope.remoteRecord.title === "") {
-                    return false;
-                  }
                   // Looking for schema.org tags or json+ld format could also be an option.
                 } catch (e) {
                   console.warn(e);
@@ -623,7 +621,7 @@
                 internal: true,
                 state: { filters: "" },
                 params: {
-                  sortBy: "resourceTitleObject.default.keyword"
+                  sortBy: "resourceTitleObject.default.sort"
                 }
               };
 
@@ -724,7 +722,7 @@
               scope.generateThumbnail = function () {
                 //Added mandatory custom params here to avoid
                 //changing other printing services
-                jsonSpec = angular.extend(scope.jsonSpec, {
+                var jsonSpec = angular.extend(scope.jsonSpec, {
                   hasNoTitle: true
                 });
 
@@ -772,6 +770,9 @@
               };
 
               var DEFAULT_CONFIG = {
+                sources: {
+                  filestore: true
+                },
                 process: "onlinesrc-add",
                 fields: {
                   url: {
@@ -864,8 +865,6 @@
                 } else {
                   return DEFAULT_CONFIG;
                 }
-
-                return DEFAULT_CONFIG;
               }
 
               gnOnlinesrc.register("onlinesrc", function (linkToEditOrType) {
@@ -880,6 +879,10 @@
                 }
 
                 scope.isEditing = angular.isDefined(linkToEdit);
+                // Flag used when editing an online resource to prevent the watcher to update the online
+                // resource description when loading the dialog.
+                scope.processSelectedWMSLayer = false;
+
                 scope.codelistFilter =
                   scope.gnCurrentEdit && scope.gnCurrentEdit.codelistFilter;
 
@@ -1143,7 +1146,7 @@
               };
 
               /**
-               * Build the multingual structure if need for the onlinesrc
+               * Build the multilingual structure if needed for the onlinesrc
                * param (name, desc, url).
                * Struct like {'ger':'', 'eng': ''}
                *
@@ -1302,7 +1305,9 @@
                           function (l) {
                             if (angular.isDefined(l.name)) {
                               scope.layers.push({
-                                Name: l.name.prefix + ":" + l.name.localPart,
+                                Name:
+                                  (l.name.prefix ? l.name.prefix + ":" : "") +
+                                  l.name.localPart,
                                 abstract: angular.isArray(l._abstract)
                                   ? l._abstract[0].value
                                   : l._abstract,
@@ -1388,7 +1393,8 @@
                     selectedLayersNames = params[scope.addLayersInUrl].split(",");
                   }
 
-                  scope.layers.forEach &&
+                  scope.layers &&
+                    scope.layers.forEach &&
                     scope.layers.forEach(function (l) {
                       if (selectedLayersNames.indexOf(l.Name) != -1) {
                         scope.params.selectedLayers.push(l);
@@ -1405,7 +1411,8 @@
                     ? []
                     : scope.params.name.split(",");
                   scope.params.selectedLayers = [];
-                  scope.layers.forEach &&
+                  scope.layers &&
+                    scope.layers.forEach &&
                     scope.layers.forEach(function (l) {
                       if (selectedLayersNames.indexOf(l.Name) != -1) {
                         scope.params.selectedLayers.push(l);
@@ -1462,7 +1469,7 @@
                     // Editing an online resource after saving the metadata doesn't trigger the params.protocol watcher
                     processSelectedWMSLayers();
                   });
-                  scope.isImage = curUrl.match(/.*.(png|jpg|jpeg|gif)$/i);
+                  scope.isImage = curUrl.match(/.*.(png|jpg|jpeg|gif)(\?.*)?$/i);
                 }
               };
               scope.$watch("params.url", updateImageTag, true);
@@ -1476,10 +1483,24 @@
                */
               scope.$watchCollection("params.selectedLayers", function (n, o) {
                 if (
+                  scope.config &&
+                  scope.config.wmsResources.addLayerNamesMode != "resourcename"
+                ) {
+                  return;
+                }
+
+                if (
                   o !== n &&
                   scope.params.selectedLayers &&
                   scope.params.selectedLayers.length > 0
                 ) {
+                  // To avoid setting the online resource description to the WMS layer description, when loading
+                  // the dialog to edit it, so it is preserved the value from the online resource description.
+                  if (scope.isEditing && !scope.processSelectedWMSLayer) {
+                    scope.processSelectedWMSLayer = true;
+                    return;
+                  }
+
                   var names = [],
                     descs = [];
 
@@ -1488,17 +1509,15 @@
                     descs.push(layer.Title || layer.title);
                   });
 
-                  if (scope.config.wmsResources.addLayerNamesMode == "resourcename") {
-                    if (scope.isMdMultilingual) {
-                      var langCode = scope.mdLangs[scope.mdLang];
-                      scope.params.name[langCode] = names.join(",");
-                      scope.params.desc[langCode] = descs.join(",");
-                    } else {
-                      angular.extend(scope.params, {
-                        name: names.join(","),
-                        desc: descs.join(",")
-                      });
-                    }
+                  if (scope.isMdMultilingual) {
+                    var langCode = scope.mdLangs[scope.mdLang];
+                    scope.params.name[langCode] = names.join(",");
+                    scope.params.desc[langCode] = descs.join(",");
+                  } else {
+                    angular.extend(scope.params, {
+                      name: names.join(","),
+                      desc: descs.join(",")
+                    });
                   }
                 }
               });
@@ -1556,7 +1575,7 @@
               scope.selectUploadedResource = function (res) {
                 if (res && res.url) {
                   var o = {
-                    name: res.id.split("/").splice(2).join("/"),
+                    name: decodeURI(res.id.split("/").splice(2).join("/")),
                     url: res.url
                   };
                   ["url", "name"].forEach(function (pName) {
@@ -1919,6 +1938,24 @@
                 };
 
                 /**
+                 * Checks if there are selected records and the selected records have a title.
+                 *
+                 * @param selectRecords
+                 * @returns {boolean}
+                 */
+                scope.canEnableLinkButton = function (selectRecords) {
+                  if (selectRecords.length < 1) return false;
+
+                  // Check if the metadata titles are defined
+                  for (var i = 0; i < selectRecords.length; i++) {
+                    if (!selectRecords[i].title && !selectRecords[i].resourceTitle)
+                      return false;
+                  }
+
+                  return true;
+                };
+
+                /**
                  * Register a method on popup open to reset
                  * the search form and trigger a search.
                  */
@@ -2103,7 +2140,7 @@
                  * Return the index or -1 if not present.
                  */
                 var findObj = function (md) {
-                  for (i = 0; i < scope.selection.length; ++i) {
+                  for (var i = 0; i < scope.selection.length; ++i) {
                     if (scope.selection[i].md === md) {
                       return i;
                     }
@@ -2151,7 +2188,7 @@
                  */
                 scope.linkToResource = function () {
                   var uuids = [];
-                  for (i = 0; i < scope.selection.length; ++i) {
+                  for (var i = 0; i < scope.selection.length; ++i) {
                     var obj = scope.selection[i],
                       parameter =
                         obj.md.uuid +

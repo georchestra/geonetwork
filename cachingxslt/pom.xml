@@ -31,7 +31,7 @@
   <parent>
     <groupId>org.geonetwork-opensource</groupId>
     <artifactId>geonetwork</artifactId>
-    <version>4.2.2-georchestra</version>
+    <version>4.4.0-georchestra</version>
   </parent>
 
 

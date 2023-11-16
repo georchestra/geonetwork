@@ -31,14 +31,9 @@ import net.sf.json.xml.XMLSerializer;
 import net.sf.saxon.Configuration;
 import net.sf.saxon.Controller;
 import net.sf.saxon.FeatureKeys;
-import org.apache.commons.io.IOUtils;
 import org.apache.fop.apps.Fop;
 import org.apache.fop.apps.FopFactory;
 import org.apache.fop.apps.MimeConstants;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.xml.resolver.tools.CatalogResolver;
 import org.fao.geonet.exceptions.XSDValidationErrorEx;
 import org.fao.geonet.utils.nio.NioPathAwareEntityResolver;
@@ -100,7 +95,6 @@ import java.nio.charset.CharacterCodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CharsetEncoder;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystemNotFoundException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
@@ -135,6 +129,7 @@ public final class Xml {
         + "\uE000-\uFFFD"
         + "\ud800\udc00-\udbff\udfff"
         + "]";
+    public static final String XML_VERSION_HEADER = "<\\?xml version=['\"]1.0['\"] encoding=['\"].*['\"]\\?>\\s*";
 
     public static SAXBuilder getSAXBuilder(boolean validate) {
         SAXBuilder builder = getSAXBuilderWithPathXMLResolver(validate, null);
@@ -398,6 +393,9 @@ public final class Xml {
     public static Element transform(Element xml, Path styleSheetPath, Map<String, Object> params) throws Exception {
         JDOMResult resXml = new JDOMResult();
         transform(xml, styleSheetPath, resXml, params);
+        if (resXml.getDocument() == null) {
+            throw new NullPointerException("Failed to create a Document for " + resXml.getResult());
+        }
         return (Element) resXml.getDocument().getRootElement().detach();
     }
     //--------------------------------------------------------------------------
@@ -1118,6 +1116,10 @@ public final class Xml {
 
     /**
      * return true if the String passed in is something like XML
+     * Check for XML header first.
+     * Then use a Regular expression to see if it starts and ends with
+     * the same element or it's a self-closing element.
+     * Regex can be slow on large document.
      *
      * @param inXMLStr a string that might be XML
      * @return true of the string is XML, false otherwise
@@ -1127,6 +1129,11 @@ public final class Xml {
         boolean retBool = false;
         Pattern pattern;
         Matcher matcher;
+
+        if (inXMLStr.startsWith("<?xml")) {
+            return true;
+        }
+        inXMLStr = inXMLStr.replaceFirst(XML_VERSION_HEADER, "");
 
         // Regular expression to see if it starts and ends with the same element or
         // it's a self-closing element.
@@ -1145,6 +1152,23 @@ public final class Xml {
 
         return retBool;
     }
+
+    /**
+     * Check if is XML and the first tag local name
+     * is rdf or something like a DCAT feed.
+     */
+    public static boolean isRDFLike(String inXMLStr) {
+        boolean retBool = false;
+        if (isXMLLike(inXMLStr)) {
+            String xml = inXMLStr.replaceFirst(XML_VERSION_HEADER, ""),
+            firstTag = xml
+                .substring(0, xml.indexOf(" "))
+                .toLowerCase();
+            retBool = firstTag.matches("<.*:(rdf|catalog|catalogrecord)\\n?");
+        }
+        return retBool;
+    }
+
 
     private static class JeevesURIResolver implements URIResolver {
 
