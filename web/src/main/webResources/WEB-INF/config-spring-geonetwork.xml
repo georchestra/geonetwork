@@ -32,9 +32,16 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
   <context:annotation-config/>
 
+
+
+  <context:property-placeholder location="file:${georchestra.datadir}/geonetwork/geonetwork.properties"
+                                ignore-resource-not-found="true" ignore-unresolvable="true" order="1"/>
+  <context:property-placeholder location="WEB-INF/config-geonetwork-georchestra.properties"
+                                ignore-resource-not-found="true" ignore-unresolvable="true" order="2"/>
   <context:property-placeholder location="${app.properties},file://#{systemEnvironment['geonetwork_dir']}/config/app.properties"
                                 ignore-unresolvable="true"
                                 ignore-resource-not-found="true"
+                                order="3"
                                 file-encoding="UTF-8"/>
 
   <import resource="config-spring-env.xml"/>
@@ -44,6 +51,13 @@
   <import resource="config-db/initial_data.xml"/>
   <import resource="config-print/config-spring-print.xml"/>
   <import resource="config-etf-validator.xml"/>
+
+  <!-- TODO ? -->
+  <import resource="config-georchestra-geonetwork-datadirs.xml"/>
+
+  <bean id="loggingConfigurationPath" class="java.lang.String">
+    <constructor-arg value="${georchestra.datadir}/geonetwork/log4j"/>
+  </bean>
 
   <!-- For database configuration look in the config-node configuration files (config-node/srv.xml) -->
 

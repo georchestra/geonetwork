@@ -27,12 +27,13 @@
   <parent>
     <artifactId>geonetwork</artifactId>
     <groupId>org.geonetwork-opensource</groupId>
-    <version>4.4.0-0</version>
+    <version>4.4.0-georchestra</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>gn-services</artifactId>
   <name>GeoNetwork services</name>
+  <version>4.4.0-georchestra</version>
 
   <dependencies>
     <dependency>

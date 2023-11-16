@@ -30,13 +30,14 @@
   <parent>
     <groupId>org.geonetwork-opensource</groupId>
     <artifactId>geonetwork</artifactId>
-    <version>4.4.0-0</version>
+    <version>4.4.0-georchestra</version>
   </parent>
 
   <groupId>org.geonetwork-opensource</groupId>
   <artifactId>gn-web-ui</artifactId>
   <packaging>jar</packaging>
   <name>GeoNetwork user interface module</name>
+  <version>4.4.0-georchestra</version>
   <description/>
 
   <licenses>
