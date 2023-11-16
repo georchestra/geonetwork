@@ -27,13 +27,12 @@
   <parent>
     <artifactId>geonetwork</artifactId>
     <groupId>org.geonetwork-opensource</groupId>
-    <version>4.2.2-georchestra</version>
+    <version>4.2.6-0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>gn-services</artifactId>
   <name>GeoNetwork services</name>
-  <version>4.2.2-georchestra</version>
 
   <dependencies>
     <dependency>
@@ -63,28 +62,28 @@
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>gn-harvesters</artifactId>
-      <version>${project.parent.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>gn-csw-server</artifactId>
-      <version>${project.parent.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>gn-domain</artifactId>
-      <version>${project.parent.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>gn-doi</artifactId>
-      <version>${project.parent.version}</version>
+      <version>${project.version}</version>
     </dependency>
 
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>gn-events</artifactId>
-      <version>${project.parent.version}</version>
+      <version>${project.version}</version>
     </dependency>
 
     <dependency>
@@ -115,7 +114,7 @@
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>gn-domain</artifactId>
-      <version>${project.parent.version}</version>
+      <version>${project.version}</version>
       <classifier>tests</classifier>
       <scope>test</scope>
     </dependency>
@@ -177,6 +176,16 @@
     <dependency>
       <groupId>org.geotools.xsd</groupId>
       <artifactId>gt-xsd-wfs</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.geotools</groupId>
+      <artifactId>gt-wmts</artifactId>
+      <version>${geotools.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.geotools</groupId>
+      <artifactId>gt-epsg-hsql</artifactId>
+      <version>${geotools.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>

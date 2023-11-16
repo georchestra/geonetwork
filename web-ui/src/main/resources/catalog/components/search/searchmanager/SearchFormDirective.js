@@ -528,12 +528,6 @@
     };
 
     this.loadMoreTerms = function (facet, moreItemsNumber) {
-      var facetConfigs = {};
-      for (var i = 0; i < facet.path.length; i++) {
-        if ((i + 1) % 2 === 0) continue;
-        var key = facet.path[i];
-        facetConfigs[key] = $scope.facetConfig[key];
-      }
       var request = gnESService.generateEsRequest(
         $scope.finalParams,
         $scope.searchObj.state,
@@ -542,21 +536,15 @@
       );
       return gnESClient.getTermsParamsWithNewSizeOrFilter(
         request.query,
-        facet.path,
+        facet.key,
+        facet.config,
         facet.items.length + (moreItemsNumber || 20),
         facet.include || undefined,
-        facet.exclude || undefined,
-        facetConfigs
+        facet.exclude || undefined
       );
     };
 
     this.filterTerms = function (facet) {
-      var facetConfigs = {};
-      for (var i = 0; i < facet.path.length; i++) {
-        if ((i + 1) % 2 === 0) continue;
-        var key = facet.path[i];
-        facetConfigs[key] = $scope.facetConfig[key];
-      }
       var request = gnESService.generateEsRequest(
         $scope.finalParams,
         $scope.searchObj.state,
@@ -565,11 +553,11 @@
       );
       return gnESClient.getTermsParamsWithNewSizeOrFilter(
         request.query,
-        facet.path,
+        facet.key,
+        facet.config,
         undefined,
         facet.include,
-        facet.exclude,
-        facetConfigs
+        facet.exclude
       );
     };
 
@@ -700,7 +688,8 @@
   module.directive("ngSearchForm", [
     "gnSearchLocation",
     "gnESService",
-    function (gnSearchLocation, gnESService) {
+    "gnGlobalSettings",
+    function (gnSearchLocation, gnESService, gnGlobalSettings) {
       return {
         restrict: "A",
         scope: true,
@@ -727,6 +716,11 @@
             if (element.find("[data-gn-pagination]").length > 0) {
               var unregisterFn = scope.$watch("hasPagination", function () {
                 if (scope.hasPagination) {
+                  if (scope.user && gnSearchLocation.isEditorBoard()) {
+                    scope.controller.setOnlyMyRecord(
+                      gnGlobalSettings.gnCfg.mods.editor.isUserRecordsOnly
+                    );
+                  }
                   scope.triggerSearch(true);
                   unregisterFn();
                 }

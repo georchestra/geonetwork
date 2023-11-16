@@ -27,13 +27,12 @@
   <parent>
     <artifactId>geonetwork</artifactId>
     <groupId>org.geonetwork-opensource</groupId>
-    <version>4.2.2-georchestra</version>
+    <version>4.2.6-0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>gn-core</artifactId>
   <name>GeoNetwork core</name>
-  <version>4.2.2-georchestra</version>
 
   <dependencies>
     <dependency>
@@ -386,26 +385,20 @@
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>gn-domain</artifactId>
-      <version>${project.parent.version}</version>
+      <version>${project.version}</version>
       <classifier>tests</classifier>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>gn-events</artifactId>
-      <version>${project.parent.version}</version>
+      <version>${project.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.apache.jclouds</groupId>
       <artifactId>jclouds-all</artifactId>
-      <version>2.2.1</version>
-      <exclusions>
-        <exclusion>
-          <groupId>javax.annotation</groupId>
-          <artifactId>jsr250-api</artifactId>
-        </exclusion>
-      </exclusions>
+      <version>2.3.0</version>
     </dependency>
 
     <dependency>
@@ -501,27 +494,27 @@
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>gn-oaipmh</artifactId>
-      <version>${project.parent.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>gn-domain</artifactId>
-      <version>${project.parent.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>gn-cachingxslt</artifactId>
-      <version>${project.parent.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.geonetwork-opensource.schemas</groupId>
       <artifactId>gn-schema-iso19139</artifactId>
-      <version>${project.parent.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency> <!-- dummy API for ARC SDE stuff -->
       <groupId>${project.groupId}</groupId>
       <artifactId>gn-dummy-api</artifactId>
-      <version>${project.parent.version}</version>
+      <version>${project.version}</version>
     </dependency>
 
     <!-- Handled locally by a temporarly repository -->
@@ -593,7 +586,7 @@
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>gn-index</artifactId>
-      <version>${project.parent.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
@@ -607,7 +600,7 @@
     <dependency>
       <groupId>com.amazonaws</groupId>
       <artifactId>aws-java-sdk-s3</artifactId>
-      <version>1.11.618</version>
+      <version>1.12.261</version>
     </dependency>
     <dependency>
       <groupId>org.jasypt</groupId>

@@ -79,7 +79,7 @@
           return r.mimeType;
         } else if (r.protocol && r.protocol.indexOf("WWW:DOWNLOAD:") >= 0) {
           return r.protocol.replace("WWW:DOWNLOAD:", "");
-        } else if (mainType.match(/W([MCF]|MT)S.*|3DTILES|ESRI:REST/) != null) {
+        } else if (mainType.match(/W([MCF]|MT)S.*|ESRI:REST/) != null) {
           return mainType.replace("SERVICE", "");
         } else if (mainType.match(/KML|GPX/) != null) {
           return mainType;
@@ -126,8 +126,6 @@
 
       var addWMSToMap =
         gnViewerSettings.resultviewFns && gnViewerSettings.resultviewFns.addMdLayerToMap;
-      var add3dTilesToMap =
-        gnViewerSettings.resultviewFns && gnViewerSettings.resultviewFns.addMdLayerToMap;
       var addEsriRestToMap =
         gnViewerSettings.resultviewFns && gnViewerSettings.resultviewFns.addMdLayerToMap;
 
@@ -149,7 +147,7 @@
             featureName = decodeURIComponent(results[1].replace(/\+/g, " "));
           }
         } else {
-          featureName = $filter("gnLocalized")(link.title);
+          featureName = $filter("gnLocalized")(link.title) || link.name;
         }
 
         // if an external viewer is defined, use it here
@@ -280,11 +278,6 @@
           iconClass: "fa-globe",
           label: "addToMap",
           action: addWMTSToMap
-        },
-        "3DTILES": {
-          iconClass: "fa-globe",
-          label: "addToMap",
-          action: add3dTilesToMap
         },
         TMS: {
           iconClass: "fa-globe",
@@ -467,7 +460,9 @@
           ? $filter("gnLocalized")(resource.name)
           : (angular.isObject(resource.title)
               ? $filter("gnLocalized")(resource.title)
-              : resource.title) || resource.name;
+              : resource.title) ||
+            resource.name ||
+            "";
         resource.locDescription = angular.isObject(resource.description)
           ? $filter("gnLocalized")(resource.description)
           : resource.description;
@@ -513,8 +508,6 @@
             return "ESRI:REST";
           } else if (protocolOrType.match(/wmts/i)) {
             return "WMTS";
-          } else if (protocolOrType.match(/3dtiles/i)) {
-            return "3DTILES";
           } else if (protocolOrType.match(/tms/i)) {
             return "TMS";
           } else if (protocolOrType.match(/wfs/i)) {

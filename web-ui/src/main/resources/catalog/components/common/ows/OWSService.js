@@ -293,23 +293,27 @@
                     cache: true,
                     timeout: timeout
                   })
-                  .success(function (data) {
-                    try {
-                      defer.resolve(displayFileContent(data, withGroupLayer, url));
-                    } catch (e) {
-                      defer.reject($translate.instant("failedToParseCapabilities"));
+                  .then(
+                    function (response) {
+                      try {
+                        defer.resolve(
+                          displayFileContent(response.data, withGroupLayer, url)
+                        );
+                      } catch (e) {
+                        defer.reject($translate.instant("failedToParseCapabilities"));
+                      }
+                    },
+                    function (response) {
+                      defer.reject(
+                        $translate.instant(
+                          response.status === 401
+                            ? "checkCapabilityUrlUnauthorized"
+                            : "checkCapabilityUrl",
+                          { url: url, status: response.status }
+                        )
+                      );
                     }
-                  })
-                  .error(function (data, status) {
-                    defer.reject(
-                      $translate.instant(
-                        status === 401
-                          ? "checkCapabilityUrlUnauthorized"
-                          : "checkCapabilityUrl",
-                        { url: url, status: status }
-                      )
-                    );
-                  });
+                  );
               }
             } else {
               defer.reject();
@@ -331,16 +335,20 @@
                     cache: true,
                     timeout: timeout
                   })
-                  .success(function (data, status, headers, config) {
-                    if (data) {
-                      defer.resolve(parseWMTSCapabilities(data));
-                    } else {
-                      defer.reject();
+                  .then(
+                    function (response) {
+                      var data = response.data;
+
+                      if (data) {
+                        defer.resolve(parseWMTSCapabilities(data));
+                      } else {
+                        defer.reject();
+                      }
+                    },
+                    function (response) {
+                      defer.reject(response.status);
                     }
-                  })
-                  .error(function (data, status, headers, config) {
-                    defer.reject(status);
-                  });
+                  );
               }
             }
             return defer.promise;
@@ -363,21 +371,23 @@
                     cache: true,
                     timeout: timeout
                   })
-                  .success(function (data, status, headers, config) {
-                    var xfsCap = parseWFSCapabilities(data);
+                  .then(
+                    function (response) {
+                      var xfsCap = parseWFSCapabilities(response.data);
 
-                    if (!xfsCap || xfsCap.exception != undefined) {
-                      defer.reject({
-                        msg: $translate.instant("wfsGetCapabilitiesFailed"),
-                        owsExceptionReport: xfsCap
-                      });
-                    } else {
-                      defer.resolve(xfsCap);
+                      if (!xfsCap || xfsCap.exception != undefined) {
+                        defer.reject({
+                          msg: $translate.instant("wfsGetCapabilitiesFailed"),
+                          owsExceptionReport: xfsCap
+                        });
+                      } else {
+                        defer.resolve(xfsCap);
+                      }
+                    },
+                    function (response) {
+                      defer.reject($translate.instant("wfsGetCapabilitiesFailed"));
                     }
-                  })
-                  .error(function (data, status, headers, config) {
-                    defer.reject($translate.instant("wfsGetCapabilitiesFailed"));
-                  });
+                  );
               }
             }
             return defer.promise;
@@ -399,21 +409,23 @@
                   .get(url, {
                     cache: true
                   })
-                  .success(function (data, status, headers, config) {
-                    var xfsCap = parseWCSCapabilities(data);
+                  .then(
+                    function (response) {
+                      var xfsCap = parseWCSCapabilities(response.data);
 
-                    if (!xfsCap || xfsCap.exception != undefined) {
-                      defer.reject({
-                        msg: "wcsGetCapabilitiesFailed",
-                        owsExceptionReport: xfsCap
-                      });
-                    } else {
-                      defer.resolve(xfsCap);
+                      if (!xfsCap || xfsCap.exception != undefined) {
+                        defer.reject({
+                          msg: "wcsGetCapabilitiesFailed",
+                          owsExceptionReport: xfsCap
+                        });
+                      } else {
+                        defer.resolve(xfsCap);
+                      }
+                    },
+                    function (response) {
+                      defer.reject(response.status);
                     }
-                  })
-                  .error(function (data, status, headers, config) {
-                    defer.reject(status);
-                  });
+                  );
               }
             }
             return defer.promise;
@@ -577,12 +589,14 @@
                 name == layers[i].name.prefix + ":" + layers[i].name.localPart ||
                 name == layers[i].Name
               ) {
-                return layers[i];
+                needles.push(layers[i]);
+                continue;
               }
 
               //check title
               if (name == layers[i].title || name == layers[i].Title) {
-                return layers[i];
+                needles.push(layers[i]);
+                continue;
               }
 
               //check dataset identifer match
@@ -614,6 +628,9 @@
 
             //FIXME: allow multiple, remove duplicates
             if (needles.length > 0) {
+              if (capObj.version) {
+                needles[0].version = capObj.version;
+              }
               return needles[0];
             } else {
               return;

@@ -33,15 +33,10 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
     ">
 
-
-  <context:property-placeholder location="file:${georchestra.datadir}/geonetwork/geonetwork.properties"
-                                ignore-resource-not-found="true" ignore-unresolvable="true" order="1"/>
-  <context:property-placeholder location="WEB-INF/config-geonetwork-georchestra.properties"
-                                ignore-resource-not-found="true" ignore-unresolvable="true" order="2"/>
-  <context:property-placeholder location="${app.properties}"
-                                order="3"
-                                file-encoding="UTF-8"
-                                ignore-unresolvable="true"/>
+  <context:property-placeholder location="${app.properties},file://#{systemEnvironment['geonetwork_dir']}/config/app.properties"
+                                ignore-unresolvable="true"
+                                ignore-resource-not-found="true"
+                                file-encoding="UTF-8"/>
 
   <context:annotation-config/>
   <bean id="ProfileManager" class="jeeves.component.ProfileManager" lazy-init="true"/>
@@ -56,10 +51,8 @@
 
   <bean id="AccessManager" class="org.fao.geonet.kernel.AccessManager" lazy-init="true"/>
   <bean id="DataManager" class="org.fao.geonet.kernel.DataManager" lazy-init="true"/>
-  <!-- will be defined into the web/ module
   <bean id="GeonetworkDataDirectory" class="org.fao.geonet.kernel.GeonetworkDataDirectory"
         lazy-init="true"/>
-  -->
 
   <bean id="ThesaurusManager" class="org.fao.geonet.kernel.ThesaurusManager" lazy-init="true">
     <property name="thesaurusCacheMaxSize" value="\${thesaurus.cache.maxsize}"/>

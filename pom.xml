@@ -29,7 +29,7 @@
   <groupId>org.geonetwork-opensource</groupId>
   <artifactId>geonetwork</artifactId>
   <packaging>pom</packaging>
-  <version>4.2.2-georchestra</version>
+  <version>4.2.6-0</version>
   <name>GeoNetwork opensource</name>
   <description>GeoNetwork opensource is a standards based, Free and
     Open Source catalog application to manage spatially referenced
@@ -64,7 +64,8 @@
       <post>geonetwork-users-fr@lists.sourceforge.net</post>
       <subscribe>https://lists.sourceforge.net/lists/listinfo/geonetwork-users-fr</subscribe>
       <unsubscribe>https://lists.sourceforge.net/lists/options/geonetwork-users-fr</unsubscribe>
-      <archive>http://osgeo-org.1560.x6.nabble.com/GeoNetwork-users-francophone-f3880536.html</archive>
+      <archive>http://osgeo-org.1560.x6.nabble.com/GeoNetwork-users-francophone-f3880536.html
+      </archive>
     </mailingList>
     <mailingList>
       <name>Usuarios (es)</name>
@@ -124,7 +125,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-resources-plugin</artifactId>
-          <version>3.1.0</version>
+          <version>3.3.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -228,6 +229,10 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.8.1</version>
+          <configuration>
+            <source>1.8</source>
+            <target>1.8</target>
+          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-assembly-plugin</artifactId>
@@ -260,10 +265,8 @@
           <compilerVersion>1.8</compilerVersion>
           <debug>true</debug>   <!-- Whether to include debugging information.   -->
           <encoding>UTF-8</encoding> <!-- The -encoding argument for the Java compiler. -->
-          <compilerArgs>
-            <!-- disable automatic annotation processing according to: http://docs.jboss.org/hibernate/jpamodelgen/1.0/reference/en-US/html_single/#d0e261 -->
-            <arg>-proc:none</arg>
-          </compilerArgs>
+          <compilerArgument>-proc:none
+          </compilerArgument> <!-- disable automatic annotation processing accoring to: http://docs.jboss.org/hibernate/jpamodelgen/1.0/reference/en-US/html_single/#d0e261 -->
         </configuration>
       </plugin>
 
@@ -273,6 +276,7 @@
         <artifactId>maven-resources-plugin</artifactId>
         <configuration>
           <encoding>UTF-8</encoding>
+          <propertiesEncoding>ISO-8859-1</propertiesEncoding>
         </configuration>
       </plugin>
 
@@ -384,6 +388,12 @@
       </dependency>
 
       <dependency>
+        <groupId>org.jsoup</groupId>
+        <artifactId>jsoup</artifactId>
+        <version>1.15.3</version>
+      </dependency>
+
+      <dependency>
         <groupId>org.codehaus.groovy</groupId>
         <artifactId>groovy-all</artifactId>
         <version>2.4.21</version>
@@ -416,6 +426,12 @@
         <groupId>org.openrdf</groupId>
         <artifactId>rio</artifactId>
         <version>1.0.9</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.jena</groupId>
+        <artifactId>apache-jena-libs</artifactId>
+        <type>pom</type>
+        <version>3.17.0</version>
       </dependency>
 
       <!-- PDF stuff: Managed by Mapfish -->
@@ -463,7 +479,7 @@
       <dependency>
         <groupId>commons-net</groupId>
         <artifactId>commons-net</artifactId>
-        <version>3.0.1</version>
+        <version>3.9.0</version>
       </dependency>
       <dependency>
         <groupId>commons-digester</groupId>
@@ -516,12 +532,9 @@
         <version>1.10</version>
       </dependency>
       <!-- logging -->
-      <dependency> <!-- usedf for camel -->
-        <groupId>org.apache.logging.log4j</groupId>
-        <artifactId>log4j-slf4j18-impl</artifactId>
-        <version>${log4j2.version}</version>
-      </dependency>
-      <dependency> <!-- used for LDAP test dependency in core -->
+      <dependency>
+        <!-- usedf for camel -->
+        <!-- used for LDAP test dependency in core -->
         <groupId>org.apache.logging.log4j</groupId>
         <artifactId>log4j-slf4j-impl</artifactId>
         <version>${log4j2.version}</version>
@@ -638,6 +651,11 @@
       </dependency>
       <dependency>
         <groupId>org.geotools.xsd</groupId>
+        <artifactId>gt-xsd-fes</artifactId>
+        <version>${geotools.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.geotools.xsd</groupId>
         <artifactId>gt-xsd-core</artifactId>
         <version>${geotools.version}</version>
       </dependency>
@@ -676,11 +694,6 @@
       <dependency>
         <groupId>org.geotools.xsd</groupId>
         <artifactId>gt-xsd-wfs</artifactId>
-        <version>${geotools.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.geotools.xsd</groupId>
-        <artifactId>gt-xsd-fes</artifactId>
         <version>${geotools.version}</version>
       </dependency>
       <dependency>
@@ -809,7 +822,7 @@
       <dependency>
         <groupId>org.tmatesoft.svnkit</groupId>
         <artifactId>svnkit</artifactId>
-        <version>1.7.8</version>
+        <version>1.10.11</version>
       </dependency>
       <dependency>
         <groupId>dlib</groupId>  <!--FIXME Handled by local repository -->
@@ -945,24 +958,14 @@
          <!-- Oracle Free Use Terms and Conditions (FUTC) -->
        </dependency>
       <dependency>
-        <groupId>org.codehaus.izpack</groupId>
-        <artifactId>izpack-standalone-compiler</artifactId>
-        <version>4.3.1</version>
-      </dependency>
-      <dependency>
-        <groupId>org.jsoup</groupId>
-        <artifactId>jsoup</artifactId>
-        <version>1.14.3</version>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>${spring.version}</version>
       </dependency>
       <dependency>
         <groupId>com.neovisionaries</groupId>
         <artifactId>nv-i18n</artifactId>
         <version>1.29</version>
-      </dependency>
-      <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-context</artifactId>
-        <version>${spring.version}</version>
       </dependency>
       <dependency>
         <groupId>org.springframework</groupId>
@@ -987,6 +990,11 @@
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-core</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-expression</artifactId>
         <version>${spring.version}</version>
       </dependency>
       <dependency>
@@ -1116,7 +1124,7 @@
       <dependency>
         <groupId>com.google.code.findbugs</groupId>
         <artifactId>jsr305</artifactId>
-        <version>2.0.1</version>
+        <version>2.0.3</version>
       </dependency>
       <dependency>
         <groupId>net.sf.json-lib</groupId>
@@ -1157,7 +1165,7 @@
       <dependency>
         <groupId>com.sun.xml.bind</groupId>
         <artifactId>jaxb-impl</artifactId>
-        <version>2.3.0</version>
+        <version>2.2.11</version>
       </dependency>
       <dependency>
         <groupId>org.elasticsearch.client</groupId>
@@ -1305,52 +1313,9 @@
     <module>messaging</module>
     <module>estest</module>
     <module>index</module>
-    <module>georchestra-integration</module>
   </modules>
 
   <profiles>
-    <profile>
-      <id>jdk11+</id>
-      <activation>
-        <jdk>[11,)</jdk>
-      </activation>
-      <properties>
-        <java.version>11</java.version>
-      </properties>
-      <dependencyManagement>
-        <dependencies>
-          <dependency>
-            <groupId>javax.annotation</groupId>
-            <artifactId>javax.annotation-api</artifactId>
-            <version>1.3.2</version>
-          </dependency>
-          <dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-            <version>2.3.1</version>
-          </dependency>
-        </dependencies>
-      </dependencyManagement>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <configuration>
-              <source>11</source>
-              <target>11</target>
-              <debug>true</debug>   <!-- Whether to include debugging information.   -->
-              <encoding>UTF-8</encoding> <!-- The -encoding argument for the Java compiler. -->
-              <compilerArgs>
-                <arg>-proc:none</arg>
-                <arg>--add-exports</arg>
-                <arg>java.base/sun.net.ftp=ALL-UNNAMED</arg>
-              </compilerArgs> <!-- disable automatic annotation processing according to: http://docs.jboss.org/hibernate/jpamodelgen/1.0/reference/en-US/html_single/#d0e261 -->
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
     <profile>
       <!-- force use of java 8 if available in toolchains.xml -->
       <id>toolchain</id>
@@ -1470,6 +1435,8 @@
     <application.name>geonetwork</application.name>
     <app.properties>WEB-INF/config.properties</app.properties>
     <!--<app.properties>file:/${geonetwork.dir}/config.properties</app.properties>-->
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
     <!-- Configure database config file to use. Could be
      h2, postgres, sqlserver, mysql, oracle, db2, postgres-postgis, jndi
      -->
@@ -1484,10 +1451,9 @@
         GEONETWORK_DB_CONNECTION_PROPERTIES=
     -->
 
-
-   <!--  <db.type>${geonetwork.db.type:postgres-postgis}</db.type> -->
+    <db.type>${geonetwork.db.type:h2}</db.type>
     <!-- Instead of using db_type a specific config file can be specified -->
-    <db.config.file>../config-db/postgres-postgis.xml</db.config.file>
+    <db.config.file>../config-db/${db.type}.xml</db.config.file>
     <db.host>#{systemEnvironment['GEONETWORK_DB_HOST']?:'localhost'}</db.host>
     <db.port>#{systemEnvironment['GEONETWORK_DB_PORT']}</db.port>
     <db.name>#{systemEnvironment['GEONETWORK_DB_NAME']?:'~/gn'}</db.name>
@@ -1511,7 +1477,7 @@
      when watchlist notifier is triggered (Default 4AM) -->
     <savedselection.watchlist.frequency>0 0 4 * * ?</savedselection.watchlist.frequency>
 
-    <microservices.url></microservices.url>
+    <microservices.url/>
     <!--<microservices.url>http://localhost:9901</microservices.url>-->
 
     <!-- Proxy security configuration:
@@ -1551,9 +1517,15 @@
     <es.index.max_result_window.limit>15000</es.index.max_result_window.limit>
 
     <es.index.mapping.total_fields.limit>4000</es.index.mapping.total_fields.limit>
+    <es.index.ignore_above>2000</es.index.ignore_above>
 
-    <es.username></es.username>
-    <es.password></es.password>
+    <!-- If elasticsearch security is on,
+    add a read/write user for index features and records: -->
+    <es.username/>
+    <es.password/>
+    <!-- and a readonly user for index features access. -->
+    <es.ro.username/>
+    <es.ro.password/>
 
     <kb.platform>linux-x86_64</kb.platform>
     <kb.installer.extension>tar.gz</kb.installer.extension>
@@ -1583,17 +1555,17 @@
 
     <!-- NOTE: When updating GeoTools, check which version
     of Postgres is used and update pg.version if needed. -->
-    <geotools.version>27.1</geotools.version>
+    <geotools.version>28.2</geotools.version>
     <jts.version>1.18.2</jts.version>
     <pg.version>42.3.3</pg.version>
 
-    <spring.version>5.2.20.RELEASE</spring.version>
-    <spring.security.version>5.7.3</spring.security.version>
+    <spring.version>5.3.27</spring.version>
+    <spring.security.version>5.7.8</spring.security.version>
     <spring.jpa.version>2.2.13.RELEASE</spring.jpa.version>
-    <springboot.version>2.2.2.RELEASE</springboot.version>
+    <springboot.version>2.7.0</springboot.version>
     <springdoc.version>1.5.9</springdoc.version>
 
-    <metrics.version>2.1.1</metrics.version>
+    <metrics.version>2.2.0</metrics.version>
     <maven.build.timestamp.format>yyyy-MM-dd'T'HH'\:'mm'\:'ssZ</maven.build.timestamp.format>
     <build.timestamp>${maven.build.timestamp}</build.timestamp>
     <rootProjectDir>..</rootProjectDir>
@@ -1608,9 +1580,9 @@
     <camel.version>2.25.1</camel.version>
     <log4j2.version>2.17.2</log4j2.version>
     <slf4j.version>1.8.0-beta2</slf4j.version>
-    <xbean.version>3.18</xbean.version>
+    <xbean.version>4.22</xbean.version>
     <jolokia.version>1.6.0</jolokia.version>
-    <httpcomponents.version>4.5.9</httpcomponents.version>
+    <httpcomponents.version>4.5.14</httpcomponents.version>
     <jasypt.version>1.9.3</jasypt.version>
     <jupiter.version>5.9.1</jupiter.version>
     <hibernate.version>5.6.7.Final</hibernate.version>
