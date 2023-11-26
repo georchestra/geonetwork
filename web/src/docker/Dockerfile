@@ -9,6 +9,8 @@ COPY --chown=jetty:jetty . /
 # Temporary switch to root
 USER root
 
+RUN mkdir -p /docker-entrypoint.d
+RUN chown jetty /docker-entrypoint.d
 RUN mkdir -p /mnt/geonetwork_datadir && \
     chown jetty:jetty /mnt/geonetwork_datadir
 
