@@ -35,6 +35,8 @@
 
   <xsl:variable name="headerUrl" select="util:getGeorchestraHeaderUrl()"/>
   <xsl:variable name="headerHeight" select="util:getGeorchestraHeaderHeight()"/>
+  <xsl:variable name="useLegacyHeader" select="util:getGeorchestraUseLegacyHeader()"/>
+  <xsl:variable name="headerScript" select="util:getGeorchestraHeaderScript()"/>
 
   <!--
   -->
