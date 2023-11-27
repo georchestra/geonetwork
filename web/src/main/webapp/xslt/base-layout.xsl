@@ -60,6 +60,7 @@
               title="{concat($env/system/site/name, ' - ', $env/system/site/organization)}"/>
 
         <xsl:call-template name="css-load"/>
+        <script src="{$headerScript}"></script>
       </head>
 
 
@@ -68,7 +69,7 @@
       and a facet search to get main site information.
       -->
       <body data-ng-controller="GnCatController" data-ng-class="[isHeaderFixed ? 'gn-header-fixed' : 'gn-header-relative', isLogoInHeader ? 'gn-logo-in-header' : 'gn-logo-in-navbar', isFooterEnabled ? 'gn-show-footer' : 'gn-hide-footer']">
-        <iframe src="{$headerUrl}?active=geonetwork" style="width:100%;height:{$headerHeight}px;border:none;overflow:hidden;" scrolling="no" frameborder="0"></iframe>
+        <geor-header active-app="geonetwork" legacy-header="{$useLegacyHeader}" legacy-url="{$headerUrl}" style="width:100%;height:{$headerHeight}px;border:none;"></geor-header>
 
         <div data-gn-alert-manager=""></div>
 
