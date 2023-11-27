@@ -227,12 +227,25 @@ public class GeoServerRest {
             + "<type>text/xml</type>"
             + "<metadataType>ISO19115:2003</metadataType>"
             + "<content>"
-            + this.nodeUrl + "api/records/" + metadataUuid + "/formatters/xml"
+            + this.baseCatalogueUrl
+            + "/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById"
+            + "&amp;outputSchema=http://www.isotc211.org/2005/gmd"
+            + "&amp;ID=" + metadataUuid
             + "</content>"
             + "</metadataLink>"
             + "<metadataLink>"
             + "<type>text/html</type>"
-            + "<metadataType>ISO19115:2003</metadataType>"
+            + "<metadataType>TC211</metadataType>"
+            + "<content>"
+            + this.baseCatalogueUrl
+            + "/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById"
+            + "&amp;outputSchema=http://www.isotc211.org/2005/gmd"
+            + "&amp;ID=" + metadataUuid
+            + "</content>"
+            + "</metadataLink>"
+            + "<metadataLink>"
+            + "<type>text/html</type>"
+            + "<metadataType>TC211</metadataType>"
             + "<content>"
             + this.nodeUrl + "api/records/" + metadataUuid
             + "</content>"
@@ -572,12 +585,25 @@ public class GeoServerRest {
             + "<type>text/xml</type>"
             + "<metadataType>ISO19115:2003</metadataType>"
             + "<content>"
-            + this.nodeUrl + "api/records/" + metadataUuid + "/formatters/xml"
+            + this.baseCatalogueUrl
+            + "/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById"
+            + "&amp;outputSchema=http://www.isotc211.org/2005/gmd"
+            + "&amp;ID=" + metadataUuid
+            + "</content>"
+            + "</metadataLink>"
+            + "<metadataLink>"
+            + "<type>text/xml</type>"
+            + "<metadataType>TC211</metadataType>"
+            + "<content>"
+            + this.baseCatalogueUrl
+            + "/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById"
+            + "&amp;outputSchema=http://www.isotc211.org/2005/gmd"
+            + "&amp;ID=" + metadataUuid
             + "</content>"
             + "</metadataLink>"
             + "<metadataLink>"
             + "<type>text/html</type>"
-            + "<metadataType>ISO19115:2003</metadataType>"
+            + "<metadataType>TC211</metadataType>"
             + "<content>"
             + this.nodeUrl + "api/records/" + metadataUuid
             + "</content>"
