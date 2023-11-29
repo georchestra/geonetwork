@@ -10,7 +10,7 @@ COPY --chown=jetty:jetty . /
 USER root
 
 RUN mkdir -p /docker-entrypoint.d
-RUN chown jetty /docker-entrypoint.d
+RUN chown jetty:jetty /docker-entrypoint.d
 RUN mkdir -p /mnt/geonetwork_datadir && \
     chown jetty:jetty /mnt/geonetwork_datadir
 
