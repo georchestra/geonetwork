@@ -21,7 +21,6 @@ ul.gn-resultview li.list-group-item {
 
 [ng-app="gn_admin"] {
   body {
-    padding-top: calc(~"@{gn-menubar-height} + 1px");
     background-color: #f7f7f7;
   }
   .container-fluid {
@@ -33,10 +32,9 @@ ul.gn-resultview li.list-group-item {
     max-height: 20px;
   }
   .gn-top-bar {
-    position: fixed;
     width: 100%;
-    height: calc(~"@{gn-menubar-height} + 1px");
-    border-width: 0 0 1px 0;
+    height: calc(~"@{gn-menubar-height} + 2px");
+    border-width: 1px 0 1px 0;
     background-color: #fff;
     top: 0;
     z-index: 1001;

@@ -1495,8 +1495,7 @@
         <dockerDatadirScmUrl>scm:git:https://github.com/georchestra/datadir.git</dockerDatadirScmUrl>
         <dockerDatadirScmVersion>docker-master</dockerDatadirScmVersion>
         <dockerGnDatadirScmUrl>scm:git:https://github.com/georchestra/geonetwork_minimal_datadir.git</dockerGnDatadirScmUrl>
-        <dockerGnDatadirScmVersion>gn4.2.2</dockerGnDatadirScmVersion>
-
+        <dockerGnDatadirScmVersion>gn4.2.7</dockerGnDatadirScmVersion>
       </properties>
       <build>
         <finalName>geonetwork</finalName>
