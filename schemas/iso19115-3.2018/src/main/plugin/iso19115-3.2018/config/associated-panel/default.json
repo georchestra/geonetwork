@@ -458,7 +458,7 @@
           "metadataStore": {
             "label": "searchAservice",
             "params": {
-              "serviceType": ["OGC API - Features"]
+              "serviceType": ["OGC API Features"]
             }
           }
         },
@@ -468,7 +468,7 @@
             "isMultilingual": false
           },
           "protocol": {
-            "value": "OGC API - Features",
+            "value": "OGC API Features",
             "hidden": true,
             "isMultilingual": false
           },
