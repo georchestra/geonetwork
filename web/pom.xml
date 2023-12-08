@@ -1356,7 +1356,6 @@
                 catalog/lib/style/bootstrap/fonts/**,
                 catalog/lib/style/bootstrap/grunt/**,
                 catalog/lib/style/bootstrap/test-infra/**,
-                catalog/lib/style/font-awesome/css/**,
                 catalog/lib/style/font-awesome/src/**,
                 catalog/lib/style/font-awesome/scss/**
               </packagingExcludes>
@@ -1399,7 +1398,7 @@
               <checkoutDirectory>${project.build.directory}/deb/etc/georchestra</checkoutDirectory>
               <connectionUrl>scm:git:https://github.com/georchestra/datadir.git</connectionUrl>
               <pushChanges>false</pushChanges>
-              <scmVersion>22.0</scmVersion>
+              <scmVersion>23.0</scmVersion>
               <scmVersionType>branch</scmVersionType>
             </configuration>
             <executions>
