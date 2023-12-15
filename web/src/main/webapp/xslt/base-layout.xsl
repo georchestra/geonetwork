@@ -99,7 +99,7 @@
       and a facet search to get main site information.
       -->
       <body data-ng-controller="GnCatController" data-ng-class="[isHeaderFixed ? 'gn-header-fixed' : 'gn-header-relative', isLogoInHeader ? 'gn-logo-in-header' : 'gn-logo-in-navbar', isFooterEnabled ? 'gn-show-footer' : 'gn-hide-footer']">
-        <geor-header active-app="geonetwork" legacy-header="{$useLegacyHeader}" legacy-url="{$headerUrl}" style="width:100%;height:{$headerHeight}px;border:none;"></geor-header>
+        <geor-header active-app="geonetwork" legacy-header="{$useLegacyHeader}" legacy-url="{$headerUrl}" style="width:100%;height:{$headerHeight}px;border:none;" logo-url="${$logoUrl}" stylesheet="${$georchestraStylesheet}"></geor-header>
 
         <div data-gn-alert-manager=""></div>
 

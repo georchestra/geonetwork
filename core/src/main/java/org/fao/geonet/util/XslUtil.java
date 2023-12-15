@@ -287,6 +287,8 @@ public final class XslUtil {
     private static String headerHeight;
     private static String useLegacyHeader;
     private static String headerScript;
+    private static String logoUrl;
+    private static String georchestraStylesheet;
 
 
     public static String getGeorchestraHeaderUrl(){
@@ -351,6 +353,38 @@ public final class XslUtil {
         }
 
         return XslUtil.headerScript;
+    }
+
+    public static String getGeorchestraHeaderLogo(){
+
+        if(XslUtil.logoUrl == null) {
+
+            // Set default value
+            XslUtil.logoUrl = "https://www.georchestra.org/public/georchestra-logo.svg";
+
+            // Load value from datadir
+            Properties properties = XslUtil.loadDatadirProperties();
+            if (properties.containsKey("logoUrl"))
+                XslUtil.logoUrl = properties.getProperty("logoUrl");
+        }
+
+        return XslUtil.logoUrl;
+    }
+
+    public static String getGeorchestraHeaderStylesheet(){
+
+        if(XslUtil.georchestraStylesheet == null) {
+
+            // Set default value
+            XslUtil.georchestraStylesheet = "";
+
+            // Load value from datadir
+            Properties properties = XslUtil.loadDatadirProperties();
+            if (properties.containsKey("georchestraStylesheet"))
+                XslUtil.georchestraStylesheet = properties.getProperty("georchestraStylesheet");
+        }
+
+        return XslUtil.georchestraStylesheet;
     }
 
     private static Properties loadProperties(File path, Properties prop) throws IOException {
