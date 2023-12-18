@@ -1381,13 +1381,6 @@ INSERT INTO settings_ui VALUES ('srv', '{
         "enabled": false,
         "includePortals": true
       }
-    },
-    "signin": {
-      "appUrl": "../../{{node}}/{{lang}}/catalog.signin",
-      "enabled": false
-    },
-    "signout": {
-      "appUrl": "../../signout"
     }
   },
   "nodeDetector": {

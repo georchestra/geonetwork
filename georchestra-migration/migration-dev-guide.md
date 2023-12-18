@@ -31,6 +31,7 @@ All italic folder just have the `pom.xml` change.
   - `JeevesContextLoaderListener.java` : remove java 8 runtime exception as we use java 11.
   - `XslUtil.java`: Implement georchestra header specific code
   - `config-spring-geonetwork.xml` : Implement `context:property-placeholder` for georchestra's datadir
+  - `src/test/resources/config-spring-geonetwork.xml`: Add GeonetworkDataDirectory bean
   - `cleanoutdatabase.sql`: Delete from settings-ui at the end of the file
 - *csw-server*
 - **docker** 
@@ -90,11 +91,13 @@ All italic folder just have the `pom.xml` change.
     - Implement `context:property-placeholder` for georchestra's datadir
     - Don't forget to import config resource and logging bean
   - `spring-servlet.xml`: Implement `context:property-placeholder` for georchestra's datadir
-  - `pom.xml`: Update `dockerGnDatadirScmVersion` variable accordingly
+  - `postgres-postgis.xml` Keep `context:property-placeholder` for georchestra's datadir
+  - `pom.xml`: Update `dockerGnDatadirScmVersion` variable accordingly and remove `font-awesome/css/` from `packagingExclude`
 - web-ui
   - `pom.xml`: version to update **and to add to gn-web-ui**
   - `RelatedResourcesService.js`: Add 3DTiles
   - `CatController.js`: Menu bar accessible and 3DTiles
+  - `menu-signin.html`: remove the `authenticated` from the `ng-if` in firstul tag.
   - `src/main/resources/catalog/locales/`
     - Add OGC API - Features to i18n files
     - Get `en-georchestra.json` and `fr-georchestra.json` from georchestra
