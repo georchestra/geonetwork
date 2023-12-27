@@ -451,7 +451,7 @@
       },
       {
         "group": "onlineDownload",
-        "label": "onlineDownloadOGCFeatures",
+        "label": "onlineDownloadOGCAPIFeatures",
         "copyLabel": "desc",
         "icon": "fa gn-icon-onlinesrc",
         "sources": {
