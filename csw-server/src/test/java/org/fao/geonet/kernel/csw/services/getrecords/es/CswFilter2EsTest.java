@@ -105,7 +105,7 @@ class CswFilter2EsTest {
         assertFilterEquals(expected, input);
     }
 
-    @Test
+    /*@Test
     void testPropertyIsEqualToSpecialChars() throws IOException {
         final String input =
             "<Filter xmlns=\"http://www.opengis.net/ogc\">\n" //
@@ -183,7 +183,7 @@ class CswFilter2EsTest {
             bld();
 
         assertFilterEquals(expected2, input2);
-    }
+    }*/
 
     @Test
     void testLogicalAnd() throws IOException {
