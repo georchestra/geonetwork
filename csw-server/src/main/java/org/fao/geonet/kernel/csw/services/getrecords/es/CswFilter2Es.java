@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2001-2016 Food and Agriculture Organization of the
+ * Copyright (C) 2001-2023 Food and Agriculture Organization of the
  * United Nations (FAO-UN), United Nations World Food Programme (WFP)
  * and United Nations Environment Programme (UNEP)
  *
@@ -26,6 +26,7 @@ package org.fao.geonet.kernel.csw.services.getrecords.es;
 import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
+import org.apache.commons.text.StringEscapeUtils;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.kernel.csw.services.getrecords.IFieldMapper;
 import org.fao.geonet.utils.Log;
@@ -82,67 +83,69 @@ import org.opengis.filter.temporal.TEquals;
 import org.opengis.filter.temporal.TOverlaps;
 import org.opengis.geometry.BoundingBox;
 
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.List;
 import java.util.regex.Pattern;
 
 /**
  * Manages the translation from CSW &lt;Filter&gt; into a ES query.
  */
 public class CswFilter2Es extends AbstractFilterVisitor {
-    private final String BINARY_OPERATOR_AND = "AND";
-    private final String BINARY_OPERATOR_OR = "OR";
+    private static final String BINARY_OPERATOR_AND = "AND";
+    private static final String BINARY_OPERATOR_OR = "OR";
 
-    static final String SPECIAL_RE = "([" + Pattern.quote("+-&|!(){}[]^\\\"~*?:/") + "])";
-    static final String SPECIAL_LIKE_RE = "(?<!\\\\)([" + Pattern.quote("+-&|!(){}[]^\"~:/") + "])";
+    private static final String SPECIAL_RE = "([" + Pattern.quote("+-&|!(){}[]^\\\"~*?:/") + "])";
+    private static final String SPECIAL_LIKE_RE = "(?<!\\\\)([" + Pattern.quote("+-&|!(){}[]^\"~:/") + "])";
     private final StringBuilder outQueryString = new StringBuilder();
     private final Expression2CswVisitor expressionVisitor;
 
     private boolean useFilter = true;
 
-    // Stack to build the ElasticSearch Query
-    Deque<String> stack = new ArrayDeque<String>();
+    // Stack to build the Elasticsearch Query
+    Deque<String> stack = new ArrayDeque<>();
 
-    private final String templateNot = " {\"bool\": {\n" +
+    private static final String TEMPLATE_NOT = " {\"bool\": {\n" +
         "            \"must_not\": [\n" +
         "             %s\n" +
         "            ]\n" +
         "          }}";
 
-
-    private final String templateAnd = " {\"bool\": {\n" +
+    private static final String TEMPLATE_AND = " {\"bool\": {\n" +
         "            \"must\": [\n" +
         "             %s\n" +
         "            ]\n" +
         "          }}";
 
-    private final String  templateAndWithFilter = " \"bool\": {\n" +
+    private static final String TEMPLATE_AND_WITH_FILTER = " \"bool\": {\n" +
         "            \"must\": [\n" +
         "             %s\n" +
         "            ]\n" +
         "          ,\"filter\":{\"query_string\":{\"query\":\"%s\"}}}"; //, "minimum_should_match" : 1
 
-    private final String templateOr = " {\"bool\": {\n" +
+    private static final String TEMPLATE_OR = " {\"bool\": {\n" +
         "            \"should\": [\n" +
         "             %s\n" +
         "            ]\n" +
         "          }}";
 
-    private final String  templateOrWithFilter = " \"bool\": {\n" +
+    private static final String TEMPLATE_OR_WITH_FILTER = " \"bool\": {\n" +
         "            \"should\": [\n" +
         "             %s\n" +
         "            ]\n" +
         "          ,\"filter\":{\"query_string\":{\"query\":\"%s\"}}, \"minimum_should_match\" : 1}";
 
-    private final String templateMatch = "{\"query_string\": {\n" +
+    private static final String TEMPLATE_MATCH = "{\"query_string\": {\n" +
         "        \"fields\": [\"%s\"],\n" +
         "        \"query\": \"%s\"\n" +
         "    }}";
 
-    private final String templatePropertyIsNot = " {\"bool\": {\n" +
-        "            \"must_not\": " + templateMatch +
+    private static final String TEMPLATE_PROPERTY_IS_NOT = " {\"bool\": {\n" +
+        "            \"must_not\": " + TEMPLATE_MATCH +
         "          }}";
 
-    private final String templateRange = " {\n" +
+    private static final String TEMPLATE_RANGE = " {\n" +
         "        \"range\" : {\n" +
         "            \"%s\" : {\n" +
         "                \"%s\" : %s\n" +
@@ -150,7 +153,7 @@ public class CswFilter2Es extends AbstractFilterVisitor {
         "        }\n" +
         "    }";
 
-    private final String templateBetween = " {\n" +
+    private static final String TEMPLATE_BETWEEN = " {\n" +
         "        \"range\" : {\n" +
         "            \"%s\" : {\n" +
         "                \"gte\" : %s,\n" +
@@ -159,12 +162,12 @@ public class CswFilter2Es extends AbstractFilterVisitor {
         "        }\n" +
         "    }";
 
-    private final String templateIsLike = "{\"query_string\": {\n" +
+    private static final String TEMPLATE_IS_LIKE = "{\"query_string\": {\n" +
         "        \"fields\": [\"%s\"],\n" +
         "        \"query\": \"%s\"\n" +
         "    }}";
 
-    private final String templateSpatial = "{ \"geo_shape\": {\"geom\": {\n" +
+    private static final String TEMPLATE_SPATIAL = "{ \"geo_shape\": {\"geom\": {\n" +
         "                        \t\"shape\": {\n" +
         "                            \t\"type\": \"%s\",\n" +
         "                            \t\"coordinates\" : %s\n" +
@@ -201,17 +204,21 @@ public class CswFilter2Es extends AbstractFilterVisitor {
     protected static String convertLikePattern(PropertyIsLike filter) {
         String result = filter.getLiteral();
         if (!filter.getWildCard().equals("*")) {
-            final String wildcardRe = "(?<!" + Pattern.quote(filter.getEscape()) + ")" + Pattern.quote(filter.getWildCard());
+            final String wildcardRe =
+                StringUtils.isNotEmpty(filter.getEscape())
+                    ? Pattern.quote(filter.getEscape() + filter.getWildCard())
+                    : filter.getWildCard();
             result = result.replaceAll(wildcardRe, "*");
         }
         if (!filter.getSingleChar().equals("?")) {
-            final String singleCharRe = "(?<!" + Pattern.quote(filter.getEscape()) + ")" + Pattern.quote(filter.getSingleChar());
+            final String singleCharRe =
+                StringUtils.isNotEmpty(filter.getEscape())
+                    ? Pattern.quote(filter.getEscape() + filter.getSingleChar())
+                    : filter.getSingleChar();
             result = result.replaceAll(singleCharRe, "?");
         }
-        if (!filter.getEscape().equals("\\")) {
-            final String escapeRe = Pattern.quote(filter.getEscape()) + "(.)";
-            result = result.replaceAll(escapeRe, "\\\\$1");
-        }
+
+        result = StringEscapeUtils.escapeJson(escapeLikeLiteral(result));
         return result;
     }
 
@@ -219,7 +226,7 @@ public class CswFilter2Es extends AbstractFilterVisitor {
         String condition = stack.isEmpty()?"":stack.pop();
         // Check for single condition (no binary operators to wrap the query
         if (!condition.startsWith(" \"bool\":")) {
-            condition = String.format(templateAndWithFilter, condition, "%s");
+            condition = String.format(TEMPLATE_AND_WITH_FILTER, condition, "%s");
         }
 
         if (StringUtils.isEmpty(condition)) {
@@ -236,21 +243,6 @@ public class CswFilter2Es extends AbstractFilterVisitor {
     }
 
     @Override
-    public Object visitNullFilter(Object extraData) {
-        return super.visitNullFilter(extraData);
-    }
-
-    @Override
-    public Object visit(ExcludeFilter filter, Object extraData) {
-        return super.visit(filter, extraData);
-    }
-
-    @Override
-    public Object visit(IncludeFilter filter, Object extraData) {
-        return super.visit(filter, extraData);
-    }
-
-    @Override
     public Object visit(And filter, Object extraData) {
         return visitBinaryLogic(filter, BINARY_OPERATOR_AND, extraData);
     }
@@ -259,9 +251,9 @@ public class CswFilter2Es extends AbstractFilterVisitor {
         String filterCondition;
 
         if (operator.equals(BINARY_OPERATOR_AND)) {
-            filterCondition = (useFilter?templateAndWithFilter:templateAnd);
+            filterCondition = (useFilter? TEMPLATE_AND_WITH_FILTER : TEMPLATE_AND);
         } else if (operator.equals(BINARY_OPERATOR_OR)) {
-            filterCondition = (useFilter?templateOrWithFilter:templateOr);
+            filterCondition = (useFilter? TEMPLATE_OR_WITH_FILTER : TEMPLATE_OR);
         } else {
             throw new NotImplementedException();
         }
@@ -305,7 +297,7 @@ public class CswFilter2Es extends AbstractFilterVisitor {
 
     @Override
     public Object visit(Not filter, Object extraData) {
-        String filterNot = templateNot;
+        String filterNot = TEMPLATE_NOT;
 
         filter.getFilter().accept(this, extraData);
 
@@ -322,25 +314,32 @@ public class CswFilter2Es extends AbstractFilterVisitor {
 
     @Override
     public Object visit(PropertyIsBetween filter, Object extraData) {
-        String filterBetween = templateBetween;
+        String filterBetween = TEMPLATE_BETWEEN;
 
-        assert filter.getExpression() instanceof PropertyName;
+        if (!(filter.getExpression() instanceof PropertyName)) {
+            throw new IllegalArgumentException("Invalid expression property provided");
+        }
+
+        if (!(filter.getLowerBoundary() instanceof Literal)) {
+            throw new IllegalArgumentException("Invalid expression lower boundary literal provided");
+        }
+
+        if (!(filter.getUpperBoundary() instanceof Literal)) {
+            throw new IllegalArgumentException("Invalid expression upper boundary literal provided");
+        }
+
         filter.getExpression().accept(expressionVisitor, extraData);
-
-        assert filter.getLowerBoundary() instanceof Literal;
         filter.getLowerBoundary().accept(expressionVisitor, extraData);
-
-        assert filter.getUpperBoundary() instanceof Literal;
         filter.getUpperBoundary().accept(expressionVisitor, extraData);
 
         String dataPropertyUpperValue = stack.pop();
         if (!NumberUtils.isNumber(dataPropertyUpperValue)) {
-            dataPropertyUpperValue = CswFilter2Es.quoteString(dataPropertyUpperValue);
+            dataPropertyUpperValue = StringEscapeUtils.escapeJson(CswFilter2Es.quoteString(dataPropertyUpperValue));
         }
 
         String dataPropertyLowerValue = stack.pop();
         if (!NumberUtils.isNumber(dataPropertyLowerValue)) {
-            dataPropertyLowerValue = CswFilter2Es.quoteString(dataPropertyLowerValue);
+            dataPropertyLowerValue = StringEscapeUtils.escapeJson(CswFilter2Es.quoteString(dataPropertyLowerValue));
         }
 
         String dataPropertyName = stack.pop();
@@ -353,17 +352,15 @@ public class CswFilter2Es extends AbstractFilterVisitor {
 
     @Override
     public Object visit(PropertyIsEqualTo filter, Object extraData) {
+        checkFilterExpressionsInBinaryComparisonOperator(filter);
 
-        assert filter.getExpression1() instanceof PropertyName;
         filter.getExpression1().accept(expressionVisitor, extraData);
-
-        assert filter.getExpression2() instanceof Literal;
         filter.getExpression2().accept(expressionVisitor, extraData);
 
         String dataPropertyValue = stack.pop();
         String dataPropertyName = stack.pop();
 
-        final String filterEqualTo = String.format(templateMatch, dataPropertyName, dataPropertyValue.replaceAll("\\/", "\\\\\\\\/"));
+        final String filterEqualTo = String.format(TEMPLATE_MATCH, dataPropertyName, StringEscapeUtils.escapeJson(escapeLiteral(dataPropertyValue)));
         stack.push(filterEqualTo);
 
         return this;
@@ -371,37 +368,35 @@ public class CswFilter2Es extends AbstractFilterVisitor {
 
     @Override
     public Object visit(PropertyIsNotEqualTo filter, Object extraData) {
-        String filterPropertyIsNot = templatePropertyIsNot;
+        String filterPropertyIsNot = TEMPLATE_PROPERTY_IS_NOT;
 
-        assert filter.getExpression1() instanceof PropertyName;
+        checkFilterExpressionsInBinaryComparisonOperator(filter);
+
         filter.getExpression1().accept(expressionVisitor, extraData);
-
-        assert filter.getExpression2() instanceof Literal;
         filter.getExpression2().accept(expressionVisitor, extraData);
 
         String dataPropertyValue = stack.pop();
         String dataPropertyName = stack.pop();
 
-        filterPropertyIsNot = String.format(filterPropertyIsNot, dataPropertyName, dataPropertyValue);
+        filterPropertyIsNot = String.format(filterPropertyIsNot, dataPropertyName, StringEscapeUtils.escapeJson(escapeLiteral(dataPropertyValue)));
         stack.push(filterPropertyIsNot);
 
         return this;
     }
 
     public Object visitRange(BinaryComparisonOperator filter, String operator, Object extraData) {
-        String filterRange = templateRange;
+        String filterRange = TEMPLATE_RANGE;
 
-        assert filter.getExpression1() instanceof PropertyName;
+        checkFilterExpressionsInBinaryComparisonOperator(filter);
+
         filter.getExpression1().accept(expressionVisitor, extraData);
-
-        assert filter.getExpression2() instanceof Literal;
         filter.getExpression2().accept(expressionVisitor, extraData);
 
         String dataPropertyValue = stack.pop();
         String dataPropertyName = stack.pop();
 
         if (!NumberUtils.isNumber(dataPropertyValue)) {
-            dataPropertyValue = CswFilter2Es.quoteString(dataPropertyValue);
+            dataPropertyValue = StringEscapeUtils.escapeJson(CswFilter2Es.quoteString(dataPropertyValue));
         }
 
         filterRange = String.format(filterRange, dataPropertyName, operator, dataPropertyValue);
@@ -421,7 +416,7 @@ public class CswFilter2Es extends AbstractFilterVisitor {
     }
 
     @Override
-        public Object visit(PropertyIsLessThan filter, Object extraData) {
+    public Object visit(PropertyIsLessThan filter, Object extraData) {
         return visitRange(filter, "lt", extraData);
     }
 
@@ -432,7 +427,7 @@ public class CswFilter2Es extends AbstractFilterVisitor {
 
     @Override
     public Object visit(PropertyIsLike filter, Object extraData) {
-        String filterIsLike = templateIsLike;
+        String filterIsLike = TEMPLATE_IS_LIKE;
 
         String expression = convertLikePattern(filter);
 
@@ -470,7 +465,7 @@ public class CswFilter2Es extends AbstractFilterVisitor {
      * @return
      */
     private String fillTemplateSpatial(String shapeType, String coords, String relation) {
-        return String.format(templateSpatial, shapeType, coords, relation);
+        return String.format(TEMPLATE_SPATIAL, shapeType, coords, relation);
     }
 
     @Override
@@ -491,14 +486,12 @@ public class CswFilter2Es extends AbstractFilterVisitor {
     }
 
     private Object addGeomFilter(BinarySpatialOperator filter, String geoOperator, Object extraData) {
-
         if (!(filter.getExpression2() == null || filter.getExpression1() == null)) {
             filter.getExpression1().accept(expressionVisitor, extraData);
         }
 
-        // out.append(":\"").append(geoOperator).append("(");
         final Expression geoExpression = filter.getExpression2() == null ? filter.getExpression1()
-                : filter.getExpression2();
+            : filter.getExpression2();
         geoExpression.accept(expressionVisitor, extraData);
 
         String geom = stack.pop();
@@ -677,5 +670,15 @@ public class CswFilter2Es extends AbstractFilterVisitor {
         }
 
         return String.join(" , ", coordinatesList);
+    }
+
+    private void checkFilterExpressionsInBinaryComparisonOperator(BinaryComparisonOperator filter) {
+        if (!(filter.getExpression1() instanceof PropertyName)) {
+            throw new IllegalArgumentException("Invalid expression property provided");
+        }
+
+        if (!(filter.getExpression2() instanceof Literal)) {
+            throw new IllegalArgumentException("Invalid expression literal provided");
+        }
     }
 }
