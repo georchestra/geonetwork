@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2001-2023 Food and Agriculture Organization of the
+ * Copyright (C) 2001-2024 Food and Agriculture Organization of the
  * United Nations (FAO-UN), United Nations World Food Programme (WFP)
  * and United Nations Environment Programme (UNEP)
  *
@@ -33,64 +33,19 @@ import org.fao.geonet.utils.Log;
 import org.geotools.filter.visitor.AbstractFilterVisitor;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.io.WKTReader;
-import org.opengis.filter.And;
-import org.opengis.filter.BinaryComparisonOperator;
-import org.opengis.filter.BinaryLogicOperator;
-import org.opengis.filter.ExcludeFilter;
-import org.opengis.filter.Filter;
-import org.opengis.filter.Id;
-import org.opengis.filter.IncludeFilter;
-import org.opengis.filter.Not;
-import org.opengis.filter.Or;
-import org.opengis.filter.PropertyIsBetween;
-import org.opengis.filter.PropertyIsEqualTo;
-import org.opengis.filter.PropertyIsGreaterThan;
-import org.opengis.filter.PropertyIsGreaterThanOrEqualTo;
-import org.opengis.filter.PropertyIsLessThan;
-import org.opengis.filter.PropertyIsLessThanOrEqualTo;
-import org.opengis.filter.PropertyIsLike;
-import org.opengis.filter.PropertyIsNil;
-import org.opengis.filter.PropertyIsNotEqualTo;
-import org.opengis.filter.PropertyIsNull;
+import org.opengis.filter.*;
 import org.opengis.filter.expression.Expression;
 import org.opengis.filter.expression.Literal;
 import org.opengis.filter.expression.PropertyName;
-import org.opengis.filter.spatial.BBOX;
-import org.opengis.filter.spatial.Beyond;
-import org.opengis.filter.spatial.BinarySpatialOperator;
-import org.opengis.filter.spatial.Contains;
-import org.opengis.filter.spatial.Crosses;
-import org.opengis.filter.spatial.DWithin;
-import org.opengis.filter.spatial.Disjoint;
-import org.opengis.filter.spatial.Equals;
-import org.opengis.filter.spatial.Intersects;
-import org.opengis.filter.spatial.Overlaps;
-import org.opengis.filter.spatial.Touches;
-import org.opengis.filter.spatial.Within;
-import org.opengis.filter.temporal.After;
-import org.opengis.filter.temporal.AnyInteracts;
-import org.opengis.filter.temporal.Before;
-import org.opengis.filter.temporal.Begins;
-import org.opengis.filter.temporal.BegunBy;
-import org.opengis.filter.temporal.During;
-import org.opengis.filter.temporal.EndedBy;
-import org.opengis.filter.temporal.Ends;
-import org.opengis.filter.temporal.Meets;
-import org.opengis.filter.temporal.MetBy;
-import org.opengis.filter.temporal.OverlappedBy;
-import org.opengis.filter.temporal.TContains;
-import org.opengis.filter.temporal.TEquals;
-import org.opengis.filter.temporal.TOverlaps;
+import org.opengis.filter.spatial.*;
+import org.opengis.filter.temporal.*;
 import org.opengis.geometry.BoundingBox;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Pattern;
 
 /**
- * Manages the translation from CSW &lt;Filter&gt; into a ES query.
+ * Manages the translation from CSW &lt;Filter&gt; into an ES query.
  */
 public class CswFilter2Es extends AbstractFilterVisitor {
     private static final String BINARY_OPERATOR_AND = "AND";
@@ -98,53 +53,38 @@ public class CswFilter2Es extends AbstractFilterVisitor {
 
     private static final String SPECIAL_RE = "([" + Pattern.quote("+-&|!(){}[]^\\\"~*?:/") + "])";
     private static final String SPECIAL_LIKE_RE = "(?<!\\\\)([" + Pattern.quote("+-&|!(){}[]^\"~:/") + "])";
-    private final StringBuilder outQueryString = new StringBuilder();
-    private final Expression2CswVisitor expressionVisitor;
-
-    private boolean useFilter = true;
-
-    // Stack to build the Elasticsearch Query
-    Deque<String> stack = new ArrayDeque<>();
-
     private static final String TEMPLATE_NOT = " {\"bool\": {\n" +
         "            \"must_not\": [\n" +
         "             %s\n" +
         "            ]\n" +
         "          }}";
-
     private static final String TEMPLATE_AND = " {\"bool\": {\n" +
         "            \"must\": [\n" +
         "             %s\n" +
         "            ]\n" +
         "          }}";
-
     private static final String TEMPLATE_AND_WITH_FILTER = " \"bool\": {\n" +
         "            \"must\": [\n" +
         "             %s\n" +
         "            ]\n" +
         "          ,\"filter\":{\"query_string\":{\"query\":\"%s\"}}}"; //, "minimum_should_match" : 1
-
     private static final String TEMPLATE_OR = " {\"bool\": {\n" +
         "            \"should\": [\n" +
         "             %s\n" +
         "            ]\n" +
         "          }}";
-
     private static final String TEMPLATE_OR_WITH_FILTER = " \"bool\": {\n" +
         "            \"should\": [\n" +
         "             %s\n" +
         "            ]\n" +
         "          ,\"filter\":{\"query_string\":{\"query\":\"%s\"}}, \"minimum_should_match\" : 1}";
-
     private static final String TEMPLATE_MATCH = "{\"query_string\": {\n" +
         "        \"fields\": [\"%s\"],\n" +
         "        \"query\": \"%s\"\n" +
         "    }}";
-
     private static final String TEMPLATE_PROPERTY_IS_NOT = " {\"bool\": {\n" +
         "            \"must_not\": " + TEMPLATE_MATCH +
         "          }}";
-
     private static final String TEMPLATE_RANGE = " {\n" +
         "        \"range\" : {\n" +
         "            \"%s\" : {\n" +
@@ -152,7 +92,6 @@ public class CswFilter2Es extends AbstractFilterVisitor {
         "            }\n" +
         "        }\n" +
         "    }";
-
     private static final String TEMPLATE_BETWEEN = " {\n" +
         "        \"range\" : {\n" +
         "            \"%s\" : {\n" +
@@ -161,12 +100,10 @@ public class CswFilter2Es extends AbstractFilterVisitor {
         "            }\n" +
         "        }\n" +
         "    }";
-
     private static final String TEMPLATE_IS_LIKE = "{\"query_string\": {\n" +
         "        \"fields\": [\"%s\"],\n" +
         "        \"query\": \"%s\"\n" +
         "    }}";
-
     private static final String TEMPLATE_SPATIAL = "{ \"geo_shape\": {\"geom\": {\n" +
         "                        \t\"shape\": {\n" +
         "                            \t\"type\": \"%s\",\n" +
@@ -174,6 +111,11 @@ public class CswFilter2Es extends AbstractFilterVisitor {
         "                        \t},\n" +
         "                        \t\"relation\": \"%s\"\n" +
         "                    \t}}}";
+    private final StringBuilder outQueryString = new StringBuilder();
+    private final Expression2CswVisitor expressionVisitor;
+    // Stack to build the Elasticsearch Query
+    Deque<String> stack = new ArrayDeque<>();
+    private boolean useFilter = true;
 
     public CswFilter2Es(IFieldMapper fieldMapper) {
         expressionVisitor = new Expression2CswVisitor(stack, fieldMapper);
@@ -223,7 +165,7 @@ public class CswFilter2Es extends AbstractFilterVisitor {
     }
 
     public String getFilter() {
-        String condition = stack.isEmpty()?"":stack.pop();
+        String condition = stack.isEmpty() ? "" : stack.pop();
         // Check for single condition (no binary operators to wrap the query
         if (!condition.startsWith(" \"bool\":")) {
             condition = String.format(TEMPLATE_AND_WITH_FILTER, condition, "%s");
@@ -231,10 +173,10 @@ public class CswFilter2Es extends AbstractFilterVisitor {
 
         if (StringUtils.isEmpty(condition)) {
             // No filter
-            condition =  "{\"bool\":{\"must\":[{\"query_string\":{\"query\":\"*\"}}],\"filter\":{\"query_string\":{\"query\":\"%s\"}}}";
+            condition = "{\"bool\":{\"must\":[{\"query_string\":{\"query\":\"*\"}}],\"filter\":{\"query_string\":{\"query\":\"%s\"}}}";
         } else {
             // Add wrapper
-            condition =  "{" + condition + "}";
+            condition = "{" + condition + "}";
         }
 
         outQueryString.append(condition);
@@ -251,9 +193,9 @@ public class CswFilter2Es extends AbstractFilterVisitor {
         String filterCondition;
 
         if (operator.equals(BINARY_OPERATOR_AND)) {
-            filterCondition = (useFilter? TEMPLATE_AND_WITH_FILTER : TEMPLATE_AND);
+            filterCondition = (useFilter ? TEMPLATE_AND_WITH_FILTER : TEMPLATE_AND);
         } else if (operator.equals(BINARY_OPERATOR_OR)) {
-            filterCondition = (useFilter? TEMPLATE_OR_WITH_FILTER : TEMPLATE_OR);
+            filterCondition = (useFilter ? TEMPLATE_OR_WITH_FILTER : TEMPLATE_OR);
         } else {
             throw new NotImplementedException();
         }
@@ -278,10 +220,10 @@ public class CswFilter2Es extends AbstractFilterVisitor {
         int count = StringUtils.countMatches(filterCondition, "%s");
 
         if (count == 1) {
-            filterCondition = String.format(filterCondition,  String.join(",", conditionList));
+            filterCondition = String.format(filterCondition, String.join(",", conditionList));
 
         } else {
-            filterCondition = String.format(filterCondition,  String.join(",", conditionList), "%s");
+            filterCondition = String.format(filterCondition, String.join(",", conditionList), "%s");
         }
 
         stack.push(filterCondition);
@@ -378,7 +320,8 @@ public class CswFilter2Es extends AbstractFilterVisitor {
         String dataPropertyValue = stack.pop();
         String dataPropertyName = stack.pop();
 
-        filterPropertyIsNot = String.format(filterPropertyIsNot, dataPropertyName, StringEscapeUtils.escapeJson(escapeLiteral(dataPropertyValue)));
+        filterPropertyIsNot = String.format(filterPropertyIsNot, dataPropertyName,
+            StringEscapeUtils.escapeJson(escapeLiteral(dataPropertyValue)));
         stack.push(filterPropertyIsNot);
 
         return this;
@@ -478,7 +421,9 @@ public class CswFilter2Es extends AbstractFilterVisitor {
         final double y0 = bbox.getMinY();
         final double y1 = bbox.getMaxY();
 
-        final String coordsValue = String.format("[[%f, %f], [%f, %f]]", x0, y1, x1, y0);
+        // Specify Locale.US to make Java use dot as decimal separators
+        final String coordsValue = String.format(Locale.US,
+            "[[%f, %f], [%f, %f]]", x0, y1, x1, y0);
 
         final String filterSpatial = fillTemplateSpatial("envelope", coordsValue, "intersects");
         stack.push(filterSpatial);
@@ -514,7 +459,8 @@ public class CswFilter2Es extends AbstractFilterVisitor {
             } else if (geometryJts instanceof Point) {
                 Point pointGeom = (Point) geometryJts;
 
-                String coordsValue = String.format("[%f, %f]", pointGeom.getX(), pointGeom.getY());
+                // Use Locale.US to make java use the dot "." as decimal separator.
+                String coordsValue = String.format(Locale.US, "[%f, %f]", pointGeom.getX(), pointGeom.getY());
                 filterSpatial = fillTemplateSpatial("point", coordsValue, geoOperator);
 
             } else if (geometryJts instanceof LineString) {
@@ -530,7 +476,7 @@ public class CswFilter2Es extends AbstractFilterVisitor {
             stack.push(filterSpatial);
         } catch (Exception ex) {
             Log.error(Geonet.CSW, "Error parsing geospatial object", ex);
-            throw new RuntimeException(ex);
+            throw new IllegalArgumentException("Invalid expression for spatial filter", ex);
         }
 
         return this;
@@ -662,8 +608,9 @@ public class CswFilter2Es extends AbstractFilterVisitor {
     private String buildCoordinatesString(Coordinate[] coordinates) {
         List<String> coordinatesList = new ArrayList<>();
 
-        for(Coordinate c : coordinates) {
-            String coordsValue = String.format("[%f, %f] ",
+        for (Coordinate c : coordinates) {
+            // Use Locale.US to make Java use dot "." as decimal separator
+            String coordsValue = String.format(Locale.US, "[%f, %f] ",
                 c.getX(), c.getY());
 
             coordinatesList.add(coordsValue);
