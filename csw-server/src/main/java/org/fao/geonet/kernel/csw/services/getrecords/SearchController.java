@@ -449,7 +449,7 @@ public class SearchController {
 
         try {
             String filterQueryString = esFilterBuilder.build(context, "metadata", false, node);
-            String jsonQuery = String.format(elasticSearchQuery, filterQueryString);
+            String jsonQuery = StringUtils.replace(elasticSearchQuery, "\"%s\"", "\"" + filterQueryString + "\"");
 
             ObjectMapper objectMapper = new ObjectMapper();
             esJsonQuery = objectMapper.readTree(jsonQuery);
