@@ -67,7 +67,7 @@ public class CswFilter2Es extends AbstractFilterVisitor {
         "            \"must\": [\n" +
         "             %s\n" +
         "            ]\n" +
-        "          ,\"filter\":{\"query_string\":{\"query\":\"%s\"}}}"; //, "minimum_should_match" : 1
+        "          ,\"filter\":{\"query_string\":{\"query\":\"{@}\"}}}"; //, "minimum_should_match" : 1
     private static final String TEMPLATE_OR = " {\"bool\": {\n" +
         "            \"should\": [\n" +
         "             %s\n" +
@@ -77,7 +77,7 @@ public class CswFilter2Es extends AbstractFilterVisitor {
         "            \"should\": [\n" +
         "             %s\n" +
         "            ]\n" +
-        "          ,\"filter\":{\"query_string\":{\"query\":\"%s\"}}, \"minimum_should_match\" : 1}";
+        "          ,\"filter\":{\"query_string\":{\"query\":\"{@}\"}}, \"minimum_should_match\" : 1}";
     private static final String TEMPLATE_MATCH = "{\"query_string\": {\n" +
         "        \"fields\": [\"%s\"],\n" +
         "        \"query\": \"%s\"\n" +
