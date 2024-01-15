@@ -531,6 +531,12 @@
       <groupId>${project.groupId}</groupId>
       <artifactId>gn-camelPeriodicProducer</artifactId>
       <version>${project.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.codehaus.groovy</groupId>
+          <artifactId>groovy</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <dependency>
