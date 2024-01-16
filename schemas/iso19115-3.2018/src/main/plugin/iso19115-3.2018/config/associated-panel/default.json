@@ -455,7 +455,8 @@
         "process": "onlinesrc-add",
         "fields": {
           "url": {
-            "isMultilingual": false
+            "isMultilingual": false,
+            "placeholder": "https://site.com/data/ogcapi/collections/{collectionId}/items"
           },
           "protocol": {
             "value": "OGC API Features",
