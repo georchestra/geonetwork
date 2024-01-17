@@ -79,9 +79,29 @@ public class LogUtils {
             setting = settingOpt.get();
         }
 
+
+        String loggingConfigurationPath;
+        try {
+            loggingConfigurationPath = (String) ApplicationContextHolder.get().getBean("loggingConfigurationPath");
+            CONFIG_LOG.info("Found loggingConfigurationPath='"+loggingConfigurationPath+"' in the bean configuration");
+        } catch (BeansException e) {
+            loggingConfigurationPath = null;
+        }
+
         // get log config from db settings
         String log4jProp = setting != null ? setting.getValue() : DEFAULT_LOG_FILE;
-        URL url = LogUtils.class.getResource("/" + log4jProp);
+        URL url ;
+
+        if (loggingConfigurationPath != null) {
+            try {
+                url = Paths.get(loggingConfigurationPath, log4jProp).toUri().toURL();
+            } catch (MalformedURLException e) {
+                url = LogUtils.class.getResource("/" + log4jProp);
+            }
+        } else {
+                url = LogUtils.class.getResource("/" + log4jProp);
+        }
+
         try {
             if (url != null) {
                 // refresh configuration
