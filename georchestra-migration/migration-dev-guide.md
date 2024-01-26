@@ -62,7 +62,7 @@ All italic folder just have the `pom.xml` change.
 - *release*
 - schemas
   - `src/main/plugin/iso19115-3.2018`
-    - OGC API features and 3Dtiles added. Differences in files: 
+    - OGC API features, COG and 3Dtiles added. Differences in files:
       - `config/associated-panel/default.json`
       - `loc/eng/labels.xml`
       - `loc/fre/labels.xml`
@@ -70,7 +70,7 @@ All italic folder just have the `pom.xml` change.
       - `test/resources/metadata-for-editing-light.xml`
       - `test/resources/metadata-iso19139-for-editing.xml`
       - `src/main/plugin/iso19115-3.2018/config/associated-panel/default.json` : Keep OGC API - Features placeholder
-  - `src/main/plugin/iso19139/loc` : 3Dtiles added in labels.xml files.
+  - `src/main/plugin/iso19139/loc` : COG and 3Dtiles added in labels.xml files.
 - *schemas-test*
 - *sde*
 - services
