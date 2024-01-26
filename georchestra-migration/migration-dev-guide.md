@@ -33,7 +33,10 @@ All italic folder just have the `pom.xml` change.
   - `config-spring-geonetwork.xml` : Implement `context:property-placeholder` for georchestra's datadir
   - `src/test/resources/config-spring-geonetwork.xml`: Add GeonetworkDataDirectory bean
   - `cleanoutdatabase.sql`: Delete from settings-ui at the end of the file
-- *csw-server*
+- csw-server
+  - `CswFilter2Es.java` : Keep `{@}` instead of `%s` until it is fixed upstream (not supporting some CSW request)
+  - `CswFilter2EsTest.java` : Keep `{@}` instead of `%s`
+  - `SearchController.java` : Keep `{@}` instead of `%s` with StringUtils.replace
 - **docker** 
   - Mandatory, get everything from geOrchestra
 - *docs*
@@ -66,6 +69,7 @@ All italic folder just have the `pom.xml` change.
       - `test/resources/metadata-for-editing.xml`
       - `test/resources/metadata-for-editing-light.xml`
       - `test/resources/metadata-iso19139-for-editing.xml`
+      - `src/main/plugin/iso19115-3.2018/config/associated-panel/default.json` : Keep OGC API - Features placeholder
   - `src/main/plugin/iso19139/loc` : 3Dtiles added in labels.xml files.
 - *schemas-test*
 - *sde*
@@ -74,12 +78,13 @@ All italic folder just have the `pom.xml` change.
   - `MetadataExtentApiTest.java` : Update image signatures if necessary (tests may fail see [MetadataExtentApiTest-reference](resources%2FMetadataExtentApiTest-reference) for image reference)
   - `BatchOpsMetadatReindexerTest.java` : Add PowerMockIgnore
   - `pom.xml`: version to update **and to add to gn-services**
+  - `LogUtils.java`: Keep custom configuration in `refreshLogConfiguration()` method.
 - *slave*
 - web
   - `src/docker`: Mandatory, get everything from geOrchestra
   - `main/filters/prod.properties`: Session timeout variable updated
   - `main/filters/java/org/fao/geonet/proxy`: Mandatory, get everything from geOrchestra
-  - `data-db-default.sql` : Some data to retrieve: setting-ui, inspire activated, georchestra name and (backported value) sitemapLinkUrl
+  - `data-db-default.sql` : Some data to retrieve: setting-ui, inspire activated, georchestra name, (backported value) sitemapLinkUrl, xlinkresolver enabled by default
   - `UpdateMetadataStatus.java`: Some fixes
   - `config-security.xml`: Remove config security add start of file, get end of the file from georchestra.
   - `config-geonetwork-georchestra.properties`, `config-georchestra-geonetwork-datadirs.xml`, `DKAN-to-ISO19115-3-2018.xsl`, `GeoIDE-services-OGC.xsl`, `udata-to-ISO19115-3-2018.xsl`
@@ -93,6 +98,7 @@ All italic folder just have the `pom.xml` change.
   - `spring-servlet.xml`: Implement `context:property-placeholder` for georchestra's datadir
   - `postgres-postgis.xml` Keep `context:property-placeholder` for georchestra's datadir
   - `pom.xml`: Update `dockerGnDatadirScmVersion` variable accordingly and remove `font-awesome/css/` from `packagingExclude`
+  - `pom.xml`: Keep exclusion of groovy package to avoid two versions of it.
 - web-ui
   - `pom.xml`: version to update **and to add to gn-web-ui**
   - `RelatedResourcesService.js`: Add 3DTiles
@@ -106,6 +112,7 @@ All italic folder just have the `pom.xml` change.
   - `gn_navbar_default.less`: Same (header position)
   - `src/main/resources/catalog/views/module.js`: Add 3DTiles
   - `src/main/resources/catalog/views/georchestra/`: Get files from georchestra
+  - `*-admin.json` : Keep change from `metadata/url/sitemapLinkUrl` to `system/server/sitemapLinkUrl` until it is fixed upstream
 - *workers*
 - *wro4j*
 - .gitignore 
