@@ -88,7 +88,7 @@ import java.util.zip.GZIPOutputStream;
     "/{portal}/api"
 })
 @Tag(name = "search",
-    description = "Proxy for ElasticSearch catalog search operations")
+    description = "Proxy for Elasticsearch catalog search operations")
 @Controller
 public class EsHTTPProxy {
     public static final String[] _validContentTypes = {
@@ -165,8 +165,8 @@ public class EsHTTPProxy {
             related = MetadataUtils.getAssociated(
                 context,
                 context.getBean(IMetadataUtils.class)
-                    .findOneByUuid(doc.get("_id").asText()),
-                relatedTypes, 0, 100);
+                    .findOne(doc.get("_source").get("id").asText()),
+                relatedTypes, 0, 1000);
         } catch (Exception e) {
             LOGGER.warn("Failed to load related types for {}. Error is: {}",
                 getSourceString(doc, Geonet.IndexFieldNames.UUID),

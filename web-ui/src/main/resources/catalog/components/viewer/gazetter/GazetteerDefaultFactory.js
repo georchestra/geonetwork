@@ -46,7 +46,10 @@
             search: function (scope, loc, query) {
               var lang = gnGlobalSettings.lang;
 
-              if (query.length < 1) return;
+              if (query.length < 1) {
+                scope.results = [];
+                return;
+              }
               var coord = gnGetCoordinate(
                 scope.map.getView().getProjection().getWorldExtent(),
                 query
@@ -92,11 +95,11 @@
                     username: "georchestra"
                   }
                 })
-                .success(function (response) {
+                .then(function (response) {
                   var loc;
                   scope.results = [];
-                  for (var i = 0; i < response.geonames.length; i++) {
-                    loc = response.geonames[i];
+                  for (var i = 0; i < response.data.geonames.length; i++) {
+                    loc = response.data.geonames[i];
                     if (loc.bbox) {
                       scope.results.push({
                         name: loc.name,

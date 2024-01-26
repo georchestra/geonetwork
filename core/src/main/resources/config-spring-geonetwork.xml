@@ -38,10 +38,11 @@
                                 ignore-resource-not-found="true" ignore-unresolvable="true" order="1"/>
   <context:property-placeholder location="WEB-INF/config-geonetwork-georchestra.properties"
                                 ignore-resource-not-found="true" ignore-unresolvable="true" order="2"/>
-  <context:property-placeholder location="${app.properties}"
+  <context:property-placeholder location="${app.properties},file://#{systemEnvironment['geonetwork_dir']}/config/app.properties"
+                                ignore-unresolvable="true"
+                                ignore-resource-not-found="true"
                                 order="3"
-                                file-encoding="UTF-8"
-                                ignore-unresolvable="true"/>
+                                file-encoding="UTF-8"/>
 
   <context:annotation-config/>
   <bean id="ProfileManager" class="jeeves.component.ProfileManager" lazy-init="true"/>

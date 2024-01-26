@@ -56,12 +56,6 @@ jobs:
     - name: "run tests"
       run: mvn verify -Pit
 
-    - name: "Building the docker image"
-      working-directory: web/
-      run: |
-        mvn clean package docker:build -Pdocker,log4j-logstash,sentry-log4j \
-        -DdockerImageName=georchestra/geonetwork:${DOCKER_TAG} -DskipTests
-
     - name: "publish the webapp as artifact"
       if: github.repository == 'georchestra/geonetwork' && github.actor != 'dependabot[bot]' && github.ref == 'refs/heads/georchestra-gn4.2.x' && github.event_name != 'pull_request'
       uses: actions/upload-artifact@v1

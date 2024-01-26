@@ -410,13 +410,13 @@ public class BaseMetadataIndexer implements IMetadataIndexer, ApplicationEventPu
                 fields.put(IndexFields.DRAFT, "n");
                 fields.put(IndexFields.INDEXING_ERROR_FIELD, true);
                 fields.put(IndexFields.INDEXING_ERROR_MSG, String.format(
-                    "Schema '%s' is not registerd in this catalog. Install it or remove those records",
+                    "Schema '%s' is not registered in this catalog. Install it or remove those records",
                     schema
                 ));
                 searchManager.index(null, md, indexKey, fields, metadataType,
                     forceRefreshReaders, indexingMode);
                 Log.error(Geonet.DATA_MANAGER, String.format(
-                    "Record %s / Schema '%s' is not registerd in this catalog. Install it or remove those records. Record is indexed indexing error flag.",
+                    "Record %s / Schema '%s' is not registered in this catalog. Install it or remove those records. Record is indexed indexing error flag.",
                     metadataId, schema));
             } else {
 
@@ -527,7 +527,11 @@ public class BaseMetadataIndexer implements IMetadataIndexer, ApplicationEventPu
 
                         // TODO: Check if ignore INSPIRE validation?
                         if (!type.equalsIgnoreCase("inspire")) {
-                            if (status == MetadataValidationStatus.INVALID && vi.isRequired()) {
+                            // If never validated and required then set status to never validated.
+                            if (status == MetadataValidationStatus.NEVER_CALCULATED && vi.isRequired()) {
+                                isValid = "-1";
+                            }
+                            if (status == MetadataValidationStatus.INVALID && vi.isRequired() && isValid != "-1") {
                                 isValid = "0";
                             }
                         } else {
@@ -585,6 +589,8 @@ public class BaseMetadataIndexer implements IMetadataIndexer, ApplicationEventPu
         List<OperationAllowed> operationsAllowed = operationAllowedRepository.findAllById_MetadataId(recordId);
         Multimap<String, Object> privilegesFields = ArrayListMultimap.create();
         boolean isPublishedToAll = false;
+        boolean isPublishedToIntranet = false;
+        boolean isPublishedToGuest = false;
 
         for (OperationAllowed operationAllowed : operationsAllowed) {
             OperationAllowedId operationAllowedId = operationAllowed.getId();
@@ -601,6 +607,10 @@ public class BaseMetadataIndexer implements IMetadataIndexer, ApplicationEventPu
 
                     if (g.get().getId() == ReservedGroup.all.getId()) {
                         isPublishedToAll = true;
+                    } else if (g.get().getId() == ReservedGroup.intranet.getId()) {
+                        isPublishedToIntranet = true;
+                    } else if (g.get().getId() == ReservedGroup.guest.getId()) {
+                        isPublishedToGuest = true;
                     }
                 }
             }
@@ -611,6 +621,19 @@ public class BaseMetadataIndexer implements IMetadataIndexer, ApplicationEventPu
         } else {
             privilegesFields.put(Geonet.IndexFieldNames.IS_PUBLISHED_TO_ALL, false);
         }
+
+        if (isPublishedToIntranet) {
+            privilegesFields.put(Geonet.IndexFieldNames.IS_PUBLISHED_TO_INTRANET, true);
+        } else {
+            privilegesFields.put(Geonet.IndexFieldNames.IS_PUBLISHED_TO_INTRANET, false);
+        }
+
+        if (isPublishedToGuest) {
+            privilegesFields.put(Geonet.IndexFieldNames.IS_PUBLISHED_TO_GUEST, true);
+        } else {
+            privilegesFields.put(Geonet.IndexFieldNames.IS_PUBLISHED_TO_GUEST, false);
+        }
+
         return privilegesFields;
     }
 

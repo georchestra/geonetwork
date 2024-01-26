@@ -101,8 +101,8 @@ public class MessageProducerFactory {
 
     private String buildFrom(Long id) {
         return String.format("quartz2://%s-%s",
-            settingManager.getSiteId(), id);
-
+            settingManager.getSiteId(),
+            id);
     }
 
     public void shutdown() {

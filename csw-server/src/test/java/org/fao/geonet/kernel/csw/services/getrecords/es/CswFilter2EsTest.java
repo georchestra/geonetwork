@@ -280,8 +280,8 @@ class CswFilter2EsTest {
         // EXPECTED:
         final ObjectNode expected = boolbdr(). //
             must(array(geoShape("geom", //
-            envelope(-180d, 90d, 180d, -90d), //
-            "intersects"))) //
+                envelope(-180d, 90d, 180d, -90d), //
+                "intersects"))) //
             . //
                 filter(queryStringPart()). //
                 bld();
@@ -343,7 +343,7 @@ class CswFilter2EsTest {
         // EXPECTED:
         final ObjectNode expected = boolbdr(). //
             must(array(geoShapePart, //
-            propertiesPart)) //
+                propertiesPart)) //
             . //
                 filter(queryStringPart()). //
                 bld();

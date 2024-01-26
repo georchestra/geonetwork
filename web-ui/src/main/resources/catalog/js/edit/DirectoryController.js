@@ -64,6 +64,7 @@
     "gnSearchSettings",
     "gnConfig",
     "gnConfigService",
+    "gnAlertService",
     function (
       $scope,
       $routeParams,
@@ -81,7 +82,8 @@
       gnGlobalSettings,
       gnSearchSettings,
       gnConfig,
-      gnConfigService
+      gnConfigService,
+      gnAlertService
     ) {
       // option to allow only administrators
       // to validate a subtemplate
@@ -162,8 +164,8 @@
       var init = function () {
         $http
           .get("../api/groups?profile=Editor", { cache: true })
-          .success(function (data) {
-            $scope.groups = data;
+          .then(function (response) {
+            $scope.groups = response.data;
           });
 
         refreshEntriesInfo();
@@ -448,7 +450,15 @@
         if (!$scope.delEntryId) {
           return;
         }
-        gnMetadataManager.remove($scope.delEntryId).then(refreshEntriesInfo);
+        gnMetadataManager
+          .remove($scope.delEntryId)
+          .then(refreshEntriesInfo, function (e) {
+            gnAlertService.addAlert({
+              msg: $translate.instant("directoryEntry-removeError-referenced"),
+              delay: 5000,
+              type: "danger"
+            });
+          });
         $scope.delEntryId = null;
       };
 
@@ -551,7 +561,8 @@
         $scope.importData.metadataType = asTemplate
           ? "TEMPLATE_OF_SUB_TEMPLATE"
           : "SUB_TEMPLATE";
-        $scope.importData.group = gnConfig["system.metadatacreate.preferredGroup"];
+        $scope.importData.group =
+          gnConfig["system.metadatacreate.preferredGroup"] || $scope.groups[0].id;
       };
 
       // begin edition of an entry

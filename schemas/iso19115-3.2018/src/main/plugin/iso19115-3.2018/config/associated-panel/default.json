@@ -30,7 +30,8 @@
           "metadataStore": {
             "label": "searchAnApplication",
             "params": {
-              "resourceType": "application"
+              "resourceType": "application",
+              "isTemplate": "n"
             }
           }
         },
@@ -63,7 +64,8 @@
           "metadataStore": {
             "label": "searchAservice",
             "params": {
-              "serviceType": ["OGC:WMS", "WMS", "view"]
+              "serviceType": ["OGC:WMS", "WMS", "view"],
+              "isTemplate": "n"
             }
           }
         },
@@ -95,7 +97,8 @@
           "metadataStore": {
             "label": "searchAservice",
             "params": {
-              "serviceType": "view"
+              "serviceType": "view",
+              "isTemplate": "n"
             }
           }
         },
@@ -132,7 +135,8 @@
           "metadataStore": {
             "label": "searchAservice",
             "params": {
-              "serviceType": ["OGC:WMTS", "WMTS"]
+              "serviceType": ["OGC:WMTS", "WMTS"],
+              "isTemplate": "n"
             }
           }
         },
@@ -164,7 +168,8 @@
           "metadataStore": {
             "label": "searchAservice",
             "params": {
-              "serviceType": "ESRI:REST"
+              "serviceType": "ESRI:REST",
+              "isTemplate": "n"
             }
           }
         },
@@ -196,7 +201,8 @@
           "metadataStore": {
             "label": "searchAservice",
             "params": {
-              "serviceType": "ESRI:REST"
+              "serviceType": "ESRI:REST",
+              "isTemplate": "n"
             }
           }
         },
@@ -310,7 +316,8 @@
           "metadataStore": {
             "label": "searchAservice",
             "params": {
-              "serviceType": ["OGC:WFS", "WFS", "download"]
+              "serviceType": ["OGC:WFS", "WFS", "download"],
+              "isTemplate": "n"
             }
           }
         },
@@ -342,7 +349,8 @@
           "metadataStore": {
             "label": "searchAservice",
             "params": {
-              "serviceType": ["OGC:WCS", "WCS"]
+              "serviceType": ["OGC:WCS", "WCS"],
+              "isTemplate": "n"
             }
           }
         },
@@ -374,7 +382,8 @@
           "metadataStore": {
             "label": "searchAservice",
             "params": {
-              "serviceType": "download"
+              "serviceType": "download",
+              "isTemplate": "n"
             }
           }
         },
@@ -411,7 +420,8 @@
           "metadataStore": {
             "label": "searchAservice",
             "params": {
-              "serviceType": "download"
+              "serviceType": "download",
+              "isTemplate": "n"
             }
           }
         },
@@ -595,9 +605,19 @@
         "process": "fcats-file-add",
         "fields": {
           "url": {
+            "isMultilingual": true
+          },
+          "name": {},
+          "function": {
+            "value": "featureCatalogue",
+            "hidden": true,
             "isMultilingual": false
           },
-          "name": {}
+          "protocol": {
+            "value": "WWW:LINK",
+            "hidden": true,
+            "isMultilingual": false
+          }
         }
       },
       {
@@ -611,13 +631,23 @@
         "process": "dq-report-add",
         "fields": {
           "url": {
-            "isMultilingual": false
+            "isMultilingual": true
           },
           "name": {},
           "desc": {},
           "type": {
             "param": "type",
             "value": "qualityReport",
+            "isMultilingual": false
+          },
+          "function": {
+            "value": "dataQualityReport",
+            "hidden": true,
+            "isMultilingual": false
+          },
+          "protocol": {
+            "value": "WWW:LINK",
+            "hidden": true,
             "isMultilingual": false
           }
         }
@@ -633,13 +663,23 @@
         "process": "dq-report-add",
         "fields": {
           "url": {
-            "isMultilingual": false
+            "isMultilingual": true
           },
           "name": {},
           "desc": {},
           "type": {
             "param": "type",
             "value": "qualitySpecification",
+            "isMultilingual": false
+          },
+          "function": {
+            "value": "dataQualityReport",
+            "hidden": true,
+            "isMultilingual": false
+          },
+          "protocol": {
+            "value": "WWW:LINK",
+            "hidden": true,
             "isMultilingual": false
           }
         }
@@ -655,13 +695,23 @@
         "process": "dq-report-add",
         "fields": {
           "url": {
-            "isMultilingual": false
+            "isMultilingual": true
           },
           "name": {},
           "desc": {},
           "type": {
             "param": "type",
             "value": "lineage",
+            "isMultilingual": false
+          },
+          "function": {
+            "value": "dataQualityReport",
+            "hidden": true,
+            "isMultilingual": false
+          },
+          "protocol": {
+            "value": "WWW:LINK",
+            "hidden": true,
             "isMultilingual": false
           }
         }
@@ -678,9 +728,19 @@
         "process": "legend-add",
         "fields": {
           "url": {
+            "isMultilingual": true
+          },
+          "name": {},
+          "function": {
+            "value": "legend",
+            "hidden": true,
             "isMultilingual": false
           },
-          "name": {}
+          "protocol": {
+            "value": "WWW:LINK",
+            "hidden": true,
+            "isMultilingual": false
+          }
         }
       },
       {
@@ -695,9 +755,19 @@
         "process": "legend-add",
         "fields": {
           "url": {
+            "isMultilingual": true
+          },
+          "name": {},
+          "function": {
+            "value": "legend",
+            "hidden": true,
             "isMultilingual": false
           },
-          "name": {}
+          "protocol": {
+            "value": "WWW:LINK",
+            "hidden": true,
+            "isMultilingual": false
+          }
         }
       },
       {
@@ -712,9 +782,19 @@
         "process": "legend-add",
         "fields": {
           "url": {
+            "isMultilingual": true
+          },
+          "name": {},
+          "function": {
+            "value": "legend",
+            "hidden": true,
             "isMultilingual": false
           },
-          "name": {}
+          "protocol": {
+            "value": "WWW:LINK",
+            "hidden": true,
+            "isMultilingual": false
+          }
         }
       },
       {
@@ -725,7 +805,7 @@
         "process": "onlinesrc-add",
         "fields": {
           "url": {
-            "isMultilingual": false
+            "isMultilingual": true
           },
           "protocol": {
             "value": "WWW:LINK",
@@ -752,7 +832,7 @@
         "process": "onlinesrc-add",
         "fields": {
           "url": {
-            "isMultilingual": false
+            "isMultilingual": true
           },
           "protocol": {
             "value": "WWW:LINK",

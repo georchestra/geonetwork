@@ -86,7 +86,7 @@ public class UsersApiTest extends AbstractServiceIntegrationTest {
             .session(this.mockHttpSession)
             .accept(MediaType.parseMediaType("application/json")))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$", hasSize(6)))
+            .andExpect(jsonPath("$", hasSize(7)))
             .andExpect(content().contentType(API_JSON_EXPECTED_ENCODING));
     }
 
@@ -184,7 +184,7 @@ public class UsersApiTest extends AbstractServiceIntegrationTest {
             .session(this.mockHttpSession)
             .accept(MediaType.parseMediaType("application/json")))
             .andExpect(status().is(400))
-            .andExpect(jsonPath("$.description", is("You cannot delete yourself from the user database")))
+            .andExpect(jsonPath("$.message", is("You cannot delete yourself from the user database")))
             .andExpect(content().contentType(API_JSON_EXPECTED_ENCODING));
     }
 
@@ -214,7 +214,7 @@ public class UsersApiTest extends AbstractServiceIntegrationTest {
             .session(this.mockHttpSession)
             .accept(MediaType.parseMediaType("application/json")))
             .andExpect(status().is(400))
-            .andExpect(jsonPath("$.description", is("You don't have rights to delete this user because the user is not part of your group")))
+            .andExpect(jsonPath("$.message", is("You don't have rights to delete this user because the user is not part of your group")))
             .andExpect(content().contentType(API_JSON_EXPECTED_ENCODING));
     }
 
@@ -271,7 +271,7 @@ public class UsersApiTest extends AbstractServiceIntegrationTest {
             .contentType(API_JSON_EXPECTED_ENCODING)
             .session(this.mockHttpSession)
             .accept(MediaType.parseMediaType("application/json")))
-            .andExpect(jsonPath("$.description", is("username is a required parameter for newuser operation")))
+            .andExpect(jsonPath("$.message", is("username is a required parameter for newuser operation")))
             .andExpect(status().is(400));
     }
 
@@ -299,7 +299,7 @@ public class UsersApiTest extends AbstractServiceIntegrationTest {
             .contentType(API_JSON_EXPECTED_ENCODING)
             .session(this.mockHttpSession)
             .accept(MediaType.parseMediaType("application/json")))
-            .andExpect(jsonPath("$.description", is("Users with username " + user.getUsername()
+            .andExpect(jsonPath("$.message", is("Users with username " + user.getUsername()
                 + " ignore case already exists")))
             .andExpect(status().is(400));
 
@@ -329,7 +329,7 @@ public class UsersApiTest extends AbstractServiceIntegrationTest {
             .contentType(API_JSON_EXPECTED_ENCODING)
             .session(this.mockHttpSession)
             .accept(MediaType.parseMediaType("application/json")))
-            .andExpect(jsonPath("$.description", is("Users with username " + user.getUsername()
+            .andExpect(jsonPath("$.message", is("Users with username " + user.getUsername()
                 + " ignore case already exists")))
             .andExpect(status().is(400));
 
@@ -357,7 +357,7 @@ public class UsersApiTest extends AbstractServiceIntegrationTest {
             .session(this.mockHttpSession)
             .accept(MediaType.parseMediaType("application/json")))
             .andExpect(status().is(400))
-            .andExpect(jsonPath("$.description", is("The old password is not valid.")));
+            .andExpect(jsonPath("$.message", is("The old password is not valid.")));
 
 
         passwordReset.setPasswordOld("testuser-editor-password");
@@ -397,7 +397,7 @@ public class UsersApiTest extends AbstractServiceIntegrationTest {
             .contentType(API_JSON_EXPECTED_ENCODING)
             .session(this.mockHttpSession)
             .accept(MediaType.parseMediaType("application/json")))
-            .andExpect(jsonPath("$.description", is("You don't have rights to do this")))
+            .andExpect(jsonPath("$.message", is("You don't have rights to do this")))
             .andExpect(status().is(400));
     }
 
@@ -424,7 +424,7 @@ public class UsersApiTest extends AbstractServiceIntegrationTest {
             .content(json)
             .session(this.mockHttpSession)
             .accept(MediaType.parseMediaType("application/json")))
-            .andExpect(jsonPath("$.description", is("Passwords should be equal")))
+            .andExpect(jsonPath("$.message", is("Passwords should be equal")))
             .andExpect(status().is(400));
     }
 
@@ -451,7 +451,7 @@ public class UsersApiTest extends AbstractServiceIntegrationTest {
             .content(json)
             .session(this.mockHttpSession)
             .accept(MediaType.parseMediaType("application/json")))
-            .andExpect(jsonPath("$.description", is("The old password is not valid.")))
+            .andExpect(jsonPath("$.message", is("The old password is not valid.")))
             .andExpect(status().is(400));
     }
 
@@ -459,7 +459,7 @@ public class UsersApiTest extends AbstractServiceIntegrationTest {
     public void resetPasswordNotExistingUser() throws Exception {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
 
-        String userId = "222";
+        String userId = "2222";
 
         this.mockHttpSession = loginAsAdmin();
 
@@ -477,7 +477,7 @@ public class UsersApiTest extends AbstractServiceIntegrationTest {
             .content(json)
             .session(this.mockHttpSession)
             .accept(MediaType.parseMediaType("application/json")))
-            .andExpect(jsonPath("$.description", is("User not found")))
+            .andExpect(jsonPath("$.message", is("User not found")))
             .andExpect(status().is(404));
     }
 
@@ -527,13 +527,46 @@ public class UsersApiTest extends AbstractServiceIntegrationTest {
         this.mockHttpSession = loginAsAdmin();
 
         this.mockMvc.perform(put("/srv/api/users/" + userToUpdate.getId())
-            .content(json)
-            .contentType(API_JSON_EXPECTED_ENCODING)
-            .session(this.mockHttpSession)
-            .accept(MediaType.parseMediaType("application/json")))
+                .content(json)
+                .contentType(API_JSON_EXPECTED_ENCODING)
+                .session(this.mockHttpSession)
+                .accept(MediaType.parseMediaType("application/json")))
             .andExpect(status().is(204));
     }
 
+    @Test
+    public void updateUserByUserAdminNotAllowed() throws Exception {
+        // User admin in Group test
+        User loginUser = _userRepo.findOneByUsername("testuser-useradmin-testgroup");
+        Assert.assertNotNull(loginUser);
+        // User to update in Group sample
+        User userToUpdate = _userRepo.findOneByUsername("testuser-editor");
+        Assert.assertNotNull(userToUpdate);
+
+        UserDto user = new UserDto();
+        user.setId(String.valueOf(userToUpdate.getId()));
+        user.setUsername(userToUpdate.getUsername());
+        user.setName(userToUpdate.getName() + "-updated");
+        user.setProfile(userToUpdate.getProfile().toString());
+        user.setGroupsEditor(Collections.singletonList("2"));
+        user.setEmail(new ArrayList(userToUpdate.getEmailAddresses()));
+        user.setEnabled(true);
+
+        Gson gson = new Gson();
+        String json = gson.toJson(user);
+
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
+
+        this.mockHttpSession = loginAs(loginUser);
+
+        this.mockMvc.perform(put("/srv/api/users/" + userToUpdate.getId())
+                .content(json)
+                .contentType(API_JSON_EXPECTED_ENCODING)
+                .session(this.mockHttpSession)
+                .accept(MediaType.parseMediaType("application/json")))
+            .andExpect(jsonPath("$.message", is("You don't have rights to do this")))
+            .andExpect(status().is(400));
+    }
 
     @Test
     public void updateUserDuplicatedUsername() throws Exception {
@@ -565,7 +598,7 @@ public class UsersApiTest extends AbstractServiceIntegrationTest {
             .contentType(API_JSON_EXPECTED_ENCODING)
             .session(this.mockHttpSession)
             .accept(MediaType.parseMediaType("application/json")))
-            .andExpect(jsonPath("$.description", is("Another user with username "
+            .andExpect(jsonPath("$.message", is("Another user with username "
                 + "'testuser-editor' ignore case already exists")))
             .andExpect(status().is(400));
     }
@@ -600,7 +633,7 @@ public class UsersApiTest extends AbstractServiceIntegrationTest {
             .contentType(API_JSON_EXPECTED_ENCODING)
             .session(this.mockHttpSession)
             .accept(MediaType.parseMediaType("application/json")))
-            .andExpect(jsonPath("$.description", is("Another user with username 'testuser-editor' ignore case already exists")))
+            .andExpect(jsonPath("$.message", is("Another user with username 'testuser-editor' ignore case already exists")))
             .andExpect(status().is(400));
     }
 
@@ -668,7 +701,7 @@ public class UsersApiTest extends AbstractServiceIntegrationTest {
             .session(this.mockHttpSession)
             .accept(MediaType.parseMediaType("application/json")))
             .andExpect(status().is(400))
-            .andExpect(jsonPath("$.description", is("Another user with username 'testuser-editor' ignore case already exists")));
+            .andExpect(jsonPath("$.message", is("Another user with username 'testuser-editor' ignore case already exists")));
     }
 
     /**
@@ -705,6 +738,9 @@ public class UsersApiTest extends AbstractServiceIntegrationTest {
         UserGroup userGroupReviewer = new UserGroup().setGroup(testGroup)
             .setProfile(Profile.Editor).setUser(testUserReviewer);
         _userGroupRepo.save(userGroupReviewer);
+        userGroupReviewer = new UserGroup().setGroup(testGroup)
+            .setProfile(Profile.Reviewer).setUser(testUserReviewer);
+        _userGroupRepo.save(userGroupReviewer);
 
         // UserAdmin - Group sample
         User testUserUserAdmin = new User();
@@ -715,8 +751,20 @@ public class UsersApiTest extends AbstractServiceIntegrationTest {
         _userRepo.save(testUserUserAdmin);
 
         UserGroup userGroupUserAdmin = new UserGroup().setGroup(sampleGroup)
-            .setProfile(Profile.Editor).setUser(testUserUserAdmin);
+            .setProfile(Profile.UserAdmin).setUser(testUserUserAdmin);
         _userGroupRepo.save(userGroupUserAdmin);
+
+        // UserAdmin - Test group
+        User testUserUserAdminForTestGroup = new User();
+        testUserUserAdminForTestGroup.setUsername("testuser-useradmin-testgroup");
+        testUserUserAdminForTestGroup.setProfile(Profile.UserAdmin);
+        testUserUserAdminForTestGroup.setEnabled(true);
+        testUserUserAdminForTestGroup.getEmailAddresses().add("test@mail.com");
+        _userRepo.save(testUserUserAdminForTestGroup);
+
+        UserGroup userGroupUserAdminForTestGroup = new UserGroup().setGroup(testGroup)
+            .setProfile(Profile.UserAdmin).setUser(testUserUserAdminForTestGroup);
+        _userGroupRepo.save(userGroupUserAdminForTestGroup);
 
         // User with same name different letter case
         User testUserEditor2 = new User();

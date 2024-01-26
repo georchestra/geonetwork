@@ -42,11 +42,13 @@
                                 ignore-resource-not-found="true" ignore-unresolvable="true" order="1"/>
   <context:property-placeholder location="WEB-INF/config-geonetwork-georchestra.properties"
                                 ignore-resource-not-found="true" ignore-unresolvable="true" order="2"/>
-  <context:property-placeholder location="${app.properties}"
-                                file-encoding="UTF-8" ignore-unresolvable="true" order="3" />
+  <context:property-placeholder location="${app.properties},file://#{systemEnvironment['geonetwork_dir']}/config/app.properties"
+                                ignore-unresolvable="true"
+                                ignore-resource-not-found="true"
+                                order="3"
+                                file-encoding="UTF-8"/>
 
   <context:component-scan base-package="org.fao.geonet"/>
-
 
   <bean id="configPath" class="java.lang.String">
     <constructor-arg index="0" value="/WEB-INF/"/>

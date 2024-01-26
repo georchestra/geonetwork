@@ -203,6 +203,57 @@
                         </option>
                       </select>
 
+                      <select
+                        data-ng-switch-when="metadata/publication/profilePublishMetadata"
+                        class="form-control"
+                        name="{{s.name}}"
+                      >
+                        <option value="Reviewer" ng-selected="'Reviewer' == s.value">
+                          {{'Reviewer' | translate}}
+                        </option>
+                        <option
+                          value="Administrator"
+                          ng-selected="'Administrator' == s.value"
+                        >
+                          {{'Administrator' | translate}}
+                        </option>
+                      </select>
+
+                      <select
+                        data-ng-switch-when="metadata/publication/profileUnpublishMetadata"
+                        class="form-control"
+                        name="{{s.name}}"
+                      >
+                        <option value="Reviewer" ng-selected="'Reviewer' == s.value">
+                          {{'Reviewer' | translate}}
+                        </option>
+                        <option
+                          value="Administrator"
+                          ng-selected="'Administrator' == s.value"
+                        >
+                          {{'Administrator' | translate}}
+                        </option>
+                      </select>
+
+                      <select
+                        data-ng-switch-when="metadata/batchediting/accesslevel"
+                        class="form-control"
+                        name="{{s.name}}"
+                      >
+                        <option value="Editor" ng-selected="'Editor' == s.value">
+                          {{'Editor' | translate}}
+                        </option>
+                        <option value="Reviewer" ng-selected="'Reviewer' == s.value">
+                          {{'Reviewer' | translate}}
+                        </option>
+                        <option
+                          value="Administrator"
+                          ng-selected="'Administrator' == s.value"
+                        >
+                          {{'Administrator' | translate}}
+                        </option>
+                      </select>
+
                       <div data-ng-switch-when="system/metadatacreate/preferredGroup">
                         <input
                           type="hidden"
@@ -253,21 +304,15 @@
                         {{'draftWhenInGroup-selection' | translate}}<br />
 
                         <input
-                          type="hidden"
-                          class="form-control"
-                          id="{{s['name']}}"
-                          name="{{s.name}}"
-                          value=".*"
-                          data-ng-disabled="draftInAllGroups != true"
-                        />
-
-                        <input
                           type="text"
                           class="form-control"
                           id="{{s['name']}}"
                           name="{{s.name}}"
-                          value="{{s.value}}"
-                          data-ng-disabled="draftInAllGroups == true"
+                          data-ng-model="draftInAllGroupsUserValue"
+                          data-ng-init="draftInAllGroupsInputValue=s.value || '.*'"
+                          data-ng-change="draftInAllGroups == true?null:draftInAllGroupsInputValue=draftInAllGroupsUserValue"
+                          data-ng-readonly="draftInAllGroups == true"
+                          data-ng-value="draftInAllGroups == true ? '.*' : draftInAllGroupsInputValue"
                         />
                       </div>
 
@@ -678,6 +723,12 @@
                       />
                     </div>
                   </div>
+                </div>
+
+                <div
+                  data-ng-if="section2.name == 'system/proxy' && isProxyConfiguredInSystemProperties"
+                >
+                  <h5 data-translate="">systemPropertiesProxyConfiguration</h5>
                 </div>
               </fieldset>
               <button

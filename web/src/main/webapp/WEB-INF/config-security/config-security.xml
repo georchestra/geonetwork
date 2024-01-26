@@ -67,7 +67,11 @@
   <!--<import resource="config-security-cas-ldap.xml"/>-->
   <!-- <import resource="config-security-cas-database.xml"/> -->
   <!-- <import resource="config-security-shibboleth.xml"/>  -->
-  <ctx:property-placeholder location="WEB-INF/config-security/config-security.properties"
-                            file-encoding="UTF-8" ignore-unresolvable="true" order="100"/>
+  <ctx:property-placeholder location="WEB-INF/config-security/config-security.properties,file://#{systemEnvironment['geonetwork_dir']}/config/security.properties"
+                            ignore-unresolvable="true"
+                            ignore-resource-not-found="true"
+                            file-encoding="UTF-8"
+                            order="100"/>
+
 
 </beans>

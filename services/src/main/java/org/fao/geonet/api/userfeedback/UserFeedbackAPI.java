@@ -514,14 +514,18 @@ public class UserFeedbackAPI {
                     String title = XslUtil.getIndexField(null, userFeedbackDto.getMetadataUUID(), "resourceTitleObject", "");
 
                     if (toAddress.size() > 0) {
-                        MailUtil.sendMail(toAddress,
-                            String.format(
-                                messages.getString("new_user_rating"),
-                                catalogueName, title),
-                            String.format(
-                                messages.getString("new_user_rating_text"),
-                                settingManager.getNodeURL(), userFeedbackDto.getMetadataUUID()),
-                            settingManager);
+                        try {
+                            MailUtil.sendMail(toAddress,
+                                String.format(
+                                    messages.getString("new_user_rating"),
+                                    catalogueName, title),
+                                String.format(
+                                    messages.getString("new_user_rating_text"),
+                                    metadataUtils.getDefaultUrl(userFeedbackDto.getMetadataUUID(), locale.getISO3Language())),
+                                settingManager);
+                        } catch (IllegalArgumentException ex) {
+                            Log.warning(API.LOG_MODULE_NAME, ex.getMessage(), ex);
+                        }
                     }
                 }
             }
@@ -604,7 +608,8 @@ public class UserFeedbackAPI {
         )
         @RequestParam(required = false, defaultValue = "") final String metadataEmail,
         @Parameter(hidden = true) final HttpServletRequest request
-    ) throws IOException {
+    ) throws Exception {
+        AbstractMetadata md = ApiUtils.canViewRecord(metadataUuid, request);
 
         Locale locale = languageUtils.parseAcceptLanguage(request.getLocales());
         ResourceBundle messages = ResourceBundle.getBundle("org.fao.geonet.api.Messages", locale);
@@ -628,7 +633,6 @@ public class UserFeedbackAPI {
         toAddress.add(to);
         if (StringUtils.isNotBlank(metadataEmail)) {
             //Check metadata email belongs to metadata security!!
-            AbstractMetadata md = metadataRepository.findOneByUuid(metadataUuid);
             String[] metadataAddresses = StringUtils.split(metadataEmail, ",");
             for (String metadataAddress : metadataAddresses) {
                 String cleanMetadataAddress = StringUtils.trimToEmpty(metadataAddress);
@@ -647,7 +651,7 @@ public class UserFeedbackAPI {
             String.format(
                 messages.getString("user_feedback_text"),
                 name, org, function, email, phone, title, type, category, comments,
-                settingManager.getNodeURL(), metadataUuid),
+                metadataUtils.getDefaultUrl(metadataUuid, locale.getISO3Language())),
             settingManager);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
