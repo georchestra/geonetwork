@@ -62,3 +62,4 @@ jobs:
       with:
         name: geonetwork.war
         path: web/target/geonetwork.war
+
