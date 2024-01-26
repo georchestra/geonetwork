@@ -482,6 +482,8 @@
           var addGeonames = !attrs["disableGeonames"];
           scope.regionTypes = [];
 
+          scope.lang = attrs["lang"];
+
           function setDefault() {
             var defaultThesaurus = attrs["default"];
             for (t in scope.regionTypes) {
@@ -736,6 +738,8 @@
               }
             });
           }
+          scope.lang = attrs["lang"];
+
           scope.$watch("regionType", function (val) {
             if (scope.regionType) {
               if (scope.regionType.id == "geonames") {
@@ -1351,7 +1355,7 @@
           "    </defs>" +
           '    <circle fill="url(\'#image{{imageId}}\')" style="stroke-miterlimit:10;" cx="250" cy="250" r="240"/>' +
           '    <text x="50%" y="50%"' +
-          '          text-anchor="middle" alignment-baseline="central"' +
+          '          text-anchor="middle" alignment-baseline="central" dominant-baseline="central"' +
           "          font-size=\"300\">{{hasIcon ? '' : org.substr(0, 1).toUpperCase()}}</text>" +
           "</svg>",
         scope: {

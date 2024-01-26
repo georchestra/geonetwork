@@ -29,7 +29,7 @@
   <groupId>org.geonetwork-opensource</groupId>
   <artifactId>geonetwork</artifactId>
   <packaging>pom</packaging>
-  <version>4.2.7-georchestra</version>
+  <version>4.2.8-georchestra</version>
   <name>GeoNetwork opensource</name>
   <description>GeoNetwork opensource is a standards based, Free and
     Open Source catalog application to manage spatially referenced
@@ -136,6 +136,14 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-clean-plugin</artifactId>
           <version>3.1.0</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>3.1.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>3.1.1</version>
         </plugin>
         <plugin>
           <groupId>net.alchim31.maven</groupId>
@@ -1457,16 +1465,6 @@
      </snapshotRepository>
   </distributionManagement>
 
-  <!--
-  <distributionManagement>
-    <snapshotRepository>
-      <id>scp-repository.geonetwork-opensource.org</id>
-      <name>GeoNetwork opensource repositories</name>
-      <url>scpexe://TO DEFINED</url>
-    </snapshotRepository>
-  </distributionManagement>
-  -->
-
   <properties>
     <db.properties>WEB-INF/config-db/jdbc.properties</db.properties>
     <!--<db.properties>file:/${geonetwork.dir}/jdbc.properties</db.properties>-->
@@ -1528,7 +1526,7 @@
     <jetty.port>8080</jetty.port>
     <jetty.stop.port>8090</jetty.stop.port>
 
-    <es.version>7.15.1</es.version>
+    <es.version>7.17.15</es.version>
     <es.platform>linux-x86_64</es.platform>
     <es.installer.extension>tar.gz</es.installer.extension>
     <es.protocol>http</es.protocol>
@@ -1585,7 +1583,7 @@
      request the list of hosts (but JPA cache db queries). -->
     <cors.allowedHosts>*</cors.allowedHosts>
 
-    <jetty.version>9.4.48.v20220622</jetty.version>
+    <jetty.version>9.4.52.v20230823</jetty.version>
     <jetty.file>jetty-distribution-${jetty.version}</jetty.file>
     <jetty.download>https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/${jetty.version}/${jetty.file}.tar.gz</jetty.download>
 
@@ -1595,8 +1593,8 @@
     <jts.version>1.18.2</jts.version>
     <pg.version>42.3.3</pg.version>
 
-    <spring.version>5.3.27</spring.version>
-    <spring.security.version>5.7.8</spring.security.version>
+    <spring.version>5.3.30</spring.version>
+    <spring.security.version>5.7.11</spring.security.version>
     <spring.jpa.version>2.2.13.RELEASE</spring.jpa.version>
     <springboot.version>2.7.0</springboot.version>
     <springdoc.version>1.5.9</springdoc.version>
@@ -1611,7 +1609,7 @@
     <node.version>v8.11.1</node.version>
     <npm.version>5.8.0</npm.version>
     <xmlunit.version>2.1.1</xmlunit.version>
-    <jackson.version>2.10.4</jackson.version>
+    <jackson.version>2.10.5</jackson.version>
     <flying-saucer>9.1.22</flying-saucer>
     <camel.version>2.25.1</camel.version>
     <log4j2.version>2.17.2</log4j2.version>
