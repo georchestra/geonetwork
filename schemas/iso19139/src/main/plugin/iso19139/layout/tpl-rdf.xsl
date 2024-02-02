@@ -306,7 +306,7 @@
 
     <!-- SIB addon-->
     <dcat:landingPage>
-      <xsl:value-of select="$resourcePrefix"/>/<xsl:value-of select="iso19139:getResourceCode(../../.)"/>
+      <xsl:value-of select="$url"/>/srv/api/records/<xsl:value-of select="$uuid"/>
     </dcat:landingPage>
 
     <dct:title>
