@@ -104,6 +104,7 @@
     <xsl:param name="uuid"/>
 
     <dct:references>
+      <!-- SIB addon-->
       <rdf:Description rdf:about="{$url}/srv/api/records/{$uuid}/formatters/xml">
         <dct:format>
           <dct:IMT>
@@ -115,7 +116,9 @@
     </dct:references>
 
     <dct:references>
-      <rdf:Description rdf:about="{$url}/srv/api/records/{$uuid}">
+      <!-- SIB addon-->
+      <!-- <rdf:Description rdf:about="{$url}/srv/api/records/{$uuid}"> -->
+      <rdf:Description rdf:about="{$url}/srv/fre/catalog.search#/metadata/{$uuid}">
         <dct:format>
           <dct:IMT>
             <rdf:value>text/html</rdf:value>
@@ -187,6 +190,14 @@
             <xsl:value-of select="(gmd:protocol/gmx:Anchor)[1]"/>
           </dcat:mediaType>
           </xsl:if>
+
+          <!-- SIB addon-->
+          <xsl:if test="(gmd:description/gco:CharacterString)[1]!=''">
+          <dct:description>
+            <xsl:value-of select="(gmd:description/gco:CharacterString)[1]"/>
+          </dct:description>
+          </xsl:if>
+
           <xsl:if test="(gmd:protocol/gco:CharacterString)[1]!=''">
           <dct:format>
             <xsl:value-of select="(gmd:protocol/gco:CharacterString)[1]"/>
@@ -273,7 +284,10 @@
   -->
   <xsl:template match="gmd:MD_DataIdentification|*[contains(@gco:isoType, 'MD_DataIdentification')]"
                 mode="to-dcat">
-    <dcat:Dataset rdf:about="{$resourcePrefix}/datasets/{iso19139:getResourceCode(../../.)}">
+
+    <!-- SIB addon-->
+    <!-- <dcat:Dataset rdf:about="{$resourcePrefix}/datasets/{iso19139:getResourceCode(../../.)}"> -->
+    <dcat:Dataset rdf:about="{$resourcePrefix}/{iso19139:getResourceCode(../../.)}">
       <xsl:call-template name="to-dcat"/>
     </dcat:Dataset>
   </xsl:template>
@@ -290,6 +304,10 @@
     </dct:identifier>
     <!-- xpath: gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code -->
 
+    <!-- SIB addon-->
+    <dcat:landingPage>
+      <xsl:value-of select="$resourcePrefix"/>/<xsl:value-of select="iso19139:getResourceCode(../../.)"/>
+    </dcat:landingPage>
 
     <dct:title>
       <xsl:value-of select="gmd:citation/*/gmd:title/gco:CharacterString"/>
@@ -299,6 +317,16 @@
 
     <dct:abstract>
       <xsl:value-of select="gmd:abstract/gco:CharacterString"/>
+
+      <!-- SIB addon-->
+      <!-- Layout will be visible only in source mode in the browser. If not in source mode, newlines won't be displayed and the keywords will be shown inline -->
+      <xsl:text>&#xa;</xsl:text> <!-- linebreak -->
+      <!-- Keywords -->
+      <xsl:for-each-group select="//gmd:MD_Keywords[(gmd:thesaurusName)]/gmd:keyword"
+      group-by="gco:CharacterString|gmx:Anchor">
+        <xsl:text>&#xa;</xsl:text> <!-- linebreak -->
+        <xsl:value-of select="normalize-space(../gmd:thesaurusName/*/gmd:title)"/> : <xsl:value-of select="normalize-space(gco:CharacterString|gmx:Anchor)"/><xsl:text>.</xsl:text>
+      </xsl:for-each-group>
     </dct:abstract>
     <!-- xpath: gmd:identificationInfo/*/gmd:abstract/gco:CharacterString -->
 
@@ -427,25 +455,44 @@
     <!-- xpath: gmd:identificationInfo/*/gmd:language/gmd:LanguageCode/@codeListValue -->
 
 
+    <!-- dct:license content -->
     <!-- "The license under which the dataset is published and can be reused." -->
-    <xsl:for-each select="gmd:resourceConstraints/gmd:MD_LegalConstraints/*/gmd:MD_RestrictionCode[@codeListValue!='otherRestrictions']">
-      <dct:license>
-        <xsl:value-of select="@codeListValue"/>
-      </dct:license>
+    <xsl:for-each select="gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:useConstraints">
+      <xsl:choose>
+        <xsl:when test="gmd:MD_RestrictionCode[@codeListValue!='otherRestrictions']">
+          <dct:license>
+            <xsl:value-of select="@codeListValue"/>
+          </dct:license>
+        </xsl:when>
+        <xsl:otherwise>
+            <xsl:call-template name="legalOtherConstraints">
+              <xsl:with-param name="ocnode"><xsl:copy-of select="./following-sibling::gmd:otherConstraints[1]"/></xsl:with-param>
+              <xsl:with-param name="tagname">license</xsl:with-param>
+            </xsl:call-template>
+        </xsl:otherwise>
+      </xsl:choose>
     </xsl:for-each>
-    <xsl:for-each
-      select="gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints/gco:CharacterString">
-      <dct:license>
-        <xsl:value-of select="."/>
-      </dct:license>
-    </xsl:for-each>
-    <xsl:for-each
-      select="gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor">
-      <dct:license rdf:resource="{@xlink:href}">
-        <xsl:value-of select="."/>
-      </dct:license>
+
+    <!--  Access constraints should not be stored under license, but rather on accessRights category,
+          cf https://semiceu.github.io/GeoDCAT-AP/releases/2.0.0/#conditions-for-access-and-use-and-limitations-on-public-access-use-limitation-and-access-other-constraints 
+    -->
+    <xsl:for-each select="gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:accessConstraints">
+      <xsl:choose>
+        <xsl:when test="gmd:MD_RestrictionCode[@codeListValue!='otherRestrictions']">
+          <dct:license>
+            <xsl:value-of select="@codeListValue"/>
+          </dct:license>
+        </xsl:when>
+        <xsl:otherwise>
+            <xsl:call-template name="legalOtherConstraints">
+              <xsl:with-param name="ocnode"><xsl:copy-of select="./following-sibling::gmd:otherConstraints[1]"/></xsl:with-param>
+              <xsl:with-param name="tagname">accessRights</xsl:with-param>
+            </xsl:call-template>
+        </xsl:otherwise>
+      </xsl:choose>
     </xsl:for-each>
     <!-- xpath: gmd:identificationInfo/*/gmd:resourceConstraints/??? -->
+
 
     <xsl:for-each select="../../gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine">
       <dcat:distribution rdf:resource="{iso19139:RecordUri($uuid)}#{encode-for-uri(gmd:CI_OnlineResource/gmd:protocol/*/text())}-{encode-for-uri(gmd:CI_OnlineResource/gmd:name/(gco:CharacterString|gmx:Anchor)/text())}"/>
@@ -519,6 +566,34 @@
 
     <!-- FIXME ?
       <void:dataDump></void:dataDump>-->
+  </xsl:template>
+
+
+  <!--
+    Process the otherContraints in LegalResources differently depending on the previous sibling. If gmd:useConstraints use dct:license, if gmd:accessConstraints use dct:accessRights
+  -->
+  <xsl:template name="legalOtherConstraints">
+    <xsl:param name="ocnode"/>
+    <xsl:param name="tagname"/>
+
+    <xsl:choose>
+      <xsl:when test="$ocnode/gmd:otherConstraints/gmx:Anchor">
+        <xsl:element name="dct:{$tagname}">
+          <xsl:attribute name="rdf:resource">
+              <xsl:value-of select="$ocnode/gmd:otherConstraints/gmx:Anchor/@xlink:href"/>
+          </xsl:attribute>
+          <xsl:value-of select="$ocnode/gmd:otherConstraints/gmx:Anchor"/>
+        </xsl:element>
+      </xsl:when>
+      <xsl:when test="$ocnode/gmd:otherConstraints/gco:CharacterString">
+        <xsl:element name="dct:{$tagname}">
+          <xsl:value-of select="$ocnode/gmd:otherConstraints/gco:CharacterString"/>
+        </xsl:element>
+      </xsl:when>
+      <!--      <xsl:otherwise>-->
+      <!--          <xsl:copy-of select="$ocnode"/>-->
+      <!--      </xsl:otherwise>-->
+    </xsl:choose>
   </xsl:template>
 
 
