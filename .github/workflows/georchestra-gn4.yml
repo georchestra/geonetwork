@@ -32,7 +32,6 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
-        cache: 'maven'
 
     - name: "Installing the geOrchestra root pom"
       run: |
