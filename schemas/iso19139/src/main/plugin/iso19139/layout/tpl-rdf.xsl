@@ -306,7 +306,7 @@
 
     <!-- SIB addon-->
     <dcat:landingPage>
-      <xsl:value-of select="$url"/>/srv/api/records/<xsl:value-of select="$uuid"/>
+      <xsl:value-of select="$url"/>/<xsl:value-of select="util:getNodeId()"/>/api/records/<xsl:value-of select="$uuid"/>
     </dcat:landingPage>
 
     <dct:title>
