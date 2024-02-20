@@ -112,7 +112,6 @@ All italic folder just have the `pom.xml` change.
   - `gn_navbar_default.less`: Same (header position)
   - `src/main/resources/catalog/views/module.js`: Add 3DTiles
   - `src/main/resources/catalog/views/georchestra/`: Get files from georchestra
-  - `*-admin.json` : Keep change from `metadata/url/sitemapLinkUrl` to `system/server/sitemapLinkUrl` until it is fixed upstream
 - *workers*
 - *wro4j*
 - .gitignore 
