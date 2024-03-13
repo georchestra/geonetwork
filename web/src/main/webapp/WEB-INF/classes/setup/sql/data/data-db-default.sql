@@ -920,6 +920,7 @@ INSERT INTO settings_ui VALUES ('srv', '{
       },
       "fluidEditorLayout": true,
       "isFilterTagsDisplayed": false,
+      "showMapInFacet": false,
       "isUserRecordsOnly": false,
       "minUserProfileToCreateTemplate": ""
     },
