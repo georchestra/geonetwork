@@ -104,7 +104,6 @@
     <xsl:param name="uuid"/>
 
     <dct:references>
-      <!-- SIB addon-->
       <rdf:Description rdf:about="{$url}/srv/api/records/{$uuid}/formatters/xml">
         <dct:format>
           <dct:IMT>
@@ -116,8 +115,7 @@
     </dct:references>
 
     <dct:references>
-      <!-- SIB addon-->
-      <!-- <rdf:Description rdf:about="{$url}/srv/api/records/{$uuid}"> -->
+      <!-- geOrchestra change: use a 'nice' HTML view for the md description url-->
       <rdf:Description rdf:about="{$url}/srv/fre/catalog.search#/metadata/{$uuid}">
         <dct:format>
           <dct:IMT>
@@ -191,7 +189,7 @@
           </dcat:mediaType>
           </xsl:if>
 
-          <!-- SIB addon-->
+          <!-- geOrchestra addition: put the description of the attached file -> fills the 'Description des données' field in uData -->
           <xsl:if test="(gmd:description/gco:CharacterString)[1]!=''">
           <dct:description>
             <xsl:value-of select="(gmd:description/gco:CharacterString)[1]"/>
@@ -284,9 +282,7 @@
   -->
   <xsl:template match="gmd:MD_DataIdentification|*[contains(@gco:isoType, 'MD_DataIdentification')]"
                 mode="to-dcat">
-
-    <!-- SIB addon-->
-    <!-- <dcat:Dataset rdf:about="{$resourcePrefix}/datasets/{iso19139:getResourceCode(../../.)}"> -->
+    <!-- geOrchestra change: /datasets/ doesnt map to anything, use the same as rdf:Description -->
     <dcat:Dataset rdf:about="{$resourcePrefix}/{iso19139:getResourceCode(../../.)}">
       <xsl:call-template name="to-dcat"/>
     </dcat:Dataset>
@@ -304,7 +300,7 @@
     </dct:identifier>
     <!-- xpath: gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code -->
 
-    <!-- SIB addon-->
+    <!-- geOrchestra addition: provide an HTML record view for the 'Voir la source originale' link -->
     <dcat:landingPage>
       <xsl:value-of select="$url"/>/<xsl:value-of select="util:getNodeId()"/>/api/records/<xsl:value-of select="$uuid"/>
     </dcat:landingPage>
@@ -317,16 +313,6 @@
 
     <dct:abstract>
       <xsl:value-of select="gmd:abstract/gco:CharacterString"/>
-
-      <!-- SIB addon-->
-      <!-- Layout will be visible only in source mode in the browser. If not in source mode, newlines won't be displayed and the keywords will be shown inline -->
-      <xsl:text>&#xa;</xsl:text> <!-- linebreak -->
-      <!-- Keywords -->
-      <xsl:for-each-group select="//gmd:MD_Keywords[(gmd:thesaurusName)]/gmd:keyword"
-      group-by="gco:CharacterString|gmx:Anchor">
-        <xsl:text>&#xa;</xsl:text> <!-- linebreak -->
-        <xsl:value-of select="normalize-space(../gmd:thesaurusName/*/gmd:title)"/> : <xsl:value-of select="normalize-space(gco:CharacterString|gmx:Anchor)"/><xsl:text>.</xsl:text>
-      </xsl:for-each-group>
     </dct:abstract>
     <!-- xpath: gmd:identificationInfo/*/gmd:abstract/gco:CharacterString -->
 
@@ -455,7 +441,7 @@
     <!-- xpath: gmd:identificationInfo/*/gmd:language/gmd:LanguageCode/@codeListValue -->
 
 
-    <!-- dct:license content -->
+    <!-- dct:license content - geOrchestra addition -->
     <!-- "The license under which the dataset is published and can be reused." -->
     <xsl:for-each select="gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:useConstraints">
       <xsl:choose>
@@ -492,7 +478,6 @@
       </xsl:choose>
     </xsl:for-each>
     <!-- xpath: gmd:identificationInfo/*/gmd:resourceConstraints/??? -->
-
 
     <xsl:for-each select="../../gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine">
       <dcat:distribution rdf:resource="{iso19139:RecordUri($uuid)}#{encode-for-uri(gmd:CI_OnlineResource/gmd:protocol/*/text())}-{encode-for-uri(gmd:CI_OnlineResource/gmd:name/(gco:CharacterString|gmx:Anchor)/text())}"/>
@@ -569,7 +554,7 @@
   </xsl:template>
 
 
-  <!--
+  <!-- geOrchestra addition
     Process the otherContraints in LegalResources differently depending on the previous sibling. If gmd:useConstraints use dct:license, if gmd:accessConstraints use dct:accessRights
   -->
   <xsl:template name="legalOtherConstraints">
