@@ -465,9 +465,9 @@
     <xsl:for-each select="gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:accessConstraints">
       <xsl:choose>
         <xsl:when test="gmd:MD_RestrictionCode[@codeListValue!='otherRestrictions']">
-          <dct:license>
+          <dct:accessRights>
             <xsl:value-of select="@codeListValue"/>
-          </dct:license>
+          </dct:accessRights>
         </xsl:when>
         <xsl:otherwise>
             <xsl:call-template name="legalOtherConstraints">
