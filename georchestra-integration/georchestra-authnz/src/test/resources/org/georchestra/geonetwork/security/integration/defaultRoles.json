@@ -80,6 +80,16 @@
 			"testadmin"
 		]
 	},
+  {
+    "id": "2a6fb334-5b93-4b4b-9f48-f39b6a04376c",
+    "name": "IMPORT",
+    "description": "This role allows users to publish data with the importer application.",
+    "lastUpdated": "71fc44b07ffd0f98806894ac6d38e780e81c4c4c2831e896d63f8ac04d03f0a4",
+    "members": [
+      "testadmin",
+      "idatafeeder"
+    ]
+  },
 	{
 		"id": "ad243705-eeec-4d1c-aa28-abb631e23a65",
 		"name": "USER",
