@@ -71,6 +71,7 @@ All italic folder just have the `pom.xml` change.
       - `test/resources/metadata-iso19139-for-editing.xml`
       - `src/main/plugin/iso19115-3.2018/config/associated-panel/default.json` : Keep OGC API - Features placeholder
   - `src/main/plugin/iso19139/loc` : COG and 3Dtiles added in labels.xml files.
+  - `iso19139/layout/config-editor.xml`: xlinks for contacts reenabled
 - *schemas-test*
 - *sde*
 - services
