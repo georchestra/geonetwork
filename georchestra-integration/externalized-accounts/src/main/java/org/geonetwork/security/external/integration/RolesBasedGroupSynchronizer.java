@@ -71,7 +71,7 @@ public class RolesBasedGroupSynchronizer extends AbstractGroupSynchronizer {
      */
     public @Override List<CanonicalGroup> fetchCanonicalGroups() {
         List<CanonicalGroup> roles = canonicalAccounts.findAllRoles();
-        Stream<CanonicalGroup> matches = roles.stream().filter(this::notMatchesGeorchestraDefaultRoleNameFilter).filter(this::matchesRoleNameFilter);
+        Stream<CanonicalGroup> matches = roles.stream().filter(this::doesNotMatchesGeorchestraDefaultRoleNameFilter).filter(this::matchesRoleNameFilter);
         return matches.map(this::renameRoleUsingConfigPattern).collect(Collectors.toList());
     }
 
@@ -92,7 +92,7 @@ public class RolesBasedGroupSynchronizer extends AbstractGroupSynchronizer {
     }
 
     protected @Override List<CanonicalGroup> resolveGroupsOf(CanonicalUser user) {
-        Stream<String> roleNames = user.getRoles().stream().filter(this::notMatchesGeorchestraDefaultRoleNameFilter).filter(config::matchesRoleNameFilter);
+        Stream<String> roleNames = user.getRoles().stream().filter(this::doesNotMatchesGeorchestraDefaultRoleNameFilter).filter(config::matchesRoleNameFilter);
 
         Stream<CanonicalGroup> roleGroups = roleNames.map(role -> this.externalGroupLinks.findByName(role)//
                 .map(GroupLink::getCanonical)//
@@ -114,14 +114,14 @@ public class RolesBasedGroupSynchronizer extends AbstractGroupSynchronizer {
         return config.matchesRoleNameFilter(name);
     }
 
-    private boolean notMatchesGeorchestraDefaultRoleNameFilter(String roleName) {
+    private boolean doesNotMatchesGeorchestraDefaultRoleNameFilter(String roleName) {
         requireNonNull(roleName);
         return !georchestraDefaultRoleNames.contains(roleName);
     }
 
-    private boolean notMatchesGeorchestraDefaultRoleNameFilter(CanonicalGroup role) {
+    private boolean doesNotMatchesGeorchestraDefaultRoleNameFilter(CanonicalGroup role) {
         requireNonNull(role);
-        return notMatchesGeorchestraDefaultRoleNameFilter(role.getName());
+        return doesNotMatchesGeorchestraDefaultRoleNameFilter(role.getName());
     }
 
 }
