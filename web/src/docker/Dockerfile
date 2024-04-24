@@ -14,6 +14,9 @@ RUN chown jetty:jetty /docker-entrypoint.d
 RUN mkdir -p /mnt/geonetwork_datadir && \
     chown jetty:jetty /mnt/geonetwork_datadir
 
+# Removes extra javax.mail library provided by Jetty
+RUN rm -rf /usr/local/jetty/lib/mail
+
 # Restore jetty user
 USER jetty
 
