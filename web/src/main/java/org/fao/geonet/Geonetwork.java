@@ -53,6 +53,7 @@ import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.kernel.setting.Settings;
 import org.fao.geonet.kernel.thumbnail.ThumbnailMaker;
 import org.fao.geonet.languages.IsoLanguagesMapper;
+import org.fao.geonet.lib.DatabaseType;
 import org.fao.geonet.lib.DbLib;
 import org.fao.geonet.lib.Lib;
 import org.fao.geonet.repository.MetadataRepository;
@@ -82,10 +83,13 @@ import org.springframework.web.context.request.ServletWebRequest;
 import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -218,11 +222,12 @@ public class Geonetwork implements ApplicationHandler {
 
         Path schemaPluginsDir = dataDirectory.getSchemaPluginsDir();
         Path schemaCatalogueFile = dataDirectory.getConfigDir().resolve(Geonet.File.SCHEMA_PLUGINS_CATALOG);
+        Path schemaPublicationDir = dataDirectory.getSchemaPublicationDir();
         boolean createOrUpdateSchemaCatalog = handlerConfig.getMandatoryValue(Geonet.Config.SCHEMA_PLUGINS_CATALOG_UPDATE).equals("true");
         logger.info("			- Schema plugins directory: " + schemaPluginsDir);
         logger.info("			- Schema Catalog File     : " + schemaCatalogueFile);
         SchemaManager schemaMan = _applicationContext.getBean(SchemaManager.class);
-        schemaMan.configure(_applicationContext, appPath, dataDirectory.getResourcesDir(), schemaCatalogueFile,
+        schemaMan.configure(_applicationContext, appPath, dataDirectory.getResourcesDir(), schemaPublicationDir, schemaCatalogueFile,
             schemaPluginsDir, context.getLanguage(), handlerConfig.getMandatoryValue(Geonet.Config.PREFERRED_SCHEMA),
             createOrUpdateSchemaCatalog);
 
@@ -393,7 +398,7 @@ public class Geonetwork implements ApplicationHandler {
                         final MockHttpServletResponse response = new MockHttpServletResponse();
                         try {
                             formatService.exec("eng", FormatType.html.toString(), mdId.toString(), null, formatterName,
-                                Boolean.TRUE.toString(), false, FormatterWidth._100, new ServletWebRequest(servletRequest, response));
+                                Boolean.TRUE.toString(), FormatterWidth._100, new ServletWebRequest(servletRequest, response));
                         } catch (Throwable t) {
                             Log.info(Geonet.GEONETWORK, "Error while initializing the Formatter with id: " + formatterName, t);
                         }
@@ -419,14 +424,32 @@ public class Geonetwork implements ApplicationHandler {
 
                 // import data from init files
                 List<Pair<String, String>> importData = context.getBean("initial-data", List.class);
+                Set<String> applicationLanguages = (Set<String>) ApplicationContextHolder.get().getBean("languages");
+
                 final DbLib dbLib = new DbLib();
                 for (Pair<String, String> pair : importData) {
-                    final ServletContext servletContext = context.getServlet().getServletContext();
-                    final Path appPath = context.getAppPath();
-                    final Path filePath = IO.toPath(pair.one());
-                    final String filePrefix = pair.two();
-                    Log.warning(Geonet.DB, "Executing SQL from: " + filePath + " " + filePrefix);
-                    dbLib.insertData(servletContext, context, appPath, filePath, filePrefix);
+                    String folderPath = pair.one();
+                    String sqlFilePath = pair.two();
+                    Path appPath = context.getAppPath();
+                    ServletContext servletContext = context.getServlet().getServletContext();
+
+                    List<String> filePaths = new ArrayList<>();
+                    if (sqlFilePath.contains("{lang}")) {
+                        for (String lang : applicationLanguages) {
+                            filePaths.add(sqlFilePath.replace("{lang}", lang));
+                        }
+                    } else {
+                        filePaths.add(sqlFilePath);
+                    }
+
+                    for (String filePathStr : filePaths) {
+                        Log.debug(Geonet.DB, "Executing SQL from: " + folderPath + " " + filePathStr);
+                        try {
+                            dbLib.insertData(servletContext, context, appPath, Path.of(folderPath), filePathStr);
+                        } catch (IOException ioe) {
+                            Log.warning(Geonet.DB, "File not found during initialization. For language add required files if needed. " + ioe.getMessage());
+                        }
+                    }
                 }
                 String siteUuid = UUID.randomUUID().toString();
                 context.getBean(SettingManager.class).setSiteUuid(siteUuid);

@@ -37,7 +37,9 @@
   module.directive("gnMetadataOpen", [
     "gnMdViewObj",
     "gnMdView",
-    function (gnMdViewObj, gnMdView) {
+    "gnGlobalSettings",
+    "$filter",
+    function (gnMdViewObj, gnMdView, gnGlobalSettings, $filter) {
       return {
         restrict: "A",
         scope: {
@@ -65,8 +67,18 @@
 
             var hyperlinkTagName = "A";
             if (element.get(0).tagName === hyperlinkTagName) {
+              var url = scope.appUrl || window.location.pathname + window.location.search;
+
+              if (
+                gnGlobalSettings.gnCfg.mods.recordview.appUrl &&
+                gnGlobalSettings.gnCfg.mods.recordview.appUrl.indexOf("http") === 0
+              ) {
+                url = $filter("setUrlPlaceholder")(
+                  gnGlobalSettings.gnCfg.mods.recordview.appUrl
+                );
+              }
               var url =
-                (scope.appUrl || window.location.pathname + window.location.search) +
+                url +
                 "#/" +
                 (scope.md.draft == "y" ? "metadraf" : "metadata") +
                 "/" +
@@ -402,7 +414,7 @@
     "$filter",
     function ($http, $filter) {
       return {
-        templateUrl: "../../catalog/components/search/mdview/partials/" + "contact.html",
+        templateUrl: "../../catalog/components/search/mdview/partials/contact.html",
         restrict: "A",
         scope: {
           mdContacts: "=gnMetadataContacts",
@@ -549,6 +561,9 @@
           thesaurus: "=thesaurus"
         },
         link: function (scope, element, attrs) {
+          scope.thesaurus = angular.isArray(scope.thesaurus)
+            ? scope.thesaurus
+            : [scope.thesaurus];
           scope.allKeywords = scope.record && scope.record.allKeywords;
           scope.getOrderByConfig = function (thesaurus) {
             return thesaurus === "th_regions"
@@ -557,6 +572,59 @@
               ? "default"
               : "";
           };
+        }
+      };
+    }
+  ]);
+
+  module.directive("gnMetadataSocialLink", [
+    "gnUtilityService",
+    "$http",
+    function (gnUtilityService, $http) {
+      return {
+        templateUrl: "../../catalog/components/search/mdview/partials/social.html",
+        scope: {
+          md: "=gnMetadataSocialLink"
+        },
+        link: function (scope, element, attrs) {
+          scope.mdService = gnUtilityService;
+          scope.$watch(scope.md, function (newVal, oldVal) {
+            if (newVal !== null && newVal !== oldVal) {
+              $http
+                .get("../api/records/" + scope.md.getUuid() + "/permalink")
+                .then(function (r) {
+                  scope.socialMediaLink = r.data;
+                });
+            }
+          });
+        }
+      };
+    }
+  ]);
+
+  module.directive("gnQualityMeasuresTable", [
+    function () {
+      return {
+        templateUrl:
+          "../../catalog/components/search/mdview/partials/qualitymeasures.html",
+        scope: {
+          measures: "=gnQualityMeasuresTable"
+        },
+        link: function (scope, element, attrs) {
+          scope.columnVisibility = {
+            name: false,
+            description: false,
+            value: false,
+            type: false,
+            date: false
+          };
+          for (var idx in scope.measures) {
+            angular.forEach(Object.keys(scope.columnVisibility), function (p) {
+              if (scope.measures[idx][p]) {
+                scope.columnVisibility[p] = true;
+              }
+            });
+          }
         }
       };
     }

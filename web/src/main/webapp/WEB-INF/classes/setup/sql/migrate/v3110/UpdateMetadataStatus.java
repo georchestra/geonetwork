@@ -319,7 +319,7 @@ public class UpdateMetadataStatus extends DatabaseMigrationTask {
             connection.rollback();
             Log.error(Geonet.DB, "  Exception while dropping old primary key constraint on table " + MetadataStatus.TABLE_NAME + ". Restart application and check logs for database errors.  If errors exists then may need to manually drop the primary key for this table." +
                     "Error is: " + e.getMessage());
-            Log.debug(Geonet.DB, e, e);
+            Log.debug(Geonet.DB, "Full stack", e);
         }
 
         connection.commit();
@@ -331,7 +331,7 @@ public class UpdateMetadataStatus extends DatabaseMigrationTask {
             connection.rollback();
             Log.error(Geonet.DB, "  Exception while dropping old primary key on table " + MetadataStatus.TABLE_NAME + ". Restart application and check logs for database errors.  If errors exists then may need to manually drop the primary key for this table. " +
                     "Error is: " + e.getMessage());
-            Log.debug(Geonet.DB, e, e);
+            Log.debug(Geonet.DB, "Full stack", e);
         }
 
         connection.commit();
@@ -343,7 +343,7 @@ public class UpdateMetadataStatus extends DatabaseMigrationTask {
             connection.rollback();
             Log.error(Geonet.DB, "  Exception while adding primary key on " + MetadataStatus_.id.getName() + " column for " + MetadataStatus.TABLE_NAME + ". " +
                     "Error is: " + e.getMessage());
-            Log.debug(Geonet.DB, e, e);
+            Log.debug(Geonet.DB, "Full stack", e);
         }
 
         connection.commit();

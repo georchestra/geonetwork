@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2001-2016 Food and Agriculture Organization of the
+ * Copyright (C) 2018-2024 Food and Agriculture Organization of the
  * United Nations (FAO-UN), United Nations World Food Programme (WFP)
  * and United Nations Environment Programme (UNEP)
  *
@@ -26,12 +26,16 @@ package org.fao.geonet.api.es;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.collect.Sets;
+import com.jayway.jsonpath.DocumentContext;
+import com.jayway.jsonpath.JsonPath;
+import com.jayway.jsonpath.PathNotFoundException;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -55,8 +59,11 @@ import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.domain.*;
 import org.fao.geonet.index.es.EsRestClient;
 import org.fao.geonet.kernel.AccessManager;
+import org.fao.geonet.kernel.SchemaManager;
 import org.fao.geonet.kernel.SelectionManager;
 import org.fao.geonet.kernel.datamanager.IMetadataUtils;
+import org.fao.geonet.kernel.schema.MetadataSchema;
+import org.fao.geonet.kernel.schema.MetadataSchemaOperationFilter;
 import org.fao.geonet.kernel.search.EsFilterBuilder;
 import org.fao.geonet.repository.SourceRepository;
 import org.slf4j.Logger;
@@ -91,6 +98,11 @@ import java.util.zip.GZIPOutputStream;
 @Tag(name = "search",
     description = "Proxy for Elasticsearch catalog search operations")
 @Controller
+/**
+ * Proxy from GeoNetwork {@code /{portal}}/api} to Elasticsearch service.
+ *
+ * The portal and privileges are included the search provided by the user.
+ */
 public class EsHTTPProxy {
     public static final String[] _validContentTypes = {
         "application/json", "text/plain"
@@ -127,8 +139,19 @@ public class EsHTTPProxy {
     @Value("${es.password}")
     private String password;
 
+    @Value("${es.proxy.headers:content-type,content-encoding,transfer-encoding}")
+    private String[] proxyHeadersAllowedList;
+
+    /**
+     * Ignore list of headers handled by proxy implementation directly.
+     */
+    private String[] proxyHeadersIgnoreList =  {"Content-Length"};
+
     @Autowired
     private EsRestClient client;
+
+    @Autowired
+    private SchemaManager schemaManager;
 
     public EsHTTPProxy() {
     }
@@ -172,7 +195,7 @@ public class EsHTTPProxy {
             LOGGER.warn("Failed to load related types for {}. Error is: {}",
                 getSourceString(doc, Geonet.IndexFieldNames.UUID),
                 e.getMessage()
-                );
+            );
         }
         doc.putPOJO("related", related);
     }
@@ -265,8 +288,8 @@ public class EsHTTPProxy {
 
 
     @io.swagger.v3.oas.annotations.Operation(
-        summary = "Search endpoint",
-        description = "See https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html for search parameters details.")
+        summary = "Execute a search query and get back search hits that match the query.",
+        description = "The search API execute a search query with a JSON request body. For more information see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-search.html for search parameters, and https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html JSON Query DSL.")
     @RequestMapping(value = "/search/records/_search",
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE,
@@ -279,16 +302,16 @@ public class EsHTTPProxy {
     @ResponseBody
     public void search(
         @RequestParam(defaultValue = SelectionManager.SELECTION_METADATA)
-            String bucket,
+        String bucket,
         @Parameter(description = "Type of related resource. If none, no associated resource returned.",
             required = false
         )
         @RequestParam(name = "relatedType", defaultValue = "")
-            RelatedItemType[] relatedTypes,
+        RelatedItemType[] relatedTypes,
         @Parameter(hidden = true)
-            HttpSession httpSession,
+        HttpSession httpSession,
         @Parameter(hidden = true)
-            HttpServletRequest request,
+        HttpServletRequest request,
         @Parameter(hidden = true)
         HttpServletResponse response,
         @RequestBody
@@ -303,8 +326,8 @@ public class EsHTTPProxy {
 
 
     @io.swagger.v3.oas.annotations.Operation(
-        summary = "Search endpoint",
-        description = "See https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html for search parameters details.")
+        summary = "Executes several searches with a Elasticsearch API request.",
+        description = "The multi search API executes several searches from a single API request. See https://www.elastic.co/guide/en/elasticsearch/reference/current/search-multi-search.html for search parameters, and https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html Query DSL.")
     @RequestMapping(value = "/search/records/_msearch",
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE,
@@ -317,16 +340,16 @@ public class EsHTTPProxy {
     @ResponseBody
     public void msearch(
         @RequestParam(defaultValue = SelectionManager.SELECTION_METADATA)
-            String bucket,
+        String bucket,
         @Parameter(description = "Type of related resource. If none, no associated resource returned.",
             required = false
         )
         @RequestParam(name = "relatedType", defaultValue = "")
-            RelatedItemType[] relatedTypes,
+        RelatedItemType[] relatedTypes,
         @Parameter(hidden = true)
-            HttpSession httpSession,
+        HttpSession httpSession,
         @Parameter(hidden = true)
-            HttpServletRequest request,
+        HttpServletRequest request,
         @Parameter(hidden = true)
         HttpServletResponse response,
         @RequestBody
@@ -361,13 +384,13 @@ public class EsHTTPProxy {
     @ResponseBody
     public void call(
         @RequestParam(defaultValue = SelectionManager.SELECTION_METADATA)
-            String bucket,
+        String bucket,
         @Parameter(description = "'_search' for search service.")
         @PathVariable String endPoint,
         @Parameter(hidden = true)
-            HttpSession httpSession,
+        HttpSession httpSession,
         @Parameter(hidden = true)
-            HttpServletRequest request,
+        HttpServletRequest request,
         @Parameter(hidden = true)
         HttpServletResponse response,
         @RequestBody
@@ -440,6 +463,7 @@ public class EsHTTPProxy {
      */
     private void addRequiredField(ArrayNode source) {
         source.add("op*");
+        source.add(Geonet.IndexFieldNames.SCHEMA);
         source.add(Geonet.IndexFieldNames.GROUP_OWNER);
         source.add(Geonet.IndexFieldNames.OWNER);
         source.add(Geonet.IndexFieldNames.ID);
@@ -451,8 +475,10 @@ public class EsHTTPProxy {
 
         // Build filter node
         String esFilter = buildQueryFilter(context,
-                                            "",
-                                            esQuery.toString().contains("\"draft\":"));
+            "",
+            esQuery.toString().contains("\"draft\":")
+                || esQuery.toString().contains("+draft:")
+                || esQuery.toString().contains("-draft:"));
         JsonNode nodeFilter = objectMapper.readTree(esFilter);
 
         JsonNode queryNode = esQuery.get("query");
@@ -586,7 +612,7 @@ public class EsHTTPProxy {
                 }
 
                 // copy headers from the remote server's response to the response to send to the client
-                copyHeadersFromConnectionToResponse(response, connectionWithFinalHost, "Content-Length");
+                copyHeadersFromConnectionToResponse(response, connectionWithFinalHost, proxyHeadersIgnoreList);
 
                 if (!contentType.split(";")[0].equals("application/json")) {
                     addPermissions = false;
@@ -660,13 +686,20 @@ public class EsHTTPProxy {
                     addRelatedTypes(doc, relatedTypes, context);
                 }
 
-                // Remove fields with privileges info
                 if (doc.has("_source")) {
                     ObjectNode sourceNode = (ObjectNode) doc.get("_source");
 
+                    String metadataSchema = doc.get("_source").get("documentStandard").asText();
+                    MetadataSchema mds = schemaManager.getSchema(metadataSchema);
+
+                    // Apply metadata schema filters to remove non-allowed fields
+                    processMetadataSchemaFilters(context, mds, doc);
+
+                    // Remove fields with privileges info
                     for (ReservedOperation o : ReservedOperation.values()) {
                         sourceNode.remove("op" + o.getId());
                     }
+
                 }
             });
         } else {
@@ -726,44 +759,35 @@ public class EsHTTPProxy {
     private void copyHeadersFromConnectionToResponse(HttpServletResponse response, HttpURLConnection uc, String... ignoreList) {
         Map<String, List<String>> map = uc.getHeaderFields();
         for (String headerName : map.keySet()) {
-
-            if (!isInIgnoreList(headerName, ignoreList)) {
-
-                // concatenate all values from the header
-                List<String> valuesList = map.get(headerName);
-                StringBuilder sBuilder = new StringBuilder();
-                valuesList.forEach(sBuilder::append);
-
-                // add header to HttpServletResponse object
-                if (headerName != null) {
-                    if ("Transfer-Encoding".equalsIgnoreCase(headerName) && "chunked".equalsIgnoreCase(sBuilder.toString())) {
-                        // do not write this header because Tomcat already assembled the chunks itself
-                        continue;
-                    }
-                    response.addHeader(headerName, sBuilder.toString());
-                }
+            if (headerName == null) {
+                continue;
             }
+            if (Arrays.stream(ignoreList).anyMatch(headerName::equalsIgnoreCase)) {
+                // Ignore list reflects headers that are handled by ESHTTPProxy directly
+                continue;
+            }
+            if (Arrays.stream(proxyHeadersAllowedList).noneMatch(headerName::equalsIgnoreCase)) {
+                // Allow list is provided as a configuration option and may need to be adjusted
+                // as Elasticsearch API changes over time.
+                continue;
+            }
+            // concatenate all values from the header
+            List<String> valuesList = map.get(headerName);
+            StringBuilder sBuilder = new StringBuilder();
+            valuesList.forEach(sBuilder::append);
+
+            if ("Transfer-Encoding".equalsIgnoreCase(headerName) && "chunked".equalsIgnoreCase(sBuilder.toString())) {
+                // do not write this header + value because Tomcat already assembled the chunks itself
+                continue;
+            }
+            // add header to HttpServletResponse object
+            response.addHeader(headerName, sBuilder.toString());
         }
     }
 
     /**
-     * Helper function to detect if a specific header is in a given ignore list
-     *
-     * @return true: in, false: not in
-     */
-    private boolean isInIgnoreList(String headerName, String[] ignoreList) {
-        if (headerName == null) return false;
-
-        for (String headerToIgnore : ignoreList) {
-            if (headerName.equalsIgnoreCase(headerToIgnore))
-                return true;
-        }
-        return false;
-    }
-
-    /**
-     * Copy client's headers in the request to send to the final host
-     * Trick the host by hiding the proxy indirection and keep useful headers information
+     * Copy client's headers in the request to send to the final host.
+     * Trick the host by hiding the proxy indirection and keep useful headers information.
      *
      * @param uc Contains now headers from client request except Host
      */
@@ -799,4 +823,100 @@ public class EsHTTPProxy {
         return false;
     }
 
+
+    /**
+     * Process the metadata schema filters to filter out from the Elasticsearch response
+     * the elements defined in the metadata schema filters.
+     *
+     * It uses a jsonpath to filter the elements, typically is configured with the following jsonpath, to
+     * filter the ES object elements with an attribute nilReason = 'withheld'.
+     *
+     *  $.*[?(@.nilReason == 'withheld')]
+     *
+     * The metadata index process, has to define this attribute. Any element that requires to be filtered, should be
+     * defined as an object in Elasticsearch.
+     *
+     * Example for contacts:
+     *
+     *  <xsl:template mode="index-contact" match="*[cit:CI_Responsibility]">
+     *      ...
+     *      <!-- Check if the contact has an attribute @gco:nilReason = 'withheld', added by update-fixed-info.xsl process -->
+     *      <xsl:variable name="hasWithheld" select="@gco:nilReason = 'withheld'" as="xs:boolean" />
+     *
+     *      <xsl:element name="contact{$fieldSuffix}">
+     *        <xsl:attribute name="type" select="'object'"/>{
+     *        ...
+     *        "address":"<xsl:value-of select="util:escapeForJson($address)"/>"
+     *        <xsl:if test="$hasWithheld">
+     *         ,"nilReason": "withheld"
+     *        </xsl:if>
+     *
+     * @param mds
+     * @param doc
+     * @throws JsonProcessingException
+     */
+    private void processMetadataSchemaFilters(ServiceContext context, MetadataSchema mds, ObjectNode doc) throws JsonProcessingException {
+        if (!doc.has("_source")) {
+            return;
+        }
+
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode sourceNode = (ObjectNode) doc.get("_source");
+
+        MetadataSchemaOperationFilter authenticatedFilter = mds.getOperationFilter("authenticated");
+
+        List<String> jsonpathFilters = new ArrayList<>();
+
+        if (authenticatedFilter != null && !context.getUserSession().isAuthenticated()) {
+            jsonpathFilters.add(authenticatedFilter.getJsonpath());
+        }
+
+        MetadataSchemaOperationFilter editFilter = mds.getOperationFilter(ReservedOperation.editing);
+
+        if (editFilter != null) {
+            boolean canEdit = doc.get("edit").asBoolean();
+
+            if (!canEdit) {
+                jsonpathFilters.add(editFilter.getJsonpath());
+            }
+        }
+
+        MetadataSchemaOperationFilter downloadFilter = mds.getOperationFilter(ReservedOperation.download);
+        if (downloadFilter != null) {
+            boolean canDownload = doc.get("download").asBoolean();
+
+            if (!canDownload) {
+                jsonpathFilters.add(downloadFilter.getJsonpath());
+            }
+        }
+
+        MetadataSchemaOperationFilter dynamicFilter = mds.getOperationFilter(ReservedOperation.dynamic);
+        if (dynamicFilter != null) {
+            boolean canDynamic = doc.get("dynamic").asBoolean();
+
+            if (!canDynamic) {
+                jsonpathFilters.add(dynamicFilter.getJsonpath());
+            }
+        }
+
+        JsonNode actualObj = filterResponseElements(mapper, sourceNode, jsonpathFilters);
+        if (actualObj != null) {
+            doc.set("_source", actualObj);
+        }
+    }
+    private JsonNode filterResponseElements(ObjectMapper mapper, ObjectNode sourceNode, List<String> jsonPathFilters) throws JsonProcessingException {
+        DocumentContext jsonContext = JsonPath.parse(sourceNode.toPrettyString());
+
+        for(String jsonPath : jsonPathFilters) {
+            if (StringUtils.isNotBlank(jsonPath)) {
+                try {
+                    jsonContext = jsonContext.delete(jsonPath);
+                } catch (PathNotFoundException ex) {
+                    // The node to remove is not returned in the response, ignore the error
+                }
+            }
+        }
+
+        return mapper.readTree(jsonContext.jsonString());
+    }
 }

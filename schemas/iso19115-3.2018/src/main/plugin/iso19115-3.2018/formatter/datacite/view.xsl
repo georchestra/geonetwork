@@ -73,7 +73,7 @@
                 xmlns:gcx="http://standards.iso.org/iso/19115/-3/gcx/1.0"
                 xmlns:gex="http://standards.iso.org/iso/19115/-3/gex/1.0"
                 xmlns:lan="http://standards.iso.org/iso/19115/-3/lan/1.0"
-                xmlns:srv="http://standards.iso.org/iso/19115/-3/srv/2.1"
+                xmlns:srv="http://standards.iso.org/iso/19115/-3/srv/2.0"
                 xmlns:mac="http://standards.iso.org/iso/19115/-3/mac/2.0"
                 xmlns:mas="http://standards.iso.org/iso/19115/-3/mas/1.0"
                 xmlns:mcc="http://standards.iso.org/iso/19115/-3/mcc/1.0"
@@ -158,9 +158,34 @@
       <!-- Return existing one -->
       <xsl:choose>
         <xsl:when test="$doiId = ''">
+          <!-- DOI can be located in different places depending on user practice.
+          At least we know three:
+          * metadata linkage (only in ISO19115-3)
+          * citation identifier
+          * onlineSrc
+          -->
           <xsl:variable name="doiFromMetadataLinkage"
-                        select="normalize-space(ancestor::mdb:MD_Metadata/mdb:metadataLinkage/*/cit:linkage/gco:CharacterString[starts-with(., $defaultDoiPrefix) or ../../cit:function/*/@codeListValue = 'doi'])"/>
-          <xsl:value-of select="$doiFromMetadataLinkage"/>
+                        select="normalize-space(ancestor::mdb:MD_Metadata/mdb:metadataLinkage/*/cit:linkage/gco:CharacterString[
+                                        starts-with(., $defaultDoiPrefix)])"/>
+          <xsl:if test="$doiFromMetadataLinkage != ''">
+            <xsl:value-of select="$doiFromMetadataLinkage"/>
+          </xsl:if>
+
+          <xsl:variable name="doiFromIdentifier"
+                        select="normalize-space(ancestor::mdb:MD_Metadata/mdb:identificationInfo/*/mri:citation/*/
+                                        cit:identifier/*/mcc:code[
+                                          starts-with(*/text(), $defaultDoiPrefix)
+                                          or starts-with(*/@xlink:href, $defaultDoiPrefix)])"/>
+          <xsl:if test="$doiFromMetadataLinkage = '' and $doiFromIdentifier != ''">
+            <xsl:value-of select="$doiFromIdentifier[1]"/>
+          </xsl:if>
+
+          <xsl:variable name="doiFromOnlineSrc"
+                        select="normalize-space(ancestor::mdb:MD_Metadata/mdb:distributionInfo//mrd:onLine/*[
+                                        matches(cit:protocol/gco:CharacterString, $doiProtocolRegex)]/cit:linkage/gco:CharacterString)"/>
+          <xsl:if test="$doiFromMetadataLinkage = '' and $doiFromIdentifier = '' and $doiFromOnlineSrc != ''">
+            <xsl:value-of select="$doiFromOnlineSrc"/>
+          </xsl:if>
         </xsl:when>
         <xsl:otherwise>
           <!-- Build a new one -->

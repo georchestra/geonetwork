@@ -69,18 +69,27 @@
                                     else true()"/>
                 <xsl:if test="not($isLogoInHeader) or $isShowGNName">
                   <xsl:variable name="appUrl"
-                                select="if(util:getUiConfigurationJsonProperty(/root/request/ui, 'mods.home.appUrl'))
+                                select="if(output != 'pdf' and util:getUiConfigurationJsonProperty(/root/request/ui, 'mods.home.appUrl'))
                                     then geonet:updateUrlPlaceholder(util:getUiConfigurationJsonProperty(/root/request/ui, 'mods.home.appUrl'), /root/gui/nodeId, $lang)
                                     else /root/gui/nodeUrl"/>
                   <li>
                     <a href="{$appUrl}">
                       <xsl:if test="not($isLogoInHeader)">
-                        <img class="gn-logo"
-                             alt="{$i18n/siteLogo}"
-                             src="{/root/gui/nodeUrl}../images/logos/{$env//system/site/siteId}.png"/>
-                      </xsl:if>
-                      <xsl:if test="$isShowGNName">
-                        <xsl:value-of select="$env//system/site/name"/>
+                        <xsl:choose>
+                          <xsl:when test="$output = 'pdf' and $env//metadata/pdfReport/headerLogoFileName != ''">
+                            <img class="gn-logo"
+                                 alt="{$i18n/siteLogo}"
+                                 src="{/root/gui/nodeUrl}../images/harvesting/{$env//metadata/pdfReport/headerLogoFileName}"/>
+                          </xsl:when>
+                          <xsl:otherwise>
+                            <img class="gn-logo"
+                                 alt="{$i18n/siteLogo}"
+                                 src="{/root/gui/nodeUrl}../images/logos/{$env//system/site/siteId}.png"/>
+                            <xsl:if test="$isShowGNName">
+                              <xsl:value-of select="$env//system/site/name"/>
+                            </xsl:if>
+                          </xsl:otherwise>
+                        </xsl:choose>
                       </xsl:if>
                     </a>
                   </li>

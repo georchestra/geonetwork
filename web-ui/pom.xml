@@ -30,7 +30,7 @@
   <parent>
     <groupId>org.geonetwork-opensource</groupId>
     <artifactId>geonetwork</artifactId>
-    <version>4.2.8-georchestra</version>
+    <version>4.4.5-0</version>
   </parent>
 
   <groupId>org.geonetwork-opensource</groupId>
@@ -47,14 +47,6 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-
-  <dependencies>
-    <dependency>
-      <groupId>org.codehaus.mojo</groupId>
-      <artifactId>jslint-maven-plugin</artifactId>
-      <version>1.0.1</version>
-    </dependency>
-  </dependencies>
 
   <build>
     <resources>
