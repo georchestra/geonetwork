@@ -19,7 +19,7 @@ A more detailed guide is available in [upgrade_geonetwork.md](upgrade_geonetwork
 
 ### Georchestra 4.2.7 and Gn 4.2.7
 
-All versions in `pom.xml` files must be updated. E.g. for this version `4.2.7-georchestra`.
+All versions in `pom.xml` files must be updated. E.g. for this version `4.4.5-georchestra`.
 All italic folder just have the `pom.xml` change.
 
 - .github
@@ -58,12 +58,6 @@ All italic folder just have the `pom.xml` change.
 - *oaipmh*
 - *release*
 - schemas
-  - `src/main/plugin/iso19115-3.2018`
-    - COG and 3Dtiles added. Differences in files:
-      - ...`config/associated-panel/default.json`
-      - ...`loc/eng/labels.xml`
-      - ...`loc/fre/labels.xml`
-  - `src/main/plugin/iso19139/loc` : COG and 3Dtiles added in labels.xml files.
   - `iso19139/layout/config-editor.xml`: xlinks for contacts reenabled
 - *schemas-test*
 - *sde*
@@ -95,16 +89,13 @@ All italic folder just have the `pom.xml` change.
   - `pom.xml`: Keep exclusion of groovy package to avoid two versions of it.
 - web-ui
   - `pom.xml`: version to update **and to add to gn-web-ui**
-  - `RelatedResourcesService.js`: Add 3DTiles
-  - `CatController.js`: Menu bar accessible and 3DTiles
-  - `menu-signin.html`: remove the `authenticated` from the `ng-if` in firstul tag.
+  - `CatController.js`: Menu bar accessible
+  - `menu-signin.html`: remove the `authenticated` from the `ng-if` in first ul tag.
   - `src/main/resources/catalog/locales/`
-    - Add OGC API - Features to i18n files
     - Get `en-georchestra.json` and `fr-georchestra.json` from georchestra
   - `src/main/resources/catalog/style/gn-less`: remove position fixed from `.gn-top-bar` to get gn header after georchestra's header.
   - `gn_admin_default.less`: Same (header position)
   - `gn_navbar_default.less`: Same (header position)
-  - `src/main/resources/catalog/views/module.js`: Add 3DTiles
   - `src/main/resources/catalog/views/georchestra/`: Get files from georchestra
 - *workers*
 - *wro4j*
