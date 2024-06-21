@@ -38,6 +38,7 @@ import org.fao.geonet.domain.Profile;
 import org.fao.geonet.repository.GroupRepository;
 import org.fao.geonet.repository.LanguageRepository;
 import org.geonetwork.security.external.configuration.ExternalizedSecurityProperties;
+import org.geonetwork.security.external.configuration.ProfileMappingProperties;
 import org.geonetwork.security.external.model.CanonicalGroup;
 import org.geonetwork.security.external.model.CanonicalUser;
 import org.geonetwork.security.external.model.GroupLink;
@@ -50,6 +51,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import com.google.common.collect.Sets;
+import org.springframework.lang.NonNull;
 
 abstract class AbstractGroupSynchronizer implements GroupSynchronizer {
     static final Logger log = LoggerFactory.getLogger(AbstractGroupSynchronizer.class.getPackage().getName());
@@ -185,7 +187,9 @@ abstract class AbstractGroupSynchronizer implements GroupSynchronizer {
         return configProperties.getProfiles().resolveHighestProfileFromRoleNames(user.getRoles());
     }
 
-    protected abstract Privilege resolvePrivilegeFor(CanonicalUser user, Group group);
+    private Privilege resolvePrivilegeFor(CanonicalUser user, Group group) {
+        return new Privilege(group, resolveUserProfile(user.getRoles()));
+    }
 
     private Map<String, GroupLink> getExistingGroupLinksById() {
         return toIdMap(this.externalGroupLinks.findAll(), g -> g.getCanonical().getId());
@@ -221,6 +225,11 @@ abstract class AbstractGroupSynchronizer implements GroupSynchronizer {
     private <T> Map<String, T> toIdMap(List<T> list, Function<T, String> idExtractor) {
         final Map<String, T> actual = list.stream().collect(Collectors.toMap(idExtractor, Function.identity()));
         return actual;
+    }
+
+    private Profile resolveUserProfile(@NonNull List<String> roles) {
+        ProfileMappingProperties profileMappings = configProperties.getProfiles();
+        return profileMappings.resolveHighestProfileFromRoleNames(roles);
     }
 
 }
