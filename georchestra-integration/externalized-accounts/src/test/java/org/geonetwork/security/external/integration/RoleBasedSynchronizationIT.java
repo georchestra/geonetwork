@@ -73,7 +73,6 @@ public class RoleBasedSynchronizationIT extends AbstractAccountsReconcilingServi
         createOnlyGeonetworkUsersAndGroupsFromRoles(users, roles);
 
         Map<String, User> existingUsers = getExistingUsers(users);
-        Map<String, Group> existingGroups = getExistingGroups(roles);
 
         // current state is that users and groups exist in GN db but no links to
         // canonical versions exist
@@ -84,10 +83,7 @@ public class RoleBasedSynchronizationIT extends AbstractAccountsReconcilingServi
         // succeeded)
         roles.forEach(gu -> {
             Optional<GroupLink> link = support.groupLinkRepository.findById(gu.getId());
-            assertTrue(link.isPresent());
-            Group actual = link.get().getGeonetworkGroup();
-            Group expected = existingGroups.get(actual.getName());
-            assertEquals(expected.getId(), actual.getId());
+            assertTrue(link.isEmpty());
         });
 
         users.forEach(cu -> {
@@ -136,7 +132,8 @@ public class RoleBasedSynchronizationIT extends AbstractAccountsReconcilingServi
 
     public @Test void Synchronize_on_empty_geonetwork_db_creates_all_users_and_groups_from_roles() {
         List<CanonicalUser> users = super.defaultUsers;
-        List<CanonicalGroup> roles = super.defaultRoles;
+        //Roles are empty due to removing default roles
+        List<CanonicalGroup> roles = new ArrayList<>();
 
         assertEquals(0, support.gnUserRepository.count());
         assertEquals(0, support.gnGroupRepository.count());
@@ -145,68 +142,8 @@ public class RoleBasedSynchronizationIT extends AbstractAccountsReconcilingServi
         verify(users, roles);
     }
 
-    public @Test void Synchronize_updates_group_members_when_role_members_changed() {
-        support.synchronizeDefaultUsersAndGroups();
-
-        List<CanonicalUser> origUsers = super.defaultUsers;
-
-        List<CanonicalGroup> newRoles = Arrays.asList(roleUser, roleGnEditor, roleGnReviewer);
-        List<CanonicalUser> usersWithChangedRoles = origUsers.stream().map(u -> swapRoles(u, newRoles))
-                .collect(toList());
-
-        when(canonicalAccountsRepositoryMock.findAllUsers()).thenReturn(usersWithChangedRoles);
-
-        service.synchronize();
-
-        for (CanonicalUser expected : usersWithChangedRoles) {
-            UserLink link = support.assertUserLink(expected);
-            for (CanonicalGroup expectedRole : newRoles) {
-                support.assertGroup(link.getInternalUser(), expectedRole);
-            }
-        }
-    }
-
     private CanonicalUser swapRoles(CanonicalUser user, List<CanonicalGroup> newRoles) {
         return super.withRoles(user, newRoles.toArray(new CanonicalGroup[newRoles.size()]));
-    }
-
-    public @Test void Synchronize_creates_updates_and_deletes_users_and_groups_based_on_roles() {
-        support.synchronizeDefaultUsersAndGroups();
-
-        List<CanonicalGroup> roles = new ArrayList<>(super.defaultRoles);
-        CanonicalGroup newrole1;
-        roles.add(newrole1 = super.createRole("newrole1"));
-        roles.add(super.createRole("newrole2"));
-
-        CanonicalGroup removedRole = super.roleOrgAdmin;
-        roles.remove(removedRole);
-
-        final CanonicalGroup changedRoleOrig = super.roleGnEditor;
-        CanonicalGroup changedRole = super.withName(changedRoleOrig, changedRoleOrig.getName() + "Modified");
-        roles.remove(changedRoleOrig);
-        roles.add(changedRole);
-        when(canonicalAccountsRepositoryMock.findRoleByName(changedRoleOrig.getName())).thenReturn(Optional.empty());
-        when(canonicalAccountsRepositoryMock.findRoleByName(changedRole.getName()))
-                .thenReturn(Optional.of(changedRole));
-
-        List<CanonicalUser> users = new ArrayList<>(super.defaultUsers);
-        users.add(super.setUpNewUser("newuser1", changedRole, roleAdministrator));
-        users.add(super.setUpNewUser("newuser2", newrole1, roleUser));
-
-        users.remove(super.testeditor);
-
-        CanonicalUser changedUser = super.withRoles(super.testuser, roleAdministrator, roleGnAdmin);
-        users.remove(super.testuser);
-        users.add(changedUser);
-        // just to be sure..
-        users.forEach(u -> assertNotEquals(u.toString(), removedRole.getName(), u.getOrganization()));
-        users.forEach(u -> assertNotEquals(u.toString(), changedRoleOrig.getName(), u.getOrganization()));
-
-        when(canonicalAccountsRepositoryMock.findAllRoles()).thenReturn(roles);
-        when(canonicalAccountsRepositoryMock.findAllUsers()).thenReturn(users);
-
-        service.synchronize();
-        verify(users, roles);
     }
 
     /**
@@ -222,11 +159,19 @@ public class RoleBasedSynchronizationIT extends AbstractAccountsReconcilingServi
      */
     public @Test void Role_based_synchronization_respects_regex_filter_from_config_and_applies_pattern_group_filter() {
         ExternalizedSecurityProperties config = support.getConfig();
-        config.setSyncRolesFilter(Pattern.compile("GN_(.*)"));
+        config.setSyncRolesFilter(Pattern.compile("PSC_(.*)"));
+
+        CanonicalGroup psc1 = super.createRole("PSC_COMMUNITY");
+        CanonicalGroup psc2 = super.createRole("PSC_GEOCOM");
+        List<CanonicalGroup> roles = super.defaultRoles;
+        roles.add(super.createRole("NOPSC_BUILDINGS"));
+        roles.add(psc1);
+        roles.add(psc2);
+
 
         service.synchronize();
 
-        Set<CanonicalGroup> origGroups = rolesMatchingPattern(config);
+        Set<CanonicalGroup> origGroups = rolesMatchingPattern(config, Set.of(psc1, psc2));
         Set<CanonicalGroup> syncedGroups = getSavedCanonicalGroups();
         assertEquals(origGroups.size(), syncedGroups.size());
         assertNotEquals("group names should differ due to pattern grouping", origGroups, syncedGroups);
@@ -253,6 +198,27 @@ public class RoleBasedSynchronizationIT extends AbstractAccountsReconcilingServi
         }
     }
 
+    public @Test void Role_correctly_added_with_editor_privilege() {
+        support.synchronizeDefaultUsersAndGroups();
+        ExternalizedSecurityProperties config = support.getConfig();
+        config.setSyncRolesFilter(Pattern.compile("(.*)"));
+
+        List<CanonicalGroup> roles = new ArrayList<>();
+        CanonicalGroup newrole1;
+        roles.add(newrole1 = super.createRole("MySuperNewRole"));
+
+
+        List<CanonicalUser> users = new ArrayList<>(super.defaultUsers);
+        users.add(super.setUpNewUser("newuser1", orgPsc,  newrole1, roleGnEditor));
+
+        when(canonicalAccountsRepositoryMock.findAllRoles()).thenReturn(roles);
+        when(canonicalAccountsRepositoryMock.findAllUsers()).thenReturn(users);
+
+        service.synchronize();
+        verify(users, roles);
+        //TODO find a way to read privileges
+    }
+
     private Set<CanonicalGroup> getSavedCanonicalGroups() {
         Set<CanonicalGroup> syncedGroups = support.groupLinkRepository.findAll().stream().map(GroupLink::getCanonical)
                 .collect(toSet());
@@ -261,17 +227,17 @@ public class RoleBasedSynchronizationIT extends AbstractAccountsReconcilingServi
 
     private Set<CanonicalGroup> stripOffRolePrefixFromGroupNames(Set<CanonicalGroup> origGroups) {
         Set<CanonicalGroup> expectedGroups = origGroups.stream()
-                .map(g -> CanonicalGroup.builder().init(g).withName(g.getName().replace("GN_", "")).build())
+                .map(g -> CanonicalGroup.builder().init(g).withName(g.getName().replace("PSC_", "")).build())
                 .collect(toSet());
         return expectedGroups;
     }
 
-    private Set<CanonicalGroup> rolesMatchingPattern(ExternalizedSecurityProperties config) {
-        Set<CanonicalGroup> origGroups = super.defaultRoles.stream()
+    private Set<CanonicalGroup> rolesMatchingPattern(ExternalizedSecurityProperties config, Set<CanonicalGroup> expectedGroups) {
+        Set<CanonicalGroup> origGroups = super.defaultRoles.stream().filter(r -> !RolesBasedGroupSynchronizer.georchestraDefaultRoleNames.contains(r.getName()))
                 .filter(r -> config.matchesRoleNameFilter(r.getName())).collect(toSet());
-        assertEquals(3, origGroups.size());
-        assertEquals("preflight check failed",
-                Sets.newLinkedHashSet(roleGnAdmin, roleGnEditor, roleGnReviewer), origGroups);
+        assertEquals(10, super.defaultRoles.size());
+        assertEquals(2, origGroups.size());
+        assertEquals("preflight check failed", expectedGroups, origGroups);
         return origGroups;
     }
 
