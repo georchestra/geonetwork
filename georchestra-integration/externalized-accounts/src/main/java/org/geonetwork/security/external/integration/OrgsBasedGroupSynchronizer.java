@@ -67,14 +67,6 @@ class OrgsBasedGroupSynchronizer extends AbstractGroupSynchronizer {
                 "Organization with name '" + orgName + "' not found in internal nor external repository");
     }
 
-    protected @Override Privilege resolvePrivilegeFor(CanonicalUser user, Group groupFromOrganization) {
-        Profile profile = resolveUserProfile(user.getRoles());
-        return new Privilege(groupFromOrganization, profile);
-    }
 
-    private Profile resolveUserProfile(@NonNull List<String> roles) {
-        ProfileMappingProperties profileMappings = configProperties.getProfiles();
-        return profileMappings.resolveHighestProfileFromRoleNames(roles);
-    }
-    
+
 }
