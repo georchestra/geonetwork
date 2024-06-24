@@ -18,10 +18,8 @@
  */
 package org.geonetwork.security.external.integration;
 
-import static java.util.Objects.requireNonNull;
-
-import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,10 +27,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import org.fao.geonet.domain.Group;
-import org.fao.geonet.domain.Profile;
 import org.geonetwork.security.external.configuration.ExternalizedSecurityProperties;
-import org.geonetwork.security.external.configuration.ProfileMappingProperties;
 import org.geonetwork.security.external.model.CanonicalGroup;
 import org.geonetwork.security.external.model.CanonicalUser;
 import org.geonetwork.security.external.model.GroupLink;
@@ -42,9 +37,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import static java.util.Objects.*;
+
 public class RolesBasedGroupSynchronizer extends AbstractGroupSynchronizer {
 
     public static final Logger log = LoggerFactory.getLogger(RolesBasedGroupSynchronizer.class.getPackage().getName());
+
+    static final Set<String> georchestraDefaultRoleNames = Set.of("SUPERUSER","ORGADMIN","MAPSTORE_ADMIN","REFERENT","EMAILPROXY",
+        "ADMINISTRATOR", "IMPORT", "USER", "GN_EDITOR", "GN_REVIEWER", "GN_ADMIN");
 
     @Autowired
     public ExternalizedSecurityProperties config;
@@ -71,7 +71,7 @@ public class RolesBasedGroupSynchronizer extends AbstractGroupSynchronizer {
      */
     public @Override List<CanonicalGroup> fetchCanonicalGroups() {
         List<CanonicalGroup> roles = canonicalAccounts.findAllRoles();
-        Stream<CanonicalGroup> matches = roles.stream().filter(this::matchesRoleNameFilter);
+        Stream<CanonicalGroup> matches = roles.stream().filter(this::doesNotMatchesGeorchestraDefaultRoleNameFilter).filter(this::matchesRoleNameFilter);
         return matches.map(this::renameRoleUsingConfigPattern).collect(Collectors.toList());
     }
 
@@ -92,7 +92,7 @@ public class RolesBasedGroupSynchronizer extends AbstractGroupSynchronizer {
     }
 
     protected @Override List<CanonicalGroup> resolveGroupsOf(CanonicalUser user) {
-        Stream<String> roleNames = user.getRoles().stream().filter(config::matchesRoleNameFilter);
+        Stream<String> roleNames = user.getRoles().stream().filter(this::doesNotMatchesGeorchestraDefaultRoleNameFilter).filter(config::matchesRoleNameFilter);
 
         Stream<CanonicalGroup> roleGroups = roleNames.map(role -> this.externalGroupLinks.findByName(role)//
                 .map(GroupLink::getCanonical)//
@@ -101,15 +101,6 @@ public class RolesBasedGroupSynchronizer extends AbstractGroupSynchronizer {
                         .orElseThrow(notFound(role))));
 
         return roleGroups.collect(Collectors.toList());
-    }
-
-    protected @Override Privilege resolvePrivilegeFor(CanonicalUser user, Group groupFromRole) {
-        final String roleName = groupFromRole.getName();
-
-        ProfileMappingProperties profileMappings = configProperties.getProfiles();
-        Profile profile = profileMappings.resolveHighestProfileFromRoleNames(Collections.singletonList(roleName));
-
-        return new Privilege(groupFromRole, profile);
     }
 
     private Supplier<? extends IllegalArgumentException> notFound(String role) {
@@ -121,6 +112,16 @@ public class RolesBasedGroupSynchronizer extends AbstractGroupSynchronizer {
         requireNonNull(role.getName());
         String name = role.getName();
         return config.matchesRoleNameFilter(name);
+    }
+
+    private boolean doesNotMatchesGeorchestraDefaultRoleNameFilter(String roleName) {
+        requireNonNull(roleName);
+        return !georchestraDefaultRoleNames.contains(roleName);
+    }
+
+    private boolean doesNotMatchesGeorchestraDefaultRoleNameFilter(CanonicalGroup role) {
+        requireNonNull(role);
+        return doesNotMatchesGeorchestraDefaultRoleNameFilter(role.getName());
     }
 
 }
