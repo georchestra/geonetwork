@@ -1429,7 +1429,7 @@
               <checkoutDirectory>${project.build.directory}/deb/etc/georchestra</checkoutDirectory>
               <connectionUrl>scm:git:https://github.com/georchestra/datadir.git</connectionUrl>
               <pushChanges>false</pushChanges>
-              <scmVersion>23.0</scmVersion>
+              <scmVersion>24.0</scmVersion>
               <scmVersionType>branch</scmVersionType>
             </configuration>
             <executions>
