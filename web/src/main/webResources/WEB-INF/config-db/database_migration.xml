@@ -364,14 +364,34 @@
         <value>WEB-INF/classes/setup/sql/migrate/v426/migrate-</value>
       </list>
     </entry>
-    <entry key="4.2.7">
+    <entry key="4.4.0">
       <list>
-        <value>WEB-INF/classes/setup/sql/migrate/v427/migrate-</value>
+        <value>WEB-INF/classes/setup/sql/migrate/v440/migrate-</value>
       </list>
     </entry>
-    <entry key="4.2.8">
+    <entry key="4.4.1">
       <list>
-        <value>WEB-INF/classes/setup/sql/migrate/v428/migrate-</value>
+        <value>WEB-INF/classes/setup/sql/migrate/v441/migrate-</value>
+      </list>
+    </entry>
+    <entry key="4.4.2">
+      <list>
+        <value>WEB-INF/classes/setup/sql/migrate/v442/migrate-</value>
+      </list>
+    </entry>
+    <entry key="4.4.3">
+      <list>
+        <value>WEB-INF/classes/setup/sql/migrate/v443/migrate-</value>
+      </list>
+    </entry>
+    <entry key="4.4.4">
+      <list>
+        <value>WEB-INF/classes/setup/sql/migrate/v444/migrate-</value>
+      </list>
+    </entry>
+    <entry key="4.4.5">
+      <list>
+        <value>WEB-INF/classes/setup/sql/migrate/v445/migrate-</value>
       </list>
     </entry>
   </util:map>

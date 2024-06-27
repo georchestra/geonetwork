@@ -7,13 +7,13 @@
   <parent>
     <groupId>org.geonetwork-opensource</groupId>
     <artifactId>geonetwork</artifactId>
-    <version>4.2.8-georchestra</version>
+    <version>4.4.5-georchestra</version>
   </parent>
 
   <artifactId>gn-release</artifactId>
   <packaging>pom</packaging>
-  <name>Release module</name>
-  <description>Use to create distribution packages.</description>
+  <name>GeoNetwork Release module</name>
+  <description>Use to create zip distribution packages (copies from files from web which must be built first).</description>
 
   <licenses>
     <license>
@@ -53,6 +53,8 @@
   </build>
 
   <profiles>
+    <!-- jetty-download is an optional build step for generating release -->
+    <!-- hack: using the integration phase steps to build before install -->
     <profile>
       <id>jetty-download</id>
       <activation>
@@ -82,7 +84,6 @@
             </executions>
           </plugin>
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-antrun-plugin</artifactId>
             <executions>
               <execution>
@@ -122,6 +123,7 @@
             <executions>
               <execution>
                 <phase>post-integration-test</phase>
+                <!-- package step moved later in maven lifecycle to avoid slowing down local testing -->
                 <goals>
                   <goal>run</goal>
                 </goals>

@@ -5,7 +5,7 @@
         xmlns:gcx="http://standards.iso.org/iso/19115/-3/gcx/1.0"
         xmlns:gex="http://standards.iso.org/iso/19115/-3/gex/1.0"
         xmlns:lan="http://standards.iso.org/iso/19115/-3/lan/1.0"
-        xmlns:srv="http://standards.iso.org/iso/19115/-3/srv/2.1"
+        xmlns:srv="http://standards.iso.org/iso/19115/-3/srv/2.0"
         xmlns:mas="http://standards.iso.org/iso/19115/-3/mas/1.0"
         xmlns:mcc="http://standards.iso.org/iso/19115/-3/mcc/1.0"
         xmlns:mco="http://standards.iso.org/iso/19115/-3/mco/1.0"
@@ -398,14 +398,8 @@
     </description>
     <condition></condition>
   </element>
-  <element name="mdb:MD_MetadataScoperd" id="39.0">
-    <label>Resource scope</label>
-    <description iso="true">Information about the scope of the resource.
-    </description>
-    <condition></condition>
-  </element>
   <element name="mdb:resourceScope" id="40.0">
-    <label>Resource scope</label>
+    <label>Resource type</label>
     <description iso="true">Code for the scope.</description>
     <condition>mandatory</condition>
   </element>

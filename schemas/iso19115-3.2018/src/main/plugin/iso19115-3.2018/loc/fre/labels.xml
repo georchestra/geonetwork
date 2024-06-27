@@ -5,7 +5,7 @@
         xmlns:gcx="http://standards.iso.org/iso/19115/-3/gcx/1.0"
         xmlns:gex="http://standards.iso.org/iso/19115/-3/gex/1.0"
         xmlns:lan="http://standards.iso.org/iso/19115/-3/lan/1.0"
-        xmlns:srv="http://standards.iso.org/iso/19115/-3/srv/2.1"
+        xmlns:srv="http://standards.iso.org/iso/19115/-3/srv/2.0"
         xmlns:mas="http://standards.iso.org/iso/19115/-3/mas/1.0"
         xmlns:mcc="http://standards.iso.org/iso/19115/-3/mcc/1.0"
         xmlns:mco="http://standards.iso.org/iso/19115/-3/mco/1.0"
@@ -388,15 +388,8 @@
     <label>Profil des métadonnées</label>
     <description>Citation du/des profil(s) de la norme de métadonnées</description>
   </element>
-  <element name="mdb:MD_MetadataScoperd" id="39.0">
-    <label>Domaine d’application des métadonnées</label>
-    <description iso="true">Informations concernant le domaine d’application de
-      la ressource.
-    </description>
-    <condition></condition>
-  </element>
   <element name="mdb:resourceScope" id="40.0">
-    <label>Domaine d’application de la ressource</label>
+    <label>Type de ressource</label>
     <description iso="true">Code pour le domaine d’application.</description>
     <condition>mandatory</condition>
   </element>
@@ -8846,11 +8839,11 @@ http://www.sandre.eaufrance.fr/?urn=urn:sandre:ensembledonnees:BDCarthage:FXX:::
     <description></description>
   </element>
   <element name="gfc:code">
-    <label>Code</label>
+    <label>Identifiant</label>
     <description></description>
   </element>
   <element name="gfc:isOrdered">
-    <label>Est prdonné</label>
+    <label>Est ordonné</label>
     <description></description>
   </element>
   <element name="gfc:isNavigable">
@@ -8914,7 +8907,7 @@ http://www.sandre.eaufrance.fr/?urn=urn:sandre:ensembledonnees:BDCarthage:FXX:::
     <description></description>
   </element>
   <element name="gfc:memberName">
-    <label>Nom</label>
+    <label>Libellé</label>
     <description></description>
   </element>
   <element name="gfc:FC_Constraint">

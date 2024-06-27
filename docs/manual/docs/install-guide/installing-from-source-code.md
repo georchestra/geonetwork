@@ -2,20 +2,17 @@
 
 ## System Requirements
 
-### Java 8
+### Java 11
 
-GeoNetwork is a Java 8 application that runs as a servlet, which means that a Java Development Kit (JDK) must be installed in order to build and run it. You can get a Java 8 JDK from your Linux distribution, [OpenJDK](https://openjdk.java.net/) or [AdoptOpenJDK](https://adoptopenjdk.net). Please note that the Java 8 [Oracle JDK](https://www.oracle.com/es/java/technologies/javase/javase8-archive-downloads.html) is currently only being distributed for testing purposes.
+GeoNetwork 4.4 is a Java 11 application that runs as a servlet, which means that a Java Development Kit (JDK) must be installed in order to build and run it. You can get a Java 11 JDK from your Linux distribution, [OpenJDK](https://openjdk.java.net/) or [Adoptium Temurin JDK](https://adoptopenjdk.net).
 
-Because GeoNetwork is developed with Java 8 (LTS), this has the following implications:
+Please note that the commercial distribution of [Oracle JDK](https://www.oracle.com/technetwork/java/javase/downloads) no longer provides Java 11 for testing purposes.
 
--   GeoNetwork should not be developed with newer versions of Java.
--   Java 11 (LTS) is **not supported** at this time.
--   GeoNetwork won't run at all with Java 7 (1.6) or earlier releases.
+Because GeoNetwork is developed with Java 11 (LTS), it  won't run at all with earlier releases.
 
-
-!!! Note
-    
-    GeoNetwork 4.4.0 is scheduled to support Java 11
+-  GeoNetwork should not be developed with newer versions of Java.
+-  It  won't run at all with earlier releases.
+-  Java 17 (LTS) is **not supported** at this time.
 
 ### Application Server
 
@@ -51,7 +48,7 @@ The software runs in different ways depending on the servlet container you are u
 
 The following tools are required to be installed to setup a development environment for GeoNetwork:
 
--   **Java 8** - Developing with GeoNetwork requires Java Development Kit (JDK) 1.8.
+-   **Java 11** - Developing with GeoNetwork requires Java Development Kit (JDK) 11.
 -   **Maven** 3.1.0+ - GeoNetwork uses [Maven](https://maven.apache.org/) to manage the build process and the dependencies. Once is installed, you should have the mvn command in your path (on Windows systems, you have to open a shell to check).
 -   **Git** - GeoNetwork source code is stored and versioned in [a Git repository on Github](https://github.com/geonetwork/core-geonetwork). Depending on your operating system a variety of Git clients are available. Please check the Git website for some [alternatives](https://git-scm.com/downloads/guis) and good [documentation](https://git-scm.com/documentation). More documentation can be found on the [Github website](https://help.github.com/).
 -   **Ant** - GeoNetwork uses [Ant](https://ant.apache.org/) to build the installer. Version 1.6.5 works but any other recent version should be OK. Once installed, you should have the Ant command in your path (on Windows systems, you have to open a shell to check).
@@ -176,7 +173,7 @@ mvn jetty:run -Penv-dev
 
 After some moments of startup and initialization, GeoNetwork is available at: <http://localhost:8080/geonetwork>
 
-For changes related to the user interface in the ``web-ui`` module or the metadata schemas in the `as` module, these can be deployed in Jetty executing the following Maven command in the **web** module:
+For changes related to the user interface in the ``web-ui`` module or the metadata schemas in the `schemas` module, these can be deployed in Jetty executing the following Maven command in the **web** module:
 
 ``` shell
 mvn process-resources -DschemasCopy=true

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2001-2021 Food and Agriculture Organization of the
+ * Copyright (C) 2001-2024 Food and Agriculture Organization of the
  * United Nations (FAO-UN), United Nations World Food Programme (WFP)
  * and United Nations Environment Programme (UNEP)
  *
@@ -369,7 +369,6 @@
     lang: "lang?_content_type=json&",
     removeThumbnail: "md.thumbnail.remove?_content_type=json&",
     removeOnlinesrc: "resource.del.and.detach", // TODO: CHANGE
-    suggest: "suggest",
     selectionLayers: "selection.layers",
 
     featureindexproxy: "../../index/features",
@@ -495,6 +494,7 @@
       isXLinkLocal: "system.xlinkResolver.localXlinkEnable",
       isSelfRegisterEnabled: "system.userSelfRegistration.enable",
       isFeedbackEnabled: "system.userFeedback.enable",
+      isMetadataFeedbackEnabled: "system.userFeedback.metadata.enable",
       isInspireEnabled: "system.inspire.enable",
       isRatingUserFeedbackEnabled: "system.localrating.enable",
       isSearchStatEnabled: "system.searchStats.enable",
@@ -710,12 +710,14 @@
           var mlObjs = angular.isArray(multilingualObjects)
             ? multilingualObjects
             : [multilingualObjects];
-          mlObjs.forEach(function (mlObj) {
-            mlObj.default =
-              mlObj["lang" + gnLangs.current] ||
-              mlObj.default ||
-              mlObj["lang" + this.mainLanguage];
-          });
+          mlObjs.forEach(
+            function (mlObj) {
+              mlObj.default =
+                mlObj["lang" + gnLangs.current] ||
+                mlObj.default ||
+                mlObj["lang" + this.mainLanguage];
+            }.bind(this)
+          );
         },
         translateCodelists: function (index) {
           var codelists = angular.isArray(index) ? index : [index];
@@ -734,7 +736,7 @@
           for (var fieldName in index) {
             var field = index[fieldName];
             if (fieldName.endsWith("Object")) {
-              this.translateMultilingualObjects(field);
+              this.translateMultilingualObjects.call(this, field);
               index[fieldName.replace(/Object$/g, "")] = angular.isArray(field)
                 ? field.map(function (mlObj) {
                     return mlObj.default;
@@ -745,16 +747,16 @@
             } else if (fieldName === "allKeywords") {
               Object.keys(field).forEach(
                 function (th) {
-                  this.translateMultilingualObjects(field[th].keywords);
+                  this.translateMultilingualObjects.call(this, field[th].keywords);
                 }.bind(this)
               );
             } else if (
               fieldName.match(/th_.*$/) !== null &&
               fieldName.match(/.*(_tree|Number)$/) === null
             ) {
-              this.translateMultilingualObjects(field);
+              this.translateMultilingualObjects.call(this, field);
             } else if (typeof field === "object") {
-              this.translateMultingualFields(field);
+              this.translateMultingualFields.call(this, field);
             }
           }
         },

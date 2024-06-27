@@ -60,7 +60,15 @@
           var map = scope.$eval(prop);
           var target = element[0];
 
-          var resizeObserver = new ResizeObserver(function() {
+          var resizeObserver = new ResizeObserver(function () {
+            map.updateSize();
+            resizeObserver.unobserve(target);
+          });
+
+          map.setTarget(target);
+          var target = element[0];
+
+          var resizeObserver = new ResizeObserver(function () {
             map.updateSize();
             resizeObserver.unobserve(target);
           });

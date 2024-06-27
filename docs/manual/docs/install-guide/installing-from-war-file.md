@@ -42,6 +42,9 @@ For [Jetty](https://www.eclipse.org/jetty/) we the following versions: 9.4.x. Ne
 
         You need to ensure Tomcat is configured with enough memory for GeoNetwork to launch. This can be be configured via the `setenv` script in tomcat with the appropriate memory for the JAVA_OPTS property). `-Xms2g -Xmx2g` is usually fine.
 
+    !!! note
+
+        For the  `/monitor/metrics` endpoint to work correctly, you must add to `JAVA_OPTS` the following option: `--add-opens=jdk.management/com.sun.management.internal=ALL-UNNAMED` 
 
 4.  Configure the search platform
 
@@ -54,15 +57,15 @@ For [Jetty](https://www.eclipse.org/jetty/) we the following versions: 9.4.x. Ne
     Download Elasticsearch for your platform <https://www.elastic.co/downloads/elasticsearch>
 
     ``` shell
-    wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.6.2-linux-x86_64.tar.gz
-    tar xvfz elasticsearch-7.6.2-linux-x86_64.tar.gz
-    cd elasticsearch-7.6.2-linux-x86_64/bin
+    wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.11.3-linux-x86_64.tar.gz
+    tar xvfz elasticsearch-8.11.3-linux-x86_64.tar.gz
+    cd elasticsearch-8.11.3-linux-x86_64/bin
     ./elasticsearch
     ```
 
     Open <http://localhost:9200> in your web browser to check that Elasticsearch is running.
 
-    To use an existing instance check `on` in [Installing search platform](installing-index.md).
+    To use an existing instance check Configure connection in [Installing search platform](installing-index.md).
 
 5.  Up and running?
 
