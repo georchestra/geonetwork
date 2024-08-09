@@ -155,15 +155,19 @@ abstract class AbstractGroupSynchronizer implements GroupSynchronizer {
             updateLabelTranslations(canonical, group);
         }
 
+        link = externalGroupLinks.save(getSyncElements(group, canonical, link));
+        assert link.isUpToDateWith(canonical);
+
+        return link;
+    }
+
+    protected GroupLink getSyncElements(Group group, CanonicalGroup canonical, GroupLink link) {
         logoUpdater.synchronize(canonical.getId(), group);
         group.setName(canonical.getName());
         group.setDescription(canonical.getDescription());
         group.setWebsite(canonical.getLinkage());
         group.setEmail(canonical.getMail());
         link.setCanonical(canonical);
-        link = externalGroupLinks.save(link);
-        assert link.isUpToDateWith(canonical);
-
         return link;
     }
 
