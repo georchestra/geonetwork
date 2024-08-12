@@ -186,7 +186,9 @@ public class IntegrationTestSupport extends ExternalResource {
     public void assertGroup(CanonicalGroup expected, Group actual) {
         assertEquals(expected.getName(), actual.getName());
         assertEquals(expected.getDescription(), actual.getDescription());
-        assertEquals(expected.getLinkage(), actual.getWebsite());
+        if (!getConfig().getSyncMode().equals(GroupSyncMode.roles)) {
+            assertEquals(expected.getLinkage(), actual.getWebsite());
+        }
     }
 
     public void addGeonetworkGroup(CanonicalGroup g) {
