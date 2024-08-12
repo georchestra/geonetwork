@@ -27,6 +27,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import org.fao.geonet.domain.Group;
 import org.geonetwork.security.external.configuration.ExternalizedSecurityProperties;
 import org.geonetwork.security.external.model.CanonicalGroup;
 import org.geonetwork.security.external.model.CanonicalUser;
@@ -124,4 +125,11 @@ public class RolesBasedGroupSynchronizer extends AbstractGroupSynchronizer {
         return doesNotMatchesGeorchestraDefaultRoleNameFilter(role.getName());
     }
 
+    @Override
+    protected GroupLink getSyncElements(Group group, CanonicalGroup canonical, GroupLink link) {
+        group.setName(canonical.getName());
+        group.setDescription(canonical.getDescription());
+        link.setCanonical(canonical);
+        return link;
+    }
 }
