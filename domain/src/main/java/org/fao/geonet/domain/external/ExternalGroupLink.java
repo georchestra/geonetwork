@@ -20,12 +20,7 @@ package org.fao.geonet.domain.external;
 
 import java.util.Objects;
 
-import javax.persistence.Access;
-import javax.persistence.AccessType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.fao.geonet.domain.Group;
 
@@ -55,6 +50,7 @@ public class ExternalGroupLink {
     private String externalId;
     private GroupSyncMode origin;
     private String name;
+
     private String description;
     private String linkage;
     private String lastUpdated;
@@ -108,6 +104,12 @@ public class ExternalGroupLink {
         return this;
     }
 
+    /**
+     * Note: this is not portable, as the TEXT definition does not
+     * exist on all DBMS. But considering geOrchestra, we are supposed
+     * to rely on a PostGreSQL server.
+     */
+    @Column(columnDefinition = "TEXT")
     public String getDescription() {
         return description;
     }
