@@ -20,12 +20,7 @@ package org.geonetwork.security.external.integration;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -99,7 +94,7 @@ class UserSynchronizer {
         log.debug("Fetching canonical user definitions...");
         List<CanonicalUser> canonicalUsers = findCanonicalUsers();
         synchronizeAll(canonicalUsers);
-        log.info("Users synchronization complete.");
+        log.debug("Users synchronization complete.");
     }
 
     @Transactional
@@ -108,7 +103,7 @@ class UserSynchronizer {
         requireNonNull(canonical);
         canonical.forEach(u -> requireNonNull(u, "null references not accepted in user's list"));
 
-        log.debug("Syncrhonizing {} canonical user definitions...", canonical.size());
+        log.debug("Synchronizing {} canonical user definitions...", canonical.size());
         try {
             final Set<String> canonicalIds = canonical.stream().map(CanonicalUser::getId).collect(Collectors.toSet());
             final Map<String, UserLink> currentLinks = getExistingUserLinksById();
@@ -125,7 +120,7 @@ class UserSynchronizer {
      * Ensures a GeoNetwork {@link User} exists matching the {@code canonical}
      * (externally defined) user properties and authorization settings.
      * <p>
-     * 
+     *
      */
     @Transactional
     public UserLink synchronize(CanonicalUser canonical) {
@@ -152,8 +147,15 @@ class UserSynchronizer {
     }
 
     private List<UserGroup> resolveNewPrivileges(User user, List<Privilege> actual) {
+        List<Privilege> editors = actual.stream().filter(privilege -> privilege.getProfile() == Profile.Reviewer)//
+                .map(privilege -> {
+                    log.debug("User {} is a reviewer of group {}", user.getUsername(),
+                        privilege.getGroup().getName());
+                    return new Privilege(privilege.getGroup(), Profile.Editor);
+                }).collect(Collectors.toList());
+        editors.addAll(actual);
 
-        return actual.stream()//
+        return editors.stream()//
                 .map(privilege -> newUserGroup(user, privilege))//
                 .collect(Collectors.toList());
     }
