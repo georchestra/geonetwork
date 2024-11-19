@@ -203,7 +203,7 @@ abstract class AbstractGroupSynchronizer implements GroupSynchronizer {
     private void deleteGoneGroups(final Map<String, GroupLink> currentLinks, final Set<String> canonicalGroupIds) {
         final Set<String> deleteCandidateIds = Sets.difference(currentLinks.keySet(), canonicalGroupIds);
         if (deleteCandidateIds.isEmpty()) {
-            log.info("No organizations were deleted.");
+            log.debug("No organizations were deleted.");
             return;
         }
         for (String groupId : deleteCandidateIds) {
