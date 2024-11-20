@@ -31,28 +31,8 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.persistence.Access;
-import javax.persistence.AccessType;
-import javax.persistence.Cacheable;
-import javax.persistence.CascadeType;
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapKeyColumn;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
+
 import org.fao.geonet.domain.converter.BooleanToYNConverter;
 
 import org.fao.geonet.entitylistener.GroupEntityListenerManager;
@@ -141,7 +121,7 @@ public class Group extends Localized implements Serializable {
      *
      * @return the description.
      */
-    @Column(length = 255)
+    @Column(columnDefinition = "TEXT")
     public String getDescription() {
         return _description;
     }
@@ -245,6 +225,7 @@ public class Group extends Localized implements Serializable {
      * @return the filename of the logo or null if there is no logo associated with this group.
      */
     @Nullable
+    @Column(columnDefinition = "TEXT")
     public String getLogo() {
         return logo;
     }
