@@ -147,12 +147,22 @@ class UserSynchronizer {
     }
 
     private List<UserGroup> resolveNewPrivileges(User user, List<Privilege> actual) {
-        List<Privilege> editors = actual.stream().filter(privilege -> privilege.getProfile() == Profile.Reviewer)//
-                .map(privilege -> {
+
+        List<Privilege> editors = actual.stream().filter(privilege -> privilege.getProfile() == Profile.Reviewer || privilege.getProfile() == Profile.Editor)
+            // group by geonetwork group
+            .collect(Collectors.groupingBy(Privilege::getGroup))//
+            .values().stream()//
+            // check if both reviewer and editor are present for the same group and profile is only reviewer
+            .filter(privileges -> privileges.size() == 1 && privileges.get(0).getProfile() == Profile.Reviewer)
+            // get first privilege (reviewer)
+            .map(privileges -> privileges.get(0))
+            // create a new privilege with editor profile
+            .map(privilege -> {
                     log.debug("User {} is a reviewer of group {}", user.getUsername(),
                         privilege.getGroup().getName());
                     return new Privilege(privilege.getGroup(), Profile.Editor);
                 }).collect(Collectors.toList());
+        //Combine all the privileges
         editors.addAll(actual);
 
         return editors.stream()//
