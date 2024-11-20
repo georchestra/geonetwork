@@ -143,14 +143,14 @@ public class IntegrationTestSupport extends ExternalResource {
     public UserGroup assertGroup(User user, CanonicalGroup belongsTo) {
         GroupLink link = assertGroupLink(belongsTo);
         Group group = link.getGeonetworkGroup();
-        Map<Integer, UserGroup> byGroupId = gnUserGroupRepository.findAll(UserGroupSpecs.hasUserId(user.getId()))
-                .stream().collect(Collectors.toMap(ug -> ug.getGroup().getId(), Function.identity()));
+        Map<Integer, List<UserGroup>> byGroupId = gnUserGroupRepository.findAll(UserGroupSpecs.hasUserId(user.getId()))
+                .stream().collect(Collectors.groupingBy(ug -> ug.getGroup().getId()));
 
-        UserGroup userGroup = byGroupId.get(group.getId());
+        UserGroup userGroup = byGroupId.get(group.getId()).get(0);
         String msg = String.format("User '%s': link to group %s not found. Got: %s", user.getUsername(),
                 group.getName(),
                 user.getUsername() + " user's link to group " + group.getName() + " not found: " + byGroupId.values()
-                        .stream().map(UserGroup::getGroup).map(Group::getName).collect(Collectors.joining(",")));
+                        .stream().map(us -> us.get(0)).map(UserGroup::getGroup).map(Group::getName).collect(Collectors.joining(",")));
         assertNotNull(msg, userGroup);
         return userGroup;
     }

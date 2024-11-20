@@ -64,7 +64,7 @@ jobs:
 
     - name: "publish the webapp as artifact"
       if: github.repository == 'georchestra/geonetwork' && github.actor != 'dependabot[bot]' && github.ref == 'refs/heads/georchestra-gn4.2.x-23.0.x' && github.event_name != 'pull_request'
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v4
       with:
         name: geonetwork.war
         path: web/target/geonetwork.war
