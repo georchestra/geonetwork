@@ -1,6 +1,6 @@
 # Geonetwork migration in Georchestra
 
-This document aims to help simplify future migration for geonetwork in Georchestra. 
+This document aims to help simplify future migration for geonetwork in Georchestra.
 
 ## Upgrade Process
 
@@ -17,14 +17,12 @@ A more detailed guide is available in [upgrade_geonetwork.md](upgrade_geonetwork
 
 ## Georchestra custom implementations
 
-### Georchestra 4.2.7 and Gn 4.2.7
-
-All versions in `pom.xml` files must be updated. E.g. for this version `4.2.7-georchestra`.
+All versions in `pom.xml` files must be updated. E.g. for this version `4.4.5-georchestra`.
 All italic folder just have the `pom.xml` change.
 
 - .github
   - workflows `linux.yml` `mvn-dep-tree.yml` `sonarcloud.yml` `dependabot.yml` are deleted. Only `georchestra-gn4.yml` is used
-- *cachingxslt* 
+- *cachingxslt*
 - common
   - `ZipUtilTest.java` : In `assertExampleZip` method, assertions which are supposed check folders must check with trailing slash too.
 - core
@@ -37,17 +35,18 @@ All italic folder just have the `pom.xml` change.
   - `CswFilter2Es.java` : Keep `{@}` instead of `%s` until it is fixed upstream (not supporting some CSW request)
   - `CswFilter2EsTest.java` : Keep `{@}` instead of `%s`
   - `SearchController.java` : Keep `{@}` instead of `%s` with StringUtils.replace
-- **docker** 
+- **docker**
   - Mandatory, get everything from geOrchestra
 - *docs*
 - *doi*
 - domain
-  - ExternalGroupLink.java : get file from geOrchestra
-  - ExternalUserLink.java : get file from geOrchestra
+  - `ExternalGroupLink.java` : get file from geOrchestra
+  - `ExternalUserLink.java` : get file from geOrchestra
+  - `Group.java` : set column definition to `TEXT` (which is PostGreSQL specific) on `description` and `logo`
 - *es*
 - *estest*
 - *events*
-- **georchestra-integration** 
+- **georchestra-integration**
   - Mandatory, get everything from geOrchestra
 - harvesters
   - `Harvester.java`: Use parseJDK11 method 
@@ -115,7 +114,7 @@ All italic folder just have the `pom.xml` change.
   - `src/main/resources/catalog/views/georchestra/`: Get files from georchestra
 - *workers*
 - *wro4j*
-- .gitignore 
+- .gitignore
   - add idea and settings to it
 - pom.xml  
   - Implement JDK 11 specific things, add georchestra-integration module, set db-type
@@ -127,4 +126,3 @@ All italic folder just have the `pom.xml` change.
 A branch has been created from core-geonetwork 4.2.7 tag and merged into `georchestra-gn4.2.x`.
 All conflicts files have been resolved with taking gn changes and not grochestra's one.
 Then changes have been reimplemented.
-
