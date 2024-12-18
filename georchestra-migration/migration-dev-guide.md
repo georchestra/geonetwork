@@ -33,7 +33,7 @@ All italic folder just have the `pom.xml` change.
 - csw-server
   - `CswFilter2Es.java` : Keep `{@}` instead of `%s` until it is fixed upstream (not supporting some CSW request)
   - `CswFilter2EsTest.java` : Keep `{@}` instead of `%s`
-  - `SearchController.java` : Keep `{@}` instead of `%s` with StringUtils.replace
+  - `SearchController.java` : Keep `{@}` instead of `%s` with StringUtils.replace, try/catch around Element resultMD, to avoid csw server to crash [issue core-gn 6940](https://github.com/geonetwork/core-geonetwork/issues/6940)
 - **docker**
   - Mandatory, get everything from geOrchestra
 - *docs*
