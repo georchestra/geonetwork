@@ -55,12 +55,9 @@ import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.Xml;
 import org.geotools.xsd.Configuration;
 import org.geotools.xsd.Parser;
-import org.jdom.Attribute;
-import org.jdom.Content;
-import org.jdom.Element;
-import org.jdom.Namespace;
 import org.opengis.filter.Filter;
 import org.opengis.filter.capability.FilterCapabilities;
+import org.jdom.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.xml.sax.SAXException;
 
@@ -483,17 +480,20 @@ public class SearchController {
                 AbstractMetadata metadata = metadataUtils.findOne(mdId);
 
                 String displayLanguage = context.getLanguage();
-                Element resultMD = retrieveMetadata(context, metadata.getId() + "",
-                    setName, outSchema, elemNames, typeName, resultType, strategy, displayLanguage);
+                try {// The query to retrieve GetRecords, filters by portal. No need to re-check again when retrieving each metadata.
+                    Element resultMD = retrieveMetadata(context, metadata.getId() + "",
+                        setName, outSchema, elemNames, typeName, resultType, strategy, displayLanguage);
 
-                if (resultMD != null) {
-                    if (resultType == ResultType.RESULTS) {
-                        results.addContent(resultMD);
+                    if (resultMD != null) {
+                        if (resultType == ResultType.RESULTS) {
+                            results.addContent(resultMD);
+                        }
+
+                        counter++;
                     }
-
-                    counter++;
+                } catch (InvalidParameterValueEx e) {
+                    results.addContent(new Comment(e.getMessage()));
                 }
-
             }
 
             results.setAttribute("numberOfRecordsMatched", Long.toString(numMatches));
