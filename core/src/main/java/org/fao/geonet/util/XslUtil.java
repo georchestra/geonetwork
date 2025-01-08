@@ -280,6 +280,7 @@ public final class XslUtil {
     private static String headerScript;
     private static String logoUrl;
     private static String georchestraStylesheet;
+    private static String headerConfigFile;
 
 
     public static String getGeorchestraHeaderUrl(){
@@ -376,6 +377,22 @@ public final class XslUtil {
         }
 
         return XslUtil.georchestraStylesheet;
+    }
+
+    public static String getGeorchestraHeaderConfigFile(){
+
+        if(XslUtil.headerConfigFile == null) {
+
+            // Set default value
+            XslUtil.headerConfigFile = "";
+
+            // Load value from datadir
+            Properties properties = XslUtil.loadDatadirProperties();
+            if (properties.containsKey("headerConfigFile"))
+                XslUtil.headerConfigFile = properties.getProperty("headerConfigFile");
+        }
+
+        return XslUtil.headerConfigFile;
     }
 
     private static Properties loadProperties(File path, Properties prop) throws IOException {
