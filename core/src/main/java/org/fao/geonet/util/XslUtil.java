@@ -304,7 +304,7 @@ public final class XslUtil {
         if(XslUtil.headerHeight == null) {
 
             // Set default value
-            XslUtil.headerHeight = "90";
+            XslUtil.headerHeight = "80";
 
             // Load value from datadir
             Properties properties = XslUtil.loadDatadirProperties();
