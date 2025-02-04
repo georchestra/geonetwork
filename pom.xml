@@ -258,6 +258,11 @@
           <artifactId>maven-enforcer-plugin</artifactId>
           <version>3.4.1</version>
         </plugin>
+        <plugin>
+          <groupId>io.fabric8</groupId>
+          <artifactId>docker-maven-plugin</artifactId>
+          <version>0.45.1</version>
+        </plugin>
       </plugins>
     </pluginManagement>
 

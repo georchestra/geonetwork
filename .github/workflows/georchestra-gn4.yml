@@ -55,6 +55,26 @@ jobs:
     - name: "run tests"
       run: mvn verify -Pit
 
+    - name: "Run Georchestra Integration Tests"
+      working-directory: geonetwork/georchestra-integration/
+      run: mvn verify -ntp -Dadditionalparam=-Xdoclint:none
+
+    - name: "Build GeoNetwork docker image"
+      if: github.repository == 'georchestra/georchestra' && github.actor != 'dependabot[bot]'
+      run: |
+        cd geonetwork/web
+        mvn package docker:build -Pdocker -DdockerImageName=georchestra/geonetwork -DdockerImageTags=${{ steps.version.outputs.VERSION }},latest -DskipTests -ntp
+    - name: "Logging in docker.io"
+      uses: azure/docker-login@v1
+      if: github.repository == 'georchestra/georchestra' && github.actor != 'dependabot[bot]' && github.event_name != 'pull_request'
+      with:
+        username: '${{ secrets.DOCKER_HUB_USERNAME }}'
+        password: '${{ secrets.DOCKER_HUB_PASSWORD }}'
+
+    - name: "Pushing latest to docker.io"
+      if: github.ref == 'refs/heads/master' && github.repository == 'georchestra/georchestra' && github.actor != 'dependabot[bot]' && github.event_name != 'pull_request'
+      run: |
+        docker push georchestra/geonetwork:latest
     - name: "publish the webapp as artifact"
       if: github.repository == 'georchestra/geonetwork' && github.actor != 'dependabot[bot]' && github.ref == 'refs/heads/georchestra-gn4.2.x' && github.event_name != 'pull_request'
       uses: actions/upload-artifact@v4
