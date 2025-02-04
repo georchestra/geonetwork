@@ -101,7 +101,7 @@ All italic folder just have the `pom.xml` change.
 - .gitignore
   - add idea and settings to it
 - pom.xml  
-  - Add georchestra-integration module, set db-type
+  - Add georchestra-integration module, set db-type, and keep io.fabric docker plugin
 
 ## Process used
 
