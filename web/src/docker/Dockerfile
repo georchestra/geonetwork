@@ -1,7 +1,5 @@
 FROM jetty:9.4.48-jre11-openjdk
 
-ENV XMS=1G XMX=6G
-
 RUN java -jar "$JETTY_HOME/start.jar" --create-startd --add-to-start=jmx,jmx-remote,stats
 
 COPY --chown=jetty:jetty . /
@@ -31,7 +29,7 @@ CMD ["sh", "-c", "exec java \
 -Dgeorchestra.datadir=/etc/georchestra \
 -Dgeonetwork.jeeves.configuration.overrides.file=/etc/georchestra/geonetwork/config/config-overrides-georchestra.xml \
 -Dgeonetwork.dir=/mnt/geonetwork_datadir \
--Xms$XMS -Xmx$XMX \
+-XX:MaxRAMPercentage=80 -XX:+UseParallelGC \
 -XX:-UsePerfData \
 ${JAVA_OPTIONS} \
 -Djetty.httpConfig.sendServerVersion=false \
