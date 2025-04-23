@@ -1,8 +1,9 @@
-name: Automatic backport action
-
+name: ♻ Backport
 on:
   pull_request_target:
-    types: ["closed", "labeled"]
+    types:
+      - closed
+      - labeled
 
 permissions:
   contents: write # so it can comment

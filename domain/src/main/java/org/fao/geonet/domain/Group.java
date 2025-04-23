@@ -31,8 +31,31 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.persistence.*;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.Enumerated;
+import javax.persistence.EnumType;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapKeyColumn;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import org.fao.geonet.domain.converter.BooleanToYNConverter;
 
 import org.fao.geonet.entitylistener.GroupEntityListenerManager;
@@ -64,6 +87,7 @@ public class Group extends Localized implements Serializable {
     private MetadataCategory defaultCategory;
     private List<MetadataCategory> allowedCategories;
     private Boolean enableAllowedCategories;
+    private Profile minimumProfileForPrivileges;
 
     /**
      * Get the id of the group.
@@ -327,6 +351,26 @@ public class Group extends Localized implements Serializable {
      */
     public Group setEnableAllowedCategories(Boolean enableAllowedCategories) {
         this.enableAllowedCategories = enableAllowedCategories;
+        return this;
+    }
+
+    /**
+     * Get the minimum profile required to update privileges for this group.
+     *
+     * @return {@link Profile} the minimum profile required to update privileges for this group.
+     */
+    @Enumerated(EnumType.STRING)
+    public Profile getMinimumProfileForPrivileges() {
+        return minimumProfileForPrivileges;
+    }
+
+    /**
+     * Set the minimum profile required to update privileges for this group.
+     * @param minimumProfileForPrivileges the minimum {@link Profile} required to update privileges for this group.
+     * @return this group entity object.
+     */
+    public Group setMinimumProfileForPrivileges(Profile minimumProfileForPrivileges) {
+        this.minimumProfileForPrivileges = minimumProfileForPrivileges;
         return this;
     }
 }
