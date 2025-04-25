@@ -3,12 +3,12 @@ name: Building georchestra-geonetwork4 artifacts
 on:
   push:
     branches:
-    - georchestra-gn4.2.x
+    - georchestra-gn4.4.x
   pull_request:
   workflow_dispatch:
 
 env:
-  DOCKER_TAG: 4.2.x
+  DOCKER_TAG: 4.4.x
 
 jobs:
   build:
@@ -56,7 +56,7 @@ jobs:
       run: mvn verify -Pit
 
     - name: "publish the webapp as artifact"
-      if: github.repository == 'georchestra/geonetwork' && github.actor != 'dependabot[bot]' && github.ref == 'refs/heads/georchestra-gn4.2.x' && github.event_name != 'pull_request'
+      if: github.repository == 'georchestra/geonetwork' && github.actor != 'dependabot[bot]' && github.ref == 'refs/heads/georchestra-gn4.4.x' && github.event_name != 'pull_request'
       uses: actions/upload-artifact@v4
       with:
         name: geonetwork.war
