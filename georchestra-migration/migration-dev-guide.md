@@ -102,6 +102,7 @@ All italic folder just have the `pom.xml` change.
   - add idea and settings to it
 - pom.xml  
   - Add georchestra-integration module, set db-type
+- config-editor.xml contains xlink by default : see https://gist.github.com/jeanmi151/19a30bc717d0b6a7fb296098a49c0766 for details 
 
 ## Process used
 
@@ -110,3 +111,5 @@ All italic folder just have the `pom.xml` change.
 A branch has been created from core-geonetwork 4.2.7 tag and merged into `georchestra-gn4.2.x`.
 All conflicts files have been resolved with taking gn changes and not grochestra's one.
 Then changes have been reimplemented.
+
+
