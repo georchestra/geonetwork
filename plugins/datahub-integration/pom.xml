@@ -68,7 +68,7 @@
         <directory>src/main/resources</directory>
       </resource>
       <resource>
-        <directory>target/resources</directory>
+        <directory>${project.basedir}/target/resources</directory>
       </resource>
     </resources>
     <plugins>
@@ -78,7 +78,9 @@
         <executions>
           <execution>
             <id>reset</id>
-            <goals><goal>clean</goal></goals>
+            <goals>
+              <goal>clean</goal>
+            </goals>
             <configuration>
               <filesets>
                 <!-- reset working files covered by .gitignore -->
@@ -126,7 +128,7 @@
           <!--   Build datahub app   -->
           <execution>
             <id>npm-build</id>
-            <phase>compile</phase>
+            <phase>generate-resources</phase>
             <goals>
               <goal>npm</goal>
             </goals>
@@ -150,7 +152,7 @@
         <executions>
           <execution>
             <id>copy-resources</id>
-            <phase>prepare-package</phase>
+            <phase>generate-resources</phase>
             <goals>
               <goal>copy-resources</goal>
             </goals>
