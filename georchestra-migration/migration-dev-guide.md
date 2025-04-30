@@ -57,7 +57,7 @@ All italic folder just have the `pom.xml` change.
 - *oaipmh*
 - *release*
 - schemas
-  - `iso19139/layout/config-editor.xml`: xlinks for contacts reenabled
+  - `iso19139/layout/config-editor.xml`: xlinks for contacts reenabled by default: see [about-xlinks.md](./about-xlinks.md)
 - *schemas-test*
 - *sde*
 - services
@@ -102,13 +102,12 @@ All italic folder just have the `pom.xml` change.
   - add idea and settings to it
 - pom.xml  
   - Add georchestra-integration module, set db-type
-- config-editor.xml contains xlink by default : see [about-xlinks.md](./about-xlinks.md)
 ## Process used
 
 ### 4.2.4 -> 4.2.7
 
 A branch has been created from core-geonetwork 4.2.7 tag and merged into `georchestra-gn4.2.x`.
-All conflicts files have been resolved with taking gn changes and not grochestra's one.
+All conflicts files have been resolved with taking gn changes and not geOrchestra's one.
 Then changes have been reimplemented.
 
 
