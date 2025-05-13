@@ -1,4 +1,4 @@
-FROM jetty:9.4.48-jre11-openjdk
+FROM jetty:9.4.57-jre11
 
 RUN java -jar "$JETTY_HOME/start.jar" --create-startd --add-to-start=jmx,jmx-remote,stats
 
