@@ -102,6 +102,7 @@
       data-ng-if="mdView.current.record.contactForDistribution"
       data-gn-metadata-contacts="mdView.current.record.contactForDistribution"
       data-gn-mode="default"
+      data-type="distribution"
       data-layout="icon"
     ></div>
 
@@ -169,11 +170,10 @@
     ></div>
   </div>
   <!-- /.col-md-8 gn-record -->
-  <div class="gn-md-side gn-page-break-avoid">
-    <div
-      ng-include="'../../catalog/views/default/templates/recordView/sources.html'"
-    ></div>
-  </div>
+  <div
+    ng-include="'../../catalog/views/default/templates/recordView/sources.html'"
+    data-gn-include-and-replace=""
+  ></div>
 </div>
 
 <div
@@ -215,6 +215,7 @@
       data-user="user"
       data-layout="card"
       data-types="children"
+      data-size="20"
       data-title="{{'seriesComposedOf' | translate}}"
     ></div>
 

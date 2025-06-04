@@ -1121,6 +1121,10 @@
                 "type": "keyword",
                 "copy_to": ["any.langukr", "organisationName.langukr"]
               },
+              "langpol": {
+                "type": "keyword",
+                "copy_to": ["any.langpol", "organisationName.langpol"]
+              },
               "link": {
                 "type": "keyword"
               }
@@ -1305,6 +1309,17 @@
                   }
                 }
               },
+              "langpol": {
+                "type": "text",
+                "analyzer": "${es.index.analyzer.default}",
+                "copy_to": ["any.langpol"],
+                "fields": {
+                  "keyword": {
+                    "type": "keyword",
+                    "ignore_above": ${es.index.ignore_above}
+                  }
+                }
+              },
               "link": {
                 "type": "keyword"
               }
@@ -1361,7 +1376,6 @@
       {
         "tag": {
           "match": "th_*",
-          "match_mapping_type": "object",
           "mapping": {
             "properties": {
               "default": {
@@ -1415,6 +1429,10 @@
               "langukr": {
                 "type": "keyword",
                 "copy_to": ["any.langukr"]
+              },
+              "langpol": {
+                "type": "keyword",
+                "copy_to": ["any.langpol"]
               },
               "text": {
                 "type": "keyword"
@@ -1628,6 +1646,10 @@
           "langroh": {
             "type": "text",
             "analyzer": "${es.index.analyzer.default}"
+          },
+          "langpol": {
+            "type": "text",
+            "analyzer": "${es.index.analyzer.default}"
           }
         }
       },
@@ -1688,6 +1710,10 @@
           "langukr": {
             "type": "keyword",
             "copy_to": ["any.langukr"]
+          },
+          "langpol": {
+            "type": "keyword",
+            "copy_to": ["any.langpol"]
           },
           "link": {
             "type": "keyword"
@@ -2243,6 +2269,9 @@
             "type": "keyword"
           },
           "langukr": {
+            "type": "keyword"
+          },
+          "langpol": {
             "type": "keyword"
           }
         }

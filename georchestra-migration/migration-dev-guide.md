@@ -17,7 +17,7 @@ A more detailed guide is available in [upgrade_geonetwork.md](upgrade_geonetwork
 
 ## Georchestra custom implementations
 
-All versions in `pom.xml` files must be updated. E.g. for this version `4.4.5-georchestra`.
+All versions in `pom.xml` files must be updated. E.g. for this version `4.4.7-georchestra`.
 All italic folder just have the `pom.xml` change.
 
 - .github

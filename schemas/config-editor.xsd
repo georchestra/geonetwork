@@ -906,7 +906,7 @@ Define if this tab is the default one for the view. Only one tab should be the d
         <xs:annotation>
           <xs:documentation><![CDATA[
 The tab key used in URL parameter to activate that tab. The key is also use for the tab label as defined in ``{schema}/loc/{lang}/strings.xml``.
-It has to be unique for all views. A good practice is to use same prefix for all tabs in the same view.            
+It has to be unique for all views. A good practice is to use same prefix for all tabs in the same view.
             ]]></xs:documentation>
         </xs:annotation>
       </xs:attribute>
@@ -1094,6 +1094,7 @@ the mandatory section with no name and then the inner elements.
         </xs:element>
         <xs:element ref="action"/>
         <xs:element ref="directive"/>
+        <xs:element ref="select"/>
         <xs:element ref="text"/>
         <xs:element ref="xsl"/>
         <xs:element ref="section"/>
@@ -1128,9 +1129,11 @@ Note: Only sections with forEach support del attribute.
 
             <section forEach="/gmd:MD_Metadata/gmd:distributionInfo">
               <text><h2>Distribution</h2></text>
-              <section forEach="*/gmd:transferOptions/*/gmd:onLine/gmd:CI_OnlineResource" name="A link">
-                <field xpath="gmd:linkage"/>
-                <field xpath="gmd:name" or="name" in="."/>
+              <section forEach="*/gmd:transferOptions/*/gmd:onLine"
+                       name="A link"
+                       del=".">
+                <field xpath="*/gmd:linkage"/>
+                <field xpath="*/gmd:name" or="name" in="."/>
               </section>
               <text><hr/></text>
             </section>
@@ -2111,9 +2114,9 @@ An autocompletion list based on a thesaurus.
 This field facilitates users in selecting a `subtemplate` (also known as xml-snippet) from the catalogue. Subtemplates are mostly used to store contact details,
 but can also be used to store snippets of xml having Quality reports, Access constraints, CRS definitions, etc.
 
-                  
-`data-insert-modes` can be `text` and/or `xlink` depending on how the subtemplate is encoded. 
-Contact can be forced to be `xlink` but some other type of subtemplates (eg. DQ report) are usually just simple default values 
+
+`data-insert-modes` can be `text` and/or `xlink` depending on how the subtemplate is encoded.
+Contact can be forced to be `xlink` but some other type of subtemplates (eg. DQ report) are usually just simple default values
 that need to be detailed by editors and in that case `text` mode is recommended. For `xlink`, the XLink resolver needs to be enabled in the admin settings.
 
 
@@ -2328,6 +2331,11 @@ This can allow to build dynamic snippet based on the current record.
           <xs:documentation>Snippet label.</xs:documentation>
         </xs:annotation>
       </xs:attribute>
+      <xs:attribute name="sortLabel" type="xs:string" use="optional">
+        <xs:annotation>
+          <xs:documentation>When defined, @sortLabel should be used instead of @label for sorting purposes. Handy for putting values at the start of end of a list, for example.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
     </xs:complexType>
   </xs:element>
   <xs:element name="batchEditing">
@@ -2526,6 +2534,68 @@ added in the directive panel eg. `text` for guidelines or add `action` to easily
       <xs:sequence>
         <xs:element ref="section"/>
       </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+
+  <xs:element name="select">
+    <xs:annotation>
+      <xs:documentation><![CDATA[
+
+Create a selector on an element to minimize form size when complex elements are repeated.
+For example, a feature catalogue can describe many feature types. Instead of displaying
+all feature types, add a dropdown (or tabs) to select one and edit it.
+
+The selector will add the parameter with the selected value to the form.
+
+Add a dynamic section with a reference to that parameter to build the editor form for the requested element.
+
+.. code-block:: xml
+
+          <section name="gfc:featureType">
+            <select name="Select a feature type"
+                    xpath="/gfc:FC_FeatureCatalogue/gfc:featureType"
+                    parameter="featureType"
+                    value="*/gfc:typeName/gco:LocalName/text()"
+                    layout="dropdown"/>
+
+
+            <field xpath="/gfc:FC_FeatureCatalogue/gfc:featureType[
+                                    */gfc:typeName/gco:LocalName = $p2/featureType
+                                    or (not($p2/featureType) and position() = 1)
+                                    or ($p3 = 'md.format.html')]"
+                     or="featureType"
+                     in="/gfc:FC_FeatureCatalogue"/>
+          </section>
+
+
+`$p2` correspond to the variable `request` and `$p3` to the `service` in the XSL template (see `base-variables.xsl`).
+So if there is no `featureType` parameter, the first feature type will be displayed.
+If the view mode is `md.format.html`, all feature types will be displayed.
+
+      ]]></xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:attribute name="name" use="optional" type="xs:string"/>
+      <xs:attribute name="xpath" use="required" type="xs:string"/>
+      <xs:attribute name="parameter" use="required" type="xs:string"/>
+      <xs:attribute name="value" use="required" type="xs:string"/>
+      <xs:attribute name="icon" use="required" type="xs:string">
+        <xs:annotation>
+          <xs:documentation><![CDATA[Icon display on the dropdown selector.]]>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="layout" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="dropdown"/>
+            <xs:enumeration value="tabs"/>
+            <xs:enumeration value="pills"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:anyAttribute/>
     </xs:complexType>
   </xs:element>
 </xs:schema>

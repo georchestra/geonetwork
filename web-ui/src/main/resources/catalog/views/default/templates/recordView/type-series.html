@@ -85,6 +85,7 @@
       data-ng-if="mdView.current.record.contactForDistribution"
       data-gn-metadata-contacts="mdView.current.record.contactForDistribution"
       data-gn-mode="default"
+      data-type="distribution"
       data-layout="icon"
     ></div>
 
@@ -149,11 +150,7 @@
       ng-include="'../../catalog/views/default/templates/recordView/lineage.html'"
     ></div>
   </div>
-  <div class="gn-md-side">
-    <div
-      ng-include="'../../catalog/views/default/templates/recordView/sources.html'"
-    ></div>
-  </div>
+  <div ng-include="'../../catalog/views/default/templates/recordView/sources.html'"></div>
 </div>
 
 <!-- contact -->

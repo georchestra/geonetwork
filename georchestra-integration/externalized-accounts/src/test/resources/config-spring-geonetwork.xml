@@ -15,5 +15,6 @@
   <bean id="ServiceManager" class="jeeves.server.dispatchers.ServiceManager" lazy-init="true"/>
   <bean id="resources" class="org.fao.geonet.resources.FileResources"/>
   <bean id="GeonetworkDataDirectory" class="org.fao.geonet.kernel.GeonetworkDataDirectory" lazy-init="true"/>
+  <bean id="SchemaManager" class="org.fao.geonet.kernel.SchemaManager" lazy-init="true"/>
 
 </beans>

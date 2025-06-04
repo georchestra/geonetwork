@@ -30,7 +30,7 @@
   <parent>
     <groupId>org.geonetwork-opensource</groupId>
     <artifactId>geonetwork</artifactId>
-    <version>4.4.5-georchestra</version>
+    <version>4.4.7-georchestra</version>
   </parent>
 
 
@@ -428,6 +428,12 @@
       <version>${project.version}</version>
     </dependency>
 
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>gn-auditable</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
     <!-- Handled locally by a temporarly repository -->
     <dependency>
       <groupId>dlib</groupId>
@@ -533,12 +539,6 @@
       <groupId>${project.groupId}</groupId>
       <artifactId>gn-camelPeriodicProducer</artifactId>
       <version>${project.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.codehaus.groovy</groupId>
-          <artifactId>groovy</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
 
     <dependency>
@@ -646,6 +646,7 @@
       <version>${xmlunit.version}</version>
       <scope>test</scope>
     </dependency>
+
   </dependencies>
 
   <build>
@@ -1068,6 +1069,16 @@
 
   <profiles>
     <profile>
+      <id>datahub-integration</id>
+      <dependencies>
+        <dependency>
+          <groupId>org.geonetwork-opensource.plugins</groupId>
+          <artifactId>gn-datahub-integration</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+      </dependencies>
+    </profile>
+    <profile>
       <id>wro4j-prebuild-cache</id>
       <activation>
         <property>
@@ -1483,7 +1494,7 @@
               <checkoutDirectory>${project.build.directory}/deb/etc/georchestra</checkoutDirectory>
               <connectionUrl>scm:git:https://github.com/georchestra/datadir.git</connectionUrl>
               <pushChanges>false</pushChanges>
-              <scmVersion>24.0</scmVersion>
+              <scmVersion>master</scmVersion>
               <scmVersionType>branch</scmVersionType>
             </configuration>
             <executions>
@@ -1579,7 +1590,7 @@
         <dockerDatadirScmUrl>scm:git:https://github.com/georchestra/datadir.git</dockerDatadirScmUrl>
         <dockerDatadirScmVersion>docker-master</dockerDatadirScmVersion>
         <dockerGnDatadirScmUrl>scm:git:https://github.com/georchestra/geonetwork_minimal_datadir.git</dockerGnDatadirScmUrl>
-        <dockerGnDatadirScmVersion>gn4.2.7</dockerGnDatadirScmVersion>
+        <dockerGnDatadirScmVersion>gn4.4.7</dockerGnDatadirScmVersion>
       </properties>
       <build>
         <finalName>geonetwork</finalName>
@@ -1647,6 +1658,14 @@
               <serverId>docker-hub</serverId>
               <registryUrl>https://index.docker.io/v1/</registryUrl>
             </configuration>
+            <executions>
+              <execution>
+                <phase>package</phase>
+                <goals>
+                  <goal>build</goal>
+                </goals>
+              </execution>
+            </executions>
             <dependencies>
               <dependency>
                 <groupId>com.google.guava</groupId>

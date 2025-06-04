@@ -240,11 +240,31 @@
                             and exists(mdb:contentInfo/*/mrc:featureCatalogue)"
                     as="xs:boolean"/>
 
+      <xsl:variable name="isMapDigital"
+                    select="count(mdb:identificationInfo/*/mri:citation/*/cit:presentationForm[*/@codeListValue = 'mapDigital']) > 0"/>
+      <xsl:variable name="isStatic"
+                    select="count(mdb:distributionInfo/*/mrd:distributionFormat/*/mrd:formatSpecificationCitation/*/cit:title/*[contains(., 'PDF') or contains(., 'PNG') or contains(., 'JPEG')]) > 0"/>
+      <xsl:variable name="isInteractive"
+                    select="count(mdb:distributionInfo/*/mrd:distributionFormat/*/mrd:formatSpecificationCitation/*/cit:title/*[contains(., 'OGC:WMC') or contains(., 'OGC:OWS-C')]) > 0"/>
+      <xsl:variable name="isPublishedWithWMCProtocol"
+                    select="count(mdb:distributionInfo/*/mrd:transferOptions/*/mrd:onLine/*/cit:protocol[starts-with(gco:CharacterString, 'OGC:WMC')]) > 0"/>
+
       <xsl:if test="$isOnlyFeatureCatalog">
         <resourceType>featureCatalog</resourceType>
       </xsl:if>
 
       <xsl:choose>
+        <xsl:when test="$isMapDigital and
+                            ($isStatic or $isInteractive or $isPublishedWithWMCProtocol)">
+          <xsl:choose>
+            <xsl:when test="$isStatic">
+              <resourceType>map-static</resourceType>
+            </xsl:when>
+            <xsl:when test="$isInteractive or $isPublishedWithWMCProtocol">
+              <resourceType>map-interactive</resourceType>
+            </xsl:when>
+          </xsl:choose>
+        </xsl:when>
         <xsl:when test="$isDataset">
           <resourceType>dataset</resourceType>
         </xsl:when>
@@ -327,14 +347,16 @@
             </xsl:variable>
             <xsl:choose>
               <xsl:when test="$zuluDateTime != ''">
+                <!-- Store original date information for the resource, instead of $zuluDateTime,
+                     to avoid timezone shifts when used for facet filters -->
                 <xsl:element name="{$dateType}DateForResource">
-                  <xsl:value-of select="$zuluDateTime"/>
+                  <xsl:value-of select="$date"/>
                 </xsl:element>
                 <xsl:element name="{$dateType}YearForResource">
-                  <xsl:value-of select="substring($zuluDateTime, 0, 5)"/>
+                  <xsl:value-of select="substring($date, 0, 5)"/>
                 </xsl:element>
                 <xsl:element name="{$dateType}MonthForResource">
-                  <xsl:value-of select="substring($zuluDateTime, 0, 8)"/>
+                  <xsl:value-of select="substring($date, 0, 8)"/>
                 </xsl:element>
               </xsl:when>
               <xsl:otherwise>
@@ -432,7 +454,7 @@
 
         <xsl:for-each select="$overviews">
           <overview type="object">{
-            "url": "<xsl:value-of select="if (local-name() = 'FileName') then @src else normalize-space(.)"/>"
+            "url": "<xsl:value-of select="if (local-name() = 'FileName') then util:escapeForJson(@src) else util:escapeForJson(normalize-space(.))"/>"
             <xsl:if test="normalize-space(../../mcc:fileDescription) != ''">,
               "nameObject":
               <xsl:value-of select="gn-fn-index:add-multilingual-field('name', ../../mcc:fileDescription, $allLanguages, true())"/>
@@ -574,6 +596,12 @@
                     id="{$thesaurusId}"
                     uri="{$thesaurusUri}"
                     title="{$thesaurusTitle}">
+                <xsl:if test="not(starts-with($thesaurusTitle, 'otherKeywords'))">
+                  <multilingualTitle>
+                    <xsl:copy-of select="gn-fn-index:add-multilingual-field('multilingualTitle',
+                            mri:thesaurusName/*/cit:title, $allLanguages, false(), true())"/>
+                  </multilingualTitle>
+                </xsl:if>
               </info>
               <keywords>
                 <xsl:for-each select="$keywords">
@@ -704,6 +732,26 @@
           <spatialRepresentationType>
             <xsl:value-of select="."/>
           </spatialRepresentationType>
+        </xsl:for-each>
+
+        <xsl:for-each select="*:resourceMaintenance/*">
+          <maintenance type="object">{
+            "frequency": "<xsl:value-of select="*:maintenanceAndUpdateFrequency/*/@codeListValue"/>"
+            <xsl:for-each select="*:dateOfNextUpdate[*/text() != '']">
+              <xsl:variable name="dateOfNextUpdateZulu"
+                            select="date-util:convertToISOZuluDateTime(*/text())"/>
+              <xsl:if test="$dateOfNextUpdateZulu != ''">
+              ,"nextUpdateDate": "<xsl:value-of select="*/text()"/>"
+              </xsl:if>
+            </xsl:for-each>
+            <xsl:for-each select="*:userDefinedMaintenanceFrequency[*/text() != '']">
+              ,"userDefinedFrequency": "<xsl:value-of select="*/text()"/>"
+            </xsl:for-each>
+            <xsl:for-each select="*:maintenanceNote[*/text() != '']">
+              ,"noteObject":
+              <xsl:value-of select="gn-fn-index:add-multilingual-field('maintenanceNote', ., $allLanguages, true())"/>
+            </xsl:for-each>
+            }</maintenance>
         </xsl:for-each>
 
         <xsl:for-each select="mri:resourceConstraints/*">
@@ -1023,7 +1071,11 @@
           "definition" :"<xsl:value-of select="util:escapeForJson(gfc:FC_FeatureType/gfc:definition/gco:CharacterString/text())"/>",
           "code" :"<xsl:value-of select="util:escapeForJson(gfc:FC_FeatureType/gfc:code/(gco:CharacterString|gcx:Anchor)/text())"/>",
           "isAbstract" :"<xsl:value-of select="gfc:FC_FeatureType/gfc:isAbstract/gco:Boolean/text()"/>",
-          "aliases" : "<xsl:value-of select="util:escapeForJson(gfc:FC_FeatureType/gfc:aliases/gco:CharacterString/text())"/>"
+          "aliases" : [
+          <xsl:for-each select="gfc:FC_FeatureType/gfc:aliases[string(*/text())]">
+            "<xsl:value-of select="util:escapeForJson(*/text())"/>"<xsl:if test="position() != last()">,</xsl:if>
+          </xsl:for-each>
+          ]
           <!--"inheritsFrom" : "<xsl:value-of select="gfc:FC_FeatureType/gfc:inheritsFrom/*/text()"/>",
           "inheritsTo" : "<xsl:value-of select="gfc:FC_FeatureType/gfc:inheritsTo/*/text()"/>",
           "constrainedBy" : "<xsl:value-of select="gfc:FC_FeatureType/gfc:constrainedBy/*/text()"/>",
@@ -1132,10 +1184,13 @@
         <xsl:variable name="processSteps"
                       select="mrl:processStep/*[mrl:description/gco:CharacterString != '']"/>
         <xsl:for-each select="$processSteps">
+          <xsl:variable name="stepDateTimeZulu"
+                        select="date-util:convertToISOZuluDateTime(normalize-space(mrl:stepDateTime))"/>
+
           <processSteps type="object">{
             "descriptionObject": <xsl:value-of select="gn-fn-index:add-multilingual-field(
                                 'description', mrl:description, $allLanguages, true())"/>
-            <xsl:if test="normalize-space(mrl:stepDateTime) != ''">
+            <xsl:if test="$stepDateTimeZulu != ''">
               ,"date": "<xsl:value-of select="mrl:stepDateTime//gml:timePosition/text()"/>"
             </xsl:if>
             <xsl:if test="normalize-space(mrl:source) != ''">
@@ -1199,16 +1254,16 @@
                         select="mdq:valueUnit//gml:identifier"/>
           <xsl:variable name="description"
                         select="(../../mdq:measure/*/mdq:measureDescription/gco:CharacterString)[1]"/>
-
           <xsl:variable name="measureDate"
-                        select="mdq:dateTime/gco:DateTime"/>
-
+                        select="normalize-space(mdq:dateTime/gco:DateTime)"/>
+          <xsl:variable name="measureDateZulu"
+                        select="date-util:convertToISOZuluDateTime($measureDate)"/>
           <measure type="object">{
             "name": "<xsl:value-of select="util:escapeForJson($name)"/>",
             <xsl:if test="$description != ''">
               "description": "<xsl:value-of select="util:escapeForJson($description)"/>",
             </xsl:if>
-            <xsl:if test="$measureDate != ''">
+            <xsl:if test="$measureDateZulu != ''">
               "date": "<xsl:value-of select="util:escapeForJson($measureDate)"/>",
             </xsl:if>
             <!-- First value only. -->
