@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 by the geOrchestra PSC
+ * Copyright (C) 2009-2025 by the geOrchestra PSC
  *
  * This file is part of geOrchestra.
  *
@@ -126,7 +126,7 @@ public class CanonicalUserImpl implements Serializable, CanonicalUser {
 
     /**
      * Creates builder to build {@link CanonicalUser}.
-     * 
+     *
      * @return created builder
      */
     public static Builder builder() {

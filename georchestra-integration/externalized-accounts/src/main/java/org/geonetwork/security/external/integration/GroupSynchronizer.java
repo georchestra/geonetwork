@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 by the geOrchestra PSC
+ * Copyright (C) 2009-2025 by the geOrchestra PSC
  *
  * This file is part of geOrchestra.
  *
@@ -31,7 +31,7 @@ import org.springframework.lang.NonNull;
 /**
  * Strategy object to synchronize internal geonetwork {@link Group groups} with
  * an external system definition of groups.
- * 
+ *
  * @see OrgsBasedGroupSynchronizer
  * @see RolesBasedGroupSynchronizer
  */
@@ -58,7 +58,7 @@ interface GroupSynchronizer {
     /**
      * Creates or updates a geonetwork {@link Group} to match the {@code canonical}
      * group
-     * 
+     *
      * @return the up to date link between the external canonical group and the
      *         internal geonetwork group
      */
