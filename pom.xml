@@ -29,7 +29,7 @@
   <groupId>org.geonetwork-opensource</groupId>
   <artifactId>geonetwork</artifactId>
   <packaging>pom</packaging>
-  <version>4.4.7-georchestra</version>
+  <version>4.4.8-georchestra</version>
   <name>GeoNetwork opensource</name>
   <description>GeoNetwork opensource is a standards based, Free and
     Open Source catalog application to manage spatially referenced
@@ -118,11 +118,11 @@
         </plugin>
         <plugin>
           <artifactId>maven-resources-plugin</artifactId>
-          <version>3.3.0</version>
+          <version>3.3.1</version>
         </plugin>
         <plugin>
           <artifactId>maven-dependency-plugin</artifactId>
-          <version>3.1.2</version>
+          <version>3.7.0</version>
         </plugin>
         <plugin>
           <artifactId>maven-clean-plugin</artifactId>
@@ -469,7 +469,7 @@
         <groupId>org.apache.jena</groupId>
         <artifactId>apache-jena-libs</artifactId>
         <type>pom</type>
-        <version>3.17.0</version>
+        <version>4.10.0</version>
       </dependency>
 
       <!-- PDF stuff: Managed by Mapfish -->
@@ -1662,7 +1662,7 @@
 
     <!-- NOTE: When updating GeoTools, check which version
     of Postgres is used and update pg.version if needed. -->
-    <geotools.version>32.2</geotools.version>
+    <geotools.version>32.3</geotools.version>
     <jts.version>1.20.0</jts.version>
     <pg.version>42.7.3</pg.version>
 
