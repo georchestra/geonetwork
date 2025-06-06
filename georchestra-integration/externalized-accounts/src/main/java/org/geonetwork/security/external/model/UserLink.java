@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 by the geOrchestra PSC
+ * Copyright (C) 2009-2025 by the geOrchestra PSC
  *
  * This file is part of geOrchestra.
  *
@@ -87,7 +87,7 @@ public class UserLink {
     /**
      * Evaluates whether the GeoNetwork {@link User user} information is current
      * with the canonical geOrchestra user.
-     * 
+     *
      * @return {@code true} if the users match according to the criteria to keep
      *         them in synch, {@code false} otherwise, meaning the GeoNetwork user
      *         properties must be updated in the database to match the geOrchestra

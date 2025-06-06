@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 by the geOrchestra PSC
+ * Copyright (C) 2009-2025 by the geOrchestra PSC
  *
  * This file is part of geOrchestra.
  *
@@ -77,7 +77,7 @@ public class AuthenticatedUserConcurrencyIT extends AbstractAccountsReconcilingS
         final CanonicalUser newUser = setUpNewUser("User_Legacy", orgC2c, roleUser, roleOrgAdmin);
 
         final String username = newUser.getUsername();
-        
+
         final Callable<User> task = () -> service.forceMatchingGeonetworkUser(username);
 
         final int nTasks = 4 * nThreads;

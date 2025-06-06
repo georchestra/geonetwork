@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 by the geOrchestra PSC
+ * Copyright (C) 2009-2025 by the geOrchestra PSC
  *
  * This file is part of geOrchestra.
  *
@@ -170,7 +170,7 @@ public class AccountsReconcilingService {
      * <p>
      * When this method returns, it is assured that the returned GeoNetwork user
      * matches the credentials of the provided canonical user info.
-     * 
+     *
      * @throws UsernameNotFoundException if the user can't be found on the
      *                                   {@link CanonicalAccountsRepository}
      */

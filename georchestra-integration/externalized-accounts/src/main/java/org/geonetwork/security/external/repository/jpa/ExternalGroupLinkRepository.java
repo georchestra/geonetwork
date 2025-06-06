@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 by the geOrchestra PSC
+ * Copyright (C) 2009-2025 by the geOrchestra PSC
  *
  * This file is part of geOrchestra.
  *
@@ -31,6 +31,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ExternalGroupLinkRepository extends PagingAndSortingRepository<ExternalGroupLink, String> {
-    
+
     Optional<ExternalGroupLink> findByName(String name);
 }
