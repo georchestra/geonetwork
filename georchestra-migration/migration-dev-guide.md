@@ -17,7 +17,7 @@ A more detailed guide is available in [upgrade_geonetwork.md](upgrade_geonetwork
 
 ## Georchestra custom implementations
 
-All versions in `pom.xml` files must be updated. E.g. for this version `4.4.7-georchestra`.
+All versions in `pom.xml` files must be updated. E.g. for this version `4.4.8-georchestra`.
 All italic folder just have the `pom.xml` change.
 
 - .github
@@ -57,7 +57,7 @@ All italic folder just have the `pom.xml` change.
 - *oaipmh*
 - *release*
 - schemas
-  - `iso19139/layout/config-editor.xml`: xlinks for contacts reenabled by default: see [about-xlinks.md](./about-xlinks.md)
+  - `iso19139/layout/config-editor.xml`: xlinks for contacts reenabled
 - *schemas-test*
 - *sde*
 - services
@@ -102,12 +102,11 @@ All italic folder just have the `pom.xml` change.
   - add idea and settings to it
 - pom.xml  
   - Add georchestra-integration module, set db-type
+
 ## Process used
 
 ### 4.2.4 -> 4.2.7
 
 A branch has been created from core-geonetwork 4.2.7 tag and merged into `georchestra-gn4.2.x`.
-All conflicts files have been resolved with taking gn changes and not geOrchestra's one.
+All conflicts files have been resolved with taking gn changes and not grochestra's one.
 Then changes have been reimplemented.
-
-

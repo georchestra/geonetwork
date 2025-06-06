@@ -1,6 +1,7 @@
 **geOrchestra/geonetwork checklist**
 <!--- In order to ease future geonetwork migrations: -->
 
+What does this PR do?
 - [ ] PR only involves cherry-picked commits from upstream.
 - [ ] PR contains custom code which will soon be available in an upstream release and can be overriden => mention core-geonetwork version if possible.
 - [ ] PR contains custom geOrchestra code, which need to be verified during future migrations.
