@@ -227,18 +227,6 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-         <artifactId>maven-install-plugin</artifactId>
-         <configuration>
-           <skip>true</skip> <!-- download artifact no need to install -->
-         </configuration>
-      </plugin>
-      <plugin>
-         <artifactId>maven-deploy-plugin</artifactId>
-         <configuration>
-           <skip>true</skip> <!-- download artifact no need to deploy -->
-         </configuration>
-      </plugin>
     </plugins>
   </build>
 </project>
