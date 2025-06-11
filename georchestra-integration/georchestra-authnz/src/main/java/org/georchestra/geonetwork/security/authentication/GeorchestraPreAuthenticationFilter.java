@@ -39,6 +39,8 @@ import org.springframework.security.web.authentication.preauth.AbstractPreAuthen
 
 import com.google.common.annotations.VisibleForTesting;
 
+import java.util.stream.Collectors;
+
 /**
  * Pre-auth filter that gets the credentials as a {@link GeorchestraUser} from a
  * {@link GeorchestraSecurityProxyAuthenticationFilter} using composition, and
@@ -85,6 +87,11 @@ public class GeorchestraPreAuthenticationFilter extends AbstractPreAuthenticated
 
         if (isFullyAuthorized) {// sec-user provided full user representation as JSON payload
             checkMandatoryProperties(auth.getUser());
+            // convert roles without the ROLE_ prefix
+            authenticatedUser.setRoles(
+                    authenticatedUser.getRoles().stream()
+                            .map(role -> role.replaceAll("^ROLE_", ""))
+                            .collect(Collectors.toList()));
             final CanonicalUser canonicalizedUser = modelMapper.toCanonical(authenticatedUser);
             user = userLinkService//
                     .findUpToDateUser(canonicalizedUser)//
