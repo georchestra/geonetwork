@@ -12,13 +12,22 @@
   <name>geOrchestra integration</name>
   <properties>
     <rootProjectDir>${basedir}/..</rootProjectDir>
-    <georchestra.version>25.0.1-SNAPSHOT</georchestra.version>
+    <georchestra.version>25.0.0</georchestra.version>
   </properties>
   <modules>
     <module>georchestra-utils</module>
     <module>externalized-accounts</module>
     <module>georchestra-authnz</module>
   </modules>
+  <repositories>
+    <repository>
+      <id>geOrchestra-artifactory</id>
+      <name>geOrchestra Maven repository</name>
+      <url>https://artifactory.georchestra.org/artifactory/georchestra/</url>
+      <snapshots><enabled>true</enabled></snapshots>
+      <releases><enabled>true</enabled></releases>
+    </repository>
+  </repositories>
   <dependencyManagement>
     <dependencies>
       <dependency>
