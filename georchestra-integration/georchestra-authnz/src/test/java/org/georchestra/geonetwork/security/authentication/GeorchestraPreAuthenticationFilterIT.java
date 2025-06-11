@@ -19,8 +19,6 @@
 
 package org.georchestra.geonetwork.security.authentication;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.regex.Pattern;
 
@@ -29,7 +27,6 @@ import org.geonetwork.security.external.configuration.ExternalizedSecurityProper
 import org.geonetwork.security.external.integration.AccountsReconcilingService;
 import org.geonetwork.security.external.model.CanonicalUser;
 import org.geonetwork.security.external.model.GroupSyncMode;
-import org.georchestra.config.security.GeorchestraUserDetails;
 import org.georchestra.geonetwork.security.AbstractGeorchestraIntegrationTest;
 import org.georchestra.security.api.UsersApi;
 import org.georchestra.security.model.GeorchestraUser;
@@ -151,6 +148,7 @@ public class GeorchestraPreAuthenticationFilterIT extends AbstractGeorchestraInt
         request.addHeader("sec-orgname", "Project Steering Committee");
         request.addHeader("sec-external-authentication", "false");
         //Should not contains ROLE_ prefix
-        assertThrows("Role EL_PSC not found in internal or external repository", IllegalArgumentException.class, () -> authFilter.getPreAuthenticatedPrincipal(request));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> authFilter.getPreAuthenticatedPrincipal(request));
+        assertEquals("Role EL_PSC not found in internal or external repository", exception.getMessage());
     }
 }
