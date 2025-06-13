@@ -19,15 +19,14 @@
 
 package org.georchestra.geonetwork.security.authentication;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
 import java.util.NoSuchElementException;
+import java.util.regex.Pattern;
 
 import org.fao.geonet.domain.User;
+import org.geonetwork.security.external.configuration.ExternalizedSecurityProperties;
 import org.geonetwork.security.external.integration.AccountsReconcilingService;
 import org.geonetwork.security.external.model.CanonicalUser;
+import org.geonetwork.security.external.model.GroupSyncMode;
 import org.georchestra.geonetwork.security.AbstractGeorchestraIntegrationTest;
 import org.georchestra.security.api.UsersApi;
 import org.georchestra.security.model.GeorchestraUser;
@@ -36,12 +35,15 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletRequest;
 
+import static org.junit.Assert.*;
+
 public class GeorchestraPreAuthenticationFilterIT extends AbstractGeorchestraIntegrationTest {
 
     private @Autowired UsersApi consoleUsersApiClient;
     private @Autowired AccountsReconcilingService synchronizationService;
 
     private @Autowired GeorchestraPreAuthenticationFilter authFilter;
+    private @Autowired ExternalizedSecurityProperties configProps;
 
     private MockHttpServletRequest request;
     private GeorchestraUser preAuthTestadmin;
@@ -133,5 +135,20 @@ public class GeorchestraPreAuthenticationFilterIT extends AbstractGeorchestraInt
 
         CanonicalUser canonical = mapper.toCanonical(testreviewer);
         support.assertUser(canonical, found);
+    }
+
+    public @Test void user_with_roles_sync_should_sync_with_groups() {
+        configProps.setSyncMode(GroupSyncMode.roles);
+        configProps.setSyncRolesFilter(Pattern.compile("EL_(.*)"));
+        synchronizationService.synchronize();
+        final String testUserJwt = "{base64}eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwicm9sZXMiOlsiUk9MRV9VU0VSIiwiUk9MRV9JTVBPUlQiLCJST0xFX0dOX0FETUlOIiwiUk9MRV9FTF9QU0MiLCJST0xFX0VMX0NPTVBBTlkiXSwib3JnYW5pemF0aW9uIjoiUFNDIiwiaWQiOiIwNDhiMmYzOC02ZWU3LTRlZWMtOWJlZC0zNDljYzZlYjEzYzMiLCJsYXN0VXBkYXRlZCI6ImY4ODJjNjJhZWY3M2VkZGNmMDgzYzUxNWYyNDlkMGZkYjMyM2U1NTA2Yzg4MTgwNzFiZDAyOWFjNGNiOWY4MTgiLCJmaXJzdE5hbWUiOiJUZXN0IiwibGFzdE5hbWUiOiJVU0VSIiwiZW1haWwiOiJwc2MrdGVzdHVzZXJAZ2VvcmNoZXN0cmEub3JnIiwibm90ZXMiOiJJbnRlcm5hbCBDUk0gbm90ZXMgb24gdGVzdHVzZXIiLCJsZGFwV2FybiI6ZmFsc2UsImlzRXh0ZXJuYWxBdXRoIjpmYWxzZX0=";
+        request = new MockHttpServletRequest();
+        request.addHeader("sec-proxy", "true");
+        request.addHeader("sec-user", testUserJwt);
+        request.addHeader("sec-orgname", "Project Steering Committee");
+        request.addHeader("sec-external-authentication", "false");
+        //Should not contains ROLE_ prefix
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> authFilter.getPreAuthenticatedPrincipal(request));
+        assertEquals("Role EL_PSC not found in internal or external repository", exception.getMessage());
     }
 }
