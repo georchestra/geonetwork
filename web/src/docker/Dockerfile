@@ -26,6 +26,7 @@ CMD ["sh", "-c", "exec java \
 -Djava.io.tmpdir=/tmp/jetty \
 -Djava.util.prefs.userRoot=/tmp/userPrefs \
 -Djava.util.prefs.systemRoot=/tmp/systemPrefs \
+-Djetty.httpConfig.requestHeaderSize=65536 \
 -Dgeorchestra.datadir=/etc/georchestra \
 -Dgeonetwork.jeeves.configuration.overrides.file=/etc/georchestra/geonetwork/config/config-overrides-georchestra.xml \
 -Dgeonetwork.dir=/mnt/geonetwork_datadir \
