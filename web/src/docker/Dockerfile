@@ -29,6 +29,7 @@ CMD ["sh", "-c", "exec java \
 -Dgeorchestra.datadir=/etc/georchestra \
 -Dgeonetwork.jeeves.configuration.overrides.file=/etc/georchestra/geonetwork/config/config-overrides-georchestra.xml \
 -Dgeonetwork.dir=/mnt/geonetwork_datadir \
+--add-opens=jdk.management/com.sun.management.internal=ALL-UNNAMED \
 -XX:MaxRAMPercentage=80 -XX:+UseParallelGC \
 -XX:-UsePerfData \
 ${JAVA_OPTIONS} \
