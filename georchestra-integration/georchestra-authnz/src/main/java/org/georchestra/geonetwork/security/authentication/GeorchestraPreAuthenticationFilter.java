@@ -24,8 +24,10 @@ import static org.georchestra.commons.security.SecurityHeaders.SEC_PROXY;
 import javax.servlet.http.HttpServletRequest;
 
 import org.fao.geonet.domain.User;
+import org.geonetwork.security.external.configuration.ExternalizedSecurityProperties;
 import org.geonetwork.security.external.integration.AccountsReconcilingService;
 import org.geonetwork.security.external.model.CanonicalUser;
+import org.geonetwork.security.external.model.GroupSyncMode;
 import org.georchestra.commons.security.SecurityHeaders;
 import org.georchestra.config.security.GeorchestraSecurityProxyAuthenticationFilter;
 import org.georchestra.config.security.GeorchestraUserDetails;
@@ -38,6 +40,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 
 import com.google.common.annotations.VisibleForTesting;
+
+import java.util.stream.Collectors;
 
 /**
  * Pre-auth filter that gets the credentials as a {@link GeorchestraUser} from a
@@ -61,6 +65,8 @@ public class GeorchestraPreAuthenticationFilter extends AbstractPreAuthenticated
      */
     private @Autowired AccountsReconcilingService userLinkService;
 
+    private @Autowired ExternalizedSecurityProperties configProps;
+
     private @Autowired CanonicalModelMapper modelMapper;
 
     public GeorchestraPreAuthenticationFilter() {
@@ -82,7 +88,12 @@ public class GeorchestraPreAuthenticationFilter extends AbstractPreAuthenticated
         final GeorchestraUser authenticatedUser = auth.getUser();
         final boolean isFullyAuthorized = null != authenticatedUser.getLastUpdated();
         User user;
-
+        if (configProps.getSyncMode() == GroupSyncMode.roles) {
+            authenticatedUser.setRoles(
+                authenticatedUser.getRoles().stream()
+                    .map(role -> role.replaceAll("^ROLE_", ""))
+                    .collect(Collectors.toList()));
+        }
         if (isFullyAuthorized) {// sec-user provided full user representation as JSON payload
             checkMandatoryProperties(auth.getUser());
             final CanonicalUser canonicalizedUser = modelMapper.toCanonical(authenticatedUser);
