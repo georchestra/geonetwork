@@ -23,6 +23,8 @@ import static org.georchestra.commons.security.SecurityHeaders.SEC_PROXY;
 
 import javax.servlet.http.HttpServletRequest;
 
+import jeeves.server.UserSession;
+import jeeves.server.sources.http.JeevesServlet;
 import org.fao.geonet.domain.User;
 import org.geonetwork.security.external.configuration.ExternalizedSecurityProperties;
 import org.geonetwork.security.external.integration.AccountsReconcilingService;
@@ -84,30 +86,12 @@ public class GeorchestraPreAuthenticationFilter extends AbstractPreAuthenticated
             log.debug("geOrchestra pre-auth is anonymous. URI: {}", request.getRequestURI());
             return null;
         }
-
-        final GeorchestraUser authenticatedUser = auth.getUser();
-        final boolean isFullyAuthorized = null != authenticatedUser.getLastUpdated();
-        User user;
-        if (configProps.getSyncMode() == GroupSyncMode.roles) {
-            authenticatedUser.setRoles(
-                authenticatedUser.getRoles().stream()
-                    .map(role -> role.replaceAll("^ROLE_", ""))
-                    .collect(Collectors.toList()));
-        }
-        if (isFullyAuthorized) {// sec-user provided full user representation as JSON payload
-            checkMandatoryProperties(auth.getUser());
-            final CanonicalUser canonicalizedUser = modelMapper.toCanonical(authenticatedUser);
-            user = userLinkService//
-                    .findUpToDateUser(canonicalizedUser)//
-                    .orElseGet(() -> userLinkService.forceMatchingGeonetworkUser(canonicalizedUser));
-        } else {// legacy authentication mode, find by username
-            final String userName = authenticatedUser.getUsername();
-            user = userLinkService//
-                    .findUpToDateUserByUsername(userName)//
-                    .orElseGet(() -> userLinkService.forceMatchingGeonetworkUser(userName));
-        }
-
-        return user;
+        return userLinkService//
+                .findUpToDateUserByUsername(auth.getUser().getUsername())//
+                .orElseGet(() -> {
+                    userLinkService.synchronize();
+                    return null;
+                });
     }
 
     private GeorchestraUser checkMandatoryProperties(GeorchestraUser user) {
