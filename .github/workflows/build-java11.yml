@@ -1,0 +1,78 @@
+name: build
+
+on:
+  push:
+    branches:
+    - georchestra-gn4.4.x
+    - gn-out-of-core-georchestra
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    if: "!startsWith(github.event.head_commit.message, '[skip ci] ')"
+    name: "📦 Build, test and publish on Docker Hub"
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+    - name: "Checking out"
+      uses: actions/checkout@v2.4.0
+      with:
+        submodules: 'recursive'
+
+    - name: "Setting up Java"
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+
+    - name: "Installing GeoNetwork"
+      run: mvn clean install -DskipTests -Pdatahub-integration
+
+    - name: "run tests"
+      run: mvn verify -Pit
+
+    - name: "publish the webapp as artifact"
+      if: github.repository == 'georchestra/geonetwork' && github.actor != 'dependabot[bot]' && github.ref == 'refs/heads/georchestra-gn4.4.x' && github.event_name != 'pull_request'
+      uses: actions/upload-artifact@v4
+      with:
+        name: geonetwork.war
+        path: web/target/geonetwork.war
+
+    - name: Getting image tag
+      if: github.repository == 'georchestra/geonetwork' && github.actor != 'dependabot[bot]'
+      id: version
+      run: echo "VERSION=$(echo $GITHUB_REF | cut -d / -f 3)" >> $GITHUB_OUTPUT
+
+    - name: "🐳 Build GeoNetwork docker image"
+      if: github.repository == 'georchestra/geonetwork' && github.actor != 'dependabot[bot]'
+      run: |
+        cd web
+        mvn package -Pdocker,datahub-integration -DdockerImageName=georchestra/geonetwork -DdockerImageTags=${{ steps.version.outputs.VERSION }},latest -DskipTests -ntp
+
+    - name: "Logging in docker.io"
+      uses: azure/docker-login@v2
+      if: github.repository == 'georchestra/geonetwork' && github.actor != 'dependabot[bot]' && github.event_name != 'pull_request'
+      with:
+        username: '${{ secrets.DOCKER_HUB_USERNAME }}'
+        password: '${{ secrets.DOCKER_HUB_PASSWORD }}'
+
+    - name: "Pushing latest to docker.io"
+      if: github.ref == 'refs/heads/master' && github.repository == 'georchestra/geonetwork' && github.actor != 'dependabot[bot]' && github.event_name != 'pull_request'
+      run: |
+        docker push georchestra/geonetwork:latest
+
+    - name: "Pushing release branch to docker.io"
+      if: (contains(github.ref, 'refs/tags/') || endsWith(github.ref, '.x')) && github.repository == 'georchestra/geonetwork' && github.actor != 'dependabot[bot]' && github.event_name != 'pull_request'
+      run: |
+        docker push georchestra/geonetwork:${{ steps.version.outputs.VERSION }}
+
+    - name: "Update Docker Hub Description"
+      if: github.ref == 'refs/heads/master' && github.repository == 'georchestra/geonetwork' && github.actor != 'dependabot[bot]' && github.event_name != 'pull_request'
+      uses: peter-evans/dockerhub-description@v3
+      with:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+        repository: georchestra/geonetwork
+        readme-filepath: ./geonetwork/DOCKER_HUB.md
+        short-description: 'Geonetwork module for the geOrchestra SDI'

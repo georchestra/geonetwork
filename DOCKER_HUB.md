@@ -39,7 +39,7 @@ For this specific component, see the section `geonetwork` in the [`georchestra/d
 
 ## Where is it built
 
-This image is built using maven : `./mvnw -Pdocker package docker:build` in [`georchestra`](https://github.com/georchestra/georchestra) repository.
+This image is built using maven : `mvn -Pdocker package` in [`georchestra`](https://github.com/georchestra/georchestra) repository.
 
 # License
 
