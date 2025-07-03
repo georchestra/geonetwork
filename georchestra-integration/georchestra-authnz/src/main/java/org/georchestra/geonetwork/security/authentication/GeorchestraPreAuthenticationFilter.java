@@ -23,13 +23,9 @@ import static org.georchestra.commons.security.SecurityHeaders.SEC_PROXY;
 
 import javax.servlet.http.HttpServletRequest;
 
-import jeeves.server.UserSession;
-import jeeves.server.sources.http.JeevesServlet;
 import org.fao.geonet.domain.User;
 import org.geonetwork.security.external.configuration.ExternalizedSecurityProperties;
 import org.geonetwork.security.external.integration.AccountsReconcilingService;
-import org.geonetwork.security.external.model.CanonicalUser;
-import org.geonetwork.security.external.model.GroupSyncMode;
 import org.georchestra.commons.security.SecurityHeaders;
 import org.georchestra.config.security.GeorchestraSecurityProxyAuthenticationFilter;
 import org.georchestra.config.security.GeorchestraUserDetails;
