@@ -91,6 +91,9 @@
 
         <xsl:call-template name="css-load"/>
         <script src="{$headerScript}"></script>
+        <xsl:if test="$georchestraStylesheet != 'null' and string($georchestraStylesheet) != ''">
+          <link rel="stylesheet" href="{$georchestraStylesheet}" type="text/css"/>
+        </xsl:if>
       </head>
 
 

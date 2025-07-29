@@ -21,7 +21,7 @@ All versions in `pom.xml` files must be updated. E.g. for this version `4.4.8-ge
 All italic folder just have the `pom.xml` change.
 
 - .github
-  - workflows `linux.yml` `mvn-dep-tree.yml` `sonarcloud.yml` `dependabot.yml` are deleted. Only `georchestra-gn4.yml` is used
+  - workflows `linux.yml` `mvn-dep-tree.yml` `sonarcloud.yml` `dependabot.yml` are deleted. Keep `backport.yml`, `build-java-11.yml`, `scorecard.yaml` is used
 - *cachingxslt*
 - common
   - `ZipUtilTest.java` : In `assertExampleZip` method, assertions which are supposed check folders must check with trailing slash too.
@@ -102,6 +102,8 @@ All italic folder just have the `pom.xml` change.
   - add idea and settings to it
 - pom.xml  
   - Add georchestra-integration module, set db-type
+- Makefile: keep it
+- 
 ## Process used
 
 ### 4.2.4 -> 4.2.7
