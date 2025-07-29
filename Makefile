@@ -3,8 +3,7 @@ BTAG=4.4.x-SNAPSHOT
 deb:
 	mvn package deb:package -pl web -PdebianPackage,datahub-integration -DskipTests ${DEPLOY_OPTS}
 
-container:
-	mvn -DskipTests -Pdatahub-integration clean install; \
+docker-build: war
 	cd web; \
 	mvn -Pdocker,datahub-integration -DskipTests package -DdockerImageTags=${BTAG},latest
 
