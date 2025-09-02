@@ -93,6 +93,7 @@ All italic folder just have the `pom.xml` change.
   - `src/main/resources/catalog/locales/`
     - Get `en-georchestra.json` and `fr-georchestra.json` from georchestra
   - `src/main/resources/catalog/style/gn-less`: remove position fixed from `.gn-top-bar` to get gn header after georchestra's header.
+  - `src/main/WebResources/WEB-INF/data/config/index/records.json`: Keep field `mappings.dynamic_templates.semsearch` from georchestra. It is used by chatbot for semantic search.
   - `gn_admin_default.less`: Same (header position)
   - `gn_navbar_default.less`: Same (header position)
   - `src/main/resources/catalog/views/georchestra/`: Get files from georchestra
