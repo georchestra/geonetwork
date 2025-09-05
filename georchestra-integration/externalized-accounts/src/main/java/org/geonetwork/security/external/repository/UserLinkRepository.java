@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2025 by the geOrchestra PSC
+ * Copyright (C) 2021 by the geOrchestra PSC
  *
  * This file is part of geOrchestra.
  *
@@ -65,7 +65,7 @@ public class UserLinkRepository {
     }
 
     @Transactional
-    public UserLink save(UserLink link) {
+    public ExternalUserLink save(UserLink link) {
         requireNonNull(link);
         requireNonNull(link.getInternalUser());
         requireNonNull(link.getCanonicalUserId());
@@ -75,24 +75,24 @@ public class UserLinkRepository {
         User gnUser = link.getInternalUser();
         gnUser = gnUserRepository.save(gnUser);
         jpaLink.setGeonetworkUser(gnUser);
-        jpaLink = linksRepo.save(jpaLink);
-        return toModel(jpaLink);
+        //jpaLink = linksRepo.save(jpaLink);
+        return jpaLink;
     }
 
     private ExternalUserLink toJPA(UserLink link) {
         Objects.requireNonNull(link);
         return new ExternalUserLink()//
-                .setExternalUserId(link.getCanonicalUserId())//
-                .setLastUpdated(link.getLastUpdated())//
-                .setGeonetworkUser(link.getInternalUser());
+            .setExternalUserId(link.getCanonicalUserId())//
+            .setLastUpdated(link.getLastUpdated())//
+            .setGeonetworkUser(link.getInternalUser());
     }
 
-    private UserLink toModel(ExternalUserLink link) {
+    public UserLink toModel(ExternalUserLink link) {
         Objects.requireNonNull(link);
         return new UserLink()//
-                .setCanonicalUserId(link.getExternalUserId())//
-                .setLastUpdated(link.getLastUpdated())//
-                .setInternalUser(link.getGeonetworkUser());
+            .setCanonicalUserId(link.getExternalUserId())//
+            .setLastUpdated(link.getLastUpdated())//
+            .setInternalUser(link.getGeonetworkUser());
     }
 
     public long countMetadataRecords(UserLink link) {
