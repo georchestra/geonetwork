@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009-2025 by the geOrchestra PSC
+ * Copyright (C) 2021 by the geOrchestra PSC
  *
  * This file is part of geOrchestra.
  *
@@ -30,6 +30,7 @@ import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.domain.Profile;
 import org.fao.geonet.domain.User;
 import org.fao.geonet.domain.UserGroup;
+import org.fao.geonet.domain.external.ExternalUserLink;
 import org.fao.geonet.repository.UserGroupRepository;
 import org.fao.geonet.repository.UserRepository;
 import org.fao.geonet.repository.specification.UserGroupSpecs;
@@ -37,6 +38,7 @@ import org.geonetwork.security.external.model.CanonicalUser;
 import org.geonetwork.security.external.model.UserLink;
 import org.geonetwork.security.external.repository.CanonicalAccountsRepository;
 import org.geonetwork.security.external.repository.UserLinkRepository;
+import org.geonetwork.security.external.repository.jpa.ExternalUserLinkRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +50,7 @@ import com.google.common.collect.Sets;
 
 class UserSynchronizer {
     static final Logger log = LoggerFactory.getLogger(UserSynchronizer.class.getPackage().getName());
+    static int i = 0;
 
     /** GN internals require {@link ApplicationContextHolder#set} */
     private @Autowired ConfigurableApplicationContext appContext;
@@ -62,6 +65,9 @@ class UserSynchronizer {
     protected @Autowired UserGroupRepository internalUserToGroupLinks;
 
     private @Autowired GroupSynchronizer userPrivilegesResolver;
+    private @Autowired ExternalUserLinkRepository linksRepo;
+
+    private List<ExternalUserLink> externalUserLinksList;
 
     public UserSynchronizer(CanonicalAccountsRepository canonicalAccounts) {
         Objects.requireNonNull(canonicalAccounts);
@@ -91,7 +97,7 @@ class UserSynchronizer {
     @Transactional
     public void synchronizeAll() {
         ApplicationContextHolder.set(appContext);
-        log.debug("Fetching canonical user definitions...");
+        log.info("Fetching canonical user definitions...");
         List<CanonicalUser> canonicalUsers = findCanonicalUsers();
         synchronizeAll(canonicalUsers);
         log.debug("Users synchronization complete.");
@@ -103,13 +109,16 @@ class UserSynchronizer {
         requireNonNull(canonical);
         canonical.forEach(u -> requireNonNull(u, "null references not accepted in user's list"));
 
-        log.debug("Synchronizing {} canonical user definitions...", canonical.size());
+        log.info("Synchronizing {} canonical user definitions...", canonical.size());
+        externalUserLinksList = new ArrayList<>();
+        i = 0;
         try {
             final Set<String> canonicalIds = canonical.stream().map(CanonicalUser::getId).collect(Collectors.toSet());
             final Map<String, UserLink> currentLinks = getExistingUserLinksById();
 
             deleteGoneUsers(canonicalIds, currentLinks);
             canonical.forEach(this::synchronize);
+            linksRepo.saveAll(externalUserLinksList);
         } catch (RuntimeException e) {
             log.error("Error synchronizing users", e);
             throw e;
@@ -127,14 +136,20 @@ class UserSynchronizer {
         ApplicationContextHolder.set(appContext);
         requireNonNull(canonical);
 
+        List<User> users = new ArrayList<>();
         UserLink link = resolveLink(canonical);
         if (!link.isUpToDateWith(canonical)) {
             Privileges privileges = userPrivilegesResolver.resolvePrivilegesFor(canonical);
             setGeonetworkUserProperties(canonical, link.getInternalUser(), privileges.getUserProfile());
             link.setLastUpdated(canonical.getLastUpdated());
-            link = externalUserLinks.save(link);
-            synchronizeUserGroups(link.getInternalUser(), privileges.getAdditionalProvileges());
+            ExternalUserLink externalLink = externalUserLinks.save(link);
+            users.add(link.getInternalUser());
+            synchronizeUserGroups(externalUserLinks.toModel(externalLink).getInternalUser(), privileges.getAdditionalProvileges());
+            externalUserLinksList.add(externalLink);
         }
+
+        log.info("Synchronized {} users so far..., user {}", i++, link.getInternalUser().getUsername());
+
         return link;
     }
 
@@ -158,21 +173,21 @@ class UserSynchronizer {
             .map(privileges -> privileges.get(0))
             // create a new privilege with editor profile
             .map(privilege -> {
-                    log.debug("User {} is a reviewer of group {}", user.getUsername(),
-                        privilege.getGroup().getName());
-                    return new Privilege(privilege.getGroup(), Profile.Editor);
-                }).collect(Collectors.toList());
+                log.debug("User {} is a reviewer of group {}", user.getUsername(),
+                    privilege.getGroup().getName());
+                return new Privilege(privilege.getGroup(), Profile.Editor);
+            }).collect(Collectors.toList());
         //Combine all the privileges
         editors.addAll(actual);
 
         return editors.stream()//
-                .map(privilege -> newUserGroup(user, privilege))//
-                .collect(Collectors.toList());
+            .map(privilege -> newUserGroup(user, privilege))//
+            .collect(Collectors.toList());
     }
 
     private UserGroup newUserGroup(User user, Privilege privilege) {
-        log.info("Adding profile {} to group {} for user {}", privilege.getProfile(), privilege.getGroup().getName(),
-                user.getUsername());
+        log.debug("Adding profile {} to group {} for user {}", privilege.getProfile(), privilege.getGroup().getName(),
+            user.getUsername());
         return new UserGroup().setUser(user).setGroup(privilege.getGroup()).setProfile(privilege.getProfile());
     }
 
@@ -190,16 +205,16 @@ class UserSynchronizer {
             User user = this.gnUserRepository.findOneByUsername(canonical.getUsername());
             if (user == null) {
                 user = new User();
-                log.info("Creating GN User {} (id: {})...", canonical.getUsername(), canonical.getId());
+                log.debug("Creating GN User {} (id: {})...", canonical.getUsername(), canonical.getId());
             } else {
-                log.info("Reconciling existing GN User {} with canonical user (id: {})", user.getUsername(),
-                        canonical.getId());
+                log.debug("Reconciling existing GN User {} with canonical user (id: {})", user.getUsername(),
+                    canonical.getId());
             }
             link.setCanonicalUserId(canonical.getId());
             link.setInternalUser(user);
         } else {
-            log.info("GN user {} (version '{}') is outdated, reconciling to version '{}'", //
-                    canonical.getUsername(), link.getLastUpdated(), canonical.getLastUpdated());
+            log.debug("GN user {} (version '{}') is outdated, reconciling to version '{}'", //
+                canonical.getUsername(), link.getLastUpdated(), canonical.getLastUpdated());
         }
         return link;
     }
@@ -243,7 +258,7 @@ class UserSynchronizer {
         long recordCount = externalUserLinks.countMetadataRecords(userLink);
         if (recordCount > 0L) {
             log.warn("Cannot delete user '{}' who is owner of {} metadata record(s).",
-                    userLink.getInternalUser().getName(), recordCount);
+                userLink.getInternalUser().getName(), recordCount);
             // can't delete the user, but can delete the link and rename the user to avoid
             // conflicts with future users with the same name
             final String deletedUserName = buildDeletedUserName(userLink);
