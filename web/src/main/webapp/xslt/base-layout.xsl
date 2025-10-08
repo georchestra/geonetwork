@@ -90,6 +90,10 @@
 
 
         <xsl:call-template name="css-load"/>
+        <script src="{$headerScript}"></script>
+        <xsl:if test="$georchestraStylesheet != 'null' and string($georchestraStylesheet) != ''">
+          <link rel="stylesheet" href="{$georchestraStylesheet}" type="text/css"/>
+        </xsl:if>
       </head>
 
 
@@ -98,6 +102,7 @@
       and a facet search to get main site information.
       -->
       <body data-ng-controller="GnCatController" data-ng-class="[isHeaderFixed ? 'gn-header-fixed' : 'gn-header-relative', isLogoInHeader ? 'gn-logo-in-header' : 'gn-logo-in-navbar', isFooterEnabled ? 'gn-show-footer' : 'gn-hide-footer']">
+        <geor-header active-app="geonetwork" config-file="{$headerConfigFile}" legacy-header="{$useLegacyHeader}" legacy-url="{$headerUrl}" logo-url="{$logoUrl}" stylesheet="{$georchestraStylesheet}" height="{$headerHeight}"></geor-header>
 
         <div data-gn-alert-manager=""/>
 
