@@ -1,0 +1,4 @@
+{
+  "viewLayers": "View the WMS layers in Mapstore",
+  "invalidSelectionZeroWMS": "No WMS layers in the current selection"
+}

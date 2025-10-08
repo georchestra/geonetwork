@@ -1452,6 +1452,7 @@
     <module>plugins</module>
     <module>translationproviders</module>
     <module>auditable</module>
+    <module>georchestra-integration</module>
   </modules>
 
   <profiles>
@@ -1577,9 +1578,8 @@
         GEONETWORK_DB_CONNECTION_PROPERTIES=
     -->
 
-    <db.type>${geonetwork.db.type:h2}</db.type>
     <!-- Instead of using db_type a specific config file can be specified -->
-    <db.config.file>../config-db/${db.type}.xml</db.config.file>
+    <db.config.file>../config-db/postgres-postgis.xml</db.config.file>
     <db.host>#{systemEnvironment['GEONETWORK_DB_HOST']?:'localhost'}</db.host>
     <db.port>#{systemEnvironment['GEONETWORK_DB_PORT']}</db.port>
     <db.name>#{systemEnvironment['GEONETWORK_DB_NAME']?:'~/gn'}</db.name>
@@ -1630,6 +1630,7 @@
     <es.protocol>http</es.protocol>
     <es.port>9200</es.port>
     <es.host>localhost</es.host>
+    <es.url>${es.protocol}://${es.host}:${es.port}</es.url>
     <es.index.features>gn-features</es.index.features>
     <es.index.features.type>features</es.index.features.type>
     <es.index.records>gn-records</es.index.records>
@@ -1648,7 +1649,7 @@
     <es.index.max_result_window.limit>15000</es.index.max_result_window.limit>
     <es.index.max_inner_result_window.limit>200</es.index.max_inner_result_window.limit>
 
-    <es.index.mapping.total_fields.limit>4000</es.index.mapping.total_fields.limit>
+    <es.index.mapping.total_fields.limit>6000</es.index.mapping.total_fields.limit>
     <es.index.ignore_above>2000</es.index.ignore_above>
 
     <!-- If elasticsearch security is on,
