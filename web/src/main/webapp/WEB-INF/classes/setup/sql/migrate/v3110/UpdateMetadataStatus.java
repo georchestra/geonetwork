@@ -246,7 +246,7 @@ public class UpdateMetadataStatus extends DatabaseMigrationTask {
                                 changeflag = true;
                             }
                         }
-                        if (changeflag = true) {
+                        if (changeflag == true) {
                             updateRowCount++;
                             metadataStatusRepository.save(metadataStatus);
                             changeflag=false;
@@ -254,8 +254,11 @@ public class UpdateMetadataStatus extends DatabaseMigrationTask {
                     }
                 }
             }
+            if (!page.hasNext()) {
+                break;
+            }
             pageRequest=page.nextPageable();
-        } while (pageRequest != null && page.hasContent());
+        } while (page.hasContent());
         Log.info(Geonet.DB, "Migration: Updated " + updateRowCount + " records from a total of " + totalRowCount + " for talbe '" + MetadataStatus.TABLE_NAME +
                 "'. (uuid:" + uuidRowCount + ", Titles:" + titleRowCount + ")");
     }

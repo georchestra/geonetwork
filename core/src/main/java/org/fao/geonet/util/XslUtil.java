@@ -110,14 +110,18 @@ import javax.imageio.ImageIO;
 import javax.xml.parsers.ParserConfigurationException;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -278,6 +282,162 @@ public final class XslUtil {
     private static final char TS_WKT = ',';
     private static final char CS_WKT = ' ';
     private static ThreadLocal<Boolean> allowScripting = new InheritableThreadLocal<Boolean>();
+
+    private static String headerUrl;
+    private static String headerHeight;
+    private static String useLegacyHeader;
+    private static String headerScript;
+    private static String logoUrl;
+    private static String georchestraStylesheet;
+    private static String headerConfigFile;
+
+
+    public static String getGeorchestraHeaderUrl(){
+
+        if(XslUtil.headerUrl == null) {
+
+            // Set default value
+            XslUtil.headerUrl = "/header/";
+
+            // Load value from datadir
+            Properties properties = XslUtil.loadDatadirProperties();
+            if (properties.containsKey("headerUrl"))
+                XslUtil.headerUrl = properties.getProperty("headerUrl");
+        }
+
+        return XslUtil.headerUrl;
+    }
+
+    public static String getGeorchestraHeaderHeight(){
+
+        if(XslUtil.headerHeight == null) {
+
+            // Set default value
+            XslUtil.headerHeight = "80";
+
+            // Load value from datadir
+            Properties properties = XslUtil.loadDatadirProperties();
+            if (properties.containsKey("headerHeight"))
+                XslUtil.headerHeight = properties.getProperty("headerHeight");
+        }
+
+        return XslUtil.headerHeight;
+    }
+
+    public static String getGeorchestraUseLegacyHeader(){
+
+        if(XslUtil.useLegacyHeader == null) {
+
+            // Set default value
+            XslUtil.useLegacyHeader = "false";
+
+            // Load value from datadir
+            Properties properties = XslUtil.loadDatadirProperties();
+            if (properties.containsKey("useLegacyHeader"))
+                XslUtil.useLegacyHeader = properties.getProperty("useLegacyHeader");
+        }
+
+        return XslUtil.useLegacyHeader;
+    }
+
+    public static String getGeorchestraHeaderScript(){
+
+        if(XslUtil.headerScript == null) {
+
+            // Set default value
+            XslUtil.headerScript = "https://cdn.jsdelivr.net/gh/georchestra/header@dist/header.js";
+
+            // Load value from datadir
+            Properties properties = XslUtil.loadDatadirProperties();
+            if (properties.containsKey("headerScript"))
+                XslUtil.headerScript = properties.getProperty("headerScript");
+        }
+
+        return XslUtil.headerScript;
+    }
+
+    public static String getGeorchestraHeaderLogo(){
+
+        if(XslUtil.logoUrl == null) {
+
+            // Set default value
+            XslUtil.logoUrl = "https://www.georchestra.org/public/georchestra-logo.svg";
+
+            // Load value from datadir
+            Properties properties = XslUtil.loadDatadirProperties();
+            if (properties.containsKey("logoUrl"))
+                XslUtil.logoUrl = properties.getProperty("logoUrl");
+        }
+
+        return XslUtil.logoUrl;
+    }
+
+    public static String getGeorchestraHeaderStylesheet(){
+
+        if(XslUtil.georchestraStylesheet == null) {
+
+            // Set default value
+            XslUtil.georchestraStylesheet = "";
+
+            // Load value from datadir
+            Properties properties = XslUtil.loadDatadirProperties();
+            if (properties.containsKey("georchestraStylesheet"))
+                XslUtil.georchestraStylesheet = properties.getProperty("georchestraStylesheet");
+        }
+
+        return XslUtil.georchestraStylesheet;
+    }
+
+    public static String getGeorchestraHeaderConfigFile(){
+
+        if(XslUtil.headerConfigFile == null) {
+
+            // Set default value
+            XslUtil.headerConfigFile = "";
+
+            // Load value from datadir
+            Properties properties = XslUtil.loadDatadirProperties();
+            if (properties.containsKey("headerConfigFile"))
+                XslUtil.headerConfigFile = properties.getProperty("headerConfigFile");
+        }
+
+        return XslUtil.headerConfigFile;
+    }
+
+    private static Properties loadProperties(File path, Properties prop) throws IOException {
+        try(FileInputStream fisProp = new FileInputStream(path)) {
+            InputStreamReader isrProp = new InputStreamReader(fisProp, "UTF8");
+            prop.load(isrProp);
+        }
+        return prop;
+    }
+
+    private static Properties loadDatadirProperties(){
+
+        String globalDatadirPath = System.getProperty("georchestra.datadir");
+        Properties properties = new Properties();
+
+        if (globalDatadirPath != null) {
+            File defaultConfiguration = Paths.get(globalDatadirPath, "default.properties").toFile();
+            File geonetworkConfiguration = Paths.get(globalDatadirPath, "geonetwork", "geonetwork.properties").toFile();
+            if (defaultConfiguration.canRead()) {
+                try {
+                    XslUtil.loadProperties(defaultConfiguration, properties);
+                } catch (IOException e) {
+                    Log.error(Geonet.GEONETWORK, "Error getting the default geOrchestra configuration", e);
+                }
+            }
+            if (geonetworkConfiguration.canRead()) {
+                try {
+                    XslUtil.loadProperties(geonetworkConfiguration, properties);
+                } catch (IOException e) {
+                    Log.error(Geonet.GEONETWORK, "Error getting the geOrchestra/geonetwork configuration", e);
+                }
+            }
+        }
+        return properties;
+    }
+
 
     /**
      * clean the src of ' and <>
@@ -903,7 +1063,7 @@ public final class XslUtil {
             final Map<String, String> values = searchManager.getFieldsValues(id, fields, language);
             return values.get(fieldname);
         } catch (Exception e) {
-            Log.warning(Geonet.GEONETWORK, "Failed to get index field '" + fieldname + "' value on '" + id + "', caused by " + e.getMessage());
+            Log.error(Geonet.GEONETWORK, "Failed to get index field '" + fieldname + "' value on '" + id + "', caused by " + e.getMessage());
         }
         return "";
     }
