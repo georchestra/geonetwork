@@ -40,3 +40,4 @@ DELETE FROM SelectionsDes;
 DELETE FROM Selections;
 DELETE FROM UserSavedSelections;
 DELETE FROM MetadataIdentifierTemplate;
+DELETE FROM settings_ui;
