@@ -6,20 +6,25 @@ on:
       - labeled
 
 permissions:
-  contents: read
+  contents: write # so it can comment
+  pull-requests: write # so it can create pull requests
 
 jobs:
   backport:
-    permissions:
-      contents: write
-      pull-requests: write
-      issues: write
+    name: Backport PR
+    if: github.event.pull_request.merged == true && !(contains(github.event.pull_request.labels.*.name, 'backport'))
     runs-on: ubuntu-latest
-    name: Backport
     steps:
-      - name: Backport Bot
-        id: backport
-        if: github.event.pull_request.merged && ( ( github.event.action == 'closed' && contains( join( github.event.pull_request.labels.*.name ), 'backport') ) || contains( github.event.label.name, 'backport' ) )
-        uses: m-kuhn/backport@v1.2.7
+      - name: Backport Action
+        uses: sqren/backport-github-action@v9.3.0
         with:
-          github_token: ${{ secrets.GH_TOKEN_BOT }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          auto_backport_label_prefix: backport-to-
+
+      - name: Info log
+        if: ${{ success() }}
+        run: cat ~/.backport/backport.info.log
+
+      - name: Debug log
+        if: ${{ failure() }}
+        run: cat ~/.backport/backport.debug.log

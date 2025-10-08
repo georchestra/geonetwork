@@ -68,7 +68,7 @@
         <directory>src/main/resources</directory>
       </resource>
       <resource>
-        <directory>target/resources</directory>
+        <directory>${project.basedir}/target/resources</directory>
       </resource>
     </resources>
     <plugins>
@@ -78,7 +78,9 @@
         <executions>
           <execution>
             <id>reset</id>
-            <goals><goal>clean</goal></goals>
+            <goals>
+              <goal>clean</goal>
+            </goals>
             <configuration>
               <filesets>
                 <!-- reset working files covered by .gitignore -->
@@ -231,18 +233,6 @@
             </configuration>
           </execution>
         </executions>
-      </plugin>
-      <plugin>
-         <artifactId>maven-install-plugin</artifactId>
-         <configuration>
-           <skip>true</skip> <!-- download artifact no need to install -->
-         </configuration>
-      </plugin>
-      <plugin>
-         <artifactId>maven-deploy-plugin</artifactId>
-         <configuration>
-           <skip>true</skip> <!-- download artifact no need to deploy -->
-         </configuration>
       </plugin>
     </plugins>
   </build>
