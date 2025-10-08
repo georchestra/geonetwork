@@ -31,6 +31,7 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Cacheable;
@@ -145,7 +146,7 @@ public class Group extends Localized implements Serializable {
      *
      * @return the description.
      */
-    @Column(length = 255)
+    @Column(columnDefinition = "TEXT")
     public String getDescription() {
         return _description;
     }
@@ -249,6 +250,7 @@ public class Group extends Localized implements Serializable {
      * @return the filename of the logo or null if there is no logo associated with this group.
      */
     @Nullable
+    @Column(columnDefinition = "TEXT")
     public String getLogo() {
         return logo;
     }

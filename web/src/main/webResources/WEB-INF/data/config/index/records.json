@@ -1615,6 +1615,26 @@
             "search_analyzer": "keyword"
           }
         }
+      },
+      {
+        "semsearch": {
+          "match": "semsearch",
+          "mapping": {
+            "type": "nested",
+            "properties": {
+              "text": {
+                "type": "object",
+                "enabled": false
+              },
+              "textEmbedding": {
+                "type": "dense_vector",
+                "dims": 1024,
+                "index": true,
+                "similarity": "cosine"
+              }
+            }
+          }
+        }
       }
     ],
     "properties": {

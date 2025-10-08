@@ -111,6 +111,23 @@
     </div>
   </div>
 
+  <div
+    data-ng-if="mdView.current.record.resourceEdition"
+    class="gn-margin-bottom flex-row"
+  >
+    <span class="badge badge-rounded" title="{{'resourceEdition' | translate}}">
+      <i class="fa fa-fw fa-square-check"></i>
+    </span>
+    <div>
+      <h3 data-translate="">resourceEdition</h3>
+      <ul class="gn-comma-list">
+        <li>
+          <span>{{mdView.current.record.resourceEdition}}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
   <!-- Language-->
   <div
     data-ng-if="mdView.current.record.resourceLanguage.length > 0"

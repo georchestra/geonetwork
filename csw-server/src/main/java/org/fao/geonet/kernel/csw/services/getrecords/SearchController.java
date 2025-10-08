@@ -53,10 +53,7 @@ import org.fao.geonet.kernel.search.EsFilterBuilder;
 import org.fao.geonet.kernel.search.EsSearchManager;
 import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.Xml;
-import org.jdom.Attribute;
-import org.jdom.Content;
-import org.jdom.Element;
-import org.jdom.Namespace;
+import org.jdom.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.nio.file.Files;
@@ -445,7 +442,7 @@ public class SearchController {
 
         try {
             String filterQueryString = esFilterBuilder.build(context, "metadata", false, node);
-            String jsonQuery = String.format(elasticSearchQuery, filterQueryString);
+            String jsonQuery = StringUtils.replace(elasticSearchQuery, "{@}", filterQueryString);
 
             ObjectMapper objectMapper = new ObjectMapper();
             esJsonQuery = objectMapper.readTree(jsonQuery);
@@ -482,16 +479,20 @@ public class SearchController {
                 AbstractMetadata metadata = metadataUtils.findOne(mdId);
 
                 String displayLanguage = context.getLanguage();
+                try {
                 // The query to retrieve GetRecords, filters by portal. No need to re-check again when retrieving each metadata.
-                Element resultMD = retrieveMetadata(context, metadata.getId() + "",
-                    setName, outSchema, elemNames, typeName, resultType, strategy, displayLanguage, false);
+                    Element resultMD = retrieveMetadata(context, metadata.getId() + "",
+                        setName, outSchema, elemNames, typeName, resultType, strategy, displayLanguage, false);
 
-                if (resultMD != null) {
-                    if (resultType == ResultType.RESULTS) {
-                        results.addContent(resultMD);
+                    if (resultMD != null) {
+                        if (resultType == ResultType.RESULTS) {
+                            results.addContent(resultMD);
+                        }
+
+                        counter++;
                     }
-
-                    counter++;
+                } catch (InvalidParameterValueEx e) {
+                    results.addContent(new Comment(e.getMessage()));
                 }
 
             }

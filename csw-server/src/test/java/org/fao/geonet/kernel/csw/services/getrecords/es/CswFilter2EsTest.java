@@ -93,7 +93,7 @@ class CswFilter2EsTest {
             fieldValues.add(field);
             query.set("fields", fieldValues);
         }
-        query.put("query", queryString == null ? "%s" : queryString);
+        query.put("query", queryString == null ? "{@}" : queryString);
 
         queryStringNode.set("query_string", query);
 
