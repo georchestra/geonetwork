@@ -17,14 +17,26 @@ A more detailed guide is available in [upgrade_geonetwork.md](upgrade_geonetwork
 
 ## Georchestra custom implementations
 
+### Future geonetwork migrations
+
+When a new version of geonetwork is released, 
+- create a branch on newest tag, e.g. `4.4.9` -> `georchestra-gn4.4.9`.
+- Then cherry-pick the commits from the latest georchestra branch.
+- `pom.xml` files must be updated. E.g. for this version `4.4.9-georchestra`.
+- Update `web-ui/pom.xml` file to add the new version to `gn-web-ui` package. E.g: from `<version>4.4.8-georchestra</version>` to `<version>4.4.9-georchestra</version>`
+- Update latest stable georchestra verison in ` georchestra-integration/pom.xml` -> `<georchestra.version>25.0.0</georchestra.version>`
+
+### Legacy list
+
+This is the list of files/folders that have been modified in georchestra's geonetwork fork.
+
 All versions in `pom.xml` files must be updated. E.g. for this version `4.4.8-georchestra`.
 All italic folder just have the `pom.xml` change.
 
 - .github
   - workflows `linux.yml` `mvn-dep-tree.yml` `sonarcloud.yml` `dependabot.yml` are deleted. Keep `backport.yml`, `build-java-11.yml`, `scorecard.yaml` is used
 - *cachingxslt*
-- common
-  - `ZipUtilTest.java` : In `assertExampleZip` method, assertions which are supposed check folders must check with trailing slash too.
+- *common*
 - core
   - `XslUtil.java`: Implement georchestra header specific code
   - `config-spring-geonetwork.xml` : Implement `context:property-placeholder` for georchestra's datadir
@@ -106,6 +118,14 @@ All italic folder just have the `pom.xml` change.
 - Makefile: keep it
 - 
 ## Process used
+
+### 4.4.8 -> 4.4.9
+
+```bash
+ git diff --binary 4.4.8..georchestra-gn4.4.x > fork-changes.patch
+ //checkout origin tag 4.4.9
+ git am -3 < fork-changes.patch
+```
 
 ### 4.2.4 -> 4.2.7
 

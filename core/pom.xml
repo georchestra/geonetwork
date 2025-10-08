@@ -33,7 +33,6 @@
 
   <artifactId>gn-core</artifactId>
   <name>GeoNetwork core</name>
-  <version>4.4.8-georchestra</version>
 
   <dependencies>
 
