@@ -39,6 +39,7 @@ class GroupSynchronizerProxy implements GroupSynchronizer {
 
     private @Autowired OrgsBasedGroupSynchronizer orgsSynchronizer;
     private @Autowired RolesBasedGroupSynchronizer rolesSynchronizer;
+    private @Autowired RolePerOrgBasedGroupSynchronizer rolePerOrgSynchronizer;
 
     private GroupSynchronizer resolve() {
         final GroupSyncMode syncMode = props.getSyncMode();
@@ -47,6 +48,8 @@ class GroupSynchronizerProxy implements GroupSynchronizer {
             return orgsSynchronizer;
         case roles:
             return rolesSynchronizer;
+        case role_per_org:
+            return rolePerOrgSynchronizer;
         default:
             throw new IllegalStateException("Invalid sync mode: " + syncMode);
         }
