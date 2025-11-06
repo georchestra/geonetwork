@@ -158,7 +158,9 @@ public class CswFilter2Es extends AbstractFilterVisitor {
         // For example, if the wildcard is % and the escape character is \:
         //  - in the previous replacement %afr\%ca% becomes *afr\*ca*
         //  - and with this replacement *afr\*ca* becomes *afr\%ca*
-        result = result.replaceAll(Pattern.quote(escapeWildcardDefault), wildcardChar);
+        // Skip if the escapeChar is an empty string, to avoid reverting previous change
+        if (! StringUtils.isEmpty(filter.getEscape()))
+            result = result.replaceAll(Pattern.quote(escapeWildcardDefault), wildcardChar);
 
         if (wildcardChar.equals("%")) {
             // Escape % for String.format used in SearchController to process the csw filter
@@ -171,7 +173,9 @@ public class CswFilter2Es extends AbstractFilterVisitor {
             String escapeSinglecharDefault = filter.getEscape() + "?";
 
             result = result.replaceAll(Pattern.quote(singleChar), "?");
-            result = result.replaceAll(Pattern.quote(escapeSinglecharDefault), singleChar);
+            // Skip if the escapeChar is an empty string, to avoid reverting previous change
+            if (! StringUtils.isEmpty(filter.getEscape()))
+                result = result.replaceAll(Pattern.quote(escapeSinglecharDefault), singleChar);
 
             if (singleChar.equals("%")) {
                 result = result.replace( singleChar, "%%");
