@@ -795,4 +795,3 @@ INSERT INTO GUF_RatingCriteria (id, name, isinternal) VALUES (1, 'Discoverabilit
 INSERT INTO GUF_RatingCriteria (id, name, isinternal) VALUES (2, 'Readability', 'n');
 INSERT INTO GUF_RatingCriteria (id, name, isinternal) VALUES (3, 'DataQuality', 'n');
 INSERT INTO GUF_RatingCriteria (id, name, isinternal) VALUES (4, 'ServiceQuality', 'n');
-
