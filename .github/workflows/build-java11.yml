@@ -22,10 +22,10 @@ jobs:
         submodules: 'recursive'
 
     - name: "Setting up Java"
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v5
       with:
         java-version: '11'
-        distribution: 'adopt'
+        distribution: 'temurin'
 
     - name: "Installing GeoNetwork"
       run: mvn clean install -DskipTests -Pdatahub-integration
