@@ -196,6 +196,26 @@ class CswFilter2EsTest {
     }
 
     @Test
+    void testUuidPropertyIsLike() throws IOException {
+
+        final String input =
+            "      <Filter xmlns=\"http://www.opengis.net/ogc\">\n" +
+            "         <PropertyIsLike wildCard=\"%\" singleChar=\"_\" escapeChar=\"\">\n" +
+            "            <PropertyName>dc:identifier</PropertyName>\n" +
+            "            <Literal>%</Literal>\n" +
+            "        </PropertyIsLike>\n" +
+            "      </Filter>\n";
+
+        // EXPECTED:
+        final ObjectNode expected = EsJsonHelper.boolbdr(). //
+            must(array(queryStringPart("dc:identifier", "*"))). //
+            filter(queryStringPart()). //
+            bld();
+
+        assertFilterEquals(expected, input);
+    }
+
+    @Test
     void testPropertyIsLikeSpecialChars() throws IOException {
 
         final String input =
