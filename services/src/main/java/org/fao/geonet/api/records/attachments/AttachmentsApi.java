@@ -25,9 +25,6 @@
 
 package org.fao.geonet.api.records.attachments;
 
-import static org.fao.geonet.api.ApiParams.API_CLASS_RECORD_OPS;
-import static org.fao.geonet.api.ApiParams.API_CLASS_RECORD_TAG;
-
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -50,7 +47,12 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.PathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.http.*;
+import org.springframework.http.CacheControl;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -70,19 +72,25 @@ import javax.annotation.PostConstruct;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.FilterInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+
+import static org.fao.geonet.api.ApiParams.API_CLASS_RECORD_OPS;
+import static org.fao.geonet.api.ApiParams.API_CLASS_RECORD_TAG;
 
 /**
  * Metadata resource related operations.
  * <p>
  * Load the store with id 'resourceStore'.
  */
-@EnableWebMvc
 @Service
+@EnableWebMvc
 @RequestMapping(value = {"/{portal}/api/records/{metadataUuid}/attachments"})
 @Tag(name = API_CLASS_RECORD_TAG,
     description = API_CLASS_RECORD_OPS)
@@ -103,36 +111,34 @@ public class AttachmentsApi {
     /**
      * Based on the file content or file extension return an appropiate mime type.
      *
-     * @return The mime type or application/{{file_extension}} if none found.
+     * @return The mime type or application/octet-stream if none found.
      */
     public static String getFileContentType(Path file) throws IOException {
-        String contentType = Files.probeContentType(file);
-        if (contentType == null) {
-            String ext = com.google.common.io.Files.getFileExtension(file.getFileName().toString()).toLowerCase();
-            switch (ext) {
-                case "png":
-                case "gif":
-                case "bmp":
-                    contentType = "image/" + ext;
-                    break;
-                case "tif":
-                case "tiff":
-                    contentType = "image/tiff";
-                    break;
-                case "jpg":
-                case "jpeg":
-                    contentType = "image/jpeg";
-                    break;
-                case "txt":
-                    contentType = "text/plain";
-                    break;
-                case "htm":
-                case "html":
-                    contentType = "text/html";
-                    break;
-                default:
-                    contentType = "application/" + ext;
-            }
+        String contentType;
+        String ext = com.google.common.io.Files.getFileExtension(file.getFileName().toString()).toLowerCase();
+        switch (ext) {
+            case "png":
+            case "gif":
+            case "bmp":
+                contentType = "image/" + ext;
+                break;
+            case "tif":
+            case "tiff":
+                contentType = "image/tiff";
+                break;
+            case "jpg":
+            case "jpeg":
+                contentType = "image/jpeg";
+                break;
+            case "txt":
+                contentType = "text/plain";
+                break;
+            case "htm":
+            case "html":
+                contentType = "text/html";
+                break;
+            default:
+                contentType = "application/octet-stream";
         }
         return contentType;
     }
