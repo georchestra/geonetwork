@@ -70,4 +70,10 @@ interface GroupSynchronizer {
      * {@link Group} and and external {@link GroupLink link} in the process.
      */
     Privileges resolvePrivilegesFor(CanonicalUser user);
+
+    /**
+     * Returns the names of the root roles (non group-specific) assigned to the given user in the
+     * external system.
+     */
+    List<String> getRootRolesForUser(@NonNull CanonicalUser user);
 }

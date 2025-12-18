@@ -237,4 +237,8 @@ abstract class AbstractGroupSynchronizer implements GroupSynchronizer {
         return profileMappings.resolveHighestProfileFromRoleNames(roles);
     }
 
+    public List<String> getRootRolesForUser(@NonNull CanonicalUser user) {
+        return user.getRoles();
+    }
+
 }
