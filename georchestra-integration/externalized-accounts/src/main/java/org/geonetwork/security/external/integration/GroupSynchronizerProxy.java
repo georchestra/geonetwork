@@ -82,4 +82,8 @@ class GroupSynchronizerProxy implements GroupSynchronizer {
     public @Override Privileges resolvePrivilegesFor(CanonicalUser user) {
         return resolve().resolvePrivilegesFor(user);
     }
+
+    public @Override List<String> getRootRolesForUser(CanonicalUser user) {
+        return resolve().getRootRolesForUser(user);
+    }
 }
