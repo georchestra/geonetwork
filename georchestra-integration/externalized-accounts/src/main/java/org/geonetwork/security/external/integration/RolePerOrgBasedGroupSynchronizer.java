@@ -62,15 +62,15 @@ public class RolePerOrgBasedGroupSynchronizer extends AbstractGroupSynchronizer 
 
     protected @Override List<CanonicalGroup> resolveGroupsOf(CanonicalUser user) {
         final String orgName = user.getOrganization();
-        if(!StringUtils.hasLength(orgName)) {
+        if (!StringUtils.hasLength(orgName)) {
             return Collections.emptyList();
         }
         Stream<String> groupsName = userRoles(user)
             .map(r -> r.contains(separator) ? r.split(separator)[0] : orgName
             ).distinct();
         Stream<CanonicalGroup> roleGroups = groupsName.map(role -> this.externalGroupLinks.findByName(role)//
-                .map(GroupLink::getCanonical)
-                .orElseThrow(notFound(role)));
+            .map(GroupLink::getCanonical)
+            .orElseThrow(notFound(role)));
         return roleGroups.collect(Collectors.toList());
     }
 
@@ -87,19 +87,19 @@ public class RolePerOrgBasedGroupSynchronizer extends AbstractGroupSynchronizer 
 
     @Override
     protected Profile resolveDefaultProfile(CanonicalUser user) {
-        return configProperties.getProfiles().resolveHighestProfileFromRoleNames(userRoles(user).map(r -> r.contains(separator) ? r.split(separator)[1] : r).collect(Collectors.toList()));
+        return configProperties.getProfiles().resolveHighestProfileFromRoleNames(getRootRolesForUser(user));
     }
 
-    private Stream<String> userRoles(CanonicalUser user){
+    private Stream<String> userRoles(CanonicalUser user) {
         return user.getRoles().stream()
-            .filter(r -> Pattern.compile(".+"+ separator + ".+").matcher(r).matches() || config.getProfiles().getRolemappings().keySet().contains(r));
+            .filter(r -> Pattern.compile(".+" + separator + ".+").matcher(r).matches() || config.getProfiles().getRolemappings().keySet().contains(r));
     }
 
     private Privilege resolvePrivilegeFor(CanonicalUser user, Group group) {
         String groupPrefix = group.getName() + separator;
-        List<String> rolesForGroup = user.getRoles().stream()
+        List<String> rolesForGroup = userRoles(user)
             .filter(r -> r.startsWith(groupPrefix) || config.getProfiles().getRolemappings().keySet().contains(r)) //e.g filter roles for this group PSC:GN_REVIEWER and GN_EDITOR
-            .map(r -> r.contains(separator) ? r.split(separator)[1] : r) // e.g get only the role part GN_REVIEWER
+            .map(this::getRootRole) // e.g get only the role part GN_REVIEWER
             .collect(Collectors.toList());
         Profile p = config.getProfiles().resolveHighestProfileFromRoleNames(rolesForGroup); // resolve highest profile for the roles filtered, here GN_REVIEWER
         return new Privilege(group, p);
@@ -108,6 +108,19 @@ public class RolePerOrgBasedGroupSynchronizer extends AbstractGroupSynchronizer 
     private Supplier<? extends IllegalArgumentException> notFound(final String orgName) {
         return () -> new IllegalArgumentException(
             "Organization with name '" + orgName + "' not found in internal nor external repository");
+    }
+
+    @Override
+    public List<String> getRootRolesForUser(CanonicalUser user) {
+        // Not used in RolePerOrg mode
+        return userRoles(user).map(this::getRootRole).collect(Collectors.toList());
+    }
+
+    private String getRootRole(String role) {
+        if (role.contains(separator)) {
+            return role.split(separator)[1];
+        }
+        return role;
     }
 
 }
