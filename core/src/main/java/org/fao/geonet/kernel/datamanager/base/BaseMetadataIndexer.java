@@ -422,8 +422,6 @@ public class BaseMetadataIndexer implements IMetadataIndexer, ApplicationEventPu
                     Optional<User> userOpt = userRepository.findById(fullMd.getSourceInfo().getOwner());
                     if (userOpt.isPresent()) {
                         User user = userOpt.get();
-                        fields.put(Geonet.IndexFieldNames.USERINFO, user.getUsername() + "|" + user.getSurname() + "|" + user
-                            .getName() + "|" + user.getProfile());
                         fields.put(Geonet.IndexFieldNames.OWNERNAME, user.getName() + " " + user.getSurname());
                     }
                 }
