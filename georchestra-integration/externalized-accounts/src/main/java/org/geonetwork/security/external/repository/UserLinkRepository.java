@@ -34,6 +34,7 @@ import org.fao.geonet.domain.external.ExternalUserLink;
 import org.fao.geonet.kernel.datamanager.IMetadataUtils;
 import org.fao.geonet.repository.UserGroupRepository;
 import org.fao.geonet.repository.UserRepository;
+import org.fao.geonet.repository.UserSavedSelectionRepository;
 import org.fao.geonet.repository.specification.MetadataSpecs;
 import org.geonetwork.security.external.model.UserLink;
 import org.geonetwork.security.external.repository.jpa.ExternalUserLinkRepository;
@@ -53,6 +54,7 @@ public class UserLinkRepository {
     private @Autowired UserRepository gnUserRepository;
     private @Autowired UserGroupRepository userGroupRepository;
     private @Autowired IMetadataUtils metadataRepository;
+    private @Autowired UserSavedSelectionRepository userSavedSelectionRepository;
 
     private @Autowired ExternalUserLinkRepository linksRepo;
 
@@ -105,6 +107,7 @@ public class UserLinkRepository {
         delete(link);
         int userId = link.getInternalUser().getId();
         this.userGroupRepository.deleteAllByIdAttribute(UserGroupId_.userId, Collections.singleton(userId));
+        this.userSavedSelectionRepository.deleteAllByUser(userId);
         this.gnUserRepository.delete(link.getInternalUser());
     }
 
