@@ -98,7 +98,13 @@ public class RolePerOrgBasedGroupSynchronizer extends AbstractGroupSynchronizer 
     private Privilege resolvePrivilegeFor(CanonicalUser user, Group group) {
         String groupPrefix = group.getName() + separator;
         List<String> rolesForGroup = userRoles(user)
-            .filter(r -> r.startsWith(groupPrefix) || config.getProfiles().getRolemappings().keySet().contains(r)) //e.g filter roles for this group PSC:GN_REVIEWER and GN_EDITOR
+            .filter(r -> {
+                if (r.contains(separator)) {
+                    return r.startsWith(groupPrefix);
+                } else {
+                    return group.getName().equals(user.getOrganization());
+                }
+            }) //e.g filter roles for this group PSC:GN_REVIEWER and GN_EDITOR //e.g filter roles for this group PSC:GN_REVIEWER and GN_EDITOR
             .map(this::getRootRole) // e.g get only the role part GN_REVIEWER
             .collect(Collectors.toList());
         Profile p = config.getProfiles().resolveHighestProfileFromRoleNames(rolesForGroup); // resolve highest profile for the roles filtered, here GN_REVIEWER
