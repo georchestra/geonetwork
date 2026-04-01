@@ -25,5 +25,7 @@ import org.fao.geonet.domain.Group;
  * external system's Organizations or Roles.
  */
 public enum GroupSyncMode {
-    orgs, roles, role_per_org;
+    orgs,
+    roles, //deprecated
+    role_per_org;
 }

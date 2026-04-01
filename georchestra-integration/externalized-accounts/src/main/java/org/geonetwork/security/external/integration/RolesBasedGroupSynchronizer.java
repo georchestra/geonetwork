@@ -40,6 +40,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import static java.util.Objects.*;
 
+@Deprecated
 public class RolesBasedGroupSynchronizer extends AbstractGroupSynchronizer {
 
     public static final Logger log = LoggerFactory.getLogger(RolesBasedGroupSynchronizer.class.getPackage().getName());
