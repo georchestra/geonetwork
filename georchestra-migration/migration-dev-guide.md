@@ -24,7 +24,7 @@ When a new version of geonetwork is released,
 - Then cherry-pick the commits from the latest georchestra branch.
 - Update georchestra latest stable version in ` georchestra-integration/pom.xml` -> `<georchestra.version>25.0.0</georchestra.version>`
 - Update poms version (replace version in sed commands): 
-  - Update GN poms: `sed -i 's|<version>4.4.9-0</version>|<version>4.4.9-georchestra</version>|g' **/pom.xml`
+  - Update GN poms: `sed -i 's|<version>4.4.10-georchestra-00</version>|<version>4.4.9-georchestra</version>|g' **/pom.xml`
   - Update georchestra-integrations poms: `sed -i 's|<version>4.4.8-georchestra</version>|<version>4.4.9-georchestra</version>|g' **/pom.xml`
 
 ### Legacy list
