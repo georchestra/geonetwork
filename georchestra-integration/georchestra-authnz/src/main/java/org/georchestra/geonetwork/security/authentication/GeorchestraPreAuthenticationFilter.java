@@ -124,6 +124,10 @@ public class GeorchestraPreAuthenticationFilter extends AbstractPreAuthenticated
             int id = principal.getId();
             int currId = ((User) curr).getId();
             return currId != id;
+        } else if (principal == null && curr.equals("anonymousUser")) {
+            // This avoid to invalidate session which was causing anonymous user
+            // to not be able to access private metadata with ViewMdGrantedAuthority.
+            return false;
         }
         return true;
     }
