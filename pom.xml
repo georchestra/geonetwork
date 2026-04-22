@@ -108,6 +108,11 @@
     <pluginManagement>
       <plugins>
         <plugin>
+          <groupId>org.owasp</groupId>
+          <artifactId>dependency-check-maven</artifactId>
+          <version>12.2.0</version>
+        </plugin>
+        <plugin>
           <artifactId>maven-jar-plugin</artifactId>
           <version>3.1.2</version>
         </plugin>
