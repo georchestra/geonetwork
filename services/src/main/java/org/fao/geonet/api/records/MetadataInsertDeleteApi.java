@@ -1094,6 +1094,7 @@ public class MetadataInsertDeleteApi {
 
         // If the group is not found, throw a ResourceNotFoundException
         if (group == null) {
+            if (groupId.equals("2")) return; //This line is used to kept compatibility with metadata editor because group 2 is hardcoded
             throw new ResourceNotFoundException(messages.getMessage("api.groups.group_not_found", new
                 Object[]{groupId}, locale));
         }
