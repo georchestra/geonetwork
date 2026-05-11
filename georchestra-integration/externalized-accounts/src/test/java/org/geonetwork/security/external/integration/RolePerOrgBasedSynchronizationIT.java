@@ -61,7 +61,6 @@ public class RolePerOrgBasedSynchronizationIT extends AbstractAccountsReconcilin
         CanonicalGroup org = orgGroups.get(0); // just to be explicit
         CanonicalGroup role = super.createRole("PSC:GN_REVIEWER"); // role name in external repo
         List<CanonicalGroup> orgs = new ArrayList<>(super.defaultGroups);
-        orgs.add(org);
 
         // Create a user that belongs to organization "PSC" and has role "PSC:GN_REVIEWER"
         CanonicalUser u = super.setUpNewUser("prefixed", org, role);
