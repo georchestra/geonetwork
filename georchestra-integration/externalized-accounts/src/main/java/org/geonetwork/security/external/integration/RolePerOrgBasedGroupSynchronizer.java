@@ -62,14 +62,17 @@ public class RolePerOrgBasedGroupSynchronizer extends AbstractGroupSynchronizer 
 
     protected @Override List<CanonicalGroup> resolveGroupsOf(CanonicalUser user) {
         final String orgName = user.getOrganization();
-        if (!StringUtils.hasLength(orgName)) {
-            return Collections.emptyList();
-        }
         Stream<String> groupsName = userRoles(user)
-            .map(r -> r.contains(separator) ? r.split(separator)[0] : orgName
-            ).distinct();
+            .flatMap(r -> {
+                if (r.contains(separator)) {
+                    return Stream.of(r.split(separator)[0]);
+                }
+                return StringUtils.hasLength(orgName) ? Stream.of(orgName) : Stream.empty();
+            })
+            .distinct();
         Stream<CanonicalGroup> roleGroups = groupsName.map(role -> this.externalGroupLinks.findByName(role)//
             .map(GroupLink::getCanonical)
+            .or(() -> canonicalAccounts.findOrganizationByName(role))
             .orElseThrow(notFound(role)));
         return roleGroups.collect(Collectors.toList());
     }
