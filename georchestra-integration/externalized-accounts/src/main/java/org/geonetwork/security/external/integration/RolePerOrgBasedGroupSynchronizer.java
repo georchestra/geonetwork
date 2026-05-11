@@ -104,7 +104,7 @@ public class RolePerOrgBasedGroupSynchronizer extends AbstractGroupSynchronizer 
                 } else {
                     return group.getName().equals(user.getOrganization());
                 }
-            }) //e.g filter roles for this group PSC:GN_REVIEWER and GN_EDITOR //e.g filter roles for this group PSC:GN_REVIEWER and GN_EDITOR
+            }) //e.g filter roles for this group PSC:GN_REVIEWER and GN_EDITOR
             .map(this::getRootRole) // e.g get only the role part GN_REVIEWER
             .collect(Collectors.toList());
         Profile p = config.getProfiles().resolveHighestProfileFromRoleNames(rolesForGroup); // resolve highest profile for the roles filtered, here GN_REVIEWER
@@ -118,7 +118,8 @@ public class RolePerOrgBasedGroupSynchronizer extends AbstractGroupSynchronizer 
 
     @Override
     public List<String> getRootRolesForUser(CanonicalUser user) {
-        // Not used in RolePerOrg mode
+        // Used to resolve the user's global/default profile: returns relevant role names
+        // with any organization prefix stripped (for example, PSC:GN_REVIEWER -> GN_REVIEWER).
         return userRoles(user).map(this::getRootRole).collect(Collectors.toList());
     }
 
