@@ -94,8 +94,9 @@ public class RolePerOrgBasedGroupSynchronizer extends AbstractGroupSynchronizer 
     }
 
     private Stream<String> userRoles(CanonicalUser user) {
+        Pattern p = Pattern.compile(".+" + separator + ".+");
         return user.getRoles().stream()
-            .filter(r -> Pattern.compile(".+" + separator + ".+").matcher(r).matches() || config.getProfiles().getRolemappings().keySet().contains(r));
+            .filter(r -> p.matcher(r).matches() || config.getProfiles().getRolemappings().containsKey(r));
     }
 
     private Privilege resolvePrivilegeFor(CanonicalUser user, Group group) {
