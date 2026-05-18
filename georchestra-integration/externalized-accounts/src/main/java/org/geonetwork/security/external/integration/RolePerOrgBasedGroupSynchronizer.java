@@ -39,6 +39,11 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Synchronizes geOrchestra groups with external groups based on the user's organization and roles.
+ * For each organization, a corresponding geOrchestra group is created (if it doesn't exist) and the user is added to it if they belong to that organization.
+ * Additionally, if the user's roles contain an organization prefix (e.g., "ORG:ROLE"), the user is added to the group corresponding to that organization (e.g., "ORG").
+ */
 public class RolePerOrgBasedGroupSynchronizer extends AbstractGroupSynchronizer {
 
     public static final Logger log = LoggerFactory.getLogger(RolePerOrgBasedGroupSynchronizer.class.getPackage().getName());
