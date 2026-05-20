@@ -87,6 +87,10 @@ public class IntegrationTestSupport extends ExternalResource {
         configProps.setSyncMode(GroupSyncMode.roles);
     }
 
+    public void setRolePerOrgSyncMode() {
+        configProps.setSyncMode(GroupSyncMode.role_per_org);
+    }
+
     public ProfileMappingProperties getProfileMappings() {
         return configProps.getProfiles();
     }
@@ -136,7 +140,7 @@ public class IntegrationTestSupport extends ExternalResource {
         assertEquals(expectedTitle, user.getKind());
 
         ProfileMappingProperties profileMappings = configProps.getProfiles();
-        Profile expectedProfile = profileMappings.resolveHighestProfileFromRoleNames(expected.getRoles());
+        Profile expectedProfile = profileMappings.resolveHighestProfileFromRoleNames(groupSynchronizer.getRootRolesForUser(expected));
         assertEquals(expectedProfile, user.getProfile());
     }
 
