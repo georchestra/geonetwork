@@ -12,7 +12,8 @@
   <name>geOrchestra integration</name>
   <properties>
     <rootProjectDir>${basedir}/..</rootProjectDir>
-    <georchestra.version>26.0.0</georchestra.version>
+    <!-- TODO: fix / packages are not published anymore as of 26.0.0 on the artifactory ?! -->
+    <georchestra.version>25.0.3</georchestra.version>
   </properties>
   <modules>
     <module>georchestra-utils</module>
