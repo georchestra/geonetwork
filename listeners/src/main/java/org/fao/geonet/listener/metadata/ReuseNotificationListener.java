@@ -88,6 +88,10 @@ public class ReuseNotificationListener implements ApplicationListener<MetadataAd
                 return;
             }
 
+            if (event.getMd().getHarvestInfo().isHarvested()) {
+                return;
+            }
+
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             if (auth != null && auth.getAuthorities().stream()
                     .anyMatch(a -> a.getAuthority().equals(Profile.Administrator.name()))) {
