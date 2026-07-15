@@ -30,7 +30,11 @@ import org.fao.geonet.domain.Profile;
 import org.fao.geonet.domain.User;
 import org.fao.geonet.events.md.MetadataAdd;
 import org.fao.geonet.kernel.setting.SettingManager;
+import org.fao.geonet.languages.FeedbackLanguages;
 import org.fao.geonet.repository.UserRepository;
+import org.fao.geonet.util.LocalizedEmail;
+import org.fao.geonet.util.LocalizedEmailComponent;
+import org.fao.geonet.util.LocalizedEmailParameter;
 import org.fao.geonet.util.MailUtil;
 import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.Xml;
@@ -40,26 +44,29 @@ import org.jdom.Namespace;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
 
-import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.List;
-import java.util.ResourceBundle;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
+import static org.fao.geonet.util.LocalizedEmailComponent.ComponentType.*;
+import static org.fao.geonet.util.LocalizedEmailComponent.KeyType;
+import static org.fao.geonet.util.LocalizedEmailComponent.ReplacementType.*;
+import static org.fao.geonet.util.LocalizedEmailParameter.ParameterType;
+
 /**
- * Sends an email notification to all GeoNetwork administrators when a reuse
- * record (e.g. map, application) is created by a non-administrator user.
- * Detection is based on XPath expressions configured in reuse-notification.properties.
+ * Sends an email notification to all GeoNetwork administrators when a newly created
+ * record, added by a non-administrator user, matches one of the XPath expressions
+ * configured via the {@code xpath.email.notifier.xpaths} property (see config.properties).
  */
 @Component
-public class ReuseNotificationListener implements ApplicationListener<MetadataAdd> {
+public class XPathEmailNotifier implements ApplicationListener<MetadataAdd> {
 
     private static final List<Namespace> NAMESPACES = Arrays.asList(
         Geonet.Namespaces.GMD,
@@ -68,7 +75,7 @@ public class ReuseNotificationListener implements ApplicationListener<MetadataAd
         Namespace.getNamespace("mcc", "http://standards.iso.org/iso/19115/-3/mcc/1.0")
     );
 
-    @Value("${reuse.notification.xpaths:}")
+    @Value("${xpath.email.notifier.xpaths:}")
     private String xpathsConfig;
 
     @Autowired
@@ -76,6 +83,9 @@ public class ReuseNotificationListener implements ApplicationListener<MetadataAd
 
     @Autowired
     private SettingManager settingManager;
+
+    @Autowired
+    private FeedbackLanguages feedbackLanguages;
 
     @Override
     public void onApplicationEvent(MetadataAdd event) {
@@ -103,7 +113,7 @@ public class ReuseNotificationListener implements ApplicationListener<MetadataAd
             }
 
             Element xmlData = event.getMd().getXmlData(false);
-            if (!isReuseRecord(xmlData)) {
+            if (!matchesXPathTrigger(xmlData)) {
                 return;
             }
 
@@ -114,7 +124,7 @@ public class ReuseNotificationListener implements ApplicationListener<MetadataAd
                 .collect(Collectors.toList());
 
             if (adminEmails.isEmpty()) {
-                Log.debug(Geonet.DATA_MANAGER, "ReuseNotificationListener: no administrator email addresses found, skipping notification");
+                Log.debug(Geonet.DATA_MANAGER, "XPathEmailNotifier: no administrator email addresses found, skipping notification");
                 return;
             }
 
@@ -122,19 +132,34 @@ public class ReuseNotificationListener implements ApplicationListener<MetadataAd
             String siteName = settingManager.getSiteName();
             String recordUrl = settingManager.getNodeURL() + "api/records/" + uuid;
 
-            ResourceBundle bundle = ResourceBundle.getBundle("org.fao.geonet.api.Messages");
-            String subject = MessageFormat.format(bundle.getString("reuse_notification_subject"), siteName);
-            String message = MessageFormat.format(bundle.getString("reuse_notification_text"), uuid, recordUrl);
+            Locale[] feedbackLocales = feedbackLanguages.getLocales(new Locale(Geonet.DEFAULT_LANGUAGE));
+
+            LocalizedEmailComponent subjectComponent = new LocalizedEmailComponent(SUBJECT, "xpath_email_notifier_subject", KeyType.MESSAGE_KEY, NUMERIC_FORMAT);
+            LocalizedEmailComponent messageComponent = new LocalizedEmailComponent(MESSAGE, "xpath_email_notifier_text", KeyType.MESSAGE_KEY, NUMERIC_FORMAT);
+
+            for (Locale feedbackLocale : feedbackLocales) {
+                subjectComponent.addParameters(feedbackLocale,
+                    new LocalizedEmailParameter(ParameterType.RAW_VALUE, 0, siteName));
+                messageComponent.addParameters(feedbackLocale,
+                    new LocalizedEmailParameter(ParameterType.RAW_VALUE, 0, uuid),
+                    new LocalizedEmailParameter(ParameterType.RAW_VALUE, 1, recordUrl));
+            }
+
+            LocalizedEmail localizedEmail = new LocalizedEmail(false);
+            localizedEmail.addComponents(subjectComponent, messageComponent);
+
+            String subject = localizedEmail.getParsedSubject(feedbackLocales);
+            String message = localizedEmail.getParsedMessage(feedbackLocales);
 
             MailUtil.sendMail(adminEmails, subject, message, settingManager);
 
         } catch (Exception e) {
-            Log.error(Geonet.DATA_MANAGER, "ReuseNotificationListener: error sending notification for record "
+            Log.error(Geonet.DATA_MANAGER, "XPathEmailNotifier: error sending notification for record "
                 + event.getMd().getUuid(), e);
         }
     }
 
-    private boolean isReuseRecord(Element xmlData) {
+    private boolean matchesXPathTrigger(Element xmlData) {
         for (String xpath : xpathsConfig.split(",")) {
             String trimmed = xpath.trim();
             if (StringUtils.isBlank(trimmed)) {
@@ -145,7 +170,7 @@ public class ReuseNotificationListener implements ApplicationListener<MetadataAd
                     return true;
                 }
             } catch (JDOMException e) {
-                Log.warning(Geonet.DATA_MANAGER, "ReuseNotificationListener: invalid XPath expression '" + trimmed + "': " + e.getMessage());
+                Log.warning(Geonet.DATA_MANAGER, "XPathEmailNotifier: invalid XPath expression '" + trimmed + "': " + e.getMessage());
             }
         }
         return false;
