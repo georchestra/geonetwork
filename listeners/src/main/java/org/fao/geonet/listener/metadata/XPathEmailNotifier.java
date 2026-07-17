@@ -75,7 +75,7 @@ public class XPathEmailNotifier implements ApplicationListener<MetadataAdd> {
         Namespace.getNamespace("mcc", "http://standards.iso.org/iso/19115/-3/mcc/1.0")
     );
 
-    @Value("${xpath.email.notifier.xpaths:}")
+    @Value("${xpaths.email.notifier:}")
     private String xpathsConfig;
 
     @Autowired
