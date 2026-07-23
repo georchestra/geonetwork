@@ -34,7 +34,9 @@ import org.fao.geonet.languages.FeedbackLanguages;
 import org.fao.geonet.repository.UserRepository;
 import org.fao.geonet.util.LocalizedEmail;
 import org.fao.geonet.util.LocalizedEmailComponent;
+import org.fao.geonet.util.LocalizedEmailComponent.KeyType;
 import org.fao.geonet.util.LocalizedEmailParameter;
+import org.fao.geonet.util.LocalizedEmailParameter.ParameterType;
 import org.fao.geonet.util.MailUtil;
 import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.Xml;
@@ -141,8 +143,8 @@ public class XPathEmailNotifier implements ApplicationListener<MetadataAdd> {
                 subjectComponent.addParameters(feedbackLocale,
                     new LocalizedEmailParameter(ParameterType.RAW_VALUE, 0, siteName));
                 messageComponent.addParameters(feedbackLocale,
-                    new LocalizedEmailParameter(ParameterType.RAW_VALUE, 0, uuid),
-                    new LocalizedEmailParameter(ParameterType.RAW_VALUE, 1, recordUrl));
+                    new LocalizedEmailParameter(ParameterType.RAW_VALUE, 0, settingManager.getNodeURL()),
+                    new LocalizedEmailParameter(ParameterType.RAW_VALUE, 1, uuid));
             }
 
             LocalizedEmail localizedEmail = new LocalizedEmail(false);
