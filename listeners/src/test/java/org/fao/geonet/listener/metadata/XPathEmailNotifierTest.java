@@ -23,6 +23,9 @@
 
 package org.fao.geonet.listener.metadata;
 
+import jeeves.server.UserSession;
+import jeeves.server.context.ServiceContext;
+
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.domain.Metadata;
 import org.fao.geonet.domain.MetadataType;
@@ -40,7 +43,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.MockedStatic;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.util.ReflectionTestUtils;
 
@@ -64,6 +66,7 @@ public class XPathEmailNotifierTest {
     private SettingManager settingManager;
     private MockedStatic<MailUtil> mailUtilStatic;
     private MockedStatic<ApplicationContextHolder> applicationContextHolderStatic;
+    private MockedStatic<ServiceContext> serviceContextStatic;
 
     @Before
     public void setUp() {
@@ -83,7 +86,7 @@ public class XPathEmailNotifierTest {
         ReflectionTestUtils.setField(notifier, "userRepository", userRepository);
         ReflectionTestUtils.setField(notifier, "settingManager", settingManager);
         ReflectionTestUtils.setField(notifier, "feedbackLanguages", feedbackLanguages);
-        ReflectionTestUtils.setField(notifier, "xpathsConfig", TRIGGER_XPATH);
+        ReflectionTestUtils.setField(notifier, "xpaths", Collections.singletonList(TRIGGER_XPATH));
 
         // LocalizedEmail (used to build the subject/message) pulls FeedbackLanguages from the
         // application context rather than from an injected field.
@@ -94,15 +97,31 @@ public class XPathEmailNotifierTest {
 
         mailUtilStatic = mockStatic(MailUtil.class);
 
-        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(
-            "editor", "n/a", Collections.singletonList(new SimpleGrantedAuthority(Profile.RegisteredUser.name()))));
+        // ServiceContext.get() returns the thread-local context set up for the current request;
+        // stub it here so onMetadataAdd() can read the logged-in user's profile from it.
+        serviceContextStatic = mockStatic(ServiceContext.class);
+        setCurrentUserProfile(Profile.Editor);
     }
 
     @After
     public void tearDown() {
         mailUtilStatic.close();
         applicationContextHolderStatic.close();
+        serviceContextStatic.close();
         SecurityContextHolder.clearContext();
+    }
+
+    private void setCurrentUserProfile(Profile profile) {
+        User user = new User().setUsername("test-user").setProfile(profile);
+        SecurityContextHolder.getContext().setAuthentication(
+            new UsernamePasswordAuthenticationToken(user, "n/a", user.getAuthorities()));
+
+        UserSession session = new UserSession();
+        session.loginAs(user);
+
+        ServiceContext context = mock(ServiceContext.class);
+        when(context.getUserSession()).thenReturn(session);
+        serviceContextStatic.when(ServiceContext::get).thenReturn(context);
     }
 
     @Test
@@ -124,6 +143,32 @@ public class XPathEmailNotifierTest {
         notifier.onMetadataAdd(new MetadataAdd(metadata));
 
         mailUtilStatic.verifyNoInteractions();
+    }
+
+    @Test
+    public void doesNotSendNotificationWhenCurrentUserIsAdministrator() {
+        setCurrentUserProfile(Profile.Administrator);
+        Metadata metadata = newMetadata("record-3", "<root><Trigger/></root>");
+
+        notifier.onMetadataAdd(new MetadataAdd(metadata));
+
+        mailUtilStatic.verifyNoInteractions();
+    }
+
+    @Test
+    public void parsesConfiguredXPathsContainingQuotesAndCommas() {
+        // Real-world config: several comma-separated XPath expressions, each using quoted
+        // string literals - must not be mangled by the property parsing (see init()).
+        String config = ".//*[local-name()='MD_ScopeCode'][@codeListValue='dataset'],"
+            + ".//*[local-name()='MD_ScopeCode'][@codeListValue='series']";
+        ReflectionTestUtils.setField(notifier, "xpathsConfig", config);
+        ReflectionTestUtils.invokeMethod(notifier, "init");
+
+        @SuppressWarnings("unchecked")
+        List<String> xpaths = (List<String>) ReflectionTestUtils.getField(notifier, "xpaths");
+        assertEquals(2, xpaths.size());
+        assertEquals(".//*[local-name()='MD_ScopeCode'][@codeListValue='dataset']", xpaths.get(0));
+        assertEquals(".//*[local-name()='MD_ScopeCode'][@codeListValue='series']", xpaths.get(1));
     }
 
     private static Metadata newMetadata(String uuid, String xmlData) {

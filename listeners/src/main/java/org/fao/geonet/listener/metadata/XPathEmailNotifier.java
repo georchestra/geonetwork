@@ -34,24 +34,23 @@ import org.fao.geonet.languages.FeedbackLanguages;
 import org.fao.geonet.repository.UserRepository;
 import org.fao.geonet.util.LocalizedEmail;
 import org.fao.geonet.util.LocalizedEmailComponent;
-import org.fao.geonet.util.LocalizedEmailComponent.KeyType;
 import org.fao.geonet.util.LocalizedEmailParameter;
-import org.fao.geonet.util.LocalizedEmailParameter.ParameterType;
 import org.fao.geonet.util.MailUtil;
 import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.Xml;
 import org.jdom.Element;
 import org.jdom.JDOMException;
-import org.jdom.Namespace;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
 
+import jeeves.server.UserSession;
+import jeeves.server.context.ServiceContext;
+
+import javax.annotation.PostConstruct;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -65,20 +64,24 @@ import static org.fao.geonet.util.LocalizedEmailParameter.ParameterType;
 /**
  * Sends an email notification to all GeoNetwork administrators when a newly created
  * record, added by a non-administrator user, matches one of the XPath expressions
- * configured via the {@code xpath.email.notifier.xpaths} property (see config.properties).
+ * configured via the {@code xpaths.email.notifier} property (see config.properties).
+ *
+ * <p>XPath expressions are evaluated against the record's XML with the {@code local-name()}
+ * function, so they are schema-agnostic: the same configuration works for ISO19139,
+ * ISO19115-3, DCAT or any other metadata schema. For example, to notify administrators
+ * whenever a record is tagged with the keyword "restricted", regardless of the schema
+ * used to describe it:
+ * <pre>xpaths.email.notifier=.//*[local-name()='keyword']//*[local-name()='CharacterString'][text()='restricted']</pre>
+ * Several expressions can be provided, separated by commas; a record matching any one of
+ * them triggers the notification.
  */
 @Component
 public class XPathEmailNotifier implements ApplicationListener<MetadataAdd> {
 
-    private static final List<Namespace> NAMESPACES = Arrays.asList(
-        Geonet.Namespaces.GMD,
-        Geonet.Namespaces.GCO,
-        Namespace.getNamespace("mdb", "http://standards.iso.org/iso/19115/-3/mdb/2.0"),
-        Namespace.getNamespace("mcc", "http://standards.iso.org/iso/19115/-3/mcc/1.0")
-    );
-
     @Value("${xpaths.email.notifier:}")
     private String xpathsConfig;
+
+    private List<String> xpaths;
 
     @Autowired
     private UserRepository userRepository;
@@ -88,6 +91,14 @@ public class XPathEmailNotifier implements ApplicationListener<MetadataAdd> {
 
     @Autowired
     private FeedbackLanguages feedbackLanguages;
+
+    @PostConstruct
+    private void init() {
+        xpaths = Arrays.stream(xpathsConfig.split(","))
+            .map(String::trim)
+            .filter(StringUtils::isNotBlank)
+            .collect(Collectors.toList());
+    }
 
     @Override
     public void onApplicationEvent(MetadataAdd event) {
@@ -104,13 +115,13 @@ public class XPathEmailNotifier implements ApplicationListener<MetadataAdd> {
                 return;
             }
 
-            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            if (auth != null && auth.getAuthorities().stream()
-                    .anyMatch(a -> a.getAuthority().equals(Profile.Administrator.name()))) {
+            if (xpaths.isEmpty()) {
                 return;
             }
 
-            if (StringUtils.isBlank(xpathsConfig)) {
+            ServiceContext context = ServiceContext.get();
+            UserSession session = context == null ? null : context.getUserSession();
+            if (session != null && session.getProfile() == Profile.Administrator) {
                 return;
             }
 
@@ -132,7 +143,6 @@ public class XPathEmailNotifier implements ApplicationListener<MetadataAdd> {
 
             String uuid = event.getMd().getUuid();
             String siteName = settingManager.getSiteName();
-            String recordUrl = settingManager.getNodeURL() + "api/records/" + uuid;
 
             Locale[] feedbackLocales = feedbackLanguages.getLocales(new Locale(Geonet.DEFAULT_LANGUAGE));
 
@@ -162,17 +172,13 @@ public class XPathEmailNotifier implements ApplicationListener<MetadataAdd> {
     }
 
     private boolean matchesXPathTrigger(Element xmlData) {
-        for (String xpath : xpathsConfig.split(",")) {
-            String trimmed = xpath.trim();
-            if (StringUtils.isBlank(trimmed)) {
-                continue;
-            }
+        for (String xpath : xpaths) {
             try {
-                if (!Xml.selectNodes(xmlData, trimmed, NAMESPACES).isEmpty()) {
+                if (!Xml.selectNodes(xmlData, xpath).isEmpty()) {
                     return true;
                 }
             } catch (JDOMException e) {
-                Log.warning(Geonet.DATA_MANAGER, "XPathEmailNotifier: invalid XPath expression '" + trimmed + "': " + e.getMessage());
+                Log.warning(Geonet.DATA_MANAGER, "XPathEmailNotifier: invalid XPath expression '" + xpath + "': " + e.getMessage());
             }
         }
         return false;
