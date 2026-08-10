@@ -34,7 +34,6 @@
     <criticalHealthCheck class=".IndexHealthCheck"/>
     <warningHealthCheck class=".DeadlockedThreadsHealthCheck"/>
     <warningHealthCheck class=".HarvestersHealthCheck"/>
-    <warningHealthCheck class=".DashboardAppHealthCheck"/>
     <warningHealthCheck class=".NoIndexErrorsHealthCheck"/>
     <warningHealthCheck class=".IndexReadOnlyHealthCheck"/>
     <warningHealthCheck class=".FreeConnectionsHealthCheck"/>
