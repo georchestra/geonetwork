@@ -60,7 +60,7 @@
 
   <properties>
     <rootProjectDir>../..</rootProjectDir>
-    <datahub.version>2.9.0</datahub.version>
+    <datahub.version>2.10.2</datahub.version>
     <datahub.zip.name>datahub-${datahub.version}.zip</datahub.zip.name>
     <datahub.download.url>https://github.com/geonetwork/geonetwork-ui/releases/download/v${datahub.version}/${datahub.zip.name}</datahub.download.url>
     <datahub.webcomponent.download.url>https://raw.githubusercontent.com/geonetwork/geonetwork-ui/refs/tags/v${datahub.version}/tools/webcomponent/wc-embedder.html</datahub.webcomponent.download.url>
