@@ -20,6 +20,15 @@ USER jetty
 
 VOLUME [ "/mnt/geonetwork_datadir", "/tmp", "/run/jetty" ]
 
+# OCI image labels (https://github.com/opencontainers/image-spec/blob/main/annotations.md)
+LABEL org.opencontainers.image.title="GeoNetwork (geOrchestra)" \
+      org.opencontainers.image.description="GeoNetwork metadata catalog, geOrchestra distribution" \
+      org.opencontainers.image.source="https://github.com/georchestra/geonetwork" \
+      org.opencontainers.image.url="https://github.com/georchestra/geonetwork" \
+      org.opencontainers.image.documentation="https://docs.georchestra.org/" \
+      org.opencontainers.image.vendor="geOrchestra" \
+      org.opencontainers.image.licenses="GPL-2.0-only"
+
 ENTRYPOINT [ "/docker-entrypoint.sh" ]
 
 CMD ["sh", "-c", "exec java \
