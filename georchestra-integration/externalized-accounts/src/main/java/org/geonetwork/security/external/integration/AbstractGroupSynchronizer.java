@@ -151,7 +151,11 @@ abstract class AbstractGroupSynchronizer implements GroupSynchronizer {
 
         Group group = link.getGeonetworkGroup();
         final boolean nameChanged = !Objects.equals(canonical.getName(), group.getName());
-        if (nameChanged || group.getLabelTranslations().isEmpty()) {
+        // the organization title may change while its name (identifier) does not
+        final String title = labelOf(canonical);
+        final boolean titleChanged = group.getLabelTranslations().values().stream()
+            .anyMatch(label -> !Objects.equals(label, title));
+        if (nameChanged || titleChanged || group.getLabelTranslations().isEmpty()) {
             updateLabelTranslations(canonical, group);
         }
 
@@ -219,9 +223,13 @@ abstract class AbstractGroupSynchronizer implements GroupSynchronizer {
         }
     }
 
-    private void updateLabelTranslations(CanonicalGroup canonical, Group group) {
-        final String newName = Optional.ofNullable(canonical.getOrgTitle()).map(String::isBlank).orElse(true)
+    private static String labelOf(CanonicalGroup canonical) {
+        return Optional.ofNullable(canonical.getOrgTitle()).map(String::isBlank).orElse(true)
             ? canonical.getName() : canonical.getOrgTitle();
+    }
+
+    private void updateLabelTranslations(CanonicalGroup canonical, Group group) {
+        final String newName = labelOf(canonical);
         Map<String, String> newLangs = langRepository.findAll().stream()
                 .collect(Collectors.toMap(Language::getId, l -> newName));
         newLangs.forEach(group.getLabelTranslations()::put);
