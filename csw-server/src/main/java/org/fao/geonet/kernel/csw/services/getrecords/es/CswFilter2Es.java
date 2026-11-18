@@ -68,7 +68,7 @@ public class CswFilter2Es extends AbstractFilterVisitor {
         "            \"must\": [\n" +
         "             %s\n" +
         "            ]\n" +
-        "          ,\"filter\":{\"query_string\":{\"query\":\"%s\"}}}"; //, "minimum_should_match" : 1
+        "          ,\"filter\":{\"query_string\":{\"query\":\"{@}\"}}}"; //, "minimum_should_match" : 1
     private static final String TEMPLATE_OR = " {\"bool\": {\n" +
         "            \"should\": [\n" +
         "             %s\n" +
@@ -78,7 +78,7 @@ public class CswFilter2Es extends AbstractFilterVisitor {
         "            \"should\": [\n" +
         "             %s\n" +
         "            ]\n" +
-        "          ,\"filter\":{\"query_string\":{\"query\":\"%s\"}}, \"minimum_should_match\" : 1}";
+        "          ,\"filter\":{\"query_string\":{\"query\":\"{@}\"}}, \"minimum_should_match\" : 1}";
     private static final String TEMPLATE_MATCH = "{\"query_string\": {\n" +
         "        \"fields\": [\"%s\"],\n" +
         "        \"query\": \"%s\"\n" +
@@ -158,7 +158,9 @@ public class CswFilter2Es extends AbstractFilterVisitor {
         // For example, if the wildcard is % and the escape character is \:
         //  - in the previous replacement %afr\%ca% becomes *afr\*ca*
         //  - and with this replacement *afr\*ca* becomes *afr\%ca*
-        result = result.replaceAll(Pattern.quote(escapeWildcardDefault), wildcardChar);
+        // Skip if the escapeChar is an empty string, to avoid reverting previous change
+        if (! StringUtils.isEmpty(filter.getEscape()))
+            result = result.replaceAll(Pattern.quote(escapeWildcardDefault), wildcardChar);
 
         if (wildcardChar.equals("%")) {
             // Escape % for String.format used in SearchController to process the csw filter
@@ -171,7 +173,9 @@ public class CswFilter2Es extends AbstractFilterVisitor {
             String escapeSinglecharDefault = filter.getEscape() + "?";
 
             result = result.replaceAll(Pattern.quote(singleChar), "?");
-            result = result.replaceAll(Pattern.quote(escapeSinglecharDefault), singleChar);
+            // Skip if the escapeChar is an empty string, to avoid reverting previous change
+            if (! StringUtils.isEmpty(filter.getEscape()))
+                result = result.replaceAll(Pattern.quote(escapeSinglecharDefault), singleChar);
 
             if (singleChar.equals("%")) {
                 result = result.replace( singleChar, "%%");

@@ -93,7 +93,7 @@ class CswFilter2EsTest {
             fieldValues.add(field);
             query.set("fields", fieldValues);
         }
-        query.put("query", queryString == null ? "%s" : queryString);
+        query.put("query", queryString == null ? "{@}" : queryString);
 
         queryStringNode.set("query_string", query);
 
@@ -189,6 +189,26 @@ class CswFilter2EsTest {
         // EXPECTED:
         final ObjectNode expected = EsJsonHelper.boolbdr(). //
             must(array(queryStringPart("AnyText", "s?rvice*"))). //
+            filter(queryStringPart()). //
+            bld();
+
+        assertFilterEquals(expected, input);
+    }
+
+    @Test
+    void testUuidPropertyIsLike() throws IOException {
+
+        final String input =
+            "      <Filter xmlns=\"http://www.opengis.net/ogc\">\n" +
+            "         <PropertyIsLike wildCard=\"%\" singleChar=\"_\" escapeChar=\"\">\n" +
+            "            <PropertyName>dc:identifier</PropertyName>\n" +
+            "            <Literal>%</Literal>\n" +
+            "        </PropertyIsLike>\n" +
+            "      </Filter>\n";
+
+        // EXPECTED:
+        final ObjectNode expected = EsJsonHelper.boolbdr(). //
+            must(array(queryStringPart("dc:identifier", "*"))). //
             filter(queryStringPart()). //
             bld();
 

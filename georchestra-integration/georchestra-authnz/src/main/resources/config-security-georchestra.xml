@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans default-lazy-init="true" xmlns="http://www.springframework.org/schema/beans"
+  xmlns:ctx="http://www.springframework.org/schema/context"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+  http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+  ">
+
+  <ctx:annotation-config />
+
+   <!-- redirect to cas when need to be logged in --> 
+  <bean id="authenticationEntryPoint"
+    class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+    <constructor-arg index="0" value="/?login" />
+  </bean>
+
+   <!-- Override passthrough filter --> 
+  <bean id="preAuthenticationFilter"
+    class="org.georchestra.geonetwork.security.authentication.GeorchestraPreAuthenticationFilter">
+    <property name="authenticationManager" ref="authenticationManager" />
+    <property name="checkForPrincipalChanges" value="true" />
+  </bean>
+</beans>
