@@ -689,7 +689,8 @@
                   <goal>verify</goal>
                 </goals>
                 <configuration>
-                  <forkCount>${system.numCores}</forkCount>
+                  <forkCount>${it.forkCount}</forkCount>
+                  <argLine>${it.argLine}</argLine>
                   <groups>org.fao.geonet.repository.AbstractSpringDataTest</groups>
                   <includes>
                     <includes>**/*.java</includes>
@@ -707,6 +708,7 @@
                 </goals>
                   <configuration>
                     <forkCount>1</forkCount>
+                    <argLine>${it.argLine}</argLine>
                     <includes>
                       <include>**/ElasticsearchIndexingTest.java</include>
                     </includes>

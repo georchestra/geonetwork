@@ -1728,5 +1728,10 @@
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 
     <skipIT>true</skipIT> <!-- disable integration tests by default, use the "it" profile to run them which enables them -->
+    <!-- Integration tests (failsafe) JVM settings. Without an explicit -Xmx each forked JVM
+         defaults to 25% of the host RAM, which, multiplied by one fork per core, exhausts memory.
+         Override on the command line, e.g. -Dit.forkCount=2 -Dit.argLine="-Xmx2G ..." -->
+    <it.forkCount>1C</it.forkCount>
+    <it.argLine>-Dfile.encoding=UTF-8 -Xmx1536m -Djava.awt.headless=true</it.argLine>
   </properties>
 </project>
