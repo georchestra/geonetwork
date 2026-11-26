@@ -203,7 +203,8 @@
                 <include>**/*.java</include>
               </includes>
               <runOrder>alphabetical</runOrder>
-              <forkCount>${system.numCores}</forkCount>
+              <forkCount>${it.forkCount}</forkCount>
+              <argLine>${it.argLine}</argLine>
             </configuration>
             <executions>
               <execution>

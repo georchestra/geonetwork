@@ -9,21 +9,24 @@ on:
   pull_request:
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  MAVEN_ARGS: -B -ntp
+
 jobs:
   build:
     if: "!startsWith(github.event.head_commit.message, '[skip ci] ')"
-    name: "📦 Build, test and publish on Docker Hub"
+    name: "📦 Build"
     runs-on: ubuntu-latest
     timeout-minutes: 40
     steps:
     - name: Free Disk Space (Ubuntu)
       uses: jlumbroso/free-disk-space@main
       with:
-        # this might remove tools that are actually needed,
-        # if set to "true" but frees about 6 GB
         tool-cache: true
-        # all of these default to true, but feel free to set to
-        # "false" if necessary for your workflow
         android: true
         dotnet: true
         haskell: true
@@ -32,7 +35,7 @@ jobs:
         swap-storage: false
 
     - name: "Checking out"
-      uses: actions/checkout@v2.4.0
+      uses: actions/checkout@v4
       with:
         submodules: 'recursive'
 
@@ -41,50 +44,173 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
+        cache: 'maven'
 
     - name: "Installing GeoNetwork"
       run: mvn clean install -DskipTests -Pdatahub-integration
 
-    - name: "run tests"
-      run: mvn verify -Pit
+    # Share the freshly built GeoNetwork artifacts with the test and docker jobs,
+    # so that they do not need to rebuild the whole project.
+    # The webapp (gn-web-app, ~400MB) is left out: it is rebuilt where needed.
+    - name: "Packing GeoNetwork artifacts"
+      run: |
+        tar -C ~/.m2/repository -cf gn-artifacts.tar \
+          --exclude='org/geonetwork-opensource/gn-web-app' \
+          org/geonetwork-opensource
+        # keep our own snapshots out of the shared dependency cache
+        rm -rf ~/.m2/repository/org/geonetwork-opensource
+
+    - name: "Uploading GeoNetwork artifacts"
+      uses: actions/upload-artifact@v4
+      with:
+        name: gn-artifacts
+        path: gn-artifacts.tar
+        retention-days: 1
+        compression-level: 1
+
+  test:
+    needs: build
+    name: "🧪 Tests (${{ matrix.name }})"
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        - name: domain
+          modules: domain
+        - name: core
+          modules: core
+        - name: services
+          modules: services
+        - name: csw-server, harvesters
+          modules: csw-server,harvesters
+        - name: others
+          modules: '!domain,!core,!services,!csw-server,!harvesters'
+    steps:
+    - name: Free Disk Space (Ubuntu)
+      uses: jlumbroso/free-disk-space@main
+      with:
+        tool-cache: true
+        android: true
+        dotnet: true
+        haskell: true
+        large-packages: true
+        docker-images: true
+        swap-storage: false
+
+    - name: "Checking out"
+      uses: actions/checkout@v4
+      with:
+        submodules: 'recursive'
+
+    - name: "Setting up Java"
+      uses: actions/setup-java@v5
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: 'maven'
+
+    - name: "Downloading GeoNetwork artifacts"
+      uses: actions/download-artifact@v4
+      with:
+        name: gn-artifacts
+
+    - name: "Unpacking GeoNetwork artifacts"
+      run: |
+        mkdir -p ~/.m2/repository
+        tar -C ~/.m2/repository -xf gn-artifacts.tar
+        rm gn-artifacts.tar
+
+    - name: "Running tests"
+      run: mvn verify -Pit -pl '${{ matrix.modules }}'
+
+    - name: "Uploading test reports"
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-reports-${{ strategy.job-index }}
+        path: |
+          **/target/surefire-reports/
+          **/target/failsafe-reports/
+        retention-days: 7
+
+  docker:
+    needs: [build, test]
+    if: github.repository == 'georchestra/geonetwork' && github.actor != 'dependabot[bot]'
+    name: "🐳 Build and publish on Docker Hub"
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+    - name: Free Disk Space (Ubuntu)
+      uses: jlumbroso/free-disk-space@main
+      with:
+        tool-cache: true
+        android: true
+        dotnet: true
+        haskell: true
+        large-packages: true
+        docker-images: true
+        swap-storage: false
+
+    - name: "Checking out"
+      uses: actions/checkout@v4
+      with:
+        submodules: 'recursive'
+
+    - name: "Setting up Java"
+      uses: actions/setup-java@v5
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: 'maven'
+
+    - name: "Downloading GeoNetwork artifacts"
+      uses: actions/download-artifact@v4
+      with:
+        name: gn-artifacts
+
+    - name: "Unpacking GeoNetwork artifacts"
+      run: |
+        mkdir -p ~/.m2/repository
+        tar -C ~/.m2/repository -xf gn-artifacts.tar
+        rm gn-artifacts.tar
+
+    - name: Getting image tag
+      id: version
+      run: echo "VERSION=$(echo $GITHUB_REF | cut -d / -f 3)" >> $GITHUB_OUTPUT
+
+    - name: "🐳 Build GeoNetwork docker image"
+      run: |
+        cd web
+        mvn package -Pdocker,datahub-integration -DdockerImageName=georchestra/geonetwork -DdockerImageTags=${{ steps.version.outputs.VERSION }},latest -DskipTests
 
     - name: "publish the webapp as artifact"
-      if: github.repository == 'georchestra/geonetwork' && github.actor != 'dependabot[bot]' && github.ref == 'refs/heads/georchestra-gn4.4.x' && github.event_name != 'pull_request'
+      if: github.ref == 'refs/heads/georchestra-gn4.4.x' && github.event_name != 'pull_request'
       uses: actions/upload-artifact@v4
       with:
         name: geonetwork.war
         path: web/target/geonetwork.war
 
-    - name: Getting image tag
-      if: github.repository == 'georchestra/geonetwork' && github.actor != 'dependabot[bot]'
-      id: version
-      run: echo "VERSION=$(echo $GITHUB_REF | cut -d / -f 3)" >> $GITHUB_OUTPUT
-
-    - name: "🐳 Build GeoNetwork docker image"
-      if: github.repository == 'georchestra/geonetwork' && github.actor != 'dependabot[bot]'
-      run: |
-        cd web
-        mvn package -Pdocker,datahub-integration -DdockerImageName=georchestra/geonetwork -DdockerImageTags=${{ steps.version.outputs.VERSION }},latest -DskipTests -ntp
-
     - name: "Logging in docker.io"
       uses: azure/docker-login@v2
-      if: github.repository == 'georchestra/geonetwork' && github.actor != 'dependabot[bot]' && github.event_name != 'pull_request'
+      if: github.event_name != 'pull_request'
       with:
         username: '${{ secrets.DOCKER_HUB_USERNAME }}'
         password: '${{ secrets.DOCKER_HUB_PASSWORD }}'
 
     - name: "Pushing latest to docker.io"
-      if: github.ref == 'refs/heads/master' && github.repository == 'georchestra/geonetwork' && github.actor != 'dependabot[bot]' && github.event_name != 'pull_request'
+      if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
       run: |
         docker push georchestra/geonetwork:latest
 
     - name: "Pushing release branch to docker.io"
-      if: (contains(github.ref, 'refs/tags/') || endsWith(github.ref, '.x')) && github.repository == 'georchestra/geonetwork' && github.actor != 'dependabot[bot]' && github.event_name != 'pull_request'
+      if: (contains(github.ref, 'refs/tags/') || endsWith(github.ref, '.x')) && github.event_name != 'pull_request'
       run: |
         docker push georchestra/geonetwork:${{ steps.version.outputs.VERSION }}
 
     - name: "Update Docker Hub Description"
-      if: github.ref == 'refs/heads/master' && github.repository == 'georchestra/geonetwork' && github.actor != 'dependabot[bot]' && github.event_name != 'pull_request'
+      if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
       uses: peter-evans/dockerhub-description@v3
       with:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
